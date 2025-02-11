@@ -22,7 +22,7 @@ package com.google.type;
 public interface DecimalOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.type.Decimal)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

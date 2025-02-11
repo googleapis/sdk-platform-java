@@ -22,7 +22,7 @@ package com.google.api;
 public interface MetricOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.Metric)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -99,6 +99,7 @@ public interface MetricOrBuilder
    *
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
+
   /* nullable */
   java.lang.String getLabelsOrDefault(
       java.lang.String key,

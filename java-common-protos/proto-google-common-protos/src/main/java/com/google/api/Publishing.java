@@ -30,52 +30,26 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.Publishing}
  */
-public final class Publishing extends com.google.protobuf.GeneratedMessageV3
+public final class Publishing
+    extends com.google.protobuf.GeneratedMessageLite<Publishing, Publishing.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.Publishing)
     PublishingOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use Publishing.newBuilder() to construct.
-  private Publishing(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private Publishing() {
-    methodSettings_ = java.util.Collections.emptyList();
+    methodSettings_ = emptyProtobufList();
     newIssueUri_ = "";
     documentationUri_ = "";
     apiShortName_ = "";
     githubLabel_ = "";
-    codeownerGithubTeams_ = com.google.protobuf.LazyStringArrayList.emptyList();
+    codeownerGithubTeams_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
     docTagPrefix_ = "";
-    organization_ = 0;
-    librarySettings_ = java.util.Collections.emptyList();
+    librarySettings_ = emptyProtobufList();
     protoReferenceDocumentationUri_ = "";
     restReferenceDocumentationUri_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new Publishing();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.ClientProto.internal_static_google_api_Publishing_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.ClientProto.internal_static_google_api_Publishing_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.Publishing.class, com.google.api.Publishing.Builder.class);
-  }
-
   public static final int METHOD_SETTINGS_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.api.MethodSettings> methodSettings_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.api.MethodSettings> methodSettings_;
   /**
    *
    *
@@ -100,7 +74,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.api.MethodSettingsOrBuilder>
       getMethodSettingsOrBuilderList() {
     return methodSettings_;
@@ -143,15 +116,107 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
    */
-  @java.lang.Override
   public com.google.api.MethodSettingsOrBuilder getMethodSettingsOrBuilder(int index) {
     return methodSettings_.get(index);
   }
 
-  public static final int NEW_ISSUE_URI_FIELD_NUMBER = 101;
+  private void ensureMethodSettingsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.api.MethodSettings> tmp = methodSettings_;
+    if (!tmp.isModifiable()) {
+      methodSettings_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
 
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object newIssueUri_ = "";
+  /**
+   *
+   *
+   * <pre>
+   * A list of API method settings, e.g. the behavior for methods that use the
+   * long-running operation pattern.
+   * </pre>
+   *
+   * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
+   */
+  private void setMethodSettings(int index, com.google.api.MethodSettings value) {
+    value.getClass();
+    ensureMethodSettingsIsMutable();
+    methodSettings_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of API method settings, e.g. the behavior for methods that use the
+   * long-running operation pattern.
+   * </pre>
+   *
+   * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
+   */
+  private void addMethodSettings(com.google.api.MethodSettings value) {
+    value.getClass();
+    ensureMethodSettingsIsMutable();
+    methodSettings_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of API method settings, e.g. the behavior for methods that use the
+   * long-running operation pattern.
+   * </pre>
+   *
+   * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
+   */
+  private void addMethodSettings(int index, com.google.api.MethodSettings value) {
+    value.getClass();
+    ensureMethodSettingsIsMutable();
+    methodSettings_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of API method settings, e.g. the behavior for methods that use the
+   * long-running operation pattern.
+   * </pre>
+   *
+   * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
+   */
+  private void addAllMethodSettings(
+      java.lang.Iterable<? extends com.google.api.MethodSettings> values) {
+    ensureMethodSettingsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, methodSettings_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of API method settings, e.g. the behavior for methods that use the
+   * long-running operation pattern.
+   * </pre>
+   *
+   * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
+   */
+  private void clearMethodSettings() {
+    methodSettings_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of API method settings, e.g. the behavior for methods that use the
+   * long-running operation pattern.
+   * </pre>
+   *
+   * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
+   */
+  private void removeMethodSettings(int index) {
+    ensureMethodSettingsIsMutable();
+    methodSettings_.remove(index);
+  }
+
+  public static final int NEW_ISSUE_URI_FIELD_NUMBER = 101;
+  private java.lang.String newIssueUri_;
   /**
    *
    *
@@ -166,15 +231,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getNewIssueUri() {
-    java.lang.Object ref = newIssueUri_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      newIssueUri_ = s;
-      return s;
-    }
+    return newIssueUri_;
   }
   /**
    *
@@ -190,21 +247,58 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getNewIssueUriBytes() {
-    java.lang.Object ref = newIssueUri_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      newIssueUri_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(newIssueUri_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Link to a *public* URI where users can report issues.  Example:
+   * https://issuetracker.google.com/issues/new?component=190865&amp;template=1161103
+   * </pre>
+   *
+   * <code>string new_issue_uri = 101;</code>
+   *
+   * @param value The newIssueUri to set.
+   */
+  private void setNewIssueUri(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    newIssueUri_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Link to a *public* URI where users can report issues.  Example:
+   * https://issuetracker.google.com/issues/new?component=190865&amp;template=1161103
+   * </pre>
+   *
+   * <code>string new_issue_uri = 101;</code>
+   */
+  private void clearNewIssueUri() {
+
+    newIssueUri_ = getDefaultInstance().getNewIssueUri();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Link to a *public* URI where users can report issues.  Example:
+   * https://issuetracker.google.com/issues/new?component=190865&amp;template=1161103
+   * </pre>
+   *
+   * <code>string new_issue_uri = 101;</code>
+   *
+   * @param value The bytes for newIssueUri to set.
+   */
+  private void setNewIssueUriBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    newIssueUri_ = value.toStringUtf8();
   }
 
   public static final int DOCUMENTATION_URI_FIELD_NUMBER = 102;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object documentationUri_ = "";
+  private java.lang.String documentationUri_;
   /**
    *
    *
@@ -219,15 +313,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getDocumentationUri() {
-    java.lang.Object ref = documentationUri_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      documentationUri_ = s;
-      return s;
-    }
+    return documentationUri_;
   }
   /**
    *
@@ -243,21 +329,58 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getDocumentationUriBytes() {
-    java.lang.Object ref = documentationUri_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      documentationUri_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(documentationUri_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Link to product home page.  Example:
+   * https://cloud.google.com/asset-inventory/docs/overview
+   * </pre>
+   *
+   * <code>string documentation_uri = 102;</code>
+   *
+   * @param value The documentationUri to set.
+   */
+  private void setDocumentationUri(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    documentationUri_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Link to product home page.  Example:
+   * https://cloud.google.com/asset-inventory/docs/overview
+   * </pre>
+   *
+   * <code>string documentation_uri = 102;</code>
+   */
+  private void clearDocumentationUri() {
+
+    documentationUri_ = getDefaultInstance().getDocumentationUri();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Link to product home page.  Example:
+   * https://cloud.google.com/asset-inventory/docs/overview
+   * </pre>
+   *
+   * <code>string documentation_uri = 102;</code>
+   *
+   * @param value The bytes for documentationUri to set.
+   */
+  private void setDocumentationUriBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    documentationUri_ = value.toStringUtf8();
   }
 
   public static final int API_SHORT_NAME_FIELD_NUMBER = 103;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object apiShortName_ = "";
+  private java.lang.String apiShortName_;
   /**
    *
    *
@@ -273,15 +396,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getApiShortName() {
-    java.lang.Object ref = apiShortName_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      apiShortName_ = s;
-      return s;
-    }
+    return apiShortName_;
   }
   /**
    *
@@ -298,21 +413,61 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getApiShortNameBytes() {
-    java.lang.Object ref = apiShortName_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      apiShortName_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(apiShortName_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Used as a tracking tag when collecting data about the APIs developer
+   * relations artifacts like docs, packages delivered to package managers,
+   * etc.  Example: "speech".
+   * </pre>
+   *
+   * <code>string api_short_name = 103;</code>
+   *
+   * @param value The apiShortName to set.
+   */
+  private void setApiShortName(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    apiShortName_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Used as a tracking tag when collecting data about the APIs developer
+   * relations artifacts like docs, packages delivered to package managers,
+   * etc.  Example: "speech".
+   * </pre>
+   *
+   * <code>string api_short_name = 103;</code>
+   */
+  private void clearApiShortName() {
+
+    apiShortName_ = getDefaultInstance().getApiShortName();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Used as a tracking tag when collecting data about the APIs developer
+   * relations artifacts like docs, packages delivered to package managers,
+   * etc.  Example: "speech".
+   * </pre>
+   *
+   * <code>string api_short_name = 103;</code>
+   *
+   * @param value The bytes for apiShortName to set.
+   */
+  private void setApiShortNameBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    apiShortName_ = value.toStringUtf8();
   }
 
   public static final int GITHUB_LABEL_FIELD_NUMBER = 104;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object githubLabel_ = "";
+  private java.lang.String githubLabel_;
   /**
    *
    *
@@ -326,15 +481,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getGithubLabel() {
-    java.lang.Object ref = githubLabel_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      githubLabel_ = s;
-      return s;
-    }
+    return githubLabel_;
   }
   /**
    *
@@ -349,22 +496,55 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getGithubLabelBytes() {
-    java.lang.Object ref = githubLabel_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      githubLabel_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(githubLabel_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * GitHub label to apply to issues and pull requests opened for this API.
+   * </pre>
+   *
+   * <code>string github_label = 104;</code>
+   *
+   * @param value The githubLabel to set.
+   */
+  private void setGithubLabel(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    githubLabel_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * GitHub label to apply to issues and pull requests opened for this API.
+   * </pre>
+   *
+   * <code>string github_label = 104;</code>
+   */
+  private void clearGithubLabel() {
+
+    githubLabel_ = getDefaultInstance().getGithubLabel();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * GitHub label to apply to issues and pull requests opened for this API.
+   * </pre>
+   *
+   * <code>string github_label = 104;</code>
+   *
+   * @param value The bytes for githubLabel to set.
+   */
+  private void setGithubLabelBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    githubLabel_ = value.toStringUtf8();
   }
 
   public static final int CODEOWNER_GITHUB_TEAMS_FIELD_NUMBER = 105;
-
-  @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList codeownerGithubTeams_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.Internal.ProtobufList<java.lang.String> codeownerGithubTeams_;
   /**
    *
    *
@@ -377,7 +557,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    *
    * @return A list containing the codeownerGithubTeams.
    */
-  public com.google.protobuf.ProtocolStringList getCodeownerGithubTeamsList() {
+  @java.lang.Override
+  public java.util.List<java.lang.String> getCodeownerGithubTeamsList() {
     return codeownerGithubTeams_;
   }
   /**
@@ -392,6 +573,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The count of codeownerGithubTeams.
    */
+  @java.lang.Override
   public int getCodeownerGithubTeamsCount() {
     return codeownerGithubTeams_.size();
   }
@@ -408,6 +590,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the element to return.
    * @return The codeownerGithubTeams at the given index.
    */
+  @java.lang.Override
   public java.lang.String getCodeownerGithubTeams(int index) {
     return codeownerGithubTeams_.get(index);
   }
@@ -424,14 +607,101 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the value to return.
    * @return The bytes of the codeownerGithubTeams at the given index.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getCodeownerGithubTeamsBytes(int index) {
-    return codeownerGithubTeams_.getByteString(index);
+    return com.google.protobuf.ByteString.copyFromUtf8(codeownerGithubTeams_.get(index));
+  }
+
+  private void ensureCodeownerGithubTeamsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = codeownerGithubTeams_;
+    if (!tmp.isModifiable()) {
+      codeownerGithubTeams_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * GitHub teams to be added to CODEOWNERS in the directory in GitHub
+   * containing source code for the client libraries for this API.
+   * </pre>
+   *
+   * <code>repeated string codeowner_github_teams = 105;</code>
+   *
+   * @param index The index to set the value at.
+   * @param value The codeownerGithubTeams to set.
+   */
+  private void setCodeownerGithubTeams(int index, java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureCodeownerGithubTeamsIsMutable();
+    codeownerGithubTeams_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * GitHub teams to be added to CODEOWNERS in the directory in GitHub
+   * containing source code for the client libraries for this API.
+   * </pre>
+   *
+   * <code>repeated string codeowner_github_teams = 105;</code>
+   *
+   * @param value The codeownerGithubTeams to add.
+   */
+  private void addCodeownerGithubTeams(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureCodeownerGithubTeamsIsMutable();
+    codeownerGithubTeams_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * GitHub teams to be added to CODEOWNERS in the directory in GitHub
+   * containing source code for the client libraries for this API.
+   * </pre>
+   *
+   * <code>repeated string codeowner_github_teams = 105;</code>
+   *
+   * @param values The codeownerGithubTeams to add.
+   */
+  private void addAllCodeownerGithubTeams(java.lang.Iterable<java.lang.String> values) {
+    ensureCodeownerGithubTeamsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, codeownerGithubTeams_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * GitHub teams to be added to CODEOWNERS in the directory in GitHub
+   * containing source code for the client libraries for this API.
+   * </pre>
+   *
+   * <code>repeated string codeowner_github_teams = 105;</code>
+   */
+  private void clearCodeownerGithubTeams() {
+    codeownerGithubTeams_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * GitHub teams to be added to CODEOWNERS in the directory in GitHub
+   * containing source code for the client libraries for this API.
+   * </pre>
+   *
+   * <code>repeated string codeowner_github_teams = 105;</code>
+   *
+   * @param value The bytes of the codeownerGithubTeams to add.
+   */
+  private void addCodeownerGithubTeamsBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    ensureCodeownerGithubTeamsIsMutable();
+    codeownerGithubTeams_.add(value.toStringUtf8());
   }
 
   public static final int DOC_TAG_PREFIX_FIELD_NUMBER = 106;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object docTagPrefix_ = "";
+  private java.lang.String docTagPrefix_;
   /**
    *
    *
@@ -446,15 +716,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getDocTagPrefix() {
-    java.lang.Object ref = docTagPrefix_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      docTagPrefix_ = s;
-      return s;
-    }
+    return docTagPrefix_;
   }
   /**
    *
@@ -470,19 +732,58 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getDocTagPrefixBytes() {
-    java.lang.Object ref = docTagPrefix_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      docTagPrefix_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(docTagPrefix_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A prefix used in sample code when demarking regions to be included in
+   * documentation.
+   * </pre>
+   *
+   * <code>string doc_tag_prefix = 106;</code>
+   *
+   * @param value The docTagPrefix to set.
+   */
+  private void setDocTagPrefix(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    docTagPrefix_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A prefix used in sample code when demarking regions to be included in
+   * documentation.
+   * </pre>
+   *
+   * <code>string doc_tag_prefix = 106;</code>
+   */
+  private void clearDocTagPrefix() {
+
+    docTagPrefix_ = getDefaultInstance().getDocTagPrefix();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A prefix used in sample code when demarking regions to be included in
+   * documentation.
+   * </pre>
+   *
+   * <code>string doc_tag_prefix = 106;</code>
+   *
+   * @param value The bytes for docTagPrefix to set.
+   */
+  private void setDocTagPrefixBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    docTagPrefix_ = value.toStringUtf8();
   }
 
   public static final int ORGANIZATION_FIELD_NUMBER = 107;
-  private int organization_ = 0;
+  private int organization_;
   /**
    *
    *
@@ -515,11 +816,51 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         com.google.api.ClientLibraryOrganization.forNumber(organization_);
     return result == null ? com.google.api.ClientLibraryOrganization.UNRECOGNIZED : result;
   }
+  /**
+   *
+   *
+   * <pre>
+   * For whom the client library is being published.
+   * </pre>
+   *
+   * <code>.google.api.ClientLibraryOrganization organization = 107;</code>
+   *
+   * @param value The enum numeric value on the wire for organization to set.
+   */
+  private void setOrganizationValue(int value) {
+    organization_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * For whom the client library is being published.
+   * </pre>
+   *
+   * <code>.google.api.ClientLibraryOrganization organization = 107;</code>
+   *
+   * @param value The organization to set.
+   */
+  private void setOrganization(com.google.api.ClientLibraryOrganization value) {
+    organization_ = value.getNumber();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * For whom the client library is being published.
+   * </pre>
+   *
+   * <code>.google.api.ClientLibraryOrganization organization = 107;</code>
+   */
+  private void clearOrganization() {
+
+    organization_ = 0;
+  }
 
   public static final int LIBRARY_SETTINGS_FIELD_NUMBER = 109;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.api.ClientLibrarySettings> librarySettings_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.api.ClientLibrarySettings>
+      librarySettings_;
   /**
    *
    *
@@ -546,7 +887,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.api.ClientLibrarySettingsOrBuilder>
       getLibrarySettingsOrBuilderList() {
     return librarySettings_;
@@ -592,15 +932,114 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
    */
-  @java.lang.Override
   public com.google.api.ClientLibrarySettingsOrBuilder getLibrarySettingsOrBuilder(int index) {
     return librarySettings_.get(index);
   }
 
-  public static final int PROTO_REFERENCE_DOCUMENTATION_URI_FIELD_NUMBER = 110;
+  private void ensureLibrarySettingsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.api.ClientLibrarySettings> tmp =
+        librarySettings_;
+    if (!tmp.isModifiable()) {
+      librarySettings_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
 
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object protoReferenceDocumentationUri_ = "";
+  /**
+   *
+   *
+   * <pre>
+   * Client library settings.  If the same version string appears multiple
+   * times in this list, then the last one wins.  Settings from earlier
+   * settings with the same version string are discarded.
+   * </pre>
+   *
+   * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
+   */
+  private void setLibrarySettings(int index, com.google.api.ClientLibrarySettings value) {
+    value.getClass();
+    ensureLibrarySettingsIsMutable();
+    librarySettings_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Client library settings.  If the same version string appears multiple
+   * times in this list, then the last one wins.  Settings from earlier
+   * settings with the same version string are discarded.
+   * </pre>
+   *
+   * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
+   */
+  private void addLibrarySettings(com.google.api.ClientLibrarySettings value) {
+    value.getClass();
+    ensureLibrarySettingsIsMutable();
+    librarySettings_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Client library settings.  If the same version string appears multiple
+   * times in this list, then the last one wins.  Settings from earlier
+   * settings with the same version string are discarded.
+   * </pre>
+   *
+   * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
+   */
+  private void addLibrarySettings(int index, com.google.api.ClientLibrarySettings value) {
+    value.getClass();
+    ensureLibrarySettingsIsMutable();
+    librarySettings_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Client library settings.  If the same version string appears multiple
+   * times in this list, then the last one wins.  Settings from earlier
+   * settings with the same version string are discarded.
+   * </pre>
+   *
+   * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
+   */
+  private void addAllLibrarySettings(
+      java.lang.Iterable<? extends com.google.api.ClientLibrarySettings> values) {
+    ensureLibrarySettingsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, librarySettings_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Client library settings.  If the same version string appears multiple
+   * times in this list, then the last one wins.  Settings from earlier
+   * settings with the same version string are discarded.
+   * </pre>
+   *
+   * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
+   */
+  private void clearLibrarySettings() {
+    librarySettings_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Client library settings.  If the same version string appears multiple
+   * times in this list, then the last one wins.  Settings from earlier
+   * settings with the same version string are discarded.
+   * </pre>
+   *
+   * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
+   */
+  private void removeLibrarySettings(int index) {
+    ensureLibrarySettingsIsMutable();
+    librarySettings_.remove(index);
+  }
+
+  public static final int PROTO_REFERENCE_DOCUMENTATION_URI_FIELD_NUMBER = 110;
+  private java.lang.String protoReferenceDocumentationUri_;
   /**
    *
    *
@@ -615,15 +1054,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getProtoReferenceDocumentationUri() {
-    java.lang.Object ref = protoReferenceDocumentationUri_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      protoReferenceDocumentationUri_ = s;
-      return s;
-    }
+    return protoReferenceDocumentationUri_;
   }
   /**
    *
@@ -639,21 +1070,58 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getProtoReferenceDocumentationUriBytes() {
-    java.lang.Object ref = protoReferenceDocumentationUri_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      protoReferenceDocumentationUri_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(protoReferenceDocumentationUri_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional link to proto reference documentation.  Example:
+   * https://cloud.google.com/pubsub/lite/docs/reference/rpc
+   * </pre>
+   *
+   * <code>string proto_reference_documentation_uri = 110;</code>
+   *
+   * @param value The protoReferenceDocumentationUri to set.
+   */
+  private void setProtoReferenceDocumentationUri(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    protoReferenceDocumentationUri_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional link to proto reference documentation.  Example:
+   * https://cloud.google.com/pubsub/lite/docs/reference/rpc
+   * </pre>
+   *
+   * <code>string proto_reference_documentation_uri = 110;</code>
+   */
+  private void clearProtoReferenceDocumentationUri() {
+
+    protoReferenceDocumentationUri_ = getDefaultInstance().getProtoReferenceDocumentationUri();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional link to proto reference documentation.  Example:
+   * https://cloud.google.com/pubsub/lite/docs/reference/rpc
+   * </pre>
+   *
+   * <code>string proto_reference_documentation_uri = 110;</code>
+   *
+   * @param value The bytes for protoReferenceDocumentationUri to set.
+   */
+  private void setProtoReferenceDocumentationUriBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    protoReferenceDocumentationUri_ = value.toStringUtf8();
   }
 
   public static final int REST_REFERENCE_DOCUMENTATION_URI_FIELD_NUMBER = 111;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object restReferenceDocumentationUri_ = "";
+  private java.lang.String restReferenceDocumentationUri_;
   /**
    *
    *
@@ -668,15 +1136,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getRestReferenceDocumentationUri() {
-    java.lang.Object ref = restReferenceDocumentationUri_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      restReferenceDocumentationUri_ = s;
-      return s;
-    }
+    return restReferenceDocumentationUri_;
   }
   /**
    *
@@ -692,289 +1152,137 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getRestReferenceDocumentationUriBytes() {
-    java.lang.Object ref = restReferenceDocumentationUri_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      restReferenceDocumentationUri_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(restReferenceDocumentationUri_);
   }
+  /**
+   *
+   *
+   * <pre>
+   * Optional link to REST reference documentation.  Example:
+   * https://cloud.google.com/pubsub/lite/docs/reference/rest
+   * </pre>
+   *
+   * <code>string rest_reference_documentation_uri = 111;</code>
+   *
+   * @param value The restReferenceDocumentationUri to set.
+   */
+  private void setRestReferenceDocumentationUri(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    restReferenceDocumentationUri_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Optional link to REST reference documentation.  Example:
+   * https://cloud.google.com/pubsub/lite/docs/reference/rest
+   * </pre>
+   *
+   * <code>string rest_reference_documentation_uri = 111;</code>
+   */
+  private void clearRestReferenceDocumentationUri() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    for (int i = 0; i < methodSettings_.size(); i++) {
-      output.writeMessage(2, methodSettings_.get(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(newIssueUri_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 101, newIssueUri_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(documentationUri_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 102, documentationUri_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(apiShortName_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 103, apiShortName_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(githubLabel_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 104, githubLabel_);
-    }
-    for (int i = 0; i < codeownerGithubTeams_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(
-          output, 105, codeownerGithubTeams_.getRaw(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(docTagPrefix_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 106, docTagPrefix_);
-    }
-    if (organization_
-        != com.google.api.ClientLibraryOrganization.CLIENT_LIBRARY_ORGANIZATION_UNSPECIFIED
-            .getNumber()) {
-      output.writeEnum(107, organization_);
-    }
-    for (int i = 0; i < librarySettings_.size(); i++) {
-      output.writeMessage(109, librarySettings_.get(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(protoReferenceDocumentationUri_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(
-          output, 110, protoReferenceDocumentationUri_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(restReferenceDocumentationUri_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(
-          output, 111, restReferenceDocumentationUri_);
-    }
-    getUnknownFields().writeTo(output);
+    restReferenceDocumentationUri_ = getDefaultInstance().getRestReferenceDocumentationUri();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    for (int i = 0; i < methodSettings_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, methodSettings_.get(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(newIssueUri_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(101, newIssueUri_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(documentationUri_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(102, documentationUri_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(apiShortName_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(103, apiShortName_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(githubLabel_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(104, githubLabel_);
-    }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < codeownerGithubTeams_.size(); i++) {
-        dataSize += computeStringSizeNoTag(codeownerGithubTeams_.getRaw(i));
-      }
-      size += dataSize;
-      size += 2 * getCodeownerGithubTeamsList().size();
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(docTagPrefix_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(106, docTagPrefix_);
-    }
-    if (organization_
-        != com.google.api.ClientLibraryOrganization.CLIENT_LIBRARY_ORGANIZATION_UNSPECIFIED
-            .getNumber()) {
-      size += com.google.protobuf.CodedOutputStream.computeEnumSize(107, organization_);
-    }
-    for (int i = 0; i < librarySettings_.size(); i++) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(109, librarySettings_.get(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(protoReferenceDocumentationUri_)) {
-      size +=
-          com.google.protobuf.GeneratedMessageV3.computeStringSize(
-              110, protoReferenceDocumentationUri_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(restReferenceDocumentationUri_)) {
-      size +=
-          com.google.protobuf.GeneratedMessageV3.computeStringSize(
-              111, restReferenceDocumentationUri_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.Publishing)) {
-      return super.equals(obj);
-    }
-    com.google.api.Publishing other = (com.google.api.Publishing) obj;
-
-    if (!getMethodSettingsList().equals(other.getMethodSettingsList())) return false;
-    if (!getNewIssueUri().equals(other.getNewIssueUri())) return false;
-    if (!getDocumentationUri().equals(other.getDocumentationUri())) return false;
-    if (!getApiShortName().equals(other.getApiShortName())) return false;
-    if (!getGithubLabel().equals(other.getGithubLabel())) return false;
-    if (!getCodeownerGithubTeamsList().equals(other.getCodeownerGithubTeamsList())) return false;
-    if (!getDocTagPrefix().equals(other.getDocTagPrefix())) return false;
-    if (organization_ != other.organization_) return false;
-    if (!getLibrarySettingsList().equals(other.getLibrarySettingsList())) return false;
-    if (!getProtoReferenceDocumentationUri().equals(other.getProtoReferenceDocumentationUri()))
-      return false;
-    if (!getRestReferenceDocumentationUri().equals(other.getRestReferenceDocumentationUri()))
-      return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (getMethodSettingsCount() > 0) {
-      hash = (37 * hash) + METHOD_SETTINGS_FIELD_NUMBER;
-      hash = (53 * hash) + getMethodSettingsList().hashCode();
-    }
-    hash = (37 * hash) + NEW_ISSUE_URI_FIELD_NUMBER;
-    hash = (53 * hash) + getNewIssueUri().hashCode();
-    hash = (37 * hash) + DOCUMENTATION_URI_FIELD_NUMBER;
-    hash = (53 * hash) + getDocumentationUri().hashCode();
-    hash = (37 * hash) + API_SHORT_NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getApiShortName().hashCode();
-    hash = (37 * hash) + GITHUB_LABEL_FIELD_NUMBER;
-    hash = (53 * hash) + getGithubLabel().hashCode();
-    if (getCodeownerGithubTeamsCount() > 0) {
-      hash = (37 * hash) + CODEOWNER_GITHUB_TEAMS_FIELD_NUMBER;
-      hash = (53 * hash) + getCodeownerGithubTeamsList().hashCode();
-    }
-    hash = (37 * hash) + DOC_TAG_PREFIX_FIELD_NUMBER;
-    hash = (53 * hash) + getDocTagPrefix().hashCode();
-    hash = (37 * hash) + ORGANIZATION_FIELD_NUMBER;
-    hash = (53 * hash) + organization_;
-    if (getLibrarySettingsCount() > 0) {
-      hash = (37 * hash) + LIBRARY_SETTINGS_FIELD_NUMBER;
-      hash = (53 * hash) + getLibrarySettingsList().hashCode();
-    }
-    hash = (37 * hash) + PROTO_REFERENCE_DOCUMENTATION_URI_FIELD_NUMBER;
-    hash = (53 * hash) + getProtoReferenceDocumentationUri().hashCode();
-    hash = (37 * hash) + REST_REFERENCE_DOCUMENTATION_URI_FIELD_NUMBER;
-    hash = (53 * hash) + getRestReferenceDocumentationUri().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Optional link to REST reference documentation.  Example:
+   * https://cloud.google.com/pubsub/lite/docs/reference/rest
+   * </pre>
+   *
+   * <code>string rest_reference_documentation_uri = 111;</code>
+   *
+   * @param value The bytes for restReferenceDocumentationUri to set.
+   */
+  private void setRestReferenceDocumentationUriBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    restReferenceDocumentationUri_ = value.toStringUtf8();
   }
 
   public static com.google.api.Publishing parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.Publishing parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.Publishing parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.Publishing parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.Publishing parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.Publishing parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.Publishing parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.Publishing parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.Publishing parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.Publishing parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.Publishing parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.Publishing parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.Publishing prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -986,429 +1294,15 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.api.Publishing}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<com.google.api.Publishing, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.Publishing)
       com.google.api.PublishingOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.ClientProto.internal_static_google_api_Publishing_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.ClientProto.internal_static_google_api_Publishing_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.Publishing.class, com.google.api.Publishing.Builder.class);
-    }
-
     // Construct using com.google.api.Publishing.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      if (methodSettingsBuilder_ == null) {
-        methodSettings_ = java.util.Collections.emptyList();
-      } else {
-        methodSettings_ = null;
-        methodSettingsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000001);
-      newIssueUri_ = "";
-      documentationUri_ = "";
-      apiShortName_ = "";
-      githubLabel_ = "";
-      codeownerGithubTeams_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      docTagPrefix_ = "";
-      organization_ = 0;
-      if (librarySettingsBuilder_ == null) {
-        librarySettings_ = java.util.Collections.emptyList();
-      } else {
-        librarySettings_ = null;
-        librarySettingsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000100);
-      protoReferenceDocumentationUri_ = "";
-      restReferenceDocumentationUri_ = "";
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.ClientProto.internal_static_google_api_Publishing_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.Publishing getDefaultInstanceForType() {
-      return com.google.api.Publishing.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.Publishing build() {
-      com.google.api.Publishing result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.Publishing buildPartial() {
-      com.google.api.Publishing result = new com.google.api.Publishing(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.api.Publishing result) {
-      if (methodSettingsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
-          methodSettings_ = java.util.Collections.unmodifiableList(methodSettings_);
-          bitField0_ = (bitField0_ & ~0x00000001);
-        }
-        result.methodSettings_ = methodSettings_;
-      } else {
-        result.methodSettings_ = methodSettingsBuilder_.build();
-      }
-      if (librarySettingsBuilder_ == null) {
-        if (((bitField0_ & 0x00000100) != 0)) {
-          librarySettings_ = java.util.Collections.unmodifiableList(librarySettings_);
-          bitField0_ = (bitField0_ & ~0x00000100);
-        }
-        result.librarySettings_ = librarySettings_;
-      } else {
-        result.librarySettings_ = librarySettingsBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.api.Publishing result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.newIssueUri_ = newIssueUri_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.documentationUri_ = documentationUri_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.apiShortName_ = apiShortName_;
-      }
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.githubLabel_ = githubLabel_;
-      }
-      if (((from_bitField0_ & 0x00000020) != 0)) {
-        codeownerGithubTeams_.makeImmutable();
-        result.codeownerGithubTeams_ = codeownerGithubTeams_;
-      }
-      if (((from_bitField0_ & 0x00000040) != 0)) {
-        result.docTagPrefix_ = docTagPrefix_;
-      }
-      if (((from_bitField0_ & 0x00000080) != 0)) {
-        result.organization_ = organization_;
-      }
-      if (((from_bitField0_ & 0x00000200) != 0)) {
-        result.protoReferenceDocumentationUri_ = protoReferenceDocumentationUri_;
-      }
-      if (((from_bitField0_ & 0x00000400) != 0)) {
-        result.restReferenceDocumentationUri_ = restReferenceDocumentationUri_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.Publishing) {
-        return mergeFrom((com.google.api.Publishing) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.Publishing other) {
-      if (other == com.google.api.Publishing.getDefaultInstance()) return this;
-      if (methodSettingsBuilder_ == null) {
-        if (!other.methodSettings_.isEmpty()) {
-          if (methodSettings_.isEmpty()) {
-            methodSettings_ = other.methodSettings_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensureMethodSettingsIsMutable();
-            methodSettings_.addAll(other.methodSettings_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.methodSettings_.isEmpty()) {
-          if (methodSettingsBuilder_.isEmpty()) {
-            methodSettingsBuilder_.dispose();
-            methodSettingsBuilder_ = null;
-            methodSettings_ = other.methodSettings_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-            methodSettingsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getMethodSettingsFieldBuilder()
-                    : null;
-          } else {
-            methodSettingsBuilder_.addAllMessages(other.methodSettings_);
-          }
-        }
-      }
-      if (!other.getNewIssueUri().isEmpty()) {
-        newIssueUri_ = other.newIssueUri_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      if (!other.getDocumentationUri().isEmpty()) {
-        documentationUri_ = other.documentationUri_;
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
-      if (!other.getApiShortName().isEmpty()) {
-        apiShortName_ = other.apiShortName_;
-        bitField0_ |= 0x00000008;
-        onChanged();
-      }
-      if (!other.getGithubLabel().isEmpty()) {
-        githubLabel_ = other.githubLabel_;
-        bitField0_ |= 0x00000010;
-        onChanged();
-      }
-      if (!other.codeownerGithubTeams_.isEmpty()) {
-        if (codeownerGithubTeams_.isEmpty()) {
-          codeownerGithubTeams_ = other.codeownerGithubTeams_;
-          bitField0_ |= 0x00000020;
-        } else {
-          ensureCodeownerGithubTeamsIsMutable();
-          codeownerGithubTeams_.addAll(other.codeownerGithubTeams_);
-        }
-        onChanged();
-      }
-      if (!other.getDocTagPrefix().isEmpty()) {
-        docTagPrefix_ = other.docTagPrefix_;
-        bitField0_ |= 0x00000040;
-        onChanged();
-      }
-      if (other.organization_ != 0) {
-        setOrganizationValue(other.getOrganizationValue());
-      }
-      if (librarySettingsBuilder_ == null) {
-        if (!other.librarySettings_.isEmpty()) {
-          if (librarySettings_.isEmpty()) {
-            librarySettings_ = other.librarySettings_;
-            bitField0_ = (bitField0_ & ~0x00000100);
-          } else {
-            ensureLibrarySettingsIsMutable();
-            librarySettings_.addAll(other.librarySettings_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.librarySettings_.isEmpty()) {
-          if (librarySettingsBuilder_.isEmpty()) {
-            librarySettingsBuilder_.dispose();
-            librarySettingsBuilder_ = null;
-            librarySettings_ = other.librarySettings_;
-            bitField0_ = (bitField0_ & ~0x00000100);
-            librarySettingsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getLibrarySettingsFieldBuilder()
-                    : null;
-          } else {
-            librarySettingsBuilder_.addAllMessages(other.librarySettings_);
-          }
-        }
-      }
-      if (!other.getProtoReferenceDocumentationUri().isEmpty()) {
-        protoReferenceDocumentationUri_ = other.protoReferenceDocumentationUri_;
-        bitField0_ |= 0x00000200;
-        onChanged();
-      }
-      if (!other.getRestReferenceDocumentationUri().isEmpty()) {
-        restReferenceDocumentationUri_ = other.restReferenceDocumentationUri_;
-        bitField0_ |= 0x00000400;
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 18:
-              {
-                com.google.api.MethodSettings m =
-                    input.readMessage(com.google.api.MethodSettings.parser(), extensionRegistry);
-                if (methodSettingsBuilder_ == null) {
-                  ensureMethodSettingsIsMutable();
-                  methodSettings_.add(m);
-                } else {
-                  methodSettingsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 18
-            case 810:
-              {
-                newIssueUri_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 810
-            case 818:
-              {
-                documentationUri_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 818
-            case 826:
-              {
-                apiShortName_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 826
-            case 834:
-              {
-                githubLabel_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 834
-            case 842:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureCodeownerGithubTeamsIsMutable();
-                codeownerGithubTeams_.add(s);
-                break;
-              } // case 842
-            case 850:
-              {
-                docTagPrefix_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000040;
-                break;
-              } // case 850
-            case 856:
-              {
-                organization_ = input.readEnum();
-                bitField0_ |= 0x00000080;
-                break;
-              } // case 856
-            case 874:
-              {
-                com.google.api.ClientLibrarySettings m =
-                    input.readMessage(
-                        com.google.api.ClientLibrarySettings.parser(), extensionRegistry);
-                if (librarySettingsBuilder_ == null) {
-                  ensureLibrarySettingsIsMutable();
-                  librarySettings_.add(m);
-                } else {
-                  librarySettingsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 874
-            case 882:
-              {
-                protoReferenceDocumentationUri_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000200;
-                break;
-              } // case 882
-            case 890:
-              {
-                restReferenceDocumentationUri_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000400;
-                break;
-              } // case 890
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.util.List<com.google.api.MethodSettings> methodSettings_ =
-        java.util.Collections.emptyList();
-
-    private void ensureMethodSettingsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
-        methodSettings_ = new java.util.ArrayList<com.google.api.MethodSettings>(methodSettings_);
-        bitField0_ |= 0x00000001;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.MethodSettings,
-            com.google.api.MethodSettings.Builder,
-            com.google.api.MethodSettingsOrBuilder>
-        methodSettingsBuilder_;
 
     /**
      *
@@ -1420,12 +1314,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.api.MethodSettings> getMethodSettingsList() {
-      if (methodSettingsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(methodSettings_);
-      } else {
-        return methodSettingsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getMethodSettingsList());
     }
     /**
      *
@@ -1437,12 +1328,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
      */
+    @java.lang.Override
     public int getMethodSettingsCount() {
-      if (methodSettingsBuilder_ == null) {
-        return methodSettings_.size();
-      } else {
-        return methodSettingsBuilder_.getCount();
-      }
+      return instance.getMethodSettingsCount();
     }
     /**
      *
@@ -1454,12 +1342,10 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
      */
+
+    @java.lang.Override
     public com.google.api.MethodSettings getMethodSettings(int index) {
-      if (methodSettingsBuilder_ == null) {
-        return methodSettings_.get(index);
-      } else {
-        return methodSettingsBuilder_.getMessage(index);
-      }
+      return instance.getMethodSettings(index);
     }
     /**
      *
@@ -1472,16 +1358,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
      */
     public Builder setMethodSettings(int index, com.google.api.MethodSettings value) {
-      if (methodSettingsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureMethodSettingsIsMutable();
-        methodSettings_.set(index, value);
-        onChanged();
-      } else {
-        methodSettingsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setMethodSettings(index, value);
       return this;
     }
     /**
@@ -1496,13 +1374,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder setMethodSettings(
         int index, com.google.api.MethodSettings.Builder builderForValue) {
-      if (methodSettingsBuilder_ == null) {
-        ensureMethodSettingsIsMutable();
-        methodSettings_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        methodSettingsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setMethodSettings(index, builderForValue.build());
       return this;
     }
     /**
@@ -1516,16 +1389,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
      */
     public Builder addMethodSettings(com.google.api.MethodSettings value) {
-      if (methodSettingsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureMethodSettingsIsMutable();
-        methodSettings_.add(value);
-        onChanged();
-      } else {
-        methodSettingsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addMethodSettings(value);
       return this;
     }
     /**
@@ -1539,16 +1404,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
      */
     public Builder addMethodSettings(int index, com.google.api.MethodSettings value) {
-      if (methodSettingsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureMethodSettingsIsMutable();
-        methodSettings_.add(index, value);
-        onChanged();
-      } else {
-        methodSettingsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addMethodSettings(index, value);
       return this;
     }
     /**
@@ -1562,13 +1419,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
      */
     public Builder addMethodSettings(com.google.api.MethodSettings.Builder builderForValue) {
-      if (methodSettingsBuilder_ == null) {
-        ensureMethodSettingsIsMutable();
-        methodSettings_.add(builderForValue.build());
-        onChanged();
-      } else {
-        methodSettingsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addMethodSettings(builderForValue.build());
       return this;
     }
     /**
@@ -1583,13 +1435,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addMethodSettings(
         int index, com.google.api.MethodSettings.Builder builderForValue) {
-      if (methodSettingsBuilder_ == null) {
-        ensureMethodSettingsIsMutable();
-        methodSettings_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        methodSettingsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addMethodSettings(index, builderForValue.build());
       return this;
     }
     /**
@@ -1604,13 +1451,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addAllMethodSettings(
         java.lang.Iterable<? extends com.google.api.MethodSettings> values) {
-      if (methodSettingsBuilder_ == null) {
-        ensureMethodSettingsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, methodSettings_);
-        onChanged();
-      } else {
-        methodSettingsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllMethodSettings(values);
       return this;
     }
     /**
@@ -1624,13 +1466,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
      */
     public Builder clearMethodSettings() {
-      if (methodSettingsBuilder_ == null) {
-        methodSettings_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-      } else {
-        methodSettingsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearMethodSettings();
       return this;
     }
     /**
@@ -1644,126 +1481,11 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
      */
     public Builder removeMethodSettings(int index) {
-      if (methodSettingsBuilder_ == null) {
-        ensureMethodSettingsIsMutable();
-        methodSettings_.remove(index);
-        onChanged();
-      } else {
-        methodSettingsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeMethodSettings(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * A list of API method settings, e.g. the behavior for methods that use the
-     * long-running operation pattern.
-     * </pre>
-     *
-     * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
-     */
-    public com.google.api.MethodSettings.Builder getMethodSettingsBuilder(int index) {
-      return getMethodSettingsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of API method settings, e.g. the behavior for methods that use the
-     * long-running operation pattern.
-     * </pre>
-     *
-     * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
-     */
-    public com.google.api.MethodSettingsOrBuilder getMethodSettingsOrBuilder(int index) {
-      if (methodSettingsBuilder_ == null) {
-        return methodSettings_.get(index);
-      } else {
-        return methodSettingsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of API method settings, e.g. the behavior for methods that use the
-     * long-running operation pattern.
-     * </pre>
-     *
-     * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
-     */
-    public java.util.List<? extends com.google.api.MethodSettingsOrBuilder>
-        getMethodSettingsOrBuilderList() {
-      if (methodSettingsBuilder_ != null) {
-        return methodSettingsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(methodSettings_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of API method settings, e.g. the behavior for methods that use the
-     * long-running operation pattern.
-     * </pre>
-     *
-     * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
-     */
-    public com.google.api.MethodSettings.Builder addMethodSettingsBuilder() {
-      return getMethodSettingsFieldBuilder()
-          .addBuilder(com.google.api.MethodSettings.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of API method settings, e.g. the behavior for methods that use the
-     * long-running operation pattern.
-     * </pre>
-     *
-     * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
-     */
-    public com.google.api.MethodSettings.Builder addMethodSettingsBuilder(int index) {
-      return getMethodSettingsFieldBuilder()
-          .addBuilder(index, com.google.api.MethodSettings.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of API method settings, e.g. the behavior for methods that use the
-     * long-running operation pattern.
-     * </pre>
-     *
-     * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
-     */
-    public java.util.List<com.google.api.MethodSettings.Builder> getMethodSettingsBuilderList() {
-      return getMethodSettingsFieldBuilder().getBuilderList();
-    }
 
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.MethodSettings,
-            com.google.api.MethodSettings.Builder,
-            com.google.api.MethodSettingsOrBuilder>
-        getMethodSettingsFieldBuilder() {
-      if (methodSettingsBuilder_ == null) {
-        methodSettingsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.api.MethodSettings,
-                com.google.api.MethodSettings.Builder,
-                com.google.api.MethodSettingsOrBuilder>(
-                methodSettings_,
-                ((bitField0_ & 0x00000001) != 0),
-                getParentForChildren(),
-                isClean());
-        methodSettings_ = null;
-      }
-      return methodSettingsBuilder_;
-    }
-
-    private java.lang.Object newIssueUri_ = "";
     /**
      *
      *
@@ -1776,16 +1498,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The newIssueUri.
      */
+    @java.lang.Override
     public java.lang.String getNewIssueUri() {
-      java.lang.Object ref = newIssueUri_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        newIssueUri_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getNewIssueUri();
     }
     /**
      *
@@ -1799,16 +1514,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for newIssueUri.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getNewIssueUriBytes() {
-      java.lang.Object ref = newIssueUri_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        newIssueUri_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getNewIssueUriBytes();
     }
     /**
      *
@@ -1824,12 +1532,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setNewIssueUri(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      newIssueUri_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setNewIssueUri(value);
       return this;
     }
     /**
@@ -1845,9 +1549,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearNewIssueUri() {
-      newIssueUri_ = getDefaultInstance().getNewIssueUri();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearNewIssueUri();
       return this;
     }
     /**
@@ -1864,17 +1567,11 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setNewIssueUriBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      newIssueUri_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setNewIssueUriBytes(value);
       return this;
     }
 
-    private java.lang.Object documentationUri_ = "";
     /**
      *
      *
@@ -1887,16 +1584,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The documentationUri.
      */
+    @java.lang.Override
     public java.lang.String getDocumentationUri() {
-      java.lang.Object ref = documentationUri_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        documentationUri_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getDocumentationUri();
     }
     /**
      *
@@ -1910,16 +1600,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for documentationUri.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getDocumentationUriBytes() {
-      java.lang.Object ref = documentationUri_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        documentationUri_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getDocumentationUriBytes();
     }
     /**
      *
@@ -1935,12 +1618,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDocumentationUri(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      documentationUri_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setDocumentationUri(value);
       return this;
     }
     /**
@@ -1956,9 +1635,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDocumentationUri() {
-      documentationUri_ = getDefaultInstance().getDocumentationUri();
-      bitField0_ = (bitField0_ & ~0x00000004);
-      onChanged();
+      copyOnWrite();
+      instance.clearDocumentationUri();
       return this;
     }
     /**
@@ -1975,17 +1653,11 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDocumentationUriBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      documentationUri_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setDocumentationUriBytes(value);
       return this;
     }
 
-    private java.lang.Object apiShortName_ = "";
     /**
      *
      *
@@ -1999,16 +1671,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The apiShortName.
      */
+    @java.lang.Override
     public java.lang.String getApiShortName() {
-      java.lang.Object ref = apiShortName_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        apiShortName_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getApiShortName();
     }
     /**
      *
@@ -2023,16 +1688,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for apiShortName.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getApiShortNameBytes() {
-      java.lang.Object ref = apiShortName_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        apiShortName_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getApiShortNameBytes();
     }
     /**
      *
@@ -2049,12 +1707,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setApiShortName(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      apiShortName_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setApiShortName(value);
       return this;
     }
     /**
@@ -2071,9 +1725,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearApiShortName() {
-      apiShortName_ = getDefaultInstance().getApiShortName();
-      bitField0_ = (bitField0_ & ~0x00000008);
-      onChanged();
+      copyOnWrite();
+      instance.clearApiShortName();
       return this;
     }
     /**
@@ -2091,17 +1744,11 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setApiShortNameBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      apiShortName_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setApiShortNameBytes(value);
       return this;
     }
 
-    private java.lang.Object githubLabel_ = "";
     /**
      *
      *
@@ -2113,16 +1760,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The githubLabel.
      */
+    @java.lang.Override
     public java.lang.String getGithubLabel() {
-      java.lang.Object ref = githubLabel_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        githubLabel_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getGithubLabel();
     }
     /**
      *
@@ -2135,16 +1775,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for githubLabel.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getGithubLabelBytes() {
-      java.lang.Object ref = githubLabel_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        githubLabel_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getGithubLabelBytes();
     }
     /**
      *
@@ -2159,12 +1792,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setGithubLabel(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      githubLabel_ = value;
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setGithubLabel(value);
       return this;
     }
     /**
@@ -2179,9 +1808,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearGithubLabel() {
-      githubLabel_ = getDefaultInstance().getGithubLabel();
-      bitField0_ = (bitField0_ & ~0x00000010);
-      onChanged();
+      copyOnWrite();
+      instance.clearGithubLabel();
       return this;
     }
     /**
@@ -2197,25 +1825,11 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setGithubLabelBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      githubLabel_ = value;
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setGithubLabelBytes(value);
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList codeownerGithubTeams_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
-
-    private void ensureCodeownerGithubTeamsIsMutable() {
-      if (!codeownerGithubTeams_.isModifiable()) {
-        codeownerGithubTeams_ = new com.google.protobuf.LazyStringArrayList(codeownerGithubTeams_);
-      }
-      bitField0_ |= 0x00000020;
-    }
     /**
      *
      *
@@ -2228,9 +1842,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * @return A list containing the codeownerGithubTeams.
      */
-    public com.google.protobuf.ProtocolStringList getCodeownerGithubTeamsList() {
-      codeownerGithubTeams_.makeImmutable();
-      return codeownerGithubTeams_;
+    @java.lang.Override
+    public java.util.List<java.lang.String> getCodeownerGithubTeamsList() {
+      return java.util.Collections.unmodifiableList(instance.getCodeownerGithubTeamsList());
     }
     /**
      *
@@ -2244,8 +1858,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The count of codeownerGithubTeams.
      */
+    @java.lang.Override
     public int getCodeownerGithubTeamsCount() {
-      return codeownerGithubTeams_.size();
+      return instance.getCodeownerGithubTeamsCount();
     }
     /**
      *
@@ -2260,8 +1875,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the element to return.
      * @return The codeownerGithubTeams at the given index.
      */
+    @java.lang.Override
     public java.lang.String getCodeownerGithubTeams(int index) {
-      return codeownerGithubTeams_.get(index);
+      return instance.getCodeownerGithubTeams(index);
     }
     /**
      *
@@ -2276,8 +1892,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the value to return.
      * @return The bytes of the codeownerGithubTeams at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getCodeownerGithubTeamsBytes(int index) {
-      return codeownerGithubTeams_.getByteString(index);
+      return instance.getCodeownerGithubTeamsBytes(index);
     }
     /**
      *
@@ -2294,13 +1911,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setCodeownerGithubTeams(int index, java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureCodeownerGithubTeamsIsMutable();
-      codeownerGithubTeams_.set(index, value);
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setCodeownerGithubTeams(index, value);
       return this;
     }
     /**
@@ -2317,13 +1929,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addCodeownerGithubTeams(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureCodeownerGithubTeamsIsMutable();
-      codeownerGithubTeams_.add(value);
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.addCodeownerGithubTeams(value);
       return this;
     }
     /**
@@ -2340,10 +1947,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAllCodeownerGithubTeams(java.lang.Iterable<java.lang.String> values) {
-      ensureCodeownerGithubTeamsIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, codeownerGithubTeams_);
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.addAllCodeownerGithubTeams(values);
       return this;
     }
     /**
@@ -2359,10 +1964,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearCodeownerGithubTeams() {
-      codeownerGithubTeams_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000020);
-      ;
-      onChanged();
+      copyOnWrite();
+      instance.clearCodeownerGithubTeams();
       return this;
     }
     /**
@@ -2379,18 +1982,11 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addCodeownerGithubTeamsBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      ensureCodeownerGithubTeamsIsMutable();
-      codeownerGithubTeams_.add(value);
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.addCodeownerGithubTeamsBytes(value);
       return this;
     }
 
-    private java.lang.Object docTagPrefix_ = "";
     /**
      *
      *
@@ -2403,16 +1999,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The docTagPrefix.
      */
+    @java.lang.Override
     public java.lang.String getDocTagPrefix() {
-      java.lang.Object ref = docTagPrefix_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        docTagPrefix_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getDocTagPrefix();
     }
     /**
      *
@@ -2426,16 +2015,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for docTagPrefix.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getDocTagPrefixBytes() {
-      java.lang.Object ref = docTagPrefix_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        docTagPrefix_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getDocTagPrefixBytes();
     }
     /**
      *
@@ -2451,12 +2033,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDocTagPrefix(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      docTagPrefix_ = value;
-      bitField0_ |= 0x00000040;
-      onChanged();
+      copyOnWrite();
+      instance.setDocTagPrefix(value);
       return this;
     }
     /**
@@ -2472,9 +2050,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDocTagPrefix() {
-      docTagPrefix_ = getDefaultInstance().getDocTagPrefix();
-      bitField0_ = (bitField0_ & ~0x00000040);
-      onChanged();
+      copyOnWrite();
+      instance.clearDocTagPrefix();
       return this;
     }
     /**
@@ -2491,17 +2068,11 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDocTagPrefixBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      docTagPrefix_ = value;
-      bitField0_ |= 0x00000040;
-      onChanged();
+      copyOnWrite();
+      instance.setDocTagPrefixBytes(value);
       return this;
     }
 
-    private int organization_ = 0;
     /**
      *
      *
@@ -2515,7 +2086,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getOrganizationValue() {
-      return organization_;
+      return instance.getOrganizationValue();
     }
     /**
      *
@@ -2526,13 +2097,12 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.api.ClientLibraryOrganization organization = 107;</code>
      *
-     * @param value The enum numeric value on the wire for organization to set.
+     * @param value The organization to set.
      * @return This builder for chaining.
      */
     public Builder setOrganizationValue(int value) {
-      organization_ = value;
-      bitField0_ |= 0x00000080;
-      onChanged();
+      copyOnWrite();
+      instance.setOrganizationValue(value);
       return this;
     }
     /**
@@ -2548,9 +2118,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.api.ClientLibraryOrganization getOrganization() {
-      com.google.api.ClientLibraryOrganization result =
-          com.google.api.ClientLibraryOrganization.forNumber(organization_);
-      return result == null ? com.google.api.ClientLibraryOrganization.UNRECOGNIZED : result;
+      return instance.getOrganization();
     }
     /**
      *
@@ -2561,16 +2129,12 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.api.ClientLibraryOrganization organization = 107;</code>
      *
-     * @param value The organization to set.
+     * @param value The enum numeric value on the wire for organization to set.
      * @return This builder for chaining.
      */
     public Builder setOrganization(com.google.api.ClientLibraryOrganization value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      bitField0_ |= 0x00000080;
-      organization_ = value.getNumber();
-      onChanged();
+      copyOnWrite();
+      instance.setOrganization(value);
       return this;
     }
     /**
@@ -2585,29 +2149,11 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearOrganization() {
-      bitField0_ = (bitField0_ & ~0x00000080);
-      organization_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearOrganization();
       return this;
     }
 
-    private java.util.List<com.google.api.ClientLibrarySettings> librarySettings_ =
-        java.util.Collections.emptyList();
-
-    private void ensureLibrarySettingsIsMutable() {
-      if (!((bitField0_ & 0x00000100) != 0)) {
-        librarySettings_ =
-            new java.util.ArrayList<com.google.api.ClientLibrarySettings>(librarySettings_);
-        bitField0_ |= 0x00000100;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.ClientLibrarySettings,
-            com.google.api.ClientLibrarySettings.Builder,
-            com.google.api.ClientLibrarySettingsOrBuilder>
-        librarySettingsBuilder_;
-
     /**
      *
      *
@@ -2619,12 +2165,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.api.ClientLibrarySettings> getLibrarySettingsList() {
-      if (librarySettingsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(librarySettings_);
-      } else {
-        return librarySettingsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getLibrarySettingsList());
     }
     /**
      *
@@ -2637,12 +2180,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
      */
+    @java.lang.Override
     public int getLibrarySettingsCount() {
-      if (librarySettingsBuilder_ == null) {
-        return librarySettings_.size();
-      } else {
-        return librarySettingsBuilder_.getCount();
-      }
+      return instance.getLibrarySettingsCount();
     }
     /**
      *
@@ -2655,12 +2195,10 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
      */
+
+    @java.lang.Override
     public com.google.api.ClientLibrarySettings getLibrarySettings(int index) {
-      if (librarySettingsBuilder_ == null) {
-        return librarySettings_.get(index);
-      } else {
-        return librarySettingsBuilder_.getMessage(index);
-      }
+      return instance.getLibrarySettings(index);
     }
     /**
      *
@@ -2674,16 +2212,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
      */
     public Builder setLibrarySettings(int index, com.google.api.ClientLibrarySettings value) {
-      if (librarySettingsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureLibrarySettingsIsMutable();
-        librarySettings_.set(index, value);
-        onChanged();
-      } else {
-        librarySettingsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setLibrarySettings(index, value);
       return this;
     }
     /**
@@ -2699,13 +2229,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder setLibrarySettings(
         int index, com.google.api.ClientLibrarySettings.Builder builderForValue) {
-      if (librarySettingsBuilder_ == null) {
-        ensureLibrarySettingsIsMutable();
-        librarySettings_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        librarySettingsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setLibrarySettings(index, builderForValue.build());
       return this;
     }
     /**
@@ -2720,16 +2245,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
      */
     public Builder addLibrarySettings(com.google.api.ClientLibrarySettings value) {
-      if (librarySettingsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureLibrarySettingsIsMutable();
-        librarySettings_.add(value);
-        onChanged();
-      } else {
-        librarySettingsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addLibrarySettings(value);
       return this;
     }
     /**
@@ -2744,16 +2261,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
      */
     public Builder addLibrarySettings(int index, com.google.api.ClientLibrarySettings value) {
-      if (librarySettingsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureLibrarySettingsIsMutable();
-        librarySettings_.add(index, value);
-        onChanged();
-      } else {
-        librarySettingsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addLibrarySettings(index, value);
       return this;
     }
     /**
@@ -2769,13 +2278,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addLibrarySettings(
         com.google.api.ClientLibrarySettings.Builder builderForValue) {
-      if (librarySettingsBuilder_ == null) {
-        ensureLibrarySettingsIsMutable();
-        librarySettings_.add(builderForValue.build());
-        onChanged();
-      } else {
-        librarySettingsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addLibrarySettings(builderForValue.build());
       return this;
     }
     /**
@@ -2791,13 +2295,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addLibrarySettings(
         int index, com.google.api.ClientLibrarySettings.Builder builderForValue) {
-      if (librarySettingsBuilder_ == null) {
-        ensureLibrarySettingsIsMutable();
-        librarySettings_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        librarySettingsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addLibrarySettings(index, builderForValue.build());
       return this;
     }
     /**
@@ -2813,13 +2312,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addAllLibrarySettings(
         java.lang.Iterable<? extends com.google.api.ClientLibrarySettings> values) {
-      if (librarySettingsBuilder_ == null) {
-        ensureLibrarySettingsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, librarySettings_);
-        onChanged();
-      } else {
-        librarySettingsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllLibrarySettings(values);
       return this;
     }
     /**
@@ -2834,13 +2328,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
      */
     public Builder clearLibrarySettings() {
-      if (librarySettingsBuilder_ == null) {
-        librarySettings_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000100);
-        onChanged();
-      } else {
-        librarySettingsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearLibrarySettings();
       return this;
     }
     /**
@@ -2855,133 +2344,11 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
      */
     public Builder removeLibrarySettings(int index) {
-      if (librarySettingsBuilder_ == null) {
-        ensureLibrarySettingsIsMutable();
-        librarySettings_.remove(index);
-        onChanged();
-      } else {
-        librarySettingsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeLibrarySettings(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Client library settings.  If the same version string appears multiple
-     * times in this list, then the last one wins.  Settings from earlier
-     * settings with the same version string are discarded.
-     * </pre>
-     *
-     * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
-     */
-    public com.google.api.ClientLibrarySettings.Builder getLibrarySettingsBuilder(int index) {
-      return getLibrarySettingsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Client library settings.  If the same version string appears multiple
-     * times in this list, then the last one wins.  Settings from earlier
-     * settings with the same version string are discarded.
-     * </pre>
-     *
-     * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
-     */
-    public com.google.api.ClientLibrarySettingsOrBuilder getLibrarySettingsOrBuilder(int index) {
-      if (librarySettingsBuilder_ == null) {
-        return librarySettings_.get(index);
-      } else {
-        return librarySettingsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Client library settings.  If the same version string appears multiple
-     * times in this list, then the last one wins.  Settings from earlier
-     * settings with the same version string are discarded.
-     * </pre>
-     *
-     * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
-     */
-    public java.util.List<? extends com.google.api.ClientLibrarySettingsOrBuilder>
-        getLibrarySettingsOrBuilderList() {
-      if (librarySettingsBuilder_ != null) {
-        return librarySettingsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(librarySettings_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Client library settings.  If the same version string appears multiple
-     * times in this list, then the last one wins.  Settings from earlier
-     * settings with the same version string are discarded.
-     * </pre>
-     *
-     * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
-     */
-    public com.google.api.ClientLibrarySettings.Builder addLibrarySettingsBuilder() {
-      return getLibrarySettingsFieldBuilder()
-          .addBuilder(com.google.api.ClientLibrarySettings.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Client library settings.  If the same version string appears multiple
-     * times in this list, then the last one wins.  Settings from earlier
-     * settings with the same version string are discarded.
-     * </pre>
-     *
-     * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
-     */
-    public com.google.api.ClientLibrarySettings.Builder addLibrarySettingsBuilder(int index) {
-      return getLibrarySettingsFieldBuilder()
-          .addBuilder(index, com.google.api.ClientLibrarySettings.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Client library settings.  If the same version string appears multiple
-     * times in this list, then the last one wins.  Settings from earlier
-     * settings with the same version string are discarded.
-     * </pre>
-     *
-     * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
-     */
-    public java.util.List<com.google.api.ClientLibrarySettings.Builder>
-        getLibrarySettingsBuilderList() {
-      return getLibrarySettingsFieldBuilder().getBuilderList();
-    }
 
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.ClientLibrarySettings,
-            com.google.api.ClientLibrarySettings.Builder,
-            com.google.api.ClientLibrarySettingsOrBuilder>
-        getLibrarySettingsFieldBuilder() {
-      if (librarySettingsBuilder_ == null) {
-        librarySettingsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.api.ClientLibrarySettings,
-                com.google.api.ClientLibrarySettings.Builder,
-                com.google.api.ClientLibrarySettingsOrBuilder>(
-                librarySettings_,
-                ((bitField0_ & 0x00000100) != 0),
-                getParentForChildren(),
-                isClean());
-        librarySettings_ = null;
-      }
-      return librarySettingsBuilder_;
-    }
-
-    private java.lang.Object protoReferenceDocumentationUri_ = "";
     /**
      *
      *
@@ -2994,16 +2361,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The protoReferenceDocumentationUri.
      */
+    @java.lang.Override
     public java.lang.String getProtoReferenceDocumentationUri() {
-      java.lang.Object ref = protoReferenceDocumentationUri_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        protoReferenceDocumentationUri_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getProtoReferenceDocumentationUri();
     }
     /**
      *
@@ -3017,16 +2377,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for protoReferenceDocumentationUri.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getProtoReferenceDocumentationUriBytes() {
-      java.lang.Object ref = protoReferenceDocumentationUri_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        protoReferenceDocumentationUri_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getProtoReferenceDocumentationUriBytes();
     }
     /**
      *
@@ -3042,12 +2395,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setProtoReferenceDocumentationUri(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      protoReferenceDocumentationUri_ = value;
-      bitField0_ |= 0x00000200;
-      onChanged();
+      copyOnWrite();
+      instance.setProtoReferenceDocumentationUri(value);
       return this;
     }
     /**
@@ -3063,9 +2412,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearProtoReferenceDocumentationUri() {
-      protoReferenceDocumentationUri_ = getDefaultInstance().getProtoReferenceDocumentationUri();
-      bitField0_ = (bitField0_ & ~0x00000200);
-      onChanged();
+      copyOnWrite();
+      instance.clearProtoReferenceDocumentationUri();
       return this;
     }
     /**
@@ -3082,17 +2430,11 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setProtoReferenceDocumentationUriBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      protoReferenceDocumentationUri_ = value;
-      bitField0_ |= 0x00000200;
-      onChanged();
+      copyOnWrite();
+      instance.setProtoReferenceDocumentationUriBytes(value);
       return this;
     }
 
-    private java.lang.Object restReferenceDocumentationUri_ = "";
     /**
      *
      *
@@ -3105,16 +2447,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The restReferenceDocumentationUri.
      */
+    @java.lang.Override
     public java.lang.String getRestReferenceDocumentationUri() {
-      java.lang.Object ref = restReferenceDocumentationUri_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        restReferenceDocumentationUri_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getRestReferenceDocumentationUri();
     }
     /**
      *
@@ -3128,16 +2463,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for restReferenceDocumentationUri.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getRestReferenceDocumentationUriBytes() {
-      java.lang.Object ref = restReferenceDocumentationUri_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        restReferenceDocumentationUri_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getRestReferenceDocumentationUriBytes();
     }
     /**
      *
@@ -3153,12 +2481,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setRestReferenceDocumentationUri(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      restReferenceDocumentationUri_ = value;
-      bitField0_ |= 0x00000400;
-      onChanged();
+      copyOnWrite();
+      instance.setRestReferenceDocumentationUri(value);
       return this;
     }
     /**
@@ -3174,9 +2498,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearRestReferenceDocumentationUri() {
-      restReferenceDocumentationUri_ = getDefaultInstance().getRestReferenceDocumentationUri();
-      bitField0_ = (bitField0_ & ~0x00000400);
-      onChanged();
+      copyOnWrite();
+      instance.clearRestReferenceDocumentationUri();
       return this;
     }
     /**
@@ -3193,74 +2516,103 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setRestReferenceDocumentationUriBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      restReferenceDocumentationUri_ = value;
-      bitField0_ |= 0x00000400;
-      onChanged();
+      copyOnWrite();
+      instance.setRestReferenceDocumentationUriBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.api.Publishing)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.Publishing();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "methodSettings_",
+                com.google.api.MethodSettings.class,
+                "newIssueUri_",
+                "documentationUri_",
+                "apiShortName_",
+                "githubLabel_",
+                "codeownerGithubTeams_",
+                "docTagPrefix_",
+                "organization_",
+                "librarySettings_",
+                com.google.api.ClientLibrarySettings.class,
+                "protoReferenceDocumentationUri_",
+                "restReferenceDocumentationUri_",
+              };
+          java.lang.String info =
+              "\u0000\u000b\u0000\u0000\u0002o\u000b\u0000\u0003\u0000\u0002\u001be\u0208f\u0208"
+                  + "g\u0208h\u0208i\u021aj\u0208k\fm\u001bn\u0208o\u0208";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.Publishing> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.Publishing.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.api.Publishing>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.Publishing)
   private static final com.google.api.Publishing DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.Publishing();
+    Publishing defaultInstance = new Publishing();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        Publishing.class, defaultInstance);
   }
 
   public static com.google.api.Publishing getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Publishing> PARSER =
-      new com.google.protobuf.AbstractParser<Publishing>() {
-        @java.lang.Override
-        public Publishing parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<Publishing> PARSER;
 
   public static com.google.protobuf.Parser<Publishing> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<Publishing> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.Publishing getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

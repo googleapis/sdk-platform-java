@@ -28,48 +28,20 @@ package com.google.cloud.audit;
  *
  * Protobuf type {@code google.cloud.audit.RequestMetadata}
  */
-public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV3
+public final class RequestMetadata
+    extends com.google.protobuf.GeneratedMessageLite<RequestMetadata, RequestMetadata.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.cloud.audit.RequestMetadata)
     RequestMetadataOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use RequestMetadata.newBuilder() to construct.
-  private RequestMetadata(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private RequestMetadata() {
     callerIp_ = "";
     callerSuppliedUserAgent_ = "";
     callerNetwork_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new RequestMetadata();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.cloud.audit.AuditLogProto
-        .internal_static_google_cloud_audit_RequestMetadata_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.cloud.audit.AuditLogProto
-        .internal_static_google_cloud_audit_RequestMetadata_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.cloud.audit.RequestMetadata.class,
-            com.google.cloud.audit.RequestMetadata.Builder.class);
-  }
-
   private int bitField0_;
   public static final int CALLER_IP_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object callerIp_ = "";
+  private java.lang.String callerIp_;
   /**
    *
    *
@@ -93,15 +65,7 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    */
   @java.lang.Override
   public java.lang.String getCallerIp() {
-    java.lang.Object ref = callerIp_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      callerIp_ = s;
-      return s;
-    }
+    return callerIp_;
   }
   /**
    *
@@ -126,21 +90,85 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getCallerIpBytes() {
-    java.lang.Object ref = callerIp_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      callerIp_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(callerIp_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The IP address of the caller.
+   * For a caller from the internet, this will be the public IPv4 or IPv6
+   * address. For calls made from inside Google's internal production network
+   * from one GCP service to another, `caller_ip` will be redacted to "private".
+   * For a caller from a Compute Engine VM with a external IP address,
+   * `caller_ip` will be the VM's external IP address. For a caller from a
+   * Compute Engine VM without a external IP address, if the VM is in the same
+   * organization (or project) as the accessed resource, `caller_ip` will be the
+   * VM's internal IPv4 address, otherwise `caller_ip` will be redacted to
+   * "gce-internal-ip". See https://cloud.google.com/compute/docs/vpc/ for more
+   * information.
+   * </pre>
+   *
+   * <code>string caller_ip = 1;</code>
+   *
+   * @param value The callerIp to set.
+   */
+  private void setCallerIp(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    callerIp_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The IP address of the caller.
+   * For a caller from the internet, this will be the public IPv4 or IPv6
+   * address. For calls made from inside Google's internal production network
+   * from one GCP service to another, `caller_ip` will be redacted to "private".
+   * For a caller from a Compute Engine VM with a external IP address,
+   * `caller_ip` will be the VM's external IP address. For a caller from a
+   * Compute Engine VM without a external IP address, if the VM is in the same
+   * organization (or project) as the accessed resource, `caller_ip` will be the
+   * VM's internal IPv4 address, otherwise `caller_ip` will be redacted to
+   * "gce-internal-ip". See https://cloud.google.com/compute/docs/vpc/ for more
+   * information.
+   * </pre>
+   *
+   * <code>string caller_ip = 1;</code>
+   */
+  private void clearCallerIp() {
+
+    callerIp_ = getDefaultInstance().getCallerIp();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The IP address of the caller.
+   * For a caller from the internet, this will be the public IPv4 or IPv6
+   * address. For calls made from inside Google's internal production network
+   * from one GCP service to another, `caller_ip` will be redacted to "private".
+   * For a caller from a Compute Engine VM with a external IP address,
+   * `caller_ip` will be the VM's external IP address. For a caller from a
+   * Compute Engine VM without a external IP address, if the VM is in the same
+   * organization (or project) as the accessed resource, `caller_ip` will be the
+   * VM's internal IPv4 address, otherwise `caller_ip` will be redacted to
+   * "gce-internal-ip". See https://cloud.google.com/compute/docs/vpc/ for more
+   * information.
+   * </pre>
+   *
+   * <code>string caller_ip = 1;</code>
+   *
+   * @param value The bytes for callerIp to set.
+   */
+  private void setCallerIpBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    callerIp_ = value.toStringUtf8();
   }
 
   public static final int CALLER_SUPPLIED_USER_AGENT_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object callerSuppliedUserAgent_ = "";
+  private java.lang.String callerSuppliedUserAgent_;
   /**
    *
    *
@@ -164,15 +192,7 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    */
   @java.lang.Override
   public java.lang.String getCallerSuppliedUserAgent() {
-    java.lang.Object ref = callerSuppliedUserAgent_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      callerSuppliedUserAgent_ = s;
-      return s;
-    }
+    return callerSuppliedUserAgent_;
   }
   /**
    *
@@ -197,21 +217,85 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getCallerSuppliedUserAgentBytes() {
-    java.lang.Object ref = callerSuppliedUserAgent_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      callerSuppliedUserAgent_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(callerSuppliedUserAgent_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The user agent of the caller.
+   * This information is not authenticated and should be treated accordingly.
+   * For example:
+   *
+   * +   `google-api-python-client/1.4.0`:
+   *     The request was made by the Google API client for Python.
+   * +   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:
+   *     The request was made by the Google Cloud SDK CLI (gcloud).
+   * +   `AppEngine-Google; (+http://code.google.com/appengine; appid:
+   * s~my-project`:
+   *     The request was made from the `my-project` App Engine app.
+   * </pre>
+   *
+   * <code>string caller_supplied_user_agent = 2;</code>
+   *
+   * @param value The callerSuppliedUserAgent to set.
+   */
+  private void setCallerSuppliedUserAgent(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    callerSuppliedUserAgent_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The user agent of the caller.
+   * This information is not authenticated and should be treated accordingly.
+   * For example:
+   *
+   * +   `google-api-python-client/1.4.0`:
+   *     The request was made by the Google API client for Python.
+   * +   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:
+   *     The request was made by the Google Cloud SDK CLI (gcloud).
+   * +   `AppEngine-Google; (+http://code.google.com/appengine; appid:
+   * s~my-project`:
+   *     The request was made from the `my-project` App Engine app.
+   * </pre>
+   *
+   * <code>string caller_supplied_user_agent = 2;</code>
+   */
+  private void clearCallerSuppliedUserAgent() {
+
+    callerSuppliedUserAgent_ = getDefaultInstance().getCallerSuppliedUserAgent();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The user agent of the caller.
+   * This information is not authenticated and should be treated accordingly.
+   * For example:
+   *
+   * +   `google-api-python-client/1.4.0`:
+   *     The request was made by the Google API client for Python.
+   * +   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:
+   *     The request was made by the Google Cloud SDK CLI (gcloud).
+   * +   `AppEngine-Google; (+http://code.google.com/appengine; appid:
+   * s~my-project`:
+   *     The request was made from the `my-project` App Engine app.
+   * </pre>
+   *
+   * <code>string caller_supplied_user_agent = 2;</code>
+   *
+   * @param value The bytes for callerSuppliedUserAgent to set.
+   */
+  private void setCallerSuppliedUserAgentBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    callerSuppliedUserAgent_ = value.toStringUtf8();
   }
 
   public static final int CALLER_NETWORK_FIELD_NUMBER = 3;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object callerNetwork_ = "";
+  private java.lang.String callerNetwork_;
   /**
    *
    *
@@ -231,15 +315,7 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    */
   @java.lang.Override
   public java.lang.String getCallerNetwork() {
-    java.lang.Object ref = callerNetwork_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      callerNetwork_ = s;
-      return s;
-    }
+    return callerNetwork_;
   }
   /**
    *
@@ -260,15 +336,69 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getCallerNetworkBytes() {
-    java.lang.Object ref = callerNetwork_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      callerNetwork_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(callerNetwork_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The network of the caller.
+   * Set only if the network host project is part of the same GCP organization
+   * (or project) as the accessed resource.
+   * See https://cloud.google.com/compute/docs/vpc/ for more information.
+   * This is a scheme-less URI full resource name. For example:
+   *
+   *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
+   * </pre>
+   *
+   * <code>string caller_network = 3;</code>
+   *
+   * @param value The callerNetwork to set.
+   */
+  private void setCallerNetwork(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    callerNetwork_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The network of the caller.
+   * Set only if the network host project is part of the same GCP organization
+   * (or project) as the accessed resource.
+   * See https://cloud.google.com/compute/docs/vpc/ for more information.
+   * This is a scheme-less URI full resource name. For example:
+   *
+   *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
+   * </pre>
+   *
+   * <code>string caller_network = 3;</code>
+   */
+  private void clearCallerNetwork() {
+
+    callerNetwork_ = getDefaultInstance().getCallerNetwork();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The network of the caller.
+   * Set only if the network host project is part of the same GCP organization
+   * (or project) as the accessed resource.
+   * See https://cloud.google.com/compute/docs/vpc/ for more information.
+   * This is a scheme-less URI full resource name. For example:
+   *
+   *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
+   * </pre>
+   *
+   * <code>string caller_network = 3;</code>
+   *
+   * @param value The bytes for callerNetwork to set.
+   */
+  private void setCallerNetworkBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    callerNetwork_ = value.toStringUtf8();
   }
 
   public static final int REQUEST_ATTRIBUTES_FIELD_NUMBER = 7;
@@ -288,8 +418,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    * </pre>
    *
    * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
-   *
-   * @return Whether the requestAttributes field is set.
    */
   @java.lang.Override
   public boolean hasRequestAttributes() {
@@ -310,8 +438,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    * </pre>
    *
    * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
-   *
-   * @return The requestAttributes.
    */
   @java.lang.Override
   public com.google.rpc.context.AttributeContext.Request getRequestAttributes() {
@@ -335,11 +461,61 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    *
    * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
    */
-  @java.lang.Override
-  public com.google.rpc.context.AttributeContext.RequestOrBuilder getRequestAttributesOrBuilder() {
-    return requestAttributes_ == null
-        ? com.google.rpc.context.AttributeContext.Request.getDefaultInstance()
-        : requestAttributes_;
+  private void setRequestAttributes(com.google.rpc.context.AttributeContext.Request value) {
+    value.getClass();
+    requestAttributes_ = value;
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Request attributes used in IAM condition evaluation. This field contains
+   * request attributes like request time and access levels associated with
+   * the request.
+   *
+   *
+   * To get the whole view of the attributes used in IAM
+   * condition evaluation, the user must also look into
+   * `AuditLog.authentication_info.resource_attributes`.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeRequestAttributes(com.google.rpc.context.AttributeContext.Request value) {
+    value.getClass();
+    if (requestAttributes_ != null
+        && requestAttributes_
+            != com.google.rpc.context.AttributeContext.Request.getDefaultInstance()) {
+      requestAttributes_ =
+          com.google.rpc.context.AttributeContext.Request.newBuilder(requestAttributes_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      requestAttributes_ = value;
+    }
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Request attributes used in IAM condition evaluation. This field contains
+   * request attributes like request time and access levels associated with
+   * the request.
+   *
+   *
+   * To get the whole view of the attributes used in IAM
+   * condition evaluation, the user must also look into
+   * `AuditLog.authentication_info.resource_attributes`.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
+   */
+  private void clearRequestAttributes() {
+    requestAttributes_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static final int DESTINATION_ATTRIBUTES_FIELD_NUMBER = 8;
@@ -356,8 +532,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    * </pre>
    *
    * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
-   *
-   * @return Whether the destinationAttributes field is set.
    */
   @java.lang.Override
   public boolean hasDestinationAttributes() {
@@ -375,8 +549,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    * </pre>
    *
    * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
-   *
-   * @return The destinationAttributes.
    */
   @java.lang.Override
   public com.google.rpc.context.AttributeContext.Peer getDestinationAttributes() {
@@ -397,218 +569,139 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    *
    * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
    */
-  @java.lang.Override
-  public com.google.rpc.context.AttributeContext.PeerOrBuilder getDestinationAttributesOrBuilder() {
-    return destinationAttributes_ == null
-        ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
-        : destinationAttributes_;
+  private void setDestinationAttributes(com.google.rpc.context.AttributeContext.Peer value) {
+    value.getClass();
+    destinationAttributes_ = value;
+    bitField0_ |= 0x00000002;
   }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * The destination of a network activity, such as accepting a TCP connection.
+   * In a multi hop network activity, the destination represents the receiver of
+   * the last hop. Only two fields are used in this message, Peer.port and
+   * Peer.ip. These fields are optionally populated by those services utilizing
+   * the IAM condition feature.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeDestinationAttributes(com.google.rpc.context.AttributeContext.Peer value) {
+    value.getClass();
+    if (destinationAttributes_ != null
+        && destinationAttributes_
+            != com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()) {
+      destinationAttributes_ =
+          com.google.rpc.context.AttributeContext.Peer.newBuilder(destinationAttributes_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      destinationAttributes_ = value;
+    }
+    bitField0_ |= 0x00000002;
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(callerIp_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, callerIp_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(callerSuppliedUserAgent_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, callerSuppliedUserAgent_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(callerNetwork_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, callerNetwork_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(7, getRequestAttributes());
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      output.writeMessage(8, getDestinationAttributes());
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(callerIp_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, callerIp_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(callerSuppliedUserAgent_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, callerSuppliedUserAgent_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(callerNetwork_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, callerNetwork_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(7, getRequestAttributes());
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(8, getDestinationAttributes());
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.cloud.audit.RequestMetadata)) {
-      return super.equals(obj);
-    }
-    com.google.cloud.audit.RequestMetadata other = (com.google.cloud.audit.RequestMetadata) obj;
-
-    if (!getCallerIp().equals(other.getCallerIp())) return false;
-    if (!getCallerSuppliedUserAgent().equals(other.getCallerSuppliedUserAgent())) return false;
-    if (!getCallerNetwork().equals(other.getCallerNetwork())) return false;
-    if (hasRequestAttributes() != other.hasRequestAttributes()) return false;
-    if (hasRequestAttributes()) {
-      if (!getRequestAttributes().equals(other.getRequestAttributes())) return false;
-    }
-    if (hasDestinationAttributes() != other.hasDestinationAttributes()) return false;
-    if (hasDestinationAttributes()) {
-      if (!getDestinationAttributes().equals(other.getDestinationAttributes())) return false;
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + CALLER_IP_FIELD_NUMBER;
-    hash = (53 * hash) + getCallerIp().hashCode();
-    hash = (37 * hash) + CALLER_SUPPLIED_USER_AGENT_FIELD_NUMBER;
-    hash = (53 * hash) + getCallerSuppliedUserAgent().hashCode();
-    hash = (37 * hash) + CALLER_NETWORK_FIELD_NUMBER;
-    hash = (53 * hash) + getCallerNetwork().hashCode();
-    if (hasRequestAttributes()) {
-      hash = (37 * hash) + REQUEST_ATTRIBUTES_FIELD_NUMBER;
-      hash = (53 * hash) + getRequestAttributes().hashCode();
-    }
-    if (hasDestinationAttributes()) {
-      hash = (37 * hash) + DESTINATION_ATTRIBUTES_FIELD_NUMBER;
-      hash = (53 * hash) + getDestinationAttributes().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * The destination of a network activity, such as accepting a TCP connection.
+   * In a multi hop network activity, the destination represents the receiver of
+   * the last hop. Only two fields are used in this message, Peer.port and
+   * Peer.ip. These fields are optionally populated by those services utilizing
+   * the IAM condition feature.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
+   */
+  private void clearDestinationAttributes() {
+    destinationAttributes_ = null;
+    bitField0_ = (bitField0_ & ~0x00000002);
   }
 
   public static com.google.cloud.audit.RequestMetadata parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.RequestMetadata parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.RequestMetadata parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.RequestMetadata parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.RequestMetadata parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.RequestMetadata parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.RequestMetadata parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.RequestMetadata parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.cloud.audit.RequestMetadata parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.RequestMetadata parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.cloud.audit.RequestMetadata parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.RequestMetadata parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.cloud.audit.RequestMetadata prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -618,266 +711,17 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    *
    * Protobuf type {@code google.cloud.audit.RequestMetadata}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.cloud.audit.RequestMetadata, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.cloud.audit.RequestMetadata)
       com.google.cloud.audit.RequestMetadataOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_RequestMetadata_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_RequestMetadata_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.cloud.audit.RequestMetadata.class,
-              com.google.cloud.audit.RequestMetadata.Builder.class);
-    }
-
     // Construct using com.google.cloud.audit.RequestMetadata.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getRequestAttributesFieldBuilder();
-        getDestinationAttributesFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      callerIp_ = "";
-      callerSuppliedUserAgent_ = "";
-      callerNetwork_ = "";
-      requestAttributes_ = null;
-      if (requestAttributesBuilder_ != null) {
-        requestAttributesBuilder_.dispose();
-        requestAttributesBuilder_ = null;
-      }
-      destinationAttributes_ = null;
-      if (destinationAttributesBuilder_ != null) {
-        destinationAttributesBuilder_.dispose();
-        destinationAttributesBuilder_ = null;
-      }
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_RequestMetadata_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.RequestMetadata getDefaultInstanceForType() {
-      return com.google.cloud.audit.RequestMetadata.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.RequestMetadata build() {
-      com.google.cloud.audit.RequestMetadata result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.RequestMetadata buildPartial() {
-      com.google.cloud.audit.RequestMetadata result =
-          new com.google.cloud.audit.RequestMetadata(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.cloud.audit.RequestMetadata result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.callerIp_ = callerIp_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.callerSuppliedUserAgent_ = callerSuppliedUserAgent_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.callerNetwork_ = callerNetwork_;
-      }
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.requestAttributes_ =
-            requestAttributesBuilder_ == null
-                ? requestAttributes_
-                : requestAttributesBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.destinationAttributes_ =
-            destinationAttributesBuilder_ == null
-                ? destinationAttributes_
-                : destinationAttributesBuilder_.build();
-        to_bitField0_ |= 0x00000002;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.cloud.audit.RequestMetadata) {
-        return mergeFrom((com.google.cloud.audit.RequestMetadata) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.cloud.audit.RequestMetadata other) {
-      if (other == com.google.cloud.audit.RequestMetadata.getDefaultInstance()) return this;
-      if (!other.getCallerIp().isEmpty()) {
-        callerIp_ = other.callerIp_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getCallerSuppliedUserAgent().isEmpty()) {
-        callerSuppliedUserAgent_ = other.callerSuppliedUserAgent_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      if (!other.getCallerNetwork().isEmpty()) {
-        callerNetwork_ = other.callerNetwork_;
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
-      if (other.hasRequestAttributes()) {
-        mergeRequestAttributes(other.getRequestAttributes());
-      }
-      if (other.hasDestinationAttributes()) {
-        mergeDestinationAttributes(other.getDestinationAttributes());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                callerIp_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                callerSuppliedUserAgent_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 26:
-              {
-                callerNetwork_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 26
-            case 58:
-              {
-                input.readMessage(
-                    getRequestAttributesFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 58
-            case 66:
-              {
-                input.readMessage(
-                    getDestinationAttributesFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 66
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object callerIp_ = "";
     /**
      *
      *
@@ -899,16 +743,9 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      *
      * @return The callerIp.
      */
+    @java.lang.Override
     public java.lang.String getCallerIp() {
-      java.lang.Object ref = callerIp_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        callerIp_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getCallerIp();
     }
     /**
      *
@@ -931,16 +768,9 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      *
      * @return The bytes for callerIp.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getCallerIpBytes() {
-      java.lang.Object ref = callerIp_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        callerIp_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getCallerIpBytes();
     }
     /**
      *
@@ -965,12 +795,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder setCallerIp(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      callerIp_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setCallerIp(value);
       return this;
     }
     /**
@@ -995,9 +821,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder clearCallerIp() {
-      callerIp_ = getDefaultInstance().getCallerIp();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearCallerIp();
       return this;
     }
     /**
@@ -1023,17 +848,11 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder setCallerIpBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      callerIp_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setCallerIpBytes(value);
       return this;
     }
 
-    private java.lang.Object callerSuppliedUserAgent_ = "";
     /**
      *
      *
@@ -1055,16 +874,9 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      *
      * @return The callerSuppliedUserAgent.
      */
+    @java.lang.Override
     public java.lang.String getCallerSuppliedUserAgent() {
-      java.lang.Object ref = callerSuppliedUserAgent_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        callerSuppliedUserAgent_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getCallerSuppliedUserAgent();
     }
     /**
      *
@@ -1087,16 +899,9 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      *
      * @return The bytes for callerSuppliedUserAgent.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getCallerSuppliedUserAgentBytes() {
-      java.lang.Object ref = callerSuppliedUserAgent_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        callerSuppliedUserAgent_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getCallerSuppliedUserAgentBytes();
     }
     /**
      *
@@ -1121,12 +926,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder setCallerSuppliedUserAgent(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      callerSuppliedUserAgent_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setCallerSuppliedUserAgent(value);
       return this;
     }
     /**
@@ -1151,9 +952,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder clearCallerSuppliedUserAgent() {
-      callerSuppliedUserAgent_ = getDefaultInstance().getCallerSuppliedUserAgent();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearCallerSuppliedUserAgent();
       return this;
     }
     /**
@@ -1179,17 +979,11 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder setCallerSuppliedUserAgentBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      callerSuppliedUserAgent_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setCallerSuppliedUserAgentBytes(value);
       return this;
     }
 
-    private java.lang.Object callerNetwork_ = "";
     /**
      *
      *
@@ -1207,16 +1001,9 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      *
      * @return The callerNetwork.
      */
+    @java.lang.Override
     public java.lang.String getCallerNetwork() {
-      java.lang.Object ref = callerNetwork_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        callerNetwork_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getCallerNetwork();
     }
     /**
      *
@@ -1235,16 +1022,9 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      *
      * @return The bytes for callerNetwork.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getCallerNetworkBytes() {
-      java.lang.Object ref = callerNetwork_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        callerNetwork_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getCallerNetworkBytes();
     }
     /**
      *
@@ -1265,12 +1045,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder setCallerNetwork(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      callerNetwork_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setCallerNetwork(value);
       return this;
     }
     /**
@@ -1291,9 +1067,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder clearCallerNetwork() {
-      callerNetwork_ = getDefaultInstance().getCallerNetwork();
-      bitField0_ = (bitField0_ & ~0x00000004);
-      onChanged();
+      copyOnWrite();
+      instance.clearCallerNetwork();
       return this;
     }
     /**
@@ -1315,22 +1090,11 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder setCallerNetworkBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      callerNetwork_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setCallerNetworkBytes(value);
       return this;
     }
 
-    private com.google.rpc.context.AttributeContext.Request requestAttributes_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.context.AttributeContext.Request,
-            com.google.rpc.context.AttributeContext.Request.Builder,
-            com.google.rpc.context.AttributeContext.RequestOrBuilder>
-        requestAttributesBuilder_;
     /**
      *
      *
@@ -1346,11 +1110,10 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
-     *
-     * @return Whether the requestAttributes field is set.
      */
+    @java.lang.Override
     public boolean hasRequestAttributes() {
-      return ((bitField0_ & 0x00000008) != 0);
+      return instance.hasRequestAttributes();
     }
     /**
      *
@@ -1367,17 +1130,10 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
-     *
-     * @return The requestAttributes.
      */
+    @java.lang.Override
     public com.google.rpc.context.AttributeContext.Request getRequestAttributes() {
-      if (requestAttributesBuilder_ == null) {
-        return requestAttributes_ == null
-            ? com.google.rpc.context.AttributeContext.Request.getDefaultInstance()
-            : requestAttributes_;
-      } else {
-        return requestAttributesBuilder_.getMessage();
-      }
+      return instance.getRequestAttributes();
     }
     /**
      *
@@ -1396,16 +1152,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
      */
     public Builder setRequestAttributes(com.google.rpc.context.AttributeContext.Request value) {
-      if (requestAttributesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        requestAttributes_ = value;
-      } else {
-        requestAttributesBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setRequestAttributes(value);
       return this;
     }
     /**
@@ -1426,13 +1174,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      */
     public Builder setRequestAttributes(
         com.google.rpc.context.AttributeContext.Request.Builder builderForValue) {
-      if (requestAttributesBuilder_ == null) {
-        requestAttributes_ = builderForValue.build();
-      } else {
-        requestAttributesBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setRequestAttributes(builderForValue.build());
       return this;
     }
     /**
@@ -1452,22 +1195,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
      */
     public Builder mergeRequestAttributes(com.google.rpc.context.AttributeContext.Request value) {
-      if (requestAttributesBuilder_ == null) {
-        if (((bitField0_ & 0x00000008) != 0)
-            && requestAttributes_ != null
-            && requestAttributes_
-                != com.google.rpc.context.AttributeContext.Request.getDefaultInstance()) {
-          getRequestAttributesBuilder().mergeFrom(value);
-        } else {
-          requestAttributes_ = value;
-        }
-      } else {
-        requestAttributesBuilder_.mergeFrom(value);
-      }
-      if (requestAttributes_ != null) {
-        bitField0_ |= 0x00000008;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeRequestAttributes(value);
       return this;
     }
     /**
@@ -1487,101 +1216,11 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
      */
     public Builder clearRequestAttributes() {
-      bitField0_ = (bitField0_ & ~0x00000008);
-      requestAttributes_ = null;
-      if (requestAttributesBuilder_ != null) {
-        requestAttributesBuilder_.dispose();
-        requestAttributesBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearRequestAttributes();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Request attributes used in IAM condition evaluation. This field contains
-     * request attributes like request time and access levels associated with
-     * the request.
-     *
-     *
-     * To get the whole view of the attributes used in IAM
-     * condition evaluation, the user must also look into
-     * `AuditLog.authentication_info.resource_attributes`.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
-     */
-    public com.google.rpc.context.AttributeContext.Request.Builder getRequestAttributesBuilder() {
-      bitField0_ |= 0x00000008;
-      onChanged();
-      return getRequestAttributesFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Request attributes used in IAM condition evaluation. This field contains
-     * request attributes like request time and access levels associated with
-     * the request.
-     *
-     *
-     * To get the whole view of the attributes used in IAM
-     * condition evaluation, the user must also look into
-     * `AuditLog.authentication_info.resource_attributes`.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
-     */
-    public com.google.rpc.context.AttributeContext.RequestOrBuilder
-        getRequestAttributesOrBuilder() {
-      if (requestAttributesBuilder_ != null) {
-        return requestAttributesBuilder_.getMessageOrBuilder();
-      } else {
-        return requestAttributes_ == null
-            ? com.google.rpc.context.AttributeContext.Request.getDefaultInstance()
-            : requestAttributes_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Request attributes used in IAM condition evaluation. This field contains
-     * request attributes like request time and access levels associated with
-     * the request.
-     *
-     *
-     * To get the whole view of the attributes used in IAM
-     * condition evaluation, the user must also look into
-     * `AuditLog.authentication_info.resource_attributes`.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.context.AttributeContext.Request,
-            com.google.rpc.context.AttributeContext.Request.Builder,
-            com.google.rpc.context.AttributeContext.RequestOrBuilder>
-        getRequestAttributesFieldBuilder() {
-      if (requestAttributesBuilder_ == null) {
-        requestAttributesBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.rpc.context.AttributeContext.Request,
-                com.google.rpc.context.AttributeContext.Request.Builder,
-                com.google.rpc.context.AttributeContext.RequestOrBuilder>(
-                getRequestAttributes(), getParentForChildren(), isClean());
-        requestAttributes_ = null;
-      }
-      return requestAttributesBuilder_;
-    }
 
-    private com.google.rpc.context.AttributeContext.Peer destinationAttributes_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.context.AttributeContext.Peer,
-            com.google.rpc.context.AttributeContext.Peer.Builder,
-            com.google.rpc.context.AttributeContext.PeerOrBuilder>
-        destinationAttributesBuilder_;
     /**
      *
      *
@@ -1594,11 +1233,10 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
-     *
-     * @return Whether the destinationAttributes field is set.
      */
+    @java.lang.Override
     public boolean hasDestinationAttributes() {
-      return ((bitField0_ & 0x00000010) != 0);
+      return instance.hasDestinationAttributes();
     }
     /**
      *
@@ -1612,17 +1250,10 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
-     *
-     * @return The destinationAttributes.
      */
+    @java.lang.Override
     public com.google.rpc.context.AttributeContext.Peer getDestinationAttributes() {
-      if (destinationAttributesBuilder_ == null) {
-        return destinationAttributes_ == null
-            ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
-            : destinationAttributes_;
-      } else {
-        return destinationAttributesBuilder_.getMessage();
-      }
+      return instance.getDestinationAttributes();
     }
     /**
      *
@@ -1638,16 +1269,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
      */
     public Builder setDestinationAttributes(com.google.rpc.context.AttributeContext.Peer value) {
-      if (destinationAttributesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        destinationAttributes_ = value;
-      } else {
-        destinationAttributesBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setDestinationAttributes(value);
       return this;
     }
     /**
@@ -1665,13 +1288,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      */
     public Builder setDestinationAttributes(
         com.google.rpc.context.AttributeContext.Peer.Builder builderForValue) {
-      if (destinationAttributesBuilder_ == null) {
-        destinationAttributes_ = builderForValue.build();
-      } else {
-        destinationAttributesBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setDestinationAttributes(builderForValue.build());
       return this;
     }
     /**
@@ -1688,22 +1306,8 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
      */
     public Builder mergeDestinationAttributes(com.google.rpc.context.AttributeContext.Peer value) {
-      if (destinationAttributesBuilder_ == null) {
-        if (((bitField0_ & 0x00000010) != 0)
-            && destinationAttributes_ != null
-            && destinationAttributes_
-                != com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()) {
-          getDestinationAttributesBuilder().mergeFrom(value);
-        } else {
-          destinationAttributes_ = value;
-        }
-      } else {
-        destinationAttributesBuilder_.mergeFrom(value);
-      }
-      if (destinationAttributes_ != null) {
-        bitField0_ |= 0x00000010;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeDestinationAttributes(value);
       return this;
     }
     /**
@@ -1720,144 +1324,97 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
      */
     public Builder clearDestinationAttributes() {
-      bitField0_ = (bitField0_ & ~0x00000010);
-      destinationAttributes_ = null;
-      if (destinationAttributesBuilder_ != null) {
-        destinationAttributesBuilder_.dispose();
-        destinationAttributesBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearDestinationAttributes();
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The destination of a network activity, such as accepting a TCP connection.
-     * In a multi hop network activity, the destination represents the receiver of
-     * the last hop. Only two fields are used in this message, Peer.port and
-     * Peer.ip. These fields are optionally populated by those services utilizing
-     * the IAM condition feature.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
-     */
-    public com.google.rpc.context.AttributeContext.Peer.Builder getDestinationAttributesBuilder() {
-      bitField0_ |= 0x00000010;
-      onChanged();
-      return getDestinationAttributesFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The destination of a network activity, such as accepting a TCP connection.
-     * In a multi hop network activity, the destination represents the receiver of
-     * the last hop. Only two fields are used in this message, Peer.port and
-     * Peer.ip. These fields are optionally populated by those services utilizing
-     * the IAM condition feature.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
-     */
-    public com.google.rpc.context.AttributeContext.PeerOrBuilder
-        getDestinationAttributesOrBuilder() {
-      if (destinationAttributesBuilder_ != null) {
-        return destinationAttributesBuilder_.getMessageOrBuilder();
-      } else {
-        return destinationAttributes_ == null
-            ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
-            : destinationAttributes_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The destination of a network activity, such as accepting a TCP connection.
-     * In a multi hop network activity, the destination represents the receiver of
-     * the last hop. Only two fields are used in this message, Peer.port and
-     * Peer.ip. These fields are optionally populated by those services utilizing
-     * the IAM condition feature.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.context.AttributeContext.Peer,
-            com.google.rpc.context.AttributeContext.Peer.Builder,
-            com.google.rpc.context.AttributeContext.PeerOrBuilder>
-        getDestinationAttributesFieldBuilder() {
-      if (destinationAttributesBuilder_ == null) {
-        destinationAttributesBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.rpc.context.AttributeContext.Peer,
-                com.google.rpc.context.AttributeContext.Peer.Builder,
-                com.google.rpc.context.AttributeContext.PeerOrBuilder>(
-                getDestinationAttributes(), getParentForChildren(), isClean());
-        destinationAttributes_ = null;
-      }
-      return destinationAttributesBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.cloud.audit.RequestMetadata)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.cloud.audit.RequestMetadata();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_",
+                "callerIp_",
+                "callerSuppliedUserAgent_",
+                "callerNetwork_",
+                "requestAttributes_",
+                "destinationAttributes_",
+              };
+          java.lang.String info =
+              "\u0000\u0005\u0000\u0001\u0001\b\u0005\u0000\u0000\u0000\u0001\u0208\u0002\u0208"
+                  + "\u0003\u0208\u0007\u1009\u0000\b\u1009\u0001";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.cloud.audit.RequestMetadata> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.cloud.audit.RequestMetadata.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.cloud.audit.RequestMetadata>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.cloud.audit.RequestMetadata)
   private static final com.google.cloud.audit.RequestMetadata DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.cloud.audit.RequestMetadata();
+    RequestMetadata defaultInstance = new RequestMetadata();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        RequestMetadata.class, defaultInstance);
   }
 
   public static com.google.cloud.audit.RequestMetadata getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<RequestMetadata> PARSER =
-      new com.google.protobuf.AbstractParser<RequestMetadata>() {
-        @java.lang.Override
-        public RequestMetadata parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<RequestMetadata> PARSER;
 
   public static com.google.protobuf.Parser<RequestMetadata> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<RequestMetadata> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.cloud.audit.RequestMetadata getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

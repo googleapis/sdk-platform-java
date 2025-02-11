@@ -22,7 +22,7 @@ package com.google.iam.v2beta;
 public interface DeletePolicyRequestOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.iam.v2beta.DeletePolicyRequest)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

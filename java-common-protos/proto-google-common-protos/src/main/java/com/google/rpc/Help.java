@@ -32,42 +32,18 @@ package com.google.rpc;
  *
  * Protobuf type {@code google.rpc.Help}
  */
-public final class Help extends com.google.protobuf.GeneratedMessageV3
+public final class Help extends com.google.protobuf.GeneratedMessageLite<Help, Help.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.rpc.Help)
     HelpOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use Help.newBuilder() to construct.
-  private Help(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private Help() {
-    links_ = java.util.Collections.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new Help();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_Help_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_Help_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.rpc.Help.class, com.google.rpc.Help.Builder.class);
+    links_ = emptyProtobufList();
   }
 
   public interface LinkOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:google.rpc.Help.Link)
-      com.google.protobuf.MessageOrBuilder {
+      com.google.protobuf.MessageLiteOrBuilder {
 
     /**
      *
@@ -128,44 +104,18 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.rpc.Help.Link}
    */
-  public static final class Link extends com.google.protobuf.GeneratedMessageV3
+  public static final class Link
+      extends com.google.protobuf.GeneratedMessageLite<Link, Link.Builder>
       implements
       // @@protoc_insertion_point(message_implements:google.rpc.Help.Link)
       LinkOrBuilder {
-    private static final long serialVersionUID = 0L;
-    // Use Link.newBuilder() to construct.
-    private Link(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-
     private Link() {
       description_ = "";
       url_ = "";
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-      return new Link();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_Help_Link_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.rpc.ErrorDetailsProto
-          .internal_static_google_rpc_Help_Link_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.rpc.Help.Link.class, com.google.rpc.Help.Link.Builder.class);
-    }
-
     public static final int DESCRIPTION_FIELD_NUMBER = 1;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object description_ = "";
+    private java.lang.String description_;
     /**
      *
      *
@@ -179,15 +129,7 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getDescription() {
-      java.lang.Object ref = description_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        description_ = s;
-        return s;
-      }
+      return description_;
     }
     /**
      *
@@ -202,21 +144,55 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getDescriptionBytes() {
-      java.lang.Object ref = description_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        description_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(description_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Describes what the link offers.
+     * </pre>
+     *
+     * <code>string description = 1;</code>
+     *
+     * @param value The description to set.
+     */
+    private void setDescription(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      description_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Describes what the link offers.
+     * </pre>
+     *
+     * <code>string description = 1;</code>
+     */
+    private void clearDescription() {
+
+      description_ = getDefaultInstance().getDescription();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Describes what the link offers.
+     * </pre>
+     *
+     * <code>string description = 1;</code>
+     *
+     * @param value The bytes for description to set.
+     */
+    private void setDescriptionBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      description_ = value.toStringUtf8();
     }
 
     public static final int URL_FIELD_NUMBER = 2;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object url_ = "";
+    private java.lang.String url_;
     /**
      *
      *
@@ -230,15 +206,7 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getUrl() {
-      java.lang.Object ref = url_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        url_ = s;
-        return s;
-      }
+      return url_;
     }
     /**
      *
@@ -253,184 +221,134 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getUrlBytes() {
-      java.lang.Object ref = url_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        url_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(url_);
     }
+    /**
+     *
+     *
+     * <pre>
+     * The URL of the link.
+     * </pre>
+     *
+     * <code>string url = 2;</code>
+     *
+     * @param value The url to set.
+     */
+    private void setUrl(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
 
-    private byte memoizedIsInitialized = -1;
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
+      url_ = value;
     }
+    /**
+     *
+     *
+     * <pre>
+     * The URL of the link.
+     * </pre>
+     *
+     * <code>string url = 2;</code>
+     */
+    private void clearUrl() {
 
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, description_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(url_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, url_);
-      }
-      getUnknownFields().writeTo(output);
+      url_ = getDefaultInstance().getUrl();
     }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, description_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(url_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, url_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-        return true;
-      }
-      if (!(obj instanceof com.google.rpc.Help.Link)) {
-        return super.equals(obj);
-      }
-      com.google.rpc.Help.Link other = (com.google.rpc.Help.Link) obj;
-
-      if (!getDescription().equals(other.getDescription())) return false;
-      if (!getUrl().equals(other.getUrl())) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + DESCRIPTION_FIELD_NUMBER;
-      hash = (53 * hash) + getDescription().hashCode();
-      hash = (37 * hash) + URL_FIELD_NUMBER;
-      hash = (53 * hash) + getUrl().hashCode();
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
+    /**
+     *
+     *
+     * <pre>
+     * The URL of the link.
+     * </pre>
+     *
+     * <code>string url = 2;</code>
+     *
+     * @param value The bytes for url to set.
+     */
+    private void setUrlBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      url_ = value.toStringUtf8();
     }
 
     public static com.google.rpc.Help.Link parseFrom(java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.Help.Link parseFrom(
         java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.Help.Link parseFrom(com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.Help.Link parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.Help.Link parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.Help.Link parseFrom(
         byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.Help.Link parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.Help.Link parseFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.rpc.Help.Link parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.Help.Link parseDelimitedFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.rpc.Help.Link parseFrom(com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.Help.Link parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
+      return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
 
     public static Builder newBuilder(com.google.rpc.Help.Link prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      *
      *
@@ -441,193 +359,15 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      * Protobuf type {@code google.rpc.Help.Link}
      */
     public static final class Builder
-        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+        extends com.google.protobuf.GeneratedMessageLite.Builder<com.google.rpc.Help.Link, Builder>
         implements
         // @@protoc_insertion_point(builder_implements:google.rpc.Help.Link)
         com.google.rpc.Help.LinkOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_Help_Link_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.google.rpc.ErrorDetailsProto
-            .internal_static_google_rpc_Help_Link_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.google.rpc.Help.Link.class, com.google.rpc.Help.Link.Builder.class);
-      }
-
       // Construct using com.google.rpc.Help.Link.newBuilder()
-      private Builder() {}
-
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
+      private Builder() {
+        super(DEFAULT_INSTANCE);
       }
 
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        description_ = "";
-        url_ = "";
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_Help_Link_descriptor;
-      }
-
-      @java.lang.Override
-      public com.google.rpc.Help.Link getDefaultInstanceForType() {
-        return com.google.rpc.Help.Link.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.google.rpc.Help.Link build() {
-        com.google.rpc.Help.Link result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.google.rpc.Help.Link buildPartial() {
-        com.google.rpc.Help.Link result = new com.google.rpc.Help.Link(this);
-        if (bitField0_ != 0) {
-          buildPartial0(result);
-        }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartial0(com.google.rpc.Help.Link result) {
-        int from_bitField0_ = bitField0_;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.description_ = description_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.url_ = url_;
-        }
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.rpc.Help.Link) {
-          return mergeFrom((com.google.rpc.Help.Link) other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.google.rpc.Help.Link other) {
-        if (other == com.google.rpc.Help.Link.getDefaultInstance()) return this;
-        if (!other.getDescription().isEmpty()) {
-          description_ = other.description_;
-          bitField0_ |= 0x00000001;
-          onChanged();
-        }
-        if (!other.getUrl().isEmpty()) {
-          url_ = other.url_;
-          bitField0_ |= 0x00000002;
-          onChanged();
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10:
-                {
-                  description_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000001;
-                  break;
-                } // case 10
-              case 18:
-                {
-                  url_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000002;
-                  break;
-                } // case 18
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-
-      private int bitField0_;
-
-      private java.lang.Object description_ = "";
       /**
        *
        *
@@ -639,16 +379,9 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The description.
        */
+      @java.lang.Override
       public java.lang.String getDescription() {
-        java.lang.Object ref = description_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          description_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getDescription();
       }
       /**
        *
@@ -661,16 +394,9 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The bytes for description.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getDescriptionBytes() {
-        java.lang.Object ref = description_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          description_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getDescriptionBytes();
       }
       /**
        *
@@ -685,12 +411,8 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setDescription(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        description_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setDescription(value);
         return this;
       }
       /**
@@ -705,9 +427,8 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearDescription() {
-        description_ = getDefaultInstance().getDescription();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
+        copyOnWrite();
+        instance.clearDescription();
         return this;
       }
       /**
@@ -723,17 +444,11 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setDescriptionBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        description_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setDescriptionBytes(value);
         return this;
       }
 
-      private java.lang.Object url_ = "";
       /**
        *
        *
@@ -745,16 +460,9 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The url.
        */
+      @java.lang.Override
       public java.lang.String getUrl() {
-        java.lang.Object ref = url_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          url_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getUrl();
       }
       /**
        *
@@ -767,16 +475,9 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The bytes for url.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getUrlBytes() {
-        java.lang.Object ref = url_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          url_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getUrlBytes();
       }
       /**
        *
@@ -791,12 +492,8 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setUrl(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        url_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setUrl(value);
         return this;
       }
       /**
@@ -811,9 +508,8 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearUrl() {
-        url_ = getDefaultInstance().getUrl();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
+        copyOnWrite();
+        instance.clearUrl();
         return this;
       }
       /**
@@ -829,84 +525,96 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setUrlBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        url_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setUrlBytes(value);
         return this;
       }
 
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
       // @@protoc_insertion_point(builder_scope:google.rpc.Help.Link)
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0,
+        java.lang.Object arg1) {
+      switch (method) {
+        case NEW_MUTABLE_INSTANCE:
+          {
+            return new com.google.rpc.Help.Link();
+          }
+        case NEW_BUILDER:
+          {
+            return new Builder();
+          }
+        case BUILD_MESSAGE_INFO:
+          {
+            java.lang.Object[] objects =
+                new java.lang.Object[] {
+                  "description_", "url_",
+                };
+            java.lang.String info =
+                "\u0000\u0002\u0000\u0000\u0001\u0002\u0002\u0000\u0000\u0000\u0001\u0208\u0002\u0208"
+                    + "";
+            return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+          }
+          // fall through
+        case GET_DEFAULT_INSTANCE:
+          {
+            return DEFAULT_INSTANCE;
+          }
+        case GET_PARSER:
+          {
+            com.google.protobuf.Parser<com.google.rpc.Help.Link> parser = PARSER;
+            if (parser == null) {
+              synchronized (com.google.rpc.Help.Link.class) {
+                parser = PARSER;
+                if (parser == null) {
+                  parser =
+                      new DefaultInstanceBasedParser<com.google.rpc.Help.Link>(DEFAULT_INSTANCE);
+                  PARSER = parser;
+                }
+              }
+            }
+            return parser;
+          }
+        case GET_MEMOIZED_IS_INITIALIZED:
+          {
+            return (byte) 1;
+          }
+        case SET_MEMOIZED_IS_INITIALIZED:
+          {
+            return null;
+          }
+      }
+      throw new UnsupportedOperationException();
     }
 
     // @@protoc_insertion_point(class_scope:google.rpc.Help.Link)
     private static final com.google.rpc.Help.Link DEFAULT_INSTANCE;
 
     static {
-      DEFAULT_INSTANCE = new com.google.rpc.Help.Link();
+      Link defaultInstance = new Link();
+      // New instances are implicitly immutable so no need to make
+      // immutable.
+      DEFAULT_INSTANCE = defaultInstance;
+      com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(Link.class, defaultInstance);
     }
 
     public static com.google.rpc.Help.Link getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<Link> PARSER =
-        new com.google.protobuf.AbstractParser<Link>() {
-          @java.lang.Override
-          public Link parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-          }
-        };
+    private static volatile com.google.protobuf.Parser<Link> PARSER;
 
     public static com.google.protobuf.Parser<Link> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<Link> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.rpc.Help.Link getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
+      return DEFAULT_INSTANCE.getParserForType();
     }
   }
 
   public static final int LINKS_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.rpc.Help.Link> links_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.rpc.Help.Link> links_;
   /**
    *
    *
@@ -929,7 +637,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.rpc.Help.Link links = 1;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.rpc.Help.LinkOrBuilder> getLinksOrBuilderList() {
     return links_;
   }
@@ -968,170 +675,179 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.rpc.Help.Link links = 1;</code>
    */
-  @java.lang.Override
   public com.google.rpc.Help.LinkOrBuilder getLinksOrBuilder(int index) {
     return links_.get(index);
   }
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  private void ensureLinksIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.rpc.Help.Link> tmp = links_;
+    if (!tmp.isModifiable()) {
+      links_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
   }
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    for (int i = 0; i < links_.size(); i++) {
-      output.writeMessage(1, links_.get(i));
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * URL(s) pointing to additional information on handling the current error.
+   * </pre>
+   *
+   * <code>repeated .google.rpc.Help.Link links = 1;</code>
+   */
+  private void setLinks(int index, com.google.rpc.Help.Link value) {
+    value.getClass();
+    ensureLinksIsMutable();
+    links_.set(index, value);
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    for (int i = 0; i < links_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, links_.get(i));
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
+  /**
+   *
+   *
+   * <pre>
+   * URL(s) pointing to additional information on handling the current error.
+   * </pre>
+   *
+   * <code>repeated .google.rpc.Help.Link links = 1;</code>
+   */
+  private void addLinks(com.google.rpc.Help.Link value) {
+    value.getClass();
+    ensureLinksIsMutable();
+    links_.add(value);
   }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.rpc.Help)) {
-      return super.equals(obj);
-    }
-    com.google.rpc.Help other = (com.google.rpc.Help) obj;
-
-    if (!getLinksList().equals(other.getLinksList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * URL(s) pointing to additional information on handling the current error.
+   * </pre>
+   *
+   * <code>repeated .google.rpc.Help.Link links = 1;</code>
+   */
+  private void addLinks(int index, com.google.rpc.Help.Link value) {
+    value.getClass();
+    ensureLinksIsMutable();
+    links_.add(index, value);
   }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (getLinksCount() > 0) {
-      hash = (37 * hash) + LINKS_FIELD_NUMBER;
-      hash = (53 * hash) + getLinksList().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * URL(s) pointing to additional information on handling the current error.
+   * </pre>
+   *
+   * <code>repeated .google.rpc.Help.Link links = 1;</code>
+   */
+  private void addAllLinks(java.lang.Iterable<? extends com.google.rpc.Help.Link> values) {
+    ensureLinksIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, links_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * URL(s) pointing to additional information on handling the current error.
+   * </pre>
+   *
+   * <code>repeated .google.rpc.Help.Link links = 1;</code>
+   */
+  private void clearLinks() {
+    links_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * URL(s) pointing to additional information on handling the current error.
+   * </pre>
+   *
+   * <code>repeated .google.rpc.Help.Link links = 1;</code>
+   */
+  private void removeLinks(int index) {
+    ensureLinksIsMutable();
+    links_.remove(index);
   }
 
   public static com.google.rpc.Help parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.rpc.Help parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.rpc.Help parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.rpc.Help parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.rpc.Help parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.rpc.Help parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.rpc.Help parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.rpc.Help parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.rpc.Help parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.rpc.Help parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.rpc.Help parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.rpc.Help parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.rpc.Help prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -1145,232 +861,15 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.rpc.Help}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<com.google.rpc.Help, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.rpc.Help)
       com.google.rpc.HelpOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_Help_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_Help_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.rpc.Help.class, com.google.rpc.Help.Builder.class);
-    }
-
     // Construct using com.google.rpc.Help.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      if (linksBuilder_ == null) {
-        links_ = java.util.Collections.emptyList();
-      } else {
-        links_ = null;
-        linksBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000001);
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_Help_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.rpc.Help getDefaultInstanceForType() {
-      return com.google.rpc.Help.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.rpc.Help build() {
-      com.google.rpc.Help result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.rpc.Help buildPartial() {
-      com.google.rpc.Help result = new com.google.rpc.Help(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.rpc.Help result) {
-      if (linksBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
-          links_ = java.util.Collections.unmodifiableList(links_);
-          bitField0_ = (bitField0_ & ~0x00000001);
-        }
-        result.links_ = links_;
-      } else {
-        result.links_ = linksBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.rpc.Help result) {
-      int from_bitField0_ = bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.rpc.Help) {
-        return mergeFrom((com.google.rpc.Help) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.rpc.Help other) {
-      if (other == com.google.rpc.Help.getDefaultInstance()) return this;
-      if (linksBuilder_ == null) {
-        if (!other.links_.isEmpty()) {
-          if (links_.isEmpty()) {
-            links_ = other.links_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensureLinksIsMutable();
-            links_.addAll(other.links_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.links_.isEmpty()) {
-          if (linksBuilder_.isEmpty()) {
-            linksBuilder_.dispose();
-            linksBuilder_ = null;
-            links_ = other.links_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-            linksBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getLinksFieldBuilder()
-                    : null;
-          } else {
-            linksBuilder_.addAllMessages(other.links_);
-          }
-        }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                com.google.rpc.Help.Link m =
-                    input.readMessage(com.google.rpc.Help.Link.parser(), extensionRegistry);
-                if (linksBuilder_ == null) {
-                  ensureLinksIsMutable();
-                  links_.add(m);
-                } else {
-                  linksBuilder_.addMessage(m);
-                }
-                break;
-              } // case 10
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.util.List<com.google.rpc.Help.Link> links_ = java.util.Collections.emptyList();
-
-    private void ensureLinksIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
-        links_ = new java.util.ArrayList<com.google.rpc.Help.Link>(links_);
-        bitField0_ |= 0x00000001;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.rpc.Help.Link,
-            com.google.rpc.Help.Link.Builder,
-            com.google.rpc.Help.LinkOrBuilder>
-        linksBuilder_;
 
     /**
      *
@@ -1381,12 +880,9 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.rpc.Help.Link links = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.rpc.Help.Link> getLinksList() {
-      if (linksBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(links_);
-      } else {
-        return linksBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getLinksList());
     }
     /**
      *
@@ -1397,12 +893,9 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.rpc.Help.Link links = 1;</code>
      */
+    @java.lang.Override
     public int getLinksCount() {
-      if (linksBuilder_ == null) {
-        return links_.size();
-      } else {
-        return linksBuilder_.getCount();
-      }
+      return instance.getLinksCount();
     }
     /**
      *
@@ -1413,12 +906,10 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.rpc.Help.Link links = 1;</code>
      */
+
+    @java.lang.Override
     public com.google.rpc.Help.Link getLinks(int index) {
-      if (linksBuilder_ == null) {
-        return links_.get(index);
-      } else {
-        return linksBuilder_.getMessage(index);
-      }
+      return instance.getLinks(index);
     }
     /**
      *
@@ -1430,16 +921,8 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.rpc.Help.Link links = 1;</code>
      */
     public Builder setLinks(int index, com.google.rpc.Help.Link value) {
-      if (linksBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureLinksIsMutable();
-        links_.set(index, value);
-        onChanged();
-      } else {
-        linksBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setLinks(index, value);
       return this;
     }
     /**
@@ -1452,13 +935,8 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.rpc.Help.Link links = 1;</code>
      */
     public Builder setLinks(int index, com.google.rpc.Help.Link.Builder builderForValue) {
-      if (linksBuilder_ == null) {
-        ensureLinksIsMutable();
-        links_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        linksBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setLinks(index, builderForValue.build());
       return this;
     }
     /**
@@ -1471,16 +949,8 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.rpc.Help.Link links = 1;</code>
      */
     public Builder addLinks(com.google.rpc.Help.Link value) {
-      if (linksBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureLinksIsMutable();
-        links_.add(value);
-        onChanged();
-      } else {
-        linksBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addLinks(value);
       return this;
     }
     /**
@@ -1493,16 +963,8 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.rpc.Help.Link links = 1;</code>
      */
     public Builder addLinks(int index, com.google.rpc.Help.Link value) {
-      if (linksBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureLinksIsMutable();
-        links_.add(index, value);
-        onChanged();
-      } else {
-        linksBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addLinks(index, value);
       return this;
     }
     /**
@@ -1515,13 +977,8 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.rpc.Help.Link links = 1;</code>
      */
     public Builder addLinks(com.google.rpc.Help.Link.Builder builderForValue) {
-      if (linksBuilder_ == null) {
-        ensureLinksIsMutable();
-        links_.add(builderForValue.build());
-        onChanged();
-      } else {
-        linksBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addLinks(builderForValue.build());
       return this;
     }
     /**
@@ -1534,13 +991,8 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.rpc.Help.Link links = 1;</code>
      */
     public Builder addLinks(int index, com.google.rpc.Help.Link.Builder builderForValue) {
-      if (linksBuilder_ == null) {
-        ensureLinksIsMutable();
-        links_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        linksBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addLinks(index, builderForValue.build());
       return this;
     }
     /**
@@ -1553,13 +1005,8 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.rpc.Help.Link links = 1;</code>
      */
     public Builder addAllLinks(java.lang.Iterable<? extends com.google.rpc.Help.Link> values) {
-      if (linksBuilder_ == null) {
-        ensureLinksIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, links_);
-        onChanged();
-      } else {
-        linksBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllLinks(values);
       return this;
     }
     /**
@@ -1572,13 +1019,8 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.rpc.Help.Link links = 1;</code>
      */
     public Builder clearLinks() {
-      if (linksBuilder_ == null) {
-        links_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-      } else {
-        linksBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearLinks();
       return this;
     }
     /**
@@ -1591,172 +1033,88 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.rpc.Help.Link links = 1;</code>
      */
     public Builder removeLinks(int index) {
-      if (linksBuilder_ == null) {
-        ensureLinksIsMutable();
-        links_.remove(index);
-        onChanged();
-      } else {
-        linksBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeLinks(index);
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * URL(s) pointing to additional information on handling the current error.
-     * </pre>
-     *
-     * <code>repeated .google.rpc.Help.Link links = 1;</code>
-     */
-    public com.google.rpc.Help.Link.Builder getLinksBuilder(int index) {
-      return getLinksFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * URL(s) pointing to additional information on handling the current error.
-     * </pre>
-     *
-     * <code>repeated .google.rpc.Help.Link links = 1;</code>
-     */
-    public com.google.rpc.Help.LinkOrBuilder getLinksOrBuilder(int index) {
-      if (linksBuilder_ == null) {
-        return links_.get(index);
-      } else {
-        return linksBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * URL(s) pointing to additional information on handling the current error.
-     * </pre>
-     *
-     * <code>repeated .google.rpc.Help.Link links = 1;</code>
-     */
-    public java.util.List<? extends com.google.rpc.Help.LinkOrBuilder> getLinksOrBuilderList() {
-      if (linksBuilder_ != null) {
-        return linksBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(links_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * URL(s) pointing to additional information on handling the current error.
-     * </pre>
-     *
-     * <code>repeated .google.rpc.Help.Link links = 1;</code>
-     */
-    public com.google.rpc.Help.Link.Builder addLinksBuilder() {
-      return getLinksFieldBuilder().addBuilder(com.google.rpc.Help.Link.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * URL(s) pointing to additional information on handling the current error.
-     * </pre>
-     *
-     * <code>repeated .google.rpc.Help.Link links = 1;</code>
-     */
-    public com.google.rpc.Help.Link.Builder addLinksBuilder(int index) {
-      return getLinksFieldBuilder()
-          .addBuilder(index, com.google.rpc.Help.Link.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * URL(s) pointing to additional information on handling the current error.
-     * </pre>
-     *
-     * <code>repeated .google.rpc.Help.Link links = 1;</code>
-     */
-    public java.util.List<com.google.rpc.Help.Link.Builder> getLinksBuilderList() {
-      return getLinksFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.rpc.Help.Link,
-            com.google.rpc.Help.Link.Builder,
-            com.google.rpc.Help.LinkOrBuilder>
-        getLinksFieldBuilder() {
-      if (linksBuilder_ == null) {
-        linksBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.rpc.Help.Link,
-                com.google.rpc.Help.Link.Builder,
-                com.google.rpc.Help.LinkOrBuilder>(
-                links_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
-        links_ = null;
-      }
-      return linksBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.rpc.Help)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.rpc.Help();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "links_", com.google.rpc.Help.Link.class,
+              };
+          java.lang.String info =
+              "\u0000\u0001\u0000\u0000\u0001\u0001\u0001\u0000\u0001\u0000\u0001\u001b";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.rpc.Help> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.rpc.Help.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser = new DefaultInstanceBasedParser<com.google.rpc.Help>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.rpc.Help)
   private static final com.google.rpc.Help DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.rpc.Help();
+    Help defaultInstance = new Help();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(Help.class, defaultInstance);
   }
 
   public static com.google.rpc.Help getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Help> PARSER =
-      new com.google.protobuf.AbstractParser<Help>() {
-        @java.lang.Override
-        public Help parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<Help> PARSER;
 
   public static com.google.protobuf.Parser<Help> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<Help> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.rpc.Help getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

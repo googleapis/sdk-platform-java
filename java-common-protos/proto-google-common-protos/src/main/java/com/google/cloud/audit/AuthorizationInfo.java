@@ -28,47 +28,19 @@ package com.google.cloud.audit;
  *
  * Protobuf type {@code google.cloud.audit.AuthorizationInfo}
  */
-public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessageV3
+public final class AuthorizationInfo
+    extends com.google.protobuf.GeneratedMessageLite<AuthorizationInfo, AuthorizationInfo.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.cloud.audit.AuthorizationInfo)
     AuthorizationInfoOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use AuthorizationInfo.newBuilder() to construct.
-  private AuthorizationInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private AuthorizationInfo() {
     resource_ = "";
     permission_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new AuthorizationInfo();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.cloud.audit.AuditLogProto
-        .internal_static_google_cloud_audit_AuthorizationInfo_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.cloud.audit.AuditLogProto
-        .internal_static_google_cloud_audit_AuthorizationInfo_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.cloud.audit.AuthorizationInfo.class,
-            com.google.cloud.audit.AuthorizationInfo.Builder.class);
-  }
-
   private int bitField0_;
   public static final int RESOURCE_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object resource_ = "";
+  private java.lang.String resource_;
   /**
    *
    *
@@ -87,15 +59,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
    */
   @java.lang.Override
   public java.lang.String getResource() {
-    java.lang.Object ref = resource_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      resource_ = s;
-      return s;
-    }
+    return resource_;
   }
   /**
    *
@@ -115,21 +79,70 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getResourceBytes() {
-    java.lang.Object ref = resource_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      resource_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(resource_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The resource being accessed, as a REST-style or cloud resource string.
+   * For example:
+   *
+   *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
+   * or
+   *     projects/PROJECTID/datasets/DATASETID
+   * </pre>
+   *
+   * <code>string resource = 1;</code>
+   *
+   * @param value The resource to set.
+   */
+  private void setResource(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    resource_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The resource being accessed, as a REST-style or cloud resource string.
+   * For example:
+   *
+   *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
+   * or
+   *     projects/PROJECTID/datasets/DATASETID
+   * </pre>
+   *
+   * <code>string resource = 1;</code>
+   */
+  private void clearResource() {
+
+    resource_ = getDefaultInstance().getResource();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The resource being accessed, as a REST-style or cloud resource string.
+   * For example:
+   *
+   *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
+   * or
+   *     projects/PROJECTID/datasets/DATASETID
+   * </pre>
+   *
+   * <code>string resource = 1;</code>
+   *
+   * @param value The bytes for resource to set.
+   */
+  private void setResourceBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    resource_ = value.toStringUtf8();
   }
 
   public static final int PERMISSION_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object permission_ = "";
+  private java.lang.String permission_;
   /**
    *
    *
@@ -143,15 +156,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
    */
   @java.lang.Override
   public java.lang.String getPermission() {
-    java.lang.Object ref = permission_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      permission_ = s;
-      return s;
-    }
+    return permission_;
   }
   /**
    *
@@ -166,19 +171,55 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getPermissionBytes() {
-    java.lang.Object ref = permission_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      permission_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(permission_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The required IAM permission.
+   * </pre>
+   *
+   * <code>string permission = 2;</code>
+   *
+   * @param value The permission to set.
+   */
+  private void setPermission(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    permission_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The required IAM permission.
+   * </pre>
+   *
+   * <code>string permission = 2;</code>
+   */
+  private void clearPermission() {
+
+    permission_ = getDefaultInstance().getPermission();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The required IAM permission.
+   * </pre>
+   *
+   * <code>string permission = 2;</code>
+   *
+   * @param value The bytes for permission to set.
+   */
+  private void setPermissionBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    permission_ = value.toStringUtf8();
   }
 
   public static final int GRANTED_FIELD_NUMBER = 3;
-  private boolean granted_ = false;
+  private boolean granted_;
   /**
    *
    *
@@ -194,6 +235,36 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
   @java.lang.Override
   public boolean getGranted() {
     return granted_;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Whether or not authorization for `resource` and `permission`
+   * was granted.
+   * </pre>
+   *
+   * <code>bool granted = 3;</code>
+   *
+   * @param value The granted to set.
+   */
+  private void setGranted(boolean value) {
+
+    granted_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Whether or not authorization for `resource` and `permission`
+   * was granted.
+   * </pre>
+   *
+   * <code>bool granted = 3;</code>
+   */
+  private void clearGranted() {
+
+    granted_ = false;
   }
 
   public static final int RESOURCE_ATTRIBUTES_FIELD_NUMBER = 5;
@@ -211,8 +282,6 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
    * </pre>
    *
    * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
-   *
-   * @return Whether the resourceAttributes field is set.
    */
   @java.lang.Override
   public boolean hasResourceAttributes() {
@@ -231,8 +300,6 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
    * </pre>
    *
    * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
-   *
-   * @return The resourceAttributes.
    */
   @java.lang.Override
   public com.google.rpc.context.AttributeContext.Resource getResourceAttributes() {
@@ -254,204 +321,141 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
    *
    * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
    */
-  @java.lang.Override
-  public com.google.rpc.context.AttributeContext.ResourceOrBuilder
-      getResourceAttributesOrBuilder() {
-    return resourceAttributes_ == null
-        ? com.google.rpc.context.AttributeContext.Resource.getDefaultInstance()
-        : resourceAttributes_;
+  private void setResourceAttributes(com.google.rpc.context.AttributeContext.Resource value) {
+    value.getClass();
+    resourceAttributes_ = value;
+    bitField0_ |= 0x00000001;
   }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Resource attributes used in IAM condition evaluation. This field contains
+   * resource attributes like resource type and resource name.
+   *
+   * To get the whole view of the attributes used in IAM
+   * condition evaluation, the user must also look into
+   * `AuditLog.request_metadata.request_attributes`.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeResourceAttributes(com.google.rpc.context.AttributeContext.Resource value) {
+    value.getClass();
+    if (resourceAttributes_ != null
+        && resourceAttributes_
+            != com.google.rpc.context.AttributeContext.Resource.getDefaultInstance()) {
+      resourceAttributes_ =
+          com.google.rpc.context.AttributeContext.Resource.newBuilder(resourceAttributes_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      resourceAttributes_ = value;
+    }
+    bitField0_ |= 0x00000001;
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(resource_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, resource_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(permission_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, permission_);
-    }
-    if (granted_ != false) {
-      output.writeBool(3, granted_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(5, getResourceAttributes());
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(resource_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, resource_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(permission_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, permission_);
-    }
-    if (granted_ != false) {
-      size += com.google.protobuf.CodedOutputStream.computeBoolSize(3, granted_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(5, getResourceAttributes());
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.cloud.audit.AuthorizationInfo)) {
-      return super.equals(obj);
-    }
-    com.google.cloud.audit.AuthorizationInfo other = (com.google.cloud.audit.AuthorizationInfo) obj;
-
-    if (!getResource().equals(other.getResource())) return false;
-    if (!getPermission().equals(other.getPermission())) return false;
-    if (getGranted() != other.getGranted()) return false;
-    if (hasResourceAttributes() != other.hasResourceAttributes()) return false;
-    if (hasResourceAttributes()) {
-      if (!getResourceAttributes().equals(other.getResourceAttributes())) return false;
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + RESOURCE_FIELD_NUMBER;
-    hash = (53 * hash) + getResource().hashCode();
-    hash = (37 * hash) + PERMISSION_FIELD_NUMBER;
-    hash = (53 * hash) + getPermission().hashCode();
-    hash = (37 * hash) + GRANTED_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getGranted());
-    if (hasResourceAttributes()) {
-      hash = (37 * hash) + RESOURCE_ATTRIBUTES_FIELD_NUMBER;
-      hash = (53 * hash) + getResourceAttributes().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Resource attributes used in IAM condition evaluation. This field contains
+   * resource attributes like resource type and resource name.
+   *
+   * To get the whole view of the attributes used in IAM
+   * condition evaluation, the user must also look into
+   * `AuditLog.request_metadata.request_attributes`.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
+   */
+  private void clearResourceAttributes() {
+    resourceAttributes_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static com.google.cloud.audit.AuthorizationInfo parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.AuthorizationInfo parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.AuthorizationInfo parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.AuthorizationInfo parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.AuthorizationInfo parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.AuthorizationInfo parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.AuthorizationInfo parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.AuthorizationInfo parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.cloud.audit.AuthorizationInfo parseDelimitedFrom(
       java.io.InputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.AuthorizationInfo parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.cloud.audit.AuthorizationInfo parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.AuthorizationInfo parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.cloud.audit.AuthorizationInfo prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -461,241 +465,17 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
    *
    * Protobuf type {@code google.cloud.audit.AuthorizationInfo}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.cloud.audit.AuthorizationInfo, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.cloud.audit.AuthorizationInfo)
       com.google.cloud.audit.AuthorizationInfoOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_AuthorizationInfo_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_AuthorizationInfo_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.cloud.audit.AuthorizationInfo.class,
-              com.google.cloud.audit.AuthorizationInfo.Builder.class);
-    }
-
     // Construct using com.google.cloud.audit.AuthorizationInfo.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getResourceAttributesFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      resource_ = "";
-      permission_ = "";
-      granted_ = false;
-      resourceAttributes_ = null;
-      if (resourceAttributesBuilder_ != null) {
-        resourceAttributesBuilder_.dispose();
-        resourceAttributesBuilder_ = null;
-      }
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_AuthorizationInfo_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.AuthorizationInfo getDefaultInstanceForType() {
-      return com.google.cloud.audit.AuthorizationInfo.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.AuthorizationInfo build() {
-      com.google.cloud.audit.AuthorizationInfo result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.AuthorizationInfo buildPartial() {
-      com.google.cloud.audit.AuthorizationInfo result =
-          new com.google.cloud.audit.AuthorizationInfo(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.cloud.audit.AuthorizationInfo result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.resource_ = resource_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.permission_ = permission_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.granted_ = granted_;
-      }
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.resourceAttributes_ =
-            resourceAttributesBuilder_ == null
-                ? resourceAttributes_
-                : resourceAttributesBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.cloud.audit.AuthorizationInfo) {
-        return mergeFrom((com.google.cloud.audit.AuthorizationInfo) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.cloud.audit.AuthorizationInfo other) {
-      if (other == com.google.cloud.audit.AuthorizationInfo.getDefaultInstance()) return this;
-      if (!other.getResource().isEmpty()) {
-        resource_ = other.resource_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getPermission().isEmpty()) {
-        permission_ = other.permission_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      if (other.getGranted() != false) {
-        setGranted(other.getGranted());
-      }
-      if (other.hasResourceAttributes()) {
-        mergeResourceAttributes(other.getResourceAttributes());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                resource_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                permission_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 24:
-              {
-                granted_ = input.readBool();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 24
-            case 42:
-              {
-                input.readMessage(
-                    getResourceAttributesFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 42
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object resource_ = "";
     /**
      *
      *
@@ -712,16 +492,9 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      *
      * @return The resource.
      */
+    @java.lang.Override
     public java.lang.String getResource() {
-      java.lang.Object ref = resource_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        resource_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getResource();
     }
     /**
      *
@@ -739,16 +512,9 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      *
      * @return The bytes for resource.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getResourceBytes() {
-      java.lang.Object ref = resource_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        resource_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getResourceBytes();
     }
     /**
      *
@@ -768,12 +534,8 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder setResource(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      resource_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setResource(value);
       return this;
     }
     /**
@@ -793,9 +555,8 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder clearResource() {
-      resource_ = getDefaultInstance().getResource();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearResource();
       return this;
     }
     /**
@@ -816,17 +577,11 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder setResourceBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      resource_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setResourceBytes(value);
       return this;
     }
 
-    private java.lang.Object permission_ = "";
     /**
      *
      *
@@ -838,16 +593,9 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      *
      * @return The permission.
      */
+    @java.lang.Override
     public java.lang.String getPermission() {
-      java.lang.Object ref = permission_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        permission_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getPermission();
     }
     /**
      *
@@ -860,16 +608,9 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      *
      * @return The bytes for permission.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getPermissionBytes() {
-      java.lang.Object ref = permission_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        permission_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getPermissionBytes();
     }
     /**
      *
@@ -884,12 +625,8 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder setPermission(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      permission_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setPermission(value);
       return this;
     }
     /**
@@ -904,9 +641,8 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder clearPermission() {
-      permission_ = getDefaultInstance().getPermission();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearPermission();
       return this;
     }
     /**
@@ -922,17 +658,11 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder setPermissionBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      permission_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setPermissionBytes(value);
       return this;
     }
 
-    private boolean granted_;
     /**
      *
      *
@@ -947,7 +677,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      */
     @java.lang.Override
     public boolean getGranted() {
-      return granted_;
+      return instance.getGranted();
     }
     /**
      *
@@ -963,10 +693,8 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder setGranted(boolean value) {
-
-      granted_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setGranted(value);
       return this;
     }
     /**
@@ -982,18 +710,11 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder clearGranted() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      granted_ = false;
-      onChanged();
+      copyOnWrite();
+      instance.clearGranted();
       return this;
     }
 
-    private com.google.rpc.context.AttributeContext.Resource resourceAttributes_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.context.AttributeContext.Resource,
-            com.google.rpc.context.AttributeContext.Resource.Builder,
-            com.google.rpc.context.AttributeContext.ResourceOrBuilder>
-        resourceAttributesBuilder_;
     /**
      *
      *
@@ -1007,11 +728,10 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
-     *
-     * @return Whether the resourceAttributes field is set.
      */
+    @java.lang.Override
     public boolean hasResourceAttributes() {
-      return ((bitField0_ & 0x00000008) != 0);
+      return instance.hasResourceAttributes();
     }
     /**
      *
@@ -1026,17 +746,10 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
-     *
-     * @return The resourceAttributes.
      */
+    @java.lang.Override
     public com.google.rpc.context.AttributeContext.Resource getResourceAttributes() {
-      if (resourceAttributesBuilder_ == null) {
-        return resourceAttributes_ == null
-            ? com.google.rpc.context.AttributeContext.Resource.getDefaultInstance()
-            : resourceAttributes_;
-      } else {
-        return resourceAttributesBuilder_.getMessage();
-      }
+      return instance.getResourceAttributes();
     }
     /**
      *
@@ -1053,16 +766,8 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
      */
     public Builder setResourceAttributes(com.google.rpc.context.AttributeContext.Resource value) {
-      if (resourceAttributesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        resourceAttributes_ = value;
-      } else {
-        resourceAttributesBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setResourceAttributes(value);
       return this;
     }
     /**
@@ -1081,13 +786,8 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      */
     public Builder setResourceAttributes(
         com.google.rpc.context.AttributeContext.Resource.Builder builderForValue) {
-      if (resourceAttributesBuilder_ == null) {
-        resourceAttributes_ = builderForValue.build();
-      } else {
-        resourceAttributesBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setResourceAttributes(builderForValue.build());
       return this;
     }
     /**
@@ -1105,22 +805,8 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
      */
     public Builder mergeResourceAttributes(com.google.rpc.context.AttributeContext.Resource value) {
-      if (resourceAttributesBuilder_ == null) {
-        if (((bitField0_ & 0x00000008) != 0)
-            && resourceAttributes_ != null
-            && resourceAttributes_
-                != com.google.rpc.context.AttributeContext.Resource.getDefaultInstance()) {
-          getResourceAttributesBuilder().mergeFrom(value);
-        } else {
-          resourceAttributes_ = value;
-        }
-      } else {
-        resourceAttributesBuilder_.mergeFrom(value);
-      }
-      if (resourceAttributes_ != null) {
-        bitField0_ |= 0x00000008;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeResourceAttributes(value);
       return this;
     }
     /**
@@ -1138,147 +824,92 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
      */
     public Builder clearResourceAttributes() {
-      bitField0_ = (bitField0_ & ~0x00000008);
-      resourceAttributes_ = null;
-      if (resourceAttributesBuilder_ != null) {
-        resourceAttributesBuilder_.dispose();
-        resourceAttributesBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearResourceAttributes();
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Resource attributes used in IAM condition evaluation. This field contains
-     * resource attributes like resource type and resource name.
-     *
-     * To get the whole view of the attributes used in IAM
-     * condition evaluation, the user must also look into
-     * `AuditLog.request_metadata.request_attributes`.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
-     */
-    public com.google.rpc.context.AttributeContext.Resource.Builder getResourceAttributesBuilder() {
-      bitField0_ |= 0x00000008;
-      onChanged();
-      return getResourceAttributesFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Resource attributes used in IAM condition evaluation. This field contains
-     * resource attributes like resource type and resource name.
-     *
-     * To get the whole view of the attributes used in IAM
-     * condition evaluation, the user must also look into
-     * `AuditLog.request_metadata.request_attributes`.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
-     */
-    public com.google.rpc.context.AttributeContext.ResourceOrBuilder
-        getResourceAttributesOrBuilder() {
-      if (resourceAttributesBuilder_ != null) {
-        return resourceAttributesBuilder_.getMessageOrBuilder();
-      } else {
-        return resourceAttributes_ == null
-            ? com.google.rpc.context.AttributeContext.Resource.getDefaultInstance()
-            : resourceAttributes_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Resource attributes used in IAM condition evaluation. This field contains
-     * resource attributes like resource type and resource name.
-     *
-     * To get the whole view of the attributes used in IAM
-     * condition evaluation, the user must also look into
-     * `AuditLog.request_metadata.request_attributes`.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.context.AttributeContext.Resource,
-            com.google.rpc.context.AttributeContext.Resource.Builder,
-            com.google.rpc.context.AttributeContext.ResourceOrBuilder>
-        getResourceAttributesFieldBuilder() {
-      if (resourceAttributesBuilder_ == null) {
-        resourceAttributesBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.rpc.context.AttributeContext.Resource,
-                com.google.rpc.context.AttributeContext.Resource.Builder,
-                com.google.rpc.context.AttributeContext.ResourceOrBuilder>(
-                getResourceAttributes(), getParentForChildren(), isClean());
-        resourceAttributes_ = null;
-      }
-      return resourceAttributesBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.cloud.audit.AuthorizationInfo)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.cloud.audit.AuthorizationInfo();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_", "resource_", "permission_", "granted_", "resourceAttributes_",
+              };
+          java.lang.String info =
+              "\u0000\u0004\u0000\u0001\u0001\u0005\u0004\u0000\u0000\u0000\u0001\u0208\u0002\u0208"
+                  + "\u0003\u0007\u0005\u1009\u0000";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.cloud.audit.AuthorizationInfo> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.cloud.audit.AuthorizationInfo.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.cloud.audit.AuthorizationInfo>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.cloud.audit.AuthorizationInfo)
   private static final com.google.cloud.audit.AuthorizationInfo DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.cloud.audit.AuthorizationInfo();
+    AuthorizationInfo defaultInstance = new AuthorizationInfo();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        AuthorizationInfo.class, defaultInstance);
   }
 
   public static com.google.cloud.audit.AuthorizationInfo getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<AuthorizationInfo> PARSER =
-      new com.google.protobuf.AbstractParser<AuthorizationInfo>() {
-        @java.lang.Override
-        public AuthorizationInfo parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<AuthorizationInfo> PARSER;
 
   public static com.google.protobuf.Parser<AuthorizationInfo> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<AuthorizationInfo> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.cloud.audit.AuthorizationInfo getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

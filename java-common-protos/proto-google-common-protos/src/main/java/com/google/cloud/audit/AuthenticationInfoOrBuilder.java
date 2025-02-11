@@ -22,7 +22,7 @@ package com.google.cloud.audit;
 public interface AuthenticationInfoOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.cloud.audit.AuthenticationInfo)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -116,19 +116,6 @@ public interface AuthenticationInfoOrBuilder
    * @return The thirdPartyPrincipal.
    */
   com.google.protobuf.Struct getThirdPartyPrincipal();
-  /**
-   *
-   *
-   * <pre>
-   * The third party identification (if any) of the authenticated user making
-   * the request.
-   * When the JSON object represented here has a proto equivalent, the proto
-   * name will be indicated in the `&#64;type` property.
-   * </pre>
-   *
-   * <code>.google.protobuf.Struct third_party_principal = 4;</code>
-   */
-  com.google.protobuf.StructOrBuilder getThirdPartyPrincipalOrBuilder();
 
   /**
    *
@@ -212,40 +199,6 @@ public interface AuthenticationInfoOrBuilder
    * </code>
    */
   int getServiceAccountDelegationInfoCount();
-  /**
-   *
-   *
-   * <pre>
-   * Identity delegation history of an authenticated service account that makes
-   * the request. It contains information on the real authorities that try to
-   * access GCP resources by delegating on a service account. When multiple
-   * authorities present, they are guaranteed to be sorted based on the original
-   * ordering of the identity delegation events.
-   * </pre>
-   *
-   * <code>
-   * repeated .google.cloud.audit.ServiceAccountDelegationInfo service_account_delegation_info = 6;
-   * </code>
-   */
-  java.util.List<? extends com.google.cloud.audit.ServiceAccountDelegationInfoOrBuilder>
-      getServiceAccountDelegationInfoOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Identity delegation history of an authenticated service account that makes
-   * the request. It contains information on the real authorities that try to
-   * access GCP resources by delegating on a service account. When multiple
-   * authorities present, they are guaranteed to be sorted based on the original
-   * ordering of the identity delegation events.
-   * </pre>
-   *
-   * <code>
-   * repeated .google.cloud.audit.ServiceAccountDelegationInfo service_account_delegation_info = 6;
-   * </code>
-   */
-  com.google.cloud.audit.ServiceAccountDelegationInfoOrBuilder
-      getServiceAccountDelegationInfoOrBuilder(int index);
 
   /**
    *

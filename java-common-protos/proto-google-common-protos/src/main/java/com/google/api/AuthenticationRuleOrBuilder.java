@@ -22,7 +22,7 @@ package com.google.api;
 public interface AuthenticationRuleOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.AuthenticationRule)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -79,16 +79,6 @@ public interface AuthenticationRuleOrBuilder
    * @return The oauth.
    */
   com.google.api.OAuthRequirements getOauth();
-  /**
-   *
-   *
-   * <pre>
-   * The requirements for OAuth credentials.
-   * </pre>
-   *
-   * <code>.google.api.OAuthRequirements oauth = 2;</code>
-   */
-  com.google.api.OAuthRequirementsOrBuilder getOauthOrBuilder();
 
   /**
    *
@@ -134,24 +124,4 @@ public interface AuthenticationRuleOrBuilder
    * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
    */
   int getRequirementsCount();
-  /**
-   *
-   *
-   * <pre>
-   * Requirements for additional authentication providers.
-   * </pre>
-   *
-   * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
-   */
-  java.util.List<? extends com.google.api.AuthRequirementOrBuilder> getRequirementsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Requirements for additional authentication providers.
-   * </pre>
-   *
-   * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
-   */
-  com.google.api.AuthRequirementOrBuilder getRequirementsOrBuilder(int index);
 }

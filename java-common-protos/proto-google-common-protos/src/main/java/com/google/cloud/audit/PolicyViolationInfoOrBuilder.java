@@ -22,7 +22,7 @@ package com.google.cloud.audit;
 public interface PolicyViolationInfoOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.cloud.audit.PolicyViolationInfo)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -48,14 +48,4 @@ public interface PolicyViolationInfoOrBuilder
    * @return The orgPolicyViolationInfo.
    */
   com.google.cloud.audit.OrgPolicyViolationInfo getOrgPolicyViolationInfo();
-  /**
-   *
-   *
-   * <pre>
-   * Indicates the orgpolicy violations for this resource.
-   * </pre>
-   *
-   * <code>.google.cloud.audit.OrgPolicyViolationInfo org_policy_violation_info = 1;</code>
-   */
-  com.google.cloud.audit.OrgPolicyViolationInfoOrBuilder getOrgPolicyViolationInfoOrBuilder();
 }

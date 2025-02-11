@@ -28,38 +28,13 @@ package com.google.iam.v2;
  *
  * Protobuf type {@code google.iam.v2.UpdatePolicyRequest}
  */
-public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMessageV3
+public final class UpdatePolicyRequest
+    extends com.google.protobuf.GeneratedMessageLite<
+        UpdatePolicyRequest, UpdatePolicyRequest.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.iam.v2.UpdatePolicyRequest)
     UpdatePolicyRequestOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use UpdatePolicyRequest.newBuilder() to construct.
-  private UpdatePolicyRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private UpdatePolicyRequest() {}
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new UpdatePolicyRequest();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.iam.v2.PolicyProto
-        .internal_static_google_iam_v2_UpdatePolicyRequest_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.iam.v2.PolicyProto
-        .internal_static_google_iam_v2_UpdatePolicyRequest_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.iam.v2.UpdatePolicyRequest.class,
-            com.google.iam.v2.UpdatePolicyRequest.Builder.class);
-  }
 
   private int bitField0_;
   public static final int POLICY_FIELD_NUMBER = 1;
@@ -76,8 +51,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
    * </pre>
    *
    * <code>.google.iam.v2.Policy policy = 1 [(.google.api.field_behavior) = REQUIRED];</code>
-   *
-   * @return Whether the policy field is set.
    */
   @java.lang.Override
   public boolean hasPolicy() {
@@ -95,8 +68,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
    * </pre>
    *
    * <code>.google.iam.v2.Policy policy = 1 [(.google.api.field_behavior) = REQUIRED];</code>
-   *
-   * @return The policy.
    */
   @java.lang.Override
   public com.google.iam.v2.Policy getPolicy() {
@@ -115,173 +86,133 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
    *
    * <code>.google.iam.v2.Policy policy = 1 [(.google.api.field_behavior) = REQUIRED];</code>
    */
-  @java.lang.Override
-  public com.google.iam.v2.PolicyOrBuilder getPolicyOrBuilder() {
-    return policy_ == null ? com.google.iam.v2.Policy.getDefaultInstance() : policy_;
+  private void setPolicy(com.google.iam.v2.Policy value) {
+    value.getClass();
+    policy_ = value;
+    bitField0_ |= 0x00000001;
   }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Required. The policy to update.
+   *
+   * To prevent conflicting updates, the `etag` value must match the value that
+   * is stored in IAM. If the `etag` values do not match, the request fails with
+   * a `409` error code and `ABORTED` status.
+   * </pre>
+   *
+   * <code>.google.iam.v2.Policy policy = 1 [(.google.api.field_behavior) = REQUIRED];</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergePolicy(com.google.iam.v2.Policy value) {
+    value.getClass();
+    if (policy_ != null && policy_ != com.google.iam.v2.Policy.getDefaultInstance()) {
+      policy_ = com.google.iam.v2.Policy.newBuilder(policy_).mergeFrom(value).buildPartial();
+    } else {
+      policy_ = value;
+    }
+    bitField0_ |= 0x00000001;
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(1, getPolicy());
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getPolicy());
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.iam.v2.UpdatePolicyRequest)) {
-      return super.equals(obj);
-    }
-    com.google.iam.v2.UpdatePolicyRequest other = (com.google.iam.v2.UpdatePolicyRequest) obj;
-
-    if (hasPolicy() != other.hasPolicy()) return false;
-    if (hasPolicy()) {
-      if (!getPolicy().equals(other.getPolicy())) return false;
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (hasPolicy()) {
-      hash = (37 * hash) + POLICY_FIELD_NUMBER;
-      hash = (53 * hash) + getPolicy().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Required. The policy to update.
+   *
+   * To prevent conflicting updates, the `etag` value must match the value that
+   * is stored in IAM. If the `etag` values do not match, the request fails with
+   * a `409` error code and `ABORTED` status.
+   * </pre>
+   *
+   * <code>.google.iam.v2.Policy policy = 1 [(.google.api.field_behavior) = REQUIRED];</code>
+   */
+  private void clearPolicy() {
+    policy_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static com.google.iam.v2.UpdatePolicyRequest parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v2.UpdatePolicyRequest parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v2.UpdatePolicyRequest parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v2.UpdatePolicyRequest parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v2.UpdatePolicyRequest parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v2.UpdatePolicyRequest parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v2.UpdatePolicyRequest parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v2.UpdatePolicyRequest parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.iam.v2.UpdatePolicyRequest parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v2.UpdatePolicyRequest parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.iam.v2.UpdatePolicyRequest parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v2.UpdatePolicyRequest parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.iam.v2.UpdatePolicyRequest prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -291,199 +222,17 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
    *
    * Protobuf type {@code google.iam.v2.UpdatePolicyRequest}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.iam.v2.UpdatePolicyRequest, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.iam.v2.UpdatePolicyRequest)
       com.google.iam.v2.UpdatePolicyRequestOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.iam.v2.PolicyProto
-          .internal_static_google_iam_v2_UpdatePolicyRequest_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.iam.v2.PolicyProto
-          .internal_static_google_iam_v2_UpdatePolicyRequest_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.iam.v2.UpdatePolicyRequest.class,
-              com.google.iam.v2.UpdatePolicyRequest.Builder.class);
-    }
-
     // Construct using com.google.iam.v2.UpdatePolicyRequest.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getPolicyFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      policy_ = null;
-      if (policyBuilder_ != null) {
-        policyBuilder_.dispose();
-        policyBuilder_ = null;
-      }
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.iam.v2.PolicyProto
-          .internal_static_google_iam_v2_UpdatePolicyRequest_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.iam.v2.UpdatePolicyRequest getDefaultInstanceForType() {
-      return com.google.iam.v2.UpdatePolicyRequest.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.iam.v2.UpdatePolicyRequest build() {
-      com.google.iam.v2.UpdatePolicyRequest result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.iam.v2.UpdatePolicyRequest buildPartial() {
-      com.google.iam.v2.UpdatePolicyRequest result =
-          new com.google.iam.v2.UpdatePolicyRequest(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.iam.v2.UpdatePolicyRequest result) {
-      int from_bitField0_ = bitField0_;
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.policy_ = policyBuilder_ == null ? policy_ : policyBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.iam.v2.UpdatePolicyRequest) {
-        return mergeFrom((com.google.iam.v2.UpdatePolicyRequest) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.iam.v2.UpdatePolicyRequest other) {
-      if (other == com.google.iam.v2.UpdatePolicyRequest.getDefaultInstance()) return this;
-      if (other.hasPolicy()) {
-        mergePolicy(other.getPolicy());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                input.readMessage(getPolicyFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private com.google.iam.v2.Policy policy_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.iam.v2.Policy,
-            com.google.iam.v2.Policy.Builder,
-            com.google.iam.v2.PolicyOrBuilder>
-        policyBuilder_;
     /**
      *
      *
@@ -496,11 +245,10 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
      * </pre>
      *
      * <code>.google.iam.v2.Policy policy = 1 [(.google.api.field_behavior) = REQUIRED];</code>
-     *
-     * @return Whether the policy field is set.
      */
+    @java.lang.Override
     public boolean hasPolicy() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return instance.hasPolicy();
     }
     /**
      *
@@ -514,15 +262,10 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
      * </pre>
      *
      * <code>.google.iam.v2.Policy policy = 1 [(.google.api.field_behavior) = REQUIRED];</code>
-     *
-     * @return The policy.
      */
+    @java.lang.Override
     public com.google.iam.v2.Policy getPolicy() {
-      if (policyBuilder_ == null) {
-        return policy_ == null ? com.google.iam.v2.Policy.getDefaultInstance() : policy_;
-      } else {
-        return policyBuilder_.getMessage();
-      }
+      return instance.getPolicy();
     }
     /**
      *
@@ -538,16 +281,8 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
      * <code>.google.iam.v2.Policy policy = 1 [(.google.api.field_behavior) = REQUIRED];</code>
      */
     public Builder setPolicy(com.google.iam.v2.Policy value) {
-      if (policyBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        policy_ = value;
-      } else {
-        policyBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setPolicy(value);
       return this;
     }
     /**
@@ -564,13 +299,8 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
      * <code>.google.iam.v2.Policy policy = 1 [(.google.api.field_behavior) = REQUIRED];</code>
      */
     public Builder setPolicy(com.google.iam.v2.Policy.Builder builderForValue) {
-      if (policyBuilder_ == null) {
-        policy_ = builderForValue.build();
-      } else {
-        policyBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setPolicy(builderForValue.build());
       return this;
     }
     /**
@@ -587,21 +317,8 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
      * <code>.google.iam.v2.Policy policy = 1 [(.google.api.field_behavior) = REQUIRED];</code>
      */
     public Builder mergePolicy(com.google.iam.v2.Policy value) {
-      if (policyBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)
-            && policy_ != null
-            && policy_ != com.google.iam.v2.Policy.getDefaultInstance()) {
-          getPolicyBuilder().mergeFrom(value);
-        } else {
-          policy_ = value;
-        }
-      } else {
-        policyBuilder_.mergeFrom(value);
-      }
-      if (policy_ != null) {
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergePolicy(value);
       return this;
     }
     /**
@@ -618,140 +335,91 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
      * <code>.google.iam.v2.Policy policy = 1 [(.google.api.field_behavior) = REQUIRED];</code>
      */
     public Builder clearPolicy() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      policy_ = null;
-      if (policyBuilder_ != null) {
-        policyBuilder_.dispose();
-        policyBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearPolicy();
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Required. The policy to update.
-     *
-     * To prevent conflicting updates, the `etag` value must match the value that
-     * is stored in IAM. If the `etag` values do not match, the request fails with
-     * a `409` error code and `ABORTED` status.
-     * </pre>
-     *
-     * <code>.google.iam.v2.Policy policy = 1 [(.google.api.field_behavior) = REQUIRED];</code>
-     */
-    public com.google.iam.v2.Policy.Builder getPolicyBuilder() {
-      bitField0_ |= 0x00000001;
-      onChanged();
-      return getPolicyFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Required. The policy to update.
-     *
-     * To prevent conflicting updates, the `etag` value must match the value that
-     * is stored in IAM. If the `etag` values do not match, the request fails with
-     * a `409` error code and `ABORTED` status.
-     * </pre>
-     *
-     * <code>.google.iam.v2.Policy policy = 1 [(.google.api.field_behavior) = REQUIRED];</code>
-     */
-    public com.google.iam.v2.PolicyOrBuilder getPolicyOrBuilder() {
-      if (policyBuilder_ != null) {
-        return policyBuilder_.getMessageOrBuilder();
-      } else {
-        return policy_ == null ? com.google.iam.v2.Policy.getDefaultInstance() : policy_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Required. The policy to update.
-     *
-     * To prevent conflicting updates, the `etag` value must match the value that
-     * is stored in IAM. If the `etag` values do not match, the request fails with
-     * a `409` error code and `ABORTED` status.
-     * </pre>
-     *
-     * <code>.google.iam.v2.Policy policy = 1 [(.google.api.field_behavior) = REQUIRED];</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.iam.v2.Policy,
-            com.google.iam.v2.Policy.Builder,
-            com.google.iam.v2.PolicyOrBuilder>
-        getPolicyFieldBuilder() {
-      if (policyBuilder_ == null) {
-        policyBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.iam.v2.Policy,
-                com.google.iam.v2.Policy.Builder,
-                com.google.iam.v2.PolicyOrBuilder>(getPolicy(), getParentForChildren(), isClean());
-        policy_ = null;
-      }
-      return policyBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.iam.v2.UpdatePolicyRequest)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.iam.v2.UpdatePolicyRequest();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_", "policy_",
+              };
+          java.lang.String info =
+              "\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0000\u0000\u0000\u0001\u1009\u0000";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.iam.v2.UpdatePolicyRequest> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.iam.v2.UpdatePolicyRequest.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.iam.v2.UpdatePolicyRequest>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.iam.v2.UpdatePolicyRequest)
   private static final com.google.iam.v2.UpdatePolicyRequest DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.iam.v2.UpdatePolicyRequest();
+    UpdatePolicyRequest defaultInstance = new UpdatePolicyRequest();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        UpdatePolicyRequest.class, defaultInstance);
   }
 
   public static com.google.iam.v2.UpdatePolicyRequest getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<UpdatePolicyRequest> PARSER =
-      new com.google.protobuf.AbstractParser<UpdatePolicyRequest>() {
-        @java.lang.Override
-        public UpdatePolicyRequest parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<UpdatePolicyRequest> PARSER;
 
   public static com.google.protobuf.Parser<UpdatePolicyRequest> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<UpdatePolicyRequest> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.iam.v2.UpdatePolicyRequest getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

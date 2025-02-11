@@ -28,47 +28,19 @@ package com.google.iam.v2;
  *
  * Protobuf type {@code google.iam.v2.PolicyRule}
  */
-public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
+public final class PolicyRule
+    extends com.google.protobuf.GeneratedMessageLite<PolicyRule, PolicyRule.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.iam.v2.PolicyRule)
     PolicyRuleOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use PolicyRule.newBuilder() to construct.
-  private PolicyRule(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private PolicyRule() {
     description_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new PolicyRule();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.iam.v2.PolicyProto.internal_static_google_iam_v2_PolicyRule_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.iam.v2.PolicyProto.internal_static_google_iam_v2_PolicyRule_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.iam.v2.PolicyRule.class, com.google.iam.v2.PolicyRule.Builder.class);
-  }
-
   private int kindCase_ = 0;
-
-  @SuppressWarnings("serial")
   private java.lang.Object kind_;
 
-  public enum KindCase
-      implements
-          com.google.protobuf.Internal.EnumLite,
-          com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+  public enum KindCase {
     DENY_RULE(2),
     KIND_NOT_SET(0);
     private final int value;
@@ -76,11 +48,7 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
     private KindCase(int value) {
       this.value = value;
     }
-    /**
-     * @param value The number of the enum to look for.
-     * @return The enum associated with the given number.
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
+    /** @deprecated Use {@link #forNumber(int)} instead. */
     @java.lang.Deprecated
     public static KindCase valueOf(int value) {
       return forNumber(value);
@@ -102,8 +70,14 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
     }
   };
 
+  @java.lang.Override
   public KindCase getKindCase() {
     return KindCase.forNumber(kindCase_);
+  }
+
+  private void clearKind() {
+    kindCase_ = 0;
+    kind_ = null;
   }
 
   public static final int DENY_RULE_FIELD_NUMBER = 2;
@@ -115,8 +89,6 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.iam.v2.DenyRule deny_rule = 2;</code>
-   *
-   * @return Whether the denyRule field is set.
    */
   @java.lang.Override
   public boolean hasDenyRule() {
@@ -130,8 +102,6 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.iam.v2.DenyRule deny_rule = 2;</code>
-   *
-   * @return The denyRule.
    */
   @java.lang.Override
   public com.google.iam.v2.DenyRule getDenyRule() {
@@ -149,18 +119,50 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.iam.v2.DenyRule deny_rule = 2;</code>
    */
-  @java.lang.Override
-  public com.google.iam.v2.DenyRuleOrBuilder getDenyRuleOrBuilder() {
-    if (kindCase_ == 2) {
-      return (com.google.iam.v2.DenyRule) kind_;
+  private void setDenyRule(com.google.iam.v2.DenyRule value) {
+    value.getClass();
+    kind_ = value;
+    kindCase_ = 2;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A rule for a deny policy.
+   * </pre>
+   *
+   * <code>.google.iam.v2.DenyRule deny_rule = 2;</code>
+   */
+  private void mergeDenyRule(com.google.iam.v2.DenyRule value) {
+    value.getClass();
+    if (kindCase_ == 2 && kind_ != com.google.iam.v2.DenyRule.getDefaultInstance()) {
+      kind_ =
+          com.google.iam.v2.DenyRule.newBuilder((com.google.iam.v2.DenyRule) kind_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      kind_ = value;
     }
-    return com.google.iam.v2.DenyRule.getDefaultInstance();
+    kindCase_ = 2;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A rule for a deny policy.
+   * </pre>
+   *
+   * <code>.google.iam.v2.DenyRule deny_rule = 2;</code>
+   */
+  private void clearDenyRule() {
+    if (kindCase_ == 2) {
+      kindCase_ = 0;
+      kind_ = null;
+    }
   }
 
   public static final int DESCRIPTION_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object description_ = "";
+  private java.lang.String description_;
   /**
    *
    *
@@ -175,15 +177,7 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getDescription() {
-    java.lang.Object ref = description_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      description_ = s;
-      return s;
-    }
+    return description_;
   }
   /**
    *
@@ -199,198 +193,137 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getDescriptionBytes() {
-    java.lang.Object ref = description_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      description_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(description_);
   }
+  /**
+   *
+   *
+   * <pre>
+   * A user-specified description of the rule. This value can be up to 256
+   * characters.
+   * </pre>
+   *
+   * <code>string description = 1;</code>
+   *
+   * @param value The description to set.
+   */
+  private void setDescription(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    description_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * A user-specified description of the rule. This value can be up to 256
+   * characters.
+   * </pre>
+   *
+   * <code>string description = 1;</code>
+   */
+  private void clearDescription() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, description_);
-    }
-    if (kindCase_ == 2) {
-      output.writeMessage(2, (com.google.iam.v2.DenyRule) kind_);
-    }
-    getUnknownFields().writeTo(output);
+    description_ = getDefaultInstance().getDescription();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, description_);
-    }
-    if (kindCase_ == 2) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(
-              2, (com.google.iam.v2.DenyRule) kind_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.iam.v2.PolicyRule)) {
-      return super.equals(obj);
-    }
-    com.google.iam.v2.PolicyRule other = (com.google.iam.v2.PolicyRule) obj;
-
-    if (!getDescription().equals(other.getDescription())) return false;
-    if (!getKindCase().equals(other.getKindCase())) return false;
-    switch (kindCase_) {
-      case 2:
-        if (!getDenyRule().equals(other.getDenyRule())) return false;
-        break;
-      case 0:
-      default:
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + DESCRIPTION_FIELD_NUMBER;
-    hash = (53 * hash) + getDescription().hashCode();
-    switch (kindCase_) {
-      case 2:
-        hash = (37 * hash) + DENY_RULE_FIELD_NUMBER;
-        hash = (53 * hash) + getDenyRule().hashCode();
-        break;
-      case 0:
-      default:
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * A user-specified description of the rule. This value can be up to 256
+   * characters.
+   * </pre>
+   *
+   * <code>string description = 1;</code>
+   *
+   * @param value The bytes for description to set.
+   */
+  private void setDescriptionBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    description_ = value.toStringUtf8();
   }
 
   public static com.google.iam.v2.PolicyRule parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v2.PolicyRule parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v2.PolicyRule parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v2.PolicyRule parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v2.PolicyRule parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v2.PolicyRule parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v2.PolicyRule parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v2.PolicyRule parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.iam.v2.PolicyRule parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v2.PolicyRule parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.iam.v2.PolicyRule parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v2.PolicyRule parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.iam.v2.PolicyRule prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -400,225 +333,28 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.iam.v2.PolicyRule}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.iam.v2.PolicyRule, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.iam.v2.PolicyRule)
       com.google.iam.v2.PolicyRuleOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.iam.v2.PolicyProto.internal_static_google_iam_v2_PolicyRule_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.iam.v2.PolicyProto
-          .internal_static_google_iam_v2_PolicyRule_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.iam.v2.PolicyRule.class, com.google.iam.v2.PolicyRule.Builder.class);
-    }
-
     // Construct using com.google.iam.v2.PolicyRule.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
     @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      if (denyRuleBuilder_ != null) {
-        denyRuleBuilder_.clear();
-      }
-      description_ = "";
-      kindCase_ = 0;
-      kind_ = null;
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.iam.v2.PolicyProto.internal_static_google_iam_v2_PolicyRule_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.iam.v2.PolicyRule getDefaultInstanceForType() {
-      return com.google.iam.v2.PolicyRule.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.iam.v2.PolicyRule build() {
-      com.google.iam.v2.PolicyRule result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.iam.v2.PolicyRule buildPartial() {
-      com.google.iam.v2.PolicyRule result = new com.google.iam.v2.PolicyRule(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      buildPartialOneofs(result);
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.iam.v2.PolicyRule result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.description_ = description_;
-      }
-    }
-
-    private void buildPartialOneofs(com.google.iam.v2.PolicyRule result) {
-      result.kindCase_ = kindCase_;
-      result.kind_ = this.kind_;
-      if (kindCase_ == 2 && denyRuleBuilder_ != null) {
-        result.kind_ = denyRuleBuilder_.build();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.iam.v2.PolicyRule) {
-        return mergeFrom((com.google.iam.v2.PolicyRule) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.iam.v2.PolicyRule other) {
-      if (other == com.google.iam.v2.PolicyRule.getDefaultInstance()) return this;
-      if (!other.getDescription().isEmpty()) {
-        description_ = other.description_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      switch (other.getKindCase()) {
-        case DENY_RULE:
-          {
-            mergeDenyRule(other.getDenyRule());
-            break;
-          }
-        case KIND_NOT_SET:
-          {
-            break;
-          }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                description_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 10
-            case 18:
-              {
-                input.readMessage(getDenyRuleFieldBuilder().getBuilder(), extensionRegistry);
-                kindCase_ = 2;
-                break;
-              } // case 18
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int kindCase_ = 0;
-    private java.lang.Object kind_;
-
     public KindCase getKindCase() {
-      return KindCase.forNumber(kindCase_);
+      return instance.getKindCase();
     }
 
     public Builder clearKind() {
-      kindCase_ = 0;
-      kind_ = null;
-      onChanged();
+      copyOnWrite();
+      instance.clearKind();
       return this;
     }
 
-    private int bitField0_;
-
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.iam.v2.DenyRule,
-            com.google.iam.v2.DenyRule.Builder,
-            com.google.iam.v2.DenyRuleOrBuilder>
-        denyRuleBuilder_;
     /**
      *
      *
@@ -627,12 +363,10 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.iam.v2.DenyRule deny_rule = 2;</code>
-     *
-     * @return Whether the denyRule field is set.
      */
     @java.lang.Override
     public boolean hasDenyRule() {
-      return kindCase_ == 2;
+      return instance.hasDenyRule();
     }
     /**
      *
@@ -642,22 +376,10 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.iam.v2.DenyRule deny_rule = 2;</code>
-     *
-     * @return The denyRule.
      */
     @java.lang.Override
     public com.google.iam.v2.DenyRule getDenyRule() {
-      if (denyRuleBuilder_ == null) {
-        if (kindCase_ == 2) {
-          return (com.google.iam.v2.DenyRule) kind_;
-        }
-        return com.google.iam.v2.DenyRule.getDefaultInstance();
-      } else {
-        if (kindCase_ == 2) {
-          return denyRuleBuilder_.getMessage();
-        }
-        return com.google.iam.v2.DenyRule.getDefaultInstance();
-      }
+      return instance.getDenyRule();
     }
     /**
      *
@@ -669,16 +391,8 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.iam.v2.DenyRule deny_rule = 2;</code>
      */
     public Builder setDenyRule(com.google.iam.v2.DenyRule value) {
-      if (denyRuleBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        kind_ = value;
-        onChanged();
-      } else {
-        denyRuleBuilder_.setMessage(value);
-      }
-      kindCase_ = 2;
+      copyOnWrite();
+      instance.setDenyRule(value);
       return this;
     }
     /**
@@ -691,13 +405,8 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.iam.v2.DenyRule deny_rule = 2;</code>
      */
     public Builder setDenyRule(com.google.iam.v2.DenyRule.Builder builderForValue) {
-      if (denyRuleBuilder_ == null) {
-        kind_ = builderForValue.build();
-        onChanged();
-      } else {
-        denyRuleBuilder_.setMessage(builderForValue.build());
-      }
-      kindCase_ = 2;
+      copyOnWrite();
+      instance.setDenyRule(builderForValue.build());
       return this;
     }
     /**
@@ -710,24 +419,8 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.iam.v2.DenyRule deny_rule = 2;</code>
      */
     public Builder mergeDenyRule(com.google.iam.v2.DenyRule value) {
-      if (denyRuleBuilder_ == null) {
-        if (kindCase_ == 2 && kind_ != com.google.iam.v2.DenyRule.getDefaultInstance()) {
-          kind_ =
-              com.google.iam.v2.DenyRule.newBuilder((com.google.iam.v2.DenyRule) kind_)
-                  .mergeFrom(value)
-                  .buildPartial();
-        } else {
-          kind_ = value;
-        }
-        onChanged();
-      } else {
-        if (kindCase_ == 2) {
-          denyRuleBuilder_.mergeFrom(value);
-        } else {
-          denyRuleBuilder_.setMessage(value);
-        }
-      }
-      kindCase_ = 2;
+      copyOnWrite();
+      instance.mergeDenyRule(value);
       return this;
     }
     /**
@@ -740,85 +433,11 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.iam.v2.DenyRule deny_rule = 2;</code>
      */
     public Builder clearDenyRule() {
-      if (denyRuleBuilder_ == null) {
-        if (kindCase_ == 2) {
-          kindCase_ = 0;
-          kind_ = null;
-          onChanged();
-        }
-      } else {
-        if (kindCase_ == 2) {
-          kindCase_ = 0;
-          kind_ = null;
-        }
-        denyRuleBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearDenyRule();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * A rule for a deny policy.
-     * </pre>
-     *
-     * <code>.google.iam.v2.DenyRule deny_rule = 2;</code>
-     */
-    public com.google.iam.v2.DenyRule.Builder getDenyRuleBuilder() {
-      return getDenyRuleFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A rule for a deny policy.
-     * </pre>
-     *
-     * <code>.google.iam.v2.DenyRule deny_rule = 2;</code>
-     */
-    @java.lang.Override
-    public com.google.iam.v2.DenyRuleOrBuilder getDenyRuleOrBuilder() {
-      if ((kindCase_ == 2) && (denyRuleBuilder_ != null)) {
-        return denyRuleBuilder_.getMessageOrBuilder();
-      } else {
-        if (kindCase_ == 2) {
-          return (com.google.iam.v2.DenyRule) kind_;
-        }
-        return com.google.iam.v2.DenyRule.getDefaultInstance();
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A rule for a deny policy.
-     * </pre>
-     *
-     * <code>.google.iam.v2.DenyRule deny_rule = 2;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.iam.v2.DenyRule,
-            com.google.iam.v2.DenyRule.Builder,
-            com.google.iam.v2.DenyRuleOrBuilder>
-        getDenyRuleFieldBuilder() {
-      if (denyRuleBuilder_ == null) {
-        if (!(kindCase_ == 2)) {
-          kind_ = com.google.iam.v2.DenyRule.getDefaultInstance();
-        }
-        denyRuleBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.iam.v2.DenyRule,
-                com.google.iam.v2.DenyRule.Builder,
-                com.google.iam.v2.DenyRuleOrBuilder>(
-                (com.google.iam.v2.DenyRule) kind_, getParentForChildren(), isClean());
-        kind_ = null;
-      }
-      kindCase_ = 2;
-      onChanged();
-      return denyRuleBuilder_;
-    }
 
-    private java.lang.Object description_ = "";
     /**
      *
      *
@@ -831,16 +450,9 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The description.
      */
+    @java.lang.Override
     public java.lang.String getDescription() {
-      java.lang.Object ref = description_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        description_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getDescription();
     }
     /**
      *
@@ -854,16 +466,9 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for description.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getDescriptionBytes() {
-      java.lang.Object ref = description_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        description_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getDescriptionBytes();
     }
     /**
      *
@@ -879,12 +484,8 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDescription(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      description_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setDescription(value);
       return this;
     }
     /**
@@ -900,9 +501,8 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDescription() {
-      description_ = getDefaultInstance().getDescription();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearDescription();
       return this;
     }
     /**
@@ -919,74 +519,91 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDescriptionBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      description_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setDescriptionBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.iam.v2.PolicyRule)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.iam.v2.PolicyRule();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "kind_", "kindCase_", "description_", com.google.iam.v2.DenyRule.class,
+              };
+          java.lang.String info =
+              "\u0000\u0002\u0001\u0000\u0001\u0002\u0002\u0000\u0000\u0000\u0001\u0208\u0002<\u0000"
+                  + "";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.iam.v2.PolicyRule> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.iam.v2.PolicyRule.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.iam.v2.PolicyRule>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.iam.v2.PolicyRule)
   private static final com.google.iam.v2.PolicyRule DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.iam.v2.PolicyRule();
+    PolicyRule defaultInstance = new PolicyRule();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        PolicyRule.class, defaultInstance);
   }
 
   public static com.google.iam.v2.PolicyRule getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<PolicyRule> PARSER =
-      new com.google.protobuf.AbstractParser<PolicyRule>() {
-        @java.lang.Override
-        public PolicyRule parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<PolicyRule> PARSER;
 
   public static com.google.protobuf.Parser<PolicyRule> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<PolicyRule> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.iam.v2.PolicyRule getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

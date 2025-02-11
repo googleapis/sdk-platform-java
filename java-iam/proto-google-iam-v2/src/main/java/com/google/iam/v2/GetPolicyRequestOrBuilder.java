@@ -22,7 +22,7 @@ package com.google.iam.v2;
 public interface GetPolicyRequestOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.iam.v2.GetPolicyRequest)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

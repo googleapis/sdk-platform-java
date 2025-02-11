@@ -22,7 +22,7 @@ package com.google.iam.v2beta;
 public interface DenyRuleOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.iam.v2beta.DenyRule)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -226,8 +226,8 @@ public interface DenyRuleOrBuilder
    *
    * <code>repeated string denied_principals = 1;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the deniedPrincipals at the given index.
+   * @param index The index of the element to return.
+   * @return The deniedPrincipals at the given index.
    */
   com.google.protobuf.ByteString getDeniedPrincipalsBytes(int index);
 
@@ -305,8 +305,8 @@ public interface DenyRuleOrBuilder
    *
    * <code>repeated string exception_principals = 2;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the exceptionPrincipals at the given index.
+   * @param index The index of the element to return.
+   * @return The exceptionPrincipals at the given index.
    */
   com.google.protobuf.ByteString getExceptionPrincipalsBytes(int index);
 
@@ -368,8 +368,8 @@ public interface DenyRuleOrBuilder
    *
    * <code>repeated string denied_permissions = 3;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the deniedPermissions at the given index.
+   * @param index The index of the element to return.
+   * @return The deniedPermissions at the given index.
    */
   com.google.protobuf.ByteString getDeniedPermissionsBytes(int index);
 
@@ -443,8 +443,8 @@ public interface DenyRuleOrBuilder
    *
    * <code>repeated string exception_permissions = 4;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the exceptionPermissions at the given index.
+   * @param index The index of the element to return.
+   * @return The exceptionPermissions at the given index.
    */
   com.google.protobuf.ByteString getExceptionPermissionsBytes(int index);
 
@@ -492,24 +492,4 @@ public interface DenyRuleOrBuilder
    * @return The denialCondition.
    */
   com.google.type.Expr getDenialCondition();
-  /**
-   *
-   *
-   * <pre>
-   * The condition that determines whether this deny rule applies to a request.
-   * If the condition expression evaluates to `true`, then the deny rule is
-   * applied; otherwise, the deny rule is not applied.
-   *
-   * Each deny rule is evaluated independently. If this deny rule does not apply
-   * to a request, other deny rules might still apply.
-   *
-   * The condition can use CEL functions that evaluate
-   * [resource
-   * tags](https://cloud.google.com/iam/help/conditions/resource-tags). Other
-   * functions and operators are not supported.
-   * </pre>
-   *
-   * <code>.google.type.Expr denial_condition = 5;</code>
-   */
-  com.google.type.ExprOrBuilder getDenialConditionOrBuilder();
 }

@@ -22,7 +22,7 @@ package com.google.rpc;
 public interface PreconditionFailureOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.rpc.PreconditionFailure)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -54,25 +54,4 @@ public interface PreconditionFailureOrBuilder
    * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
    */
   int getViolationsCount();
-  /**
-   *
-   *
-   * <pre>
-   * Describes all precondition violations.
-   * </pre>
-   *
-   * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
-   */
-  java.util.List<? extends com.google.rpc.PreconditionFailure.ViolationOrBuilder>
-      getViolationsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Describes all precondition violations.
-   * </pre>
-   *
-   * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
-   */
-  com.google.rpc.PreconditionFailure.ViolationOrBuilder getViolationsOrBuilder(int index);
 }

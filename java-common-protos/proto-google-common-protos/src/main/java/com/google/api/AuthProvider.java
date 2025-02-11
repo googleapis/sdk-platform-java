@@ -30,47 +30,22 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.AuthProvider}
  */
-public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
+public final class AuthProvider
+    extends com.google.protobuf.GeneratedMessageLite<AuthProvider, AuthProvider.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.AuthProvider)
     AuthProviderOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use AuthProvider.newBuilder() to construct.
-  private AuthProvider(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private AuthProvider() {
     id_ = "";
     issuer_ = "";
     jwksUri_ = "";
     audiences_ = "";
     authorizationUrl_ = "";
-    jwtLocations_ = java.util.Collections.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new AuthProvider();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.AuthProto.internal_static_google_api_AuthProvider_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.AuthProto.internal_static_google_api_AuthProvider_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.AuthProvider.class, com.google.api.AuthProvider.Builder.class);
+    jwtLocations_ = emptyProtobufList();
   }
 
   public static final int ID_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object id_ = "";
+  private java.lang.String id_;
   /**
    *
    *
@@ -87,15 +62,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getId() {
-    java.lang.Object ref = id_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      id_ = s;
-      return s;
-    }
+    return id_;
   }
   /**
    *
@@ -113,21 +80,64 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getIdBytes() {
-    java.lang.Object ref = id_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      id_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(id_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The unique identifier of the auth provider. It will be referred to by
+   * `AuthRequirement.provider_id`.
+   *
+   * Example: "bookstore_auth".
+   * </pre>
+   *
+   * <code>string id = 1;</code>
+   *
+   * @param value The id to set.
+   */
+  private void setId(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    id_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The unique identifier of the auth provider. It will be referred to by
+   * `AuthRequirement.provider_id`.
+   *
+   * Example: "bookstore_auth".
+   * </pre>
+   *
+   * <code>string id = 1;</code>
+   */
+  private void clearId() {
+
+    id_ = getDefaultInstance().getId();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The unique identifier of the auth provider. It will be referred to by
+   * `AuthRequirement.provider_id`.
+   *
+   * Example: "bookstore_auth".
+   * </pre>
+   *
+   * <code>string id = 1;</code>
+   *
+   * @param value The bytes for id to set.
+   */
+  private void setIdBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    id_ = value.toStringUtf8();
   }
 
   public static final int ISSUER_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object issuer_ = "";
+  private java.lang.String issuer_;
   /**
    *
    *
@@ -146,15 +156,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getIssuer() {
-    java.lang.Object ref = issuer_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      issuer_ = s;
-      return s;
-    }
+    return issuer_;
   }
   /**
    *
@@ -174,21 +176,70 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getIssuerBytes() {
-    java.lang.Object ref = issuer_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      issuer_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(issuer_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Identifies the principal that issued the JWT. See
+   * https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.1
+   * Usually a URL or an email address.
+   *
+   * Example: https://securetoken.google.com
+   * Example: 1234567-compute&#64;developer.gserviceaccount.com
+   * </pre>
+   *
+   * <code>string issuer = 2;</code>
+   *
+   * @param value The issuer to set.
+   */
+  private void setIssuer(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    issuer_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Identifies the principal that issued the JWT. See
+   * https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.1
+   * Usually a URL or an email address.
+   *
+   * Example: https://securetoken.google.com
+   * Example: 1234567-compute&#64;developer.gserviceaccount.com
+   * </pre>
+   *
+   * <code>string issuer = 2;</code>
+   */
+  private void clearIssuer() {
+
+    issuer_ = getDefaultInstance().getIssuer();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Identifies the principal that issued the JWT. See
+   * https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.1
+   * Usually a URL or an email address.
+   *
+   * Example: https://securetoken.google.com
+   * Example: 1234567-compute&#64;developer.gserviceaccount.com
+   * </pre>
+   *
+   * <code>string issuer = 2;</code>
+   *
+   * @param value The bytes for issuer to set.
+   */
+  private void setIssuerBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    issuer_ = value.toStringUtf8();
   }
 
   public static final int JWKS_URI_FIELD_NUMBER = 3;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object jwksUri_ = "";
+  private java.lang.String jwksUri_;
   /**
    *
    *
@@ -213,15 +264,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getJwksUri() {
-    java.lang.Object ref = jwksUri_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      jwksUri_ = s;
-      return s;
-    }
+    return jwksUri_;
   }
   /**
    *
@@ -247,21 +290,88 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getJwksUriBytes() {
-    java.lang.Object ref = jwksUri_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      jwksUri_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(jwksUri_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * URL of the provider's public key set to validate signature of the JWT. See
+   * [OpenID
+   * Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
+   * Optional if the key set document:
+   *  - can be retrieved from
+   *    [OpenID
+   *    Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html)
+   *    of the issuer.
+   *  - can be inferred from the email domain of the issuer (e.g. a Google
+   *  service account).
+   *
+   * Example: https://www.googleapis.com/oauth2/v1/certs
+   * </pre>
+   *
+   * <code>string jwks_uri = 3;</code>
+   *
+   * @param value The jwksUri to set.
+   */
+  private void setJwksUri(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    jwksUri_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * URL of the provider's public key set to validate signature of the JWT. See
+   * [OpenID
+   * Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
+   * Optional if the key set document:
+   *  - can be retrieved from
+   *    [OpenID
+   *    Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html)
+   *    of the issuer.
+   *  - can be inferred from the email domain of the issuer (e.g. a Google
+   *  service account).
+   *
+   * Example: https://www.googleapis.com/oauth2/v1/certs
+   * </pre>
+   *
+   * <code>string jwks_uri = 3;</code>
+   */
+  private void clearJwksUri() {
+
+    jwksUri_ = getDefaultInstance().getJwksUri();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * URL of the provider's public key set to validate signature of the JWT. See
+   * [OpenID
+   * Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
+   * Optional if the key set document:
+   *  - can be retrieved from
+   *    [OpenID
+   *    Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html)
+   *    of the issuer.
+   *  - can be inferred from the email domain of the issuer (e.g. a Google
+   *  service account).
+   *
+   * Example: https://www.googleapis.com/oauth2/v1/certs
+   * </pre>
+   *
+   * <code>string jwks_uri = 3;</code>
+   *
+   * @param value The bytes for jwksUri to set.
+   */
+  private void setJwksUriBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    jwksUri_ = value.toStringUtf8();
   }
 
   public static final int AUDIENCES_FIELD_NUMBER = 4;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object audiences_ = "";
+  private java.lang.String audiences_;
   /**
    *
    *
@@ -291,15 +401,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getAudiences() {
-    java.lang.Object ref = audiences_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      audiences_ = s;
-      return s;
-    }
+    return audiences_;
   }
   /**
    *
@@ -330,21 +432,103 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getAudiencesBytes() {
-    java.lang.Object ref = audiences_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      audiences_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(audiences_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The list of JWT
+   * [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
+   * that are allowed to access. A JWT containing any of these audiences will
+   * be accepted. When this setting is absent, JWTs with audiences:
+   *   - "https://[service.name]/[google.protobuf.Api.name]"
+   *   - "https://[service.name]/"
+   * will be accepted.
+   * For example, if no audiences are in the setting, LibraryService API will
+   * accept JWTs with the following audiences:
+   *   -
+   *   https://library-example.googleapis.com/google.example.library.v1.LibraryService
+   *   - https://library-example.googleapis.com/
+   *
+   * Example:
+   *
+   *     audiences: bookstore_android.apps.googleusercontent.com,
+   *                bookstore_web.apps.googleusercontent.com
+   * </pre>
+   *
+   * <code>string audiences = 4;</code>
+   *
+   * @param value The audiences to set.
+   */
+  private void setAudiences(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    audiences_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The list of JWT
+   * [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
+   * that are allowed to access. A JWT containing any of these audiences will
+   * be accepted. When this setting is absent, JWTs with audiences:
+   *   - "https://[service.name]/[google.protobuf.Api.name]"
+   *   - "https://[service.name]/"
+   * will be accepted.
+   * For example, if no audiences are in the setting, LibraryService API will
+   * accept JWTs with the following audiences:
+   *   -
+   *   https://library-example.googleapis.com/google.example.library.v1.LibraryService
+   *   - https://library-example.googleapis.com/
+   *
+   * Example:
+   *
+   *     audiences: bookstore_android.apps.googleusercontent.com,
+   *                bookstore_web.apps.googleusercontent.com
+   * </pre>
+   *
+   * <code>string audiences = 4;</code>
+   */
+  private void clearAudiences() {
+
+    audiences_ = getDefaultInstance().getAudiences();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The list of JWT
+   * [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
+   * that are allowed to access. A JWT containing any of these audiences will
+   * be accepted. When this setting is absent, JWTs with audiences:
+   *   - "https://[service.name]/[google.protobuf.Api.name]"
+   *   - "https://[service.name]/"
+   * will be accepted.
+   * For example, if no audiences are in the setting, LibraryService API will
+   * accept JWTs with the following audiences:
+   *   -
+   *   https://library-example.googleapis.com/google.example.library.v1.LibraryService
+   *   - https://library-example.googleapis.com/
+   *
+   * Example:
+   *
+   *     audiences: bookstore_android.apps.googleusercontent.com,
+   *                bookstore_web.apps.googleusercontent.com
+   * </pre>
+   *
+   * <code>string audiences = 4;</code>
+   *
+   * @param value The bytes for audiences to set.
+   */
+  private void setAudiencesBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    audiences_ = value.toStringUtf8();
   }
 
   public static final int AUTHORIZATION_URL_FIELD_NUMBER = 5;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object authorizationUrl_ = "";
+  private java.lang.String authorizationUrl_;
   /**
    *
    *
@@ -359,15 +543,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getAuthorizationUrl() {
-    java.lang.Object ref = authorizationUrl_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      authorizationUrl_ = s;
-      return s;
-    }
+    return authorizationUrl_;
   }
   /**
    *
@@ -383,21 +559,58 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getAuthorizationUrlBytes() {
-    java.lang.Object ref = authorizationUrl_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      authorizationUrl_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(authorizationUrl_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Redirect URL if JWT token is required but not present or is expired.
+   * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
+   * </pre>
+   *
+   * <code>string authorization_url = 5;</code>
+   *
+   * @param value The authorizationUrl to set.
+   */
+  private void setAuthorizationUrl(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    authorizationUrl_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Redirect URL if JWT token is required but not present or is expired.
+   * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
+   * </pre>
+   *
+   * <code>string authorization_url = 5;</code>
+   */
+  private void clearAuthorizationUrl() {
+
+    authorizationUrl_ = getDefaultInstance().getAuthorizationUrl();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Redirect URL if JWT token is required but not present or is expired.
+   * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
+   * </pre>
+   *
+   * <code>string authorization_url = 5;</code>
+   *
+   * @param value The bytes for authorizationUrl to set.
+   */
+  private void setAuthorizationUrlBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    authorizationUrl_ = value.toStringUtf8();
   }
 
   public static final int JWT_LOCATIONS_FIELD_NUMBER = 6;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.api.JwtLocation> jwtLocations_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.api.JwtLocation> jwtLocations_;
   /**
    *
    *
@@ -454,7 +667,6 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.api.JwtLocationOrBuilder>
       getJwtLocationsOrBuilderList() {
     return jwtLocations_;
@@ -545,215 +757,281 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
    */
-  @java.lang.Override
   public com.google.api.JwtLocationOrBuilder getJwtLocationsOrBuilder(int index) {
     return jwtLocations_.get(index);
   }
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  private void ensureJwtLocationsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.api.JwtLocation> tmp = jwtLocations_;
+    if (!tmp.isModifiable()) {
+      jwtLocations_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
   }
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(id_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(issuer_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, issuer_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(jwksUri_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, jwksUri_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(audiences_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, audiences_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(authorizationUrl_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, authorizationUrl_);
-    }
-    for (int i = 0; i < jwtLocations_.size(); i++) {
-      output.writeMessage(6, jwtLocations_.get(i));
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * Defines the locations to extract the JWT.  For now it is only used by the
+   * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
+   * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+   *
+   * JWT locations can be one of HTTP headers, URL query parameters or
+   * cookies. The rule is that the first match wins.
+   *
+   * If not specified,  default to use following 3 locations:
+   *    1) Authorization: Bearer
+   *    2) x-goog-iap-jwt-assertion
+   *    3) access_token query parameter
+   *
+   * Default locations can be specified as followings:
+   *    jwt_locations:
+   *    - header: Authorization
+   *      value_prefix: "Bearer "
+   *    - header: x-goog-iap-jwt-assertion
+   *    - query: access_token
+   * </pre>
+   *
+   * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
+   */
+  private void setJwtLocations(int index, com.google.api.JwtLocation value) {
+    value.getClass();
+    ensureJwtLocationsIsMutable();
+    jwtLocations_.set(index, value);
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(id_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(issuer_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, issuer_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(jwksUri_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, jwksUri_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(audiences_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, audiences_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(authorizationUrl_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, authorizationUrl_);
-    }
-    for (int i = 0; i < jwtLocations_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(6, jwtLocations_.get(i));
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
+  /**
+   *
+   *
+   * <pre>
+   * Defines the locations to extract the JWT.  For now it is only used by the
+   * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
+   * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+   *
+   * JWT locations can be one of HTTP headers, URL query parameters or
+   * cookies. The rule is that the first match wins.
+   *
+   * If not specified,  default to use following 3 locations:
+   *    1) Authorization: Bearer
+   *    2) x-goog-iap-jwt-assertion
+   *    3) access_token query parameter
+   *
+   * Default locations can be specified as followings:
+   *    jwt_locations:
+   *    - header: Authorization
+   *      value_prefix: "Bearer "
+   *    - header: x-goog-iap-jwt-assertion
+   *    - query: access_token
+   * </pre>
+   *
+   * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
+   */
+  private void addJwtLocations(com.google.api.JwtLocation value) {
+    value.getClass();
+    ensureJwtLocationsIsMutable();
+    jwtLocations_.add(value);
   }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.AuthProvider)) {
-      return super.equals(obj);
-    }
-    com.google.api.AuthProvider other = (com.google.api.AuthProvider) obj;
-
-    if (!getId().equals(other.getId())) return false;
-    if (!getIssuer().equals(other.getIssuer())) return false;
-    if (!getJwksUri().equals(other.getJwksUri())) return false;
-    if (!getAudiences().equals(other.getAudiences())) return false;
-    if (!getAuthorizationUrl().equals(other.getAuthorizationUrl())) return false;
-    if (!getJwtLocationsList().equals(other.getJwtLocationsList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Defines the locations to extract the JWT.  For now it is only used by the
+   * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
+   * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+   *
+   * JWT locations can be one of HTTP headers, URL query parameters or
+   * cookies. The rule is that the first match wins.
+   *
+   * If not specified,  default to use following 3 locations:
+   *    1) Authorization: Bearer
+   *    2) x-goog-iap-jwt-assertion
+   *    3) access_token query parameter
+   *
+   * Default locations can be specified as followings:
+   *    jwt_locations:
+   *    - header: Authorization
+   *      value_prefix: "Bearer "
+   *    - header: x-goog-iap-jwt-assertion
+   *    - query: access_token
+   * </pre>
+   *
+   * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
+   */
+  private void addJwtLocations(int index, com.google.api.JwtLocation value) {
+    value.getClass();
+    ensureJwtLocationsIsMutable();
+    jwtLocations_.add(index, value);
   }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + ID_FIELD_NUMBER;
-    hash = (53 * hash) + getId().hashCode();
-    hash = (37 * hash) + ISSUER_FIELD_NUMBER;
-    hash = (53 * hash) + getIssuer().hashCode();
-    hash = (37 * hash) + JWKS_URI_FIELD_NUMBER;
-    hash = (53 * hash) + getJwksUri().hashCode();
-    hash = (37 * hash) + AUDIENCES_FIELD_NUMBER;
-    hash = (53 * hash) + getAudiences().hashCode();
-    hash = (37 * hash) + AUTHORIZATION_URL_FIELD_NUMBER;
-    hash = (53 * hash) + getAuthorizationUrl().hashCode();
-    if (getJwtLocationsCount() > 0) {
-      hash = (37 * hash) + JWT_LOCATIONS_FIELD_NUMBER;
-      hash = (53 * hash) + getJwtLocationsList().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Defines the locations to extract the JWT.  For now it is only used by the
+   * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
+   * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+   *
+   * JWT locations can be one of HTTP headers, URL query parameters or
+   * cookies. The rule is that the first match wins.
+   *
+   * If not specified,  default to use following 3 locations:
+   *    1) Authorization: Bearer
+   *    2) x-goog-iap-jwt-assertion
+   *    3) access_token query parameter
+   *
+   * Default locations can be specified as followings:
+   *    jwt_locations:
+   *    - header: Authorization
+   *      value_prefix: "Bearer "
+   *    - header: x-goog-iap-jwt-assertion
+   *    - query: access_token
+   * </pre>
+   *
+   * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
+   */
+  private void addAllJwtLocations(java.lang.Iterable<? extends com.google.api.JwtLocation> values) {
+    ensureJwtLocationsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, jwtLocations_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines the locations to extract the JWT.  For now it is only used by the
+   * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
+   * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+   *
+   * JWT locations can be one of HTTP headers, URL query parameters or
+   * cookies. The rule is that the first match wins.
+   *
+   * If not specified,  default to use following 3 locations:
+   *    1) Authorization: Bearer
+   *    2) x-goog-iap-jwt-assertion
+   *    3) access_token query parameter
+   *
+   * Default locations can be specified as followings:
+   *    jwt_locations:
+   *    - header: Authorization
+   *      value_prefix: "Bearer "
+   *    - header: x-goog-iap-jwt-assertion
+   *    - query: access_token
+   * </pre>
+   *
+   * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
+   */
+  private void clearJwtLocations() {
+    jwtLocations_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines the locations to extract the JWT.  For now it is only used by the
+   * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
+   * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+   *
+   * JWT locations can be one of HTTP headers, URL query parameters or
+   * cookies. The rule is that the first match wins.
+   *
+   * If not specified,  default to use following 3 locations:
+   *    1) Authorization: Bearer
+   *    2) x-goog-iap-jwt-assertion
+   *    3) access_token query parameter
+   *
+   * Default locations can be specified as followings:
+   *    jwt_locations:
+   *    - header: Authorization
+   *      value_prefix: "Bearer "
+   *    - header: x-goog-iap-jwt-assertion
+   *    - query: access_token
+   * </pre>
+   *
+   * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
+   */
+  private void removeJwtLocations(int index) {
+    ensureJwtLocationsIsMutable();
+    jwtLocations_.remove(index);
   }
 
   public static com.google.api.AuthProvider parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.AuthProvider parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.AuthProvider parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.AuthProvider parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.AuthProvider parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.AuthProvider parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.AuthProvider parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.AuthProvider parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.AuthProvider parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.AuthProvider parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.AuthProvider parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.AuthProvider parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.AuthProvider prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -765,294 +1043,16 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.api.AuthProvider}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<com.google.api.AuthProvider, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.AuthProvider)
       com.google.api.AuthProviderOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.AuthProto.internal_static_google_api_AuthProvider_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.AuthProto.internal_static_google_api_AuthProvider_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.AuthProvider.class, com.google.api.AuthProvider.Builder.class);
-    }
-
     // Construct using com.google.api.AuthProvider.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      id_ = "";
-      issuer_ = "";
-      jwksUri_ = "";
-      audiences_ = "";
-      authorizationUrl_ = "";
-      if (jwtLocationsBuilder_ == null) {
-        jwtLocations_ = java.util.Collections.emptyList();
-      } else {
-        jwtLocations_ = null;
-        jwtLocationsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000020);
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.AuthProto.internal_static_google_api_AuthProvider_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.AuthProvider getDefaultInstanceForType() {
-      return com.google.api.AuthProvider.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.AuthProvider build() {
-      com.google.api.AuthProvider result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.AuthProvider buildPartial() {
-      com.google.api.AuthProvider result = new com.google.api.AuthProvider(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.api.AuthProvider result) {
-      if (jwtLocationsBuilder_ == null) {
-        if (((bitField0_ & 0x00000020) != 0)) {
-          jwtLocations_ = java.util.Collections.unmodifiableList(jwtLocations_);
-          bitField0_ = (bitField0_ & ~0x00000020);
-        }
-        result.jwtLocations_ = jwtLocations_;
-      } else {
-        result.jwtLocations_ = jwtLocationsBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.api.AuthProvider result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.id_ = id_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.issuer_ = issuer_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.jwksUri_ = jwksUri_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.audiences_ = audiences_;
-      }
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.authorizationUrl_ = authorizationUrl_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.AuthProvider) {
-        return mergeFrom((com.google.api.AuthProvider) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.AuthProvider other) {
-      if (other == com.google.api.AuthProvider.getDefaultInstance()) return this;
-      if (!other.getId().isEmpty()) {
-        id_ = other.id_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getIssuer().isEmpty()) {
-        issuer_ = other.issuer_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      if (!other.getJwksUri().isEmpty()) {
-        jwksUri_ = other.jwksUri_;
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
-      if (!other.getAudiences().isEmpty()) {
-        audiences_ = other.audiences_;
-        bitField0_ |= 0x00000008;
-        onChanged();
-      }
-      if (!other.getAuthorizationUrl().isEmpty()) {
-        authorizationUrl_ = other.authorizationUrl_;
-        bitField0_ |= 0x00000010;
-        onChanged();
-      }
-      if (jwtLocationsBuilder_ == null) {
-        if (!other.jwtLocations_.isEmpty()) {
-          if (jwtLocations_.isEmpty()) {
-            jwtLocations_ = other.jwtLocations_;
-            bitField0_ = (bitField0_ & ~0x00000020);
-          } else {
-            ensureJwtLocationsIsMutable();
-            jwtLocations_.addAll(other.jwtLocations_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.jwtLocations_.isEmpty()) {
-          if (jwtLocationsBuilder_.isEmpty()) {
-            jwtLocationsBuilder_.dispose();
-            jwtLocationsBuilder_ = null;
-            jwtLocations_ = other.jwtLocations_;
-            bitField0_ = (bitField0_ & ~0x00000020);
-            jwtLocationsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getJwtLocationsFieldBuilder()
-                    : null;
-          } else {
-            jwtLocationsBuilder_.addAllMessages(other.jwtLocations_);
-          }
-        }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                id_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                issuer_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 26:
-              {
-                jwksUri_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 26
-            case 34:
-              {
-                audiences_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 34
-            case 42:
-              {
-                authorizationUrl_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 42
-            case 50:
-              {
-                com.google.api.JwtLocation m =
-                    input.readMessage(com.google.api.JwtLocation.parser(), extensionRegistry);
-                if (jwtLocationsBuilder_ == null) {
-                  ensureJwtLocationsIsMutable();
-                  jwtLocations_.add(m);
-                } else {
-                  jwtLocationsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 50
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object id_ = "";
     /**
      *
      *
@@ -1067,16 +1067,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The id.
      */
+    @java.lang.Override
     public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getId();
     }
     /**
      *
@@ -1092,16 +1085,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for id.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getIdBytes();
     }
     /**
      *
@@ -1119,12 +1105,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setId(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      id_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setId(value);
       return this;
     }
     /**
@@ -1142,9 +1124,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearId() {
-      id_ = getDefaultInstance().getId();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearId();
       return this;
     }
     /**
@@ -1163,17 +1144,11 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setIdBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      id_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setIdBytes(value);
       return this;
     }
 
-    private java.lang.Object issuer_ = "";
     /**
      *
      *
@@ -1190,16 +1165,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The issuer.
      */
+    @java.lang.Override
     public java.lang.String getIssuer() {
-      java.lang.Object ref = issuer_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        issuer_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getIssuer();
     }
     /**
      *
@@ -1217,16 +1185,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for issuer.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getIssuerBytes() {
-      java.lang.Object ref = issuer_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        issuer_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getIssuerBytes();
     }
     /**
      *
@@ -1246,12 +1207,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setIssuer(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      issuer_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setIssuer(value);
       return this;
     }
     /**
@@ -1271,9 +1228,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearIssuer() {
-      issuer_ = getDefaultInstance().getIssuer();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearIssuer();
       return this;
     }
     /**
@@ -1294,17 +1250,11 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setIssuerBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      issuer_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setIssuerBytes(value);
       return this;
     }
 
-    private java.lang.Object jwksUri_ = "";
     /**
      *
      *
@@ -1327,16 +1277,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The jwksUri.
      */
+    @java.lang.Override
     public java.lang.String getJwksUri() {
-      java.lang.Object ref = jwksUri_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        jwksUri_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getJwksUri();
     }
     /**
      *
@@ -1360,16 +1303,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for jwksUri.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getJwksUriBytes() {
-      java.lang.Object ref = jwksUri_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        jwksUri_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getJwksUriBytes();
     }
     /**
      *
@@ -1395,12 +1331,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setJwksUri(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      jwksUri_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setJwksUri(value);
       return this;
     }
     /**
@@ -1426,9 +1358,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearJwksUri() {
-      jwksUri_ = getDefaultInstance().getJwksUri();
-      bitField0_ = (bitField0_ & ~0x00000004);
-      onChanged();
+      copyOnWrite();
+      instance.clearJwksUri();
       return this;
     }
     /**
@@ -1455,17 +1386,11 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setJwksUriBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      jwksUri_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setJwksUriBytes(value);
       return this;
     }
 
-    private java.lang.Object audiences_ = "";
     /**
      *
      *
@@ -1493,16 +1418,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The audiences.
      */
+    @java.lang.Override
     public java.lang.String getAudiences() {
-      java.lang.Object ref = audiences_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        audiences_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getAudiences();
     }
     /**
      *
@@ -1531,16 +1449,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for audiences.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getAudiencesBytes() {
-      java.lang.Object ref = audiences_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        audiences_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getAudiencesBytes();
     }
     /**
      *
@@ -1571,12 +1482,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAudiences(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      audiences_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setAudiences(value);
       return this;
     }
     /**
@@ -1607,9 +1514,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAudiences() {
-      audiences_ = getDefaultInstance().getAudiences();
-      bitField0_ = (bitField0_ & ~0x00000008);
-      onChanged();
+      copyOnWrite();
+      instance.clearAudiences();
       return this;
     }
     /**
@@ -1641,17 +1547,11 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAudiencesBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      audiences_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setAudiencesBytes(value);
       return this;
     }
 
-    private java.lang.Object authorizationUrl_ = "";
     /**
      *
      *
@@ -1664,16 +1564,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The authorizationUrl.
      */
+    @java.lang.Override
     public java.lang.String getAuthorizationUrl() {
-      java.lang.Object ref = authorizationUrl_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        authorizationUrl_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getAuthorizationUrl();
     }
     /**
      *
@@ -1687,16 +1580,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for authorizationUrl.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getAuthorizationUrlBytes() {
-      java.lang.Object ref = authorizationUrl_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        authorizationUrl_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getAuthorizationUrlBytes();
     }
     /**
      *
@@ -1712,12 +1598,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAuthorizationUrl(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      authorizationUrl_ = value;
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setAuthorizationUrl(value);
       return this;
     }
     /**
@@ -1733,9 +1615,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAuthorizationUrl() {
-      authorizationUrl_ = getDefaultInstance().getAuthorizationUrl();
-      bitField0_ = (bitField0_ & ~0x00000010);
-      onChanged();
+      copyOnWrite();
+      instance.clearAuthorizationUrl();
       return this;
     }
     /**
@@ -1752,32 +1633,11 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAuthorizationUrlBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      authorizationUrl_ = value;
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setAuthorizationUrlBytes(value);
       return this;
     }
 
-    private java.util.List<com.google.api.JwtLocation> jwtLocations_ =
-        java.util.Collections.emptyList();
-
-    private void ensureJwtLocationsIsMutable() {
-      if (!((bitField0_ & 0x00000020) != 0)) {
-        jwtLocations_ = new java.util.ArrayList<com.google.api.JwtLocation>(jwtLocations_);
-        bitField0_ |= 0x00000020;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.JwtLocation,
-            com.google.api.JwtLocation.Builder,
-            com.google.api.JwtLocationOrBuilder>
-        jwtLocationsBuilder_;
-
     /**
      *
      *
@@ -1804,12 +1664,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.api.JwtLocation> getJwtLocationsList() {
-      if (jwtLocationsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(jwtLocations_);
-      } else {
-        return jwtLocationsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getJwtLocationsList());
     }
     /**
      *
@@ -1837,12 +1694,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
      */
+    @java.lang.Override
     public int getJwtLocationsCount() {
-      if (jwtLocationsBuilder_ == null) {
-        return jwtLocations_.size();
-      } else {
-        return jwtLocationsBuilder_.getCount();
-      }
+      return instance.getJwtLocationsCount();
     }
     /**
      *
@@ -1870,12 +1724,10 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
      */
+
+    @java.lang.Override
     public com.google.api.JwtLocation getJwtLocations(int index) {
-      if (jwtLocationsBuilder_ == null) {
-        return jwtLocations_.get(index);
-      } else {
-        return jwtLocationsBuilder_.getMessage(index);
-      }
+      return instance.getJwtLocations(index);
     }
     /**
      *
@@ -1904,16 +1756,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
      */
     public Builder setJwtLocations(int index, com.google.api.JwtLocation value) {
-      if (jwtLocationsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureJwtLocationsIsMutable();
-        jwtLocations_.set(index, value);
-        onChanged();
-      } else {
-        jwtLocationsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setJwtLocations(index, value);
       return this;
     }
     /**
@@ -1943,13 +1787,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
      */
     public Builder setJwtLocations(int index, com.google.api.JwtLocation.Builder builderForValue) {
-      if (jwtLocationsBuilder_ == null) {
-        ensureJwtLocationsIsMutable();
-        jwtLocations_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        jwtLocationsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setJwtLocations(index, builderForValue.build());
       return this;
     }
     /**
@@ -1979,16 +1818,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
      */
     public Builder addJwtLocations(com.google.api.JwtLocation value) {
-      if (jwtLocationsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureJwtLocationsIsMutable();
-        jwtLocations_.add(value);
-        onChanged();
-      } else {
-        jwtLocationsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addJwtLocations(value);
       return this;
     }
     /**
@@ -2018,16 +1849,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
      */
     public Builder addJwtLocations(int index, com.google.api.JwtLocation value) {
-      if (jwtLocationsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureJwtLocationsIsMutable();
-        jwtLocations_.add(index, value);
-        onChanged();
-      } else {
-        jwtLocationsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addJwtLocations(index, value);
       return this;
     }
     /**
@@ -2057,13 +1880,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
      */
     public Builder addJwtLocations(com.google.api.JwtLocation.Builder builderForValue) {
-      if (jwtLocationsBuilder_ == null) {
-        ensureJwtLocationsIsMutable();
-        jwtLocations_.add(builderForValue.build());
-        onChanged();
-      } else {
-        jwtLocationsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addJwtLocations(builderForValue.build());
       return this;
     }
     /**
@@ -2093,13 +1911,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
      */
     public Builder addJwtLocations(int index, com.google.api.JwtLocation.Builder builderForValue) {
-      if (jwtLocationsBuilder_ == null) {
-        ensureJwtLocationsIsMutable();
-        jwtLocations_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        jwtLocationsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addJwtLocations(index, builderForValue.build());
       return this;
     }
     /**
@@ -2130,13 +1943,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addAllJwtLocations(
         java.lang.Iterable<? extends com.google.api.JwtLocation> values) {
-      if (jwtLocationsBuilder_ == null) {
-        ensureJwtLocationsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, jwtLocations_);
-        onChanged();
-      } else {
-        jwtLocationsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllJwtLocations(values);
       return this;
     }
     /**
@@ -2166,13 +1974,8 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
      */
     public Builder clearJwtLocations() {
-      if (jwtLocationsBuilder_ == null) {
-        jwtLocations_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000020);
-        onChanged();
-      } else {
-        jwtLocationsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearJwtLocations();
       return this;
     }
     /**
@@ -2202,276 +2005,97 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
      */
     public Builder removeJwtLocations(int index) {
-      if (jwtLocationsBuilder_ == null) {
-        ensureJwtLocationsIsMutable();
-        jwtLocations_.remove(index);
-        onChanged();
-      } else {
-        jwtLocationsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeJwtLocations(index);
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the locations to extract the JWT.  For now it is only used by the
-     * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
-     * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
-     *
-     * JWT locations can be one of HTTP headers, URL query parameters or
-     * cookies. The rule is that the first match wins.
-     *
-     * If not specified,  default to use following 3 locations:
-     *    1) Authorization: Bearer
-     *    2) x-goog-iap-jwt-assertion
-     *    3) access_token query parameter
-     *
-     * Default locations can be specified as followings:
-     *    jwt_locations:
-     *    - header: Authorization
-     *      value_prefix: "Bearer "
-     *    - header: x-goog-iap-jwt-assertion
-     *    - query: access_token
-     * </pre>
-     *
-     * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
-     */
-    public com.google.api.JwtLocation.Builder getJwtLocationsBuilder(int index) {
-      return getJwtLocationsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the locations to extract the JWT.  For now it is only used by the
-     * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
-     * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
-     *
-     * JWT locations can be one of HTTP headers, URL query parameters or
-     * cookies. The rule is that the first match wins.
-     *
-     * If not specified,  default to use following 3 locations:
-     *    1) Authorization: Bearer
-     *    2) x-goog-iap-jwt-assertion
-     *    3) access_token query parameter
-     *
-     * Default locations can be specified as followings:
-     *    jwt_locations:
-     *    - header: Authorization
-     *      value_prefix: "Bearer "
-     *    - header: x-goog-iap-jwt-assertion
-     *    - query: access_token
-     * </pre>
-     *
-     * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
-     */
-    public com.google.api.JwtLocationOrBuilder getJwtLocationsOrBuilder(int index) {
-      if (jwtLocationsBuilder_ == null) {
-        return jwtLocations_.get(index);
-      } else {
-        return jwtLocationsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the locations to extract the JWT.  For now it is only used by the
-     * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
-     * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
-     *
-     * JWT locations can be one of HTTP headers, URL query parameters or
-     * cookies. The rule is that the first match wins.
-     *
-     * If not specified,  default to use following 3 locations:
-     *    1) Authorization: Bearer
-     *    2) x-goog-iap-jwt-assertion
-     *    3) access_token query parameter
-     *
-     * Default locations can be specified as followings:
-     *    jwt_locations:
-     *    - header: Authorization
-     *      value_prefix: "Bearer "
-     *    - header: x-goog-iap-jwt-assertion
-     *    - query: access_token
-     * </pre>
-     *
-     * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
-     */
-    public java.util.List<? extends com.google.api.JwtLocationOrBuilder>
-        getJwtLocationsOrBuilderList() {
-      if (jwtLocationsBuilder_ != null) {
-        return jwtLocationsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(jwtLocations_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the locations to extract the JWT.  For now it is only used by the
-     * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
-     * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
-     *
-     * JWT locations can be one of HTTP headers, URL query parameters or
-     * cookies. The rule is that the first match wins.
-     *
-     * If not specified,  default to use following 3 locations:
-     *    1) Authorization: Bearer
-     *    2) x-goog-iap-jwt-assertion
-     *    3) access_token query parameter
-     *
-     * Default locations can be specified as followings:
-     *    jwt_locations:
-     *    - header: Authorization
-     *      value_prefix: "Bearer "
-     *    - header: x-goog-iap-jwt-assertion
-     *    - query: access_token
-     * </pre>
-     *
-     * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
-     */
-    public com.google.api.JwtLocation.Builder addJwtLocationsBuilder() {
-      return getJwtLocationsFieldBuilder()
-          .addBuilder(com.google.api.JwtLocation.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the locations to extract the JWT.  For now it is only used by the
-     * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
-     * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
-     *
-     * JWT locations can be one of HTTP headers, URL query parameters or
-     * cookies. The rule is that the first match wins.
-     *
-     * If not specified,  default to use following 3 locations:
-     *    1) Authorization: Bearer
-     *    2) x-goog-iap-jwt-assertion
-     *    3) access_token query parameter
-     *
-     * Default locations can be specified as followings:
-     *    jwt_locations:
-     *    - header: Authorization
-     *      value_prefix: "Bearer "
-     *    - header: x-goog-iap-jwt-assertion
-     *    - query: access_token
-     * </pre>
-     *
-     * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
-     */
-    public com.google.api.JwtLocation.Builder addJwtLocationsBuilder(int index) {
-      return getJwtLocationsFieldBuilder()
-          .addBuilder(index, com.google.api.JwtLocation.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the locations to extract the JWT.  For now it is only used by the
-     * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
-     * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
-     *
-     * JWT locations can be one of HTTP headers, URL query parameters or
-     * cookies. The rule is that the first match wins.
-     *
-     * If not specified,  default to use following 3 locations:
-     *    1) Authorization: Bearer
-     *    2) x-goog-iap-jwt-assertion
-     *    3) access_token query parameter
-     *
-     * Default locations can be specified as followings:
-     *    jwt_locations:
-     *    - header: Authorization
-     *      value_prefix: "Bearer "
-     *    - header: x-goog-iap-jwt-assertion
-     *    - query: access_token
-     * </pre>
-     *
-     * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
-     */
-    public java.util.List<com.google.api.JwtLocation.Builder> getJwtLocationsBuilderList() {
-      return getJwtLocationsFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.JwtLocation,
-            com.google.api.JwtLocation.Builder,
-            com.google.api.JwtLocationOrBuilder>
-        getJwtLocationsFieldBuilder() {
-      if (jwtLocationsBuilder_ == null) {
-        jwtLocationsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.api.JwtLocation,
-                com.google.api.JwtLocation.Builder,
-                com.google.api.JwtLocationOrBuilder>(
-                jwtLocations_, ((bitField0_ & 0x00000020) != 0), getParentForChildren(), isClean());
-        jwtLocations_ = null;
-      }
-      return jwtLocationsBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.api.AuthProvider)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.AuthProvider();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "id_",
+                "issuer_",
+                "jwksUri_",
+                "audiences_",
+                "authorizationUrl_",
+                "jwtLocations_",
+                com.google.api.JwtLocation.class,
+              };
+          java.lang.String info =
+              "\u0000\u0006\u0000\u0000\u0001\u0006\u0006\u0000\u0001\u0000\u0001\u0208\u0002\u0208"
+                  + "\u0003\u0208\u0004\u0208\u0005\u0208\u0006\u001b";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.AuthProvider> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.AuthProvider.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.api.AuthProvider>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.AuthProvider)
   private static final com.google.api.AuthProvider DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.AuthProvider();
+    AuthProvider defaultInstance = new AuthProvider();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        AuthProvider.class, defaultInstance);
   }
 
   public static com.google.api.AuthProvider getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<AuthProvider> PARSER =
-      new com.google.protobuf.AbstractParser<AuthProvider>() {
-        @java.lang.Override
-        public AuthProvider parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<AuthProvider> PARSER;
 
   public static com.google.protobuf.Parser<AuthProvider> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<AuthProvider> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.AuthProvider getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

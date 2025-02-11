@@ -31,47 +31,19 @@ package com.google.apps.card.v1;
  *
  * Protobuf type {@code google.apps.card.v1.ImageComponent}
  */
-public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
+public final class ImageComponent
+    extends com.google.protobuf.GeneratedMessageLite<ImageComponent, ImageComponent.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.ImageComponent)
     ImageComponentOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use ImageComponent.newBuilder() to construct.
-  private ImageComponent(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private ImageComponent() {
     imageUri_ = "";
     altText_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new ImageComponent();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_ImageComponent_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_ImageComponent_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.apps.card.v1.ImageComponent.class,
-            com.google.apps.card.v1.ImageComponent.Builder.class);
-  }
-
   private int bitField0_;
   public static final int IMAGE_URI_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object imageUri_ = "";
+  private java.lang.String imageUri_;
   /**
    *
    *
@@ -85,15 +57,7 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getImageUri() {
-    java.lang.Object ref = imageUri_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      imageUri_ = s;
-      return s;
-    }
+    return imageUri_;
   }
   /**
    *
@@ -108,21 +72,55 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getImageUriBytes() {
-    java.lang.Object ref = imageUri_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      imageUri_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(imageUri_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The image URL.
+   * </pre>
+   *
+   * <code>string image_uri = 1;</code>
+   *
+   * @param value The imageUri to set.
+   */
+  private void setImageUri(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    imageUri_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The image URL.
+   * </pre>
+   *
+   * <code>string image_uri = 1;</code>
+   */
+  private void clearImageUri() {
+
+    imageUri_ = getDefaultInstance().getImageUri();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The image URL.
+   * </pre>
+   *
+   * <code>string image_uri = 1;</code>
+   *
+   * @param value The bytes for imageUri to set.
+   */
+  private void setImageUriBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    imageUri_ = value.toStringUtf8();
   }
 
   public static final int ALT_TEXT_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object altText_ = "";
+  private java.lang.String altText_;
   /**
    *
    *
@@ -136,15 +134,7 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getAltText() {
-    java.lang.Object ref = altText_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      altText_ = s;
-      return s;
-    }
+    return altText_;
   }
   /**
    *
@@ -159,15 +149,51 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getAltTextBytes() {
-    java.lang.Object ref = altText_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      altText_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(altText_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The accessibility label for the image.
+   * </pre>
+   *
+   * <code>string alt_text = 2;</code>
+   *
+   * @param value The altText to set.
+   */
+  private void setAltText(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    altText_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The accessibility label for the image.
+   * </pre>
+   *
+   * <code>string alt_text = 2;</code>
+   */
+  private void clearAltText() {
+
+    altText_ = getDefaultInstance().getAltText();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The accessibility label for the image.
+   * </pre>
+   *
+   * <code>string alt_text = 2;</code>
+   *
+   * @param value The bytes for altText to set.
+   */
+  private void setAltTextBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    altText_ = value.toStringUtf8();
   }
 
   public static final int CROP_STYLE_FIELD_NUMBER = 3;
@@ -180,8 +206,6 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.ImageCropStyle crop_style = 3;</code>
-   *
-   * @return Whether the cropStyle field is set.
    */
   @java.lang.Override
   public boolean hasCropStyle() {
@@ -195,8 +219,6 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.ImageCropStyle crop_style = 3;</code>
-   *
-   * @return The cropStyle.
    */
   @java.lang.Override
   public com.google.apps.card.v1.ImageCropStyle getCropStyle() {
@@ -213,11 +235,46 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.apps.card.v1.ImageCropStyle crop_style = 3;</code>
    */
-  @java.lang.Override
-  public com.google.apps.card.v1.ImageCropStyleOrBuilder getCropStyleOrBuilder() {
-    return cropStyle_ == null
-        ? com.google.apps.card.v1.ImageCropStyle.getDefaultInstance()
-        : cropStyle_;
+  private void setCropStyle(com.google.apps.card.v1.ImageCropStyle value) {
+    value.getClass();
+    cropStyle_ = value;
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The crop style to apply to the image.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.ImageCropStyle crop_style = 3;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeCropStyle(com.google.apps.card.v1.ImageCropStyle value) {
+    value.getClass();
+    if (cropStyle_ != null
+        && cropStyle_ != com.google.apps.card.v1.ImageCropStyle.getDefaultInstance()) {
+      cropStyle_ =
+          com.google.apps.card.v1.ImageCropStyle.newBuilder(cropStyle_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      cropStyle_ = value;
+    }
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The crop style to apply to the image.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.ImageCropStyle crop_style = 3;</code>
+   */
+  private void clearCropStyle() {
+    cropStyle_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static final int BORDER_STYLE_FIELD_NUMBER = 4;
@@ -230,8 +287,6 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.BorderStyle border_style = 4;</code>
-   *
-   * @return Whether the borderStyle field is set.
    */
   @java.lang.Override
   public boolean hasBorderStyle() {
@@ -245,8 +300,6 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.BorderStyle border_style = 4;</code>
-   *
-   * @return The borderStyle.
    */
   @java.lang.Override
   public com.google.apps.card.v1.BorderStyle getBorderStyle() {
@@ -263,208 +316,130 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.apps.card.v1.BorderStyle border_style = 4;</code>
    */
-  @java.lang.Override
-  public com.google.apps.card.v1.BorderStyleOrBuilder getBorderStyleOrBuilder() {
-    return borderStyle_ == null
-        ? com.google.apps.card.v1.BorderStyle.getDefaultInstance()
-        : borderStyle_;
+  private void setBorderStyle(com.google.apps.card.v1.BorderStyle value) {
+    value.getClass();
+    borderStyle_ = value;
+    bitField0_ |= 0x00000002;
   }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * The border style to apply to the image.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.BorderStyle border_style = 4;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeBorderStyle(com.google.apps.card.v1.BorderStyle value) {
+    value.getClass();
+    if (borderStyle_ != null
+        && borderStyle_ != com.google.apps.card.v1.BorderStyle.getDefaultInstance()) {
+      borderStyle_ =
+          com.google.apps.card.v1.BorderStyle.newBuilder(borderStyle_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      borderStyle_ = value;
+    }
+    bitField0_ |= 0x00000002;
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(imageUri_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, imageUri_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(altText_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, altText_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(3, getCropStyle());
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      output.writeMessage(4, getBorderStyle());
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(imageUri_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, imageUri_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(altText_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, altText_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, getCropStyle());
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, getBorderStyle());
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.apps.card.v1.ImageComponent)) {
-      return super.equals(obj);
-    }
-    com.google.apps.card.v1.ImageComponent other = (com.google.apps.card.v1.ImageComponent) obj;
-
-    if (!getImageUri().equals(other.getImageUri())) return false;
-    if (!getAltText().equals(other.getAltText())) return false;
-    if (hasCropStyle() != other.hasCropStyle()) return false;
-    if (hasCropStyle()) {
-      if (!getCropStyle().equals(other.getCropStyle())) return false;
-    }
-    if (hasBorderStyle() != other.hasBorderStyle()) return false;
-    if (hasBorderStyle()) {
-      if (!getBorderStyle().equals(other.getBorderStyle())) return false;
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + IMAGE_URI_FIELD_NUMBER;
-    hash = (53 * hash) + getImageUri().hashCode();
-    hash = (37 * hash) + ALT_TEXT_FIELD_NUMBER;
-    hash = (53 * hash) + getAltText().hashCode();
-    if (hasCropStyle()) {
-      hash = (37 * hash) + CROP_STYLE_FIELD_NUMBER;
-      hash = (53 * hash) + getCropStyle().hashCode();
-    }
-    if (hasBorderStyle()) {
-      hash = (37 * hash) + BORDER_STYLE_FIELD_NUMBER;
-      hash = (53 * hash) + getBorderStyle().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * The border style to apply to the image.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.BorderStyle border_style = 4;</code>
+   */
+  private void clearBorderStyle() {
+    borderStyle_ = null;
+    bitField0_ = (bitField0_ & ~0x00000002);
   }
 
   public static com.google.apps.card.v1.ImageComponent parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.ImageComponent parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.ImageComponent parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.ImageComponent parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.ImageComponent parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.ImageComponent parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.ImageComponent parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.ImageComponent parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.ImageComponent parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.ImageComponent parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.ImageComponent parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.ImageComponent parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.apps.card.v1.ImageComponent prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -477,244 +452,17 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.apps.card.v1.ImageComponent}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.apps.card.v1.ImageComponent, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.apps.card.v1.ImageComponent)
       com.google.apps.card.v1.ImageComponentOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_ImageComponent_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_ImageComponent_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.apps.card.v1.ImageComponent.class,
-              com.google.apps.card.v1.ImageComponent.Builder.class);
-    }
-
     // Construct using com.google.apps.card.v1.ImageComponent.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getCropStyleFieldBuilder();
-        getBorderStyleFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      imageUri_ = "";
-      altText_ = "";
-      cropStyle_ = null;
-      if (cropStyleBuilder_ != null) {
-        cropStyleBuilder_.dispose();
-        cropStyleBuilder_ = null;
-      }
-      borderStyle_ = null;
-      if (borderStyleBuilder_ != null) {
-        borderStyleBuilder_.dispose();
-        borderStyleBuilder_ = null;
-      }
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_ImageComponent_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.ImageComponent getDefaultInstanceForType() {
-      return com.google.apps.card.v1.ImageComponent.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.ImageComponent build() {
-      com.google.apps.card.v1.ImageComponent result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.ImageComponent buildPartial() {
-      com.google.apps.card.v1.ImageComponent result =
-          new com.google.apps.card.v1.ImageComponent(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.apps.card.v1.ImageComponent result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.imageUri_ = imageUri_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.altText_ = altText_;
-      }
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.cropStyle_ = cropStyleBuilder_ == null ? cropStyle_ : cropStyleBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.borderStyle_ =
-            borderStyleBuilder_ == null ? borderStyle_ : borderStyleBuilder_.build();
-        to_bitField0_ |= 0x00000002;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.apps.card.v1.ImageComponent) {
-        return mergeFrom((com.google.apps.card.v1.ImageComponent) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.apps.card.v1.ImageComponent other) {
-      if (other == com.google.apps.card.v1.ImageComponent.getDefaultInstance()) return this;
-      if (!other.getImageUri().isEmpty()) {
-        imageUri_ = other.imageUri_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getAltText().isEmpty()) {
-        altText_ = other.altText_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      if (other.hasCropStyle()) {
-        mergeCropStyle(other.getCropStyle());
-      }
-      if (other.hasBorderStyle()) {
-        mergeBorderStyle(other.getBorderStyle());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                imageUri_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                altText_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 26:
-              {
-                input.readMessage(getCropStyleFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 26
-            case 34:
-              {
-                input.readMessage(getBorderStyleFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 34
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object imageUri_ = "";
     /**
      *
      *
@@ -726,16 +474,9 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The imageUri.
      */
+    @java.lang.Override
     public java.lang.String getImageUri() {
-      java.lang.Object ref = imageUri_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        imageUri_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getImageUri();
     }
     /**
      *
@@ -748,16 +489,9 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for imageUri.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getImageUriBytes() {
-      java.lang.Object ref = imageUri_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        imageUri_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getImageUriBytes();
     }
     /**
      *
@@ -772,12 +506,8 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setImageUri(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      imageUri_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setImageUri(value);
       return this;
     }
     /**
@@ -792,9 +522,8 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearImageUri() {
-      imageUri_ = getDefaultInstance().getImageUri();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearImageUri();
       return this;
     }
     /**
@@ -810,17 +539,11 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setImageUriBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      imageUri_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setImageUriBytes(value);
       return this;
     }
 
-    private java.lang.Object altText_ = "";
     /**
      *
      *
@@ -832,16 +555,9 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The altText.
      */
+    @java.lang.Override
     public java.lang.String getAltText() {
-      java.lang.Object ref = altText_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        altText_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getAltText();
     }
     /**
      *
@@ -854,16 +570,9 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for altText.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getAltTextBytes() {
-      java.lang.Object ref = altText_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        altText_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getAltTextBytes();
     }
     /**
      *
@@ -878,12 +587,8 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAltText(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      altText_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setAltText(value);
       return this;
     }
     /**
@@ -898,9 +603,8 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAltText() {
-      altText_ = getDefaultInstance().getAltText();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearAltText();
       return this;
     }
     /**
@@ -916,22 +620,11 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAltTextBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      altText_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setAltTextBytes(value);
       return this;
     }
 
-    private com.google.apps.card.v1.ImageCropStyle cropStyle_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.ImageCropStyle,
-            com.google.apps.card.v1.ImageCropStyle.Builder,
-            com.google.apps.card.v1.ImageCropStyleOrBuilder>
-        cropStyleBuilder_;
     /**
      *
      *
@@ -940,11 +633,10 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.ImageCropStyle crop_style = 3;</code>
-     *
-     * @return Whether the cropStyle field is set.
      */
+    @java.lang.Override
     public boolean hasCropStyle() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return instance.hasCropStyle();
     }
     /**
      *
@@ -954,17 +646,10 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.ImageCropStyle crop_style = 3;</code>
-     *
-     * @return The cropStyle.
      */
+    @java.lang.Override
     public com.google.apps.card.v1.ImageCropStyle getCropStyle() {
-      if (cropStyleBuilder_ == null) {
-        return cropStyle_ == null
-            ? com.google.apps.card.v1.ImageCropStyle.getDefaultInstance()
-            : cropStyle_;
-      } else {
-        return cropStyleBuilder_.getMessage();
-      }
+      return instance.getCropStyle();
     }
     /**
      *
@@ -976,16 +661,8 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.ImageCropStyle crop_style = 3;</code>
      */
     public Builder setCropStyle(com.google.apps.card.v1.ImageCropStyle value) {
-      if (cropStyleBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        cropStyle_ = value;
-      } else {
-        cropStyleBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setCropStyle(value);
       return this;
     }
     /**
@@ -998,13 +675,8 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.ImageCropStyle crop_style = 3;</code>
      */
     public Builder setCropStyle(com.google.apps.card.v1.ImageCropStyle.Builder builderForValue) {
-      if (cropStyleBuilder_ == null) {
-        cropStyle_ = builderForValue.build();
-      } else {
-        cropStyleBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setCropStyle(builderForValue.build());
       return this;
     }
     /**
@@ -1017,21 +689,8 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.ImageCropStyle crop_style = 3;</code>
      */
     public Builder mergeCropStyle(com.google.apps.card.v1.ImageCropStyle value) {
-      if (cropStyleBuilder_ == null) {
-        if (((bitField0_ & 0x00000004) != 0)
-            && cropStyle_ != null
-            && cropStyle_ != com.google.apps.card.v1.ImageCropStyle.getDefaultInstance()) {
-          getCropStyleBuilder().mergeFrom(value);
-        } else {
-          cropStyle_ = value;
-        }
-      } else {
-        cropStyleBuilder_.mergeFrom(value);
-      }
-      if (cropStyle_ != null) {
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeCropStyle(value);
       return this;
     }
     /**
@@ -1044,79 +703,11 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.ImageCropStyle crop_style = 3;</code>
      */
     public Builder clearCropStyle() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      cropStyle_ = null;
-      if (cropStyleBuilder_ != null) {
-        cropStyleBuilder_.dispose();
-        cropStyleBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearCropStyle();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * The crop style to apply to the image.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.ImageCropStyle crop_style = 3;</code>
-     */
-    public com.google.apps.card.v1.ImageCropStyle.Builder getCropStyleBuilder() {
-      bitField0_ |= 0x00000004;
-      onChanged();
-      return getCropStyleFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The crop style to apply to the image.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.ImageCropStyle crop_style = 3;</code>
-     */
-    public com.google.apps.card.v1.ImageCropStyleOrBuilder getCropStyleOrBuilder() {
-      if (cropStyleBuilder_ != null) {
-        return cropStyleBuilder_.getMessageOrBuilder();
-      } else {
-        return cropStyle_ == null
-            ? com.google.apps.card.v1.ImageCropStyle.getDefaultInstance()
-            : cropStyle_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The crop style to apply to the image.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.ImageCropStyle crop_style = 3;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.ImageCropStyle,
-            com.google.apps.card.v1.ImageCropStyle.Builder,
-            com.google.apps.card.v1.ImageCropStyleOrBuilder>
-        getCropStyleFieldBuilder() {
-      if (cropStyleBuilder_ == null) {
-        cropStyleBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.ImageCropStyle,
-                com.google.apps.card.v1.ImageCropStyle.Builder,
-                com.google.apps.card.v1.ImageCropStyleOrBuilder>(
-                getCropStyle(), getParentForChildren(), isClean());
-        cropStyle_ = null;
-      }
-      return cropStyleBuilder_;
-    }
 
-    private com.google.apps.card.v1.BorderStyle borderStyle_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.BorderStyle,
-            com.google.apps.card.v1.BorderStyle.Builder,
-            com.google.apps.card.v1.BorderStyleOrBuilder>
-        borderStyleBuilder_;
     /**
      *
      *
@@ -1125,11 +716,10 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.BorderStyle border_style = 4;</code>
-     *
-     * @return Whether the borderStyle field is set.
      */
+    @java.lang.Override
     public boolean hasBorderStyle() {
-      return ((bitField0_ & 0x00000008) != 0);
+      return instance.hasBorderStyle();
     }
     /**
      *
@@ -1139,17 +729,10 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.BorderStyle border_style = 4;</code>
-     *
-     * @return The borderStyle.
      */
+    @java.lang.Override
     public com.google.apps.card.v1.BorderStyle getBorderStyle() {
-      if (borderStyleBuilder_ == null) {
-        return borderStyle_ == null
-            ? com.google.apps.card.v1.BorderStyle.getDefaultInstance()
-            : borderStyle_;
-      } else {
-        return borderStyleBuilder_.getMessage();
-      }
+      return instance.getBorderStyle();
     }
     /**
      *
@@ -1161,16 +744,8 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.BorderStyle border_style = 4;</code>
      */
     public Builder setBorderStyle(com.google.apps.card.v1.BorderStyle value) {
-      if (borderStyleBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        borderStyle_ = value;
-      } else {
-        borderStyleBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setBorderStyle(value);
       return this;
     }
     /**
@@ -1183,13 +758,8 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.BorderStyle border_style = 4;</code>
      */
     public Builder setBorderStyle(com.google.apps.card.v1.BorderStyle.Builder builderForValue) {
-      if (borderStyleBuilder_ == null) {
-        borderStyle_ = builderForValue.build();
-      } else {
-        borderStyleBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setBorderStyle(builderForValue.build());
       return this;
     }
     /**
@@ -1202,21 +772,8 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.BorderStyle border_style = 4;</code>
      */
     public Builder mergeBorderStyle(com.google.apps.card.v1.BorderStyle value) {
-      if (borderStyleBuilder_ == null) {
-        if (((bitField0_ & 0x00000008) != 0)
-            && borderStyle_ != null
-            && borderStyle_ != com.google.apps.card.v1.BorderStyle.getDefaultInstance()) {
-          getBorderStyleBuilder().mergeFrom(value);
-        } else {
-          borderStyle_ = value;
-        }
-      } else {
-        borderStyleBuilder_.mergeFrom(value);
-      }
-      if (borderStyle_ != null) {
-        bitField0_ |= 0x00000008;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeBorderStyle(value);
       return this;
     }
     /**
@@ -1229,131 +786,92 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.BorderStyle border_style = 4;</code>
      */
     public Builder clearBorderStyle() {
-      bitField0_ = (bitField0_ & ~0x00000008);
-      borderStyle_ = null;
-      if (borderStyleBuilder_ != null) {
-        borderStyleBuilder_.dispose();
-        borderStyleBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearBorderStyle();
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The border style to apply to the image.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.BorderStyle border_style = 4;</code>
-     */
-    public com.google.apps.card.v1.BorderStyle.Builder getBorderStyleBuilder() {
-      bitField0_ |= 0x00000008;
-      onChanged();
-      return getBorderStyleFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The border style to apply to the image.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.BorderStyle border_style = 4;</code>
-     */
-    public com.google.apps.card.v1.BorderStyleOrBuilder getBorderStyleOrBuilder() {
-      if (borderStyleBuilder_ != null) {
-        return borderStyleBuilder_.getMessageOrBuilder();
-      } else {
-        return borderStyle_ == null
-            ? com.google.apps.card.v1.BorderStyle.getDefaultInstance()
-            : borderStyle_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The border style to apply to the image.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.BorderStyle border_style = 4;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.BorderStyle,
-            com.google.apps.card.v1.BorderStyle.Builder,
-            com.google.apps.card.v1.BorderStyleOrBuilder>
-        getBorderStyleFieldBuilder() {
-      if (borderStyleBuilder_ == null) {
-        borderStyleBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.BorderStyle,
-                com.google.apps.card.v1.BorderStyle.Builder,
-                com.google.apps.card.v1.BorderStyleOrBuilder>(
-                getBorderStyle(), getParentForChildren(), isClean());
-        borderStyle_ = null;
-      }
-      return borderStyleBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.apps.card.v1.ImageComponent)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.apps.card.v1.ImageComponent();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_", "imageUri_", "altText_", "cropStyle_", "borderStyle_",
+              };
+          java.lang.String info =
+              "\u0000\u0004\u0000\u0001\u0001\u0004\u0004\u0000\u0000\u0000\u0001\u0208\u0002\u0208"
+                  + "\u0003\u1009\u0000\u0004\u1009\u0001";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.apps.card.v1.ImageComponent> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.apps.card.v1.ImageComponent.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.apps.card.v1.ImageComponent>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.apps.card.v1.ImageComponent)
   private static final com.google.apps.card.v1.ImageComponent DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.apps.card.v1.ImageComponent();
+    ImageComponent defaultInstance = new ImageComponent();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        ImageComponent.class, defaultInstance);
   }
 
   public static com.google.apps.card.v1.ImageComponent getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<ImageComponent> PARSER =
-      new com.google.protobuf.AbstractParser<ImageComponent>() {
-        @java.lang.Override
-        public ImageComponent parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<ImageComponent> PARSER;
 
   public static com.google.protobuf.Parser<ImageComponent> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<ImageComponent> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.apps.card.v1.ImageComponent getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

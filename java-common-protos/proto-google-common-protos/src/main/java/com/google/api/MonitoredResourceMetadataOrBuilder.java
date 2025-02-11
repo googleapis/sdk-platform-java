@@ -22,7 +22,7 @@ package com.google.api;
 public interface MonitoredResourceMetadataOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.MonitoredResourceMetadata)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -66,25 +66,6 @@ public interface MonitoredResourceMetadataOrBuilder
    * @return The systemLabels.
    */
   com.google.protobuf.Struct getSystemLabels();
-  /**
-   *
-   *
-   * <pre>
-   * Output only. Values for predefined system metadata labels.
-   * System labels are a kind of metadata extracted by Google, including
-   * "machine_image", "vpc", "subnet_id",
-   * "security_group", "name", etc.
-   * System label values can be only strings, Boolean values, or a list of
-   * strings. For example:
-   *
-   *     { "name": "my-test-instance",
-   *       "security_group": ["a", "b", "c"],
-   *       "spot_instance": false }
-   * </pre>
-   *
-   * <code>.google.protobuf.Struct system_labels = 1;</code>
-   */
-  com.google.protobuf.StructOrBuilder getSystemLabelsOrBuilder();
 
   /**
    *
@@ -128,6 +109,7 @@ public interface MonitoredResourceMetadataOrBuilder
    *
    * <code>map&lt;string, string&gt; user_labels = 2;</code>
    */
+
   /* nullable */
   java.lang.String getUserLabelsOrDefault(
       java.lang.String key,

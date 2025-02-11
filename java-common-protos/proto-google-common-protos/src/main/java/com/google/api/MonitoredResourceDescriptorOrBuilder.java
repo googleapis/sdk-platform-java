@@ -22,7 +22,7 @@ package com.google.api;
 public interface MonitoredResourceDescriptorOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.MonitoredResourceDescriptor)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -188,30 +188,6 @@ public interface MonitoredResourceDescriptorOrBuilder
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
    */
   int getLabelsCount();
-  /**
-   *
-   *
-   * <pre>
-   * Required. A set of labels used to describe instances of this monitored
-   * resource type. For example, an individual Google Cloud SQL database is
-   * identified by values for the labels `"database_id"` and `"zone"`.
-   * </pre>
-   *
-   * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
-   */
-  java.util.List<? extends com.google.api.LabelDescriptorOrBuilder> getLabelsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Required. A set of labels used to describe instances of this monitored
-   * resource type. For example, an individual Google Cloud SQL database is
-   * identified by values for the labels `"database_id"` and `"zone"`.
-   * </pre>
-   *
-   * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
-   */
-  com.google.api.LabelDescriptorOrBuilder getLabelsOrBuilder(int index);
 
   /**
    *

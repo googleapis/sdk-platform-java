@@ -28,7 +28,7 @@ package com.google.api;
  *
  * Protobuf enum {@code google.api.ClientLibraryDestination}
  */
-public enum ClientLibraryDestination implements com.google.protobuf.ProtocolMessageEnum {
+public enum ClientLibraryDestination implements com.google.protobuf.Internal.EnumLite {
   /**
    *
    *
@@ -97,6 +97,7 @@ public enum ClientLibraryDestination implements com.google.protobuf.ProtocolMess
    */
   public static final int PACKAGE_MANAGER_VALUE = 20;
 
+  @java.lang.Override
   public final int getNumber() {
     if (this == UNRECOGNIZED) {
       throw new java.lang.IllegalArgumentException(
@@ -106,8 +107,8 @@ public enum ClientLibraryDestination implements com.google.protobuf.ProtocolMess
   }
 
   /**
-   * @param value The numeric wire value of the corresponding enum entry.
-   * @return The enum associated with the given numeric wire value.
+   * @param value The number of the enum to look for.
+   * @return The enum associated with the given number.
    * @deprecated Use {@link #forNumber(int)} instead.
    */
   @java.lang.Deprecated
@@ -115,10 +116,6 @@ public enum ClientLibraryDestination implements com.google.protobuf.ProtocolMess
     return forNumber(value);
   }
 
-  /**
-   * @param value The numeric wire value of the corresponding enum entry.
-   * @return The enum associated with the given numeric wire value.
-   */
   public static ClientLibraryDestination forNumber(int value) {
     switch (value) {
       case 0:
@@ -140,39 +137,26 @@ public enum ClientLibraryDestination implements com.google.protobuf.ProtocolMess
   private static final com.google.protobuf.Internal.EnumLiteMap<ClientLibraryDestination>
       internalValueMap =
           new com.google.protobuf.Internal.EnumLiteMap<ClientLibraryDestination>() {
+            @java.lang.Override
             public ClientLibraryDestination findValueByNumber(int number) {
               return ClientLibraryDestination.forNumber(number);
             }
           };
 
-  public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-    if (this == UNRECOGNIZED) {
-      throw new java.lang.IllegalStateException(
-          "Can't get the descriptor of an unrecognized enum value.");
+  public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+    return ClientLibraryDestinationVerifier.INSTANCE;
+  }
+
+  private static final class ClientLibraryDestinationVerifier
+      implements com.google.protobuf.Internal.EnumVerifier {
+    static final com.google.protobuf.Internal.EnumVerifier INSTANCE =
+        new ClientLibraryDestinationVerifier();
+
+    @java.lang.Override
+    public boolean isInRange(int number) {
+      return ClientLibraryDestination.forNumber(number) != null;
     }
-    return getDescriptor().getValues().get(ordinal());
-  }
-
-  public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-    return getDescriptor();
-  }
-
-  public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-    return com.google.api.ClientProto.getDescriptor().getEnumTypes().get(1);
-  }
-
-  private static final ClientLibraryDestination[] VALUES = values();
-
-  public static ClientLibraryDestination valueOf(
-      com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-    if (desc.getType() != getDescriptor()) {
-      throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-    }
-    if (desc.getIndex() == -1) {
-      return UNRECOGNIZED;
-    }
-    return VALUES[desc.getIndex()];
-  }
+  };
 
   private final int value;
 

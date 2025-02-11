@@ -22,7 +22,7 @@ package com.google.apps.card.v1;
 public interface ImageComponentOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.apps.card.v1.ImageComponent)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -98,16 +98,6 @@ public interface ImageComponentOrBuilder
    * @return The cropStyle.
    */
   com.google.apps.card.v1.ImageCropStyle getCropStyle();
-  /**
-   *
-   *
-   * <pre>
-   * The crop style to apply to the image.
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.ImageCropStyle crop_style = 3;</code>
-   */
-  com.google.apps.card.v1.ImageCropStyleOrBuilder getCropStyleOrBuilder();
 
   /**
    *
@@ -133,14 +123,4 @@ public interface ImageComponentOrBuilder
    * @return The borderStyle.
    */
   com.google.apps.card.v1.BorderStyle getBorderStyle();
-  /**
-   *
-   *
-   * <pre>
-   * The border style to apply to the image.
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.BorderStyle border_style = 4;</code>
-   */
-  com.google.apps.card.v1.BorderStyleOrBuilder getBorderStyleOrBuilder();
 }

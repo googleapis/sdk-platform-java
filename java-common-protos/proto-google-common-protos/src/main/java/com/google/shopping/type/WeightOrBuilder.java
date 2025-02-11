@@ -22,7 +22,7 @@ package com.google.shopping.type;
 public interface WeightOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.shopping.type.Weight)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

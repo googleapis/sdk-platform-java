@@ -22,7 +22,7 @@ package com.google.type;
 public interface PostalAddressOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.type.PostalAddress)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -409,8 +409,8 @@ public interface PostalAddressOrBuilder
    *
    * <code>repeated string address_lines = 9;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the addressLines at the given index.
+   * @param index The index of the element to return.
+   * @return The addressLines at the given index.
    */
   com.google.protobuf.ByteString getAddressLinesBytes(int index);
 
@@ -468,8 +468,8 @@ public interface PostalAddressOrBuilder
    *
    * <code>repeated string recipients = 10;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the recipients at the given index.
+   * @param index The index of the element to return.
+   * @return The recipients at the given index.
    */
   com.google.protobuf.ByteString getRecipientsBytes(int index);
 

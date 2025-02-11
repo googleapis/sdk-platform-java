@@ -22,7 +22,7 @@ package com.google.api;
 public interface EndpointOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.Endpoint)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -103,8 +103,8 @@ public interface EndpointOrBuilder
    *
    * <code>repeated string aliases = 2;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the aliases at the given index.
+   * @param index The index of the element to return.
+   * @return The aliases at the given index.
    */
   com.google.protobuf.ByteString getAliasesBytes(int index);
 

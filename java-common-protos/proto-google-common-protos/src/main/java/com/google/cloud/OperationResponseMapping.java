@@ -31,7 +31,7 @@ package com.google.cloud;
  *
  * Protobuf enum {@code google.cloud.OperationResponseMapping}
  */
-public enum OperationResponseMapping implements com.google.protobuf.ProtocolMessageEnum {
+public enum OperationResponseMapping implements com.google.protobuf.Internal.EnumLite {
   /**
    *
    *
@@ -152,6 +152,7 @@ public enum OperationResponseMapping implements com.google.protobuf.ProtocolMess
    */
   public static final int ERROR_MESSAGE_VALUE = 4;
 
+  @java.lang.Override
   public final int getNumber() {
     if (this == UNRECOGNIZED) {
       throw new java.lang.IllegalArgumentException(
@@ -161,8 +162,8 @@ public enum OperationResponseMapping implements com.google.protobuf.ProtocolMess
   }
 
   /**
-   * @param value The numeric wire value of the corresponding enum entry.
-   * @return The enum associated with the given numeric wire value.
+   * @param value The number of the enum to look for.
+   * @return The enum associated with the given number.
    * @deprecated Use {@link #forNumber(int)} instead.
    */
   @java.lang.Deprecated
@@ -170,10 +171,6 @@ public enum OperationResponseMapping implements com.google.protobuf.ProtocolMess
     return forNumber(value);
   }
 
-  /**
-   * @param value The numeric wire value of the corresponding enum entry.
-   * @return The enum associated with the given numeric wire value.
-   */
   public static OperationResponseMapping forNumber(int value) {
     switch (value) {
       case 0:
@@ -199,39 +196,26 @@ public enum OperationResponseMapping implements com.google.protobuf.ProtocolMess
   private static final com.google.protobuf.Internal.EnumLiteMap<OperationResponseMapping>
       internalValueMap =
           new com.google.protobuf.Internal.EnumLiteMap<OperationResponseMapping>() {
+            @java.lang.Override
             public OperationResponseMapping findValueByNumber(int number) {
               return OperationResponseMapping.forNumber(number);
             }
           };
 
-  public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-    if (this == UNRECOGNIZED) {
-      throw new java.lang.IllegalStateException(
-          "Can't get the descriptor of an unrecognized enum value.");
+  public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+    return OperationResponseMappingVerifier.INSTANCE;
+  }
+
+  private static final class OperationResponseMappingVerifier
+      implements com.google.protobuf.Internal.EnumVerifier {
+    static final com.google.protobuf.Internal.EnumVerifier INSTANCE =
+        new OperationResponseMappingVerifier();
+
+    @java.lang.Override
+    public boolean isInRange(int number) {
+      return OperationResponseMapping.forNumber(number) != null;
     }
-    return getDescriptor().getValues().get(ordinal());
-  }
-
-  public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-    return getDescriptor();
-  }
-
-  public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-    return com.google.cloud.ExtendedOperationsProto.getDescriptor().getEnumTypes().get(0);
-  }
-
-  private static final OperationResponseMapping[] VALUES = values();
-
-  public static OperationResponseMapping valueOf(
-      com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-    if (desc.getType() != getDescriptor()) {
-      throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-    }
-    if (desc.getIndex() == -1) {
-      return UNRECOGNIZED;
-    }
-    return VALUES[desc.getIndex()];
-  }
+  };
 
   private final int value;
 

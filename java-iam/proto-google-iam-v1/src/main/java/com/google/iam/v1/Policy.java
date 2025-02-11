@@ -100,42 +100,18 @@ package com.google.iam.v1;
  *
  * Protobuf type {@code google.iam.v1.Policy}
  */
-public final class Policy extends com.google.protobuf.GeneratedMessageV3
+public final class Policy extends com.google.protobuf.GeneratedMessageLite<Policy, Policy.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.iam.v1.Policy)
     PolicyOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use Policy.newBuilder() to construct.
-  private Policy(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private Policy() {
-    bindings_ = java.util.Collections.emptyList();
-    auditConfigs_ = java.util.Collections.emptyList();
+    bindings_ = emptyProtobufList();
+    auditConfigs_ = emptyProtobufList();
     etag_ = com.google.protobuf.ByteString.EMPTY;
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new Policy();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.iam.v1.PolicyProto.internal_static_google_iam_v1_Policy_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.iam.v1.PolicyProto.internal_static_google_iam_v1_Policy_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.iam.v1.Policy.class, com.google.iam.v1.Policy.Builder.class);
-  }
-
   public static final int VERSION_FIELD_NUMBER = 1;
-  private int version_ = 0;
+  private int version_;
   /**
    *
    *
@@ -175,11 +151,85 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
   public int getVersion() {
     return version_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the format of the policy.
+   *
+   * Valid values are `0`, `1`, and `3`. Requests that specify an invalid value
+   * are rejected.
+   *
+   * Any operation that affects conditional role bindings must specify version
+   * `3`. This requirement applies to the following operations:
+   *
+   * * Getting a policy that includes a conditional role binding
+   * * Adding a conditional role binding to a policy
+   * * Changing a conditional role binding in a policy
+   * * Removing any role binding, with or without a condition, from a policy
+   *   that includes conditions
+   *
+   * **Important:** If you use IAM Conditions, you must include the `etag` field
+   * whenever you call `setIamPolicy`. If you omit this field, then IAM allows
+   * you to overwrite a version `3` policy with a version `1` policy, and all of
+   * the conditions in the version `3` policy are lost.
+   *
+   * If a policy does not include any conditions, operations on that policy may
+   * specify any valid version or leave the field unset.
+   *
+   * To learn which resources support conditions in their IAM policies, see the
+   * [IAM
+   * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
+   * </pre>
+   *
+   * <code>int32 version = 1;</code>
+   *
+   * @param value The version to set.
+   */
+  private void setVersion(int value) {
+
+    version_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the format of the policy.
+   *
+   * Valid values are `0`, `1`, and `3`. Requests that specify an invalid value
+   * are rejected.
+   *
+   * Any operation that affects conditional role bindings must specify version
+   * `3`. This requirement applies to the following operations:
+   *
+   * * Getting a policy that includes a conditional role binding
+   * * Adding a conditional role binding to a policy
+   * * Changing a conditional role binding in a policy
+   * * Removing any role binding, with or without a condition, from a policy
+   *   that includes conditions
+   *
+   * **Important:** If you use IAM Conditions, you must include the `etag` field
+   * whenever you call `setIamPolicy`. If you omit this field, then IAM allows
+   * you to overwrite a version `3` policy with a version `1` policy, and all of
+   * the conditions in the version `3` policy are lost.
+   *
+   * If a policy does not include any conditions, operations on that policy may
+   * specify any valid version or leave the field unset.
+   *
+   * To learn which resources support conditions in their IAM policies, see the
+   * [IAM
+   * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
+   * </pre>
+   *
+   * <code>int32 version = 1;</code>
+   */
+  private void clearVersion() {
+
+    version_ = 0;
+  }
 
   public static final int BINDINGS_FIELD_NUMBER = 4;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.iam.v1.Binding> bindings_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.iam.v1.Binding> bindings_;
   /**
    *
    *
@@ -220,7 +270,6 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.iam.v1.BindingOrBuilder> getBindingsOrBuilderList() {
     return bindings_;
   }
@@ -286,15 +335,154 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
    */
-  @java.lang.Override
   public com.google.iam.v1.BindingOrBuilder getBindingsOrBuilder(int index) {
     return bindings_.get(index);
   }
 
-  public static final int AUDIT_CONFIGS_FIELD_NUMBER = 6;
+  private void ensureBindingsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.iam.v1.Binding> tmp = bindings_;
+    if (!tmp.isModifiable()) {
+      bindings_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
 
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.iam.v1.AuditConfig> auditConfigs_;
+  /**
+   *
+   *
+   * <pre>
+   * Associates a list of `members`, or principals, with a `role`. Optionally,
+   * may specify a `condition` that determines how and when the `bindings` are
+   * applied. Each of the `bindings` must contain at least one principal.
+   *
+   * The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250
+   * of these principals can be Google groups. Each occurrence of a principal
+   * counts towards these limits. For example, if the `bindings` grant 50
+   * different roles to `user:alice&#64;example.com`, and not to any other
+   * principal, then you can add another 1,450 principals to the `bindings` in
+   * the `Policy`.
+   * </pre>
+   *
+   * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
+   */
+  private void setBindings(int index, com.google.iam.v1.Binding value) {
+    value.getClass();
+    ensureBindingsIsMutable();
+    bindings_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Associates a list of `members`, or principals, with a `role`. Optionally,
+   * may specify a `condition` that determines how and when the `bindings` are
+   * applied. Each of the `bindings` must contain at least one principal.
+   *
+   * The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250
+   * of these principals can be Google groups. Each occurrence of a principal
+   * counts towards these limits. For example, if the `bindings` grant 50
+   * different roles to `user:alice&#64;example.com`, and not to any other
+   * principal, then you can add another 1,450 principals to the `bindings` in
+   * the `Policy`.
+   * </pre>
+   *
+   * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
+   */
+  private void addBindings(com.google.iam.v1.Binding value) {
+    value.getClass();
+    ensureBindingsIsMutable();
+    bindings_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Associates a list of `members`, or principals, with a `role`. Optionally,
+   * may specify a `condition` that determines how and when the `bindings` are
+   * applied. Each of the `bindings` must contain at least one principal.
+   *
+   * The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250
+   * of these principals can be Google groups. Each occurrence of a principal
+   * counts towards these limits. For example, if the `bindings` grant 50
+   * different roles to `user:alice&#64;example.com`, and not to any other
+   * principal, then you can add another 1,450 principals to the `bindings` in
+   * the `Policy`.
+   * </pre>
+   *
+   * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
+   */
+  private void addBindings(int index, com.google.iam.v1.Binding value) {
+    value.getClass();
+    ensureBindingsIsMutable();
+    bindings_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Associates a list of `members`, or principals, with a `role`. Optionally,
+   * may specify a `condition` that determines how and when the `bindings` are
+   * applied. Each of the `bindings` must contain at least one principal.
+   *
+   * The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250
+   * of these principals can be Google groups. Each occurrence of a principal
+   * counts towards these limits. For example, if the `bindings` grant 50
+   * different roles to `user:alice&#64;example.com`, and not to any other
+   * principal, then you can add another 1,450 principals to the `bindings` in
+   * the `Policy`.
+   * </pre>
+   *
+   * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
+   */
+  private void addAllBindings(java.lang.Iterable<? extends com.google.iam.v1.Binding> values) {
+    ensureBindingsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, bindings_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Associates a list of `members`, or principals, with a `role`. Optionally,
+   * may specify a `condition` that determines how and when the `bindings` are
+   * applied. Each of the `bindings` must contain at least one principal.
+   *
+   * The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250
+   * of these principals can be Google groups. Each occurrence of a principal
+   * counts towards these limits. For example, if the `bindings` grant 50
+   * different roles to `user:alice&#64;example.com`, and not to any other
+   * principal, then you can add another 1,450 principals to the `bindings` in
+   * the `Policy`.
+   * </pre>
+   *
+   * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
+   */
+  private void clearBindings() {
+    bindings_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Associates a list of `members`, or principals, with a `role`. Optionally,
+   * may specify a `condition` that determines how and when the `bindings` are
+   * applied. Each of the `bindings` must contain at least one principal.
+   *
+   * The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250
+   * of these principals can be Google groups. Each occurrence of a principal
+   * counts towards these limits. For example, if the `bindings` grant 50
+   * different roles to `user:alice&#64;example.com`, and not to any other
+   * principal, then you can add another 1,450 principals to the `bindings` in
+   * the `Policy`.
+   * </pre>
+   *
+   * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
+   */
+  private void removeBindings(int index) {
+    ensureBindingsIsMutable();
+    bindings_.remove(index);
+  }
+
+  public static final int AUDIT_CONFIGS_FIELD_NUMBER = 6;
+  private com.google.protobuf.Internal.ProtobufList<com.google.iam.v1.AuditConfig> auditConfigs_;
   /**
    *
    *
@@ -317,7 +505,6 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.iam.v1.AuditConfigOrBuilder>
       getAuditConfigsOrBuilderList() {
     return auditConfigs_;
@@ -357,13 +544,101 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
    */
-  @java.lang.Override
   public com.google.iam.v1.AuditConfigOrBuilder getAuditConfigsOrBuilder(int index) {
     return auditConfigs_.get(index);
   }
 
+  private void ensureAuditConfigsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.iam.v1.AuditConfig> tmp = auditConfigs_;
+    if (!tmp.isModifiable()) {
+      auditConfigs_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * Specifies cloud audit logging configuration for this policy.
+   * </pre>
+   *
+   * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
+   */
+  private void setAuditConfigs(int index, com.google.iam.v1.AuditConfig value) {
+    value.getClass();
+    ensureAuditConfigsIsMutable();
+    auditConfigs_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies cloud audit logging configuration for this policy.
+   * </pre>
+   *
+   * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
+   */
+  private void addAuditConfigs(com.google.iam.v1.AuditConfig value) {
+    value.getClass();
+    ensureAuditConfigsIsMutable();
+    auditConfigs_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies cloud audit logging configuration for this policy.
+   * </pre>
+   *
+   * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
+   */
+  private void addAuditConfigs(int index, com.google.iam.v1.AuditConfig value) {
+    value.getClass();
+    ensureAuditConfigsIsMutable();
+    auditConfigs_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies cloud audit logging configuration for this policy.
+   * </pre>
+   *
+   * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
+   */
+  private void addAllAuditConfigs(
+      java.lang.Iterable<? extends com.google.iam.v1.AuditConfig> values) {
+    ensureAuditConfigsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, auditConfigs_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies cloud audit logging configuration for this policy.
+   * </pre>
+   *
+   * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
+   */
+  private void clearAuditConfigs() {
+    auditConfigs_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies cloud audit logging configuration for this policy.
+   * </pre>
+   *
+   * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
+   */
+  private void removeAuditConfigs(int index) {
+    ensureAuditConfigsIsMutable();
+    auditConfigs_.remove(index);
+  }
+
   public static final int ETAG_FIELD_NUMBER = 3;
-  private com.google.protobuf.ByteString etag_ = com.google.protobuf.ByteString.EMPTY;
+  private com.google.protobuf.ByteString etag_;
   /**
    *
    *
@@ -390,195 +665,139 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.ByteString getEtag() {
     return etag_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * `etag` is used for optimistic concurrency control as a way to help
+   * prevent simultaneous updates of a policy from overwriting each other.
+   * It is strongly suggested that systems make use of the `etag` in the
+   * read-modify-write cycle to perform policy updates in order to avoid race
+   * conditions: An `etag` is returned in the response to `getIamPolicy`, and
+   * systems are expected to put that etag in the request to `setIamPolicy` to
+   * ensure that their change will be applied to the same version of the policy.
+   *
+   * **Important:** If you use IAM Conditions, you must include the `etag` field
+   * whenever you call `setIamPolicy`. If you omit this field, then IAM allows
+   * you to overwrite a version `3` policy with a version `1` policy, and all of
+   * the conditions in the version `3` policy are lost.
+   * </pre>
+   *
+   * <code>bytes etag = 3;</code>
+   *
+   * @param value The etag to set.
+   */
+  private void setEtag(com.google.protobuf.ByteString value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    etag_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * `etag` is used for optimistic concurrency control as a way to help
+   * prevent simultaneous updates of a policy from overwriting each other.
+   * It is strongly suggested that systems make use of the `etag` in the
+   * read-modify-write cycle to perform policy updates in order to avoid race
+   * conditions: An `etag` is returned in the response to `getIamPolicy`, and
+   * systems are expected to put that etag in the request to `setIamPolicy` to
+   * ensure that their change will be applied to the same version of the policy.
+   *
+   * **Important:** If you use IAM Conditions, you must include the `etag` field
+   * whenever you call `setIamPolicy`. If you omit this field, then IAM allows
+   * you to overwrite a version `3` policy with a version `1` policy, and all of
+   * the conditions in the version `3` policy are lost.
+   * </pre>
+   *
+   * <code>bytes etag = 3;</code>
+   */
+  private void clearEtag() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (version_ != 0) {
-      output.writeInt32(1, version_);
-    }
-    if (!etag_.isEmpty()) {
-      output.writeBytes(3, etag_);
-    }
-    for (int i = 0; i < bindings_.size(); i++) {
-      output.writeMessage(4, bindings_.get(i));
-    }
-    for (int i = 0; i < auditConfigs_.size(); i++) {
-      output.writeMessage(6, auditConfigs_.get(i));
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (version_ != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeInt32Size(1, version_);
-    }
-    if (!etag_.isEmpty()) {
-      size += com.google.protobuf.CodedOutputStream.computeBytesSize(3, etag_);
-    }
-    for (int i = 0; i < bindings_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, bindings_.get(i));
-    }
-    for (int i = 0; i < auditConfigs_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(6, auditConfigs_.get(i));
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.iam.v1.Policy)) {
-      return super.equals(obj);
-    }
-    com.google.iam.v1.Policy other = (com.google.iam.v1.Policy) obj;
-
-    if (getVersion() != other.getVersion()) return false;
-    if (!getBindingsList().equals(other.getBindingsList())) return false;
-    if (!getAuditConfigsList().equals(other.getAuditConfigsList())) return false;
-    if (!getEtag().equals(other.getEtag())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + VERSION_FIELD_NUMBER;
-    hash = (53 * hash) + getVersion();
-    if (getBindingsCount() > 0) {
-      hash = (37 * hash) + BINDINGS_FIELD_NUMBER;
-      hash = (53 * hash) + getBindingsList().hashCode();
-    }
-    if (getAuditConfigsCount() > 0) {
-      hash = (37 * hash) + AUDIT_CONFIGS_FIELD_NUMBER;
-      hash = (53 * hash) + getAuditConfigsList().hashCode();
-    }
-    hash = (37 * hash) + ETAG_FIELD_NUMBER;
-    hash = (53 * hash) + getEtag().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+    etag_ = getDefaultInstance().getEtag();
   }
 
   public static com.google.iam.v1.Policy parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v1.Policy parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v1.Policy parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v1.Policy parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v1.Policy parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v1.Policy parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v1.Policy parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v1.Policy parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.iam.v1.Policy parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v1.Policy parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.iam.v1.Policy parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v1.Policy parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.iam.v1.Policy prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -660,300 +879,16 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.iam.v1.Policy}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<com.google.iam.v1.Policy, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.iam.v1.Policy)
       com.google.iam.v1.PolicyOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.iam.v1.PolicyProto.internal_static_google_iam_v1_Policy_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.iam.v1.PolicyProto.internal_static_google_iam_v1_Policy_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.iam.v1.Policy.class, com.google.iam.v1.Policy.Builder.class);
-    }
-
     // Construct using com.google.iam.v1.Policy.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      version_ = 0;
-      if (bindingsBuilder_ == null) {
-        bindings_ = java.util.Collections.emptyList();
-      } else {
-        bindings_ = null;
-        bindingsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000002);
-      if (auditConfigsBuilder_ == null) {
-        auditConfigs_ = java.util.Collections.emptyList();
-      } else {
-        auditConfigs_ = null;
-        auditConfigsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000004);
-      etag_ = com.google.protobuf.ByteString.EMPTY;
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.iam.v1.PolicyProto.internal_static_google_iam_v1_Policy_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.iam.v1.Policy getDefaultInstanceForType() {
-      return com.google.iam.v1.Policy.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.iam.v1.Policy build() {
-      com.google.iam.v1.Policy result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.iam.v1.Policy buildPartial() {
-      com.google.iam.v1.Policy result = new com.google.iam.v1.Policy(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.iam.v1.Policy result) {
-      if (bindingsBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)) {
-          bindings_ = java.util.Collections.unmodifiableList(bindings_);
-          bitField0_ = (bitField0_ & ~0x00000002);
-        }
-        result.bindings_ = bindings_;
-      } else {
-        result.bindings_ = bindingsBuilder_.build();
-      }
-      if (auditConfigsBuilder_ == null) {
-        if (((bitField0_ & 0x00000004) != 0)) {
-          auditConfigs_ = java.util.Collections.unmodifiableList(auditConfigs_);
-          bitField0_ = (bitField0_ & ~0x00000004);
-        }
-        result.auditConfigs_ = auditConfigs_;
-      } else {
-        result.auditConfigs_ = auditConfigsBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.iam.v1.Policy result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.version_ = version_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.etag_ = etag_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.iam.v1.Policy) {
-        return mergeFrom((com.google.iam.v1.Policy) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.iam.v1.Policy other) {
-      if (other == com.google.iam.v1.Policy.getDefaultInstance()) return this;
-      if (other.getVersion() != 0) {
-        setVersion(other.getVersion());
-      }
-      if (bindingsBuilder_ == null) {
-        if (!other.bindings_.isEmpty()) {
-          if (bindings_.isEmpty()) {
-            bindings_ = other.bindings_;
-            bitField0_ = (bitField0_ & ~0x00000002);
-          } else {
-            ensureBindingsIsMutable();
-            bindings_.addAll(other.bindings_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.bindings_.isEmpty()) {
-          if (bindingsBuilder_.isEmpty()) {
-            bindingsBuilder_.dispose();
-            bindingsBuilder_ = null;
-            bindings_ = other.bindings_;
-            bitField0_ = (bitField0_ & ~0x00000002);
-            bindingsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getBindingsFieldBuilder()
-                    : null;
-          } else {
-            bindingsBuilder_.addAllMessages(other.bindings_);
-          }
-        }
-      }
-      if (auditConfigsBuilder_ == null) {
-        if (!other.auditConfigs_.isEmpty()) {
-          if (auditConfigs_.isEmpty()) {
-            auditConfigs_ = other.auditConfigs_;
-            bitField0_ = (bitField0_ & ~0x00000004);
-          } else {
-            ensureAuditConfigsIsMutable();
-            auditConfigs_.addAll(other.auditConfigs_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.auditConfigs_.isEmpty()) {
-          if (auditConfigsBuilder_.isEmpty()) {
-            auditConfigsBuilder_.dispose();
-            auditConfigsBuilder_ = null;
-            auditConfigs_ = other.auditConfigs_;
-            bitField0_ = (bitField0_ & ~0x00000004);
-            auditConfigsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getAuditConfigsFieldBuilder()
-                    : null;
-          } else {
-            auditConfigsBuilder_.addAllMessages(other.auditConfigs_);
-          }
-        }
-      }
-      if (other.getEtag() != com.google.protobuf.ByteString.EMPTY) {
-        setEtag(other.getEtag());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 8:
-              {
-                version_ = input.readInt32();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 8
-            case 26:
-              {
-                etag_ = input.readBytes();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 26
-            case 34:
-              {
-                com.google.iam.v1.Binding m =
-                    input.readMessage(com.google.iam.v1.Binding.parser(), extensionRegistry);
-                if (bindingsBuilder_ == null) {
-                  ensureBindingsIsMutable();
-                  bindings_.add(m);
-                } else {
-                  bindingsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 34
-            case 50:
-              {
-                com.google.iam.v1.AuditConfig m =
-                    input.readMessage(com.google.iam.v1.AuditConfig.parser(), extensionRegistry);
-                if (auditConfigsBuilder_ == null) {
-                  ensureAuditConfigsIsMutable();
-                  auditConfigs_.add(m);
-                } else {
-                  auditConfigsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 50
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private int version_;
     /**
      *
      *
@@ -991,7 +926,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getVersion() {
-      return version_;
+      return instance.getVersion();
     }
     /**
      *
@@ -1030,10 +965,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setVersion(int value) {
-
-      version_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setVersion(value);
       return this;
     }
     /**
@@ -1072,27 +1005,11 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearVersion() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      version_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearVersion();
       return this;
     }
 
-    private java.util.List<com.google.iam.v1.Binding> bindings_ = java.util.Collections.emptyList();
-
-    private void ensureBindingsIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
-        bindings_ = new java.util.ArrayList<com.google.iam.v1.Binding>(bindings_);
-        bitField0_ |= 0x00000002;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.iam.v1.Binding,
-            com.google.iam.v1.Binding.Builder,
-            com.google.iam.v1.BindingOrBuilder>
-        bindingsBuilder_;
-
     /**
      *
      *
@@ -1111,12 +1028,9 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.iam.v1.Binding> getBindingsList() {
-      if (bindingsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(bindings_);
-      } else {
-        return bindingsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getBindingsList());
     }
     /**
      *
@@ -1136,12 +1050,9 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
      */
+    @java.lang.Override
     public int getBindingsCount() {
-      if (bindingsBuilder_ == null) {
-        return bindings_.size();
-      } else {
-        return bindingsBuilder_.getCount();
-      }
+      return instance.getBindingsCount();
     }
     /**
      *
@@ -1161,12 +1072,10 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
      */
+
+    @java.lang.Override
     public com.google.iam.v1.Binding getBindings(int index) {
-      if (bindingsBuilder_ == null) {
-        return bindings_.get(index);
-      } else {
-        return bindingsBuilder_.getMessage(index);
-      }
+      return instance.getBindings(index);
     }
     /**
      *
@@ -1187,16 +1096,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
      */
     public Builder setBindings(int index, com.google.iam.v1.Binding value) {
-      if (bindingsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureBindingsIsMutable();
-        bindings_.set(index, value);
-        onChanged();
-      } else {
-        bindingsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setBindings(index, value);
       return this;
     }
     /**
@@ -1218,13 +1119,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
      */
     public Builder setBindings(int index, com.google.iam.v1.Binding.Builder builderForValue) {
-      if (bindingsBuilder_ == null) {
-        ensureBindingsIsMutable();
-        bindings_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        bindingsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setBindings(index, builderForValue.build());
       return this;
     }
     /**
@@ -1246,16 +1142,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
      */
     public Builder addBindings(com.google.iam.v1.Binding value) {
-      if (bindingsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureBindingsIsMutable();
-        bindings_.add(value);
-        onChanged();
-      } else {
-        bindingsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addBindings(value);
       return this;
     }
     /**
@@ -1277,16 +1165,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
      */
     public Builder addBindings(int index, com.google.iam.v1.Binding value) {
-      if (bindingsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureBindingsIsMutable();
-        bindings_.add(index, value);
-        onChanged();
-      } else {
-        bindingsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addBindings(index, value);
       return this;
     }
     /**
@@ -1308,13 +1188,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
      */
     public Builder addBindings(com.google.iam.v1.Binding.Builder builderForValue) {
-      if (bindingsBuilder_ == null) {
-        ensureBindingsIsMutable();
-        bindings_.add(builderForValue.build());
-        onChanged();
-      } else {
-        bindingsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addBindings(builderForValue.build());
       return this;
     }
     /**
@@ -1336,13 +1211,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
      */
     public Builder addBindings(int index, com.google.iam.v1.Binding.Builder builderForValue) {
-      if (bindingsBuilder_ == null) {
-        ensureBindingsIsMutable();
-        bindings_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        bindingsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addBindings(index, builderForValue.build());
       return this;
     }
     /**
@@ -1364,13 +1234,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
      */
     public Builder addAllBindings(java.lang.Iterable<? extends com.google.iam.v1.Binding> values) {
-      if (bindingsBuilder_ == null) {
-        ensureBindingsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, bindings_);
-        onChanged();
-      } else {
-        bindingsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllBindings(values);
       return this;
     }
     /**
@@ -1392,13 +1257,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
      */
     public Builder clearBindings() {
-      if (bindingsBuilder_ == null) {
-        bindings_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
-      } else {
-        bindingsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearBindings();
       return this;
     }
     /**
@@ -1420,183 +1280,10 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
      */
     public Builder removeBindings(int index) {
-      if (bindingsBuilder_ == null) {
-        ensureBindingsIsMutable();
-        bindings_.remove(index);
-        onChanged();
-      } else {
-        bindingsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeBindings(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Associates a list of `members`, or principals, with a `role`. Optionally,
-     * may specify a `condition` that determines how and when the `bindings` are
-     * applied. Each of the `bindings` must contain at least one principal.
-     *
-     * The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250
-     * of these principals can be Google groups. Each occurrence of a principal
-     * counts towards these limits. For example, if the `bindings` grant 50
-     * different roles to `user:alice&#64;example.com`, and not to any other
-     * principal, then you can add another 1,450 principals to the `bindings` in
-     * the `Policy`.
-     * </pre>
-     *
-     * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
-     */
-    public com.google.iam.v1.Binding.Builder getBindingsBuilder(int index) {
-      return getBindingsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Associates a list of `members`, or principals, with a `role`. Optionally,
-     * may specify a `condition` that determines how and when the `bindings` are
-     * applied. Each of the `bindings` must contain at least one principal.
-     *
-     * The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250
-     * of these principals can be Google groups. Each occurrence of a principal
-     * counts towards these limits. For example, if the `bindings` grant 50
-     * different roles to `user:alice&#64;example.com`, and not to any other
-     * principal, then you can add another 1,450 principals to the `bindings` in
-     * the `Policy`.
-     * </pre>
-     *
-     * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
-     */
-    public com.google.iam.v1.BindingOrBuilder getBindingsOrBuilder(int index) {
-      if (bindingsBuilder_ == null) {
-        return bindings_.get(index);
-      } else {
-        return bindingsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Associates a list of `members`, or principals, with a `role`. Optionally,
-     * may specify a `condition` that determines how and when the `bindings` are
-     * applied. Each of the `bindings` must contain at least one principal.
-     *
-     * The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250
-     * of these principals can be Google groups. Each occurrence of a principal
-     * counts towards these limits. For example, if the `bindings` grant 50
-     * different roles to `user:alice&#64;example.com`, and not to any other
-     * principal, then you can add another 1,450 principals to the `bindings` in
-     * the `Policy`.
-     * </pre>
-     *
-     * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
-     */
-    public java.util.List<? extends com.google.iam.v1.BindingOrBuilder> getBindingsOrBuilderList() {
-      if (bindingsBuilder_ != null) {
-        return bindingsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(bindings_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Associates a list of `members`, or principals, with a `role`. Optionally,
-     * may specify a `condition` that determines how and when the `bindings` are
-     * applied. Each of the `bindings` must contain at least one principal.
-     *
-     * The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250
-     * of these principals can be Google groups. Each occurrence of a principal
-     * counts towards these limits. For example, if the `bindings` grant 50
-     * different roles to `user:alice&#64;example.com`, and not to any other
-     * principal, then you can add another 1,450 principals to the `bindings` in
-     * the `Policy`.
-     * </pre>
-     *
-     * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
-     */
-    public com.google.iam.v1.Binding.Builder addBindingsBuilder() {
-      return getBindingsFieldBuilder().addBuilder(com.google.iam.v1.Binding.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Associates a list of `members`, or principals, with a `role`. Optionally,
-     * may specify a `condition` that determines how and when the `bindings` are
-     * applied. Each of the `bindings` must contain at least one principal.
-     *
-     * The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250
-     * of these principals can be Google groups. Each occurrence of a principal
-     * counts towards these limits. For example, if the `bindings` grant 50
-     * different roles to `user:alice&#64;example.com`, and not to any other
-     * principal, then you can add another 1,450 principals to the `bindings` in
-     * the `Policy`.
-     * </pre>
-     *
-     * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
-     */
-    public com.google.iam.v1.Binding.Builder addBindingsBuilder(int index) {
-      return getBindingsFieldBuilder()
-          .addBuilder(index, com.google.iam.v1.Binding.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Associates a list of `members`, or principals, with a `role`. Optionally,
-     * may specify a `condition` that determines how and when the `bindings` are
-     * applied. Each of the `bindings` must contain at least one principal.
-     *
-     * The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250
-     * of these principals can be Google groups. Each occurrence of a principal
-     * counts towards these limits. For example, if the `bindings` grant 50
-     * different roles to `user:alice&#64;example.com`, and not to any other
-     * principal, then you can add another 1,450 principals to the `bindings` in
-     * the `Policy`.
-     * </pre>
-     *
-     * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
-     */
-    public java.util.List<com.google.iam.v1.Binding.Builder> getBindingsBuilderList() {
-      return getBindingsFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.iam.v1.Binding,
-            com.google.iam.v1.Binding.Builder,
-            com.google.iam.v1.BindingOrBuilder>
-        getBindingsFieldBuilder() {
-      if (bindingsBuilder_ == null) {
-        bindingsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.iam.v1.Binding,
-                com.google.iam.v1.Binding.Builder,
-                com.google.iam.v1.BindingOrBuilder>(
-                bindings_, ((bitField0_ & 0x00000002) != 0), getParentForChildren(), isClean());
-        bindings_ = null;
-      }
-      return bindingsBuilder_;
-    }
-
-    private java.util.List<com.google.iam.v1.AuditConfig> auditConfigs_ =
-        java.util.Collections.emptyList();
-
-    private void ensureAuditConfigsIsMutable() {
-      if (!((bitField0_ & 0x00000004) != 0)) {
-        auditConfigs_ = new java.util.ArrayList<com.google.iam.v1.AuditConfig>(auditConfigs_);
-        bitField0_ |= 0x00000004;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.iam.v1.AuditConfig,
-            com.google.iam.v1.AuditConfig.Builder,
-            com.google.iam.v1.AuditConfigOrBuilder>
-        auditConfigsBuilder_;
 
     /**
      *
@@ -1607,12 +1294,9 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.iam.v1.AuditConfig> getAuditConfigsList() {
-      if (auditConfigsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(auditConfigs_);
-      } else {
-        return auditConfigsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getAuditConfigsList());
     }
     /**
      *
@@ -1623,12 +1307,9 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
      */
+    @java.lang.Override
     public int getAuditConfigsCount() {
-      if (auditConfigsBuilder_ == null) {
-        return auditConfigs_.size();
-      } else {
-        return auditConfigsBuilder_.getCount();
-      }
+      return instance.getAuditConfigsCount();
     }
     /**
      *
@@ -1639,12 +1320,10 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
      */
+
+    @java.lang.Override
     public com.google.iam.v1.AuditConfig getAuditConfigs(int index) {
-      if (auditConfigsBuilder_ == null) {
-        return auditConfigs_.get(index);
-      } else {
-        return auditConfigsBuilder_.getMessage(index);
-      }
+      return instance.getAuditConfigs(index);
     }
     /**
      *
@@ -1656,16 +1335,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
      */
     public Builder setAuditConfigs(int index, com.google.iam.v1.AuditConfig value) {
-      if (auditConfigsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureAuditConfigsIsMutable();
-        auditConfigs_.set(index, value);
-        onChanged();
-      } else {
-        auditConfigsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setAuditConfigs(index, value);
       return this;
     }
     /**
@@ -1679,13 +1350,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder setAuditConfigs(
         int index, com.google.iam.v1.AuditConfig.Builder builderForValue) {
-      if (auditConfigsBuilder_ == null) {
-        ensureAuditConfigsIsMutable();
-        auditConfigs_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        auditConfigsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setAuditConfigs(index, builderForValue.build());
       return this;
     }
     /**
@@ -1698,16 +1364,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
      */
     public Builder addAuditConfigs(com.google.iam.v1.AuditConfig value) {
-      if (auditConfigsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureAuditConfigsIsMutable();
-        auditConfigs_.add(value);
-        onChanged();
-      } else {
-        auditConfigsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addAuditConfigs(value);
       return this;
     }
     /**
@@ -1720,16 +1378,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
      */
     public Builder addAuditConfigs(int index, com.google.iam.v1.AuditConfig value) {
-      if (auditConfigsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureAuditConfigsIsMutable();
-        auditConfigs_.add(index, value);
-        onChanged();
-      } else {
-        auditConfigsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addAuditConfigs(index, value);
       return this;
     }
     /**
@@ -1742,13 +1392,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
      */
     public Builder addAuditConfigs(com.google.iam.v1.AuditConfig.Builder builderForValue) {
-      if (auditConfigsBuilder_ == null) {
-        ensureAuditConfigsIsMutable();
-        auditConfigs_.add(builderForValue.build());
-        onChanged();
-      } else {
-        auditConfigsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addAuditConfigs(builderForValue.build());
       return this;
     }
     /**
@@ -1762,13 +1407,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addAuditConfigs(
         int index, com.google.iam.v1.AuditConfig.Builder builderForValue) {
-      if (auditConfigsBuilder_ == null) {
-        ensureAuditConfigsIsMutable();
-        auditConfigs_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        auditConfigsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addAuditConfigs(index, builderForValue.build());
       return this;
     }
     /**
@@ -1782,13 +1422,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addAllAuditConfigs(
         java.lang.Iterable<? extends com.google.iam.v1.AuditConfig> values) {
-      if (auditConfigsBuilder_ == null) {
-        ensureAuditConfigsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, auditConfigs_);
-        onChanged();
-      } else {
-        auditConfigsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllAuditConfigs(values);
       return this;
     }
     /**
@@ -1801,13 +1436,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
      */
     public Builder clearAuditConfigs() {
-      if (auditConfigsBuilder_ == null) {
-        auditConfigs_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000004);
-        onChanged();
-      } else {
-        auditConfigsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearAuditConfigs();
       return this;
     }
     /**
@@ -1820,117 +1450,11 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
      */
     public Builder removeAuditConfigs(int index) {
-      if (auditConfigsBuilder_ == null) {
-        ensureAuditConfigsIsMutable();
-        auditConfigs_.remove(index);
-        onChanged();
-      } else {
-        auditConfigsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeAuditConfigs(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Specifies cloud audit logging configuration for this policy.
-     * </pre>
-     *
-     * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
-     */
-    public com.google.iam.v1.AuditConfig.Builder getAuditConfigsBuilder(int index) {
-      return getAuditConfigsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Specifies cloud audit logging configuration for this policy.
-     * </pre>
-     *
-     * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
-     */
-    public com.google.iam.v1.AuditConfigOrBuilder getAuditConfigsOrBuilder(int index) {
-      if (auditConfigsBuilder_ == null) {
-        return auditConfigs_.get(index);
-      } else {
-        return auditConfigsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Specifies cloud audit logging configuration for this policy.
-     * </pre>
-     *
-     * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
-     */
-    public java.util.List<? extends com.google.iam.v1.AuditConfigOrBuilder>
-        getAuditConfigsOrBuilderList() {
-      if (auditConfigsBuilder_ != null) {
-        return auditConfigsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(auditConfigs_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Specifies cloud audit logging configuration for this policy.
-     * </pre>
-     *
-     * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
-     */
-    public com.google.iam.v1.AuditConfig.Builder addAuditConfigsBuilder() {
-      return getAuditConfigsFieldBuilder()
-          .addBuilder(com.google.iam.v1.AuditConfig.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Specifies cloud audit logging configuration for this policy.
-     * </pre>
-     *
-     * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
-     */
-    public com.google.iam.v1.AuditConfig.Builder addAuditConfigsBuilder(int index) {
-      return getAuditConfigsFieldBuilder()
-          .addBuilder(index, com.google.iam.v1.AuditConfig.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Specifies cloud audit logging configuration for this policy.
-     * </pre>
-     *
-     * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
-     */
-    public java.util.List<com.google.iam.v1.AuditConfig.Builder> getAuditConfigsBuilderList() {
-      return getAuditConfigsFieldBuilder().getBuilderList();
-    }
 
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.iam.v1.AuditConfig,
-            com.google.iam.v1.AuditConfig.Builder,
-            com.google.iam.v1.AuditConfigOrBuilder>
-        getAuditConfigsFieldBuilder() {
-      if (auditConfigsBuilder_ == null) {
-        auditConfigsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.iam.v1.AuditConfig,
-                com.google.iam.v1.AuditConfig.Builder,
-                com.google.iam.v1.AuditConfigOrBuilder>(
-                auditConfigs_, ((bitField0_ & 0x00000004) != 0), getParentForChildren(), isClean());
-        auditConfigs_ = null;
-      }
-      return auditConfigsBuilder_;
-    }
-
-    private com.google.protobuf.ByteString etag_ = com.google.protobuf.ByteString.EMPTY;
     /**
      *
      *
@@ -1955,7 +1479,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getEtag() {
-      return etag_;
+      return instance.getEtag();
     }
     /**
      *
@@ -1981,12 +1505,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setEtag(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      etag_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setEtag(value);
       return this;
     }
     /**
@@ -2012,70 +1532,94 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearEtag() {
-      bitField0_ = (bitField0_ & ~0x00000008);
-      etag_ = getDefaultInstance().getEtag();
-      onChanged();
+      copyOnWrite();
+      instance.clearEtag();
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.iam.v1.Policy)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.iam.v1.Policy();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "version_",
+                "etag_",
+                "bindings_",
+                com.google.iam.v1.Binding.class,
+                "auditConfigs_",
+                com.google.iam.v1.AuditConfig.class,
+              };
+          java.lang.String info =
+              "\u0000\u0004\u0000\u0000\u0001\u0006\u0004\u0000\u0002\u0000\u0001\u0004\u0003\n"
+                  + "\u0004\u001b\u0006\u001b";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.iam.v1.Policy> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.iam.v1.Policy.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser = new DefaultInstanceBasedParser<com.google.iam.v1.Policy>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.iam.v1.Policy)
   private static final com.google.iam.v1.Policy DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.iam.v1.Policy();
+    Policy defaultInstance = new Policy();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(Policy.class, defaultInstance);
   }
 
   public static com.google.iam.v1.Policy getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Policy> PARSER =
-      new com.google.protobuf.AbstractParser<Policy>() {
-        @java.lang.Override
-        public Policy parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<Policy> PARSER;
 
   public static com.google.protobuf.Parser<Policy> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<Policy> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.iam.v1.Policy getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

@@ -22,7 +22,7 @@ package com.google.cloud.location;
 public interface LocationOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.cloud.location.Location)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -153,6 +153,7 @@ public interface LocationOrBuilder
    *
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
+
   /* nullable */
   java.lang.String getLabelsOrDefault(
       java.lang.String key,
@@ -197,15 +198,4 @@ public interface LocationOrBuilder
    * @return The metadata.
    */
   com.google.protobuf.Any getMetadata();
-  /**
-   *
-   *
-   * <pre>
-   * Service-specific metadata. For example the available capacity at the given
-   * location.
-   * </pre>
-   *
-   * <code>.google.protobuf.Any metadata = 3;</code>
-   */
-  com.google.protobuf.AnyOrBuilder getMetadataOrBuilder();
 }

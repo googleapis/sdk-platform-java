@@ -22,7 +22,7 @@ package com.google.rpc;
 public interface LocalizedMessageOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.rpc.LocalizedMessage)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

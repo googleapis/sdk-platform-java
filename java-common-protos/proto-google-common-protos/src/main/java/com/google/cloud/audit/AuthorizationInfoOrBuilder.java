@@ -22,7 +22,7 @@ package com.google.cloud.audit;
 public interface AuthorizationInfoOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.cloud.audit.AuthorizationInfo)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -132,19 +132,4 @@ public interface AuthorizationInfoOrBuilder
    * @return The resourceAttributes.
    */
   com.google.rpc.context.AttributeContext.Resource getResourceAttributes();
-  /**
-   *
-   *
-   * <pre>
-   * Resource attributes used in IAM condition evaluation. This field contains
-   * resource attributes like resource type and resource name.
-   *
-   * To get the whole view of the attributes used in IAM
-   * condition evaluation, the user must also look into
-   * `AuditLog.request_metadata.request_attributes`.
-   * </pre>
-   *
-   * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
-   */
-  com.google.rpc.context.AttributeContext.ResourceOrBuilder getResourceAttributesOrBuilder();
 }

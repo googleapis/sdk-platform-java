@@ -22,7 +22,7 @@ package com.google.api;
 public interface ProjectPropertiesOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.ProjectProperties)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -54,24 +54,4 @@ public interface ProjectPropertiesOrBuilder
    * <code>repeated .google.api.Property properties = 1;</code>
    */
   int getPropertiesCount();
-  /**
-   *
-   *
-   * <pre>
-   * List of per consumer project-specific properties.
-   * </pre>
-   *
-   * <code>repeated .google.api.Property properties = 1;</code>
-   */
-  java.util.List<? extends com.google.api.PropertyOrBuilder> getPropertiesOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * List of per consumer project-specific properties.
-   * </pre>
-   *
-   * <code>repeated .google.api.Property properties = 1;</code>
-   */
-  com.google.api.PropertyOrBuilder getPropertiesOrBuilder(int index);
 }

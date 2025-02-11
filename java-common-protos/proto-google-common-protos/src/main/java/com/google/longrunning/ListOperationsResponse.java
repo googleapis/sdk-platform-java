@@ -29,46 +29,19 @@ package com.google.longrunning;
  *
  * Protobuf type {@code google.longrunning.ListOperationsResponse}
  */
-public final class ListOperationsResponse extends com.google.protobuf.GeneratedMessageV3
+public final class ListOperationsResponse
+    extends com.google.protobuf.GeneratedMessageLite<
+        ListOperationsResponse, ListOperationsResponse.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.longrunning.ListOperationsResponse)
     ListOperationsResponseOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use ListOperationsResponse.newBuilder() to construct.
-  private ListOperationsResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private ListOperationsResponse() {
-    operations_ = java.util.Collections.emptyList();
+    operations_ = emptyProtobufList();
     nextPageToken_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new ListOperationsResponse();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.longrunning.OperationsProto
-        .internal_static_google_longrunning_ListOperationsResponse_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.longrunning.OperationsProto
-        .internal_static_google_longrunning_ListOperationsResponse_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.longrunning.ListOperationsResponse.class,
-            com.google.longrunning.ListOperationsResponse.Builder.class);
-  }
-
   public static final int OPERATIONS_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.longrunning.Operation> operations_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.longrunning.Operation> operations_;
   /**
    *
    *
@@ -91,7 +64,6 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
    *
    * <code>repeated .google.longrunning.Operation operations = 1;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.longrunning.OperationOrBuilder>
       getOperationsOrBuilderList() {
     return operations_;
@@ -131,15 +103,101 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
    *
    * <code>repeated .google.longrunning.Operation operations = 1;</code>
    */
-  @java.lang.Override
   public com.google.longrunning.OperationOrBuilder getOperationsOrBuilder(int index) {
     return operations_.get(index);
   }
 
-  public static final int NEXT_PAGE_TOKEN_FIELD_NUMBER = 2;
+  private void ensureOperationsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.longrunning.Operation> tmp = operations_;
+    if (!tmp.isModifiable()) {
+      operations_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
 
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object nextPageToken_ = "";
+  /**
+   *
+   *
+   * <pre>
+   * A list of operations that matches the specified filter in the request.
+   * </pre>
+   *
+   * <code>repeated .google.longrunning.Operation operations = 1;</code>
+   */
+  private void setOperations(int index, com.google.longrunning.Operation value) {
+    value.getClass();
+    ensureOperationsIsMutable();
+    operations_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of operations that matches the specified filter in the request.
+   * </pre>
+   *
+   * <code>repeated .google.longrunning.Operation operations = 1;</code>
+   */
+  private void addOperations(com.google.longrunning.Operation value) {
+    value.getClass();
+    ensureOperationsIsMutable();
+    operations_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of operations that matches the specified filter in the request.
+   * </pre>
+   *
+   * <code>repeated .google.longrunning.Operation operations = 1;</code>
+   */
+  private void addOperations(int index, com.google.longrunning.Operation value) {
+    value.getClass();
+    ensureOperationsIsMutable();
+    operations_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of operations that matches the specified filter in the request.
+   * </pre>
+   *
+   * <code>repeated .google.longrunning.Operation operations = 1;</code>
+   */
+  private void addAllOperations(
+      java.lang.Iterable<? extends com.google.longrunning.Operation> values) {
+    ensureOperationsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, operations_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of operations that matches the specified filter in the request.
+   * </pre>
+   *
+   * <code>repeated .google.longrunning.Operation operations = 1;</code>
+   */
+  private void clearOperations() {
+    operations_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of operations that matches the specified filter in the request.
+   * </pre>
+   *
+   * <code>repeated .google.longrunning.Operation operations = 1;</code>
+   */
+  private void removeOperations(int index) {
+    ensureOperationsIsMutable();
+    operations_.remove(index);
+  }
+
+  public static final int NEXT_PAGE_TOKEN_FIELD_NUMBER = 2;
+  private java.lang.String nextPageToken_;
   /**
    *
    *
@@ -153,15 +211,7 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
    */
   @java.lang.Override
   public java.lang.String getNextPageToken() {
-    java.lang.Object ref = nextPageToken_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      nextPageToken_ = s;
-      return s;
-    }
+    return nextPageToken_;
   }
   /**
    *
@@ -176,187 +226,135 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getNextPageTokenBytes() {
-    java.lang.Object ref = nextPageToken_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      nextPageToken_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(nextPageToken_);
   }
+  /**
+   *
+   *
+   * <pre>
+   * The standard List next-page token.
+   * </pre>
+   *
+   * <code>string next_page_token = 2;</code>
+   *
+   * @param value The nextPageToken to set.
+   */
+  private void setNextPageToken(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    nextPageToken_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The standard List next-page token.
+   * </pre>
+   *
+   * <code>string next_page_token = 2;</code>
+   */
+  private void clearNextPageToken() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    for (int i = 0; i < operations_.size(); i++) {
-      output.writeMessage(1, operations_.get(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(nextPageToken_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, nextPageToken_);
-    }
-    getUnknownFields().writeTo(output);
+    nextPageToken_ = getDefaultInstance().getNextPageToken();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    for (int i = 0; i < operations_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, operations_.get(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(nextPageToken_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, nextPageToken_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.longrunning.ListOperationsResponse)) {
-      return super.equals(obj);
-    }
-    com.google.longrunning.ListOperationsResponse other =
-        (com.google.longrunning.ListOperationsResponse) obj;
-
-    if (!getOperationsList().equals(other.getOperationsList())) return false;
-    if (!getNextPageToken().equals(other.getNextPageToken())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (getOperationsCount() > 0) {
-      hash = (37 * hash) + OPERATIONS_FIELD_NUMBER;
-      hash = (53 * hash) + getOperationsList().hashCode();
-    }
-    hash = (37 * hash) + NEXT_PAGE_TOKEN_FIELD_NUMBER;
-    hash = (53 * hash) + getNextPageToken().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * The standard List next-page token.
+   * </pre>
+   *
+   * <code>string next_page_token = 2;</code>
+   *
+   * @param value The bytes for nextPageToken to set.
+   */
+  private void setNextPageTokenBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    nextPageToken_ = value.toStringUtf8();
   }
 
   public static com.google.longrunning.ListOperationsResponse parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.longrunning.ListOperationsResponse parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.longrunning.ListOperationsResponse parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.longrunning.ListOperationsResponse parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.longrunning.ListOperationsResponse parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.longrunning.ListOperationsResponse parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.longrunning.ListOperationsResponse parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.longrunning.ListOperationsResponse parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.longrunning.ListOperationsResponse parseDelimitedFrom(
       java.io.InputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.longrunning.ListOperationsResponse parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.longrunning.ListOperationsResponse parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.longrunning.ListOperationsResponse parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.longrunning.ListOperationsResponse prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -367,253 +365,16 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
    *
    * Protobuf type {@code google.longrunning.ListOperationsResponse}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.longrunning.ListOperationsResponse, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.longrunning.ListOperationsResponse)
       com.google.longrunning.ListOperationsResponseOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.longrunning.OperationsProto
-          .internal_static_google_longrunning_ListOperationsResponse_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.longrunning.OperationsProto
-          .internal_static_google_longrunning_ListOperationsResponse_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.longrunning.ListOperationsResponse.class,
-              com.google.longrunning.ListOperationsResponse.Builder.class);
-    }
-
     // Construct using com.google.longrunning.ListOperationsResponse.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      if (operationsBuilder_ == null) {
-        operations_ = java.util.Collections.emptyList();
-      } else {
-        operations_ = null;
-        operationsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000001);
-      nextPageToken_ = "";
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.longrunning.OperationsProto
-          .internal_static_google_longrunning_ListOperationsResponse_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.longrunning.ListOperationsResponse getDefaultInstanceForType() {
-      return com.google.longrunning.ListOperationsResponse.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.longrunning.ListOperationsResponse build() {
-      com.google.longrunning.ListOperationsResponse result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.longrunning.ListOperationsResponse buildPartial() {
-      com.google.longrunning.ListOperationsResponse result =
-          new com.google.longrunning.ListOperationsResponse(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.longrunning.ListOperationsResponse result) {
-      if (operationsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
-          operations_ = java.util.Collections.unmodifiableList(operations_);
-          bitField0_ = (bitField0_ & ~0x00000001);
-        }
-        result.operations_ = operations_;
-      } else {
-        result.operations_ = operationsBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.longrunning.ListOperationsResponse result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.nextPageToken_ = nextPageToken_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.longrunning.ListOperationsResponse) {
-        return mergeFrom((com.google.longrunning.ListOperationsResponse) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.longrunning.ListOperationsResponse other) {
-      if (other == com.google.longrunning.ListOperationsResponse.getDefaultInstance()) return this;
-      if (operationsBuilder_ == null) {
-        if (!other.operations_.isEmpty()) {
-          if (operations_.isEmpty()) {
-            operations_ = other.operations_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensureOperationsIsMutable();
-            operations_.addAll(other.operations_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.operations_.isEmpty()) {
-          if (operationsBuilder_.isEmpty()) {
-            operationsBuilder_.dispose();
-            operationsBuilder_ = null;
-            operations_ = other.operations_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-            operationsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getOperationsFieldBuilder()
-                    : null;
-          } else {
-            operationsBuilder_.addAllMessages(other.operations_);
-          }
-        }
-      }
-      if (!other.getNextPageToken().isEmpty()) {
-        nextPageToken_ = other.nextPageToken_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                com.google.longrunning.Operation m =
-                    input.readMessage(com.google.longrunning.Operation.parser(), extensionRegistry);
-                if (operationsBuilder_ == null) {
-                  ensureOperationsIsMutable();
-                  operations_.add(m);
-                } else {
-                  operationsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 10
-            case 18:
-              {
-                nextPageToken_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.util.List<com.google.longrunning.Operation> operations_ =
-        java.util.Collections.emptyList();
-
-    private void ensureOperationsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
-        operations_ = new java.util.ArrayList<com.google.longrunning.Operation>(operations_);
-        bitField0_ |= 0x00000001;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.longrunning.Operation,
-            com.google.longrunning.Operation.Builder,
-            com.google.longrunning.OperationOrBuilder>
-        operationsBuilder_;
 
     /**
      *
@@ -624,12 +385,9 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
      *
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.longrunning.Operation> getOperationsList() {
-      if (operationsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(operations_);
-      } else {
-        return operationsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getOperationsList());
     }
     /**
      *
@@ -640,12 +398,9 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
      *
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
+    @java.lang.Override
     public int getOperationsCount() {
-      if (operationsBuilder_ == null) {
-        return operations_.size();
-      } else {
-        return operationsBuilder_.getCount();
-      }
+      return instance.getOperationsCount();
     }
     /**
      *
@@ -656,12 +411,10 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
      *
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
+
+    @java.lang.Override
     public com.google.longrunning.Operation getOperations(int index) {
-      if (operationsBuilder_ == null) {
-        return operations_.get(index);
-      } else {
-        return operationsBuilder_.getMessage(index);
-      }
+      return instance.getOperations(index);
     }
     /**
      *
@@ -673,16 +426,8 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
     public Builder setOperations(int index, com.google.longrunning.Operation value) {
-      if (operationsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureOperationsIsMutable();
-        operations_.set(index, value);
-        onChanged();
-      } else {
-        operationsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setOperations(index, value);
       return this;
     }
     /**
@@ -696,13 +441,8 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
      */
     public Builder setOperations(
         int index, com.google.longrunning.Operation.Builder builderForValue) {
-      if (operationsBuilder_ == null) {
-        ensureOperationsIsMutable();
-        operations_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        operationsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setOperations(index, builderForValue.build());
       return this;
     }
     /**
@@ -715,16 +455,8 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
     public Builder addOperations(com.google.longrunning.Operation value) {
-      if (operationsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureOperationsIsMutable();
-        operations_.add(value);
-        onChanged();
-      } else {
-        operationsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addOperations(value);
       return this;
     }
     /**
@@ -737,16 +469,8 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
     public Builder addOperations(int index, com.google.longrunning.Operation value) {
-      if (operationsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureOperationsIsMutable();
-        operations_.add(index, value);
-        onChanged();
-      } else {
-        operationsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addOperations(index, value);
       return this;
     }
     /**
@@ -759,13 +483,8 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
     public Builder addOperations(com.google.longrunning.Operation.Builder builderForValue) {
-      if (operationsBuilder_ == null) {
-        ensureOperationsIsMutable();
-        operations_.add(builderForValue.build());
-        onChanged();
-      } else {
-        operationsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addOperations(builderForValue.build());
       return this;
     }
     /**
@@ -779,13 +498,8 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
      */
     public Builder addOperations(
         int index, com.google.longrunning.Operation.Builder builderForValue) {
-      if (operationsBuilder_ == null) {
-        ensureOperationsIsMutable();
-        operations_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        operationsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addOperations(index, builderForValue.build());
       return this;
     }
     /**
@@ -799,13 +513,8 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
      */
     public Builder addAllOperations(
         java.lang.Iterable<? extends com.google.longrunning.Operation> values) {
-      if (operationsBuilder_ == null) {
-        ensureOperationsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, operations_);
-        onChanged();
-      } else {
-        operationsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllOperations(values);
       return this;
     }
     /**
@@ -818,13 +527,8 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
     public Builder clearOperations() {
-      if (operationsBuilder_ == null) {
-        operations_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-      } else {
-        operationsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearOperations();
       return this;
     }
     /**
@@ -837,117 +541,11 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
     public Builder removeOperations(int index) {
-      if (operationsBuilder_ == null) {
-        ensureOperationsIsMutable();
-        operations_.remove(index);
-        onChanged();
-      } else {
-        operationsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeOperations(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * A list of operations that matches the specified filter in the request.
-     * </pre>
-     *
-     * <code>repeated .google.longrunning.Operation operations = 1;</code>
-     */
-    public com.google.longrunning.Operation.Builder getOperationsBuilder(int index) {
-      return getOperationsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of operations that matches the specified filter in the request.
-     * </pre>
-     *
-     * <code>repeated .google.longrunning.Operation operations = 1;</code>
-     */
-    public com.google.longrunning.OperationOrBuilder getOperationsOrBuilder(int index) {
-      if (operationsBuilder_ == null) {
-        return operations_.get(index);
-      } else {
-        return operationsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of operations that matches the specified filter in the request.
-     * </pre>
-     *
-     * <code>repeated .google.longrunning.Operation operations = 1;</code>
-     */
-    public java.util.List<? extends com.google.longrunning.OperationOrBuilder>
-        getOperationsOrBuilderList() {
-      if (operationsBuilder_ != null) {
-        return operationsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(operations_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of operations that matches the specified filter in the request.
-     * </pre>
-     *
-     * <code>repeated .google.longrunning.Operation operations = 1;</code>
-     */
-    public com.google.longrunning.Operation.Builder addOperationsBuilder() {
-      return getOperationsFieldBuilder()
-          .addBuilder(com.google.longrunning.Operation.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of operations that matches the specified filter in the request.
-     * </pre>
-     *
-     * <code>repeated .google.longrunning.Operation operations = 1;</code>
-     */
-    public com.google.longrunning.Operation.Builder addOperationsBuilder(int index) {
-      return getOperationsFieldBuilder()
-          .addBuilder(index, com.google.longrunning.Operation.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of operations that matches the specified filter in the request.
-     * </pre>
-     *
-     * <code>repeated .google.longrunning.Operation operations = 1;</code>
-     */
-    public java.util.List<com.google.longrunning.Operation.Builder> getOperationsBuilderList() {
-      return getOperationsFieldBuilder().getBuilderList();
-    }
 
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.longrunning.Operation,
-            com.google.longrunning.Operation.Builder,
-            com.google.longrunning.OperationOrBuilder>
-        getOperationsFieldBuilder() {
-      if (operationsBuilder_ == null) {
-        operationsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.longrunning.Operation,
-                com.google.longrunning.Operation.Builder,
-                com.google.longrunning.OperationOrBuilder>(
-                operations_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
-        operations_ = null;
-      }
-      return operationsBuilder_;
-    }
-
-    private java.lang.Object nextPageToken_ = "";
     /**
      *
      *
@@ -959,16 +557,9 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
      *
      * @return The nextPageToken.
      */
+    @java.lang.Override
     public java.lang.String getNextPageToken() {
-      java.lang.Object ref = nextPageToken_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        nextPageToken_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getNextPageToken();
     }
     /**
      *
@@ -981,16 +572,9 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
      *
      * @return The bytes for nextPageToken.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getNextPageTokenBytes() {
-      java.lang.Object ref = nextPageToken_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        nextPageToken_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getNextPageTokenBytes();
     }
     /**
      *
@@ -1005,12 +589,8 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
      * @return This builder for chaining.
      */
     public Builder setNextPageToken(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      nextPageToken_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setNextPageToken(value);
       return this;
     }
     /**
@@ -1025,9 +605,8 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
      * @return This builder for chaining.
      */
     public Builder clearNextPageToken() {
-      nextPageToken_ = getDefaultInstance().getNextPageToken();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearNextPageToken();
       return this;
     }
     /**
@@ -1043,74 +622,92 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
      * @return This builder for chaining.
      */
     public Builder setNextPageTokenBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      nextPageToken_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setNextPageTokenBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.longrunning.ListOperationsResponse)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.longrunning.ListOperationsResponse();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "operations_", com.google.longrunning.Operation.class, "nextPageToken_",
+              };
+          java.lang.String info =
+              "\u0000\u0002\u0000\u0000\u0001\u0002\u0002\u0000\u0001\u0000\u0001\u001b\u0002\u0208"
+                  + "";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.longrunning.ListOperationsResponse> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.longrunning.ListOperationsResponse.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.longrunning.ListOperationsResponse>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.longrunning.ListOperationsResponse)
   private static final com.google.longrunning.ListOperationsResponse DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.longrunning.ListOperationsResponse();
+    ListOperationsResponse defaultInstance = new ListOperationsResponse();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        ListOperationsResponse.class, defaultInstance);
   }
 
   public static com.google.longrunning.ListOperationsResponse getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<ListOperationsResponse> PARSER =
-      new com.google.protobuf.AbstractParser<ListOperationsResponse>() {
-        @java.lang.Override
-        public ListOperationsResponse parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<ListOperationsResponse> PARSER;
 
   public static com.google.protobuf.Parser<ListOperationsResponse> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<ListOperationsResponse> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.longrunning.ListOperationsResponse getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

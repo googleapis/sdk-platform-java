@@ -51,45 +51,17 @@ package com.google.type;
  *
  * Protobuf type {@code google.type.DateTime}
  */
-public final class DateTime extends com.google.protobuf.GeneratedMessageV3
+public final class DateTime
+    extends com.google.protobuf.GeneratedMessageLite<DateTime, DateTime.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.type.DateTime)
     DateTimeOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use DateTime.newBuilder() to construct.
-  private DateTime(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private DateTime() {}
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new DateTime();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.type.DateTimeProto.internal_static_google_type_DateTime_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.type.DateTimeProto.internal_static_google_type_DateTime_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.type.DateTime.class, com.google.type.DateTime.Builder.class);
-  }
-
   private int timeOffsetCase_ = 0;
-
-  @SuppressWarnings("serial")
   private java.lang.Object timeOffset_;
 
-  public enum TimeOffsetCase
-      implements
-          com.google.protobuf.Internal.EnumLite,
-          com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+  public enum TimeOffsetCase {
     UTC_OFFSET(8),
     TIME_ZONE(9),
     TIMEOFFSET_NOT_SET(0);
@@ -98,11 +70,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     private TimeOffsetCase(int value) {
       this.value = value;
     }
-    /**
-     * @param value The number of the enum to look for.
-     * @return The enum associated with the given number.
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
+    /** @deprecated Use {@link #forNumber(int)} instead. */
     @java.lang.Deprecated
     public static TimeOffsetCase valueOf(int value) {
       return forNumber(value);
@@ -126,12 +94,18 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     }
   };
 
+  @java.lang.Override
   public TimeOffsetCase getTimeOffsetCase() {
     return TimeOffsetCase.forNumber(timeOffsetCase_);
   }
 
+  private void clearTimeOffset() {
+    timeOffsetCase_ = 0;
+    timeOffset_ = null;
+  }
+
   public static final int YEAR_FIELD_NUMBER = 1;
-  private int year_ = 0;
+  private int year_;
   /**
    *
    *
@@ -148,9 +122,39 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
   public int getYear() {
     return year_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Year of date. Must be from 1 to 9999, or 0 if specifying a
+   * datetime without a year.
+   * </pre>
+   *
+   * <code>int32 year = 1;</code>
+   *
+   * @param value The year to set.
+   */
+  private void setYear(int value) {
+
+    year_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Year of date. Must be from 1 to 9999, or 0 if specifying a
+   * datetime without a year.
+   * </pre>
+   *
+   * <code>int32 year = 1;</code>
+   */
+  private void clearYear() {
+
+    year_ = 0;
+  }
 
   public static final int MONTH_FIELD_NUMBER = 2;
-  private int month_ = 0;
+  private int month_;
   /**
    *
    *
@@ -166,9 +170,37 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
   public int getMonth() {
     return month_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Required. Month of year. Must be from 1 to 12.
+   * </pre>
+   *
+   * <code>int32 month = 2;</code>
+   *
+   * @param value The month to set.
+   */
+  private void setMonth(int value) {
+
+    month_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. Month of year. Must be from 1 to 12.
+   * </pre>
+   *
+   * <code>int32 month = 2;</code>
+   */
+  private void clearMonth() {
+
+    month_ = 0;
+  }
 
   public static final int DAY_FIELD_NUMBER = 3;
-  private int day_ = 0;
+  private int day_;
   /**
    *
    *
@@ -185,9 +217,39 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
   public int getDay() {
     return day_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Required. Day of month. Must be from 1 to 31 and valid for the year and
+   * month.
+   * </pre>
+   *
+   * <code>int32 day = 3;</code>
+   *
+   * @param value The day to set.
+   */
+  private void setDay(int value) {
+
+    day_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. Day of month. Must be from 1 to 31 and valid for the year and
+   * month.
+   * </pre>
+   *
+   * <code>int32 day = 3;</code>
+   */
+  private void clearDay() {
+
+    day_ = 0;
+  }
 
   public static final int HOURS_FIELD_NUMBER = 4;
-  private int hours_ = 0;
+  private int hours_;
   /**
    *
    *
@@ -205,9 +267,41 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
   public int getHours() {
     return hours_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Required. Hours of day in 24 hour format. Should be from 0 to 23. An API
+   * may choose to allow the value "24:00:00" for scenarios like business
+   * closing time.
+   * </pre>
+   *
+   * <code>int32 hours = 4;</code>
+   *
+   * @param value The hours to set.
+   */
+  private void setHours(int value) {
+
+    hours_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. Hours of day in 24 hour format. Should be from 0 to 23. An API
+   * may choose to allow the value "24:00:00" for scenarios like business
+   * closing time.
+   * </pre>
+   *
+   * <code>int32 hours = 4;</code>
+   */
+  private void clearHours() {
+
+    hours_ = 0;
+  }
 
   public static final int MINUTES_FIELD_NUMBER = 5;
-  private int minutes_ = 0;
+  private int minutes_;
   /**
    *
    *
@@ -223,9 +317,37 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
   public int getMinutes() {
     return minutes_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Required. Minutes of hour of day. Must be from 0 to 59.
+   * </pre>
+   *
+   * <code>int32 minutes = 5;</code>
+   *
+   * @param value The minutes to set.
+   */
+  private void setMinutes(int value) {
+
+    minutes_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. Minutes of hour of day. Must be from 0 to 59.
+   * </pre>
+   *
+   * <code>int32 minutes = 5;</code>
+   */
+  private void clearMinutes() {
+
+    minutes_ = 0;
+  }
 
   public static final int SECONDS_FIELD_NUMBER = 6;
-  private int seconds_ = 0;
+  private int seconds_;
   /**
    *
    *
@@ -242,9 +364,39 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
   public int getSeconds() {
     return seconds_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Required. Seconds of minutes of the time. Must normally be from 0 to 59. An
+   * API may allow the value 60 if it allows leap-seconds.
+   * </pre>
+   *
+   * <code>int32 seconds = 6;</code>
+   *
+   * @param value The seconds to set.
+   */
+  private void setSeconds(int value) {
+
+    seconds_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. Seconds of minutes of the time. Must normally be from 0 to 59. An
+   * API may allow the value 60 if it allows leap-seconds.
+   * </pre>
+   *
+   * <code>int32 seconds = 6;</code>
+   */
+  private void clearSeconds() {
+
+    seconds_ = 0;
+  }
 
   public static final int NANOS_FIELD_NUMBER = 7;
-  private int nanos_ = 0;
+  private int nanos_;
   /**
    *
    *
@@ -261,6 +413,36 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
   public int getNanos() {
     return nanos_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Required. Fractions of seconds in nanoseconds. Must be from 0 to
+   * 999,999,999.
+   * </pre>
+   *
+   * <code>int32 nanos = 7;</code>
+   *
+   * @param value The nanos to set.
+   */
+  private void setNanos(int value) {
+
+    nanos_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. Fractions of seconds in nanoseconds. Must be from 0 to
+   * 999,999,999.
+   * </pre>
+   *
+   * <code>int32 nanos = 7;</code>
+   */
+  private void clearNanos() {
+
+    nanos_ = 0;
+  }
 
   public static final int UTC_OFFSET_FIELD_NUMBER = 8;
   /**
@@ -273,8 +455,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.protobuf.Duration utc_offset = 8;</code>
-   *
-   * @return Whether the utcOffset field is set.
    */
   @java.lang.Override
   public boolean hasUtcOffset() {
@@ -290,8 +470,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.protobuf.Duration utc_offset = 8;</code>
-   *
-   * @return The utcOffset.
    */
   @java.lang.Override
   public com.google.protobuf.Duration getUtcOffset() {
@@ -311,12 +489,50 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.protobuf.Duration utc_offset = 8;</code>
    */
-  @java.lang.Override
-  public com.google.protobuf.DurationOrBuilder getUtcOffsetOrBuilder() {
-    if (timeOffsetCase_ == 8) {
-      return (com.google.protobuf.Duration) timeOffset_;
+  private void setUtcOffset(com.google.protobuf.Duration value) {
+    value.getClass();
+    timeOffset_ = value;
+    timeOffsetCase_ = 8;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * UTC offset. Must be whole seconds, between -18 hours and +18 hours.
+   * For example, a UTC offset of -4:00 would be represented as
+   * { seconds: -14400 }.
+   * </pre>
+   *
+   * <code>.google.protobuf.Duration utc_offset = 8;</code>
+   */
+  private void mergeUtcOffset(com.google.protobuf.Duration value) {
+    value.getClass();
+    if (timeOffsetCase_ == 8 && timeOffset_ != com.google.protobuf.Duration.getDefaultInstance()) {
+      timeOffset_ =
+          com.google.protobuf.Duration.newBuilder((com.google.protobuf.Duration) timeOffset_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      timeOffset_ = value;
     }
-    return com.google.protobuf.Duration.getDefaultInstance();
+    timeOffsetCase_ = 8;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * UTC offset. Must be whole seconds, between -18 hours and +18 hours.
+   * For example, a UTC offset of -4:00 would be represented as
+   * { seconds: -14400 }.
+   * </pre>
+   *
+   * <code>.google.protobuf.Duration utc_offset = 8;</code>
+   */
+  private void clearUtcOffset() {
+    if (timeOffsetCase_ == 8) {
+      timeOffsetCase_ = 0;
+      timeOffset_ = null;
+    }
   }
 
   public static final int TIME_ZONE_FIELD_NUMBER = 9;
@@ -328,8 +544,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.type.TimeZone time_zone = 9;</code>
-   *
-   * @return Whether the timeZone field is set.
    */
   @java.lang.Override
   public boolean hasTimeZone() {
@@ -343,8 +557,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.type.TimeZone time_zone = 9;</code>
-   *
-   * @return The timeZone.
    */
   @java.lang.Override
   public com.google.type.TimeZone getTimeZone() {
@@ -362,264 +574,129 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.type.TimeZone time_zone = 9;</code>
    */
-  @java.lang.Override
-  public com.google.type.TimeZoneOrBuilder getTimeZoneOrBuilder() {
+  private void setTimeZone(com.google.type.TimeZone value) {
+    value.getClass();
+    timeOffset_ = value;
+    timeOffsetCase_ = 9;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Time zone.
+   * </pre>
+   *
+   * <code>.google.type.TimeZone time_zone = 9;</code>
+   */
+  private void mergeTimeZone(com.google.type.TimeZone value) {
+    value.getClass();
+    if (timeOffsetCase_ == 9 && timeOffset_ != com.google.type.TimeZone.getDefaultInstance()) {
+      timeOffset_ =
+          com.google.type.TimeZone.newBuilder((com.google.type.TimeZone) timeOffset_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      timeOffset_ = value;
+    }
+    timeOffsetCase_ = 9;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Time zone.
+   * </pre>
+   *
+   * <code>.google.type.TimeZone time_zone = 9;</code>
+   */
+  private void clearTimeZone() {
     if (timeOffsetCase_ == 9) {
-      return (com.google.type.TimeZone) timeOffset_;
+      timeOffsetCase_ = 0;
+      timeOffset_ = null;
     }
-    return com.google.type.TimeZone.getDefaultInstance();
-  }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
-  }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (year_ != 0) {
-      output.writeInt32(1, year_);
-    }
-    if (month_ != 0) {
-      output.writeInt32(2, month_);
-    }
-    if (day_ != 0) {
-      output.writeInt32(3, day_);
-    }
-    if (hours_ != 0) {
-      output.writeInt32(4, hours_);
-    }
-    if (minutes_ != 0) {
-      output.writeInt32(5, minutes_);
-    }
-    if (seconds_ != 0) {
-      output.writeInt32(6, seconds_);
-    }
-    if (nanos_ != 0) {
-      output.writeInt32(7, nanos_);
-    }
-    if (timeOffsetCase_ == 8) {
-      output.writeMessage(8, (com.google.protobuf.Duration) timeOffset_);
-    }
-    if (timeOffsetCase_ == 9) {
-      output.writeMessage(9, (com.google.type.TimeZone) timeOffset_);
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (year_ != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeInt32Size(1, year_);
-    }
-    if (month_ != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeInt32Size(2, month_);
-    }
-    if (day_ != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeInt32Size(3, day_);
-    }
-    if (hours_ != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeInt32Size(4, hours_);
-    }
-    if (minutes_ != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeInt32Size(5, minutes_);
-    }
-    if (seconds_ != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeInt32Size(6, seconds_);
-    }
-    if (nanos_ != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeInt32Size(7, nanos_);
-    }
-    if (timeOffsetCase_ == 8) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(
-              8, (com.google.protobuf.Duration) timeOffset_);
-    }
-    if (timeOffsetCase_ == 9) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(
-              9, (com.google.type.TimeZone) timeOffset_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.type.DateTime)) {
-      return super.equals(obj);
-    }
-    com.google.type.DateTime other = (com.google.type.DateTime) obj;
-
-    if (getYear() != other.getYear()) return false;
-    if (getMonth() != other.getMonth()) return false;
-    if (getDay() != other.getDay()) return false;
-    if (getHours() != other.getHours()) return false;
-    if (getMinutes() != other.getMinutes()) return false;
-    if (getSeconds() != other.getSeconds()) return false;
-    if (getNanos() != other.getNanos()) return false;
-    if (!getTimeOffsetCase().equals(other.getTimeOffsetCase())) return false;
-    switch (timeOffsetCase_) {
-      case 8:
-        if (!getUtcOffset().equals(other.getUtcOffset())) return false;
-        break;
-      case 9:
-        if (!getTimeZone().equals(other.getTimeZone())) return false;
-        break;
-      case 0:
-      default:
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + YEAR_FIELD_NUMBER;
-    hash = (53 * hash) + getYear();
-    hash = (37 * hash) + MONTH_FIELD_NUMBER;
-    hash = (53 * hash) + getMonth();
-    hash = (37 * hash) + DAY_FIELD_NUMBER;
-    hash = (53 * hash) + getDay();
-    hash = (37 * hash) + HOURS_FIELD_NUMBER;
-    hash = (53 * hash) + getHours();
-    hash = (37 * hash) + MINUTES_FIELD_NUMBER;
-    hash = (53 * hash) + getMinutes();
-    hash = (37 * hash) + SECONDS_FIELD_NUMBER;
-    hash = (53 * hash) + getSeconds();
-    hash = (37 * hash) + NANOS_FIELD_NUMBER;
-    hash = (53 * hash) + getNanos();
-    switch (timeOffsetCase_) {
-      case 8:
-        hash = (37 * hash) + UTC_OFFSET_FIELD_NUMBER;
-        hash = (53 * hash) + getUtcOffset().hashCode();
-        break;
-      case 9:
-        hash = (37 * hash) + TIME_ZONE_FIELD_NUMBER;
-        hash = (53 * hash) + getTimeZone().hashCode();
-        break;
-      case 0:
-      default:
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
   }
 
   public static com.google.type.DateTime parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.type.DateTime parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.type.DateTime parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.type.DateTime parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.type.DateTime parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.type.DateTime parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.type.DateTime parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.type.DateTime parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.type.DateTime parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.type.DateTime parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.type.DateTime parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.type.DateTime parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.type.DateTime prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -652,313 +729,27 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.type.DateTime}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<com.google.type.DateTime, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.type.DateTime)
       com.google.type.DateTimeOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.type.DateTimeProto.internal_static_google_type_DateTime_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.type.DateTimeProto.internal_static_google_type_DateTime_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.type.DateTime.class, com.google.type.DateTime.Builder.class);
-    }
-
     // Construct using com.google.type.DateTime.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
     @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      year_ = 0;
-      month_ = 0;
-      day_ = 0;
-      hours_ = 0;
-      minutes_ = 0;
-      seconds_ = 0;
-      nanos_ = 0;
-      if (utcOffsetBuilder_ != null) {
-        utcOffsetBuilder_.clear();
-      }
-      if (timeZoneBuilder_ != null) {
-        timeZoneBuilder_.clear();
-      }
-      timeOffsetCase_ = 0;
-      timeOffset_ = null;
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.type.DateTimeProto.internal_static_google_type_DateTime_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.type.DateTime getDefaultInstanceForType() {
-      return com.google.type.DateTime.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.type.DateTime build() {
-      com.google.type.DateTime result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.type.DateTime buildPartial() {
-      com.google.type.DateTime result = new com.google.type.DateTime(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      buildPartialOneofs(result);
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.type.DateTime result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.year_ = year_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.month_ = month_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.day_ = day_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.hours_ = hours_;
-      }
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.minutes_ = minutes_;
-      }
-      if (((from_bitField0_ & 0x00000020) != 0)) {
-        result.seconds_ = seconds_;
-      }
-      if (((from_bitField0_ & 0x00000040) != 0)) {
-        result.nanos_ = nanos_;
-      }
-    }
-
-    private void buildPartialOneofs(com.google.type.DateTime result) {
-      result.timeOffsetCase_ = timeOffsetCase_;
-      result.timeOffset_ = this.timeOffset_;
-      if (timeOffsetCase_ == 8 && utcOffsetBuilder_ != null) {
-        result.timeOffset_ = utcOffsetBuilder_.build();
-      }
-      if (timeOffsetCase_ == 9 && timeZoneBuilder_ != null) {
-        result.timeOffset_ = timeZoneBuilder_.build();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.type.DateTime) {
-        return mergeFrom((com.google.type.DateTime) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.type.DateTime other) {
-      if (other == com.google.type.DateTime.getDefaultInstance()) return this;
-      if (other.getYear() != 0) {
-        setYear(other.getYear());
-      }
-      if (other.getMonth() != 0) {
-        setMonth(other.getMonth());
-      }
-      if (other.getDay() != 0) {
-        setDay(other.getDay());
-      }
-      if (other.getHours() != 0) {
-        setHours(other.getHours());
-      }
-      if (other.getMinutes() != 0) {
-        setMinutes(other.getMinutes());
-      }
-      if (other.getSeconds() != 0) {
-        setSeconds(other.getSeconds());
-      }
-      if (other.getNanos() != 0) {
-        setNanos(other.getNanos());
-      }
-      switch (other.getTimeOffsetCase()) {
-        case UTC_OFFSET:
-          {
-            mergeUtcOffset(other.getUtcOffset());
-            break;
-          }
-        case TIME_ZONE:
-          {
-            mergeTimeZone(other.getTimeZone());
-            break;
-          }
-        case TIMEOFFSET_NOT_SET:
-          {
-            break;
-          }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 8:
-              {
-                year_ = input.readInt32();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 8
-            case 16:
-              {
-                month_ = input.readInt32();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 16
-            case 24:
-              {
-                day_ = input.readInt32();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 24
-            case 32:
-              {
-                hours_ = input.readInt32();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 32
-            case 40:
-              {
-                minutes_ = input.readInt32();
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 40
-            case 48:
-              {
-                seconds_ = input.readInt32();
-                bitField0_ |= 0x00000020;
-                break;
-              } // case 48
-            case 56:
-              {
-                nanos_ = input.readInt32();
-                bitField0_ |= 0x00000040;
-                break;
-              } // case 56
-            case 66:
-              {
-                input.readMessage(getUtcOffsetFieldBuilder().getBuilder(), extensionRegistry);
-                timeOffsetCase_ = 8;
-                break;
-              } // case 66
-            case 74:
-              {
-                input.readMessage(getTimeZoneFieldBuilder().getBuilder(), extensionRegistry);
-                timeOffsetCase_ = 9;
-                break;
-              } // case 74
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int timeOffsetCase_ = 0;
-    private java.lang.Object timeOffset_;
-
     public TimeOffsetCase getTimeOffsetCase() {
-      return TimeOffsetCase.forNumber(timeOffsetCase_);
+      return instance.getTimeOffsetCase();
     }
 
     public Builder clearTimeOffset() {
-      timeOffsetCase_ = 0;
-      timeOffset_ = null;
-      onChanged();
+      copyOnWrite();
+      instance.clearTimeOffset();
       return this;
     }
 
-    private int bitField0_;
-
-    private int year_;
     /**
      *
      *
@@ -973,7 +764,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getYear() {
-      return year_;
+      return instance.getYear();
     }
     /**
      *
@@ -989,10 +780,8 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setYear(int value) {
-
-      year_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setYear(value);
       return this;
     }
     /**
@@ -1008,13 +797,11 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearYear() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      year_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearYear();
       return this;
     }
 
-    private int month_;
     /**
      *
      *
@@ -1028,7 +815,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getMonth() {
-      return month_;
+      return instance.getMonth();
     }
     /**
      *
@@ -1043,10 +830,8 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setMonth(int value) {
-
-      month_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setMonth(value);
       return this;
     }
     /**
@@ -1061,13 +846,11 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearMonth() {
-      bitField0_ = (bitField0_ & ~0x00000002);
-      month_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearMonth();
       return this;
     }
 
-    private int day_;
     /**
      *
      *
@@ -1082,7 +865,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getDay() {
-      return day_;
+      return instance.getDay();
     }
     /**
      *
@@ -1098,10 +881,8 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDay(int value) {
-
-      day_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setDay(value);
       return this;
     }
     /**
@@ -1117,13 +898,11 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDay() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      day_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearDay();
       return this;
     }
 
-    private int hours_;
     /**
      *
      *
@@ -1139,7 +918,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getHours() {
-      return hours_;
+      return instance.getHours();
     }
     /**
      *
@@ -1156,10 +935,8 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setHours(int value) {
-
-      hours_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setHours(value);
       return this;
     }
     /**
@@ -1176,13 +953,11 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearHours() {
-      bitField0_ = (bitField0_ & ~0x00000008);
-      hours_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearHours();
       return this;
     }
 
-    private int minutes_;
     /**
      *
      *
@@ -1196,7 +971,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getMinutes() {
-      return minutes_;
+      return instance.getMinutes();
     }
     /**
      *
@@ -1211,10 +986,8 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setMinutes(int value) {
-
-      minutes_ = value;
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setMinutes(value);
       return this;
     }
     /**
@@ -1229,13 +1002,11 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearMinutes() {
-      bitField0_ = (bitField0_ & ~0x00000010);
-      minutes_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearMinutes();
       return this;
     }
 
-    private int seconds_;
     /**
      *
      *
@@ -1250,7 +1021,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getSeconds() {
-      return seconds_;
+      return instance.getSeconds();
     }
     /**
      *
@@ -1266,10 +1037,8 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setSeconds(int value) {
-
-      seconds_ = value;
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setSeconds(value);
       return this;
     }
     /**
@@ -1285,13 +1054,11 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearSeconds() {
-      bitField0_ = (bitField0_ & ~0x00000020);
-      seconds_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearSeconds();
       return this;
     }
 
-    private int nanos_;
     /**
      *
      *
@@ -1306,7 +1073,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getNanos() {
-      return nanos_;
+      return instance.getNanos();
     }
     /**
      *
@@ -1322,10 +1089,8 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setNanos(int value) {
-
-      nanos_ = value;
-      bitField0_ |= 0x00000040;
-      onChanged();
+      copyOnWrite();
+      instance.setNanos(value);
       return this;
     }
     /**
@@ -1341,17 +1106,11 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearNanos() {
-      bitField0_ = (bitField0_ & ~0x00000040);
-      nanos_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearNanos();
       return this;
     }
 
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Duration,
-            com.google.protobuf.Duration.Builder,
-            com.google.protobuf.DurationOrBuilder>
-        utcOffsetBuilder_;
     /**
      *
      *
@@ -1362,12 +1121,10 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.protobuf.Duration utc_offset = 8;</code>
-     *
-     * @return Whether the utcOffset field is set.
      */
     @java.lang.Override
     public boolean hasUtcOffset() {
-      return timeOffsetCase_ == 8;
+      return instance.hasUtcOffset();
     }
     /**
      *
@@ -1379,22 +1136,10 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.protobuf.Duration utc_offset = 8;</code>
-     *
-     * @return The utcOffset.
      */
     @java.lang.Override
     public com.google.protobuf.Duration getUtcOffset() {
-      if (utcOffsetBuilder_ == null) {
-        if (timeOffsetCase_ == 8) {
-          return (com.google.protobuf.Duration) timeOffset_;
-        }
-        return com.google.protobuf.Duration.getDefaultInstance();
-      } else {
-        if (timeOffsetCase_ == 8) {
-          return utcOffsetBuilder_.getMessage();
-        }
-        return com.google.protobuf.Duration.getDefaultInstance();
-      }
+      return instance.getUtcOffset();
     }
     /**
      *
@@ -1408,16 +1153,8 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Duration utc_offset = 8;</code>
      */
     public Builder setUtcOffset(com.google.protobuf.Duration value) {
-      if (utcOffsetBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        timeOffset_ = value;
-        onChanged();
-      } else {
-        utcOffsetBuilder_.setMessage(value);
-      }
-      timeOffsetCase_ = 8;
+      copyOnWrite();
+      instance.setUtcOffset(value);
       return this;
     }
     /**
@@ -1432,13 +1169,8 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Duration utc_offset = 8;</code>
      */
     public Builder setUtcOffset(com.google.protobuf.Duration.Builder builderForValue) {
-      if (utcOffsetBuilder_ == null) {
-        timeOffset_ = builderForValue.build();
-        onChanged();
-      } else {
-        utcOffsetBuilder_.setMessage(builderForValue.build());
-      }
-      timeOffsetCase_ = 8;
+      copyOnWrite();
+      instance.setUtcOffset(builderForValue.build());
       return this;
     }
     /**
@@ -1453,25 +1185,8 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Duration utc_offset = 8;</code>
      */
     public Builder mergeUtcOffset(com.google.protobuf.Duration value) {
-      if (utcOffsetBuilder_ == null) {
-        if (timeOffsetCase_ == 8
-            && timeOffset_ != com.google.protobuf.Duration.getDefaultInstance()) {
-          timeOffset_ =
-              com.google.protobuf.Duration.newBuilder((com.google.protobuf.Duration) timeOffset_)
-                  .mergeFrom(value)
-                  .buildPartial();
-        } else {
-          timeOffset_ = value;
-        }
-        onChanged();
-      } else {
-        if (timeOffsetCase_ == 8) {
-          utcOffsetBuilder_.mergeFrom(value);
-        } else {
-          utcOffsetBuilder_.setMessage(value);
-        }
-      }
-      timeOffsetCase_ = 8;
+      copyOnWrite();
+      instance.mergeUtcOffset(value);
       return this;
     }
     /**
@@ -1486,95 +1201,11 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Duration utc_offset = 8;</code>
      */
     public Builder clearUtcOffset() {
-      if (utcOffsetBuilder_ == null) {
-        if (timeOffsetCase_ == 8) {
-          timeOffsetCase_ = 0;
-          timeOffset_ = null;
-          onChanged();
-        }
-      } else {
-        if (timeOffsetCase_ == 8) {
-          timeOffsetCase_ = 0;
-          timeOffset_ = null;
-        }
-        utcOffsetBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearUtcOffset();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * UTC offset. Must be whole seconds, between -18 hours and +18 hours.
-     * For example, a UTC offset of -4:00 would be represented as
-     * { seconds: -14400 }.
-     * </pre>
-     *
-     * <code>.google.protobuf.Duration utc_offset = 8;</code>
-     */
-    public com.google.protobuf.Duration.Builder getUtcOffsetBuilder() {
-      return getUtcOffsetFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * UTC offset. Must be whole seconds, between -18 hours and +18 hours.
-     * For example, a UTC offset of -4:00 would be represented as
-     * { seconds: -14400 }.
-     * </pre>
-     *
-     * <code>.google.protobuf.Duration utc_offset = 8;</code>
-     */
-    @java.lang.Override
-    public com.google.protobuf.DurationOrBuilder getUtcOffsetOrBuilder() {
-      if ((timeOffsetCase_ == 8) && (utcOffsetBuilder_ != null)) {
-        return utcOffsetBuilder_.getMessageOrBuilder();
-      } else {
-        if (timeOffsetCase_ == 8) {
-          return (com.google.protobuf.Duration) timeOffset_;
-        }
-        return com.google.protobuf.Duration.getDefaultInstance();
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * UTC offset. Must be whole seconds, between -18 hours and +18 hours.
-     * For example, a UTC offset of -4:00 would be represented as
-     * { seconds: -14400 }.
-     * </pre>
-     *
-     * <code>.google.protobuf.Duration utc_offset = 8;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Duration,
-            com.google.protobuf.Duration.Builder,
-            com.google.protobuf.DurationOrBuilder>
-        getUtcOffsetFieldBuilder() {
-      if (utcOffsetBuilder_ == null) {
-        if (!(timeOffsetCase_ == 8)) {
-          timeOffset_ = com.google.protobuf.Duration.getDefaultInstance();
-        }
-        utcOffsetBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.protobuf.Duration,
-                com.google.protobuf.Duration.Builder,
-                com.google.protobuf.DurationOrBuilder>(
-                (com.google.protobuf.Duration) timeOffset_, getParentForChildren(), isClean());
-        timeOffset_ = null;
-      }
-      timeOffsetCase_ = 8;
-      onChanged();
-      return utcOffsetBuilder_;
-    }
 
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.type.TimeZone,
-            com.google.type.TimeZone.Builder,
-            com.google.type.TimeZoneOrBuilder>
-        timeZoneBuilder_;
     /**
      *
      *
@@ -1583,12 +1214,10 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.type.TimeZone time_zone = 9;</code>
-     *
-     * @return Whether the timeZone field is set.
      */
     @java.lang.Override
     public boolean hasTimeZone() {
-      return timeOffsetCase_ == 9;
+      return instance.hasTimeZone();
     }
     /**
      *
@@ -1598,22 +1227,10 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.type.TimeZone time_zone = 9;</code>
-     *
-     * @return The timeZone.
      */
     @java.lang.Override
     public com.google.type.TimeZone getTimeZone() {
-      if (timeZoneBuilder_ == null) {
-        if (timeOffsetCase_ == 9) {
-          return (com.google.type.TimeZone) timeOffset_;
-        }
-        return com.google.type.TimeZone.getDefaultInstance();
-      } else {
-        if (timeOffsetCase_ == 9) {
-          return timeZoneBuilder_.getMessage();
-        }
-        return com.google.type.TimeZone.getDefaultInstance();
-      }
+      return instance.getTimeZone();
     }
     /**
      *
@@ -1625,16 +1242,8 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.TimeZone time_zone = 9;</code>
      */
     public Builder setTimeZone(com.google.type.TimeZone value) {
-      if (timeZoneBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        timeOffset_ = value;
-        onChanged();
-      } else {
-        timeZoneBuilder_.setMessage(value);
-      }
-      timeOffsetCase_ = 9;
+      copyOnWrite();
+      instance.setTimeZone(value);
       return this;
     }
     /**
@@ -1647,13 +1256,8 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.TimeZone time_zone = 9;</code>
      */
     public Builder setTimeZone(com.google.type.TimeZone.Builder builderForValue) {
-      if (timeZoneBuilder_ == null) {
-        timeOffset_ = builderForValue.build();
-        onChanged();
-      } else {
-        timeZoneBuilder_.setMessage(builderForValue.build());
-      }
-      timeOffsetCase_ = 9;
+      copyOnWrite();
+      instance.setTimeZone(builderForValue.build());
       return this;
     }
     /**
@@ -1666,24 +1270,8 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.TimeZone time_zone = 9;</code>
      */
     public Builder mergeTimeZone(com.google.type.TimeZone value) {
-      if (timeZoneBuilder_ == null) {
-        if (timeOffsetCase_ == 9 && timeOffset_ != com.google.type.TimeZone.getDefaultInstance()) {
-          timeOffset_ =
-              com.google.type.TimeZone.newBuilder((com.google.type.TimeZone) timeOffset_)
-                  .mergeFrom(value)
-                  .buildPartial();
-        } else {
-          timeOffset_ = value;
-        }
-        onChanged();
-      } else {
-        if (timeOffsetCase_ == 9) {
-          timeZoneBuilder_.mergeFrom(value);
-        } else {
-          timeZoneBuilder_.setMessage(value);
-        }
-      }
-      timeOffsetCase_ = 9;
+      copyOnWrite();
+      instance.mergeTimeZone(value);
       return this;
     }
     /**
@@ -1696,142 +1284,100 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.TimeZone time_zone = 9;</code>
      */
     public Builder clearTimeZone() {
-      if (timeZoneBuilder_ == null) {
-        if (timeOffsetCase_ == 9) {
-          timeOffsetCase_ = 0;
-          timeOffset_ = null;
-          onChanged();
-        }
-      } else {
-        if (timeOffsetCase_ == 9) {
-          timeOffsetCase_ = 0;
-          timeOffset_ = null;
-        }
-        timeZoneBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearTimeZone();
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Time zone.
-     * </pre>
-     *
-     * <code>.google.type.TimeZone time_zone = 9;</code>
-     */
-    public com.google.type.TimeZone.Builder getTimeZoneBuilder() {
-      return getTimeZoneFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Time zone.
-     * </pre>
-     *
-     * <code>.google.type.TimeZone time_zone = 9;</code>
-     */
-    @java.lang.Override
-    public com.google.type.TimeZoneOrBuilder getTimeZoneOrBuilder() {
-      if ((timeOffsetCase_ == 9) && (timeZoneBuilder_ != null)) {
-        return timeZoneBuilder_.getMessageOrBuilder();
-      } else {
-        if (timeOffsetCase_ == 9) {
-          return (com.google.type.TimeZone) timeOffset_;
-        }
-        return com.google.type.TimeZone.getDefaultInstance();
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Time zone.
-     * </pre>
-     *
-     * <code>.google.type.TimeZone time_zone = 9;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.type.TimeZone,
-            com.google.type.TimeZone.Builder,
-            com.google.type.TimeZoneOrBuilder>
-        getTimeZoneFieldBuilder() {
-      if (timeZoneBuilder_ == null) {
-        if (!(timeOffsetCase_ == 9)) {
-          timeOffset_ = com.google.type.TimeZone.getDefaultInstance();
-        }
-        timeZoneBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.type.TimeZone,
-                com.google.type.TimeZone.Builder,
-                com.google.type.TimeZoneOrBuilder>(
-                (com.google.type.TimeZone) timeOffset_, getParentForChildren(), isClean());
-        timeOffset_ = null;
-      }
-      timeOffsetCase_ = 9;
-      onChanged();
-      return timeZoneBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.type.DateTime)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.type.DateTime();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "timeOffset_",
+                "timeOffsetCase_",
+                "year_",
+                "month_",
+                "day_",
+                "hours_",
+                "minutes_",
+                "seconds_",
+                "nanos_",
+                com.google.protobuf.Duration.class,
+                com.google.type.TimeZone.class,
+              };
+          java.lang.String info =
+              "\u0000\t\u0001\u0000\u0001\t\t\u0000\u0000\u0000\u0001\u0004\u0002\u0004\u0003\u0004"
+                  + "\u0004\u0004\u0005\u0004\u0006\u0004\u0007\u0004\b<\u0000\t<\u0000";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.type.DateTime> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.type.DateTime.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser = new DefaultInstanceBasedParser<com.google.type.DateTime>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.type.DateTime)
   private static final com.google.type.DateTime DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.type.DateTime();
+    DateTime defaultInstance = new DateTime();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        DateTime.class, defaultInstance);
   }
 
   public static com.google.type.DateTime getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<DateTime> PARSER =
-      new com.google.protobuf.AbstractParser<DateTime>() {
-        @java.lang.Override
-        public DateTime parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<DateTime> PARSER;
 
   public static com.google.protobuf.Parser<DateTime> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<DateTime> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.type.DateTime getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

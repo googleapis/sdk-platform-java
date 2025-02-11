@@ -22,7 +22,7 @@ package com.google.iam.v2;
 public interface PolicyRuleOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.iam.v2.PolicyRule)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -48,16 +48,6 @@ public interface PolicyRuleOrBuilder
    * @return The denyRule.
    */
   com.google.iam.v2.DenyRule getDenyRule();
-  /**
-   *
-   *
-   * <pre>
-   * A rule for a deny policy.
-   * </pre>
-   *
-   * <code>.google.iam.v2.DenyRule deny_rule = 2;</code>
-   */
-  com.google.iam.v2.DenyRuleOrBuilder getDenyRuleOrBuilder();
 
   /**
    *
@@ -86,5 +76,5 @@ public interface PolicyRuleOrBuilder
    */
   com.google.protobuf.ByteString getDescriptionBytes();
 
-  com.google.iam.v2.PolicyRule.KindCase getKindCase();
+  public com.google.iam.v2.PolicyRule.KindCase getKindCase();
 }

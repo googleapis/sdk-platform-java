@@ -22,7 +22,7 @@ package com.google.type;
 public interface TimeOfDayOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.type.TimeOfDay)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

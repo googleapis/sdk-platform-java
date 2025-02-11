@@ -22,7 +22,7 @@ package com.google.iam.v1;
 public interface PolicyOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.iam.v1.Policy)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -118,44 +118,6 @@ public interface PolicyOrBuilder
    * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
    */
   int getBindingsCount();
-  /**
-   *
-   *
-   * <pre>
-   * Associates a list of `members`, or principals, with a `role`. Optionally,
-   * may specify a `condition` that determines how and when the `bindings` are
-   * applied. Each of the `bindings` must contain at least one principal.
-   *
-   * The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250
-   * of these principals can be Google groups. Each occurrence of a principal
-   * counts towards these limits. For example, if the `bindings` grant 50
-   * different roles to `user:alice&#64;example.com`, and not to any other
-   * principal, then you can add another 1,450 principals to the `bindings` in
-   * the `Policy`.
-   * </pre>
-   *
-   * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
-   */
-  java.util.List<? extends com.google.iam.v1.BindingOrBuilder> getBindingsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Associates a list of `members`, or principals, with a `role`. Optionally,
-   * may specify a `condition` that determines how and when the `bindings` are
-   * applied. Each of the `bindings` must contain at least one principal.
-   *
-   * The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250
-   * of these principals can be Google groups. Each occurrence of a principal
-   * counts towards these limits. For example, if the `bindings` grant 50
-   * different roles to `user:alice&#64;example.com`, and not to any other
-   * principal, then you can add another 1,450 principals to the `bindings` in
-   * the `Policy`.
-   * </pre>
-   *
-   * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
-   */
-  com.google.iam.v1.BindingOrBuilder getBindingsOrBuilder(int index);
 
   /**
    *
@@ -187,26 +149,6 @@ public interface PolicyOrBuilder
    * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
    */
   int getAuditConfigsCount();
-  /**
-   *
-   *
-   * <pre>
-   * Specifies cloud audit logging configuration for this policy.
-   * </pre>
-   *
-   * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
-   */
-  java.util.List<? extends com.google.iam.v1.AuditConfigOrBuilder> getAuditConfigsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Specifies cloud audit logging configuration for this policy.
-   * </pre>
-   *
-   * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
-   */
-  com.google.iam.v1.AuditConfigOrBuilder getAuditConfigsOrBuilder(int index);
 
   /**
    *

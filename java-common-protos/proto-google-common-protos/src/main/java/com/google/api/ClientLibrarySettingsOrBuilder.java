@@ -22,7 +22,7 @@ package com.google.api;
 public interface ClientLibrarySettingsOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.ClientLibrarySettings)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -116,16 +116,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return The javaSettings.
    */
   com.google.api.JavaSettings getJavaSettings();
-  /**
-   *
-   *
-   * <pre>
-   * Settings for legacy Java features, supported in the Service YAML.
-   * </pre>
-   *
-   * <code>.google.api.JavaSettings java_settings = 21;</code>
-   */
-  com.google.api.JavaSettingsOrBuilder getJavaSettingsOrBuilder();
 
   /**
    *
@@ -151,16 +141,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return The cppSettings.
    */
   com.google.api.CppSettings getCppSettings();
-  /**
-   *
-   *
-   * <pre>
-   * Settings for C++ client libraries.
-   * </pre>
-   *
-   * <code>.google.api.CppSettings cpp_settings = 22;</code>
-   */
-  com.google.api.CppSettingsOrBuilder getCppSettingsOrBuilder();
 
   /**
    *
@@ -186,16 +166,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return The phpSettings.
    */
   com.google.api.PhpSettings getPhpSettings();
-  /**
-   *
-   *
-   * <pre>
-   * Settings for PHP client libraries.
-   * </pre>
-   *
-   * <code>.google.api.PhpSettings php_settings = 23;</code>
-   */
-  com.google.api.PhpSettingsOrBuilder getPhpSettingsOrBuilder();
 
   /**
    *
@@ -221,16 +191,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return The pythonSettings.
    */
   com.google.api.PythonSettings getPythonSettings();
-  /**
-   *
-   *
-   * <pre>
-   * Settings for Python client libraries.
-   * </pre>
-   *
-   * <code>.google.api.PythonSettings python_settings = 24;</code>
-   */
-  com.google.api.PythonSettingsOrBuilder getPythonSettingsOrBuilder();
 
   /**
    *
@@ -256,16 +216,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return The nodeSettings.
    */
   com.google.api.NodeSettings getNodeSettings();
-  /**
-   *
-   *
-   * <pre>
-   * Settings for Node client libraries.
-   * </pre>
-   *
-   * <code>.google.api.NodeSettings node_settings = 25;</code>
-   */
-  com.google.api.NodeSettingsOrBuilder getNodeSettingsOrBuilder();
 
   /**
    *
@@ -291,16 +241,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return The dotnetSettings.
    */
   com.google.api.DotnetSettings getDotnetSettings();
-  /**
-   *
-   *
-   * <pre>
-   * Settings for .NET client libraries.
-   * </pre>
-   *
-   * <code>.google.api.DotnetSettings dotnet_settings = 26;</code>
-   */
-  com.google.api.DotnetSettingsOrBuilder getDotnetSettingsOrBuilder();
 
   /**
    *
@@ -326,16 +266,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return The rubySettings.
    */
   com.google.api.RubySettings getRubySettings();
-  /**
-   *
-   *
-   * <pre>
-   * Settings for Ruby client libraries.
-   * </pre>
-   *
-   * <code>.google.api.RubySettings ruby_settings = 27;</code>
-   */
-  com.google.api.RubySettingsOrBuilder getRubySettingsOrBuilder();
 
   /**
    *
@@ -361,14 +291,4 @@ public interface ClientLibrarySettingsOrBuilder
    * @return The goSettings.
    */
   com.google.api.GoSettings getGoSettings();
-  /**
-   *
-   *
-   * <pre>
-   * Settings for Go client libraries.
-   * </pre>
-   *
-   * <code>.google.api.GoSettings go_settings = 28;</code>
-   */
-  com.google.api.GoSettingsOrBuilder getGoSettingsOrBuilder();
 }

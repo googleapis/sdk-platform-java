@@ -22,7 +22,7 @@ package com.google.iam.v2;
 public interface UpdatePolicyRequestOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.iam.v2.UpdatePolicyRequest)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -56,18 +56,4 @@ public interface UpdatePolicyRequestOrBuilder
    * @return The policy.
    */
   com.google.iam.v2.Policy getPolicy();
-  /**
-   *
-   *
-   * <pre>
-   * Required. The policy to update.
-   *
-   * To prevent conflicting updates, the `etag` value must match the value that
-   * is stored in IAM. If the `etag` values do not match, the request fails with
-   * a `409` error code and `ABORTED` status.
-   * </pre>
-   *
-   * <code>.google.iam.v2.Policy policy = 1 [(.google.api.field_behavior) = REQUIRED];</code>
-   */
-  com.google.iam.v2.PolicyOrBuilder getPolicyOrBuilder();
 }

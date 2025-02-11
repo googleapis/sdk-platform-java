@@ -22,7 +22,7 @@ package com.google.apps.card.v1;
 public interface ButtonListOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.apps.card.v1.ButtonList)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -54,24 +54,4 @@ public interface ButtonListOrBuilder
    * <code>repeated .google.apps.card.v1.Button buttons = 1;</code>
    */
   int getButtonsCount();
-  /**
-   *
-   *
-   * <pre>
-   * An array of buttons.
-   * </pre>
-   *
-   * <code>repeated .google.apps.card.v1.Button buttons = 1;</code>
-   */
-  java.util.List<? extends com.google.apps.card.v1.ButtonOrBuilder> getButtonsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * An array of buttons.
-   * </pre>
-   *
-   * <code>repeated .google.apps.card.v1.Button buttons = 1;</code>
-   */
-  com.google.apps.card.v1.ButtonOrBuilder getButtonsOrBuilder(int index);
 }

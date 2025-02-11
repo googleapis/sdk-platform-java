@@ -22,7 +22,7 @@ package com.google.api;
 public interface JwtLocationOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.JwtLocation)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -174,5 +174,5 @@ public interface JwtLocationOrBuilder
    */
   com.google.protobuf.ByteString getValuePrefixBytes();
 
-  com.google.api.JwtLocation.InCase getInCase();
+  public com.google.api.JwtLocation.InCase getInCase();
 }

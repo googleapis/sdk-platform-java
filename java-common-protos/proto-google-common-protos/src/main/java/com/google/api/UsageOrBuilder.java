@@ -22,7 +22,7 @@ package com.google.api;
 public interface UsageOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.Usage)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -102,8 +102,8 @@ public interface UsageOrBuilder
    *
    * <code>repeated string requirements = 1;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the requirements at the given index.
+   * @param index The index of the element to return.
+   * @return The requirements at the given index.
    */
   com.google.protobuf.ByteString getRequirementsBytes(int index);
 
@@ -143,30 +143,6 @@ public interface UsageOrBuilder
    * <code>repeated .google.api.UsageRule rules = 6;</code>
    */
   int getRulesCount();
-  /**
-   *
-   *
-   * <pre>
-   * A list of usage rules that apply to individual API methods.
-   *
-   * **NOTE:** All service configuration rules follow "last one wins" order.
-   * </pre>
-   *
-   * <code>repeated .google.api.UsageRule rules = 6;</code>
-   */
-  java.util.List<? extends com.google.api.UsageRuleOrBuilder> getRulesOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * A list of usage rules that apply to individual API methods.
-   *
-   * **NOTE:** All service configuration rules follow "last one wins" order.
-   * </pre>
-   *
-   * <code>repeated .google.api.UsageRule rules = 6;</code>
-   */
-  com.google.api.UsageRuleOrBuilder getRulesOrBuilder(int index);
 
   /**
    *

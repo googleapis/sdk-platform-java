@@ -22,7 +22,7 @@ package com.google.apps.card.v1;
 public interface ImageOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.apps.card.v1.Image)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -85,16 +85,6 @@ public interface ImageOrBuilder
    * @return The onClick.
    */
   com.google.apps.card.v1.OnClick getOnClick();
-  /**
-   *
-   *
-   * <pre>
-   * When a user clicks the image, the click triggers this action.
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.OnClick on_click = 2;</code>
-   */
-  com.google.apps.card.v1.OnClickOrBuilder getOnClickOrBuilder();
 
   /**
    *

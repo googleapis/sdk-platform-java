@@ -28,7 +28,7 @@ package com.google.type;
  *
  * Protobuf enum {@code google.type.Month}
  */
-public enum Month implements com.google.protobuf.ProtocolMessageEnum {
+public enum Month implements com.google.protobuf.Internal.EnumLite {
   /**
    *
    *
@@ -293,6 +293,7 @@ public enum Month implements com.google.protobuf.ProtocolMessageEnum {
    */
   public static final int DECEMBER_VALUE = 12;
 
+  @java.lang.Override
   public final int getNumber() {
     if (this == UNRECOGNIZED) {
       throw new java.lang.IllegalArgumentException(
@@ -302,8 +303,8 @@ public enum Month implements com.google.protobuf.ProtocolMessageEnum {
   }
 
   /**
-   * @param value The numeric wire value of the corresponding enum entry.
-   * @return The enum associated with the given numeric wire value.
+   * @param value The number of the enum to look for.
+   * @return The enum associated with the given number.
    * @deprecated Use {@link #forNumber(int)} instead.
    */
   @java.lang.Deprecated
@@ -311,10 +312,6 @@ public enum Month implements com.google.protobuf.ProtocolMessageEnum {
     return forNumber(value);
   }
 
-  /**
-   * @param value The numeric wire value of the corresponding enum entry.
-   * @return The enum associated with the given numeric wire value.
-   */
   public static Month forNumber(int value) {
     switch (value) {
       case 0:
@@ -354,38 +351,24 @@ public enum Month implements com.google.protobuf.ProtocolMessageEnum {
 
   private static final com.google.protobuf.Internal.EnumLiteMap<Month> internalValueMap =
       new com.google.protobuf.Internal.EnumLiteMap<Month>() {
+        @java.lang.Override
         public Month findValueByNumber(int number) {
           return Month.forNumber(number);
         }
       };
 
-  public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-    if (this == UNRECOGNIZED) {
-      throw new java.lang.IllegalStateException(
-          "Can't get the descriptor of an unrecognized enum value.");
+  public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+    return MonthVerifier.INSTANCE;
+  }
+
+  private static final class MonthVerifier implements com.google.protobuf.Internal.EnumVerifier {
+    static final com.google.protobuf.Internal.EnumVerifier INSTANCE = new MonthVerifier();
+
+    @java.lang.Override
+    public boolean isInRange(int number) {
+      return Month.forNumber(number) != null;
     }
-    return getDescriptor().getValues().get(ordinal());
-  }
-
-  public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-    return getDescriptor();
-  }
-
-  public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-    return com.google.type.MonthProto.getDescriptor().getEnumTypes().get(0);
-  }
-
-  private static final Month[] VALUES = values();
-
-  public static Month valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-    if (desc.getType() != getDescriptor()) {
-      throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-    }
-    if (desc.getIndex() == -1) {
-      return UNRECOGNIZED;
-    }
-    return VALUES[desc.getIndex()];
-  }
+  };
 
   private final int value;
 

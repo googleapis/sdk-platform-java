@@ -22,7 +22,7 @@ package com.google.rpc;
 public interface ResourceInfoOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.rpc.ResourceInfo)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

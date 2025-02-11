@@ -28,50 +28,22 @@ package com.google.cloud.audit;
  *
  * Protobuf type {@code google.cloud.audit.AuthenticationInfo}
  */
-public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessageV3
+public final class AuthenticationInfo
+    extends com.google.protobuf.GeneratedMessageLite<AuthenticationInfo, AuthenticationInfo.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.cloud.audit.AuthenticationInfo)
     AuthenticationInfoOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use AuthenticationInfo.newBuilder() to construct.
-  private AuthenticationInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private AuthenticationInfo() {
     principalEmail_ = "";
     authoritySelector_ = "";
     serviceAccountKeyName_ = "";
-    serviceAccountDelegationInfo_ = java.util.Collections.emptyList();
+    serviceAccountDelegationInfo_ = emptyProtobufList();
     principalSubject_ = "";
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new AuthenticationInfo();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.cloud.audit.AuditLogProto
-        .internal_static_google_cloud_audit_AuthenticationInfo_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.cloud.audit.AuditLogProto
-        .internal_static_google_cloud_audit_AuthenticationInfo_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.cloud.audit.AuthenticationInfo.class,
-            com.google.cloud.audit.AuthenticationInfo.Builder.class);
   }
 
   private int bitField0_;
   public static final int PRINCIPAL_EMAIL_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object principalEmail_ = "";
+  private java.lang.String principalEmail_;
   /**
    *
    *
@@ -90,15 +62,7 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
    */
   @java.lang.Override
   public java.lang.String getPrincipalEmail() {
-    java.lang.Object ref = principalEmail_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      principalEmail_ = s;
-      return s;
-    }
+    return principalEmail_;
   }
   /**
    *
@@ -118,21 +82,70 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getPrincipalEmailBytes() {
-    java.lang.Object ref = principalEmail_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      principalEmail_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(principalEmail_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The email address of the authenticated user (or service account on behalf
+   * of third party principal) making the request. For third party identity
+   * callers, the `principal_subject` field is populated instead of this field.
+   * For privacy reasons, the principal email address is sometimes redacted.
+   * For more information, see [Caller identities in audit
+   * logs](https://cloud.google.com/logging/docs/audit#user-id).
+   * </pre>
+   *
+   * <code>string principal_email = 1;</code>
+   *
+   * @param value The principalEmail to set.
+   */
+  private void setPrincipalEmail(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    principalEmail_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The email address of the authenticated user (or service account on behalf
+   * of third party principal) making the request. For third party identity
+   * callers, the `principal_subject` field is populated instead of this field.
+   * For privacy reasons, the principal email address is sometimes redacted.
+   * For more information, see [Caller identities in audit
+   * logs](https://cloud.google.com/logging/docs/audit#user-id).
+   * </pre>
+   *
+   * <code>string principal_email = 1;</code>
+   */
+  private void clearPrincipalEmail() {
+
+    principalEmail_ = getDefaultInstance().getPrincipalEmail();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The email address of the authenticated user (or service account on behalf
+   * of third party principal) making the request. For third party identity
+   * callers, the `principal_subject` field is populated instead of this field.
+   * For privacy reasons, the principal email address is sometimes redacted.
+   * For more information, see [Caller identities in audit
+   * logs](https://cloud.google.com/logging/docs/audit#user-id).
+   * </pre>
+   *
+   * <code>string principal_email = 1;</code>
+   *
+   * @param value The bytes for principalEmail to set.
+   */
+  private void setPrincipalEmailBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    principalEmail_ = value.toStringUtf8();
   }
 
   public static final int AUTHORITY_SELECTOR_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object authoritySelector_ = "";
+  private java.lang.String authoritySelector_;
   /**
    *
    *
@@ -147,15 +160,7 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
    */
   @java.lang.Override
   public java.lang.String getAuthoritySelector() {
-    java.lang.Object ref = authoritySelector_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      authoritySelector_ = s;
-      return s;
-    }
+    return authoritySelector_;
   }
   /**
    *
@@ -171,15 +176,54 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getAuthoritySelectorBytes() {
-    java.lang.Object ref = authoritySelector_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      authoritySelector_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(authoritySelector_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The authority selector specified by the requestor, if any.
+   * It is not guaranteed that the principal was allowed to use this authority.
+   * </pre>
+   *
+   * <code>string authority_selector = 2;</code>
+   *
+   * @param value The authoritySelector to set.
+   */
+  private void setAuthoritySelector(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    authoritySelector_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The authority selector specified by the requestor, if any.
+   * It is not guaranteed that the principal was allowed to use this authority.
+   * </pre>
+   *
+   * <code>string authority_selector = 2;</code>
+   */
+  private void clearAuthoritySelector() {
+
+    authoritySelector_ = getDefaultInstance().getAuthoritySelector();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The authority selector specified by the requestor, if any.
+   * It is not guaranteed that the principal was allowed to use this authority.
+   * </pre>
+   *
+   * <code>string authority_selector = 2;</code>
+   *
+   * @param value The bytes for authoritySelector to set.
+   */
+  private void setAuthoritySelectorBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    authoritySelector_ = value.toStringUtf8();
   }
 
   public static final int THIRD_PARTY_PRINCIPAL_FIELD_NUMBER = 4;
@@ -195,8 +239,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
    * </pre>
    *
    * <code>.google.protobuf.Struct third_party_principal = 4;</code>
-   *
-   * @return Whether the thirdPartyPrincipal field is set.
    */
   @java.lang.Override
   public boolean hasThirdPartyPrincipal() {
@@ -213,8 +255,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
    * </pre>
    *
    * <code>.google.protobuf.Struct third_party_principal = 4;</code>
-   *
-   * @return The thirdPartyPrincipal.
    */
   @java.lang.Override
   public com.google.protobuf.Struct getThirdPartyPrincipal() {
@@ -234,17 +274,56 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
    *
    * <code>.google.protobuf.Struct third_party_principal = 4;</code>
    */
-  @java.lang.Override
-  public com.google.protobuf.StructOrBuilder getThirdPartyPrincipalOrBuilder() {
-    return thirdPartyPrincipal_ == null
-        ? com.google.protobuf.Struct.getDefaultInstance()
-        : thirdPartyPrincipal_;
+  private void setThirdPartyPrincipal(com.google.protobuf.Struct value) {
+    value.getClass();
+    thirdPartyPrincipal_ = value;
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The third party identification (if any) of the authenticated user making
+   * the request.
+   * When the JSON object represented here has a proto equivalent, the proto
+   * name will be indicated in the `&#64;type` property.
+   * </pre>
+   *
+   * <code>.google.protobuf.Struct third_party_principal = 4;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeThirdPartyPrincipal(com.google.protobuf.Struct value) {
+    value.getClass();
+    if (thirdPartyPrincipal_ != null
+        && thirdPartyPrincipal_ != com.google.protobuf.Struct.getDefaultInstance()) {
+      thirdPartyPrincipal_ =
+          com.google.protobuf.Struct.newBuilder(thirdPartyPrincipal_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      thirdPartyPrincipal_ = value;
+    }
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The third party identification (if any) of the authenticated user making
+   * the request.
+   * When the JSON object represented here has a proto equivalent, the proto
+   * name will be indicated in the `&#64;type` property.
+   * </pre>
+   *
+   * <code>.google.protobuf.Struct third_party_principal = 4;</code>
+   */
+  private void clearThirdPartyPrincipal() {
+    thirdPartyPrincipal_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static final int SERVICE_ACCOUNT_KEY_NAME_FIELD_NUMBER = 5;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object serviceAccountKeyName_ = "";
+  private java.lang.String serviceAccountKeyName_;
   /**
    *
    *
@@ -262,15 +341,7 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
    */
   @java.lang.Override
   public java.lang.String getServiceAccountKeyName() {
-    java.lang.Object ref = serviceAccountKeyName_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      serviceAccountKeyName_ = s;
-      return s;
-    }
+    return serviceAccountKeyName_;
   }
   /**
    *
@@ -289,21 +360,68 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getServiceAccountKeyNameBytes() {
-    java.lang.Object ref = serviceAccountKeyName_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      serviceAccountKeyName_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(serviceAccountKeyName_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name of the service account key used to create or exchange
+   * credentials for authenticating the service account making the request.
+   * This is a scheme-less URI full resource name. For example:
+   *
+   * "//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}"
+   * </pre>
+   *
+   * <code>string service_account_key_name = 5;</code>
+   *
+   * @param value The serviceAccountKeyName to set.
+   */
+  private void setServiceAccountKeyName(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    serviceAccountKeyName_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name of the service account key used to create or exchange
+   * credentials for authenticating the service account making the request.
+   * This is a scheme-less URI full resource name. For example:
+   *
+   * "//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}"
+   * </pre>
+   *
+   * <code>string service_account_key_name = 5;</code>
+   */
+  private void clearServiceAccountKeyName() {
+
+    serviceAccountKeyName_ = getDefaultInstance().getServiceAccountKeyName();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name of the service account key used to create or exchange
+   * credentials for authenticating the service account making the request.
+   * This is a scheme-less URI full resource name. For example:
+   *
+   * "//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}"
+   * </pre>
+   *
+   * <code>string service_account_key_name = 5;</code>
+   *
+   * @param value The bytes for serviceAccountKeyName to set.
+   */
+  private void setServiceAccountKeyNameBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    serviceAccountKeyName_ = value.toStringUtf8();
   }
 
   public static final int SERVICE_ACCOUNT_DELEGATION_INFO_FIELD_NUMBER = 6;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.cloud.audit.ServiceAccountDelegationInfo>
+  private com.google.protobuf.Internal.ProtobufList<
+          com.google.cloud.audit.ServiceAccountDelegationInfo>
       serviceAccountDelegationInfo_;
   /**
    *
@@ -340,7 +458,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
    * repeated .google.cloud.audit.ServiceAccountDelegationInfo service_account_delegation_info = 6;
    * </code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.cloud.audit.ServiceAccountDelegationInfoOrBuilder>
       getServiceAccountDelegationInfoOrBuilderList() {
     return serviceAccountDelegationInfo_;
@@ -399,16 +516,142 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
    * repeated .google.cloud.audit.ServiceAccountDelegationInfo service_account_delegation_info = 6;
    * </code>
    */
-  @java.lang.Override
   public com.google.cloud.audit.ServiceAccountDelegationInfoOrBuilder
       getServiceAccountDelegationInfoOrBuilder(int index) {
     return serviceAccountDelegationInfo_.get(index);
   }
 
-  public static final int PRINCIPAL_SUBJECT_FIELD_NUMBER = 8;
+  private void ensureServiceAccountDelegationInfoIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.cloud.audit.ServiceAccountDelegationInfo>
+        tmp = serviceAccountDelegationInfo_;
+    if (!tmp.isModifiable()) {
+      serviceAccountDelegationInfo_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
 
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object principalSubject_ = "";
+  /**
+   *
+   *
+   * <pre>
+   * Identity delegation history of an authenticated service account that makes
+   * the request. It contains information on the real authorities that try to
+   * access GCP resources by delegating on a service account. When multiple
+   * authorities present, they are guaranteed to be sorted based on the original
+   * ordering of the identity delegation events.
+   * </pre>
+   *
+   * <code>
+   * repeated .google.cloud.audit.ServiceAccountDelegationInfo service_account_delegation_info = 6;
+   * </code>
+   */
+  private void setServiceAccountDelegationInfo(
+      int index, com.google.cloud.audit.ServiceAccountDelegationInfo value) {
+    value.getClass();
+    ensureServiceAccountDelegationInfoIsMutable();
+    serviceAccountDelegationInfo_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Identity delegation history of an authenticated service account that makes
+   * the request. It contains information on the real authorities that try to
+   * access GCP resources by delegating on a service account. When multiple
+   * authorities present, they are guaranteed to be sorted based on the original
+   * ordering of the identity delegation events.
+   * </pre>
+   *
+   * <code>
+   * repeated .google.cloud.audit.ServiceAccountDelegationInfo service_account_delegation_info = 6;
+   * </code>
+   */
+  private void addServiceAccountDelegationInfo(
+      com.google.cloud.audit.ServiceAccountDelegationInfo value) {
+    value.getClass();
+    ensureServiceAccountDelegationInfoIsMutable();
+    serviceAccountDelegationInfo_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Identity delegation history of an authenticated service account that makes
+   * the request. It contains information on the real authorities that try to
+   * access GCP resources by delegating on a service account. When multiple
+   * authorities present, they are guaranteed to be sorted based on the original
+   * ordering of the identity delegation events.
+   * </pre>
+   *
+   * <code>
+   * repeated .google.cloud.audit.ServiceAccountDelegationInfo service_account_delegation_info = 6;
+   * </code>
+   */
+  private void addServiceAccountDelegationInfo(
+      int index, com.google.cloud.audit.ServiceAccountDelegationInfo value) {
+    value.getClass();
+    ensureServiceAccountDelegationInfoIsMutable();
+    serviceAccountDelegationInfo_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Identity delegation history of an authenticated service account that makes
+   * the request. It contains information on the real authorities that try to
+   * access GCP resources by delegating on a service account. When multiple
+   * authorities present, they are guaranteed to be sorted based on the original
+   * ordering of the identity delegation events.
+   * </pre>
+   *
+   * <code>
+   * repeated .google.cloud.audit.ServiceAccountDelegationInfo service_account_delegation_info = 6;
+   * </code>
+   */
+  private void addAllServiceAccountDelegationInfo(
+      java.lang.Iterable<? extends com.google.cloud.audit.ServiceAccountDelegationInfo> values) {
+    ensureServiceAccountDelegationInfoIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, serviceAccountDelegationInfo_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Identity delegation history of an authenticated service account that makes
+   * the request. It contains information on the real authorities that try to
+   * access GCP resources by delegating on a service account. When multiple
+   * authorities present, they are guaranteed to be sorted based on the original
+   * ordering of the identity delegation events.
+   * </pre>
+   *
+   * <code>
+   * repeated .google.cloud.audit.ServiceAccountDelegationInfo service_account_delegation_info = 6;
+   * </code>
+   */
+  private void clearServiceAccountDelegationInfo() {
+    serviceAccountDelegationInfo_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Identity delegation history of an authenticated service account that makes
+   * the request. It contains information on the real authorities that try to
+   * access GCP resources by delegating on a service account. When multiple
+   * authorities present, they are guaranteed to be sorted based on the original
+   * ordering of the identity delegation events.
+   * </pre>
+   *
+   * <code>
+   * repeated .google.cloud.audit.ServiceAccountDelegationInfo service_account_delegation_info = 6;
+   * </code>
+   */
+  private void removeServiceAccountDelegationInfo(int index) {
+    ensureServiceAccountDelegationInfoIsMutable();
+    serviceAccountDelegationInfo_.remove(index);
+  }
+
+  public static final int PRINCIPAL_SUBJECT_FIELD_NUMBER = 8;
+  private java.lang.String principalSubject_;
   /**
    *
    *
@@ -423,15 +666,7 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
    */
   @java.lang.Override
   public java.lang.String getPrincipalSubject() {
-    java.lang.Object ref = principalSubject_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      principalSubject_ = s;
-      return s;
-    }
+    return principalSubject_;
   }
   /**
    *
@@ -447,231 +682,138 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getPrincipalSubjectBytes() {
-    java.lang.Object ref = principalSubject_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      principalSubject_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(principalSubject_);
   }
+  /**
+   *
+   *
+   * <pre>
+   * String representation of identity of requesting party.
+   * Populated for both first and third party identities.
+   * </pre>
+   *
+   * <code>string principal_subject = 8;</code>
+   *
+   * @param value The principalSubject to set.
+   */
+  private void setPrincipalSubject(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    principalSubject_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * String representation of identity of requesting party.
+   * Populated for both first and third party identities.
+   * </pre>
+   *
+   * <code>string principal_subject = 8;</code>
+   */
+  private void clearPrincipalSubject() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principalEmail_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, principalEmail_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(authoritySelector_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, authoritySelector_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(4, getThirdPartyPrincipal());
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(serviceAccountKeyName_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, serviceAccountKeyName_);
-    }
-    for (int i = 0; i < serviceAccountDelegationInfo_.size(); i++) {
-      output.writeMessage(6, serviceAccountDelegationInfo_.get(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principalSubject_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 8, principalSubject_);
-    }
-    getUnknownFields().writeTo(output);
+    principalSubject_ = getDefaultInstance().getPrincipalSubject();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principalEmail_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, principalEmail_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(authoritySelector_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, authoritySelector_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, getThirdPartyPrincipal());
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(serviceAccountKeyName_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, serviceAccountKeyName_);
-    }
-    for (int i = 0; i < serviceAccountDelegationInfo_.size(); i++) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(
-              6, serviceAccountDelegationInfo_.get(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principalSubject_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, principalSubject_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.cloud.audit.AuthenticationInfo)) {
-      return super.equals(obj);
-    }
-    com.google.cloud.audit.AuthenticationInfo other =
-        (com.google.cloud.audit.AuthenticationInfo) obj;
-
-    if (!getPrincipalEmail().equals(other.getPrincipalEmail())) return false;
-    if (!getAuthoritySelector().equals(other.getAuthoritySelector())) return false;
-    if (hasThirdPartyPrincipal() != other.hasThirdPartyPrincipal()) return false;
-    if (hasThirdPartyPrincipal()) {
-      if (!getThirdPartyPrincipal().equals(other.getThirdPartyPrincipal())) return false;
-    }
-    if (!getServiceAccountKeyName().equals(other.getServiceAccountKeyName())) return false;
-    if (!getServiceAccountDelegationInfoList().equals(other.getServiceAccountDelegationInfoList()))
-      return false;
-    if (!getPrincipalSubject().equals(other.getPrincipalSubject())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + PRINCIPAL_EMAIL_FIELD_NUMBER;
-    hash = (53 * hash) + getPrincipalEmail().hashCode();
-    hash = (37 * hash) + AUTHORITY_SELECTOR_FIELD_NUMBER;
-    hash = (53 * hash) + getAuthoritySelector().hashCode();
-    if (hasThirdPartyPrincipal()) {
-      hash = (37 * hash) + THIRD_PARTY_PRINCIPAL_FIELD_NUMBER;
-      hash = (53 * hash) + getThirdPartyPrincipal().hashCode();
-    }
-    hash = (37 * hash) + SERVICE_ACCOUNT_KEY_NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getServiceAccountKeyName().hashCode();
-    if (getServiceAccountDelegationInfoCount() > 0) {
-      hash = (37 * hash) + SERVICE_ACCOUNT_DELEGATION_INFO_FIELD_NUMBER;
-      hash = (53 * hash) + getServiceAccountDelegationInfoList().hashCode();
-    }
-    hash = (37 * hash) + PRINCIPAL_SUBJECT_FIELD_NUMBER;
-    hash = (53 * hash) + getPrincipalSubject().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * String representation of identity of requesting party.
+   * Populated for both first and third party identities.
+   * </pre>
+   *
+   * <code>string principal_subject = 8;</code>
+   *
+   * @param value The bytes for principalSubject to set.
+   */
+  private void setPrincipalSubjectBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    principalSubject_ = value.toStringUtf8();
   }
 
   public static com.google.cloud.audit.AuthenticationInfo parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.AuthenticationInfo parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.AuthenticationInfo parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.AuthenticationInfo parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.AuthenticationInfo parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.AuthenticationInfo parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.AuthenticationInfo parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.AuthenticationInfo parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.cloud.audit.AuthenticationInfo parseDelimitedFrom(
       java.io.InputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.AuthenticationInfo parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.cloud.audit.AuthenticationInfo parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.AuthenticationInfo parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.cloud.audit.AuthenticationInfo prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -681,322 +823,17 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
    *
    * Protobuf type {@code google.cloud.audit.AuthenticationInfo}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.cloud.audit.AuthenticationInfo, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.cloud.audit.AuthenticationInfo)
       com.google.cloud.audit.AuthenticationInfoOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_AuthenticationInfo_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_AuthenticationInfo_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.cloud.audit.AuthenticationInfo.class,
-              com.google.cloud.audit.AuthenticationInfo.Builder.class);
-    }
-
     // Construct using com.google.cloud.audit.AuthenticationInfo.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getThirdPartyPrincipalFieldBuilder();
-        getServiceAccountDelegationInfoFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      principalEmail_ = "";
-      authoritySelector_ = "";
-      thirdPartyPrincipal_ = null;
-      if (thirdPartyPrincipalBuilder_ != null) {
-        thirdPartyPrincipalBuilder_.dispose();
-        thirdPartyPrincipalBuilder_ = null;
-      }
-      serviceAccountKeyName_ = "";
-      if (serviceAccountDelegationInfoBuilder_ == null) {
-        serviceAccountDelegationInfo_ = java.util.Collections.emptyList();
-      } else {
-        serviceAccountDelegationInfo_ = null;
-        serviceAccountDelegationInfoBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000010);
-      principalSubject_ = "";
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_AuthenticationInfo_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.AuthenticationInfo getDefaultInstanceForType() {
-      return com.google.cloud.audit.AuthenticationInfo.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.AuthenticationInfo build() {
-      com.google.cloud.audit.AuthenticationInfo result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.AuthenticationInfo buildPartial() {
-      com.google.cloud.audit.AuthenticationInfo result =
-          new com.google.cloud.audit.AuthenticationInfo(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.cloud.audit.AuthenticationInfo result) {
-      if (serviceAccountDelegationInfoBuilder_ == null) {
-        if (((bitField0_ & 0x00000010) != 0)) {
-          serviceAccountDelegationInfo_ =
-              java.util.Collections.unmodifiableList(serviceAccountDelegationInfo_);
-          bitField0_ = (bitField0_ & ~0x00000010);
-        }
-        result.serviceAccountDelegationInfo_ = serviceAccountDelegationInfo_;
-      } else {
-        result.serviceAccountDelegationInfo_ = serviceAccountDelegationInfoBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.cloud.audit.AuthenticationInfo result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.principalEmail_ = principalEmail_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.authoritySelector_ = authoritySelector_;
-      }
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.thirdPartyPrincipal_ =
-            thirdPartyPrincipalBuilder_ == null
-                ? thirdPartyPrincipal_
-                : thirdPartyPrincipalBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.serviceAccountKeyName_ = serviceAccountKeyName_;
-      }
-      if (((from_bitField0_ & 0x00000020) != 0)) {
-        result.principalSubject_ = principalSubject_;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.cloud.audit.AuthenticationInfo) {
-        return mergeFrom((com.google.cloud.audit.AuthenticationInfo) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.cloud.audit.AuthenticationInfo other) {
-      if (other == com.google.cloud.audit.AuthenticationInfo.getDefaultInstance()) return this;
-      if (!other.getPrincipalEmail().isEmpty()) {
-        principalEmail_ = other.principalEmail_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getAuthoritySelector().isEmpty()) {
-        authoritySelector_ = other.authoritySelector_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      if (other.hasThirdPartyPrincipal()) {
-        mergeThirdPartyPrincipal(other.getThirdPartyPrincipal());
-      }
-      if (!other.getServiceAccountKeyName().isEmpty()) {
-        serviceAccountKeyName_ = other.serviceAccountKeyName_;
-        bitField0_ |= 0x00000008;
-        onChanged();
-      }
-      if (serviceAccountDelegationInfoBuilder_ == null) {
-        if (!other.serviceAccountDelegationInfo_.isEmpty()) {
-          if (serviceAccountDelegationInfo_.isEmpty()) {
-            serviceAccountDelegationInfo_ = other.serviceAccountDelegationInfo_;
-            bitField0_ = (bitField0_ & ~0x00000010);
-          } else {
-            ensureServiceAccountDelegationInfoIsMutable();
-            serviceAccountDelegationInfo_.addAll(other.serviceAccountDelegationInfo_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.serviceAccountDelegationInfo_.isEmpty()) {
-          if (serviceAccountDelegationInfoBuilder_.isEmpty()) {
-            serviceAccountDelegationInfoBuilder_.dispose();
-            serviceAccountDelegationInfoBuilder_ = null;
-            serviceAccountDelegationInfo_ = other.serviceAccountDelegationInfo_;
-            bitField0_ = (bitField0_ & ~0x00000010);
-            serviceAccountDelegationInfoBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getServiceAccountDelegationInfoFieldBuilder()
-                    : null;
-          } else {
-            serviceAccountDelegationInfoBuilder_.addAllMessages(
-                other.serviceAccountDelegationInfo_);
-          }
-        }
-      }
-      if (!other.getPrincipalSubject().isEmpty()) {
-        principalSubject_ = other.principalSubject_;
-        bitField0_ |= 0x00000020;
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                principalEmail_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                authoritySelector_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 34:
-              {
-                input.readMessage(
-                    getThirdPartyPrincipalFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 34
-            case 42:
-              {
-                serviceAccountKeyName_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 42
-            case 50:
-              {
-                com.google.cloud.audit.ServiceAccountDelegationInfo m =
-                    input.readMessage(
-                        com.google.cloud.audit.ServiceAccountDelegationInfo.parser(),
-                        extensionRegistry);
-                if (serviceAccountDelegationInfoBuilder_ == null) {
-                  ensureServiceAccountDelegationInfoIsMutable();
-                  serviceAccountDelegationInfo_.add(m);
-                } else {
-                  serviceAccountDelegationInfoBuilder_.addMessage(m);
-                }
-                break;
-              } // case 50
-            case 66:
-              {
-                principalSubject_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000020;
-                break;
-              } // case 66
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object principalEmail_ = "";
     /**
      *
      *
@@ -1013,16 +850,9 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      *
      * @return The principalEmail.
      */
+    @java.lang.Override
     public java.lang.String getPrincipalEmail() {
-      java.lang.Object ref = principalEmail_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        principalEmail_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getPrincipalEmail();
     }
     /**
      *
@@ -1040,16 +870,9 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      *
      * @return The bytes for principalEmail.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getPrincipalEmailBytes() {
-      java.lang.Object ref = principalEmail_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        principalEmail_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getPrincipalEmailBytes();
     }
     /**
      *
@@ -1069,12 +892,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * @return This builder for chaining.
      */
     public Builder setPrincipalEmail(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      principalEmail_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setPrincipalEmail(value);
       return this;
     }
     /**
@@ -1094,9 +913,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * @return This builder for chaining.
      */
     public Builder clearPrincipalEmail() {
-      principalEmail_ = getDefaultInstance().getPrincipalEmail();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearPrincipalEmail();
       return this;
     }
     /**
@@ -1117,17 +935,11 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * @return This builder for chaining.
      */
     public Builder setPrincipalEmailBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      principalEmail_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setPrincipalEmailBytes(value);
       return this;
     }
 
-    private java.lang.Object authoritySelector_ = "";
     /**
      *
      *
@@ -1140,16 +952,9 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      *
      * @return The authoritySelector.
      */
+    @java.lang.Override
     public java.lang.String getAuthoritySelector() {
-      java.lang.Object ref = authoritySelector_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        authoritySelector_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getAuthoritySelector();
     }
     /**
      *
@@ -1163,16 +968,9 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      *
      * @return The bytes for authoritySelector.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getAuthoritySelectorBytes() {
-      java.lang.Object ref = authoritySelector_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        authoritySelector_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getAuthoritySelectorBytes();
     }
     /**
      *
@@ -1188,12 +986,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * @return This builder for chaining.
      */
     public Builder setAuthoritySelector(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      authoritySelector_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setAuthoritySelector(value);
       return this;
     }
     /**
@@ -1209,9 +1003,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * @return This builder for chaining.
      */
     public Builder clearAuthoritySelector() {
-      authoritySelector_ = getDefaultInstance().getAuthoritySelector();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearAuthoritySelector();
       return this;
     }
     /**
@@ -1228,22 +1021,11 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * @return This builder for chaining.
      */
     public Builder setAuthoritySelectorBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      authoritySelector_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setAuthoritySelectorBytes(value);
       return this;
     }
 
-    private com.google.protobuf.Struct thirdPartyPrincipal_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Struct,
-            com.google.protobuf.Struct.Builder,
-            com.google.protobuf.StructOrBuilder>
-        thirdPartyPrincipalBuilder_;
     /**
      *
      *
@@ -1255,11 +1037,10 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * </pre>
      *
      * <code>.google.protobuf.Struct third_party_principal = 4;</code>
-     *
-     * @return Whether the thirdPartyPrincipal field is set.
      */
+    @java.lang.Override
     public boolean hasThirdPartyPrincipal() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return instance.hasThirdPartyPrincipal();
     }
     /**
      *
@@ -1272,17 +1053,10 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * </pre>
      *
      * <code>.google.protobuf.Struct third_party_principal = 4;</code>
-     *
-     * @return The thirdPartyPrincipal.
      */
+    @java.lang.Override
     public com.google.protobuf.Struct getThirdPartyPrincipal() {
-      if (thirdPartyPrincipalBuilder_ == null) {
-        return thirdPartyPrincipal_ == null
-            ? com.google.protobuf.Struct.getDefaultInstance()
-            : thirdPartyPrincipal_;
-      } else {
-        return thirdPartyPrincipalBuilder_.getMessage();
-      }
+      return instance.getThirdPartyPrincipal();
     }
     /**
      *
@@ -1297,16 +1071,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * <code>.google.protobuf.Struct third_party_principal = 4;</code>
      */
     public Builder setThirdPartyPrincipal(com.google.protobuf.Struct value) {
-      if (thirdPartyPrincipalBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        thirdPartyPrincipal_ = value;
-      } else {
-        thirdPartyPrincipalBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setThirdPartyPrincipal(value);
       return this;
     }
     /**
@@ -1322,13 +1088,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * <code>.google.protobuf.Struct third_party_principal = 4;</code>
      */
     public Builder setThirdPartyPrincipal(com.google.protobuf.Struct.Builder builderForValue) {
-      if (thirdPartyPrincipalBuilder_ == null) {
-        thirdPartyPrincipal_ = builderForValue.build();
-      } else {
-        thirdPartyPrincipalBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setThirdPartyPrincipal(builderForValue.build());
       return this;
     }
     /**
@@ -1344,21 +1105,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * <code>.google.protobuf.Struct third_party_principal = 4;</code>
      */
     public Builder mergeThirdPartyPrincipal(com.google.protobuf.Struct value) {
-      if (thirdPartyPrincipalBuilder_ == null) {
-        if (((bitField0_ & 0x00000004) != 0)
-            && thirdPartyPrincipal_ != null
-            && thirdPartyPrincipal_ != com.google.protobuf.Struct.getDefaultInstance()) {
-          getThirdPartyPrincipalBuilder().mergeFrom(value);
-        } else {
-          thirdPartyPrincipal_ = value;
-        }
-      } else {
-        thirdPartyPrincipalBuilder_.mergeFrom(value);
-      }
-      if (thirdPartyPrincipal_ != null) {
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeThirdPartyPrincipal(value);
       return this;
     }
     /**
@@ -1374,83 +1122,11 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * <code>.google.protobuf.Struct third_party_principal = 4;</code>
      */
     public Builder clearThirdPartyPrincipal() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      thirdPartyPrincipal_ = null;
-      if (thirdPartyPrincipalBuilder_ != null) {
-        thirdPartyPrincipalBuilder_.dispose();
-        thirdPartyPrincipalBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearThirdPartyPrincipal();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * The third party identification (if any) of the authenticated user making
-     * the request.
-     * When the JSON object represented here has a proto equivalent, the proto
-     * name will be indicated in the `&#64;type` property.
-     * </pre>
-     *
-     * <code>.google.protobuf.Struct third_party_principal = 4;</code>
-     */
-    public com.google.protobuf.Struct.Builder getThirdPartyPrincipalBuilder() {
-      bitField0_ |= 0x00000004;
-      onChanged();
-      return getThirdPartyPrincipalFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The third party identification (if any) of the authenticated user making
-     * the request.
-     * When the JSON object represented here has a proto equivalent, the proto
-     * name will be indicated in the `&#64;type` property.
-     * </pre>
-     *
-     * <code>.google.protobuf.Struct third_party_principal = 4;</code>
-     */
-    public com.google.protobuf.StructOrBuilder getThirdPartyPrincipalOrBuilder() {
-      if (thirdPartyPrincipalBuilder_ != null) {
-        return thirdPartyPrincipalBuilder_.getMessageOrBuilder();
-      } else {
-        return thirdPartyPrincipal_ == null
-            ? com.google.protobuf.Struct.getDefaultInstance()
-            : thirdPartyPrincipal_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The third party identification (if any) of the authenticated user making
-     * the request.
-     * When the JSON object represented here has a proto equivalent, the proto
-     * name will be indicated in the `&#64;type` property.
-     * </pre>
-     *
-     * <code>.google.protobuf.Struct third_party_principal = 4;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Struct,
-            com.google.protobuf.Struct.Builder,
-            com.google.protobuf.StructOrBuilder>
-        getThirdPartyPrincipalFieldBuilder() {
-      if (thirdPartyPrincipalBuilder_ == null) {
-        thirdPartyPrincipalBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.protobuf.Struct,
-                com.google.protobuf.Struct.Builder,
-                com.google.protobuf.StructOrBuilder>(
-                getThirdPartyPrincipal(), getParentForChildren(), isClean());
-        thirdPartyPrincipal_ = null;
-      }
-      return thirdPartyPrincipalBuilder_;
-    }
 
-    private java.lang.Object serviceAccountKeyName_ = "";
     /**
      *
      *
@@ -1466,16 +1142,9 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      *
      * @return The serviceAccountKeyName.
      */
+    @java.lang.Override
     public java.lang.String getServiceAccountKeyName() {
-      java.lang.Object ref = serviceAccountKeyName_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        serviceAccountKeyName_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getServiceAccountKeyName();
     }
     /**
      *
@@ -1492,16 +1161,9 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      *
      * @return The bytes for serviceAccountKeyName.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getServiceAccountKeyNameBytes() {
-      java.lang.Object ref = serviceAccountKeyName_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        serviceAccountKeyName_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getServiceAccountKeyNameBytes();
     }
     /**
      *
@@ -1520,12 +1182,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * @return This builder for chaining.
      */
     public Builder setServiceAccountKeyName(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      serviceAccountKeyName_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setServiceAccountKeyName(value);
       return this;
     }
     /**
@@ -1544,9 +1202,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * @return This builder for chaining.
      */
     public Builder clearServiceAccountKeyName() {
-      serviceAccountKeyName_ = getDefaultInstance().getServiceAccountKeyName();
-      bitField0_ = (bitField0_ & ~0x00000008);
-      onChanged();
+      copyOnWrite();
+      instance.clearServiceAccountKeyName();
       return this;
     }
     /**
@@ -1566,34 +1223,11 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * @return This builder for chaining.
      */
     public Builder setServiceAccountKeyNameBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      serviceAccountKeyName_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setServiceAccountKeyNameBytes(value);
       return this;
     }
 
-    private java.util.List<com.google.cloud.audit.ServiceAccountDelegationInfo>
-        serviceAccountDelegationInfo_ = java.util.Collections.emptyList();
-
-    private void ensureServiceAccountDelegationInfoIsMutable() {
-      if (!((bitField0_ & 0x00000010) != 0)) {
-        serviceAccountDelegationInfo_ =
-            new java.util.ArrayList<com.google.cloud.audit.ServiceAccountDelegationInfo>(
-                serviceAccountDelegationInfo_);
-        bitField0_ |= 0x00000010;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.cloud.audit.ServiceAccountDelegationInfo,
-            com.google.cloud.audit.ServiceAccountDelegationInfo.Builder,
-            com.google.cloud.audit.ServiceAccountDelegationInfoOrBuilder>
-        serviceAccountDelegationInfoBuilder_;
-
     /**
      *
      *
@@ -1609,13 +1243,10 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * repeated .google.cloud.audit.ServiceAccountDelegationInfo service_account_delegation_info = 6;
      * </code>
      */
+    @java.lang.Override
     public java.util.List<com.google.cloud.audit.ServiceAccountDelegationInfo>
         getServiceAccountDelegationInfoList() {
-      if (serviceAccountDelegationInfoBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(serviceAccountDelegationInfo_);
-      } else {
-        return serviceAccountDelegationInfoBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getServiceAccountDelegationInfoList());
     }
     /**
      *
@@ -1632,12 +1263,9 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * repeated .google.cloud.audit.ServiceAccountDelegationInfo service_account_delegation_info = 6;
      * </code>
      */
+    @java.lang.Override
     public int getServiceAccountDelegationInfoCount() {
-      if (serviceAccountDelegationInfoBuilder_ == null) {
-        return serviceAccountDelegationInfo_.size();
-      } else {
-        return serviceAccountDelegationInfoBuilder_.getCount();
-      }
+      return instance.getServiceAccountDelegationInfoCount();
     }
     /**
      *
@@ -1654,13 +1282,11 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * repeated .google.cloud.audit.ServiceAccountDelegationInfo service_account_delegation_info = 6;
      * </code>
      */
+
+    @java.lang.Override
     public com.google.cloud.audit.ServiceAccountDelegationInfo getServiceAccountDelegationInfo(
         int index) {
-      if (serviceAccountDelegationInfoBuilder_ == null) {
-        return serviceAccountDelegationInfo_.get(index);
-      } else {
-        return serviceAccountDelegationInfoBuilder_.getMessage(index);
-      }
+      return instance.getServiceAccountDelegationInfo(index);
     }
     /**
      *
@@ -1679,16 +1305,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      */
     public Builder setServiceAccountDelegationInfo(
         int index, com.google.cloud.audit.ServiceAccountDelegationInfo value) {
-      if (serviceAccountDelegationInfoBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureServiceAccountDelegationInfoIsMutable();
-        serviceAccountDelegationInfo_.set(index, value);
-        onChanged();
-      } else {
-        serviceAccountDelegationInfoBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setServiceAccountDelegationInfo(index, value);
       return this;
     }
     /**
@@ -1708,13 +1326,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      */
     public Builder setServiceAccountDelegationInfo(
         int index, com.google.cloud.audit.ServiceAccountDelegationInfo.Builder builderForValue) {
-      if (serviceAccountDelegationInfoBuilder_ == null) {
-        ensureServiceAccountDelegationInfoIsMutable();
-        serviceAccountDelegationInfo_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        serviceAccountDelegationInfoBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setServiceAccountDelegationInfo(index, builderForValue.build());
       return this;
     }
     /**
@@ -1734,16 +1347,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      */
     public Builder addServiceAccountDelegationInfo(
         com.google.cloud.audit.ServiceAccountDelegationInfo value) {
-      if (serviceAccountDelegationInfoBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureServiceAccountDelegationInfoIsMutable();
-        serviceAccountDelegationInfo_.add(value);
-        onChanged();
-      } else {
-        serviceAccountDelegationInfoBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addServiceAccountDelegationInfo(value);
       return this;
     }
     /**
@@ -1763,16 +1368,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      */
     public Builder addServiceAccountDelegationInfo(
         int index, com.google.cloud.audit.ServiceAccountDelegationInfo value) {
-      if (serviceAccountDelegationInfoBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureServiceAccountDelegationInfoIsMutable();
-        serviceAccountDelegationInfo_.add(index, value);
-        onChanged();
-      } else {
-        serviceAccountDelegationInfoBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addServiceAccountDelegationInfo(index, value);
       return this;
     }
     /**
@@ -1792,13 +1389,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      */
     public Builder addServiceAccountDelegationInfo(
         com.google.cloud.audit.ServiceAccountDelegationInfo.Builder builderForValue) {
-      if (serviceAccountDelegationInfoBuilder_ == null) {
-        ensureServiceAccountDelegationInfoIsMutable();
-        serviceAccountDelegationInfo_.add(builderForValue.build());
-        onChanged();
-      } else {
-        serviceAccountDelegationInfoBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addServiceAccountDelegationInfo(builderForValue.build());
       return this;
     }
     /**
@@ -1818,13 +1410,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      */
     public Builder addServiceAccountDelegationInfo(
         int index, com.google.cloud.audit.ServiceAccountDelegationInfo.Builder builderForValue) {
-      if (serviceAccountDelegationInfoBuilder_ == null) {
-        ensureServiceAccountDelegationInfoIsMutable();
-        serviceAccountDelegationInfo_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        serviceAccountDelegationInfoBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addServiceAccountDelegationInfo(index, builderForValue.build());
       return this;
     }
     /**
@@ -1844,14 +1431,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      */
     public Builder addAllServiceAccountDelegationInfo(
         java.lang.Iterable<? extends com.google.cloud.audit.ServiceAccountDelegationInfo> values) {
-      if (serviceAccountDelegationInfoBuilder_ == null) {
-        ensureServiceAccountDelegationInfoIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, serviceAccountDelegationInfo_);
-        onChanged();
-      } else {
-        serviceAccountDelegationInfoBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllServiceAccountDelegationInfo(values);
       return this;
     }
     /**
@@ -1870,13 +1451,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * </code>
      */
     public Builder clearServiceAccountDelegationInfo() {
-      if (serviceAccountDelegationInfoBuilder_ == null) {
-        serviceAccountDelegationInfo_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000010);
-        onChanged();
-      } else {
-        serviceAccountDelegationInfoBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearServiceAccountDelegationInfo();
       return this;
     }
     /**
@@ -1895,162 +1471,11 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * </code>
      */
     public Builder removeServiceAccountDelegationInfo(int index) {
-      if (serviceAccountDelegationInfoBuilder_ == null) {
-        ensureServiceAccountDelegationInfoIsMutable();
-        serviceAccountDelegationInfo_.remove(index);
-        onChanged();
-      } else {
-        serviceAccountDelegationInfoBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeServiceAccountDelegationInfo(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Identity delegation history of an authenticated service account that makes
-     * the request. It contains information on the real authorities that try to
-     * access GCP resources by delegating on a service account. When multiple
-     * authorities present, they are guaranteed to be sorted based on the original
-     * ordering of the identity delegation events.
-     * </pre>
-     *
-     * <code>
-     * repeated .google.cloud.audit.ServiceAccountDelegationInfo service_account_delegation_info = 6;
-     * </code>
-     */
-    public com.google.cloud.audit.ServiceAccountDelegationInfo.Builder
-        getServiceAccountDelegationInfoBuilder(int index) {
-      return getServiceAccountDelegationInfoFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Identity delegation history of an authenticated service account that makes
-     * the request. It contains information on the real authorities that try to
-     * access GCP resources by delegating on a service account. When multiple
-     * authorities present, they are guaranteed to be sorted based on the original
-     * ordering of the identity delegation events.
-     * </pre>
-     *
-     * <code>
-     * repeated .google.cloud.audit.ServiceAccountDelegationInfo service_account_delegation_info = 6;
-     * </code>
-     */
-    public com.google.cloud.audit.ServiceAccountDelegationInfoOrBuilder
-        getServiceAccountDelegationInfoOrBuilder(int index) {
-      if (serviceAccountDelegationInfoBuilder_ == null) {
-        return serviceAccountDelegationInfo_.get(index);
-      } else {
-        return serviceAccountDelegationInfoBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Identity delegation history of an authenticated service account that makes
-     * the request. It contains information on the real authorities that try to
-     * access GCP resources by delegating on a service account. When multiple
-     * authorities present, they are guaranteed to be sorted based on the original
-     * ordering of the identity delegation events.
-     * </pre>
-     *
-     * <code>
-     * repeated .google.cloud.audit.ServiceAccountDelegationInfo service_account_delegation_info = 6;
-     * </code>
-     */
-    public java.util.List<? extends com.google.cloud.audit.ServiceAccountDelegationInfoOrBuilder>
-        getServiceAccountDelegationInfoOrBuilderList() {
-      if (serviceAccountDelegationInfoBuilder_ != null) {
-        return serviceAccountDelegationInfoBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(serviceAccountDelegationInfo_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Identity delegation history of an authenticated service account that makes
-     * the request. It contains information on the real authorities that try to
-     * access GCP resources by delegating on a service account. When multiple
-     * authorities present, they are guaranteed to be sorted based on the original
-     * ordering of the identity delegation events.
-     * </pre>
-     *
-     * <code>
-     * repeated .google.cloud.audit.ServiceAccountDelegationInfo service_account_delegation_info = 6;
-     * </code>
-     */
-    public com.google.cloud.audit.ServiceAccountDelegationInfo.Builder
-        addServiceAccountDelegationInfoBuilder() {
-      return getServiceAccountDelegationInfoFieldBuilder()
-          .addBuilder(com.google.cloud.audit.ServiceAccountDelegationInfo.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Identity delegation history of an authenticated service account that makes
-     * the request. It contains information on the real authorities that try to
-     * access GCP resources by delegating on a service account. When multiple
-     * authorities present, they are guaranteed to be sorted based on the original
-     * ordering of the identity delegation events.
-     * </pre>
-     *
-     * <code>
-     * repeated .google.cloud.audit.ServiceAccountDelegationInfo service_account_delegation_info = 6;
-     * </code>
-     */
-    public com.google.cloud.audit.ServiceAccountDelegationInfo.Builder
-        addServiceAccountDelegationInfoBuilder(int index) {
-      return getServiceAccountDelegationInfoFieldBuilder()
-          .addBuilder(
-              index, com.google.cloud.audit.ServiceAccountDelegationInfo.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Identity delegation history of an authenticated service account that makes
-     * the request. It contains information on the real authorities that try to
-     * access GCP resources by delegating on a service account. When multiple
-     * authorities present, they are guaranteed to be sorted based on the original
-     * ordering of the identity delegation events.
-     * </pre>
-     *
-     * <code>
-     * repeated .google.cloud.audit.ServiceAccountDelegationInfo service_account_delegation_info = 6;
-     * </code>
-     */
-    public java.util.List<com.google.cloud.audit.ServiceAccountDelegationInfo.Builder>
-        getServiceAccountDelegationInfoBuilderList() {
-      return getServiceAccountDelegationInfoFieldBuilder().getBuilderList();
-    }
 
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.cloud.audit.ServiceAccountDelegationInfo,
-            com.google.cloud.audit.ServiceAccountDelegationInfo.Builder,
-            com.google.cloud.audit.ServiceAccountDelegationInfoOrBuilder>
-        getServiceAccountDelegationInfoFieldBuilder() {
-      if (serviceAccountDelegationInfoBuilder_ == null) {
-        serviceAccountDelegationInfoBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.cloud.audit.ServiceAccountDelegationInfo,
-                com.google.cloud.audit.ServiceAccountDelegationInfo.Builder,
-                com.google.cloud.audit.ServiceAccountDelegationInfoOrBuilder>(
-                serviceAccountDelegationInfo_,
-                ((bitField0_ & 0x00000010) != 0),
-                getParentForChildren(),
-                isClean());
-        serviceAccountDelegationInfo_ = null;
-      }
-      return serviceAccountDelegationInfoBuilder_;
-    }
-
-    private java.lang.Object principalSubject_ = "";
     /**
      *
      *
@@ -2063,16 +1488,9 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      *
      * @return The principalSubject.
      */
+    @java.lang.Override
     public java.lang.String getPrincipalSubject() {
-      java.lang.Object ref = principalSubject_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        principalSubject_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getPrincipalSubject();
     }
     /**
      *
@@ -2086,16 +1504,9 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      *
      * @return The bytes for principalSubject.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getPrincipalSubjectBytes() {
-      java.lang.Object ref = principalSubject_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        principalSubject_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getPrincipalSubjectBytes();
     }
     /**
      *
@@ -2111,12 +1522,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * @return This builder for chaining.
      */
     public Builder setPrincipalSubject(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      principalSubject_ = value;
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setPrincipalSubject(value);
       return this;
     }
     /**
@@ -2132,9 +1539,8 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * @return This builder for chaining.
      */
     public Builder clearPrincipalSubject() {
-      principalSubject_ = getDefaultInstance().getPrincipalSubject();
-      bitField0_ = (bitField0_ & ~0x00000020);
-      onChanged();
+      copyOnWrite();
+      instance.clearPrincipalSubject();
       return this;
     }
     /**
@@ -2151,74 +1557,99 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * @return This builder for chaining.
      */
     public Builder setPrincipalSubjectBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      principalSubject_ = value;
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setPrincipalSubjectBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.cloud.audit.AuthenticationInfo)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.cloud.audit.AuthenticationInfo();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_",
+                "principalEmail_",
+                "authoritySelector_",
+                "thirdPartyPrincipal_",
+                "serviceAccountKeyName_",
+                "serviceAccountDelegationInfo_",
+                com.google.cloud.audit.ServiceAccountDelegationInfo.class,
+                "principalSubject_",
+              };
+          java.lang.String info =
+              "\u0000\u0006\u0000\u0001\u0001\b\u0006\u0000\u0001\u0000\u0001\u0208\u0002\u0208"
+                  + "\u0004\u1009\u0000\u0005\u0208\u0006\u001b\b\u0208";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.cloud.audit.AuthenticationInfo> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.cloud.audit.AuthenticationInfo.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.cloud.audit.AuthenticationInfo>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.cloud.audit.AuthenticationInfo)
   private static final com.google.cloud.audit.AuthenticationInfo DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.cloud.audit.AuthenticationInfo();
+    AuthenticationInfo defaultInstance = new AuthenticationInfo();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        AuthenticationInfo.class, defaultInstance);
   }
 
   public static com.google.cloud.audit.AuthenticationInfo getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<AuthenticationInfo> PARSER =
-      new com.google.protobuf.AbstractParser<AuthenticationInfo>() {
-        @java.lang.Override
-        public AuthenticationInfo parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<AuthenticationInfo> PARSER;
 
   public static com.google.protobuf.Parser<AuthenticationInfo> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<AuthenticationInfo> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.cloud.audit.AuthenticationInfo getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

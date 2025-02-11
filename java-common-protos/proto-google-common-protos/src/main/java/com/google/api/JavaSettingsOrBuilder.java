@@ -22,7 +22,7 @@ package com.google.api;
 public interface JavaSettingsOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.JavaSettings)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -163,6 +163,7 @@ public interface JavaSettingsOrBuilder
    *
    * <code>map&lt;string, string&gt; service_class_names = 2;</code>
    */
+
   /* nullable */
   java.lang.String getServiceClassNamesOrDefault(
       java.lang.String key,
@@ -216,14 +217,4 @@ public interface JavaSettingsOrBuilder
    * @return The common.
    */
   com.google.api.CommonLanguageSettings getCommon();
-  /**
-   *
-   *
-   * <pre>
-   * Some settings.
-   * </pre>
-   *
-   * <code>.google.api.CommonLanguageSettings common = 3;</code>
-   */
-  com.google.api.CommonLanguageSettingsOrBuilder getCommonOrBuilder();
 }

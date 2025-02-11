@@ -22,7 +22,7 @@ package com.google.api;
 public interface ConfigChangeOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.ConfigChange)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -177,26 +177,4 @@ public interface ConfigChangeOrBuilder
    * <code>repeated .google.api.Advice advices = 5;</code>
    */
   int getAdvicesCount();
-  /**
-   *
-   *
-   * <pre>
-   * Collection of advice provided for this change, useful for determining the
-   * possible impact of this change.
-   * </pre>
-   *
-   * <code>repeated .google.api.Advice advices = 5;</code>
-   */
-  java.util.List<? extends com.google.api.AdviceOrBuilder> getAdvicesOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Collection of advice provided for this change, useful for determining the
-   * possible impact of this change.
-   * </pre>
-   *
-   * <code>repeated .google.api.Advice advices = 5;</code>
-   */
-  com.google.api.AdviceOrBuilder getAdvicesOrBuilder(int index);
 }

@@ -45,45 +45,19 @@ package com.google.apps.card.v1;
  *
  * Protobuf type {@code google.apps.card.v1.Suggestions}
  */
-public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
+public final class Suggestions
+    extends com.google.protobuf.GeneratedMessageLite<Suggestions, Suggestions.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.Suggestions)
     SuggestionsOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use Suggestions.newBuilder() to construct.
-  private Suggestions(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private Suggestions() {
-    items_ = java.util.Collections.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new Suggestions();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_Suggestions_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_Suggestions_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.apps.card.v1.Suggestions.class,
-            com.google.apps.card.v1.Suggestions.Builder.class);
+    items_ = emptyProtobufList();
   }
 
   public interface SuggestionItemOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:google.apps.card.v1.Suggestions.SuggestionItem)
-      com.google.protobuf.MessageOrBuilder {
+      com.google.protobuf.MessageLiteOrBuilder {
 
     /**
      *
@@ -125,7 +99,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
      */
     com.google.protobuf.ByteString getTextBytes();
 
-    com.google.apps.card.v1.Suggestions.SuggestionItem.ContentCase getContentCase();
+    public com.google.apps.card.v1.Suggestions.SuggestionItem.ContentCase getContentCase();
   }
   /**
    *
@@ -139,48 +113,17 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.apps.card.v1.Suggestions.SuggestionItem}
    */
-  public static final class SuggestionItem extends com.google.protobuf.GeneratedMessageV3
+  public static final class SuggestionItem
+      extends com.google.protobuf.GeneratedMessageLite<SuggestionItem, SuggestionItem.Builder>
       implements
       // @@protoc_insertion_point(message_implements:google.apps.card.v1.Suggestions.SuggestionItem)
       SuggestionItemOrBuilder {
-    private static final long serialVersionUID = 0L;
-    // Use SuggestionItem.newBuilder() to construct.
-    private SuggestionItem(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-
     private SuggestionItem() {}
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-      return new SuggestionItem();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Suggestions_SuggestionItem_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Suggestions_SuggestionItem_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.apps.card.v1.Suggestions.SuggestionItem.class,
-              com.google.apps.card.v1.Suggestions.SuggestionItem.Builder.class);
-    }
-
     private int contentCase_ = 0;
-
-    @SuppressWarnings("serial")
     private java.lang.Object content_;
 
-    public enum ContentCase
-        implements
-            com.google.protobuf.Internal.EnumLite,
-            com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+    public enum ContentCase {
       TEXT(1),
       CONTENT_NOT_SET(0);
       private final int value;
@@ -188,11 +131,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
       private ContentCase(int value) {
         this.value = value;
       }
-      /**
-       * @param value The number of the enum to look for.
-       * @return The enum associated with the given number.
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
+      /** @deprecated Use {@link #forNumber(int)} instead. */
       @java.lang.Deprecated
       public static ContentCase valueOf(int value) {
         return forNumber(value);
@@ -214,8 +153,14 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
       }
     };
 
+    @java.lang.Override
     public ContentCase getContentCase() {
       return ContentCase.forNumber(contentCase_);
+    }
+
+    private void clearContent() {
+      contentCase_ = 0;
+      content_ = null;
     }
 
     public static final int TEXT_FIELD_NUMBER = 1;
@@ -231,6 +176,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
      *
      * @return Whether the text field is set.
      */
+    @java.lang.Override
     public boolean hasText() {
       return contentCase_ == 1;
     }
@@ -246,21 +192,13 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The text.
      */
+    @java.lang.Override
     public java.lang.String getText() {
-      java.lang.Object ref = "";
+      java.lang.String ref = "";
       if (contentCase_ == 1) {
-        ref = content_;
+        ref = (java.lang.String) content_;
       }
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (contentCase_ == 1) {
-          content_ = s;
-        }
-        return s;
-      }
+      return ref;
     }
     /**
      *
@@ -274,196 +212,147 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for text.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getTextBytes() {
-      java.lang.Object ref = "";
+      java.lang.String ref = "";
       if (contentCase_ == 1) {
-        ref = content_;
+        ref = (java.lang.String) content_;
       }
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        if (contentCase_ == 1) {
-          content_ = b;
-        }
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(ref);
     }
-
-    private byte memoizedIsInitialized = -1;
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
+    /**
+     *
+     *
+     * <pre>
+     * The value of a suggested input to a text input field. This is
+     * equivalent to what users enter themselves.
+     * </pre>
+     *
+     * <code>string text = 1;</code>
+     *
+     * @param value The text to set.
+     */
+    private void setText(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+      contentCase_ = 1;
+      content_ = value;
     }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
+    /**
+     *
+     *
+     * <pre>
+     * The value of a suggested input to a text input field. This is
+     * equivalent to what users enter themselves.
+     * </pre>
+     *
+     * <code>string text = 1;</code>
+     */
+    private void clearText() {
       if (contentCase_ == 1) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, content_);
+        contentCase_ = 0;
+        content_ = null;
       }
-      getUnknownFields().writeTo(output);
     }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (contentCase_ == 1) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, content_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-        return true;
-      }
-      if (!(obj instanceof com.google.apps.card.v1.Suggestions.SuggestionItem)) {
-        return super.equals(obj);
-      }
-      com.google.apps.card.v1.Suggestions.SuggestionItem other =
-          (com.google.apps.card.v1.Suggestions.SuggestionItem) obj;
-
-      if (!getContentCase().equals(other.getContentCase())) return false;
-      switch (contentCase_) {
-        case 1:
-          if (!getText().equals(other.getText())) return false;
-          break;
-        case 0:
-        default:
-      }
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      switch (contentCase_) {
-        case 1:
-          hash = (37 * hash) + TEXT_FIELD_NUMBER;
-          hash = (53 * hash) + getText().hashCode();
-          break;
-        case 0:
-        default:
-      }
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
+    /**
+     *
+     *
+     * <pre>
+     * The value of a suggested input to a text input field. This is
+     * equivalent to what users enter themselves.
+     * </pre>
+     *
+     * <code>string text = 1;</code>
+     *
+     * @param value The bytes for text to set.
+     */
+    private void setTextBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      content_ = value.toStringUtf8();
+      contentCase_ = 1;
     }
 
     public static com.google.apps.card.v1.Suggestions.SuggestionItem parseFrom(
         java.nio.ByteBuffer data) throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.Suggestions.SuggestionItem parseFrom(
         java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.Suggestions.SuggestionItem parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.Suggestions.SuggestionItem parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.Suggestions.SuggestionItem parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.Suggestions.SuggestionItem parseFrom(
         byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.Suggestions.SuggestionItem parseFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.Suggestions.SuggestionItem parseFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.Suggestions.SuggestionItem parseDelimitedFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.Suggestions.SuggestionItem parseDelimitedFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.Suggestions.SuggestionItem parseFrom(
         com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.Suggestions.SuggestionItem parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
+      return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
 
     public static Builder newBuilder(com.google.apps.card.v1.Suggestions.SuggestionItem prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      *
      *
@@ -477,208 +366,26 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
      * Protobuf type {@code google.apps.card.v1.Suggestions.SuggestionItem}
      */
     public static final class Builder
-        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+        extends com.google.protobuf.GeneratedMessageLite.Builder<
+            com.google.apps.card.v1.Suggestions.SuggestionItem, Builder>
         implements
         // @@protoc_insertion_point(builder_implements:google.apps.card.v1.Suggestions.SuggestionItem)
         com.google.apps.card.v1.Suggestions.SuggestionItemOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_Suggestions_SuggestionItem_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_Suggestions_SuggestionItem_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.google.apps.card.v1.Suggestions.SuggestionItem.class,
-                com.google.apps.card.v1.Suggestions.SuggestionItem.Builder.class);
-      }
-
       // Construct using com.google.apps.card.v1.Suggestions.SuggestionItem.newBuilder()
-      private Builder() {}
-
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
+      private Builder() {
+        super(DEFAULT_INSTANCE);
       }
 
       @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        contentCase_ = 0;
-        content_ = null;
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_Suggestions_SuggestionItem_descriptor;
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.Suggestions.SuggestionItem getDefaultInstanceForType() {
-        return com.google.apps.card.v1.Suggestions.SuggestionItem.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.Suggestions.SuggestionItem build() {
-        com.google.apps.card.v1.Suggestions.SuggestionItem result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.Suggestions.SuggestionItem buildPartial() {
-        com.google.apps.card.v1.Suggestions.SuggestionItem result =
-            new com.google.apps.card.v1.Suggestions.SuggestionItem(this);
-        if (bitField0_ != 0) {
-          buildPartial0(result);
-        }
-        buildPartialOneofs(result);
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartial0(com.google.apps.card.v1.Suggestions.SuggestionItem result) {
-        int from_bitField0_ = bitField0_;
-      }
-
-      private void buildPartialOneofs(com.google.apps.card.v1.Suggestions.SuggestionItem result) {
-        result.contentCase_ = contentCase_;
-        result.content_ = this.content_;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.apps.card.v1.Suggestions.SuggestionItem) {
-          return mergeFrom((com.google.apps.card.v1.Suggestions.SuggestionItem) other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.google.apps.card.v1.Suggestions.SuggestionItem other) {
-        if (other == com.google.apps.card.v1.Suggestions.SuggestionItem.getDefaultInstance())
-          return this;
-        switch (other.getContentCase()) {
-          case TEXT:
-            {
-              contentCase_ = 1;
-              content_ = other.content_;
-              onChanged();
-              break;
-            }
-          case CONTENT_NOT_SET:
-            {
-              break;
-            }
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10:
-                {
-                  java.lang.String s = input.readStringRequireUtf8();
-                  contentCase_ = 1;
-                  content_ = s;
-                  break;
-                } // case 10
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-
-      private int contentCase_ = 0;
-      private java.lang.Object content_;
-
       public ContentCase getContentCase() {
-        return ContentCase.forNumber(contentCase_);
+        return instance.getContentCase();
       }
 
       public Builder clearContent() {
-        contentCase_ = 0;
-        content_ = null;
-        onChanged();
+        copyOnWrite();
+        instance.clearContent();
         return this;
       }
-
-      private int bitField0_;
 
       /**
        *
@@ -694,7 +401,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
        */
       @java.lang.Override
       public boolean hasText() {
-        return contentCase_ == 1;
+        return instance.hasText();
       }
       /**
        *
@@ -710,20 +417,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
        */
       @java.lang.Override
       public java.lang.String getText() {
-        java.lang.Object ref = "";
-        if (contentCase_ == 1) {
-          ref = content_;
-        }
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (contentCase_ == 1) {
-            content_ = s;
-          }
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getText();
       }
       /**
        *
@@ -739,20 +433,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
        */
       @java.lang.Override
       public com.google.protobuf.ByteString getTextBytes() {
-        java.lang.Object ref = "";
-        if (contentCase_ == 1) {
-          ref = content_;
-        }
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          if (contentCase_ == 1) {
-            content_ = b;
-          }
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getTextBytes();
       }
       /**
        *
@@ -768,12 +449,8 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setText(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        contentCase_ = 1;
-        content_ = value;
-        onChanged();
+        copyOnWrite();
+        instance.setText(value);
         return this;
       }
       /**
@@ -789,11 +466,8 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearText() {
-        if (contentCase_ == 1) {
-          contentCase_ = 0;
-          content_ = null;
-          onChanged();
-        }
+        copyOnWrite();
+        instance.clearText();
         return this;
       }
       /**
@@ -810,84 +484,100 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setTextBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        contentCase_ = 1;
-        content_ = value;
-        onChanged();
+        copyOnWrite();
+        instance.setTextBytes(value);
         return this;
       }
 
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
       // @@protoc_insertion_point(builder_scope:google.apps.card.v1.Suggestions.SuggestionItem)
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0,
+        java.lang.Object arg1) {
+      switch (method) {
+        case NEW_MUTABLE_INSTANCE:
+          {
+            return new com.google.apps.card.v1.Suggestions.SuggestionItem();
+          }
+        case NEW_BUILDER:
+          {
+            return new Builder();
+          }
+        case BUILD_MESSAGE_INFO:
+          {
+            java.lang.Object[] objects =
+                new java.lang.Object[] {
+                  "content_", "contentCase_",
+                };
+            java.lang.String info =
+                "\u0000\u0001\u0001\u0000\u0001\u0001\u0001\u0000\u0000\u0000\u0001\u023b\u0000";
+            return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+          }
+          // fall through
+        case GET_DEFAULT_INSTANCE:
+          {
+            return DEFAULT_INSTANCE;
+          }
+        case GET_PARSER:
+          {
+            com.google.protobuf.Parser<com.google.apps.card.v1.Suggestions.SuggestionItem> parser =
+                PARSER;
+            if (parser == null) {
+              synchronized (com.google.apps.card.v1.Suggestions.SuggestionItem.class) {
+                parser = PARSER;
+                if (parser == null) {
+                  parser =
+                      new DefaultInstanceBasedParser<
+                          com.google.apps.card.v1.Suggestions.SuggestionItem>(DEFAULT_INSTANCE);
+                  PARSER = parser;
+                }
+              }
+            }
+            return parser;
+          }
+        case GET_MEMOIZED_IS_INITIALIZED:
+          {
+            return (byte) 1;
+          }
+        case SET_MEMOIZED_IS_INITIALIZED:
+          {
+            return null;
+          }
+      }
+      throw new UnsupportedOperationException();
     }
 
     // @@protoc_insertion_point(class_scope:google.apps.card.v1.Suggestions.SuggestionItem)
     private static final com.google.apps.card.v1.Suggestions.SuggestionItem DEFAULT_INSTANCE;
 
     static {
-      DEFAULT_INSTANCE = new com.google.apps.card.v1.Suggestions.SuggestionItem();
+      SuggestionItem defaultInstance = new SuggestionItem();
+      // New instances are implicitly immutable so no need to make
+      // immutable.
+      DEFAULT_INSTANCE = defaultInstance;
+      com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+          SuggestionItem.class, defaultInstance);
     }
 
     public static com.google.apps.card.v1.Suggestions.SuggestionItem getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<SuggestionItem> PARSER =
-        new com.google.protobuf.AbstractParser<SuggestionItem>() {
-          @java.lang.Override
-          public SuggestionItem parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-          }
-        };
+    private static volatile com.google.protobuf.Parser<SuggestionItem> PARSER;
 
     public static com.google.protobuf.Parser<SuggestionItem> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<SuggestionItem> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.Suggestions.SuggestionItem getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
+      return DEFAULT_INSTANCE.getParserForType();
     }
   }
 
   public static final int ITEMS_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.apps.card.v1.Suggestions.SuggestionItem> items_;
+  private com.google.protobuf.Internal.ProtobufList<
+          com.google.apps.card.v1.Suggestions.SuggestionItem>
+      items_;
   /**
    *
    *
@@ -912,7 +602,6 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.apps.card.v1.Suggestions.SuggestionItemOrBuilder>
       getItemsOrBuilderList() {
     return items_;
@@ -955,170 +644,187 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
    */
-  @java.lang.Override
   public com.google.apps.card.v1.Suggestions.SuggestionItemOrBuilder getItemsOrBuilder(int index) {
     return items_.get(index);
   }
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  private void ensureItemsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.apps.card.v1.Suggestions.SuggestionItem>
+        tmp = items_;
+    if (!tmp.isModifiable()) {
+      items_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
   }
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    for (int i = 0; i < items_.size(); i++) {
-      output.writeMessage(1, items_.get(i));
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * A list of suggestions used for autocomplete recommendations in text input
+   * fields.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
+   */
+  private void setItems(int index, com.google.apps.card.v1.Suggestions.SuggestionItem value) {
+    value.getClass();
+    ensureItemsIsMutable();
+    items_.set(index, value);
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    for (int i = 0; i < items_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, items_.get(i));
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
+  /**
+   *
+   *
+   * <pre>
+   * A list of suggestions used for autocomplete recommendations in text input
+   * fields.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
+   */
+  private void addItems(com.google.apps.card.v1.Suggestions.SuggestionItem value) {
+    value.getClass();
+    ensureItemsIsMutable();
+    items_.add(value);
   }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.apps.card.v1.Suggestions)) {
-      return super.equals(obj);
-    }
-    com.google.apps.card.v1.Suggestions other = (com.google.apps.card.v1.Suggestions) obj;
-
-    if (!getItemsList().equals(other.getItemsList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * A list of suggestions used for autocomplete recommendations in text input
+   * fields.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
+   */
+  private void addItems(int index, com.google.apps.card.v1.Suggestions.SuggestionItem value) {
+    value.getClass();
+    ensureItemsIsMutable();
+    items_.add(index, value);
   }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (getItemsCount() > 0) {
-      hash = (37 * hash) + ITEMS_FIELD_NUMBER;
-      hash = (53 * hash) + getItemsList().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * A list of suggestions used for autocomplete recommendations in text input
+   * fields.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
+   */
+  private void addAllItems(
+      java.lang.Iterable<? extends com.google.apps.card.v1.Suggestions.SuggestionItem> values) {
+    ensureItemsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, items_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of suggestions used for autocomplete recommendations in text input
+   * fields.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
+   */
+  private void clearItems() {
+    items_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of suggestions used for autocomplete recommendations in text input
+   * fields.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
+   */
+  private void removeItems(int index) {
+    ensureItemsIsMutable();
+    items_.remove(index);
   }
 
   public static com.google.apps.card.v1.Suggestions parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.Suggestions parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Suggestions parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.Suggestions parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Suggestions parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.Suggestions parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Suggestions parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.Suggestions parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Suggestions parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.Suggestions parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Suggestions parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.Suggestions parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.apps.card.v1.Suggestions prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -1145,240 +851,16 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.apps.card.v1.Suggestions}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.apps.card.v1.Suggestions, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.apps.card.v1.Suggestions)
       com.google.apps.card.v1.SuggestionsOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Suggestions_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Suggestions_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.apps.card.v1.Suggestions.class,
-              com.google.apps.card.v1.Suggestions.Builder.class);
-    }
-
     // Construct using com.google.apps.card.v1.Suggestions.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      if (itemsBuilder_ == null) {
-        items_ = java.util.Collections.emptyList();
-      } else {
-        items_ = null;
-        itemsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000001);
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Suggestions_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.Suggestions getDefaultInstanceForType() {
-      return com.google.apps.card.v1.Suggestions.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.Suggestions build() {
-      com.google.apps.card.v1.Suggestions result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.Suggestions buildPartial() {
-      com.google.apps.card.v1.Suggestions result = new com.google.apps.card.v1.Suggestions(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.apps.card.v1.Suggestions result) {
-      if (itemsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
-          items_ = java.util.Collections.unmodifiableList(items_);
-          bitField0_ = (bitField0_ & ~0x00000001);
-        }
-        result.items_ = items_;
-      } else {
-        result.items_ = itemsBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.apps.card.v1.Suggestions result) {
-      int from_bitField0_ = bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.apps.card.v1.Suggestions) {
-        return mergeFrom((com.google.apps.card.v1.Suggestions) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.apps.card.v1.Suggestions other) {
-      if (other == com.google.apps.card.v1.Suggestions.getDefaultInstance()) return this;
-      if (itemsBuilder_ == null) {
-        if (!other.items_.isEmpty()) {
-          if (items_.isEmpty()) {
-            items_ = other.items_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensureItemsIsMutable();
-            items_.addAll(other.items_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.items_.isEmpty()) {
-          if (itemsBuilder_.isEmpty()) {
-            itemsBuilder_.dispose();
-            itemsBuilder_ = null;
-            items_ = other.items_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-            itemsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getItemsFieldBuilder()
-                    : null;
-          } else {
-            itemsBuilder_.addAllMessages(other.items_);
-          }
-        }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                com.google.apps.card.v1.Suggestions.SuggestionItem m =
-                    input.readMessage(
-                        com.google.apps.card.v1.Suggestions.SuggestionItem.parser(),
-                        extensionRegistry);
-                if (itemsBuilder_ == null) {
-                  ensureItemsIsMutable();
-                  items_.add(m);
-                } else {
-                  itemsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 10
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.util.List<com.google.apps.card.v1.Suggestions.SuggestionItem> items_ =
-        java.util.Collections.emptyList();
-
-    private void ensureItemsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
-        items_ =
-            new java.util.ArrayList<com.google.apps.card.v1.Suggestions.SuggestionItem>(items_);
-        bitField0_ |= 0x00000001;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.apps.card.v1.Suggestions.SuggestionItem,
-            com.google.apps.card.v1.Suggestions.SuggestionItem.Builder,
-            com.google.apps.card.v1.Suggestions.SuggestionItemOrBuilder>
-        itemsBuilder_;
 
     /**
      *
@@ -1390,12 +872,9 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.apps.card.v1.Suggestions.SuggestionItem> getItemsList() {
-      if (itemsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(items_);
-      } else {
-        return itemsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getItemsList());
     }
     /**
      *
@@ -1407,12 +886,9 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
      */
+    @java.lang.Override
     public int getItemsCount() {
-      if (itemsBuilder_ == null) {
-        return items_.size();
-      } else {
-        return itemsBuilder_.getCount();
-      }
+      return instance.getItemsCount();
     }
     /**
      *
@@ -1424,12 +900,10 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
      */
+
+    @java.lang.Override
     public com.google.apps.card.v1.Suggestions.SuggestionItem getItems(int index) {
-      if (itemsBuilder_ == null) {
-        return items_.get(index);
-      } else {
-        return itemsBuilder_.getMessage(index);
-      }
+      return instance.getItems(index);
     }
     /**
      *
@@ -1442,16 +916,8 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
      */
     public Builder setItems(int index, com.google.apps.card.v1.Suggestions.SuggestionItem value) {
-      if (itemsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureItemsIsMutable();
-        items_.set(index, value);
-        onChanged();
-      } else {
-        itemsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setItems(index, value);
       return this;
     }
     /**
@@ -1466,13 +932,8 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder setItems(
         int index, com.google.apps.card.v1.Suggestions.SuggestionItem.Builder builderForValue) {
-      if (itemsBuilder_ == null) {
-        ensureItemsIsMutable();
-        items_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        itemsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setItems(index, builderForValue.build());
       return this;
     }
     /**
@@ -1486,16 +947,8 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
      */
     public Builder addItems(com.google.apps.card.v1.Suggestions.SuggestionItem value) {
-      if (itemsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureItemsIsMutable();
-        items_.add(value);
-        onChanged();
-      } else {
-        itemsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addItems(value);
       return this;
     }
     /**
@@ -1509,16 +962,8 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
      */
     public Builder addItems(int index, com.google.apps.card.v1.Suggestions.SuggestionItem value) {
-      if (itemsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureItemsIsMutable();
-        items_.add(index, value);
-        onChanged();
-      } else {
-        itemsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addItems(index, value);
       return this;
     }
     /**
@@ -1533,13 +978,8 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addItems(
         com.google.apps.card.v1.Suggestions.SuggestionItem.Builder builderForValue) {
-      if (itemsBuilder_ == null) {
-        ensureItemsIsMutable();
-        items_.add(builderForValue.build());
-        onChanged();
-      } else {
-        itemsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addItems(builderForValue.build());
       return this;
     }
     /**
@@ -1554,13 +994,8 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addItems(
         int index, com.google.apps.card.v1.Suggestions.SuggestionItem.Builder builderForValue) {
-      if (itemsBuilder_ == null) {
-        ensureItemsIsMutable();
-        items_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        itemsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addItems(index, builderForValue.build());
       return this;
     }
     /**
@@ -1575,13 +1010,8 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addAllItems(
         java.lang.Iterable<? extends com.google.apps.card.v1.Suggestions.SuggestionItem> values) {
-      if (itemsBuilder_ == null) {
-        ensureItemsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, items_);
-        onChanged();
-      } else {
-        itemsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllItems(values);
       return this;
     }
     /**
@@ -1595,13 +1025,8 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
      */
     public Builder clearItems() {
-      if (itemsBuilder_ == null) {
-        items_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-      } else {
-        itemsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearItems();
       return this;
     }
     /**
@@ -1615,183 +1040,91 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
      */
     public Builder removeItems(int index) {
-      if (itemsBuilder_ == null) {
-        ensureItemsIsMutable();
-        items_.remove(index);
-        onChanged();
-      } else {
-        itemsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeItems(index);
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of suggestions used for autocomplete recommendations in text input
-     * fields.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
-     */
-    public com.google.apps.card.v1.Suggestions.SuggestionItem.Builder getItemsBuilder(int index) {
-      return getItemsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of suggestions used for autocomplete recommendations in text input
-     * fields.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
-     */
-    public com.google.apps.card.v1.Suggestions.SuggestionItemOrBuilder getItemsOrBuilder(
-        int index) {
-      if (itemsBuilder_ == null) {
-        return items_.get(index);
-      } else {
-        return itemsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of suggestions used for autocomplete recommendations in text input
-     * fields.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
-     */
-    public java.util.List<? extends com.google.apps.card.v1.Suggestions.SuggestionItemOrBuilder>
-        getItemsOrBuilderList() {
-      if (itemsBuilder_ != null) {
-        return itemsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(items_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of suggestions used for autocomplete recommendations in text input
-     * fields.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
-     */
-    public com.google.apps.card.v1.Suggestions.SuggestionItem.Builder addItemsBuilder() {
-      return getItemsFieldBuilder()
-          .addBuilder(com.google.apps.card.v1.Suggestions.SuggestionItem.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of suggestions used for autocomplete recommendations in text input
-     * fields.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
-     */
-    public com.google.apps.card.v1.Suggestions.SuggestionItem.Builder addItemsBuilder(int index) {
-      return getItemsFieldBuilder()
-          .addBuilder(
-              index, com.google.apps.card.v1.Suggestions.SuggestionItem.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of suggestions used for autocomplete recommendations in text input
-     * fields.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
-     */
-    public java.util.List<com.google.apps.card.v1.Suggestions.SuggestionItem.Builder>
-        getItemsBuilderList() {
-      return getItemsFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.apps.card.v1.Suggestions.SuggestionItem,
-            com.google.apps.card.v1.Suggestions.SuggestionItem.Builder,
-            com.google.apps.card.v1.Suggestions.SuggestionItemOrBuilder>
-        getItemsFieldBuilder() {
-      if (itemsBuilder_ == null) {
-        itemsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.apps.card.v1.Suggestions.SuggestionItem,
-                com.google.apps.card.v1.Suggestions.SuggestionItem.Builder,
-                com.google.apps.card.v1.Suggestions.SuggestionItemOrBuilder>(
-                items_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
-        items_ = null;
-      }
-      return itemsBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.apps.card.v1.Suggestions)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.apps.card.v1.Suggestions();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "items_", com.google.apps.card.v1.Suggestions.SuggestionItem.class,
+              };
+          java.lang.String info =
+              "\u0000\u0001\u0000\u0000\u0001\u0001\u0001\u0000\u0001\u0000\u0001\u001b";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.apps.card.v1.Suggestions> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.apps.card.v1.Suggestions.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.apps.card.v1.Suggestions>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.apps.card.v1.Suggestions)
   private static final com.google.apps.card.v1.Suggestions DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.apps.card.v1.Suggestions();
+    Suggestions defaultInstance = new Suggestions();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        Suggestions.class, defaultInstance);
   }
 
   public static com.google.apps.card.v1.Suggestions getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Suggestions> PARSER =
-      new com.google.protobuf.AbstractParser<Suggestions>() {
-        @java.lang.Override
-        public Suggestions parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<Suggestions> PARSER;
 
   public static com.google.protobuf.Parser<Suggestions> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<Suggestions> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.apps.card.v1.Suggestions getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

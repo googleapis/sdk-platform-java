@@ -22,7 +22,7 @@ package com.google.api;
 public interface AuthenticationOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.Authentication)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -60,30 +60,6 @@ public interface AuthenticationOrBuilder
    * <code>repeated .google.api.AuthenticationRule rules = 3;</code>
    */
   int getRulesCount();
-  /**
-   *
-   *
-   * <pre>
-   * A list of authentication rules that apply to individual API methods.
-   *
-   * **NOTE:** All service configuration rules follow "last one wins" order.
-   * </pre>
-   *
-   * <code>repeated .google.api.AuthenticationRule rules = 3;</code>
-   */
-  java.util.List<? extends com.google.api.AuthenticationRuleOrBuilder> getRulesOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * A list of authentication rules that apply to individual API methods.
-   *
-   * **NOTE:** All service configuration rules follow "last one wins" order.
-   * </pre>
-   *
-   * <code>repeated .google.api.AuthenticationRule rules = 3;</code>
-   */
-  com.google.api.AuthenticationRuleOrBuilder getRulesOrBuilder(int index);
 
   /**
    *
@@ -115,24 +91,4 @@ public interface AuthenticationOrBuilder
    * <code>repeated .google.api.AuthProvider providers = 4;</code>
    */
   int getProvidersCount();
-  /**
-   *
-   *
-   * <pre>
-   * Defines a set of authentication providers that a service supports.
-   * </pre>
-   *
-   * <code>repeated .google.api.AuthProvider providers = 4;</code>
-   */
-  java.util.List<? extends com.google.api.AuthProviderOrBuilder> getProvidersOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Defines a set of authentication providers that a service supports.
-   * </pre>
-   *
-   * <code>repeated .google.api.AuthProvider providers = 4;</code>
-   */
-  com.google.api.AuthProviderOrBuilder getProvidersOrBuilder(int index);
 }

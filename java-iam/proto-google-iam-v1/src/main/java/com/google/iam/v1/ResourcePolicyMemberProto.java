@@ -24,53 +24,7 @@ public final class ResourcePolicyMemberProto {
 
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistryLite registry) {}
 
-  public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
-  }
-
-  static final com.google.protobuf.Descriptors.Descriptor
-      internal_static_google_iam_v1_ResourcePolicyMember_descriptor;
-  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_google_iam_v1_ResourcePolicyMember_fieldAccessorTable;
-
-  public static com.google.protobuf.Descriptors.FileDescriptor getDescriptor() {
-    return descriptor;
-  }
-
-  private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
-
   static {
-    java.lang.String[] descriptorData = {
-      "\n*google/iam/v1/resource_policy_member.p"
-          + "roto\022\rgoogle.iam.v1\032\037google/api/field_be"
-          + "havior.proto\"e\n\024ResourcePolicyMember\022&\n\031"
-          + "iam_policy_name_principal\030\001 \001(\tB\003\340A\003\022%\n\030"
-          + "iam_policy_uid_principal\030\002 \001(\tB\003\340A\003B\207\001\n\021"
-          + "com.google.iam.v1B\031ResourcePolicyMemberP"
-          + "rotoP\001Z)cloud.google.com/go/iam/apiv1/ia"
-          + "mpb;iampb\252\002\023Google.Cloud.Iam.V1\312\002\023Google"
-          + "\\Cloud\\Iam\\V1b\006proto3"
-    };
-    descriptor =
-        com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
-            descriptorData,
-            new com.google.protobuf.Descriptors.FileDescriptor[] {
-              com.google.api.FieldBehaviorProto.getDescriptor(),
-            });
-    internal_static_google_iam_v1_ResourcePolicyMember_descriptor =
-        getDescriptor().getMessageTypes().get(0);
-    internal_static_google_iam_v1_ResourcePolicyMember_fieldAccessorTable =
-        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-            internal_static_google_iam_v1_ResourcePolicyMember_descriptor,
-            new java.lang.String[] {
-              "IamPolicyNamePrincipal", "IamPolicyUidPrincipal",
-            });
-    com.google.protobuf.ExtensionRegistry registry =
-        com.google.protobuf.ExtensionRegistry.newInstance();
-    registry.add(com.google.api.FieldBehaviorProto.fieldBehavior);
-    com.google.protobuf.Descriptors.FileDescriptor.internalUpdateFileDescriptor(
-        descriptor, registry);
-    com.google.api.FieldBehaviorProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

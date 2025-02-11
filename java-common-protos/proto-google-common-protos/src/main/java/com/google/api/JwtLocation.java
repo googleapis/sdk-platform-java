@@ -28,47 +28,19 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.JwtLocation}
  */
-public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
+public final class JwtLocation
+    extends com.google.protobuf.GeneratedMessageLite<JwtLocation, JwtLocation.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.JwtLocation)
     JwtLocationOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use JwtLocation.newBuilder() to construct.
-  private JwtLocation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private JwtLocation() {
     valuePrefix_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new JwtLocation();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.AuthProto.internal_static_google_api_JwtLocation_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.AuthProto.internal_static_google_api_JwtLocation_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.JwtLocation.class, com.google.api.JwtLocation.Builder.class);
-  }
-
   private int inCase_ = 0;
-
-  @SuppressWarnings("serial")
   private java.lang.Object in_;
 
-  public enum InCase
-      implements
-          com.google.protobuf.Internal.EnumLite,
-          com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+  public enum InCase {
     HEADER(1),
     QUERY(2),
     COOKIE(4),
@@ -78,11 +50,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
     private InCase(int value) {
       this.value = value;
     }
-    /**
-     * @param value The number of the enum to look for.
-     * @return The enum associated with the given number.
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
+    /** @deprecated Use {@link #forNumber(int)} instead. */
     @java.lang.Deprecated
     public static InCase valueOf(int value) {
       return forNumber(value);
@@ -108,8 +76,14 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
     }
   };
 
+  @java.lang.Override
   public InCase getInCase() {
     return InCase.forNumber(inCase_);
+  }
+
+  private void clearIn() {
+    inCase_ = 0;
+    in_ = null;
   }
 
   public static final int HEADER_FIELD_NUMBER = 1;
@@ -124,6 +98,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the header field is set.
    */
+  @java.lang.Override
   public boolean hasHeader() {
     return inCase_ == 1;
   }
@@ -138,21 +113,13 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The header.
    */
+  @java.lang.Override
   public java.lang.String getHeader() {
-    java.lang.Object ref = "";
+    java.lang.String ref = "";
     if (inCase_ == 1) {
-      ref = in_;
+      ref = (java.lang.String) in_;
     }
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      if (inCase_ == 1) {
-        in_ = s;
-      }
-      return s;
-    }
+    return ref;
   }
   /**
    *
@@ -165,21 +132,60 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for header.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getHeaderBytes() {
-    java.lang.Object ref = "";
+    java.lang.String ref = "";
     if (inCase_ == 1) {
-      ref = in_;
+      ref = (java.lang.String) in_;
     }
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      if (inCase_ == 1) {
-        in_ = b;
-      }
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
+    return com.google.protobuf.ByteString.copyFromUtf8(ref);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies HTTP header name to extract JWT token.
+   * </pre>
+   *
+   * <code>string header = 1;</code>
+   *
+   * @param value The header to set.
+   */
+  private void setHeader(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    inCase_ = 1;
+    in_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies HTTP header name to extract JWT token.
+   * </pre>
+   *
+   * <code>string header = 1;</code>
+   */
+  private void clearHeader() {
+    if (inCase_ == 1) {
+      inCase_ = 0;
+      in_ = null;
     }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies HTTP header name to extract JWT token.
+   * </pre>
+   *
+   * <code>string header = 1;</code>
+   *
+   * @param value The bytes for header to set.
+   */
+  private void setHeaderBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    in_ = value.toStringUtf8();
+    inCase_ = 1;
   }
 
   public static final int QUERY_FIELD_NUMBER = 2;
@@ -194,6 +200,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the query field is set.
    */
+  @java.lang.Override
   public boolean hasQuery() {
     return inCase_ == 2;
   }
@@ -208,21 +215,13 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The query.
    */
+  @java.lang.Override
   public java.lang.String getQuery() {
-    java.lang.Object ref = "";
+    java.lang.String ref = "";
     if (inCase_ == 2) {
-      ref = in_;
+      ref = (java.lang.String) in_;
     }
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      if (inCase_ == 2) {
-        in_ = s;
-      }
-      return s;
-    }
+    return ref;
   }
   /**
    *
@@ -235,21 +234,60 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for query.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getQueryBytes() {
-    java.lang.Object ref = "";
+    java.lang.String ref = "";
     if (inCase_ == 2) {
-      ref = in_;
+      ref = (java.lang.String) in_;
     }
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      if (inCase_ == 2) {
-        in_ = b;
-      }
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
+    return com.google.protobuf.ByteString.copyFromUtf8(ref);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies URL query parameter name to extract JWT token.
+   * </pre>
+   *
+   * <code>string query = 2;</code>
+   *
+   * @param value The query to set.
+   */
+  private void setQuery(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    inCase_ = 2;
+    in_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies URL query parameter name to extract JWT token.
+   * </pre>
+   *
+   * <code>string query = 2;</code>
+   */
+  private void clearQuery() {
+    if (inCase_ == 2) {
+      inCase_ = 0;
+      in_ = null;
     }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies URL query parameter name to extract JWT token.
+   * </pre>
+   *
+   * <code>string query = 2;</code>
+   *
+   * @param value The bytes for query to set.
+   */
+  private void setQueryBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    in_ = value.toStringUtf8();
+    inCase_ = 2;
   }
 
   public static final int COOKIE_FIELD_NUMBER = 4;
@@ -264,6 +302,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the cookie field is set.
    */
+  @java.lang.Override
   public boolean hasCookie() {
     return inCase_ == 4;
   }
@@ -278,21 +317,13 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The cookie.
    */
+  @java.lang.Override
   public java.lang.String getCookie() {
-    java.lang.Object ref = "";
+    java.lang.String ref = "";
     if (inCase_ == 4) {
-      ref = in_;
+      ref = (java.lang.String) in_;
     }
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      if (inCase_ == 4) {
-        in_ = s;
-      }
-      return s;
-    }
+    return ref;
   }
   /**
    *
@@ -305,27 +336,64 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for cookie.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getCookieBytes() {
-    java.lang.Object ref = "";
+    java.lang.String ref = "";
     if (inCase_ == 4) {
-      ref = in_;
+      ref = (java.lang.String) in_;
     }
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      if (inCase_ == 4) {
-        in_ = b;
-      }
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
+    return com.google.protobuf.ByteString.copyFromUtf8(ref);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies cookie name to extract JWT token.
+   * </pre>
+   *
+   * <code>string cookie = 4;</code>
+   *
+   * @param value The cookie to set.
+   */
+  private void setCookie(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    inCase_ = 4;
+    in_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies cookie name to extract JWT token.
+   * </pre>
+   *
+   * <code>string cookie = 4;</code>
+   */
+  private void clearCookie() {
+    if (inCase_ == 4) {
+      inCase_ = 0;
+      in_ = null;
     }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies cookie name to extract JWT token.
+   * </pre>
+   *
+   * <code>string cookie = 4;</code>
+   *
+   * @param value The bytes for cookie to set.
+   */
+  private void setCookieBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    in_ = value.toStringUtf8();
+    inCase_ = 4;
   }
 
   public static final int VALUE_PREFIX_FIELD_NUMBER = 3;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object valuePrefix_ = "";
+  private java.lang.String valuePrefix_;
   /**
    *
    *
@@ -346,15 +414,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getValuePrefix() {
-    java.lang.Object ref = valuePrefix_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      valuePrefix_ = s;
-      return s;
-    }
+    return valuePrefix_;
   }
   /**
    *
@@ -376,222 +436,155 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getValuePrefixBytes() {
-    java.lang.Object ref = valuePrefix_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      valuePrefix_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(valuePrefix_);
   }
+  /**
+   *
+   *
+   * <pre>
+   * The value prefix. The value format is "value_prefix{token}"
+   * Only applies to "in" header type. Must be empty for "in" query type.
+   * If not empty, the header value has to match (case sensitive) this prefix.
+   * If not matched, JWT will not be extracted. If matched, JWT will be
+   * extracted after the prefix is removed.
+   *
+   * For example, for "Authorization: Bearer {JWT}",
+   * value_prefix="Bearer " with a space at the end.
+   * </pre>
+   *
+   * <code>string value_prefix = 3;</code>
+   *
+   * @param value The valuePrefix to set.
+   */
+  private void setValuePrefix(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    valuePrefix_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The value prefix. The value format is "value_prefix{token}"
+   * Only applies to "in" header type. Must be empty for "in" query type.
+   * If not empty, the header value has to match (case sensitive) this prefix.
+   * If not matched, JWT will not be extracted. If matched, JWT will be
+   * extracted after the prefix is removed.
+   *
+   * For example, for "Authorization: Bearer {JWT}",
+   * value_prefix="Bearer " with a space at the end.
+   * </pre>
+   *
+   * <code>string value_prefix = 3;</code>
+   */
+  private void clearValuePrefix() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (inCase_ == 1) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, in_);
-    }
-    if (inCase_ == 2) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, in_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(valuePrefix_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, valuePrefix_);
-    }
-    if (inCase_ == 4) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, in_);
-    }
-    getUnknownFields().writeTo(output);
+    valuePrefix_ = getDefaultInstance().getValuePrefix();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (inCase_ == 1) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, in_);
-    }
-    if (inCase_ == 2) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, in_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(valuePrefix_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, valuePrefix_);
-    }
-    if (inCase_ == 4) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, in_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.JwtLocation)) {
-      return super.equals(obj);
-    }
-    com.google.api.JwtLocation other = (com.google.api.JwtLocation) obj;
-
-    if (!getValuePrefix().equals(other.getValuePrefix())) return false;
-    if (!getInCase().equals(other.getInCase())) return false;
-    switch (inCase_) {
-      case 1:
-        if (!getHeader().equals(other.getHeader())) return false;
-        break;
-      case 2:
-        if (!getQuery().equals(other.getQuery())) return false;
-        break;
-      case 4:
-        if (!getCookie().equals(other.getCookie())) return false;
-        break;
-      case 0:
-      default:
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + VALUE_PREFIX_FIELD_NUMBER;
-    hash = (53 * hash) + getValuePrefix().hashCode();
-    switch (inCase_) {
-      case 1:
-        hash = (37 * hash) + HEADER_FIELD_NUMBER;
-        hash = (53 * hash) + getHeader().hashCode();
-        break;
-      case 2:
-        hash = (37 * hash) + QUERY_FIELD_NUMBER;
-        hash = (53 * hash) + getQuery().hashCode();
-        break;
-      case 4:
-        hash = (37 * hash) + COOKIE_FIELD_NUMBER;
-        hash = (53 * hash) + getCookie().hashCode();
-        break;
-      case 0:
-      default:
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * The value prefix. The value format is "value_prefix{token}"
+   * Only applies to "in" header type. Must be empty for "in" query type.
+   * If not empty, the header value has to match (case sensitive) this prefix.
+   * If not matched, JWT will not be extracted. If matched, JWT will be
+   * extracted after the prefix is removed.
+   *
+   * For example, for "Authorization: Bearer {JWT}",
+   * value_prefix="Bearer " with a space at the end.
+   * </pre>
+   *
+   * <code>string value_prefix = 3;</code>
+   *
+   * @param value The bytes for valuePrefix to set.
+   */
+  private void setValuePrefixBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    valuePrefix_ = value.toStringUtf8();
   }
 
   public static com.google.api.JwtLocation parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.JwtLocation parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.JwtLocation parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.JwtLocation parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.JwtLocation parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.JwtLocation parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.JwtLocation parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.JwtLocation parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.JwtLocation parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.JwtLocation parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.JwtLocation parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.JwtLocation parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.JwtLocation prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -601,243 +594,26 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.api.JwtLocation}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<com.google.api.JwtLocation, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.JwtLocation)
       com.google.api.JwtLocationOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.AuthProto.internal_static_google_api_JwtLocation_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.AuthProto.internal_static_google_api_JwtLocation_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.JwtLocation.class, com.google.api.JwtLocation.Builder.class);
-    }
-
     // Construct using com.google.api.JwtLocation.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
     @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      valuePrefix_ = "";
-      inCase_ = 0;
-      in_ = null;
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.AuthProto.internal_static_google_api_JwtLocation_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.JwtLocation getDefaultInstanceForType() {
-      return com.google.api.JwtLocation.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.JwtLocation build() {
-      com.google.api.JwtLocation result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.JwtLocation buildPartial() {
-      com.google.api.JwtLocation result = new com.google.api.JwtLocation(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      buildPartialOneofs(result);
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.api.JwtLocation result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.valuePrefix_ = valuePrefix_;
-      }
-    }
-
-    private void buildPartialOneofs(com.google.api.JwtLocation result) {
-      result.inCase_ = inCase_;
-      result.in_ = this.in_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.JwtLocation) {
-        return mergeFrom((com.google.api.JwtLocation) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.JwtLocation other) {
-      if (other == com.google.api.JwtLocation.getDefaultInstance()) return this;
-      if (!other.getValuePrefix().isEmpty()) {
-        valuePrefix_ = other.valuePrefix_;
-        bitField0_ |= 0x00000008;
-        onChanged();
-      }
-      switch (other.getInCase()) {
-        case HEADER:
-          {
-            inCase_ = 1;
-            in_ = other.in_;
-            onChanged();
-            break;
-          }
-        case QUERY:
-          {
-            inCase_ = 2;
-            in_ = other.in_;
-            onChanged();
-            break;
-          }
-        case COOKIE:
-          {
-            inCase_ = 4;
-            in_ = other.in_;
-            onChanged();
-            break;
-          }
-        case IN_NOT_SET:
-          {
-            break;
-          }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                inCase_ = 1;
-                in_ = s;
-                break;
-              } // case 10
-            case 18:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                inCase_ = 2;
-                in_ = s;
-                break;
-              } // case 18
-            case 26:
-              {
-                valuePrefix_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 26
-            case 34:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                inCase_ = 4;
-                in_ = s;
-                break;
-              } // case 34
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int inCase_ = 0;
-    private java.lang.Object in_;
-
     public InCase getInCase() {
-      return InCase.forNumber(inCase_);
+      return instance.getInCase();
     }
 
     public Builder clearIn() {
-      inCase_ = 0;
-      in_ = null;
-      onChanged();
+      copyOnWrite();
+      instance.clearIn();
       return this;
     }
-
-    private int bitField0_;
 
     /**
      *
@@ -852,7 +628,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean hasHeader() {
-      return inCase_ == 1;
+      return instance.hasHeader();
     }
     /**
      *
@@ -867,20 +643,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getHeader() {
-      java.lang.Object ref = "";
-      if (inCase_ == 1) {
-        ref = in_;
-      }
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (inCase_ == 1) {
-          in_ = s;
-        }
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getHeader();
     }
     /**
      *
@@ -895,20 +658,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getHeaderBytes() {
-      java.lang.Object ref = "";
-      if (inCase_ == 1) {
-        ref = in_;
-      }
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        if (inCase_ == 1) {
-          in_ = b;
-        }
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getHeaderBytes();
     }
     /**
      *
@@ -923,12 +673,8 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setHeader(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      inCase_ = 1;
-      in_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setHeader(value);
       return this;
     }
     /**
@@ -943,11 +689,8 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearHeader() {
-      if (inCase_ == 1) {
-        inCase_ = 0;
-        in_ = null;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.clearHeader();
       return this;
     }
     /**
@@ -963,13 +706,8 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setHeaderBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      inCase_ = 1;
-      in_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setHeaderBytes(value);
       return this;
     }
 
@@ -986,7 +724,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean hasQuery() {
-      return inCase_ == 2;
+      return instance.hasQuery();
     }
     /**
      *
@@ -1001,20 +739,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getQuery() {
-      java.lang.Object ref = "";
-      if (inCase_ == 2) {
-        ref = in_;
-      }
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (inCase_ == 2) {
-          in_ = s;
-        }
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getQuery();
     }
     /**
      *
@@ -1029,20 +754,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getQueryBytes() {
-      java.lang.Object ref = "";
-      if (inCase_ == 2) {
-        ref = in_;
-      }
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        if (inCase_ == 2) {
-          in_ = b;
-        }
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getQueryBytes();
     }
     /**
      *
@@ -1057,12 +769,8 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setQuery(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      inCase_ = 2;
-      in_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setQuery(value);
       return this;
     }
     /**
@@ -1077,11 +785,8 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearQuery() {
-      if (inCase_ == 2) {
-        inCase_ = 0;
-        in_ = null;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.clearQuery();
       return this;
     }
     /**
@@ -1097,13 +802,8 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setQueryBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      inCase_ = 2;
-      in_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setQueryBytes(value);
       return this;
     }
 
@@ -1120,7 +820,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean hasCookie() {
-      return inCase_ == 4;
+      return instance.hasCookie();
     }
     /**
      *
@@ -1135,20 +835,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getCookie() {
-      java.lang.Object ref = "";
-      if (inCase_ == 4) {
-        ref = in_;
-      }
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (inCase_ == 4) {
-          in_ = s;
-        }
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getCookie();
     }
     /**
      *
@@ -1163,20 +850,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getCookieBytes() {
-      java.lang.Object ref = "";
-      if (inCase_ == 4) {
-        ref = in_;
-      }
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        if (inCase_ == 4) {
-          in_ = b;
-        }
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getCookieBytes();
     }
     /**
      *
@@ -1191,12 +865,8 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setCookie(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      inCase_ = 4;
-      in_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setCookie(value);
       return this;
     }
     /**
@@ -1211,11 +881,8 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearCookie() {
-      if (inCase_ == 4) {
-        inCase_ = 0;
-        in_ = null;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.clearCookie();
       return this;
     }
     /**
@@ -1231,17 +898,11 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setCookieBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      inCase_ = 4;
-      in_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setCookieBytes(value);
       return this;
     }
 
-    private java.lang.Object valuePrefix_ = "";
     /**
      *
      *
@@ -1260,16 +921,9 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The valuePrefix.
      */
+    @java.lang.Override
     public java.lang.String getValuePrefix() {
-      java.lang.Object ref = valuePrefix_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        valuePrefix_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getValuePrefix();
     }
     /**
      *
@@ -1289,16 +943,9 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for valuePrefix.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getValuePrefixBytes() {
-      java.lang.Object ref = valuePrefix_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        valuePrefix_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getValuePrefixBytes();
     }
     /**
      *
@@ -1320,12 +967,8 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setValuePrefix(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      valuePrefix_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setValuePrefix(value);
       return this;
     }
     /**
@@ -1347,9 +990,8 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearValuePrefix() {
-      valuePrefix_ = getDefaultInstance().getValuePrefix();
-      bitField0_ = (bitField0_ & ~0x00000008);
-      onChanged();
+      copyOnWrite();
+      instance.clearValuePrefix();
       return this;
     }
     /**
@@ -1372,74 +1014,91 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setValuePrefixBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      valuePrefix_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setValuePrefixBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.api.JwtLocation)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.JwtLocation();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "in_", "inCase_", "valuePrefix_",
+              };
+          java.lang.String info =
+              "\u0000\u0004\u0001\u0000\u0001\u0004\u0004\u0000\u0000\u0000\u0001\u023b\u0000\u0002"
+                  + "\u023b\u0000\u0003\u0208\u0004\u023b\u0000";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.JwtLocation> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.JwtLocation.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.api.JwtLocation>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.JwtLocation)
   private static final com.google.api.JwtLocation DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.JwtLocation();
+    JwtLocation defaultInstance = new JwtLocation();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        JwtLocation.class, defaultInstance);
   }
 
   public static com.google.api.JwtLocation getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<JwtLocation> PARSER =
-      new com.google.protobuf.AbstractParser<JwtLocation>() {
-        @java.lang.Override
-        public JwtLocation parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<JwtLocation> PARSER;
 
   public static com.google.protobuf.Parser<JwtLocation> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<JwtLocation> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.JwtLocation getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

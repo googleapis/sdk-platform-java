@@ -29,46 +29,21 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.ContextRule}
  */
-public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
+public final class ContextRule
+    extends com.google.protobuf.GeneratedMessageLite<ContextRule, ContextRule.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.ContextRule)
     ContextRuleOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use ContextRule.newBuilder() to construct.
-  private ContextRule(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private ContextRule() {
     selector_ = "";
-    requested_ = com.google.protobuf.LazyStringArrayList.emptyList();
-    provided_ = com.google.protobuf.LazyStringArrayList.emptyList();
-    allowedRequestExtensions_ = com.google.protobuf.LazyStringArrayList.emptyList();
-    allowedResponseExtensions_ = com.google.protobuf.LazyStringArrayList.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new ContextRule();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.ContextProto.internal_static_google_api_ContextRule_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.ContextProto.internal_static_google_api_ContextRule_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.ContextRule.class, com.google.api.ContextRule.Builder.class);
+    requested_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+    provided_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+    allowedRequestExtensions_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+    allowedResponseExtensions_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
   }
 
   public static final int SELECTOR_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object selector_ = "";
+  private java.lang.String selector_;
   /**
    *
    *
@@ -85,15 +60,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getSelector() {
-    java.lang.Object ref = selector_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      selector_ = s;
-      return s;
-    }
+    return selector_;
   }
   /**
    *
@@ -111,22 +78,64 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getSelectorBytes() {
-    java.lang.Object ref = selector_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      selector_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(selector_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Selects the methods to which this rule applies.
+   *
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
+   * </pre>
+   *
+   * <code>string selector = 1;</code>
+   *
+   * @param value The selector to set.
+   */
+  private void setSelector(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    selector_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Selects the methods to which this rule applies.
+   *
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
+   * </pre>
+   *
+   * <code>string selector = 1;</code>
+   */
+  private void clearSelector() {
+
+    selector_ = getDefaultInstance().getSelector();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Selects the methods to which this rule applies.
+   *
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
+   * </pre>
+   *
+   * <code>string selector = 1;</code>
+   *
+   * @param value The bytes for selector to set.
+   */
+  private void setSelectorBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    selector_ = value.toStringUtf8();
   }
 
   public static final int REQUESTED_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList requested_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.Internal.ProtobufList<java.lang.String> requested_;
   /**
    *
    *
@@ -139,7 +148,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return A list containing the requested.
    */
-  public com.google.protobuf.ProtocolStringList getRequestedList() {
+  @java.lang.Override
+  public java.util.List<java.lang.String> getRequestedList() {
     return requested_;
   }
   /**
@@ -154,6 +164,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The count of requested.
    */
+  @java.lang.Override
   public int getRequestedCount() {
     return requested_.size();
   }
@@ -170,6 +181,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the element to return.
    * @return The requested at the given index.
    */
+  @java.lang.Override
   public java.lang.String getRequested(int index) {
     return requested_.get(index);
   }
@@ -186,15 +198,101 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the value to return.
    * @return The bytes of the requested at the given index.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getRequestedBytes(int index) {
-    return requested_.getByteString(index);
+    return com.google.protobuf.ByteString.copyFromUtf8(requested_.get(index));
+  }
+
+  private void ensureRequestedIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = requested_;
+    if (!tmp.isModifiable()) {
+      requested_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of full type names of requested contexts, only the requested context
+   * will be made available to the backend.
+   * </pre>
+   *
+   * <code>repeated string requested = 2;</code>
+   *
+   * @param index The index to set the value at.
+   * @param value The requested to set.
+   */
+  private void setRequested(int index, java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureRequestedIsMutable();
+    requested_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of full type names of requested contexts, only the requested context
+   * will be made available to the backend.
+   * </pre>
+   *
+   * <code>repeated string requested = 2;</code>
+   *
+   * @param value The requested to add.
+   */
+  private void addRequested(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureRequestedIsMutable();
+    requested_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of full type names of requested contexts, only the requested context
+   * will be made available to the backend.
+   * </pre>
+   *
+   * <code>repeated string requested = 2;</code>
+   *
+   * @param values The requested to add.
+   */
+  private void addAllRequested(java.lang.Iterable<java.lang.String> values) {
+    ensureRequestedIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, requested_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of full type names of requested contexts, only the requested context
+   * will be made available to the backend.
+   * </pre>
+   *
+   * <code>repeated string requested = 2;</code>
+   */
+  private void clearRequested() {
+    requested_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of full type names of requested contexts, only the requested context
+   * will be made available to the backend.
+   * </pre>
+   *
+   * <code>repeated string requested = 2;</code>
+   *
+   * @param value The bytes of the requested to add.
+   */
+  private void addRequestedBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    ensureRequestedIsMutable();
+    requested_.add(value.toStringUtf8());
   }
 
   public static final int PROVIDED_FIELD_NUMBER = 3;
-
-  @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList provided_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.Internal.ProtobufList<java.lang.String> provided_;
   /**
    *
    *
@@ -207,7 +305,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return A list containing the provided.
    */
-  public com.google.protobuf.ProtocolStringList getProvidedList() {
+  @java.lang.Override
+  public java.util.List<java.lang.String> getProvidedList() {
     return provided_;
   }
   /**
@@ -222,6 +321,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The count of provided.
    */
+  @java.lang.Override
   public int getProvidedCount() {
     return provided_.size();
   }
@@ -238,6 +338,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the element to return.
    * @return The provided at the given index.
    */
+  @java.lang.Override
   public java.lang.String getProvided(int index) {
     return provided_.get(index);
   }
@@ -254,15 +355,101 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the value to return.
    * @return The bytes of the provided at the given index.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getProvidedBytes(int index) {
-    return provided_.getByteString(index);
+    return com.google.protobuf.ByteString.copyFromUtf8(provided_.get(index));
+  }
+
+  private void ensureProvidedIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = provided_;
+    if (!tmp.isModifiable()) {
+      provided_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of full type names of provided contexts. It is used to support
+   * propagating HTTP headers and ETags from the response extension.
+   * </pre>
+   *
+   * <code>repeated string provided = 3;</code>
+   *
+   * @param index The index to set the value at.
+   * @param value The provided to set.
+   */
+  private void setProvided(int index, java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureProvidedIsMutable();
+    provided_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of full type names of provided contexts. It is used to support
+   * propagating HTTP headers and ETags from the response extension.
+   * </pre>
+   *
+   * <code>repeated string provided = 3;</code>
+   *
+   * @param value The provided to add.
+   */
+  private void addProvided(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureProvidedIsMutable();
+    provided_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of full type names of provided contexts. It is used to support
+   * propagating HTTP headers and ETags from the response extension.
+   * </pre>
+   *
+   * <code>repeated string provided = 3;</code>
+   *
+   * @param values The provided to add.
+   */
+  private void addAllProvided(java.lang.Iterable<java.lang.String> values) {
+    ensureProvidedIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, provided_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of full type names of provided contexts. It is used to support
+   * propagating HTTP headers and ETags from the response extension.
+   * </pre>
+   *
+   * <code>repeated string provided = 3;</code>
+   */
+  private void clearProvided() {
+    provided_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of full type names of provided contexts. It is used to support
+   * propagating HTTP headers and ETags from the response extension.
+   * </pre>
+   *
+   * <code>repeated string provided = 3;</code>
+   *
+   * @param value The bytes of the provided to add.
+   */
+  private void addProvidedBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    ensureProvidedIsMutable();
+    provided_.add(value.toStringUtf8());
   }
 
   public static final int ALLOWED_REQUEST_EXTENSIONS_FIELD_NUMBER = 4;
-
-  @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList allowedRequestExtensions_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.Internal.ProtobufList<java.lang.String> allowedRequestExtensions_;
   /**
    *
    *
@@ -275,7 +462,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return A list containing the allowedRequestExtensions.
    */
-  public com.google.protobuf.ProtocolStringList getAllowedRequestExtensionsList() {
+  @java.lang.Override
+  public java.util.List<java.lang.String> getAllowedRequestExtensionsList() {
     return allowedRequestExtensions_;
   }
   /**
@@ -290,6 +478,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The count of allowedRequestExtensions.
    */
+  @java.lang.Override
   public int getAllowedRequestExtensionsCount() {
     return allowedRequestExtensions_.size();
   }
@@ -306,6 +495,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the element to return.
    * @return The allowedRequestExtensions at the given index.
    */
+  @java.lang.Override
   public java.lang.String getAllowedRequestExtensions(int index) {
     return allowedRequestExtensions_.get(index);
   }
@@ -322,15 +512,101 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the value to return.
    * @return The bytes of the allowedRequestExtensions at the given index.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getAllowedRequestExtensionsBytes(int index) {
-    return allowedRequestExtensions_.getByteString(index);
+    return com.google.protobuf.ByteString.copyFromUtf8(allowedRequestExtensions_.get(index));
+  }
+
+  private void ensureAllowedRequestExtensionsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = allowedRequestExtensions_;
+    if (!tmp.isModifiable()) {
+      allowedRequestExtensions_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from client to backend.
+   * </pre>
+   *
+   * <code>repeated string allowed_request_extensions = 4;</code>
+   *
+   * @param index The index to set the value at.
+   * @param value The allowedRequestExtensions to set.
+   */
+  private void setAllowedRequestExtensions(int index, java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureAllowedRequestExtensionsIsMutable();
+    allowedRequestExtensions_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from client to backend.
+   * </pre>
+   *
+   * <code>repeated string allowed_request_extensions = 4;</code>
+   *
+   * @param value The allowedRequestExtensions to add.
+   */
+  private void addAllowedRequestExtensions(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureAllowedRequestExtensionsIsMutable();
+    allowedRequestExtensions_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from client to backend.
+   * </pre>
+   *
+   * <code>repeated string allowed_request_extensions = 4;</code>
+   *
+   * @param values The allowedRequestExtensions to add.
+   */
+  private void addAllAllowedRequestExtensions(java.lang.Iterable<java.lang.String> values) {
+    ensureAllowedRequestExtensionsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, allowedRequestExtensions_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from client to backend.
+   * </pre>
+   *
+   * <code>repeated string allowed_request_extensions = 4;</code>
+   */
+  private void clearAllowedRequestExtensions() {
+    allowedRequestExtensions_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from client to backend.
+   * </pre>
+   *
+   * <code>repeated string allowed_request_extensions = 4;</code>
+   *
+   * @param value The bytes of the allowedRequestExtensions to add.
+   */
+  private void addAllowedRequestExtensionsBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    ensureAllowedRequestExtensionsIsMutable();
+    allowedRequestExtensions_.add(value.toStringUtf8());
   }
 
   public static final int ALLOWED_RESPONSE_EXTENSIONS_FIELD_NUMBER = 5;
-
-  @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList allowedResponseExtensions_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.Internal.ProtobufList<java.lang.String> allowedResponseExtensions_;
   /**
    *
    *
@@ -343,7 +619,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return A list containing the allowedResponseExtensions.
    */
-  public com.google.protobuf.ProtocolStringList getAllowedResponseExtensionsList() {
+  @java.lang.Override
+  public java.util.List<java.lang.String> getAllowedResponseExtensionsList() {
     return allowedResponseExtensions_;
   }
   /**
@@ -358,6 +635,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The count of allowedResponseExtensions.
    */
+  @java.lang.Override
   public int getAllowedResponseExtensionsCount() {
     return allowedResponseExtensions_.size();
   }
@@ -374,6 +652,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the element to return.
    * @return The allowedResponseExtensions at the given index.
    */
+  @java.lang.Override
   public java.lang.String getAllowedResponseExtensions(int index) {
     return allowedResponseExtensions_.get(index);
   }
@@ -390,235 +669,180 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the value to return.
    * @return The bytes of the allowedResponseExtensions at the given index.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getAllowedResponseExtensionsBytes(int index) {
-    return allowedResponseExtensions_.getByteString(index);
+    return com.google.protobuf.ByteString.copyFromUtf8(allowedResponseExtensions_.get(index));
   }
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  private void ensureAllowedResponseExtensionsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = allowedResponseExtensions_;
+    if (!tmp.isModifiable()) {
+      allowedResponseExtensions_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(selector_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, selector_);
-    }
-    for (int i = 0; i < requested_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, requested_.getRaw(i));
-    }
-    for (int i = 0; i < provided_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, provided_.getRaw(i));
-    }
-    for (int i = 0; i < allowedRequestExtensions_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(
-          output, 4, allowedRequestExtensions_.getRaw(i));
-    }
-    for (int i = 0; i < allowedResponseExtensions_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(
-          output, 5, allowedResponseExtensions_.getRaw(i));
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from backend to client.
+   * </pre>
+   *
+   * <code>repeated string allowed_response_extensions = 5;</code>
+   *
+   * @param index The index to set the value at.
+   * @param value The allowedResponseExtensions to set.
+   */
+  private void setAllowedResponseExtensions(int index, java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureAllowedResponseExtensionsIsMutable();
+    allowedResponseExtensions_.set(index, value);
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(selector_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, selector_);
-    }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < requested_.size(); i++) {
-        dataSize += computeStringSizeNoTag(requested_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getRequestedList().size();
-    }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < provided_.size(); i++) {
-        dataSize += computeStringSizeNoTag(provided_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getProvidedList().size();
-    }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < allowedRequestExtensions_.size(); i++) {
-        dataSize += computeStringSizeNoTag(allowedRequestExtensions_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getAllowedRequestExtensionsList().size();
-    }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < allowedResponseExtensions_.size(); i++) {
-        dataSize += computeStringSizeNoTag(allowedResponseExtensions_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getAllowedResponseExtensionsList().size();
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
+  /**
+   *
+   *
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from backend to client.
+   * </pre>
+   *
+   * <code>repeated string allowed_response_extensions = 5;</code>
+   *
+   * @param value The allowedResponseExtensions to add.
+   */
+  private void addAllowedResponseExtensions(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureAllowedResponseExtensionsIsMutable();
+    allowedResponseExtensions_.add(value);
   }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.ContextRule)) {
-      return super.equals(obj);
-    }
-    com.google.api.ContextRule other = (com.google.api.ContextRule) obj;
-
-    if (!getSelector().equals(other.getSelector())) return false;
-    if (!getRequestedList().equals(other.getRequestedList())) return false;
-    if (!getProvidedList().equals(other.getProvidedList())) return false;
-    if (!getAllowedRequestExtensionsList().equals(other.getAllowedRequestExtensionsList()))
-      return false;
-    if (!getAllowedResponseExtensionsList().equals(other.getAllowedResponseExtensionsList()))
-      return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from backend to client.
+   * </pre>
+   *
+   * <code>repeated string allowed_response_extensions = 5;</code>
+   *
+   * @param values The allowedResponseExtensions to add.
+   */
+  private void addAllAllowedResponseExtensions(java.lang.Iterable<java.lang.String> values) {
+    ensureAllowedResponseExtensionsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, allowedResponseExtensions_);
   }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + SELECTOR_FIELD_NUMBER;
-    hash = (53 * hash) + getSelector().hashCode();
-    if (getRequestedCount() > 0) {
-      hash = (37 * hash) + REQUESTED_FIELD_NUMBER;
-      hash = (53 * hash) + getRequestedList().hashCode();
-    }
-    if (getProvidedCount() > 0) {
-      hash = (37 * hash) + PROVIDED_FIELD_NUMBER;
-      hash = (53 * hash) + getProvidedList().hashCode();
-    }
-    if (getAllowedRequestExtensionsCount() > 0) {
-      hash = (37 * hash) + ALLOWED_REQUEST_EXTENSIONS_FIELD_NUMBER;
-      hash = (53 * hash) + getAllowedRequestExtensionsList().hashCode();
-    }
-    if (getAllowedResponseExtensionsCount() > 0) {
-      hash = (37 * hash) + ALLOWED_RESPONSE_EXTENSIONS_FIELD_NUMBER;
-      hash = (53 * hash) + getAllowedResponseExtensionsList().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from backend to client.
+   * </pre>
+   *
+   * <code>repeated string allowed_response_extensions = 5;</code>
+   */
+  private void clearAllowedResponseExtensions() {
+    allowedResponseExtensions_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from backend to client.
+   * </pre>
+   *
+   * <code>repeated string allowed_response_extensions = 5;</code>
+   *
+   * @param value The bytes of the allowedResponseExtensions to add.
+   */
+  private void addAllowedResponseExtensionsBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    ensureAllowedResponseExtensionsIsMutable();
+    allowedResponseExtensions_.add(value.toStringUtf8());
   }
 
   public static com.google.api.ContextRule parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.ContextRule parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.ContextRule parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.ContextRule parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.ContextRule parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.ContextRule parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.ContextRule parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.ContextRule parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.ContextRule parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.ContextRule parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.ContextRule parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.ContextRule parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.ContextRule prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -629,263 +853,16 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.api.ContextRule}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<com.google.api.ContextRule, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.ContextRule)
       com.google.api.ContextRuleOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.ContextProto.internal_static_google_api_ContextRule_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.ContextProto.internal_static_google_api_ContextRule_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.ContextRule.class, com.google.api.ContextRule.Builder.class);
-    }
-
     // Construct using com.google.api.ContextRule.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      selector_ = "";
-      requested_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      provided_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      allowedRequestExtensions_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      allowedResponseExtensions_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.ContextProto.internal_static_google_api_ContextRule_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.ContextRule getDefaultInstanceForType() {
-      return com.google.api.ContextRule.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.ContextRule build() {
-      com.google.api.ContextRule result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.ContextRule buildPartial() {
-      com.google.api.ContextRule result = new com.google.api.ContextRule(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.api.ContextRule result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.selector_ = selector_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        requested_.makeImmutable();
-        result.requested_ = requested_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        provided_.makeImmutable();
-        result.provided_ = provided_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        allowedRequestExtensions_.makeImmutable();
-        result.allowedRequestExtensions_ = allowedRequestExtensions_;
-      }
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        allowedResponseExtensions_.makeImmutable();
-        result.allowedResponseExtensions_ = allowedResponseExtensions_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.ContextRule) {
-        return mergeFrom((com.google.api.ContextRule) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.ContextRule other) {
-      if (other == com.google.api.ContextRule.getDefaultInstance()) return this;
-      if (!other.getSelector().isEmpty()) {
-        selector_ = other.selector_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.requested_.isEmpty()) {
-        if (requested_.isEmpty()) {
-          requested_ = other.requested_;
-          bitField0_ |= 0x00000002;
-        } else {
-          ensureRequestedIsMutable();
-          requested_.addAll(other.requested_);
-        }
-        onChanged();
-      }
-      if (!other.provided_.isEmpty()) {
-        if (provided_.isEmpty()) {
-          provided_ = other.provided_;
-          bitField0_ |= 0x00000004;
-        } else {
-          ensureProvidedIsMutable();
-          provided_.addAll(other.provided_);
-        }
-        onChanged();
-      }
-      if (!other.allowedRequestExtensions_.isEmpty()) {
-        if (allowedRequestExtensions_.isEmpty()) {
-          allowedRequestExtensions_ = other.allowedRequestExtensions_;
-          bitField0_ |= 0x00000008;
-        } else {
-          ensureAllowedRequestExtensionsIsMutable();
-          allowedRequestExtensions_.addAll(other.allowedRequestExtensions_);
-        }
-        onChanged();
-      }
-      if (!other.allowedResponseExtensions_.isEmpty()) {
-        if (allowedResponseExtensions_.isEmpty()) {
-          allowedResponseExtensions_ = other.allowedResponseExtensions_;
-          bitField0_ |= 0x00000010;
-        } else {
-          ensureAllowedResponseExtensionsIsMutable();
-          allowedResponseExtensions_.addAll(other.allowedResponseExtensions_);
-        }
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                selector_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureRequestedIsMutable();
-                requested_.add(s);
-                break;
-              } // case 18
-            case 26:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureProvidedIsMutable();
-                provided_.add(s);
-                break;
-              } // case 26
-            case 34:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureAllowedRequestExtensionsIsMutable();
-                allowedRequestExtensions_.add(s);
-                break;
-              } // case 34
-            case 42:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureAllowedResponseExtensionsIsMutable();
-                allowedResponseExtensions_.add(s);
-                break;
-              } // case 42
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object selector_ = "";
     /**
      *
      *
@@ -900,16 +877,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The selector.
      */
+    @java.lang.Override
     public java.lang.String getSelector() {
-      java.lang.Object ref = selector_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        selector_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getSelector();
     }
     /**
      *
@@ -925,16 +895,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for selector.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getSelectorBytes() {
-      java.lang.Object ref = selector_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        selector_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getSelectorBytes();
     }
     /**
      *
@@ -952,12 +915,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setSelector(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      selector_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setSelector(value);
       return this;
     }
     /**
@@ -975,9 +934,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearSelector() {
-      selector_ = getDefaultInstance().getSelector();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearSelector();
       return this;
     }
     /**
@@ -996,25 +954,11 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setSelectorBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      selector_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setSelectorBytes(value);
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList requested_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
-
-    private void ensureRequestedIsMutable() {
-      if (!requested_.isModifiable()) {
-        requested_ = new com.google.protobuf.LazyStringArrayList(requested_);
-      }
-      bitField0_ |= 0x00000002;
-    }
     /**
      *
      *
@@ -1027,9 +971,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return A list containing the requested.
      */
-    public com.google.protobuf.ProtocolStringList getRequestedList() {
-      requested_.makeImmutable();
-      return requested_;
+    @java.lang.Override
+    public java.util.List<java.lang.String> getRequestedList() {
+      return java.util.Collections.unmodifiableList(instance.getRequestedList());
     }
     /**
      *
@@ -1043,8 +987,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The count of requested.
      */
+    @java.lang.Override
     public int getRequestedCount() {
-      return requested_.size();
+      return instance.getRequestedCount();
     }
     /**
      *
@@ -1059,8 +1004,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the element to return.
      * @return The requested at the given index.
      */
+    @java.lang.Override
     public java.lang.String getRequested(int index) {
-      return requested_.get(index);
+      return instance.getRequested(index);
     }
     /**
      *
@@ -1075,8 +1021,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the value to return.
      * @return The bytes of the requested at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getRequestedBytes(int index) {
-      return requested_.getByteString(index);
+      return instance.getRequestedBytes(index);
     }
     /**
      *
@@ -1093,13 +1040,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setRequested(int index, java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureRequestedIsMutable();
-      requested_.set(index, value);
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setRequested(index, value);
       return this;
     }
     /**
@@ -1116,13 +1058,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addRequested(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureRequestedIsMutable();
-      requested_.add(value);
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.addRequested(value);
       return this;
     }
     /**
@@ -1139,10 +1076,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAllRequested(java.lang.Iterable<java.lang.String> values) {
-      ensureRequestedIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, requested_);
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.addAllRequested(values);
       return this;
     }
     /**
@@ -1158,10 +1093,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearRequested() {
-      requested_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      ;
-      onChanged();
+      copyOnWrite();
+      instance.clearRequested();
       return this;
     }
     /**
@@ -1178,26 +1111,11 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addRequestedBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      ensureRequestedIsMutable();
-      requested_.add(value);
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.addRequestedBytes(value);
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList provided_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
-
-    private void ensureProvidedIsMutable() {
-      if (!provided_.isModifiable()) {
-        provided_ = new com.google.protobuf.LazyStringArrayList(provided_);
-      }
-      bitField0_ |= 0x00000004;
-    }
     /**
      *
      *
@@ -1210,9 +1128,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return A list containing the provided.
      */
-    public com.google.protobuf.ProtocolStringList getProvidedList() {
-      provided_.makeImmutable();
-      return provided_;
+    @java.lang.Override
+    public java.util.List<java.lang.String> getProvidedList() {
+      return java.util.Collections.unmodifiableList(instance.getProvidedList());
     }
     /**
      *
@@ -1226,8 +1144,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The count of provided.
      */
+    @java.lang.Override
     public int getProvidedCount() {
-      return provided_.size();
+      return instance.getProvidedCount();
     }
     /**
      *
@@ -1242,8 +1161,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the element to return.
      * @return The provided at the given index.
      */
+    @java.lang.Override
     public java.lang.String getProvided(int index) {
-      return provided_.get(index);
+      return instance.getProvided(index);
     }
     /**
      *
@@ -1258,8 +1178,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the value to return.
      * @return The bytes of the provided at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getProvidedBytes(int index) {
-      return provided_.getByteString(index);
+      return instance.getProvidedBytes(index);
     }
     /**
      *
@@ -1276,13 +1197,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setProvided(int index, java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureProvidedIsMutable();
-      provided_.set(index, value);
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setProvided(index, value);
       return this;
     }
     /**
@@ -1299,13 +1215,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addProvided(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureProvidedIsMutable();
-      provided_.add(value);
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.addProvided(value);
       return this;
     }
     /**
@@ -1322,10 +1233,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAllProvided(java.lang.Iterable<java.lang.String> values) {
-      ensureProvidedIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, provided_);
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.addAllProvided(values);
       return this;
     }
     /**
@@ -1341,10 +1250,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearProvided() {
-      provided_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000004);
-      ;
-      onChanged();
+      copyOnWrite();
+      instance.clearProvided();
       return this;
     }
     /**
@@ -1361,27 +1268,11 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addProvidedBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      ensureProvidedIsMutable();
-      provided_.add(value);
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.addProvidedBytes(value);
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList allowedRequestExtensions_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
-
-    private void ensureAllowedRequestExtensionsIsMutable() {
-      if (!allowedRequestExtensions_.isModifiable()) {
-        allowedRequestExtensions_ =
-            new com.google.protobuf.LazyStringArrayList(allowedRequestExtensions_);
-      }
-      bitField0_ |= 0x00000008;
-    }
     /**
      *
      *
@@ -1394,9 +1285,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return A list containing the allowedRequestExtensions.
      */
-    public com.google.protobuf.ProtocolStringList getAllowedRequestExtensionsList() {
-      allowedRequestExtensions_.makeImmutable();
-      return allowedRequestExtensions_;
+    @java.lang.Override
+    public java.util.List<java.lang.String> getAllowedRequestExtensionsList() {
+      return java.util.Collections.unmodifiableList(instance.getAllowedRequestExtensionsList());
     }
     /**
      *
@@ -1410,8 +1301,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The count of allowedRequestExtensions.
      */
+    @java.lang.Override
     public int getAllowedRequestExtensionsCount() {
-      return allowedRequestExtensions_.size();
+      return instance.getAllowedRequestExtensionsCount();
     }
     /**
      *
@@ -1426,8 +1318,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the element to return.
      * @return The allowedRequestExtensions at the given index.
      */
+    @java.lang.Override
     public java.lang.String getAllowedRequestExtensions(int index) {
-      return allowedRequestExtensions_.get(index);
+      return instance.getAllowedRequestExtensions(index);
     }
     /**
      *
@@ -1442,8 +1335,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the value to return.
      * @return The bytes of the allowedRequestExtensions at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getAllowedRequestExtensionsBytes(int index) {
-      return allowedRequestExtensions_.getByteString(index);
+      return instance.getAllowedRequestExtensionsBytes(index);
     }
     /**
      *
@@ -1460,13 +1354,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAllowedRequestExtensions(int index, java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureAllowedRequestExtensionsIsMutable();
-      allowedRequestExtensions_.set(index, value);
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setAllowedRequestExtensions(index, value);
       return this;
     }
     /**
@@ -1483,13 +1372,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAllowedRequestExtensions(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureAllowedRequestExtensionsIsMutable();
-      allowedRequestExtensions_.add(value);
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.addAllowedRequestExtensions(value);
       return this;
     }
     /**
@@ -1506,10 +1390,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAllAllowedRequestExtensions(java.lang.Iterable<java.lang.String> values) {
-      ensureAllowedRequestExtensionsIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, allowedRequestExtensions_);
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.addAllAllowedRequestExtensions(values);
       return this;
     }
     /**
@@ -1525,10 +1407,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAllowedRequestExtensions() {
-      allowedRequestExtensions_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000008);
-      ;
-      onChanged();
+      copyOnWrite();
+      instance.clearAllowedRequestExtensions();
       return this;
     }
     /**
@@ -1545,27 +1425,11 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAllowedRequestExtensionsBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      ensureAllowedRequestExtensionsIsMutable();
-      allowedRequestExtensions_.add(value);
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.addAllowedRequestExtensionsBytes(value);
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList allowedResponseExtensions_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
-
-    private void ensureAllowedResponseExtensionsIsMutable() {
-      if (!allowedResponseExtensions_.isModifiable()) {
-        allowedResponseExtensions_ =
-            new com.google.protobuf.LazyStringArrayList(allowedResponseExtensions_);
-      }
-      bitField0_ |= 0x00000010;
-    }
     /**
      *
      *
@@ -1578,9 +1442,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return A list containing the allowedResponseExtensions.
      */
-    public com.google.protobuf.ProtocolStringList getAllowedResponseExtensionsList() {
-      allowedResponseExtensions_.makeImmutable();
-      return allowedResponseExtensions_;
+    @java.lang.Override
+    public java.util.List<java.lang.String> getAllowedResponseExtensionsList() {
+      return java.util.Collections.unmodifiableList(instance.getAllowedResponseExtensionsList());
     }
     /**
      *
@@ -1594,8 +1458,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The count of allowedResponseExtensions.
      */
+    @java.lang.Override
     public int getAllowedResponseExtensionsCount() {
-      return allowedResponseExtensions_.size();
+      return instance.getAllowedResponseExtensionsCount();
     }
     /**
      *
@@ -1610,8 +1475,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the element to return.
      * @return The allowedResponseExtensions at the given index.
      */
+    @java.lang.Override
     public java.lang.String getAllowedResponseExtensions(int index) {
-      return allowedResponseExtensions_.get(index);
+      return instance.getAllowedResponseExtensions(index);
     }
     /**
      *
@@ -1626,8 +1492,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the value to return.
      * @return The bytes of the allowedResponseExtensions at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getAllowedResponseExtensionsBytes(int index) {
-      return allowedResponseExtensions_.getByteString(index);
+      return instance.getAllowedResponseExtensionsBytes(index);
     }
     /**
      *
@@ -1644,13 +1511,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAllowedResponseExtensions(int index, java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureAllowedResponseExtensionsIsMutable();
-      allowedResponseExtensions_.set(index, value);
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setAllowedResponseExtensions(index, value);
       return this;
     }
     /**
@@ -1667,13 +1529,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAllowedResponseExtensions(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureAllowedResponseExtensionsIsMutable();
-      allowedResponseExtensions_.add(value);
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.addAllowedResponseExtensions(value);
       return this;
     }
     /**
@@ -1690,10 +1547,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAllAllowedResponseExtensions(java.lang.Iterable<java.lang.String> values) {
-      ensureAllowedResponseExtensionsIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, allowedResponseExtensions_);
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.addAllAllowedResponseExtensions(values);
       return this;
     }
     /**
@@ -1709,10 +1564,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAllowedResponseExtensions() {
-      allowedResponseExtensions_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000010);
-      ;
-      onChanged();
+      copyOnWrite();
+      instance.clearAllowedResponseExtensions();
       return this;
     }
     /**
@@ -1729,75 +1582,95 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAllowedResponseExtensionsBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      ensureAllowedResponseExtensionsIsMutable();
-      allowedResponseExtensions_.add(value);
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.addAllowedResponseExtensionsBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.api.ContextRule)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.ContextRule();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "selector_",
+                "requested_",
+                "provided_",
+                "allowedRequestExtensions_",
+                "allowedResponseExtensions_",
+              };
+          java.lang.String info =
+              "\u0000\u0005\u0000\u0000\u0001\u0005\u0005\u0000\u0004\u0000\u0001\u0208\u0002\u021a"
+                  + "\u0003\u021a\u0004\u021a\u0005\u021a";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.ContextRule> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.ContextRule.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.api.ContextRule>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.ContextRule)
   private static final com.google.api.ContextRule DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.ContextRule();
+    ContextRule defaultInstance = new ContextRule();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        ContextRule.class, defaultInstance);
   }
 
   public static com.google.api.ContextRule getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<ContextRule> PARSER =
-      new com.google.protobuf.AbstractParser<ContextRule>() {
-        @java.lang.Override
-        public ContextRule parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<ContextRule> PARSER;
 
   public static com.google.protobuf.Parser<ContextRule> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<ContextRule> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.ContextRule getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

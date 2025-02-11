@@ -28,44 +28,18 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.RoutingParameter}
  */
-public final class RoutingParameter extends com.google.protobuf.GeneratedMessageV3
+public final class RoutingParameter
+    extends com.google.protobuf.GeneratedMessageLite<RoutingParameter, RoutingParameter.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.RoutingParameter)
     RoutingParameterOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use RoutingParameter.newBuilder() to construct.
-  private RoutingParameter(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private RoutingParameter() {
     field_ = "";
     pathTemplate_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new RoutingParameter();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.RoutingProto.internal_static_google_api_RoutingParameter_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.RoutingProto
-        .internal_static_google_api_RoutingParameter_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.RoutingParameter.class, com.google.api.RoutingParameter.Builder.class);
-  }
-
   public static final int FIELD_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object field_ = "";
+  private java.lang.String field_;
   /**
    *
    *
@@ -79,15 +53,7 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
    */
   @java.lang.Override
   public java.lang.String getField() {
-    java.lang.Object ref = field_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      field_ = s;
-      return s;
-    }
+    return field_;
   }
   /**
    *
@@ -102,21 +68,55 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getFieldBytes() {
-    java.lang.Object ref = field_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      field_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(field_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A request field to extract the header key-value pair from.
+   * </pre>
+   *
+   * <code>string field = 1;</code>
+   *
+   * @param value The field to set.
+   */
+  private void setField(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    field_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A request field to extract the header key-value pair from.
+   * </pre>
+   *
+   * <code>string field = 1;</code>
+   */
+  private void clearField() {
+
+    field_ = getDefaultInstance().getField();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A request field to extract the header key-value pair from.
+   * </pre>
+   *
+   * <code>string field = 1;</code>
+   *
+   * @param value The bytes for field to set.
+   */
+  private void setFieldBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    field_ = value.toStringUtf8();
   }
 
   public static final int PATH_TEMPLATE_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object pathTemplate_ = "";
+  private java.lang.String pathTemplate_;
   /**
    *
    *
@@ -183,15 +183,7 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
    */
   @java.lang.Override
   public java.lang.String getPathTemplate() {
-    java.lang.Object ref = pathTemplate_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      pathTemplate_ = s;
-      return s;
-    }
+    return pathTemplate_;
   }
   /**
    *
@@ -259,183 +251,293 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getPathTemplateBytes() {
-    java.lang.Object ref = pathTemplate_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      pathTemplate_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(pathTemplate_);
   }
+  /**
+   *
+   *
+   * <pre>
+   * A pattern matching the key-value field. Optional.
+   * If not specified, the whole field specified in the `field` field will be
+   * taken as value, and its name used as key. If specified, it MUST contain
+   * exactly one named segment (along with any number of unnamed segments) The
+   * pattern will be matched over the field specified in the `field` field, then
+   * if the match is successful:
+   * - the name of the single named segment will be used as a header name,
+   * - the match value of the segment will be used as a header value;
+   * if the match is NOT successful, nothing will be sent.
+   *
+   * Example:
+   *
+   *               -- This is a field in the request message
+   *              |   that the header value will be extracted from.
+   *              |
+   *              |                     -- This is the key name in the
+   *              |                    |   routing header.
+   *              V                    |
+   *     field: "table_name"           v
+   *     path_template: "projects/&#42;&#47;{table_location=instances/&#42;}/tables/&#42;"
+   *                                                ^            ^
+   *                                                |            |
+   *       In the {} brackets is the pattern that --             |
+   *       specifies what to extract from the                    |
+   *       field as a value to be sent.                          |
+   *                                                             |
+   *      The string in the field must match the whole pattern --
+   *      before brackets, inside brackets, after brackets.
+   *
+   * When looking at this specific example, we can see that:
+   * - A key-value pair with the key `table_location`
+   *   and the value matching `instances/&#42;` should be added
+   *   to the x-goog-request-params routing header.
+   * - The value is extracted from the request message's `table_name` field
+   *   if it matches the full pattern specified:
+   *   `projects/&#42;&#47;instances/&#42;&#47;tables/&#42;`.
+   *
+   * **NB:** If the `path_template` field is not provided, the key name is
+   * equal to the field name, and the whole field should be sent as a value.
+   * This makes the pattern for the field and the value functionally equivalent
+   * to `**`, and the configuration
+   *
+   *     {
+   *       field: "table_name"
+   *     }
+   *
+   * is a functionally equivalent shorthand to:
+   *
+   *     {
+   *       field: "table_name"
+   *       path_template: "{table_name=**}"
+   *     }
+   *
+   * See Example 1 for more details.
+   * </pre>
+   *
+   * <code>string path_template = 2;</code>
+   *
+   * @param value The pathTemplate to set.
+   */
+  private void setPathTemplate(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    pathTemplate_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * A pattern matching the key-value field. Optional.
+   * If not specified, the whole field specified in the `field` field will be
+   * taken as value, and its name used as key. If specified, it MUST contain
+   * exactly one named segment (along with any number of unnamed segments) The
+   * pattern will be matched over the field specified in the `field` field, then
+   * if the match is successful:
+   * - the name of the single named segment will be used as a header name,
+   * - the match value of the segment will be used as a header value;
+   * if the match is NOT successful, nothing will be sent.
+   *
+   * Example:
+   *
+   *               -- This is a field in the request message
+   *              |   that the header value will be extracted from.
+   *              |
+   *              |                     -- This is the key name in the
+   *              |                    |   routing header.
+   *              V                    |
+   *     field: "table_name"           v
+   *     path_template: "projects/&#42;&#47;{table_location=instances/&#42;}/tables/&#42;"
+   *                                                ^            ^
+   *                                                |            |
+   *       In the {} brackets is the pattern that --             |
+   *       specifies what to extract from the                    |
+   *       field as a value to be sent.                          |
+   *                                                             |
+   *      The string in the field must match the whole pattern --
+   *      before brackets, inside brackets, after brackets.
+   *
+   * When looking at this specific example, we can see that:
+   * - A key-value pair with the key `table_location`
+   *   and the value matching `instances/&#42;` should be added
+   *   to the x-goog-request-params routing header.
+   * - The value is extracted from the request message's `table_name` field
+   *   if it matches the full pattern specified:
+   *   `projects/&#42;&#47;instances/&#42;&#47;tables/&#42;`.
+   *
+   * **NB:** If the `path_template` field is not provided, the key name is
+   * equal to the field name, and the whole field should be sent as a value.
+   * This makes the pattern for the field and the value functionally equivalent
+   * to `**`, and the configuration
+   *
+   *     {
+   *       field: "table_name"
+   *     }
+   *
+   * is a functionally equivalent shorthand to:
+   *
+   *     {
+   *       field: "table_name"
+   *       path_template: "{table_name=**}"
+   *     }
+   *
+   * See Example 1 for more details.
+   * </pre>
+   *
+   * <code>string path_template = 2;</code>
+   */
+  private void clearPathTemplate() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(field_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, field_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(pathTemplate_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, pathTemplate_);
-    }
-    getUnknownFields().writeTo(output);
+    pathTemplate_ = getDefaultInstance().getPathTemplate();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(field_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, field_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(pathTemplate_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, pathTemplate_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.RoutingParameter)) {
-      return super.equals(obj);
-    }
-    com.google.api.RoutingParameter other = (com.google.api.RoutingParameter) obj;
-
-    if (!getField().equals(other.getField())) return false;
-    if (!getPathTemplate().equals(other.getPathTemplate())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + FIELD_FIELD_NUMBER;
-    hash = (53 * hash) + getField().hashCode();
-    hash = (37 * hash) + PATH_TEMPLATE_FIELD_NUMBER;
-    hash = (53 * hash) + getPathTemplate().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * A pattern matching the key-value field. Optional.
+   * If not specified, the whole field specified in the `field` field will be
+   * taken as value, and its name used as key. If specified, it MUST contain
+   * exactly one named segment (along with any number of unnamed segments) The
+   * pattern will be matched over the field specified in the `field` field, then
+   * if the match is successful:
+   * - the name of the single named segment will be used as a header name,
+   * - the match value of the segment will be used as a header value;
+   * if the match is NOT successful, nothing will be sent.
+   *
+   * Example:
+   *
+   *               -- This is a field in the request message
+   *              |   that the header value will be extracted from.
+   *              |
+   *              |                     -- This is the key name in the
+   *              |                    |   routing header.
+   *              V                    |
+   *     field: "table_name"           v
+   *     path_template: "projects/&#42;&#47;{table_location=instances/&#42;}/tables/&#42;"
+   *                                                ^            ^
+   *                                                |            |
+   *       In the {} brackets is the pattern that --             |
+   *       specifies what to extract from the                    |
+   *       field as a value to be sent.                          |
+   *                                                             |
+   *      The string in the field must match the whole pattern --
+   *      before brackets, inside brackets, after brackets.
+   *
+   * When looking at this specific example, we can see that:
+   * - A key-value pair with the key `table_location`
+   *   and the value matching `instances/&#42;` should be added
+   *   to the x-goog-request-params routing header.
+   * - The value is extracted from the request message's `table_name` field
+   *   if it matches the full pattern specified:
+   *   `projects/&#42;&#47;instances/&#42;&#47;tables/&#42;`.
+   *
+   * **NB:** If the `path_template` field is not provided, the key name is
+   * equal to the field name, and the whole field should be sent as a value.
+   * This makes the pattern for the field and the value functionally equivalent
+   * to `**`, and the configuration
+   *
+   *     {
+   *       field: "table_name"
+   *     }
+   *
+   * is a functionally equivalent shorthand to:
+   *
+   *     {
+   *       field: "table_name"
+   *       path_template: "{table_name=**}"
+   *     }
+   *
+   * See Example 1 for more details.
+   * </pre>
+   *
+   * <code>string path_template = 2;</code>
+   *
+   * @param value The bytes for pathTemplate to set.
+   */
+  private void setPathTemplateBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    pathTemplate_ = value.toStringUtf8();
   }
 
   public static com.google.api.RoutingParameter parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.RoutingParameter parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.RoutingParameter parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.RoutingParameter parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.RoutingParameter parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.RoutingParameter parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.RoutingParameter parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.RoutingParameter parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.RoutingParameter parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.RoutingParameter parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.RoutingParameter parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.RoutingParameter parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.RoutingParameter prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -445,191 +547,17 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
    *
    * Protobuf type {@code google.api.RoutingParameter}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.api.RoutingParameter, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.RoutingParameter)
       com.google.api.RoutingParameterOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.RoutingProto.internal_static_google_api_RoutingParameter_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.RoutingProto
-          .internal_static_google_api_RoutingParameter_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.RoutingParameter.class, com.google.api.RoutingParameter.Builder.class);
-    }
-
     // Construct using com.google.api.RoutingParameter.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      field_ = "";
-      pathTemplate_ = "";
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.RoutingProto.internal_static_google_api_RoutingParameter_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.RoutingParameter getDefaultInstanceForType() {
-      return com.google.api.RoutingParameter.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.RoutingParameter build() {
-      com.google.api.RoutingParameter result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.RoutingParameter buildPartial() {
-      com.google.api.RoutingParameter result = new com.google.api.RoutingParameter(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.api.RoutingParameter result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.field_ = field_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.pathTemplate_ = pathTemplate_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.RoutingParameter) {
-        return mergeFrom((com.google.api.RoutingParameter) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.RoutingParameter other) {
-      if (other == com.google.api.RoutingParameter.getDefaultInstance()) return this;
-      if (!other.getField().isEmpty()) {
-        field_ = other.field_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getPathTemplate().isEmpty()) {
-        pathTemplate_ = other.pathTemplate_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                field_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                pathTemplate_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object field_ = "";
     /**
      *
      *
@@ -641,16 +569,9 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
      *
      * @return The field.
      */
+    @java.lang.Override
     public java.lang.String getField() {
-      java.lang.Object ref = field_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        field_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getField();
     }
     /**
      *
@@ -663,16 +584,9 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for field.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getFieldBytes() {
-      java.lang.Object ref = field_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        field_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getFieldBytes();
     }
     /**
      *
@@ -687,12 +601,8 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder setField(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      field_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setField(value);
       return this;
     }
     /**
@@ -707,9 +617,8 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearField() {
-      field_ = getDefaultInstance().getField();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearField();
       return this;
     }
     /**
@@ -725,17 +634,11 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder setFieldBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      field_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setFieldBytes(value);
       return this;
     }
 
-    private java.lang.Object pathTemplate_ = "";
     /**
      *
      *
@@ -800,16 +703,9 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
      *
      * @return The pathTemplate.
      */
+    @java.lang.Override
     public java.lang.String getPathTemplate() {
-      java.lang.Object ref = pathTemplate_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        pathTemplate_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getPathTemplate();
     }
     /**
      *
@@ -875,16 +771,9 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for pathTemplate.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getPathTemplateBytes() {
-      java.lang.Object ref = pathTemplate_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        pathTemplate_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getPathTemplateBytes();
     }
     /**
      *
@@ -952,12 +841,8 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder setPathTemplate(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      pathTemplate_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setPathTemplate(value);
       return this;
     }
     /**
@@ -1025,9 +910,8 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearPathTemplate() {
-      pathTemplate_ = getDefaultInstance().getPathTemplate();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearPathTemplate();
       return this;
     }
     /**
@@ -1096,74 +980,92 @@ public final class RoutingParameter extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder setPathTemplateBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      pathTemplate_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setPathTemplateBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.api.RoutingParameter)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.RoutingParameter();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "field_", "pathTemplate_",
+              };
+          java.lang.String info =
+              "\u0000\u0002\u0000\u0000\u0001\u0002\u0002\u0000\u0000\u0000\u0001\u0208\u0002\u0208"
+                  + "";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.RoutingParameter> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.RoutingParameter.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.api.RoutingParameter>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.RoutingParameter)
   private static final com.google.api.RoutingParameter DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.RoutingParameter();
+    RoutingParameter defaultInstance = new RoutingParameter();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        RoutingParameter.class, defaultInstance);
   }
 
   public static com.google.api.RoutingParameter getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<RoutingParameter> PARSER =
-      new com.google.protobuf.AbstractParser<RoutingParameter>() {
-        @java.lang.Override
-        public RoutingParameter parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<RoutingParameter> PARSER;
 
   public static com.google.protobuf.Parser<RoutingParameter> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<RoutingParameter> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.RoutingParameter getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

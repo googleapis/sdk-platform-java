@@ -53,43 +53,19 @@ package com.google.type;
  *
  * Protobuf type {@code google.type.PhoneNumber}
  */
-public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
+public final class PhoneNumber
+    extends com.google.protobuf.GeneratedMessageLite<PhoneNumber, PhoneNumber.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.type.PhoneNumber)
     PhoneNumberOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use PhoneNumber.newBuilder() to construct.
-  private PhoneNumber(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private PhoneNumber() {
     extension_ = "";
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new PhoneNumber();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.type.PhoneNumberProto.internal_static_google_type_PhoneNumber_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.type.PhoneNumberProto
-        .internal_static_google_type_PhoneNumber_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.type.PhoneNumber.class, com.google.type.PhoneNumber.Builder.class);
   }
 
   public interface ShortCodeOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:google.type.PhoneNumber.ShortCode)
-      com.google.protobuf.MessageOrBuilder {
+      com.google.protobuf.MessageLiteOrBuilder {
 
     /**
      *
@@ -168,46 +144,18 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.type.PhoneNumber.ShortCode}
    */
-  public static final class ShortCode extends com.google.protobuf.GeneratedMessageV3
+  public static final class ShortCode
+      extends com.google.protobuf.GeneratedMessageLite<ShortCode, ShortCode.Builder>
       implements
       // @@protoc_insertion_point(message_implements:google.type.PhoneNumber.ShortCode)
       ShortCodeOrBuilder {
-    private static final long serialVersionUID = 0L;
-    // Use ShortCode.newBuilder() to construct.
-    private ShortCode(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-
     private ShortCode() {
       regionCode_ = "";
       number_ = "";
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-      return new ShortCode();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.type.PhoneNumberProto
-          .internal_static_google_type_PhoneNumber_ShortCode_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.type.PhoneNumberProto
-          .internal_static_google_type_PhoneNumber_ShortCode_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.type.PhoneNumber.ShortCode.class,
-              com.google.type.PhoneNumber.ShortCode.Builder.class);
-    }
-
     public static final int REGION_CODE_FIELD_NUMBER = 1;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object regionCode_ = "";
+    private java.lang.String regionCode_;
     /**
      *
      *
@@ -225,15 +173,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getRegionCode() {
-      java.lang.Object ref = regionCode_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        regionCode_ = s;
-        return s;
-      }
+      return regionCode_;
     }
     /**
      *
@@ -252,21 +192,67 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getRegionCodeBytes() {
-      java.lang.Object ref = regionCode_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        regionCode_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(regionCode_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Required. The BCP-47 region code of the location where calls to this
+     * short code can be made, such as "US" and "BB".
+     *
+     * Reference(s):
+     *  - http://www.unicode.org/reports/tr35/#unicode_region_subtag
+     * </pre>
+     *
+     * <code>string region_code = 1;</code>
+     *
+     * @param value The regionCode to set.
+     */
+    private void setRegionCode(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      regionCode_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Required. The BCP-47 region code of the location where calls to this
+     * short code can be made, such as "US" and "BB".
+     *
+     * Reference(s):
+     *  - http://www.unicode.org/reports/tr35/#unicode_region_subtag
+     * </pre>
+     *
+     * <code>string region_code = 1;</code>
+     */
+    private void clearRegionCode() {
+
+      regionCode_ = getDefaultInstance().getRegionCode();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Required. The BCP-47 region code of the location where calls to this
+     * short code can be made, such as "US" and "BB".
+     *
+     * Reference(s):
+     *  - http://www.unicode.org/reports/tr35/#unicode_region_subtag
+     * </pre>
+     *
+     * <code>string region_code = 1;</code>
+     *
+     * @param value The bytes for regionCode to set.
+     */
+    private void setRegionCodeBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      regionCode_ = value.toStringUtf8();
     }
 
     public static final int NUMBER_FIELD_NUMBER = 2;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object number_ = "";
+    private java.lang.String number_;
     /**
      *
      *
@@ -281,15 +267,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getNumber() {
-      java.lang.Object ref = number_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        number_ = s;
-        return s;
-      }
+      return number_;
     }
     /**
      *
@@ -305,185 +283,138 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getNumberBytes() {
-      java.lang.Object ref = number_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        number_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(number_);
     }
+    /**
+     *
+     *
+     * <pre>
+     * Required. The short code digits, without a leading plus ('+') or country
+     * calling code, e.g. "611".
+     * </pre>
+     *
+     * <code>string number = 2;</code>
+     *
+     * @param value The number to set.
+     */
+    private void setNumber(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
 
-    private byte memoizedIsInitialized = -1;
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
+      number_ = value;
     }
+    /**
+     *
+     *
+     * <pre>
+     * Required. The short code digits, without a leading plus ('+') or country
+     * calling code, e.g. "611".
+     * </pre>
+     *
+     * <code>string number = 2;</code>
+     */
+    private void clearNumber() {
 
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(regionCode_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, regionCode_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(number_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, number_);
-      }
-      getUnknownFields().writeTo(output);
+      number_ = getDefaultInstance().getNumber();
     }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(regionCode_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, regionCode_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(number_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, number_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-        return true;
-      }
-      if (!(obj instanceof com.google.type.PhoneNumber.ShortCode)) {
-        return super.equals(obj);
-      }
-      com.google.type.PhoneNumber.ShortCode other = (com.google.type.PhoneNumber.ShortCode) obj;
-
-      if (!getRegionCode().equals(other.getRegionCode())) return false;
-      if (!getNumber().equals(other.getNumber())) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + REGION_CODE_FIELD_NUMBER;
-      hash = (53 * hash) + getRegionCode().hashCode();
-      hash = (37 * hash) + NUMBER_FIELD_NUMBER;
-      hash = (53 * hash) + getNumber().hashCode();
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
+    /**
+     *
+     *
+     * <pre>
+     * Required. The short code digits, without a leading plus ('+') or country
+     * calling code, e.g. "611".
+     * </pre>
+     *
+     * <code>string number = 2;</code>
+     *
+     * @param value The bytes for number to set.
+     */
+    private void setNumberBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      number_ = value.toStringUtf8();
     }
 
     public static com.google.type.PhoneNumber.ShortCode parseFrom(java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.type.PhoneNumber.ShortCode parseFrom(
         java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.type.PhoneNumber.ShortCode parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.type.PhoneNumber.ShortCode parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.type.PhoneNumber.ShortCode parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.type.PhoneNumber.ShortCode parseFrom(
         byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.type.PhoneNumber.ShortCode parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.type.PhoneNumber.ShortCode parseFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.type.PhoneNumber.ShortCode parseDelimitedFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.type.PhoneNumber.ShortCode parseDelimitedFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.type.PhoneNumber.ShortCode parseFrom(
         com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.type.PhoneNumber.ShortCode parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
+      return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
 
     public static Builder newBuilder(com.google.type.PhoneNumber.ShortCode prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      *
      *
@@ -502,197 +433,16 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * Protobuf type {@code google.type.PhoneNumber.ShortCode}
      */
     public static final class Builder
-        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+        extends com.google.protobuf.GeneratedMessageLite.Builder<
+            com.google.type.PhoneNumber.ShortCode, Builder>
         implements
         // @@protoc_insertion_point(builder_implements:google.type.PhoneNumber.ShortCode)
         com.google.type.PhoneNumber.ShortCodeOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return com.google.type.PhoneNumberProto
-            .internal_static_google_type_PhoneNumber_ShortCode_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.google.type.PhoneNumberProto
-            .internal_static_google_type_PhoneNumber_ShortCode_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.google.type.PhoneNumber.ShortCode.class,
-                com.google.type.PhoneNumber.ShortCode.Builder.class);
-      }
-
       // Construct using com.google.type.PhoneNumber.ShortCode.newBuilder()
-      private Builder() {}
-
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
+      private Builder() {
+        super(DEFAULT_INSTANCE);
       }
 
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        regionCode_ = "";
-        number_ = "";
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return com.google.type.PhoneNumberProto
-            .internal_static_google_type_PhoneNumber_ShortCode_descriptor;
-      }
-
-      @java.lang.Override
-      public com.google.type.PhoneNumber.ShortCode getDefaultInstanceForType() {
-        return com.google.type.PhoneNumber.ShortCode.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.google.type.PhoneNumber.ShortCode build() {
-        com.google.type.PhoneNumber.ShortCode result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.google.type.PhoneNumber.ShortCode buildPartial() {
-        com.google.type.PhoneNumber.ShortCode result =
-            new com.google.type.PhoneNumber.ShortCode(this);
-        if (bitField0_ != 0) {
-          buildPartial0(result);
-        }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartial0(com.google.type.PhoneNumber.ShortCode result) {
-        int from_bitField0_ = bitField0_;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.regionCode_ = regionCode_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.number_ = number_;
-        }
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.type.PhoneNumber.ShortCode) {
-          return mergeFrom((com.google.type.PhoneNumber.ShortCode) other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.google.type.PhoneNumber.ShortCode other) {
-        if (other == com.google.type.PhoneNumber.ShortCode.getDefaultInstance()) return this;
-        if (!other.getRegionCode().isEmpty()) {
-          regionCode_ = other.regionCode_;
-          bitField0_ |= 0x00000001;
-          onChanged();
-        }
-        if (!other.getNumber().isEmpty()) {
-          number_ = other.number_;
-          bitField0_ |= 0x00000002;
-          onChanged();
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10:
-                {
-                  regionCode_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000001;
-                  break;
-                } // case 10
-              case 18:
-                {
-                  number_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000002;
-                  break;
-                } // case 18
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-
-      private int bitField0_;
-
-      private java.lang.Object regionCode_ = "";
       /**
        *
        *
@@ -708,16 +458,9 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The regionCode.
        */
+      @java.lang.Override
       public java.lang.String getRegionCode() {
-        java.lang.Object ref = regionCode_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          regionCode_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getRegionCode();
       }
       /**
        *
@@ -734,16 +477,9 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The bytes for regionCode.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getRegionCodeBytes() {
-        java.lang.Object ref = regionCode_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          regionCode_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getRegionCodeBytes();
       }
       /**
        *
@@ -762,12 +498,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setRegionCode(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        regionCode_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setRegionCode(value);
         return this;
       }
       /**
@@ -786,9 +518,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearRegionCode() {
-        regionCode_ = getDefaultInstance().getRegionCode();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
+        copyOnWrite();
+        instance.clearRegionCode();
         return this;
       }
       /**
@@ -808,17 +539,11 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setRegionCodeBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        regionCode_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setRegionCodeBytes(value);
         return this;
       }
 
-      private java.lang.Object number_ = "";
       /**
        *
        *
@@ -831,16 +556,9 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The number.
        */
+      @java.lang.Override
       public java.lang.String getNumber() {
-        java.lang.Object ref = number_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          number_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getNumber();
       }
       /**
        *
@@ -854,16 +572,9 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The bytes for number.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getNumberBytes() {
-        java.lang.Object ref = number_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          number_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getNumberBytes();
       }
       /**
        *
@@ -879,12 +590,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setNumber(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        number_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setNumber(value);
         return this;
       }
       /**
@@ -900,9 +607,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearNumber() {
-        number_ = getDefaultInstance().getNumber();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
+        copyOnWrite();
+        instance.clearNumber();
         return this;
       }
       /**
@@ -919,89 +625,100 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setNumberBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        number_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setNumberBytes(value);
         return this;
       }
 
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
       // @@protoc_insertion_point(builder_scope:google.type.PhoneNumber.ShortCode)
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0,
+        java.lang.Object arg1) {
+      switch (method) {
+        case NEW_MUTABLE_INSTANCE:
+          {
+            return new com.google.type.PhoneNumber.ShortCode();
+          }
+        case NEW_BUILDER:
+          {
+            return new Builder();
+          }
+        case BUILD_MESSAGE_INFO:
+          {
+            java.lang.Object[] objects =
+                new java.lang.Object[] {
+                  "regionCode_", "number_",
+                };
+            java.lang.String info =
+                "\u0000\u0002\u0000\u0000\u0001\u0002\u0002\u0000\u0000\u0000\u0001\u0208\u0002\u0208"
+                    + "";
+            return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+          }
+          // fall through
+        case GET_DEFAULT_INSTANCE:
+          {
+            return DEFAULT_INSTANCE;
+          }
+        case GET_PARSER:
+          {
+            com.google.protobuf.Parser<com.google.type.PhoneNumber.ShortCode> parser = PARSER;
+            if (parser == null) {
+              synchronized (com.google.type.PhoneNumber.ShortCode.class) {
+                parser = PARSER;
+                if (parser == null) {
+                  parser =
+                      new DefaultInstanceBasedParser<com.google.type.PhoneNumber.ShortCode>(
+                          DEFAULT_INSTANCE);
+                  PARSER = parser;
+                }
+              }
+            }
+            return parser;
+          }
+        case GET_MEMOIZED_IS_INITIALIZED:
+          {
+            return (byte) 1;
+          }
+        case SET_MEMOIZED_IS_INITIALIZED:
+          {
+            return null;
+          }
+      }
+      throw new UnsupportedOperationException();
     }
 
     // @@protoc_insertion_point(class_scope:google.type.PhoneNumber.ShortCode)
     private static final com.google.type.PhoneNumber.ShortCode DEFAULT_INSTANCE;
 
     static {
-      DEFAULT_INSTANCE = new com.google.type.PhoneNumber.ShortCode();
+      ShortCode defaultInstance = new ShortCode();
+      // New instances are implicitly immutable so no need to make
+      // immutable.
+      DEFAULT_INSTANCE = defaultInstance;
+      com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+          ShortCode.class, defaultInstance);
     }
 
     public static com.google.type.PhoneNumber.ShortCode getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<ShortCode> PARSER =
-        new com.google.protobuf.AbstractParser<ShortCode>() {
-          @java.lang.Override
-          public ShortCode parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-          }
-        };
+    private static volatile com.google.protobuf.Parser<ShortCode> PARSER;
 
     public static com.google.protobuf.Parser<ShortCode> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ShortCode> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.type.PhoneNumber.ShortCode getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
+      return DEFAULT_INSTANCE.getParserForType();
     }
   }
 
   private int kindCase_ = 0;
-
-  @SuppressWarnings("serial")
   private java.lang.Object kind_;
 
-  public enum KindCase
-      implements
-          com.google.protobuf.Internal.EnumLite,
-          com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+  public enum KindCase {
     E164_NUMBER(1),
     SHORT_CODE(2),
     KIND_NOT_SET(0);
@@ -1010,11 +727,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
     private KindCase(int value) {
       this.value = value;
     }
-    /**
-     * @param value The number of the enum to look for.
-     * @return The enum associated with the given number.
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
+    /** @deprecated Use {@link #forNumber(int)} instead. */
     @java.lang.Deprecated
     public static KindCase valueOf(int value) {
       return forNumber(value);
@@ -1038,8 +751,14 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
     }
   };
 
+  @java.lang.Override
   public KindCase getKindCase() {
     return KindCase.forNumber(kindCase_);
+  }
+
+  private void clearKind() {
+    kindCase_ = 0;
+    kind_ = null;
   }
 
   public static final int E164_NUMBER_FIELD_NUMBER = 1;
@@ -1068,6 +787,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the e164Number field is set.
    */
+  @java.lang.Override
   public boolean hasE164Number() {
     return kindCase_ == 1;
   }
@@ -1096,21 +816,13 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The e164Number.
    */
+  @java.lang.Override
   public java.lang.String getE164Number() {
-    java.lang.Object ref = "";
+    java.lang.String ref = "";
     if (kindCase_ == 1) {
-      ref = kind_;
+      ref = (java.lang.String) kind_;
     }
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      if (kindCase_ == 1) {
-        kind_ = s;
-      }
-      return s;
-    }
+    return ref;
   }
   /**
    *
@@ -1137,21 +849,102 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for e164Number.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getE164NumberBytes() {
-    java.lang.Object ref = "";
+    java.lang.String ref = "";
     if (kindCase_ == 1) {
-      ref = kind_;
+      ref = (java.lang.String) kind_;
     }
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      if (kindCase_ == 1) {
-        kind_ = b;
-      }
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
+    return com.google.protobuf.ByteString.copyFromUtf8(ref);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The phone number, represented as a leading plus sign ('+'), followed by a
+   * phone number that uses a relaxed ITU E.164 format consisting of the
+   * country calling code (1 to 3 digits) and the subscriber number, with no
+   * additional spaces or formatting, e.g.:
+   *  - correct: "+15552220123"
+   *  - incorrect: "+1 (555) 222-01234 x123".
+   *
+   * The ITU E.164 format limits the latter to 12 digits, but in practice not
+   * all countries respect that, so we relax that restriction here.
+   * National-only numbers are not allowed.
+   *
+   * References:
+   *  - https://www.itu.int/rec/T-REC-E.164-201011-I
+   *  - https://en.wikipedia.org/wiki/E.164.
+   *  - https://en.wikipedia.org/wiki/List_of_country_calling_codes
+   * </pre>
+   *
+   * <code>string e164_number = 1;</code>
+   *
+   * @param value The e164Number to set.
+   */
+  private void setE164Number(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    kindCase_ = 1;
+    kind_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The phone number, represented as a leading plus sign ('+'), followed by a
+   * phone number that uses a relaxed ITU E.164 format consisting of the
+   * country calling code (1 to 3 digits) and the subscriber number, with no
+   * additional spaces or formatting, e.g.:
+   *  - correct: "+15552220123"
+   *  - incorrect: "+1 (555) 222-01234 x123".
+   *
+   * The ITU E.164 format limits the latter to 12 digits, but in practice not
+   * all countries respect that, so we relax that restriction here.
+   * National-only numbers are not allowed.
+   *
+   * References:
+   *  - https://www.itu.int/rec/T-REC-E.164-201011-I
+   *  - https://en.wikipedia.org/wiki/E.164.
+   *  - https://en.wikipedia.org/wiki/List_of_country_calling_codes
+   * </pre>
+   *
+   * <code>string e164_number = 1;</code>
+   */
+  private void clearE164Number() {
+    if (kindCase_ == 1) {
+      kindCase_ = 0;
+      kind_ = null;
     }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The phone number, represented as a leading plus sign ('+'), followed by a
+   * phone number that uses a relaxed ITU E.164 format consisting of the
+   * country calling code (1 to 3 digits) and the subscriber number, with no
+   * additional spaces or formatting, e.g.:
+   *  - correct: "+15552220123"
+   *  - incorrect: "+1 (555) 222-01234 x123".
+   *
+   * The ITU E.164 format limits the latter to 12 digits, but in practice not
+   * all countries respect that, so we relax that restriction here.
+   * National-only numbers are not allowed.
+   *
+   * References:
+   *  - https://www.itu.int/rec/T-REC-E.164-201011-I
+   *  - https://en.wikipedia.org/wiki/E.164.
+   *  - https://en.wikipedia.org/wiki/List_of_country_calling_codes
+   * </pre>
+   *
+   * <code>string e164_number = 1;</code>
+   *
+   * @param value The bytes for e164Number to set.
+   */
+  private void setE164NumberBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    kind_ = value.toStringUtf8();
+    kindCase_ = 1;
   }
 
   public static final int SHORT_CODE_FIELD_NUMBER = 2;
@@ -1166,8 +959,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.type.PhoneNumber.ShortCode short_code = 2;</code>
-   *
-   * @return Whether the shortCode field is set.
    */
   @java.lang.Override
   public boolean hasShortCode() {
@@ -1184,8 +975,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.type.PhoneNumber.ShortCode short_code = 2;</code>
-   *
-   * @return The shortCode.
    */
   @java.lang.Override
   public com.google.type.PhoneNumber.ShortCode getShortCode() {
@@ -1206,18 +995,57 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.type.PhoneNumber.ShortCode short_code = 2;</code>
    */
-  @java.lang.Override
-  public com.google.type.PhoneNumber.ShortCodeOrBuilder getShortCodeOrBuilder() {
-    if (kindCase_ == 2) {
-      return (com.google.type.PhoneNumber.ShortCode) kind_;
+  private void setShortCode(com.google.type.PhoneNumber.ShortCode value) {
+    value.getClass();
+    kind_ = value;
+    kindCase_ = 2;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A short code.
+   *
+   * Reference(s):
+   *  - https://en.wikipedia.org/wiki/Short_code
+   * </pre>
+   *
+   * <code>.google.type.PhoneNumber.ShortCode short_code = 2;</code>
+   */
+  private void mergeShortCode(com.google.type.PhoneNumber.ShortCode value) {
+    value.getClass();
+    if (kindCase_ == 2 && kind_ != com.google.type.PhoneNumber.ShortCode.getDefaultInstance()) {
+      kind_ =
+          com.google.type.PhoneNumber.ShortCode.newBuilder(
+                  (com.google.type.PhoneNumber.ShortCode) kind_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      kind_ = value;
     }
-    return com.google.type.PhoneNumber.ShortCode.getDefaultInstance();
+    kindCase_ = 2;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A short code.
+   *
+   * Reference(s):
+   *  - https://en.wikipedia.org/wiki/Short_code
+   * </pre>
+   *
+   * <code>.google.type.PhoneNumber.ShortCode short_code = 2;</code>
+   */
+  private void clearShortCode() {
+    if (kindCase_ == 2) {
+      kindCase_ = 0;
+      kind_ = null;
+    }
   }
 
   public static final int EXTENSION_FIELD_NUMBER = 3;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object extension_ = "";
+  private java.lang.String extension_;
   /**
    *
    *
@@ -1239,15 +1067,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getExtension() {
-    java.lang.Object ref = extension_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      extension_ = s;
-      return s;
-    }
+    return extension_;
   }
   /**
    *
@@ -1270,211 +1090,158 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getExtensionBytes() {
-    java.lang.Object ref = extension_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      extension_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(extension_);
   }
+  /**
+   *
+   *
+   * <pre>
+   * The phone number's extension. The extension is not standardized in ITU
+   * recommendations, except for being defined as a series of numbers with a
+   * maximum length of 40 digits. Other than digits, some other dialing
+   * characters such as ',' (indicating a wait) or '#' may be stored here.
+   *
+   * Note that no regions currently use extensions with short codes, so this
+   * field is normally only set in conjunction with an E.164 number. It is held
+   * separately from the E.164 number to allow for short code extensions in the
+   * future.
+   * </pre>
+   *
+   * <code>string extension = 3;</code>
+   *
+   * @param value The extension to set.
+   */
+  private void setExtension(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    extension_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The phone number's extension. The extension is not standardized in ITU
+   * recommendations, except for being defined as a series of numbers with a
+   * maximum length of 40 digits. Other than digits, some other dialing
+   * characters such as ',' (indicating a wait) or '#' may be stored here.
+   *
+   * Note that no regions currently use extensions with short codes, so this
+   * field is normally only set in conjunction with an E.164 number. It is held
+   * separately from the E.164 number to allow for short code extensions in the
+   * future.
+   * </pre>
+   *
+   * <code>string extension = 3;</code>
+   */
+  private void clearExtension() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (kindCase_ == 1) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, kind_);
-    }
-    if (kindCase_ == 2) {
-      output.writeMessage(2, (com.google.type.PhoneNumber.ShortCode) kind_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(extension_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, extension_);
-    }
-    getUnknownFields().writeTo(output);
+    extension_ = getDefaultInstance().getExtension();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (kindCase_ == 1) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, kind_);
-    }
-    if (kindCase_ == 2) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(
-              2, (com.google.type.PhoneNumber.ShortCode) kind_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(extension_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, extension_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.type.PhoneNumber)) {
-      return super.equals(obj);
-    }
-    com.google.type.PhoneNumber other = (com.google.type.PhoneNumber) obj;
-
-    if (!getExtension().equals(other.getExtension())) return false;
-    if (!getKindCase().equals(other.getKindCase())) return false;
-    switch (kindCase_) {
-      case 1:
-        if (!getE164Number().equals(other.getE164Number())) return false;
-        break;
-      case 2:
-        if (!getShortCode().equals(other.getShortCode())) return false;
-        break;
-      case 0:
-      default:
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + EXTENSION_FIELD_NUMBER;
-    hash = (53 * hash) + getExtension().hashCode();
-    switch (kindCase_) {
-      case 1:
-        hash = (37 * hash) + E164_NUMBER_FIELD_NUMBER;
-        hash = (53 * hash) + getE164Number().hashCode();
-        break;
-      case 2:
-        hash = (37 * hash) + SHORT_CODE_FIELD_NUMBER;
-        hash = (53 * hash) + getShortCode().hashCode();
-        break;
-      case 0:
-      default:
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * The phone number's extension. The extension is not standardized in ITU
+   * recommendations, except for being defined as a series of numbers with a
+   * maximum length of 40 digits. Other than digits, some other dialing
+   * characters such as ',' (indicating a wait) or '#' may be stored here.
+   *
+   * Note that no regions currently use extensions with short codes, so this
+   * field is normally only set in conjunction with an E.164 number. It is held
+   * separately from the E.164 number to allow for short code extensions in the
+   * future.
+   * </pre>
+   *
+   * <code>string extension = 3;</code>
+   *
+   * @param value The bytes for extension to set.
+   */
+  private void setExtensionBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    extension_ = value.toStringUtf8();
   }
 
   public static com.google.type.PhoneNumber parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.type.PhoneNumber parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.type.PhoneNumber parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.type.PhoneNumber parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.type.PhoneNumber parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.type.PhoneNumber parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.type.PhoneNumber parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.type.PhoneNumber parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.type.PhoneNumber parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.type.PhoneNumber parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.type.PhoneNumber parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.type.PhoneNumber parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.type.PhoneNumber prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -1509,233 +1276,26 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.type.PhoneNumber}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<com.google.type.PhoneNumber, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.type.PhoneNumber)
       com.google.type.PhoneNumberOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.type.PhoneNumberProto.internal_static_google_type_PhoneNumber_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.type.PhoneNumberProto
-          .internal_static_google_type_PhoneNumber_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.type.PhoneNumber.class, com.google.type.PhoneNumber.Builder.class);
-    }
-
     // Construct using com.google.type.PhoneNumber.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
     @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      if (shortCodeBuilder_ != null) {
-        shortCodeBuilder_.clear();
-      }
-      extension_ = "";
-      kindCase_ = 0;
-      kind_ = null;
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.type.PhoneNumberProto.internal_static_google_type_PhoneNumber_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.type.PhoneNumber getDefaultInstanceForType() {
-      return com.google.type.PhoneNumber.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.type.PhoneNumber build() {
-      com.google.type.PhoneNumber result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.type.PhoneNumber buildPartial() {
-      com.google.type.PhoneNumber result = new com.google.type.PhoneNumber(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      buildPartialOneofs(result);
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.type.PhoneNumber result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.extension_ = extension_;
-      }
-    }
-
-    private void buildPartialOneofs(com.google.type.PhoneNumber result) {
-      result.kindCase_ = kindCase_;
-      result.kind_ = this.kind_;
-      if (kindCase_ == 2 && shortCodeBuilder_ != null) {
-        result.kind_ = shortCodeBuilder_.build();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.type.PhoneNumber) {
-        return mergeFrom((com.google.type.PhoneNumber) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.type.PhoneNumber other) {
-      if (other == com.google.type.PhoneNumber.getDefaultInstance()) return this;
-      if (!other.getExtension().isEmpty()) {
-        extension_ = other.extension_;
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
-      switch (other.getKindCase()) {
-        case E164_NUMBER:
-          {
-            kindCase_ = 1;
-            kind_ = other.kind_;
-            onChanged();
-            break;
-          }
-        case SHORT_CODE:
-          {
-            mergeShortCode(other.getShortCode());
-            break;
-          }
-        case KIND_NOT_SET:
-          {
-            break;
-          }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                kindCase_ = 1;
-                kind_ = s;
-                break;
-              } // case 10
-            case 18:
-              {
-                input.readMessage(getShortCodeFieldBuilder().getBuilder(), extensionRegistry);
-                kindCase_ = 2;
-                break;
-              } // case 18
-            case 26:
-              {
-                extension_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 26
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int kindCase_ = 0;
-    private java.lang.Object kind_;
-
     public KindCase getKindCase() {
-      return KindCase.forNumber(kindCase_);
+      return instance.getKindCase();
     }
 
     public Builder clearKind() {
-      kindCase_ = 0;
-      kind_ = null;
-      onChanged();
+      copyOnWrite();
+      instance.clearKind();
       return this;
     }
-
-    private int bitField0_;
 
     /**
      *
@@ -1764,7 +1324,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean hasE164Number() {
-      return kindCase_ == 1;
+      return instance.hasE164Number();
     }
     /**
      *
@@ -1793,20 +1353,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getE164Number() {
-      java.lang.Object ref = "";
-      if (kindCase_ == 1) {
-        ref = kind_;
-      }
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (kindCase_ == 1) {
-          kind_ = s;
-        }
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getE164Number();
     }
     /**
      *
@@ -1835,20 +1382,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getE164NumberBytes() {
-      java.lang.Object ref = "";
-      if (kindCase_ == 1) {
-        ref = kind_;
-      }
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        if (kindCase_ == 1) {
-          kind_ = b;
-        }
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getE164NumberBytes();
     }
     /**
      *
@@ -1877,12 +1411,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setE164Number(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      kindCase_ = 1;
-      kind_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setE164Number(value);
       return this;
     }
     /**
@@ -1911,11 +1441,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearE164Number() {
-      if (kindCase_ == 1) {
-        kindCase_ = 0;
-        kind_ = null;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.clearE164Number();
       return this;
     }
     /**
@@ -1945,21 +1472,11 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setE164NumberBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      kindCase_ = 1;
-      kind_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setE164NumberBytes(value);
       return this;
     }
 
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.type.PhoneNumber.ShortCode,
-            com.google.type.PhoneNumber.ShortCode.Builder,
-            com.google.type.PhoneNumber.ShortCodeOrBuilder>
-        shortCodeBuilder_;
     /**
      *
      *
@@ -1971,12 +1488,10 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.type.PhoneNumber.ShortCode short_code = 2;</code>
-     *
-     * @return Whether the shortCode field is set.
      */
     @java.lang.Override
     public boolean hasShortCode() {
-      return kindCase_ == 2;
+      return instance.hasShortCode();
     }
     /**
      *
@@ -1989,22 +1504,10 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.type.PhoneNumber.ShortCode short_code = 2;</code>
-     *
-     * @return The shortCode.
      */
     @java.lang.Override
     public com.google.type.PhoneNumber.ShortCode getShortCode() {
-      if (shortCodeBuilder_ == null) {
-        if (kindCase_ == 2) {
-          return (com.google.type.PhoneNumber.ShortCode) kind_;
-        }
-        return com.google.type.PhoneNumber.ShortCode.getDefaultInstance();
-      } else {
-        if (kindCase_ == 2) {
-          return shortCodeBuilder_.getMessage();
-        }
-        return com.google.type.PhoneNumber.ShortCode.getDefaultInstance();
-      }
+      return instance.getShortCode();
     }
     /**
      *
@@ -2019,16 +1522,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.PhoneNumber.ShortCode short_code = 2;</code>
      */
     public Builder setShortCode(com.google.type.PhoneNumber.ShortCode value) {
-      if (shortCodeBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        kind_ = value;
-        onChanged();
-      } else {
-        shortCodeBuilder_.setMessage(value);
-      }
-      kindCase_ = 2;
+      copyOnWrite();
+      instance.setShortCode(value);
       return this;
     }
     /**
@@ -2044,13 +1539,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.PhoneNumber.ShortCode short_code = 2;</code>
      */
     public Builder setShortCode(com.google.type.PhoneNumber.ShortCode.Builder builderForValue) {
-      if (shortCodeBuilder_ == null) {
-        kind_ = builderForValue.build();
-        onChanged();
-      } else {
-        shortCodeBuilder_.setMessage(builderForValue.build());
-      }
-      kindCase_ = 2;
+      copyOnWrite();
+      instance.setShortCode(builderForValue.build());
       return this;
     }
     /**
@@ -2066,25 +1556,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.PhoneNumber.ShortCode short_code = 2;</code>
      */
     public Builder mergeShortCode(com.google.type.PhoneNumber.ShortCode value) {
-      if (shortCodeBuilder_ == null) {
-        if (kindCase_ == 2 && kind_ != com.google.type.PhoneNumber.ShortCode.getDefaultInstance()) {
-          kind_ =
-              com.google.type.PhoneNumber.ShortCode.newBuilder(
-                      (com.google.type.PhoneNumber.ShortCode) kind_)
-                  .mergeFrom(value)
-                  .buildPartial();
-        } else {
-          kind_ = value;
-        }
-        onChanged();
-      } else {
-        if (kindCase_ == 2) {
-          shortCodeBuilder_.mergeFrom(value);
-        } else {
-          shortCodeBuilder_.setMessage(value);
-        }
-      }
-      kindCase_ = 2;
+      copyOnWrite();
+      instance.mergeShortCode(value);
       return this;
     }
     /**
@@ -2100,94 +1573,11 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.PhoneNumber.ShortCode short_code = 2;</code>
      */
     public Builder clearShortCode() {
-      if (shortCodeBuilder_ == null) {
-        if (kindCase_ == 2) {
-          kindCase_ = 0;
-          kind_ = null;
-          onChanged();
-        }
-      } else {
-        if (kindCase_ == 2) {
-          kindCase_ = 0;
-          kind_ = null;
-        }
-        shortCodeBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearShortCode();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * A short code.
-     *
-     * Reference(s):
-     *  - https://en.wikipedia.org/wiki/Short_code
-     * </pre>
-     *
-     * <code>.google.type.PhoneNumber.ShortCode short_code = 2;</code>
-     */
-    public com.google.type.PhoneNumber.ShortCode.Builder getShortCodeBuilder() {
-      return getShortCodeFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A short code.
-     *
-     * Reference(s):
-     *  - https://en.wikipedia.org/wiki/Short_code
-     * </pre>
-     *
-     * <code>.google.type.PhoneNumber.ShortCode short_code = 2;</code>
-     */
-    @java.lang.Override
-    public com.google.type.PhoneNumber.ShortCodeOrBuilder getShortCodeOrBuilder() {
-      if ((kindCase_ == 2) && (shortCodeBuilder_ != null)) {
-        return shortCodeBuilder_.getMessageOrBuilder();
-      } else {
-        if (kindCase_ == 2) {
-          return (com.google.type.PhoneNumber.ShortCode) kind_;
-        }
-        return com.google.type.PhoneNumber.ShortCode.getDefaultInstance();
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A short code.
-     *
-     * Reference(s):
-     *  - https://en.wikipedia.org/wiki/Short_code
-     * </pre>
-     *
-     * <code>.google.type.PhoneNumber.ShortCode short_code = 2;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.type.PhoneNumber.ShortCode,
-            com.google.type.PhoneNumber.ShortCode.Builder,
-            com.google.type.PhoneNumber.ShortCodeOrBuilder>
-        getShortCodeFieldBuilder() {
-      if (shortCodeBuilder_ == null) {
-        if (!(kindCase_ == 2)) {
-          kind_ = com.google.type.PhoneNumber.ShortCode.getDefaultInstance();
-        }
-        shortCodeBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.type.PhoneNumber.ShortCode,
-                com.google.type.PhoneNumber.ShortCode.Builder,
-                com.google.type.PhoneNumber.ShortCodeOrBuilder>(
-                (com.google.type.PhoneNumber.ShortCode) kind_, getParentForChildren(), isClean());
-        kind_ = null;
-      }
-      kindCase_ = 2;
-      onChanged();
-      return shortCodeBuilder_;
-    }
 
-    private java.lang.Object extension_ = "";
     /**
      *
      *
@@ -2207,16 +1597,9 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The extension.
      */
+    @java.lang.Override
     public java.lang.String getExtension() {
-      java.lang.Object ref = extension_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        extension_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getExtension();
     }
     /**
      *
@@ -2237,16 +1620,9 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for extension.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getExtensionBytes() {
-      java.lang.Object ref = extension_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        extension_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getExtensionBytes();
     }
     /**
      *
@@ -2269,12 +1645,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setExtension(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      extension_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setExtension(value);
       return this;
     }
     /**
@@ -2297,9 +1669,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearExtension() {
-      extension_ = getDefaultInstance().getExtension();
-      bitField0_ = (bitField0_ & ~0x00000004);
-      onChanged();
+      copyOnWrite();
+      instance.clearExtension();
       return this;
     }
     /**
@@ -2323,74 +1694,91 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setExtensionBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      extension_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setExtensionBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.type.PhoneNumber)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.type.PhoneNumber();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "kind_", "kindCase_", com.google.type.PhoneNumber.ShortCode.class, "extension_",
+              };
+          java.lang.String info =
+              "\u0000\u0003\u0001\u0000\u0001\u0003\u0003\u0000\u0000\u0000\u0001\u023b\u0000\u0002"
+                  + "<\u0000\u0003\u0208";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.type.PhoneNumber> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.type.PhoneNumber.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.type.PhoneNumber>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.type.PhoneNumber)
   private static final com.google.type.PhoneNumber DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.type.PhoneNumber();
+    PhoneNumber defaultInstance = new PhoneNumber();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        PhoneNumber.class, defaultInstance);
   }
 
   public static com.google.type.PhoneNumber getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<PhoneNumber> PARSER =
-      new com.google.protobuf.AbstractParser<PhoneNumber>() {
-        @java.lang.Override
-        public PhoneNumber parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<PhoneNumber> PARSER;
 
   public static com.google.protobuf.Parser<PhoneNumber> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<PhoneNumber> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.type.PhoneNumber getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

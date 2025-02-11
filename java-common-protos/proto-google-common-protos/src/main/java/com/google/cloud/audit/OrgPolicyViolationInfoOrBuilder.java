@@ -22,7 +22,7 @@ package com.google.cloud.audit;
 public interface OrgPolicyViolationInfoOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.cloud.audit.OrgPolicyViolationInfo)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -52,18 +52,6 @@ public interface OrgPolicyViolationInfoOrBuilder
    * @return The payload.
    */
   com.google.protobuf.Struct getPayload();
-  /**
-   *
-   *
-   * <pre>
-   * Optional. Resource payload that is currently in scope and is subjected to orgpolicy
-   * conditions. This payload may be the subset of the actual Resource that may
-   * come in the request. This payload should not contain any core content.
-   * </pre>
-   *
-   * <code>.google.protobuf.Struct payload = 1 [(.google.api.field_behavior) = OPTIONAL];</code>
-   */
-  com.google.protobuf.StructOrBuilder getPayloadOrBuilder();
 
   /**
    *
@@ -162,6 +150,7 @@ public interface OrgPolicyViolationInfoOrBuilder
    * <code>map&lt;string, string&gt; resource_tags = 3 [(.google.api.field_behavior) = OPTIONAL];
    * </code>
    */
+
   /* nullable */
   java.lang.String getResourceTagsOrDefault(
       java.lang.String key,
@@ -221,29 +210,4 @@ public interface OrgPolicyViolationInfoOrBuilder
    * </code>
    */
   int getViolationInfoCount();
-  /**
-   *
-   *
-   * <pre>
-   * Optional. Policy violations
-   * </pre>
-   *
-   * <code>
-   * repeated .google.cloud.audit.ViolationInfo violation_info = 4 [(.google.api.field_behavior) = OPTIONAL];
-   * </code>
-   */
-  java.util.List<? extends com.google.cloud.audit.ViolationInfoOrBuilder>
-      getViolationInfoOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Optional. Policy violations
-   * </pre>
-   *
-   * <code>
-   * repeated .google.cloud.audit.ViolationInfo violation_info = 4 [(.google.api.field_behavior) = OPTIONAL];
-   * </code>
-   */
-  com.google.cloud.audit.ViolationInfoOrBuilder getViolationInfoOrBuilder(int index);
 }

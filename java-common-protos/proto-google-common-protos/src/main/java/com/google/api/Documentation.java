@@ -82,48 +82,22 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.Documentation}
  */
-public final class Documentation extends com.google.protobuf.GeneratedMessageV3
+public final class Documentation
+    extends com.google.protobuf.GeneratedMessageLite<Documentation, Documentation.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.Documentation)
     DocumentationOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use Documentation.newBuilder() to construct.
-  private Documentation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private Documentation() {
     summary_ = "";
-    pages_ = java.util.Collections.emptyList();
-    rules_ = java.util.Collections.emptyList();
+    pages_ = emptyProtobufList();
+    rules_ = emptyProtobufList();
     documentationRootUrl_ = "";
     serviceRootUrl_ = "";
     overview_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new Documentation();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.DocumentationProto.internal_static_google_api_Documentation_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.DocumentationProto
-        .internal_static_google_api_Documentation_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.Documentation.class, com.google.api.Documentation.Builder.class);
-  }
-
   public static final int SUMMARY_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object summary_ = "";
+  private java.lang.String summary_;
   /**
    *
    *
@@ -140,15 +114,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getSummary() {
-    java.lang.Object ref = summary_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      summary_ = s;
-      return s;
-    }
+    return summary_;
   }
   /**
    *
@@ -166,21 +132,64 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getSummaryBytes() {
-    java.lang.Object ref = summary_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      summary_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(summary_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A short description of what the service does. The summary must be plain
+   * text. It becomes the overview of the service displayed in Google Cloud
+   * Console.
+   * NOTE: This field is equivalent to the standard field `description`.
+   * </pre>
+   *
+   * <code>string summary = 1;</code>
+   *
+   * @param value The summary to set.
+   */
+  private void setSummary(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    summary_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A short description of what the service does. The summary must be plain
+   * text. It becomes the overview of the service displayed in Google Cloud
+   * Console.
+   * NOTE: This field is equivalent to the standard field `description`.
+   * </pre>
+   *
+   * <code>string summary = 1;</code>
+   */
+  private void clearSummary() {
+
+    summary_ = getDefaultInstance().getSummary();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A short description of what the service does. The summary must be plain
+   * text. It becomes the overview of the service displayed in Google Cloud
+   * Console.
+   * NOTE: This field is equivalent to the standard field `description`.
+   * </pre>
+   *
+   * <code>string summary = 1;</code>
+   *
+   * @param value The bytes for summary to set.
+   */
+  private void setSummaryBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    summary_ = value.toStringUtf8();
   }
 
   public static final int PAGES_FIELD_NUMBER = 5;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.api.Page> pages_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.api.Page> pages_;
   /**
    *
    *
@@ -203,7 +212,6 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Page pages = 5;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.api.PageOrBuilder> getPagesOrBuilderList() {
     return pages_;
   }
@@ -242,15 +250,100 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Page pages = 5;</code>
    */
-  @java.lang.Override
   public com.google.api.PageOrBuilder getPagesOrBuilder(int index) {
     return pages_.get(index);
   }
 
-  public static final int RULES_FIELD_NUMBER = 3;
+  private void ensurePagesIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.api.Page> tmp = pages_;
+    if (!tmp.isModifiable()) {
+      pages_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
 
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.api.DocumentationRule> rules_;
+  /**
+   *
+   *
+   * <pre>
+   * The top level pages for the documentation set.
+   * </pre>
+   *
+   * <code>repeated .google.api.Page pages = 5;</code>
+   */
+  private void setPages(int index, com.google.api.Page value) {
+    value.getClass();
+    ensurePagesIsMutable();
+    pages_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The top level pages for the documentation set.
+   * </pre>
+   *
+   * <code>repeated .google.api.Page pages = 5;</code>
+   */
+  private void addPages(com.google.api.Page value) {
+    value.getClass();
+    ensurePagesIsMutable();
+    pages_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The top level pages for the documentation set.
+   * </pre>
+   *
+   * <code>repeated .google.api.Page pages = 5;</code>
+   */
+  private void addPages(int index, com.google.api.Page value) {
+    value.getClass();
+    ensurePagesIsMutable();
+    pages_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The top level pages for the documentation set.
+   * </pre>
+   *
+   * <code>repeated .google.api.Page pages = 5;</code>
+   */
+  private void addAllPages(java.lang.Iterable<? extends com.google.api.Page> values) {
+    ensurePagesIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, pages_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The top level pages for the documentation set.
+   * </pre>
+   *
+   * <code>repeated .google.api.Page pages = 5;</code>
+   */
+  private void clearPages() {
+    pages_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The top level pages for the documentation set.
+   * </pre>
+   *
+   * <code>repeated .google.api.Page pages = 5;</code>
+   */
+  private void removePages(int index) {
+    ensurePagesIsMutable();
+    pages_.remove(index);
+  }
+
+  public static final int RULES_FIELD_NUMBER = 3;
+  private com.google.protobuf.Internal.ProtobufList<com.google.api.DocumentationRule> rules_;
   /**
    *
    *
@@ -277,7 +370,6 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.DocumentationRule rules = 3;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.api.DocumentationRuleOrBuilder>
       getRulesOrBuilderList() {
     return rules_;
@@ -323,15 +415,112 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.DocumentationRule rules = 3;</code>
    */
-  @java.lang.Override
   public com.google.api.DocumentationRuleOrBuilder getRulesOrBuilder(int index) {
     return rules_.get(index);
   }
 
-  public static final int DOCUMENTATION_ROOT_URL_FIELD_NUMBER = 4;
+  private void ensureRulesIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.api.DocumentationRule> tmp = rules_;
+    if (!tmp.isModifiable()) {
+      rules_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
 
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object documentationRootUrl_ = "";
+  /**
+   *
+   *
+   * <pre>
+   * A list of documentation rules that apply to individual API elements.
+   *
+   * **NOTE:** All service configuration rules follow "last one wins" order.
+   * </pre>
+   *
+   * <code>repeated .google.api.DocumentationRule rules = 3;</code>
+   */
+  private void setRules(int index, com.google.api.DocumentationRule value) {
+    value.getClass();
+    ensureRulesIsMutable();
+    rules_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of documentation rules that apply to individual API elements.
+   *
+   * **NOTE:** All service configuration rules follow "last one wins" order.
+   * </pre>
+   *
+   * <code>repeated .google.api.DocumentationRule rules = 3;</code>
+   */
+  private void addRules(com.google.api.DocumentationRule value) {
+    value.getClass();
+    ensureRulesIsMutable();
+    rules_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of documentation rules that apply to individual API elements.
+   *
+   * **NOTE:** All service configuration rules follow "last one wins" order.
+   * </pre>
+   *
+   * <code>repeated .google.api.DocumentationRule rules = 3;</code>
+   */
+  private void addRules(int index, com.google.api.DocumentationRule value) {
+    value.getClass();
+    ensureRulesIsMutable();
+    rules_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of documentation rules that apply to individual API elements.
+   *
+   * **NOTE:** All service configuration rules follow "last one wins" order.
+   * </pre>
+   *
+   * <code>repeated .google.api.DocumentationRule rules = 3;</code>
+   */
+  private void addAllRules(java.lang.Iterable<? extends com.google.api.DocumentationRule> values) {
+    ensureRulesIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, rules_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of documentation rules that apply to individual API elements.
+   *
+   * **NOTE:** All service configuration rules follow "last one wins" order.
+   * </pre>
+   *
+   * <code>repeated .google.api.DocumentationRule rules = 3;</code>
+   */
+  private void clearRules() {
+    rules_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of documentation rules that apply to individual API elements.
+   *
+   * **NOTE:** All service configuration rules follow "last one wins" order.
+   * </pre>
+   *
+   * <code>repeated .google.api.DocumentationRule rules = 3;</code>
+   */
+  private void removeRules(int index) {
+    ensureRulesIsMutable();
+    rules_.remove(index);
+  }
+
+  public static final int DOCUMENTATION_ROOT_URL_FIELD_NUMBER = 4;
+  private java.lang.String documentationRootUrl_;
   /**
    *
    *
@@ -345,15 +534,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getDocumentationRootUrl() {
-    java.lang.Object ref = documentationRootUrl_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      documentationRootUrl_ = s;
-      return s;
-    }
+    return documentationRootUrl_;
   }
   /**
    *
@@ -368,21 +549,55 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getDocumentationRootUrlBytes() {
-    java.lang.Object ref = documentationRootUrl_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      documentationRootUrl_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(documentationRootUrl_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The URL to the root of documentation.
+   * </pre>
+   *
+   * <code>string documentation_root_url = 4;</code>
+   *
+   * @param value The documentationRootUrl to set.
+   */
+  private void setDocumentationRootUrl(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    documentationRootUrl_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The URL to the root of documentation.
+   * </pre>
+   *
+   * <code>string documentation_root_url = 4;</code>
+   */
+  private void clearDocumentationRootUrl() {
+
+    documentationRootUrl_ = getDefaultInstance().getDocumentationRootUrl();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The URL to the root of documentation.
+   * </pre>
+   *
+   * <code>string documentation_root_url = 4;</code>
+   *
+   * @param value The bytes for documentationRootUrl to set.
+   */
+  private void setDocumentationRootUrlBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    documentationRootUrl_ = value.toStringUtf8();
   }
 
   public static final int SERVICE_ROOT_URL_FIELD_NUMBER = 6;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object serviceRootUrl_ = "";
+  private java.lang.String serviceRootUrl_;
   /**
    *
    *
@@ -399,15 +614,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getServiceRootUrl() {
-    java.lang.Object ref = serviceRootUrl_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      serviceRootUrl_ = s;
-      return s;
-    }
+    return serviceRootUrl_;
   }
   /**
    *
@@ -425,21 +632,64 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getServiceRootUrlBytes() {
-    java.lang.Object ref = serviceRootUrl_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      serviceRootUrl_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(serviceRootUrl_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the service root url if the default one (the service name
+   * from the yaml file) is not suitable. This can be seen in any fully
+   * specified service urls as well as sections that show a base that other
+   * urls are relative to.
+   * </pre>
+   *
+   * <code>string service_root_url = 6;</code>
+   *
+   * @param value The serviceRootUrl to set.
+   */
+  private void setServiceRootUrl(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    serviceRootUrl_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the service root url if the default one (the service name
+   * from the yaml file) is not suitable. This can be seen in any fully
+   * specified service urls as well as sections that show a base that other
+   * urls are relative to.
+   * </pre>
+   *
+   * <code>string service_root_url = 6;</code>
+   */
+  private void clearServiceRootUrl() {
+
+    serviceRootUrl_ = getDefaultInstance().getServiceRootUrl();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the service root url if the default one (the service name
+   * from the yaml file) is not suitable. This can be seen in any fully
+   * specified service urls as well as sections that show a base that other
+   * urls are relative to.
+   * </pre>
+   *
+   * <code>string service_root_url = 6;</code>
+   *
+   * @param value The bytes for serviceRootUrl to set.
+   */
+  private void setServiceRootUrlBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    serviceRootUrl_ = value.toStringUtf8();
   }
 
   public static final int OVERVIEW_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object overview_ = "";
+  private java.lang.String overview_;
   /**
    *
    *
@@ -465,15 +715,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getOverview() {
-    java.lang.Object ref = overview_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      overview_ = s;
-      return s;
-    }
+    return overview_;
   }
   /**
    *
@@ -500,223 +742,170 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getOverviewBytes() {
-    java.lang.Object ref = overview_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      overview_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(overview_);
   }
+  /**
+   *
+   *
+   * <pre>
+   * Declares a single overview page. For example:
+   * &lt;pre&gt;&lt;code&gt;documentation:
+   *   summary: ...
+   *   overview: &amp;#40;== include overview.md ==&amp;#41;
+   * &lt;/code&gt;&lt;/pre&gt;
+   * This is a shortcut for the following declaration (using pages style):
+   * &lt;pre&gt;&lt;code&gt;documentation:
+   *   summary: ...
+   *   pages:
+   *   - name: Overview
+   *     content: &amp;#40;== include overview.md ==&amp;#41;
+   * &lt;/code&gt;&lt;/pre&gt;
+   * Note: you cannot specify both `overview` field and `pages` field.
+   * </pre>
+   *
+   * <code>string overview = 2;</code>
+   *
+   * @param value The overview to set.
+   */
+  private void setOverview(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    overview_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Declares a single overview page. For example:
+   * &lt;pre&gt;&lt;code&gt;documentation:
+   *   summary: ...
+   *   overview: &amp;#40;== include overview.md ==&amp;#41;
+   * &lt;/code&gt;&lt;/pre&gt;
+   * This is a shortcut for the following declaration (using pages style):
+   * &lt;pre&gt;&lt;code&gt;documentation:
+   *   summary: ...
+   *   pages:
+   *   - name: Overview
+   *     content: &amp;#40;== include overview.md ==&amp;#41;
+   * &lt;/code&gt;&lt;/pre&gt;
+   * Note: you cannot specify both `overview` field and `pages` field.
+   * </pre>
+   *
+   * <code>string overview = 2;</code>
+   */
+  private void clearOverview() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(summary_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, summary_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(overview_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, overview_);
-    }
-    for (int i = 0; i < rules_.size(); i++) {
-      output.writeMessage(3, rules_.get(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(documentationRootUrl_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, documentationRootUrl_);
-    }
-    for (int i = 0; i < pages_.size(); i++) {
-      output.writeMessage(5, pages_.get(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(serviceRootUrl_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, serviceRootUrl_);
-    }
-    getUnknownFields().writeTo(output);
+    overview_ = getDefaultInstance().getOverview();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(summary_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, summary_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(overview_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, overview_);
-    }
-    for (int i = 0; i < rules_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, rules_.get(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(documentationRootUrl_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, documentationRootUrl_);
-    }
-    for (int i = 0; i < pages_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(5, pages_.get(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(serviceRootUrl_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, serviceRootUrl_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.Documentation)) {
-      return super.equals(obj);
-    }
-    com.google.api.Documentation other = (com.google.api.Documentation) obj;
-
-    if (!getSummary().equals(other.getSummary())) return false;
-    if (!getPagesList().equals(other.getPagesList())) return false;
-    if (!getRulesList().equals(other.getRulesList())) return false;
-    if (!getDocumentationRootUrl().equals(other.getDocumentationRootUrl())) return false;
-    if (!getServiceRootUrl().equals(other.getServiceRootUrl())) return false;
-    if (!getOverview().equals(other.getOverview())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + SUMMARY_FIELD_NUMBER;
-    hash = (53 * hash) + getSummary().hashCode();
-    if (getPagesCount() > 0) {
-      hash = (37 * hash) + PAGES_FIELD_NUMBER;
-      hash = (53 * hash) + getPagesList().hashCode();
-    }
-    if (getRulesCount() > 0) {
-      hash = (37 * hash) + RULES_FIELD_NUMBER;
-      hash = (53 * hash) + getRulesList().hashCode();
-    }
-    hash = (37 * hash) + DOCUMENTATION_ROOT_URL_FIELD_NUMBER;
-    hash = (53 * hash) + getDocumentationRootUrl().hashCode();
-    hash = (37 * hash) + SERVICE_ROOT_URL_FIELD_NUMBER;
-    hash = (53 * hash) + getServiceRootUrl().hashCode();
-    hash = (37 * hash) + OVERVIEW_FIELD_NUMBER;
-    hash = (53 * hash) + getOverview().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Declares a single overview page. For example:
+   * &lt;pre&gt;&lt;code&gt;documentation:
+   *   summary: ...
+   *   overview: &amp;#40;== include overview.md ==&amp;#41;
+   * &lt;/code&gt;&lt;/pre&gt;
+   * This is a shortcut for the following declaration (using pages style):
+   * &lt;pre&gt;&lt;code&gt;documentation:
+   *   summary: ...
+   *   pages:
+   *   - name: Overview
+   *     content: &amp;#40;== include overview.md ==&amp;#41;
+   * &lt;/code&gt;&lt;/pre&gt;
+   * Note: you cannot specify both `overview` field and `pages` field.
+   * </pre>
+   *
+   * <code>string overview = 2;</code>
+   *
+   * @param value The bytes for overview to set.
+   */
+  private void setOverviewBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    overview_ = value.toStringUtf8();
   }
 
   public static com.google.api.Documentation parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.Documentation parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.Documentation parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.Documentation parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.Documentation parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.Documentation parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.Documentation parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.Documentation parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.Documentation parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.Documentation parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.Documentation parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.Documentation parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.Documentation prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -780,335 +969,17 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.api.Documentation}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.api.Documentation, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.Documentation)
       com.google.api.DocumentationOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.DocumentationProto.internal_static_google_api_Documentation_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.DocumentationProto
-          .internal_static_google_api_Documentation_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.Documentation.class, com.google.api.Documentation.Builder.class);
-    }
-
     // Construct using com.google.api.Documentation.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      summary_ = "";
-      if (pagesBuilder_ == null) {
-        pages_ = java.util.Collections.emptyList();
-      } else {
-        pages_ = null;
-        pagesBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000002);
-      if (rulesBuilder_ == null) {
-        rules_ = java.util.Collections.emptyList();
-      } else {
-        rules_ = null;
-        rulesBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000004);
-      documentationRootUrl_ = "";
-      serviceRootUrl_ = "";
-      overview_ = "";
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.DocumentationProto.internal_static_google_api_Documentation_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.Documentation getDefaultInstanceForType() {
-      return com.google.api.Documentation.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.Documentation build() {
-      com.google.api.Documentation result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.Documentation buildPartial() {
-      com.google.api.Documentation result = new com.google.api.Documentation(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.api.Documentation result) {
-      if (pagesBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)) {
-          pages_ = java.util.Collections.unmodifiableList(pages_);
-          bitField0_ = (bitField0_ & ~0x00000002);
-        }
-        result.pages_ = pages_;
-      } else {
-        result.pages_ = pagesBuilder_.build();
-      }
-      if (rulesBuilder_ == null) {
-        if (((bitField0_ & 0x00000004) != 0)) {
-          rules_ = java.util.Collections.unmodifiableList(rules_);
-          bitField0_ = (bitField0_ & ~0x00000004);
-        }
-        result.rules_ = rules_;
-      } else {
-        result.rules_ = rulesBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.api.Documentation result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.summary_ = summary_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.documentationRootUrl_ = documentationRootUrl_;
-      }
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.serviceRootUrl_ = serviceRootUrl_;
-      }
-      if (((from_bitField0_ & 0x00000020) != 0)) {
-        result.overview_ = overview_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.Documentation) {
-        return mergeFrom((com.google.api.Documentation) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.Documentation other) {
-      if (other == com.google.api.Documentation.getDefaultInstance()) return this;
-      if (!other.getSummary().isEmpty()) {
-        summary_ = other.summary_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (pagesBuilder_ == null) {
-        if (!other.pages_.isEmpty()) {
-          if (pages_.isEmpty()) {
-            pages_ = other.pages_;
-            bitField0_ = (bitField0_ & ~0x00000002);
-          } else {
-            ensurePagesIsMutable();
-            pages_.addAll(other.pages_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.pages_.isEmpty()) {
-          if (pagesBuilder_.isEmpty()) {
-            pagesBuilder_.dispose();
-            pagesBuilder_ = null;
-            pages_ = other.pages_;
-            bitField0_ = (bitField0_ & ~0x00000002);
-            pagesBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getPagesFieldBuilder()
-                    : null;
-          } else {
-            pagesBuilder_.addAllMessages(other.pages_);
-          }
-        }
-      }
-      if (rulesBuilder_ == null) {
-        if (!other.rules_.isEmpty()) {
-          if (rules_.isEmpty()) {
-            rules_ = other.rules_;
-            bitField0_ = (bitField0_ & ~0x00000004);
-          } else {
-            ensureRulesIsMutable();
-            rules_.addAll(other.rules_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.rules_.isEmpty()) {
-          if (rulesBuilder_.isEmpty()) {
-            rulesBuilder_.dispose();
-            rulesBuilder_ = null;
-            rules_ = other.rules_;
-            bitField0_ = (bitField0_ & ~0x00000004);
-            rulesBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getRulesFieldBuilder()
-                    : null;
-          } else {
-            rulesBuilder_.addAllMessages(other.rules_);
-          }
-        }
-      }
-      if (!other.getDocumentationRootUrl().isEmpty()) {
-        documentationRootUrl_ = other.documentationRootUrl_;
-        bitField0_ |= 0x00000008;
-        onChanged();
-      }
-      if (!other.getServiceRootUrl().isEmpty()) {
-        serviceRootUrl_ = other.serviceRootUrl_;
-        bitField0_ |= 0x00000010;
-        onChanged();
-      }
-      if (!other.getOverview().isEmpty()) {
-        overview_ = other.overview_;
-        bitField0_ |= 0x00000020;
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                summary_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                overview_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000020;
-                break;
-              } // case 18
-            case 26:
-              {
-                com.google.api.DocumentationRule m =
-                    input.readMessage(com.google.api.DocumentationRule.parser(), extensionRegistry);
-                if (rulesBuilder_ == null) {
-                  ensureRulesIsMutable();
-                  rules_.add(m);
-                } else {
-                  rulesBuilder_.addMessage(m);
-                }
-                break;
-              } // case 26
-            case 34:
-              {
-                documentationRootUrl_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 34
-            case 42:
-              {
-                com.google.api.Page m =
-                    input.readMessage(com.google.api.Page.parser(), extensionRegistry);
-                if (pagesBuilder_ == null) {
-                  ensurePagesIsMutable();
-                  pages_.add(m);
-                } else {
-                  pagesBuilder_.addMessage(m);
-                }
-                break;
-              } // case 42
-            case 50:
-              {
-                serviceRootUrl_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 50
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object summary_ = "";
     /**
      *
      *
@@ -1123,16 +994,9 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The summary.
      */
+    @java.lang.Override
     public java.lang.String getSummary() {
-      java.lang.Object ref = summary_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        summary_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getSummary();
     }
     /**
      *
@@ -1148,16 +1012,9 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for summary.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getSummaryBytes() {
-      java.lang.Object ref = summary_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        summary_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getSummaryBytes();
     }
     /**
      *
@@ -1175,12 +1032,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setSummary(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      summary_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setSummary(value);
       return this;
     }
     /**
@@ -1198,9 +1051,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearSummary() {
-      summary_ = getDefaultInstance().getSummary();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearSummary();
       return this;
     }
     /**
@@ -1219,29 +1071,11 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setSummaryBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      summary_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setSummaryBytes(value);
       return this;
     }
 
-    private java.util.List<com.google.api.Page> pages_ = java.util.Collections.emptyList();
-
-    private void ensurePagesIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
-        pages_ = new java.util.ArrayList<com.google.api.Page>(pages_);
-        bitField0_ |= 0x00000002;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.Page, com.google.api.Page.Builder, com.google.api.PageOrBuilder>
-        pagesBuilder_;
-
     /**
      *
      *
@@ -1251,12 +1085,9 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.Page pages = 5;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.api.Page> getPagesList() {
-      if (pagesBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(pages_);
-      } else {
-        return pagesBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getPagesList());
     }
     /**
      *
@@ -1267,12 +1098,9 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.Page pages = 5;</code>
      */
+    @java.lang.Override
     public int getPagesCount() {
-      if (pagesBuilder_ == null) {
-        return pages_.size();
-      } else {
-        return pagesBuilder_.getCount();
-      }
+      return instance.getPagesCount();
     }
     /**
      *
@@ -1283,12 +1111,10 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.Page pages = 5;</code>
      */
+
+    @java.lang.Override
     public com.google.api.Page getPages(int index) {
-      if (pagesBuilder_ == null) {
-        return pages_.get(index);
-      } else {
-        return pagesBuilder_.getMessage(index);
-      }
+      return instance.getPages(index);
     }
     /**
      *
@@ -1300,16 +1126,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.Page pages = 5;</code>
      */
     public Builder setPages(int index, com.google.api.Page value) {
-      if (pagesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensurePagesIsMutable();
-        pages_.set(index, value);
-        onChanged();
-      } else {
-        pagesBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setPages(index, value);
       return this;
     }
     /**
@@ -1322,13 +1140,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.Page pages = 5;</code>
      */
     public Builder setPages(int index, com.google.api.Page.Builder builderForValue) {
-      if (pagesBuilder_ == null) {
-        ensurePagesIsMutable();
-        pages_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        pagesBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setPages(index, builderForValue.build());
       return this;
     }
     /**
@@ -1341,16 +1154,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.Page pages = 5;</code>
      */
     public Builder addPages(com.google.api.Page value) {
-      if (pagesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensurePagesIsMutable();
-        pages_.add(value);
-        onChanged();
-      } else {
-        pagesBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addPages(value);
       return this;
     }
     /**
@@ -1363,16 +1168,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.Page pages = 5;</code>
      */
     public Builder addPages(int index, com.google.api.Page value) {
-      if (pagesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensurePagesIsMutable();
-        pages_.add(index, value);
-        onChanged();
-      } else {
-        pagesBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addPages(index, value);
       return this;
     }
     /**
@@ -1385,13 +1182,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.Page pages = 5;</code>
      */
     public Builder addPages(com.google.api.Page.Builder builderForValue) {
-      if (pagesBuilder_ == null) {
-        ensurePagesIsMutable();
-        pages_.add(builderForValue.build());
-        onChanged();
-      } else {
-        pagesBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addPages(builderForValue.build());
       return this;
     }
     /**
@@ -1404,13 +1196,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.Page pages = 5;</code>
      */
     public Builder addPages(int index, com.google.api.Page.Builder builderForValue) {
-      if (pagesBuilder_ == null) {
-        ensurePagesIsMutable();
-        pages_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        pagesBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addPages(index, builderForValue.build());
       return this;
     }
     /**
@@ -1423,13 +1210,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.Page pages = 5;</code>
      */
     public Builder addAllPages(java.lang.Iterable<? extends com.google.api.Page> values) {
-      if (pagesBuilder_ == null) {
-        ensurePagesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, pages_);
-        onChanged();
-      } else {
-        pagesBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllPages(values);
       return this;
     }
     /**
@@ -1442,13 +1224,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.Page pages = 5;</code>
      */
     public Builder clearPages() {
-      if (pagesBuilder_ == null) {
-        pages_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
-      } else {
-        pagesBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearPages();
       return this;
     }
     /**
@@ -1461,124 +1238,10 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.Page pages = 5;</code>
      */
     public Builder removePages(int index) {
-      if (pagesBuilder_ == null) {
-        ensurePagesIsMutable();
-        pages_.remove(index);
-        onChanged();
-      } else {
-        pagesBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removePages(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * The top level pages for the documentation set.
-     * </pre>
-     *
-     * <code>repeated .google.api.Page pages = 5;</code>
-     */
-    public com.google.api.Page.Builder getPagesBuilder(int index) {
-      return getPagesFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The top level pages for the documentation set.
-     * </pre>
-     *
-     * <code>repeated .google.api.Page pages = 5;</code>
-     */
-    public com.google.api.PageOrBuilder getPagesOrBuilder(int index) {
-      if (pagesBuilder_ == null) {
-        return pages_.get(index);
-      } else {
-        return pagesBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The top level pages for the documentation set.
-     * </pre>
-     *
-     * <code>repeated .google.api.Page pages = 5;</code>
-     */
-    public java.util.List<? extends com.google.api.PageOrBuilder> getPagesOrBuilderList() {
-      if (pagesBuilder_ != null) {
-        return pagesBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(pages_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The top level pages for the documentation set.
-     * </pre>
-     *
-     * <code>repeated .google.api.Page pages = 5;</code>
-     */
-    public com.google.api.Page.Builder addPagesBuilder() {
-      return getPagesFieldBuilder().addBuilder(com.google.api.Page.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The top level pages for the documentation set.
-     * </pre>
-     *
-     * <code>repeated .google.api.Page pages = 5;</code>
-     */
-    public com.google.api.Page.Builder addPagesBuilder(int index) {
-      return getPagesFieldBuilder().addBuilder(index, com.google.api.Page.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The top level pages for the documentation set.
-     * </pre>
-     *
-     * <code>repeated .google.api.Page pages = 5;</code>
-     */
-    public java.util.List<com.google.api.Page.Builder> getPagesBuilderList() {
-      return getPagesFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.Page, com.google.api.Page.Builder, com.google.api.PageOrBuilder>
-        getPagesFieldBuilder() {
-      if (pagesBuilder_ == null) {
-        pagesBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.api.Page, com.google.api.Page.Builder, com.google.api.PageOrBuilder>(
-                pages_, ((bitField0_ & 0x00000002) != 0), getParentForChildren(), isClean());
-        pages_ = null;
-      }
-      return pagesBuilder_;
-    }
-
-    private java.util.List<com.google.api.DocumentationRule> rules_ =
-        java.util.Collections.emptyList();
-
-    private void ensureRulesIsMutable() {
-      if (!((bitField0_ & 0x00000004) != 0)) {
-        rules_ = new java.util.ArrayList<com.google.api.DocumentationRule>(rules_);
-        bitField0_ |= 0x00000004;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.DocumentationRule,
-            com.google.api.DocumentationRule.Builder,
-            com.google.api.DocumentationRuleOrBuilder>
-        rulesBuilder_;
 
     /**
      *
@@ -1591,12 +1254,9 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.DocumentationRule rules = 3;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.api.DocumentationRule> getRulesList() {
-      if (rulesBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(rules_);
-      } else {
-        return rulesBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getRulesList());
     }
     /**
      *
@@ -1609,12 +1269,9 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.DocumentationRule rules = 3;</code>
      */
+    @java.lang.Override
     public int getRulesCount() {
-      if (rulesBuilder_ == null) {
-        return rules_.size();
-      } else {
-        return rulesBuilder_.getCount();
-      }
+      return instance.getRulesCount();
     }
     /**
      *
@@ -1627,12 +1284,10 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.DocumentationRule rules = 3;</code>
      */
+
+    @java.lang.Override
     public com.google.api.DocumentationRule getRules(int index) {
-      if (rulesBuilder_ == null) {
-        return rules_.get(index);
-      } else {
-        return rulesBuilder_.getMessage(index);
-      }
+      return instance.getRules(index);
     }
     /**
      *
@@ -1646,16 +1301,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.DocumentationRule rules = 3;</code>
      */
     public Builder setRules(int index, com.google.api.DocumentationRule value) {
-      if (rulesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureRulesIsMutable();
-        rules_.set(index, value);
-        onChanged();
-      } else {
-        rulesBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setRules(index, value);
       return this;
     }
     /**
@@ -1670,13 +1317,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.DocumentationRule rules = 3;</code>
      */
     public Builder setRules(int index, com.google.api.DocumentationRule.Builder builderForValue) {
-      if (rulesBuilder_ == null) {
-        ensureRulesIsMutable();
-        rules_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        rulesBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setRules(index, builderForValue.build());
       return this;
     }
     /**
@@ -1691,16 +1333,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.DocumentationRule rules = 3;</code>
      */
     public Builder addRules(com.google.api.DocumentationRule value) {
-      if (rulesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureRulesIsMutable();
-        rules_.add(value);
-        onChanged();
-      } else {
-        rulesBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addRules(value);
       return this;
     }
     /**
@@ -1715,16 +1349,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.DocumentationRule rules = 3;</code>
      */
     public Builder addRules(int index, com.google.api.DocumentationRule value) {
-      if (rulesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureRulesIsMutable();
-        rules_.add(index, value);
-        onChanged();
-      } else {
-        rulesBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addRules(index, value);
       return this;
     }
     /**
@@ -1739,13 +1365,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.DocumentationRule rules = 3;</code>
      */
     public Builder addRules(com.google.api.DocumentationRule.Builder builderForValue) {
-      if (rulesBuilder_ == null) {
-        ensureRulesIsMutable();
-        rules_.add(builderForValue.build());
-        onChanged();
-      } else {
-        rulesBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addRules(builderForValue.build());
       return this;
     }
     /**
@@ -1760,13 +1381,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.DocumentationRule rules = 3;</code>
      */
     public Builder addRules(int index, com.google.api.DocumentationRule.Builder builderForValue) {
-      if (rulesBuilder_ == null) {
-        ensureRulesIsMutable();
-        rules_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        rulesBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addRules(index, builderForValue.build());
       return this;
     }
     /**
@@ -1782,13 +1398,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addAllRules(
         java.lang.Iterable<? extends com.google.api.DocumentationRule> values) {
-      if (rulesBuilder_ == null) {
-        ensureRulesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, rules_);
-        onChanged();
-      } else {
-        rulesBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllRules(values);
       return this;
     }
     /**
@@ -1803,13 +1414,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.DocumentationRule rules = 3;</code>
      */
     public Builder clearRules() {
-      if (rulesBuilder_ == null) {
-        rules_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000004);
-        onChanged();
-      } else {
-        rulesBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearRules();
       return this;
     }
     /**
@@ -1824,129 +1430,11 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.DocumentationRule rules = 3;</code>
      */
     public Builder removeRules(int index) {
-      if (rulesBuilder_ == null) {
-        ensureRulesIsMutable();
-        rules_.remove(index);
-        onChanged();
-      } else {
-        rulesBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeRules(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * A list of documentation rules that apply to individual API elements.
-     *
-     * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
-     *
-     * <code>repeated .google.api.DocumentationRule rules = 3;</code>
-     */
-    public com.google.api.DocumentationRule.Builder getRulesBuilder(int index) {
-      return getRulesFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of documentation rules that apply to individual API elements.
-     *
-     * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
-     *
-     * <code>repeated .google.api.DocumentationRule rules = 3;</code>
-     */
-    public com.google.api.DocumentationRuleOrBuilder getRulesOrBuilder(int index) {
-      if (rulesBuilder_ == null) {
-        return rules_.get(index);
-      } else {
-        return rulesBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of documentation rules that apply to individual API elements.
-     *
-     * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
-     *
-     * <code>repeated .google.api.DocumentationRule rules = 3;</code>
-     */
-    public java.util.List<? extends com.google.api.DocumentationRuleOrBuilder>
-        getRulesOrBuilderList() {
-      if (rulesBuilder_ != null) {
-        return rulesBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(rules_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of documentation rules that apply to individual API elements.
-     *
-     * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
-     *
-     * <code>repeated .google.api.DocumentationRule rules = 3;</code>
-     */
-    public com.google.api.DocumentationRule.Builder addRulesBuilder() {
-      return getRulesFieldBuilder()
-          .addBuilder(com.google.api.DocumentationRule.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of documentation rules that apply to individual API elements.
-     *
-     * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
-     *
-     * <code>repeated .google.api.DocumentationRule rules = 3;</code>
-     */
-    public com.google.api.DocumentationRule.Builder addRulesBuilder(int index) {
-      return getRulesFieldBuilder()
-          .addBuilder(index, com.google.api.DocumentationRule.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of documentation rules that apply to individual API elements.
-     *
-     * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
-     *
-     * <code>repeated .google.api.DocumentationRule rules = 3;</code>
-     */
-    public java.util.List<com.google.api.DocumentationRule.Builder> getRulesBuilderList() {
-      return getRulesFieldBuilder().getBuilderList();
-    }
 
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.DocumentationRule,
-            com.google.api.DocumentationRule.Builder,
-            com.google.api.DocumentationRuleOrBuilder>
-        getRulesFieldBuilder() {
-      if (rulesBuilder_ == null) {
-        rulesBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.api.DocumentationRule,
-                com.google.api.DocumentationRule.Builder,
-                com.google.api.DocumentationRuleOrBuilder>(
-                rules_, ((bitField0_ & 0x00000004) != 0), getParentForChildren(), isClean());
-        rules_ = null;
-      }
-      return rulesBuilder_;
-    }
-
-    private java.lang.Object documentationRootUrl_ = "";
     /**
      *
      *
@@ -1958,16 +1446,9 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The documentationRootUrl.
      */
+    @java.lang.Override
     public java.lang.String getDocumentationRootUrl() {
-      java.lang.Object ref = documentationRootUrl_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        documentationRootUrl_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getDocumentationRootUrl();
     }
     /**
      *
@@ -1980,16 +1461,9 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for documentationRootUrl.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getDocumentationRootUrlBytes() {
-      java.lang.Object ref = documentationRootUrl_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        documentationRootUrl_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getDocumentationRootUrlBytes();
     }
     /**
      *
@@ -2004,12 +1478,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDocumentationRootUrl(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      documentationRootUrl_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setDocumentationRootUrl(value);
       return this;
     }
     /**
@@ -2024,9 +1494,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDocumentationRootUrl() {
-      documentationRootUrl_ = getDefaultInstance().getDocumentationRootUrl();
-      bitField0_ = (bitField0_ & ~0x00000008);
-      onChanged();
+      copyOnWrite();
+      instance.clearDocumentationRootUrl();
       return this;
     }
     /**
@@ -2042,17 +1511,11 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDocumentationRootUrlBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      documentationRootUrl_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setDocumentationRootUrlBytes(value);
       return this;
     }
 
-    private java.lang.Object serviceRootUrl_ = "";
     /**
      *
      *
@@ -2067,16 +1530,9 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The serviceRootUrl.
      */
+    @java.lang.Override
     public java.lang.String getServiceRootUrl() {
-      java.lang.Object ref = serviceRootUrl_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        serviceRootUrl_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getServiceRootUrl();
     }
     /**
      *
@@ -2092,16 +1548,9 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for serviceRootUrl.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getServiceRootUrlBytes() {
-      java.lang.Object ref = serviceRootUrl_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        serviceRootUrl_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getServiceRootUrlBytes();
     }
     /**
      *
@@ -2119,12 +1568,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setServiceRootUrl(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      serviceRootUrl_ = value;
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setServiceRootUrl(value);
       return this;
     }
     /**
@@ -2142,9 +1587,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearServiceRootUrl() {
-      serviceRootUrl_ = getDefaultInstance().getServiceRootUrl();
-      bitField0_ = (bitField0_ & ~0x00000010);
-      onChanged();
+      copyOnWrite();
+      instance.clearServiceRootUrl();
       return this;
     }
     /**
@@ -2163,17 +1607,11 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setServiceRootUrlBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      serviceRootUrl_ = value;
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setServiceRootUrlBytes(value);
       return this;
     }
 
-    private java.lang.Object overview_ = "";
     /**
      *
      *
@@ -2197,16 +1635,9 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The overview.
      */
+    @java.lang.Override
     public java.lang.String getOverview() {
-      java.lang.Object ref = overview_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        overview_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getOverview();
     }
     /**
      *
@@ -2231,16 +1662,9 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for overview.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getOverviewBytes() {
-      java.lang.Object ref = overview_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        overview_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getOverviewBytes();
     }
     /**
      *
@@ -2267,12 +1691,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setOverview(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      overview_ = value;
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setOverview(value);
       return this;
     }
     /**
@@ -2299,9 +1719,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearOverview() {
-      overview_ = getDefaultInstance().getOverview();
-      bitField0_ = (bitField0_ & ~0x00000020);
-      onChanged();
+      copyOnWrite();
+      instance.clearOverview();
       return this;
     }
     /**
@@ -2329,74 +1748,98 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setOverviewBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      overview_ = value;
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setOverviewBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.api.Documentation)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.Documentation();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "summary_",
+                "overview_",
+                "rules_",
+                com.google.api.DocumentationRule.class,
+                "documentationRootUrl_",
+                "pages_",
+                com.google.api.Page.class,
+                "serviceRootUrl_",
+              };
+          java.lang.String info =
+              "\u0000\u0006\u0000\u0000\u0001\u0006\u0006\u0000\u0002\u0000\u0001\u0208\u0002\u0208"
+                  + "\u0003\u001b\u0004\u0208\u0005\u001b\u0006\u0208";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.Documentation> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.Documentation.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.api.Documentation>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.Documentation)
   private static final com.google.api.Documentation DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.Documentation();
+    Documentation defaultInstance = new Documentation();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        Documentation.class, defaultInstance);
   }
 
   public static com.google.api.Documentation getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Documentation> PARSER =
-      new com.google.protobuf.AbstractParser<Documentation>() {
-        @java.lang.Override
-        public Documentation parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<Documentation> PARSER;
 
   public static com.google.protobuf.Parser<Documentation> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<Documentation> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.Documentation getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

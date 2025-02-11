@@ -22,4 +22,4 @@ package com.google.apps.card.v1;
 public interface DividerOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.apps.card.v1.Divider)
-    com.google.protobuf.MessageOrBuilder {}
+    com.google.protobuf.MessageLiteOrBuilder {}

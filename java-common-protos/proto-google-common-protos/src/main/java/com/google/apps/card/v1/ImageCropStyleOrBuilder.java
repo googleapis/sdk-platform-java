@@ -22,7 +22,7 @@ package com.google.apps.card.v1;
 public interface ImageCropStyleOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.apps.card.v1.ImageCropStyle)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

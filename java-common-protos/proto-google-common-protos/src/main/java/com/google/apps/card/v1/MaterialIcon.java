@@ -44,45 +44,17 @@ package com.google.apps.card.v1;
  *
  * Protobuf type {@code google.apps.card.v1.MaterialIcon}
  */
-public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
+public final class MaterialIcon
+    extends com.google.protobuf.GeneratedMessageLite<MaterialIcon, MaterialIcon.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.MaterialIcon)
     MaterialIconOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use MaterialIcon.newBuilder() to construct.
-  private MaterialIcon(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private MaterialIcon() {
     name_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new MaterialIcon();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_MaterialIcon_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_MaterialIcon_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.apps.card.v1.MaterialIcon.class,
-            com.google.apps.card.v1.MaterialIcon.Builder.class);
-  }
-
   public static final int NAME_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object name_ = "";
+  private java.lang.String name_;
   /**
    *
    *
@@ -99,15 +71,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getName() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      name_ = s;
-      return s;
-    }
+    return name_;
   }
   /**
    *
@@ -125,19 +89,64 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      name_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(name_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The icon name defined in the [Google Material
+   * Icon](https://fonts.google.com/icons), for example, `check_box`. Any
+   * invalid names are abandoned and replaced with empty string and
+   * results in the icon failing to render.
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The name to set.
+   */
+  private void setName(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    name_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The icon name defined in the [Google Material
+   * Icon](https://fonts.google.com/icons), for example, `check_box`. Any
+   * invalid names are abandoned and replaced with empty string and
+   * results in the icon failing to render.
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   */
+  private void clearName() {
+
+    name_ = getDefaultInstance().getName();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The icon name defined in the [Google Material
+   * Icon](https://fonts.google.com/icons), for example, `check_box`. Any
+   * invalid names are abandoned and replaced with empty string and
+   * results in the icon failing to render.
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The bytes for name to set.
+   */
+  private void setNameBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    name_ = value.toStringUtf8();
   }
 
   public static final int FILL_FIELD_NUMBER = 2;
-  private boolean fill_ = false;
+  private boolean fill_;
   /**
    *
    *
@@ -157,9 +166,45 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
   public boolean getFill() {
     return fill_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Whether the icon renders as filled. Default value is false.
+   *
+   * To preview different icon settings, go to
+   * [Google Font Icons](https://fonts.google.com/icons) and adjust the
+   * settings under **Customize**.
+   * </pre>
+   *
+   * <code>bool fill = 2;</code>
+   *
+   * @param value The fill to set.
+   */
+  private void setFill(boolean value) {
+
+    fill_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Whether the icon renders as filled. Default value is false.
+   *
+   * To preview different icon settings, go to
+   * [Google Font Icons](https://fonts.google.com/icons) and adjust the
+   * settings under **Customize**.
+   * </pre>
+   *
+   * <code>bool fill = 2;</code>
+   */
+  private void clearFill() {
+
+    fill_ = false;
+  }
 
   public static final int WEIGHT_FIELD_NUMBER = 3;
-  private int weight_ = 0;
+  private int weight_;
   /**
    *
    *
@@ -181,9 +226,49 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
   public int getWeight() {
     return weight_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The stroke weight of the icon. Choose from {100, 200, 300, 400,
+   * 500, 600, 700}. If absent, default value is 400. If any other value is
+   * specified, the default value is used.
+   *
+   * To preview different icon settings, go to
+   * [Google Font Icons](https://fonts.google.com/icons) and adjust the
+   * settings under **Customize**.
+   * </pre>
+   *
+   * <code>int32 weight = 3;</code>
+   *
+   * @param value The weight to set.
+   */
+  private void setWeight(int value) {
+
+    weight_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The stroke weight of the icon. Choose from {100, 200, 300, 400,
+   * 500, 600, 700}. If absent, default value is 400. If any other value is
+   * specified, the default value is used.
+   *
+   * To preview different icon settings, go to
+   * [Google Font Icons](https://fonts.google.com/icons) and adjust the
+   * settings under **Customize**.
+   * </pre>
+   *
+   * <code>int32 weight = 3;</code>
+   */
+  private void clearWeight() {
+
+    weight_ = 0;
+  }
 
   public static final int GRADE_FIELD_NUMBER = 4;
-  private int grade_ = 0;
+  private int grade_;
   /**
    *
    *
@@ -206,191 +291,130 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
   public int getGrade() {
     return grade_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Weight and grade affect a symbol’s thickness. Adjustments to grade are more
+   * granular than adjustments to weight and have a small impact on the size of
+   * the symbol. Choose from {-25, 0, 200}. If absent, default value is 0. If
+   * any other value is specified, the default value is used.
+   *
+   * To preview different icon settings, go to
+   * [Google Font Icons](https://fonts.google.com/icons) and adjust the
+   * settings under **Customize**.
+   * </pre>
+   *
+   * <code>int32 grade = 4;</code>
+   *
+   * @param value The grade to set.
+   */
+  private void setGrade(int value) {
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    grade_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Weight and grade affect a symbol’s thickness. Adjustments to grade are more
+   * granular than adjustments to weight and have a small impact on the size of
+   * the symbol. Choose from {-25, 0, 200}. If absent, default value is 0. If
+   * any other value is specified, the default value is used.
+   *
+   * To preview different icon settings, go to
+   * [Google Font Icons](https://fonts.google.com/icons) and adjust the
+   * settings under **Customize**.
+   * </pre>
+   *
+   * <code>int32 grade = 4;</code>
+   */
+  private void clearGrade() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
-    }
-    if (fill_ != false) {
-      output.writeBool(2, fill_);
-    }
-    if (weight_ != 0) {
-      output.writeInt32(3, weight_);
-    }
-    if (grade_ != 0) {
-      output.writeInt32(4, grade_);
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
-    }
-    if (fill_ != false) {
-      size += com.google.protobuf.CodedOutputStream.computeBoolSize(2, fill_);
-    }
-    if (weight_ != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeInt32Size(3, weight_);
-    }
-    if (grade_ != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeInt32Size(4, grade_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.apps.card.v1.MaterialIcon)) {
-      return super.equals(obj);
-    }
-    com.google.apps.card.v1.MaterialIcon other = (com.google.apps.card.v1.MaterialIcon) obj;
-
-    if (!getName().equals(other.getName())) return false;
-    if (getFill() != other.getFill()) return false;
-    if (getWeight() != other.getWeight()) return false;
-    if (getGrade() != other.getGrade()) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getName().hashCode();
-    hash = (37 * hash) + FILL_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getFill());
-    hash = (37 * hash) + WEIGHT_FIELD_NUMBER;
-    hash = (53 * hash) + getWeight();
-    hash = (37 * hash) + GRADE_FIELD_NUMBER;
-    hash = (53 * hash) + getGrade();
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+    grade_ = 0;
   }
 
   public static com.google.apps.card.v1.MaterialIcon parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.MaterialIcon parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.MaterialIcon parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.MaterialIcon parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.MaterialIcon parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.MaterialIcon parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.MaterialIcon parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.MaterialIcon parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.MaterialIcon parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.MaterialIcon parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.MaterialIcon parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.MaterialIcon parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.apps.card.v1.MaterialIcon prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -416,218 +440,17 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.apps.card.v1.MaterialIcon}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.apps.card.v1.MaterialIcon, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.apps.card.v1.MaterialIcon)
       com.google.apps.card.v1.MaterialIconOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_MaterialIcon_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_MaterialIcon_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.apps.card.v1.MaterialIcon.class,
-              com.google.apps.card.v1.MaterialIcon.Builder.class);
-    }
-
     // Construct using com.google.apps.card.v1.MaterialIcon.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      name_ = "";
-      fill_ = false;
-      weight_ = 0;
-      grade_ = 0;
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_MaterialIcon_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.MaterialIcon getDefaultInstanceForType() {
-      return com.google.apps.card.v1.MaterialIcon.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.MaterialIcon build() {
-      com.google.apps.card.v1.MaterialIcon result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.MaterialIcon buildPartial() {
-      com.google.apps.card.v1.MaterialIcon result = new com.google.apps.card.v1.MaterialIcon(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.apps.card.v1.MaterialIcon result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.name_ = name_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.fill_ = fill_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.weight_ = weight_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.grade_ = grade_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.apps.card.v1.MaterialIcon) {
-        return mergeFrom((com.google.apps.card.v1.MaterialIcon) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.apps.card.v1.MaterialIcon other) {
-      if (other == com.google.apps.card.v1.MaterialIcon.getDefaultInstance()) return this;
-      if (!other.getName().isEmpty()) {
-        name_ = other.name_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (other.getFill() != false) {
-        setFill(other.getFill());
-      }
-      if (other.getWeight() != 0) {
-        setWeight(other.getWeight());
-      }
-      if (other.getGrade() != 0) {
-        setGrade(other.getGrade());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                name_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 16:
-              {
-                fill_ = input.readBool();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 16
-            case 24:
-              {
-                weight_ = input.readInt32();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 24
-            case 32:
-              {
-                grade_ = input.readInt32();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 32
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object name_ = "";
     /**
      *
      *
@@ -642,16 +465,9 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        name_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getName();
     }
     /**
      *
@@ -667,16 +483,9 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getNameBytes() {
-      java.lang.Object ref = name_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        name_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getNameBytes();
     }
     /**
      *
@@ -694,12 +503,8 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setName(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setName(value);
       return this;
     }
     /**
@@ -717,9 +522,8 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearName() {
-      name_ = getDefaultInstance().getName();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearName();
       return this;
     }
     /**
@@ -738,17 +542,11 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setNameBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setNameBytes(value);
       return this;
     }
 
-    private boolean fill_;
     /**
      *
      *
@@ -766,7 +564,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean getFill() {
-      return fill_;
+      return instance.getFill();
     }
     /**
      *
@@ -785,10 +583,8 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setFill(boolean value) {
-
-      fill_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setFill(value);
       return this;
     }
     /**
@@ -807,13 +603,11 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearFill() {
-      bitField0_ = (bitField0_ & ~0x00000002);
-      fill_ = false;
-      onChanged();
+      copyOnWrite();
+      instance.clearFill();
       return this;
     }
 
-    private int weight_;
     /**
      *
      *
@@ -833,7 +627,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getWeight() {
-      return weight_;
+      return instance.getWeight();
     }
     /**
      *
@@ -854,10 +648,8 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setWeight(int value) {
-
-      weight_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setWeight(value);
       return this;
     }
     /**
@@ -878,13 +670,11 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearWeight() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      weight_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearWeight();
       return this;
     }
 
-    private int grade_;
     /**
      *
      *
@@ -905,7 +695,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getGrade() {
-      return grade_;
+      return instance.getGrade();
     }
     /**
      *
@@ -927,10 +717,8 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setGrade(int value) {
-
-      grade_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setGrade(value);
       return this;
     }
     /**
@@ -952,70 +740,92 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearGrade() {
-      bitField0_ = (bitField0_ & ~0x00000008);
-      grade_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearGrade();
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.apps.card.v1.MaterialIcon)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.apps.card.v1.MaterialIcon();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "name_", "fill_", "weight_", "grade_",
+              };
+          java.lang.String info =
+              "\u0000\u0004\u0000\u0000\u0001\u0004\u0004\u0000\u0000\u0000\u0001\u0208\u0002\u0007"
+                  + "\u0003\u0004\u0004\u0004";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.apps.card.v1.MaterialIcon> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.apps.card.v1.MaterialIcon.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.apps.card.v1.MaterialIcon>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.apps.card.v1.MaterialIcon)
   private static final com.google.apps.card.v1.MaterialIcon DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.apps.card.v1.MaterialIcon();
+    MaterialIcon defaultInstance = new MaterialIcon();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        MaterialIcon.class, defaultInstance);
   }
 
   public static com.google.apps.card.v1.MaterialIcon getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<MaterialIcon> PARSER =
-      new com.google.protobuf.AbstractParser<MaterialIcon>() {
-        @java.lang.Override
-        public MaterialIcon parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<MaterialIcon> PARSER;
 
   public static com.google.protobuf.Parser<MaterialIcon> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<MaterialIcon> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.apps.card.v1.MaterialIcon getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

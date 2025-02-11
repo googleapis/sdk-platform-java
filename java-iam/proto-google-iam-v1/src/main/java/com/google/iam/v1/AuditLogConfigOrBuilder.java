@@ -22,7 +22,7 @@ package com.google.iam.v1;
 public interface AuditLogConfigOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.iam.v1.AuditLogConfig)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -107,8 +107,8 @@ public interface AuditLogConfigOrBuilder
    *
    * <code>repeated string exempted_members = 2;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the exemptedMembers at the given index.
+   * @param index The index of the element to return.
+   * @return The exemptedMembers at the given index.
    */
   com.google.protobuf.ByteString getExemptedMembersBytes(int index);
 }

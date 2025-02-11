@@ -22,7 +22,7 @@ package com.google.longrunning;
 public interface DeleteOperationRequestOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.longrunning.DeleteOperationRequest)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

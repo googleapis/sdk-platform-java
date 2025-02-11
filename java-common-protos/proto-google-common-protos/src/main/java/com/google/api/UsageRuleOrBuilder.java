@@ -22,7 +22,7 @@ package com.google.api;
 public interface UsageRuleOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.UsageRule)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

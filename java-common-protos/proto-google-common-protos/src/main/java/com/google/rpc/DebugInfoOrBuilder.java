@@ -22,7 +22,7 @@ package com.google.rpc;
 public interface DebugInfoOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.rpc.DebugInfo)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -70,8 +70,8 @@ public interface DebugInfoOrBuilder
    *
    * <code>repeated string stack_entries = 1;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the stackEntries at the given index.
+   * @param index The index of the element to return.
+   * @return The stackEntries at the given index.
    */
   com.google.protobuf.ByteString getStackEntriesBytes(int index);
 

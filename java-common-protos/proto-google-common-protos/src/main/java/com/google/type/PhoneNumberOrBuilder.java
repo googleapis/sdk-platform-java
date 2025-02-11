@@ -22,7 +22,7 @@ package com.google.type;
 public interface PhoneNumberOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.type.PhoneNumber)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -133,19 +133,6 @@ public interface PhoneNumberOrBuilder
    * @return The shortCode.
    */
   com.google.type.PhoneNumber.ShortCode getShortCode();
-  /**
-   *
-   *
-   * <pre>
-   * A short code.
-   *
-   * Reference(s):
-   *  - https://en.wikipedia.org/wiki/Short_code
-   * </pre>
-   *
-   * <code>.google.type.PhoneNumber.ShortCode short_code = 2;</code>
-   */
-  com.google.type.PhoneNumber.ShortCodeOrBuilder getShortCodeOrBuilder();
 
   /**
    *
@@ -188,5 +175,5 @@ public interface PhoneNumberOrBuilder
    */
   com.google.protobuf.ByteString getExtensionBytes();
 
-  com.google.type.PhoneNumber.KindCase getKindCase();
+  public com.google.type.PhoneNumber.KindCase getKindCase();
 }

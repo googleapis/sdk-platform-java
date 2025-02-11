@@ -22,7 +22,7 @@ package com.google.rpc;
 public interface StatusOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.rpc.Status)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -102,26 +102,4 @@ public interface StatusOrBuilder
    * <code>repeated .google.protobuf.Any details = 3;</code>
    */
   int getDetailsCount();
-  /**
-   *
-   *
-   * <pre>
-   * A list of messages that carry the error details.  There is a common set of
-   * message types for APIs to use.
-   * </pre>
-   *
-   * <code>repeated .google.protobuf.Any details = 3;</code>
-   */
-  java.util.List<? extends com.google.protobuf.AnyOrBuilder> getDetailsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * A list of messages that carry the error details.  There is a common set of
-   * message types for APIs to use.
-   * </pre>
-   *
-   * <code>repeated .google.protobuf.Any details = 3;</code>
-   */
-  com.google.protobuf.AnyOrBuilder getDetailsOrBuilder(int index);
 }

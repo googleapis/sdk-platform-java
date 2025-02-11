@@ -386,42 +386,18 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.RoutingRule}
  */
-public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
+public final class RoutingRule
+    extends com.google.protobuf.GeneratedMessageLite<RoutingRule, RoutingRule.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.RoutingRule)
     RoutingRuleOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use RoutingRule.newBuilder() to construct.
-  private RoutingRule(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private RoutingRule() {
-    routingParameters_ = java.util.Collections.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new RoutingRule();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.RoutingProto.internal_static_google_api_RoutingRule_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.RoutingProto.internal_static_google_api_RoutingRule_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.RoutingRule.class, com.google.api.RoutingRule.Builder.class);
+    routingParameters_ = emptyProtobufList();
   }
 
   public static final int ROUTING_PARAMETERS_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.api.RoutingParameter> routingParameters_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.api.RoutingParameter>
+      routingParameters_;
   /**
    *
    *
@@ -454,7 +430,6 @@ public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.api.RoutingParameterOrBuilder>
       getRoutingParametersOrBuilderList() {
     return routingParameters_;
@@ -509,171 +484,211 @@ public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
    */
-  @java.lang.Override
   public com.google.api.RoutingParameterOrBuilder getRoutingParametersOrBuilder(int index) {
     return routingParameters_.get(index);
   }
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  private void ensureRoutingParametersIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.api.RoutingParameter> tmp =
+        routingParameters_;
+    if (!tmp.isModifiable()) {
+      routingParameters_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
   }
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    for (int i = 0; i < routingParameters_.size(); i++) {
-      output.writeMessage(2, routingParameters_.get(i));
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * A collection of Routing Parameter specifications.
+   * **NOTE:** If multiple Routing Parameters describe the same key
+   * (via the `path_template` field or via the `field` field when
+   * `path_template` is not provided), "last one wins" rule
+   * determines which Parameter gets used.
+   * See the examples for more details.
+   * </pre>
+   *
+   * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
+   */
+  private void setRoutingParameters(int index, com.google.api.RoutingParameter value) {
+    value.getClass();
+    ensureRoutingParametersIsMutable();
+    routingParameters_.set(index, value);
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    for (int i = 0; i < routingParameters_.size(); i++) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(2, routingParameters_.get(i));
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
+  /**
+   *
+   *
+   * <pre>
+   * A collection of Routing Parameter specifications.
+   * **NOTE:** If multiple Routing Parameters describe the same key
+   * (via the `path_template` field or via the `field` field when
+   * `path_template` is not provided), "last one wins" rule
+   * determines which Parameter gets used.
+   * See the examples for more details.
+   * </pre>
+   *
+   * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
+   */
+  private void addRoutingParameters(com.google.api.RoutingParameter value) {
+    value.getClass();
+    ensureRoutingParametersIsMutable();
+    routingParameters_.add(value);
   }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.RoutingRule)) {
-      return super.equals(obj);
-    }
-    com.google.api.RoutingRule other = (com.google.api.RoutingRule) obj;
-
-    if (!getRoutingParametersList().equals(other.getRoutingParametersList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * A collection of Routing Parameter specifications.
+   * **NOTE:** If multiple Routing Parameters describe the same key
+   * (via the `path_template` field or via the `field` field when
+   * `path_template` is not provided), "last one wins" rule
+   * determines which Parameter gets used.
+   * See the examples for more details.
+   * </pre>
+   *
+   * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
+   */
+  private void addRoutingParameters(int index, com.google.api.RoutingParameter value) {
+    value.getClass();
+    ensureRoutingParametersIsMutable();
+    routingParameters_.add(index, value);
   }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (getRoutingParametersCount() > 0) {
-      hash = (37 * hash) + ROUTING_PARAMETERS_FIELD_NUMBER;
-      hash = (53 * hash) + getRoutingParametersList().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * A collection of Routing Parameter specifications.
+   * **NOTE:** If multiple Routing Parameters describe the same key
+   * (via the `path_template` field or via the `field` field when
+   * `path_template` is not provided), "last one wins" rule
+   * determines which Parameter gets used.
+   * See the examples for more details.
+   * </pre>
+   *
+   * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
+   */
+  private void addAllRoutingParameters(
+      java.lang.Iterable<? extends com.google.api.RoutingParameter> values) {
+    ensureRoutingParametersIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, routingParameters_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A collection of Routing Parameter specifications.
+   * **NOTE:** If multiple Routing Parameters describe the same key
+   * (via the `path_template` field or via the `field` field when
+   * `path_template` is not provided), "last one wins" rule
+   * determines which Parameter gets used.
+   * See the examples for more details.
+   * </pre>
+   *
+   * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
+   */
+  private void clearRoutingParameters() {
+    routingParameters_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A collection of Routing Parameter specifications.
+   * **NOTE:** If multiple Routing Parameters describe the same key
+   * (via the `path_template` field or via the `field` field when
+   * `path_template` is not provided), "last one wins" rule
+   * determines which Parameter gets used.
+   * See the examples for more details.
+   * </pre>
+   *
+   * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
+   */
+  private void removeRoutingParameters(int index) {
+    ensureRoutingParametersIsMutable();
+    routingParameters_.remove(index);
   }
 
   public static com.google.api.RoutingRule parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.RoutingRule parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.RoutingRule parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.RoutingRule parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.RoutingRule parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.RoutingRule parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.RoutingRule parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.RoutingRule parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.RoutingRule parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.RoutingRule parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.RoutingRule parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.RoutingRule parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.RoutingRule prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -1041,234 +1056,15 @@ public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.api.RoutingRule}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<com.google.api.RoutingRule, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.RoutingRule)
       com.google.api.RoutingRuleOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.RoutingProto.internal_static_google_api_RoutingRule_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.RoutingProto.internal_static_google_api_RoutingRule_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.RoutingRule.class, com.google.api.RoutingRule.Builder.class);
-    }
-
     // Construct using com.google.api.RoutingRule.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      if (routingParametersBuilder_ == null) {
-        routingParameters_ = java.util.Collections.emptyList();
-      } else {
-        routingParameters_ = null;
-        routingParametersBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000001);
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.RoutingProto.internal_static_google_api_RoutingRule_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.RoutingRule getDefaultInstanceForType() {
-      return com.google.api.RoutingRule.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.RoutingRule build() {
-      com.google.api.RoutingRule result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.RoutingRule buildPartial() {
-      com.google.api.RoutingRule result = new com.google.api.RoutingRule(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.api.RoutingRule result) {
-      if (routingParametersBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
-          routingParameters_ = java.util.Collections.unmodifiableList(routingParameters_);
-          bitField0_ = (bitField0_ & ~0x00000001);
-        }
-        result.routingParameters_ = routingParameters_;
-      } else {
-        result.routingParameters_ = routingParametersBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.api.RoutingRule result) {
-      int from_bitField0_ = bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.RoutingRule) {
-        return mergeFrom((com.google.api.RoutingRule) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.RoutingRule other) {
-      if (other == com.google.api.RoutingRule.getDefaultInstance()) return this;
-      if (routingParametersBuilder_ == null) {
-        if (!other.routingParameters_.isEmpty()) {
-          if (routingParameters_.isEmpty()) {
-            routingParameters_ = other.routingParameters_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensureRoutingParametersIsMutable();
-            routingParameters_.addAll(other.routingParameters_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.routingParameters_.isEmpty()) {
-          if (routingParametersBuilder_.isEmpty()) {
-            routingParametersBuilder_.dispose();
-            routingParametersBuilder_ = null;
-            routingParameters_ = other.routingParameters_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-            routingParametersBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getRoutingParametersFieldBuilder()
-                    : null;
-          } else {
-            routingParametersBuilder_.addAllMessages(other.routingParameters_);
-          }
-        }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 18:
-              {
-                com.google.api.RoutingParameter m =
-                    input.readMessage(com.google.api.RoutingParameter.parser(), extensionRegistry);
-                if (routingParametersBuilder_ == null) {
-                  ensureRoutingParametersIsMutable();
-                  routingParameters_.add(m);
-                } else {
-                  routingParametersBuilder_.addMessage(m);
-                }
-                break;
-              } // case 18
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.util.List<com.google.api.RoutingParameter> routingParameters_ =
-        java.util.Collections.emptyList();
-
-    private void ensureRoutingParametersIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
-        routingParameters_ =
-            new java.util.ArrayList<com.google.api.RoutingParameter>(routingParameters_);
-        bitField0_ |= 0x00000001;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.RoutingParameter,
-            com.google.api.RoutingParameter.Builder,
-            com.google.api.RoutingParameterOrBuilder>
-        routingParametersBuilder_;
 
     /**
      *
@@ -1284,12 +1080,9 @@ public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.api.RoutingParameter> getRoutingParametersList() {
-      if (routingParametersBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(routingParameters_);
-      } else {
-        return routingParametersBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getRoutingParametersList());
     }
     /**
      *
@@ -1305,12 +1098,9 @@ public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
      */
+    @java.lang.Override
     public int getRoutingParametersCount() {
-      if (routingParametersBuilder_ == null) {
-        return routingParameters_.size();
-      } else {
-        return routingParametersBuilder_.getCount();
-      }
+      return instance.getRoutingParametersCount();
     }
     /**
      *
@@ -1326,12 +1116,10 @@ public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
      */
+
+    @java.lang.Override
     public com.google.api.RoutingParameter getRoutingParameters(int index) {
-      if (routingParametersBuilder_ == null) {
-        return routingParameters_.get(index);
-      } else {
-        return routingParametersBuilder_.getMessage(index);
-      }
+      return instance.getRoutingParameters(index);
     }
     /**
      *
@@ -1348,16 +1136,8 @@ public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
      */
     public Builder setRoutingParameters(int index, com.google.api.RoutingParameter value) {
-      if (routingParametersBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureRoutingParametersIsMutable();
-        routingParameters_.set(index, value);
-        onChanged();
-      } else {
-        routingParametersBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setRoutingParameters(index, value);
       return this;
     }
     /**
@@ -1376,13 +1156,8 @@ public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder setRoutingParameters(
         int index, com.google.api.RoutingParameter.Builder builderForValue) {
-      if (routingParametersBuilder_ == null) {
-        ensureRoutingParametersIsMutable();
-        routingParameters_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        routingParametersBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setRoutingParameters(index, builderForValue.build());
       return this;
     }
     /**
@@ -1400,16 +1175,8 @@ public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
      */
     public Builder addRoutingParameters(com.google.api.RoutingParameter value) {
-      if (routingParametersBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureRoutingParametersIsMutable();
-        routingParameters_.add(value);
-        onChanged();
-      } else {
-        routingParametersBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addRoutingParameters(value);
       return this;
     }
     /**
@@ -1427,16 +1194,8 @@ public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
      */
     public Builder addRoutingParameters(int index, com.google.api.RoutingParameter value) {
-      if (routingParametersBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureRoutingParametersIsMutable();
-        routingParameters_.add(index, value);
-        onChanged();
-      } else {
-        routingParametersBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addRoutingParameters(index, value);
       return this;
     }
     /**
@@ -1454,13 +1213,8 @@ public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
      */
     public Builder addRoutingParameters(com.google.api.RoutingParameter.Builder builderForValue) {
-      if (routingParametersBuilder_ == null) {
-        ensureRoutingParametersIsMutable();
-        routingParameters_.add(builderForValue.build());
-        onChanged();
-      } else {
-        routingParametersBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addRoutingParameters(builderForValue.build());
       return this;
     }
     /**
@@ -1479,13 +1233,8 @@ public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addRoutingParameters(
         int index, com.google.api.RoutingParameter.Builder builderForValue) {
-      if (routingParametersBuilder_ == null) {
-        ensureRoutingParametersIsMutable();
-        routingParameters_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        routingParametersBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addRoutingParameters(index, builderForValue.build());
       return this;
     }
     /**
@@ -1504,13 +1253,8 @@ public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addAllRoutingParameters(
         java.lang.Iterable<? extends com.google.api.RoutingParameter> values) {
-      if (routingParametersBuilder_ == null) {
-        ensureRoutingParametersIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, routingParameters_);
-        onChanged();
-      } else {
-        routingParametersBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllRoutingParameters(values);
       return this;
     }
     /**
@@ -1528,13 +1272,8 @@ public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
      */
     public Builder clearRoutingParameters() {
-      if (routingParametersBuilder_ == null) {
-        routingParameters_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-      } else {
-        routingParametersBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearRoutingParameters();
       return this;
     }
     /**
@@ -1552,208 +1291,90 @@ public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
      */
     public Builder removeRoutingParameters(int index) {
-      if (routingParametersBuilder_ == null) {
-        ensureRoutingParametersIsMutable();
-        routingParameters_.remove(index);
-        onChanged();
-      } else {
-        routingParametersBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeRoutingParameters(index);
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A collection of Routing Parameter specifications.
-     * **NOTE:** If multiple Routing Parameters describe the same key
-     * (via the `path_template` field or via the `field` field when
-     * `path_template` is not provided), "last one wins" rule
-     * determines which Parameter gets used.
-     * See the examples for more details.
-     * </pre>
-     *
-     * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
-     */
-    public com.google.api.RoutingParameter.Builder getRoutingParametersBuilder(int index) {
-      return getRoutingParametersFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A collection of Routing Parameter specifications.
-     * **NOTE:** If multiple Routing Parameters describe the same key
-     * (via the `path_template` field or via the `field` field when
-     * `path_template` is not provided), "last one wins" rule
-     * determines which Parameter gets used.
-     * See the examples for more details.
-     * </pre>
-     *
-     * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
-     */
-    public com.google.api.RoutingParameterOrBuilder getRoutingParametersOrBuilder(int index) {
-      if (routingParametersBuilder_ == null) {
-        return routingParameters_.get(index);
-      } else {
-        return routingParametersBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A collection of Routing Parameter specifications.
-     * **NOTE:** If multiple Routing Parameters describe the same key
-     * (via the `path_template` field or via the `field` field when
-     * `path_template` is not provided), "last one wins" rule
-     * determines which Parameter gets used.
-     * See the examples for more details.
-     * </pre>
-     *
-     * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
-     */
-    public java.util.List<? extends com.google.api.RoutingParameterOrBuilder>
-        getRoutingParametersOrBuilderList() {
-      if (routingParametersBuilder_ != null) {
-        return routingParametersBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(routingParameters_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A collection of Routing Parameter specifications.
-     * **NOTE:** If multiple Routing Parameters describe the same key
-     * (via the `path_template` field or via the `field` field when
-     * `path_template` is not provided), "last one wins" rule
-     * determines which Parameter gets used.
-     * See the examples for more details.
-     * </pre>
-     *
-     * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
-     */
-    public com.google.api.RoutingParameter.Builder addRoutingParametersBuilder() {
-      return getRoutingParametersFieldBuilder()
-          .addBuilder(com.google.api.RoutingParameter.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A collection of Routing Parameter specifications.
-     * **NOTE:** If multiple Routing Parameters describe the same key
-     * (via the `path_template` field or via the `field` field when
-     * `path_template` is not provided), "last one wins" rule
-     * determines which Parameter gets used.
-     * See the examples for more details.
-     * </pre>
-     *
-     * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
-     */
-    public com.google.api.RoutingParameter.Builder addRoutingParametersBuilder(int index) {
-      return getRoutingParametersFieldBuilder()
-          .addBuilder(index, com.google.api.RoutingParameter.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A collection of Routing Parameter specifications.
-     * **NOTE:** If multiple Routing Parameters describe the same key
-     * (via the `path_template` field or via the `field` field when
-     * `path_template` is not provided), "last one wins" rule
-     * determines which Parameter gets used.
-     * See the examples for more details.
-     * </pre>
-     *
-     * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
-     */
-    public java.util.List<com.google.api.RoutingParameter.Builder>
-        getRoutingParametersBuilderList() {
-      return getRoutingParametersFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.RoutingParameter,
-            com.google.api.RoutingParameter.Builder,
-            com.google.api.RoutingParameterOrBuilder>
-        getRoutingParametersFieldBuilder() {
-      if (routingParametersBuilder_ == null) {
-        routingParametersBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.api.RoutingParameter,
-                com.google.api.RoutingParameter.Builder,
-                com.google.api.RoutingParameterOrBuilder>(
-                routingParameters_,
-                ((bitField0_ & 0x00000001) != 0),
-                getParentForChildren(),
-                isClean());
-        routingParameters_ = null;
-      }
-      return routingParametersBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.api.RoutingRule)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.RoutingRule();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "routingParameters_", com.google.api.RoutingParameter.class,
+              };
+          java.lang.String info =
+              "\u0000\u0001\u0000\u0000\u0002\u0002\u0001\u0000\u0001\u0000\u0002\u001b";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.RoutingRule> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.RoutingRule.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.api.RoutingRule>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.RoutingRule)
   private static final com.google.api.RoutingRule DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.RoutingRule();
+    RoutingRule defaultInstance = new RoutingRule();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        RoutingRule.class, defaultInstance);
   }
 
   public static com.google.api.RoutingRule getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<RoutingRule> PARSER =
-      new com.google.protobuf.AbstractParser<RoutingRule>() {
-        @java.lang.Override
-        public RoutingRule parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<RoutingRule> PARSER;
 
   public static com.google.protobuf.Parser<RoutingRule> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<RoutingRule> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.RoutingRule getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

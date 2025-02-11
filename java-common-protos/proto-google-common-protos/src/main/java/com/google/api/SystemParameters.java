@@ -33,44 +33,17 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.SystemParameters}
  */
-public final class SystemParameters extends com.google.protobuf.GeneratedMessageV3
+public final class SystemParameters
+    extends com.google.protobuf.GeneratedMessageLite<SystemParameters, SystemParameters.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.SystemParameters)
     SystemParametersOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use SystemParameters.newBuilder() to construct.
-  private SystemParameters(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private SystemParameters() {
-    rules_ = java.util.Collections.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new SystemParameters();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.SystemParameterProto
-        .internal_static_google_api_SystemParameters_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.SystemParameterProto
-        .internal_static_google_api_SystemParameters_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.SystemParameters.class, com.google.api.SystemParameters.Builder.class);
+    rules_ = emptyProtobufList();
   }
 
   public static final int RULES_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.api.SystemParameterRule> rules_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.api.SystemParameterRule> rules_;
   /**
    *
    *
@@ -149,7 +122,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
    *
    * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.api.SystemParameterRuleOrBuilder>
       getRulesOrBuilderList() {
     return rules_;
@@ -273,170 +245,348 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
    *
    * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
    */
-  @java.lang.Override
   public com.google.api.SystemParameterRuleOrBuilder getRulesOrBuilder(int index) {
     return rules_.get(index);
   }
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  private void ensureRulesIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.api.SystemParameterRule> tmp = rules_;
+    if (!tmp.isModifiable()) {
+      rules_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
   }
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    for (int i = 0; i < rules_.size(); i++) {
-      output.writeMessage(1, rules_.get(i));
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * Define system parameters.
+   *
+   * The parameters defined here will override the default parameters
+   * implemented by the system. If this field is missing from the service
+   * config, default system parameters will be used. Default system parameters
+   * and names is implementation-dependent.
+   *
+   * Example: define api key for all methods
+   *
+   *     system_parameters
+   *       rules:
+   *         - selector: "*"
+   *           parameters:
+   *             - name: api_key
+   *               url_query_parameter: api_key
+   *
+   *
+   * Example: define 2 api key names for a specific method.
+   *
+   *     system_parameters
+   *       rules:
+   *         - selector: "/ListShelves"
+   *           parameters:
+   *             - name: api_key
+   *               http_header: Api-Key1
+   *             - name: api_key
+   *               http_header: Api-Key2
+   *
+   * **NOTE:** All service configuration rules follow "last one wins" order.
+   * </pre>
+   *
+   * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
+   */
+  private void setRules(int index, com.google.api.SystemParameterRule value) {
+    value.getClass();
+    ensureRulesIsMutable();
+    rules_.set(index, value);
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    for (int i = 0; i < rules_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, rules_.get(i));
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
+  /**
+   *
+   *
+   * <pre>
+   * Define system parameters.
+   *
+   * The parameters defined here will override the default parameters
+   * implemented by the system. If this field is missing from the service
+   * config, default system parameters will be used. Default system parameters
+   * and names is implementation-dependent.
+   *
+   * Example: define api key for all methods
+   *
+   *     system_parameters
+   *       rules:
+   *         - selector: "*"
+   *           parameters:
+   *             - name: api_key
+   *               url_query_parameter: api_key
+   *
+   *
+   * Example: define 2 api key names for a specific method.
+   *
+   *     system_parameters
+   *       rules:
+   *         - selector: "/ListShelves"
+   *           parameters:
+   *             - name: api_key
+   *               http_header: Api-Key1
+   *             - name: api_key
+   *               http_header: Api-Key2
+   *
+   * **NOTE:** All service configuration rules follow "last one wins" order.
+   * </pre>
+   *
+   * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
+   */
+  private void addRules(com.google.api.SystemParameterRule value) {
+    value.getClass();
+    ensureRulesIsMutable();
+    rules_.add(value);
   }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.SystemParameters)) {
-      return super.equals(obj);
-    }
-    com.google.api.SystemParameters other = (com.google.api.SystemParameters) obj;
-
-    if (!getRulesList().equals(other.getRulesList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Define system parameters.
+   *
+   * The parameters defined here will override the default parameters
+   * implemented by the system. If this field is missing from the service
+   * config, default system parameters will be used. Default system parameters
+   * and names is implementation-dependent.
+   *
+   * Example: define api key for all methods
+   *
+   *     system_parameters
+   *       rules:
+   *         - selector: "*"
+   *           parameters:
+   *             - name: api_key
+   *               url_query_parameter: api_key
+   *
+   *
+   * Example: define 2 api key names for a specific method.
+   *
+   *     system_parameters
+   *       rules:
+   *         - selector: "/ListShelves"
+   *           parameters:
+   *             - name: api_key
+   *               http_header: Api-Key1
+   *             - name: api_key
+   *               http_header: Api-Key2
+   *
+   * **NOTE:** All service configuration rules follow "last one wins" order.
+   * </pre>
+   *
+   * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
+   */
+  private void addRules(int index, com.google.api.SystemParameterRule value) {
+    value.getClass();
+    ensureRulesIsMutable();
+    rules_.add(index, value);
   }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (getRulesCount() > 0) {
-      hash = (37 * hash) + RULES_FIELD_NUMBER;
-      hash = (53 * hash) + getRulesList().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Define system parameters.
+   *
+   * The parameters defined here will override the default parameters
+   * implemented by the system. If this field is missing from the service
+   * config, default system parameters will be used. Default system parameters
+   * and names is implementation-dependent.
+   *
+   * Example: define api key for all methods
+   *
+   *     system_parameters
+   *       rules:
+   *         - selector: "*"
+   *           parameters:
+   *             - name: api_key
+   *               url_query_parameter: api_key
+   *
+   *
+   * Example: define 2 api key names for a specific method.
+   *
+   *     system_parameters
+   *       rules:
+   *         - selector: "/ListShelves"
+   *           parameters:
+   *             - name: api_key
+   *               http_header: Api-Key1
+   *             - name: api_key
+   *               http_header: Api-Key2
+   *
+   * **NOTE:** All service configuration rules follow "last one wins" order.
+   * </pre>
+   *
+   * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
+   */
+  private void addAllRules(
+      java.lang.Iterable<? extends com.google.api.SystemParameterRule> values) {
+    ensureRulesIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, rules_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Define system parameters.
+   *
+   * The parameters defined here will override the default parameters
+   * implemented by the system. If this field is missing from the service
+   * config, default system parameters will be used. Default system parameters
+   * and names is implementation-dependent.
+   *
+   * Example: define api key for all methods
+   *
+   *     system_parameters
+   *       rules:
+   *         - selector: "*"
+   *           parameters:
+   *             - name: api_key
+   *               url_query_parameter: api_key
+   *
+   *
+   * Example: define 2 api key names for a specific method.
+   *
+   *     system_parameters
+   *       rules:
+   *         - selector: "/ListShelves"
+   *           parameters:
+   *             - name: api_key
+   *               http_header: Api-Key1
+   *             - name: api_key
+   *               http_header: Api-Key2
+   *
+   * **NOTE:** All service configuration rules follow "last one wins" order.
+   * </pre>
+   *
+   * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
+   */
+  private void clearRules() {
+    rules_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Define system parameters.
+   *
+   * The parameters defined here will override the default parameters
+   * implemented by the system. If this field is missing from the service
+   * config, default system parameters will be used. Default system parameters
+   * and names is implementation-dependent.
+   *
+   * Example: define api key for all methods
+   *
+   *     system_parameters
+   *       rules:
+   *         - selector: "*"
+   *           parameters:
+   *             - name: api_key
+   *               url_query_parameter: api_key
+   *
+   *
+   * Example: define 2 api key names for a specific method.
+   *
+   *     system_parameters
+   *       rules:
+   *         - selector: "/ListShelves"
+   *           parameters:
+   *             - name: api_key
+   *               http_header: Api-Key1
+   *             - name: api_key
+   *               http_header: Api-Key2
+   *
+   * **NOTE:** All service configuration rules follow "last one wins" order.
+   * </pre>
+   *
+   * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
+   */
+  private void removeRules(int index) {
+    ensureRulesIsMutable();
+    rules_.remove(index);
   }
 
   public static com.google.api.SystemParameters parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.SystemParameters parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.SystemParameters parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.SystemParameters parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.SystemParameters parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.SystemParameters parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.SystemParameters parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.SystemParameters parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.SystemParameters parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.SystemParameters parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.SystemParameters parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.SystemParameters parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.SystemParameters prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -451,237 +601,16 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
    *
    * Protobuf type {@code google.api.SystemParameters}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.api.SystemParameters, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.SystemParameters)
       com.google.api.SystemParametersOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.SystemParameterProto
-          .internal_static_google_api_SystemParameters_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.SystemParameterProto
-          .internal_static_google_api_SystemParameters_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.SystemParameters.class, com.google.api.SystemParameters.Builder.class);
-    }
-
     // Construct using com.google.api.SystemParameters.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      if (rulesBuilder_ == null) {
-        rules_ = java.util.Collections.emptyList();
-      } else {
-        rules_ = null;
-        rulesBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000001);
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.SystemParameterProto
-          .internal_static_google_api_SystemParameters_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.SystemParameters getDefaultInstanceForType() {
-      return com.google.api.SystemParameters.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.SystemParameters build() {
-      com.google.api.SystemParameters result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.SystemParameters buildPartial() {
-      com.google.api.SystemParameters result = new com.google.api.SystemParameters(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.api.SystemParameters result) {
-      if (rulesBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
-          rules_ = java.util.Collections.unmodifiableList(rules_);
-          bitField0_ = (bitField0_ & ~0x00000001);
-        }
-        result.rules_ = rules_;
-      } else {
-        result.rules_ = rulesBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.api.SystemParameters result) {
-      int from_bitField0_ = bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.SystemParameters) {
-        return mergeFrom((com.google.api.SystemParameters) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.SystemParameters other) {
-      if (other == com.google.api.SystemParameters.getDefaultInstance()) return this;
-      if (rulesBuilder_ == null) {
-        if (!other.rules_.isEmpty()) {
-          if (rules_.isEmpty()) {
-            rules_ = other.rules_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensureRulesIsMutable();
-            rules_.addAll(other.rules_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.rules_.isEmpty()) {
-          if (rulesBuilder_.isEmpty()) {
-            rulesBuilder_.dispose();
-            rulesBuilder_ = null;
-            rules_ = other.rules_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-            rulesBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getRulesFieldBuilder()
-                    : null;
-          } else {
-            rulesBuilder_.addAllMessages(other.rules_);
-          }
-        }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                com.google.api.SystemParameterRule m =
-                    input.readMessage(
-                        com.google.api.SystemParameterRule.parser(), extensionRegistry);
-                if (rulesBuilder_ == null) {
-                  ensureRulesIsMutable();
-                  rules_.add(m);
-                } else {
-                  rulesBuilder_.addMessage(m);
-                }
-                break;
-              } // case 10
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.util.List<com.google.api.SystemParameterRule> rules_ =
-        java.util.Collections.emptyList();
-
-    private void ensureRulesIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
-        rules_ = new java.util.ArrayList<com.google.api.SystemParameterRule>(rules_);
-        bitField0_ |= 0x00000001;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.SystemParameterRule,
-            com.google.api.SystemParameterRule.Builder,
-            com.google.api.SystemParameterRuleOrBuilder>
-        rulesBuilder_;
 
     /**
      *
@@ -720,12 +649,9 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
      *
      * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.api.SystemParameterRule> getRulesList() {
-      if (rulesBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(rules_);
-      } else {
-        return rulesBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getRulesList());
     }
     /**
      *
@@ -764,12 +690,9 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
      *
      * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
      */
+    @java.lang.Override
     public int getRulesCount() {
-      if (rulesBuilder_ == null) {
-        return rules_.size();
-      } else {
-        return rulesBuilder_.getCount();
-      }
+      return instance.getRulesCount();
     }
     /**
      *
@@ -808,12 +731,10 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
      *
      * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
      */
+
+    @java.lang.Override
     public com.google.api.SystemParameterRule getRules(int index) {
-      if (rulesBuilder_ == null) {
-        return rules_.get(index);
-      } else {
-        return rulesBuilder_.getMessage(index);
-      }
+      return instance.getRules(index);
     }
     /**
      *
@@ -853,16 +774,8 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
      * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
      */
     public Builder setRules(int index, com.google.api.SystemParameterRule value) {
-      if (rulesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureRulesIsMutable();
-        rules_.set(index, value);
-        onChanged();
-      } else {
-        rulesBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setRules(index, value);
       return this;
     }
     /**
@@ -903,13 +816,8 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
      * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
      */
     public Builder setRules(int index, com.google.api.SystemParameterRule.Builder builderForValue) {
-      if (rulesBuilder_ == null) {
-        ensureRulesIsMutable();
-        rules_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        rulesBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setRules(index, builderForValue.build());
       return this;
     }
     /**
@@ -950,16 +858,8 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
      * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
      */
     public Builder addRules(com.google.api.SystemParameterRule value) {
-      if (rulesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureRulesIsMutable();
-        rules_.add(value);
-        onChanged();
-      } else {
-        rulesBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addRules(value);
       return this;
     }
     /**
@@ -1000,16 +900,8 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
      * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
      */
     public Builder addRules(int index, com.google.api.SystemParameterRule value) {
-      if (rulesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureRulesIsMutable();
-        rules_.add(index, value);
-        onChanged();
-      } else {
-        rulesBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addRules(index, value);
       return this;
     }
     /**
@@ -1050,13 +942,8 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
      * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
      */
     public Builder addRules(com.google.api.SystemParameterRule.Builder builderForValue) {
-      if (rulesBuilder_ == null) {
-        ensureRulesIsMutable();
-        rules_.add(builderForValue.build());
-        onChanged();
-      } else {
-        rulesBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addRules(builderForValue.build());
       return this;
     }
     /**
@@ -1097,13 +984,8 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
      * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
      */
     public Builder addRules(int index, com.google.api.SystemParameterRule.Builder builderForValue) {
-      if (rulesBuilder_ == null) {
-        ensureRulesIsMutable();
-        rules_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        rulesBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addRules(index, builderForValue.build());
       return this;
     }
     /**
@@ -1145,13 +1027,8 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
      */
     public Builder addAllRules(
         java.lang.Iterable<? extends com.google.api.SystemParameterRule> values) {
-      if (rulesBuilder_ == null) {
-        ensureRulesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, rules_);
-        onChanged();
-      } else {
-        rulesBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllRules(values);
       return this;
     }
     /**
@@ -1192,13 +1069,8 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
      * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
      */
     public Builder clearRules() {
-      if (rulesBuilder_ == null) {
-        rules_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-      } else {
-        rulesBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearRules();
       return this;
     }
     /**
@@ -1239,342 +1111,91 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
      * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
      */
     public Builder removeRules(int index) {
-      if (rulesBuilder_ == null) {
-        ensureRulesIsMutable();
-        rules_.remove(index);
-        onChanged();
-      } else {
-        rulesBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeRules(index);
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Define system parameters.
-     *
-     * The parameters defined here will override the default parameters
-     * implemented by the system. If this field is missing from the service
-     * config, default system parameters will be used. Default system parameters
-     * and names is implementation-dependent.
-     *
-     * Example: define api key for all methods
-     *
-     *     system_parameters
-     *       rules:
-     *         - selector: "*"
-     *           parameters:
-     *             - name: api_key
-     *               url_query_parameter: api_key
-     *
-     *
-     * Example: define 2 api key names for a specific method.
-     *
-     *     system_parameters
-     *       rules:
-     *         - selector: "/ListShelves"
-     *           parameters:
-     *             - name: api_key
-     *               http_header: Api-Key1
-     *             - name: api_key
-     *               http_header: Api-Key2
-     *
-     * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
-     *
-     * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
-     */
-    public com.google.api.SystemParameterRule.Builder getRulesBuilder(int index) {
-      return getRulesFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Define system parameters.
-     *
-     * The parameters defined here will override the default parameters
-     * implemented by the system. If this field is missing from the service
-     * config, default system parameters will be used. Default system parameters
-     * and names is implementation-dependent.
-     *
-     * Example: define api key for all methods
-     *
-     *     system_parameters
-     *       rules:
-     *         - selector: "*"
-     *           parameters:
-     *             - name: api_key
-     *               url_query_parameter: api_key
-     *
-     *
-     * Example: define 2 api key names for a specific method.
-     *
-     *     system_parameters
-     *       rules:
-     *         - selector: "/ListShelves"
-     *           parameters:
-     *             - name: api_key
-     *               http_header: Api-Key1
-     *             - name: api_key
-     *               http_header: Api-Key2
-     *
-     * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
-     *
-     * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
-     */
-    public com.google.api.SystemParameterRuleOrBuilder getRulesOrBuilder(int index) {
-      if (rulesBuilder_ == null) {
-        return rules_.get(index);
-      } else {
-        return rulesBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Define system parameters.
-     *
-     * The parameters defined here will override the default parameters
-     * implemented by the system. If this field is missing from the service
-     * config, default system parameters will be used. Default system parameters
-     * and names is implementation-dependent.
-     *
-     * Example: define api key for all methods
-     *
-     *     system_parameters
-     *       rules:
-     *         - selector: "*"
-     *           parameters:
-     *             - name: api_key
-     *               url_query_parameter: api_key
-     *
-     *
-     * Example: define 2 api key names for a specific method.
-     *
-     *     system_parameters
-     *       rules:
-     *         - selector: "/ListShelves"
-     *           parameters:
-     *             - name: api_key
-     *               http_header: Api-Key1
-     *             - name: api_key
-     *               http_header: Api-Key2
-     *
-     * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
-     *
-     * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
-     */
-    public java.util.List<? extends com.google.api.SystemParameterRuleOrBuilder>
-        getRulesOrBuilderList() {
-      if (rulesBuilder_ != null) {
-        return rulesBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(rules_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Define system parameters.
-     *
-     * The parameters defined here will override the default parameters
-     * implemented by the system. If this field is missing from the service
-     * config, default system parameters will be used. Default system parameters
-     * and names is implementation-dependent.
-     *
-     * Example: define api key for all methods
-     *
-     *     system_parameters
-     *       rules:
-     *         - selector: "*"
-     *           parameters:
-     *             - name: api_key
-     *               url_query_parameter: api_key
-     *
-     *
-     * Example: define 2 api key names for a specific method.
-     *
-     *     system_parameters
-     *       rules:
-     *         - selector: "/ListShelves"
-     *           parameters:
-     *             - name: api_key
-     *               http_header: Api-Key1
-     *             - name: api_key
-     *               http_header: Api-Key2
-     *
-     * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
-     *
-     * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
-     */
-    public com.google.api.SystemParameterRule.Builder addRulesBuilder() {
-      return getRulesFieldBuilder()
-          .addBuilder(com.google.api.SystemParameterRule.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Define system parameters.
-     *
-     * The parameters defined here will override the default parameters
-     * implemented by the system. If this field is missing from the service
-     * config, default system parameters will be used. Default system parameters
-     * and names is implementation-dependent.
-     *
-     * Example: define api key for all methods
-     *
-     *     system_parameters
-     *       rules:
-     *         - selector: "*"
-     *           parameters:
-     *             - name: api_key
-     *               url_query_parameter: api_key
-     *
-     *
-     * Example: define 2 api key names for a specific method.
-     *
-     *     system_parameters
-     *       rules:
-     *         - selector: "/ListShelves"
-     *           parameters:
-     *             - name: api_key
-     *               http_header: Api-Key1
-     *             - name: api_key
-     *               http_header: Api-Key2
-     *
-     * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
-     *
-     * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
-     */
-    public com.google.api.SystemParameterRule.Builder addRulesBuilder(int index) {
-      return getRulesFieldBuilder()
-          .addBuilder(index, com.google.api.SystemParameterRule.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Define system parameters.
-     *
-     * The parameters defined here will override the default parameters
-     * implemented by the system. If this field is missing from the service
-     * config, default system parameters will be used. Default system parameters
-     * and names is implementation-dependent.
-     *
-     * Example: define api key for all methods
-     *
-     *     system_parameters
-     *       rules:
-     *         - selector: "*"
-     *           parameters:
-     *             - name: api_key
-     *               url_query_parameter: api_key
-     *
-     *
-     * Example: define 2 api key names for a specific method.
-     *
-     *     system_parameters
-     *       rules:
-     *         - selector: "/ListShelves"
-     *           parameters:
-     *             - name: api_key
-     *               http_header: Api-Key1
-     *             - name: api_key
-     *               http_header: Api-Key2
-     *
-     * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
-     *
-     * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
-     */
-    public java.util.List<com.google.api.SystemParameterRule.Builder> getRulesBuilderList() {
-      return getRulesFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.SystemParameterRule,
-            com.google.api.SystemParameterRule.Builder,
-            com.google.api.SystemParameterRuleOrBuilder>
-        getRulesFieldBuilder() {
-      if (rulesBuilder_ == null) {
-        rulesBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.api.SystemParameterRule,
-                com.google.api.SystemParameterRule.Builder,
-                com.google.api.SystemParameterRuleOrBuilder>(
-                rules_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
-        rules_ = null;
-      }
-      return rulesBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.api.SystemParameters)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.SystemParameters();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "rules_", com.google.api.SystemParameterRule.class,
+              };
+          java.lang.String info =
+              "\u0000\u0001\u0000\u0000\u0001\u0001\u0001\u0000\u0001\u0000\u0001\u001b";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.SystemParameters> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.SystemParameters.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.api.SystemParameters>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.SystemParameters)
   private static final com.google.api.SystemParameters DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.SystemParameters();
+    SystemParameters defaultInstance = new SystemParameters();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        SystemParameters.class, defaultInstance);
   }
 
   public static com.google.api.SystemParameters getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<SystemParameters> PARSER =
-      new com.google.protobuf.AbstractParser<SystemParameters>() {
-        @java.lang.Override
-        public SystemParameters parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<SystemParameters> PARSER;
 
   public static com.google.protobuf.Parser<SystemParameters> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<SystemParameters> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.SystemParameters getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

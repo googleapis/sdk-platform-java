@@ -22,7 +22,7 @@ package com.google.logging.type;
 public interface HttpRequestOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.logging.type.HttpRequest)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -262,17 +262,6 @@ public interface HttpRequestOrBuilder
    * @return The latency.
    */
   com.google.protobuf.Duration getLatency();
-  /**
-   *
-   *
-   * <pre>
-   * The request processing latency on the server, from the time the request was
-   * received until the response was sent.
-   * </pre>
-   *
-   * <code>.google.protobuf.Duration latency = 14;</code>
-   */
-  com.google.protobuf.DurationOrBuilder getLatencyOrBuilder();
 
   /**
    *

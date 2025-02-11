@@ -42,46 +42,18 @@ package com.google.apps.card.v1;
  *
  * Protobuf type {@code google.apps.card.v1.TextInput}
  */
-public final class TextInput extends com.google.protobuf.GeneratedMessageV3
+public final class TextInput
+    extends com.google.protobuf.GeneratedMessageLite<TextInput, TextInput.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.TextInput)
     TextInputOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use TextInput.newBuilder() to construct.
-  private TextInput(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private TextInput() {
     name_ = "";
     label_ = "";
     hintText_ = "";
     value_ = "";
-    type_ = 0;
     placeholderText_ = "";
   }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new TextInput();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_TextInput_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_TextInput_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.apps.card.v1.TextInput.class,
-            com.google.apps.card.v1.TextInput.Builder.class);
-  }
-
   /**
    *
    *
@@ -97,7 +69,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf enum {@code google.apps.card.v1.TextInput.Type}
    */
-  public enum Type implements com.google.protobuf.ProtocolMessageEnum {
+  public enum Type implements com.google.protobuf.Internal.EnumLite {
     /**
      *
      *
@@ -142,6 +114,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      */
     public static final int MULTIPLE_LINE_VALUE = 1;
 
+    @java.lang.Override
     public final int getNumber() {
       if (this == UNRECOGNIZED) {
         throw new java.lang.IllegalArgumentException(
@@ -151,8 +124,8 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
     }
 
     /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
+     * @param value The number of the enum to look for.
+     * @return The enum associated with the given number.
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
@@ -160,10 +133,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       return forNumber(value);
     }
 
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
     public static Type forNumber(int value) {
       switch (value) {
         case 0:
@@ -181,38 +150,24 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
 
     private static final com.google.protobuf.Internal.EnumLiteMap<Type> internalValueMap =
         new com.google.protobuf.Internal.EnumLiteMap<Type>() {
+          @java.lang.Override
           public Type findValueByNumber(int number) {
             return Type.forNumber(number);
           }
         };
 
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalStateException(
-            "Can't get the descriptor of an unrecognized enum value.");
+    public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+      return TypeVerifier.INSTANCE;
+    }
+
+    private static final class TypeVerifier implements com.google.protobuf.Internal.EnumVerifier {
+      static final com.google.protobuf.Internal.EnumVerifier INSTANCE = new TypeVerifier();
+
+      @java.lang.Override
+      public boolean isInRange(int number) {
+        return Type.forNumber(number) != null;
       }
-      return getDescriptor().getValues().get(ordinal());
-    }
-
-    public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-      return getDescriptor();
-    }
-
-    public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-      return com.google.apps.card.v1.TextInput.getDescriptor().getEnumTypes().get(0);
-    }
-
-    private static final Type[] VALUES = values();
-
-    public static Type valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
+    };
 
     private final int value;
 
@@ -225,9 +180,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
 
   private int bitField0_;
   public static final int NAME_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object name_ = "";
+  private java.lang.String name_;
   /**
    *
    *
@@ -244,15 +197,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getName() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      name_ = s;
-      return s;
-    }
+    return name_;
   }
   /**
    *
@@ -270,21 +215,64 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      name_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(name_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name by which the text input is identified in a form input event.
+   *
+   * For details about working with form inputs, see [Receive form
+   * data](https://developers.google.com/workspace/chat/read-form-data).
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The name to set.
+   */
+  private void setName(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    name_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name by which the text input is identified in a form input event.
+   *
+   * For details about working with form inputs, see [Receive form
+   * data](https://developers.google.com/workspace/chat/read-form-data).
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   */
+  private void clearName() {
+
+    name_ = getDefaultInstance().getName();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name by which the text input is identified in a form input event.
+   *
+   * For details about working with form inputs, see [Receive form
+   * data](https://developers.google.com/workspace/chat/read-form-data).
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The bytes for name to set.
+   */
+  private void setNameBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    name_ = value.toStringUtf8();
   }
 
   public static final int LABEL_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object label_ = "";
+  private java.lang.String label_;
   /**
    *
    *
@@ -304,15 +292,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getLabel() {
-    java.lang.Object ref = label_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      label_ = s;
-      return s;
-    }
+    return label_;
   }
   /**
    *
@@ -333,21 +313,73 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getLabelBytes() {
-    java.lang.Object ref = label_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      label_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(label_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text that appears above the text input field in the user interface.
+   *
+   * Specify text that helps the user enter the information your app needs.
+   * For example, if you are asking someone's name, but specifically need their
+   * surname, write `surname` instead of `name`.
+   *
+   * Required if `hintText` is unspecified. Otherwise, optional.
+   * </pre>
+   *
+   * <code>string label = 2;</code>
+   *
+   * @param value The label to set.
+   */
+  private void setLabel(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    label_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text that appears above the text input field in the user interface.
+   *
+   * Specify text that helps the user enter the information your app needs.
+   * For example, if you are asking someone's name, but specifically need their
+   * surname, write `surname` instead of `name`.
+   *
+   * Required if `hintText` is unspecified. Otherwise, optional.
+   * </pre>
+   *
+   * <code>string label = 2;</code>
+   */
+  private void clearLabel() {
+
+    label_ = getDefaultInstance().getLabel();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text that appears above the text input field in the user interface.
+   *
+   * Specify text that helps the user enter the information your app needs.
+   * For example, if you are asking someone's name, but specifically need their
+   * surname, write `surname` instead of `name`.
+   *
+   * Required if `hintText` is unspecified. Otherwise, optional.
+   * </pre>
+   *
+   * <code>string label = 2;</code>
+   *
+   * @param value The bytes for label to set.
+   */
+  private void setLabelBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    label_ = value.toStringUtf8();
   }
 
   public static final int HINT_TEXT_FIELD_NUMBER = 3;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object hintText_ = "";
+  private java.lang.String hintText_;
   /**
    *
    *
@@ -364,15 +396,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getHintText() {
-    java.lang.Object ref = hintText_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      hintText_ = s;
-      return s;
-    }
+    return hintText_;
   }
   /**
    *
@@ -390,21 +414,64 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getHintTextBytes() {
-    java.lang.Object ref = hintText_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      hintText_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(hintText_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Text that appears below the text input field meant to assist users by
+   * prompting them to enter a certain value. This text is always visible.
+   *
+   * Required if `label` is unspecified. Otherwise, optional.
+   * </pre>
+   *
+   * <code>string hint_text = 3;</code>
+   *
+   * @param value The hintText to set.
+   */
+  private void setHintText(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    hintText_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Text that appears below the text input field meant to assist users by
+   * prompting them to enter a certain value. This text is always visible.
+   *
+   * Required if `label` is unspecified. Otherwise, optional.
+   * </pre>
+   *
+   * <code>string hint_text = 3;</code>
+   */
+  private void clearHintText() {
+
+    hintText_ = getDefaultInstance().getHintText();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Text that appears below the text input field meant to assist users by
+   * prompting them to enter a certain value. This text is always visible.
+   *
+   * Required if `label` is unspecified. Otherwise, optional.
+   * </pre>
+   *
+   * <code>string hint_text = 3;</code>
+   *
+   * @param value The bytes for hintText to set.
+   */
+  private void setHintTextBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    hintText_ = value.toStringUtf8();
   }
 
   public static final int VALUE_FIELD_NUMBER = 4;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object value_ = "";
+  private java.lang.String value_;
   /**
    *
    *
@@ -421,15 +488,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getValue() {
-    java.lang.Object ref = value_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      value_ = s;
-      return s;
-    }
+    return value_;
   }
   /**
    *
@@ -447,19 +506,64 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getValueBytes() {
-    java.lang.Object ref = value_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      value_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(value_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The value entered by a user, returned as part of a form input event.
+   *
+   * For details about working with form inputs, see [Receive form
+   * data](https://developers.google.com/workspace/chat/read-form-data).
+   * </pre>
+   *
+   * <code>string value = 4;</code>
+   *
+   * @param value The value to set.
+   */
+  private void setValue(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    value_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The value entered by a user, returned as part of a form input event.
+   *
+   * For details about working with form inputs, see [Receive form
+   * data](https://developers.google.com/workspace/chat/read-form-data).
+   * </pre>
+   *
+   * <code>string value = 4;</code>
+   */
+  private void clearValue() {
+
+    value_ = getDefaultInstance().getValue();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The value entered by a user, returned as part of a form input event.
+   *
+   * For details about working with form inputs, see [Receive form
+   * data](https://developers.google.com/workspace/chat/read-form-data).
+   * </pre>
+   *
+   * <code>string value = 4;</code>
+   *
+   * @param value The bytes for value to set.
+   */
+  private void setValueBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    value_ = value.toStringUtf8();
   }
 
   public static final int TYPE_FIELD_NUMBER = 5;
-  private int type_ = 0;
+  private int type_;
   /**
    *
    *
@@ -494,6 +598,50 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         com.google.apps.card.v1.TextInput.Type.forNumber(type_);
     return result == null ? com.google.apps.card.v1.TextInput.Type.UNRECOGNIZED : result;
   }
+  /**
+   *
+   *
+   * <pre>
+   * How a text input field appears in the user interface.
+   * For example, whether the field is single or multi-line.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextInput.Type type = 5;</code>
+   *
+   * @param value The enum numeric value on the wire for type to set.
+   */
+  private void setTypeValue(int value) {
+    type_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * How a text input field appears in the user interface.
+   * For example, whether the field is single or multi-line.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextInput.Type type = 5;</code>
+   *
+   * @param value The type to set.
+   */
+  private void setType(com.google.apps.card.v1.TextInput.Type value) {
+    type_ = value.getNumber();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * How a text input field appears in the user interface.
+   * For example, whether the field is single or multi-line.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextInput.Type type = 5;</code>
+   */
+  private void clearType() {
+
+    type_ = 0;
+  }
 
   public static final int ON_CHANGE_ACTION_FIELD_NUMBER = 6;
   private com.google.apps.card.v1.Action onChangeAction_;
@@ -510,8 +658,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
-   *
-   * @return Whether the onChangeAction field is set.
    */
   @java.lang.Override
   public boolean hasOnChangeAction() {
@@ -530,8 +676,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
-   *
-   * @return The onChangeAction.
    */
   @java.lang.Override
   public com.google.apps.card.v1.Action getOnChangeAction() {
@@ -553,11 +697,56 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
    */
-  @java.lang.Override
-  public com.google.apps.card.v1.ActionOrBuilder getOnChangeActionOrBuilder() {
-    return onChangeAction_ == null
-        ? com.google.apps.card.v1.Action.getDefaultInstance()
-        : onChangeAction_;
+  private void setOnChangeAction(com.google.apps.card.v1.Action value) {
+    value.getClass();
+    onChangeAction_ = value;
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * What to do when a change occurs in the text input field. For example, a
+   * user adding to the field or deleting text.
+   *
+   * Examples of actions to take include running a custom function or opening
+   * a [dialog](https://developers.google.com/workspace/chat/dialogs)
+   * in Google Chat.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeOnChangeAction(com.google.apps.card.v1.Action value) {
+    value.getClass();
+    if (onChangeAction_ != null
+        && onChangeAction_ != com.google.apps.card.v1.Action.getDefaultInstance()) {
+      onChangeAction_ =
+          com.google.apps.card.v1.Action.newBuilder(onChangeAction_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      onChangeAction_ = value;
+    }
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * What to do when a change occurs in the text input field. For example, a
+   * user adding to the field or deleting text.
+   *
+   * Examples of actions to take include running a custom function or opening
+   * a [dialog](https://developers.google.com/workspace/chat/dialogs)
+   * in Google Chat.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
+   */
+  private void clearOnChangeAction() {
+    onChangeAction_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static final int INITIAL_SUGGESTIONS_FIELD_NUMBER = 7;
@@ -587,8 +776,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
-   *
-   * @return Whether the initialSuggestions field is set.
    */
   @java.lang.Override
   public boolean hasInitialSuggestions() {
@@ -619,8 +806,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
-   *
-   * @return The initialSuggestions.
    */
   @java.lang.Override
   public com.google.apps.card.v1.Suggestions getInitialSuggestions() {
@@ -654,11 +839,80 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
    */
-  @java.lang.Override
-  public com.google.apps.card.v1.SuggestionsOrBuilder getInitialSuggestionsOrBuilder() {
-    return initialSuggestions_ == null
-        ? com.google.apps.card.v1.Suggestions.getDefaultInstance()
-        : initialSuggestions_;
+  private void setInitialSuggestions(com.google.apps.card.v1.Suggestions value) {
+    value.getClass();
+    initialSuggestions_ = value;
+    bitField0_ |= 0x00000002;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Suggested values that users can enter. These values appear when users click
+   * inside the text input field. As users type, the suggested values
+   * dynamically filter to match what the users have typed.
+   *
+   * For example, a text input field for programming language might suggest
+   * Java, JavaScript, Python, and C++. When users start typing `Jav`, the list
+   * of suggestions filters to show just `Java` and `JavaScript`.
+   *
+   * Suggested values help guide users to enter values that your app can make
+   * sense of. When referring to JavaScript, some users might enter `javascript`
+   * and others `java script`. Suggesting `JavaScript` can standardize how users
+   * interact with your app.
+   *
+   * When specified, `TextInput.type` is always `SINGLE_LINE`, even if it's set
+   * to `MULTIPLE_LINE`.
+   *
+   * [Google Workspace
+   * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeInitialSuggestions(com.google.apps.card.v1.Suggestions value) {
+    value.getClass();
+    if (initialSuggestions_ != null
+        && initialSuggestions_ != com.google.apps.card.v1.Suggestions.getDefaultInstance()) {
+      initialSuggestions_ =
+          com.google.apps.card.v1.Suggestions.newBuilder(initialSuggestions_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      initialSuggestions_ = value;
+    }
+    bitField0_ |= 0x00000002;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Suggested values that users can enter. These values appear when users click
+   * inside the text input field. As users type, the suggested values
+   * dynamically filter to match what the users have typed.
+   *
+   * For example, a text input field for programming language might suggest
+   * Java, JavaScript, Python, and C++. When users start typing `Jav`, the list
+   * of suggestions filters to show just `Java` and `JavaScript`.
+   *
+   * Suggested values help guide users to enter values that your app can make
+   * sense of. When referring to JavaScript, some users might enter `javascript`
+   * and others `java script`. Suggesting `JavaScript` can standardize how users
+   * interact with your app.
+   *
+   * When specified, `TextInput.type` is always `SINGLE_LINE`, even if it's set
+   * to `MULTIPLE_LINE`.
+   *
+   * [Google Workspace
+   * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
+   */
+  private void clearInitialSuggestions() {
+    initialSuggestions_ = null;
+    bitField0_ = (bitField0_ & ~0x00000002);
   }
 
   public static final int AUTO_COMPLETE_ACTION_FIELD_NUMBER = 8;
@@ -681,8 +935,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
-   *
-   * @return Whether the autoCompleteAction field is set.
    */
   @java.lang.Override
   public boolean hasAutoCompleteAction() {
@@ -706,8 +958,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
-   *
-   * @return The autoCompleteAction.
    */
   @java.lang.Override
   public com.google.apps.card.v1.Action getAutoCompleteAction() {
@@ -734,17 +984,70 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
    */
-  @java.lang.Override
-  public com.google.apps.card.v1.ActionOrBuilder getAutoCompleteActionOrBuilder() {
-    return autoCompleteAction_ == null
-        ? com.google.apps.card.v1.Action.getDefaultInstance()
-        : autoCompleteAction_;
+  private void setAutoCompleteAction(com.google.apps.card.v1.Action value) {
+    value.getClass();
+    autoCompleteAction_ = value;
+    bitField0_ |= 0x00000004;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Specify what action to take when the text input field provides
+   * suggestions to users who interact with it.
+   *
+   * If unspecified, the suggestions are set by `initialSuggestions` and
+   * are processed by the client.
+   *
+   * If specified, the app takes the action specified here, such as running
+   * a custom function.
+   *
+   * [Google Workspace
+   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeAutoCompleteAction(com.google.apps.card.v1.Action value) {
+    value.getClass();
+    if (autoCompleteAction_ != null
+        && autoCompleteAction_ != com.google.apps.card.v1.Action.getDefaultInstance()) {
+      autoCompleteAction_ =
+          com.google.apps.card.v1.Action.newBuilder(autoCompleteAction_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      autoCompleteAction_ = value;
+    }
+    bitField0_ |= 0x00000004;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Specify what action to take when the text input field provides
+   * suggestions to users who interact with it.
+   *
+   * If unspecified, the suggestions are set by `initialSuggestions` and
+   * are processed by the client.
+   *
+   * If specified, the app takes the action specified here, such as running
+   * a custom function.
+   *
+   * [Google Workspace
+   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
+   */
+  private void clearAutoCompleteAction() {
+    autoCompleteAction_ = null;
+    bitField0_ = (bitField0_ & ~0x00000004);
   }
 
   public static final int PLACEHOLDER_TEXT_FIELD_NUMBER = 12;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object placeholderText_ = "";
+  private java.lang.String placeholderText_;
   /**
    *
    *
@@ -762,15 +1065,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getPlaceholderText() {
-    java.lang.Object ref = placeholderText_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      placeholderText_ = s;
-      return s;
-    }
+    return placeholderText_;
   }
   /**
    *
@@ -789,261 +1084,146 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getPlaceholderTextBytes() {
-    java.lang.Object ref = placeholderText_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      placeholderText_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(placeholderText_);
   }
+  /**
+   *
+   *
+   * <pre>
+   * Text that appears in the text input field when the field is empty.
+   * Use this text to prompt users to enter a value. For example, `Enter a
+   * number from 0 to 100`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>string placeholder_text = 12;</code>
+   *
+   * @param value The placeholderText to set.
+   */
+  private void setPlaceholderText(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    placeholderText_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Text that appears in the text input field when the field is empty.
+   * Use this text to prompt users to enter a value. For example, `Enter a
+   * number from 0 to 100`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>string placeholder_text = 12;</code>
+   */
+  private void clearPlaceholderText() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(label_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, label_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(hintText_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, hintText_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(value_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, value_);
-    }
-    if (type_ != com.google.apps.card.v1.TextInput.Type.SINGLE_LINE.getNumber()) {
-      output.writeEnum(5, type_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(6, getOnChangeAction());
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      output.writeMessage(7, getInitialSuggestions());
-    }
-    if (((bitField0_ & 0x00000004) != 0)) {
-      output.writeMessage(8, getAutoCompleteAction());
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(placeholderText_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 12, placeholderText_);
-    }
-    getUnknownFields().writeTo(output);
+    placeholderText_ = getDefaultInstance().getPlaceholderText();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(label_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, label_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(hintText_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, hintText_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(value_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, value_);
-    }
-    if (type_ != com.google.apps.card.v1.TextInput.Type.SINGLE_LINE.getNumber()) {
-      size += com.google.protobuf.CodedOutputStream.computeEnumSize(5, type_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(6, getOnChangeAction());
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(7, getInitialSuggestions());
-    }
-    if (((bitField0_ & 0x00000004) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(8, getAutoCompleteAction());
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(placeholderText_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(12, placeholderText_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.apps.card.v1.TextInput)) {
-      return super.equals(obj);
-    }
-    com.google.apps.card.v1.TextInput other = (com.google.apps.card.v1.TextInput) obj;
-
-    if (!getName().equals(other.getName())) return false;
-    if (!getLabel().equals(other.getLabel())) return false;
-    if (!getHintText().equals(other.getHintText())) return false;
-    if (!getValue().equals(other.getValue())) return false;
-    if (type_ != other.type_) return false;
-    if (hasOnChangeAction() != other.hasOnChangeAction()) return false;
-    if (hasOnChangeAction()) {
-      if (!getOnChangeAction().equals(other.getOnChangeAction())) return false;
-    }
-    if (hasInitialSuggestions() != other.hasInitialSuggestions()) return false;
-    if (hasInitialSuggestions()) {
-      if (!getInitialSuggestions().equals(other.getInitialSuggestions())) return false;
-    }
-    if (hasAutoCompleteAction() != other.hasAutoCompleteAction()) return false;
-    if (hasAutoCompleteAction()) {
-      if (!getAutoCompleteAction().equals(other.getAutoCompleteAction())) return false;
-    }
-    if (!getPlaceholderText().equals(other.getPlaceholderText())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getName().hashCode();
-    hash = (37 * hash) + LABEL_FIELD_NUMBER;
-    hash = (53 * hash) + getLabel().hashCode();
-    hash = (37 * hash) + HINT_TEXT_FIELD_NUMBER;
-    hash = (53 * hash) + getHintText().hashCode();
-    hash = (37 * hash) + VALUE_FIELD_NUMBER;
-    hash = (53 * hash) + getValue().hashCode();
-    hash = (37 * hash) + TYPE_FIELD_NUMBER;
-    hash = (53 * hash) + type_;
-    if (hasOnChangeAction()) {
-      hash = (37 * hash) + ON_CHANGE_ACTION_FIELD_NUMBER;
-      hash = (53 * hash) + getOnChangeAction().hashCode();
-    }
-    if (hasInitialSuggestions()) {
-      hash = (37 * hash) + INITIAL_SUGGESTIONS_FIELD_NUMBER;
-      hash = (53 * hash) + getInitialSuggestions().hashCode();
-    }
-    if (hasAutoCompleteAction()) {
-      hash = (37 * hash) + AUTO_COMPLETE_ACTION_FIELD_NUMBER;
-      hash = (53 * hash) + getAutoCompleteAction().hashCode();
-    }
-    hash = (37 * hash) + PLACEHOLDER_TEXT_FIELD_NUMBER;
-    hash = (53 * hash) + getPlaceholderText().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Text that appears in the text input field when the field is empty.
+   * Use this text to prompt users to enter a value. For example, `Enter a
+   * number from 0 to 100`.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>string placeholder_text = 12;</code>
+   *
+   * @param value The bytes for placeholderText to set.
+   */
+  private void setPlaceholderTextBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    placeholderText_ = value.toStringUtf8();
   }
 
   public static com.google.apps.card.v1.TextInput parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.TextInput parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.TextInput parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.TextInput parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.TextInput parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.TextInput parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.TextInput parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.TextInput parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.TextInput parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.TextInput parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.TextInput parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.TextInput parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.apps.card.v1.TextInput prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -1067,328 +1247,17 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.apps.card.v1.TextInput}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.apps.card.v1.TextInput, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.apps.card.v1.TextInput)
       com.google.apps.card.v1.TextInputOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_TextInput_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_TextInput_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.apps.card.v1.TextInput.class,
-              com.google.apps.card.v1.TextInput.Builder.class);
-    }
-
     // Construct using com.google.apps.card.v1.TextInput.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getOnChangeActionFieldBuilder();
-        getInitialSuggestionsFieldBuilder();
-        getAutoCompleteActionFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      name_ = "";
-      label_ = "";
-      hintText_ = "";
-      value_ = "";
-      type_ = 0;
-      onChangeAction_ = null;
-      if (onChangeActionBuilder_ != null) {
-        onChangeActionBuilder_.dispose();
-        onChangeActionBuilder_ = null;
-      }
-      initialSuggestions_ = null;
-      if (initialSuggestionsBuilder_ != null) {
-        initialSuggestionsBuilder_.dispose();
-        initialSuggestionsBuilder_ = null;
-      }
-      autoCompleteAction_ = null;
-      if (autoCompleteActionBuilder_ != null) {
-        autoCompleteActionBuilder_.dispose();
-        autoCompleteActionBuilder_ = null;
-      }
-      placeholderText_ = "";
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_TextInput_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.TextInput getDefaultInstanceForType() {
-      return com.google.apps.card.v1.TextInput.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.TextInput build() {
-      com.google.apps.card.v1.TextInput result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.TextInput buildPartial() {
-      com.google.apps.card.v1.TextInput result = new com.google.apps.card.v1.TextInput(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.apps.card.v1.TextInput result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.name_ = name_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.label_ = label_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.hintText_ = hintText_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.value_ = value_;
-      }
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.type_ = type_;
-      }
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000020) != 0)) {
-        result.onChangeAction_ =
-            onChangeActionBuilder_ == null ? onChangeAction_ : onChangeActionBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      if (((from_bitField0_ & 0x00000040) != 0)) {
-        result.initialSuggestions_ =
-            initialSuggestionsBuilder_ == null
-                ? initialSuggestions_
-                : initialSuggestionsBuilder_.build();
-        to_bitField0_ |= 0x00000002;
-      }
-      if (((from_bitField0_ & 0x00000080) != 0)) {
-        result.autoCompleteAction_ =
-            autoCompleteActionBuilder_ == null
-                ? autoCompleteAction_
-                : autoCompleteActionBuilder_.build();
-        to_bitField0_ |= 0x00000004;
-      }
-      if (((from_bitField0_ & 0x00000100) != 0)) {
-        result.placeholderText_ = placeholderText_;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.apps.card.v1.TextInput) {
-        return mergeFrom((com.google.apps.card.v1.TextInput) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.apps.card.v1.TextInput other) {
-      if (other == com.google.apps.card.v1.TextInput.getDefaultInstance()) return this;
-      if (!other.getName().isEmpty()) {
-        name_ = other.name_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getLabel().isEmpty()) {
-        label_ = other.label_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      if (!other.getHintText().isEmpty()) {
-        hintText_ = other.hintText_;
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
-      if (!other.getValue().isEmpty()) {
-        value_ = other.value_;
-        bitField0_ |= 0x00000008;
-        onChanged();
-      }
-      if (other.type_ != 0) {
-        setTypeValue(other.getTypeValue());
-      }
-      if (other.hasOnChangeAction()) {
-        mergeOnChangeAction(other.getOnChangeAction());
-      }
-      if (other.hasInitialSuggestions()) {
-        mergeInitialSuggestions(other.getInitialSuggestions());
-      }
-      if (other.hasAutoCompleteAction()) {
-        mergeAutoCompleteAction(other.getAutoCompleteAction());
-      }
-      if (!other.getPlaceholderText().isEmpty()) {
-        placeholderText_ = other.placeholderText_;
-        bitField0_ |= 0x00000100;
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                name_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                label_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 26:
-              {
-                hintText_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 26
-            case 34:
-              {
-                value_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 34
-            case 40:
-              {
-                type_ = input.readEnum();
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 40
-            case 50:
-              {
-                input.readMessage(getOnChangeActionFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000020;
-                break;
-              } // case 50
-            case 58:
-              {
-                input.readMessage(
-                    getInitialSuggestionsFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000040;
-                break;
-              } // case 58
-            case 66:
-              {
-                input.readMessage(
-                    getAutoCompleteActionFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000080;
-                break;
-              } // case 66
-            case 98:
-              {
-                placeholderText_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000100;
-                break;
-              } // case 98
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object name_ = "";
     /**
      *
      *
@@ -1403,16 +1272,9 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        name_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getName();
     }
     /**
      *
@@ -1428,16 +1290,9 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getNameBytes() {
-      java.lang.Object ref = name_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        name_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getNameBytes();
     }
     /**
      *
@@ -1455,12 +1310,8 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setName(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setName(value);
       return this;
     }
     /**
@@ -1478,9 +1329,8 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearName() {
-      name_ = getDefaultInstance().getName();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearName();
       return this;
     }
     /**
@@ -1499,17 +1349,11 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setNameBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setNameBytes(value);
       return this;
     }
 
-    private java.lang.Object label_ = "";
     /**
      *
      *
@@ -1527,16 +1371,9 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The label.
      */
+    @java.lang.Override
     public java.lang.String getLabel() {
-      java.lang.Object ref = label_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        label_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getLabel();
     }
     /**
      *
@@ -1555,16 +1392,9 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for label.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getLabelBytes() {
-      java.lang.Object ref = label_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        label_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getLabelBytes();
     }
     /**
      *
@@ -1585,12 +1415,8 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setLabel(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      label_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setLabel(value);
       return this;
     }
     /**
@@ -1611,9 +1437,8 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearLabel() {
-      label_ = getDefaultInstance().getLabel();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearLabel();
       return this;
     }
     /**
@@ -1635,17 +1460,11 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setLabelBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      label_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setLabelBytes(value);
       return this;
     }
 
-    private java.lang.Object hintText_ = "";
     /**
      *
      *
@@ -1660,16 +1479,9 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The hintText.
      */
+    @java.lang.Override
     public java.lang.String getHintText() {
-      java.lang.Object ref = hintText_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        hintText_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getHintText();
     }
     /**
      *
@@ -1685,16 +1497,9 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for hintText.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getHintTextBytes() {
-      java.lang.Object ref = hintText_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        hintText_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getHintTextBytes();
     }
     /**
      *
@@ -1712,12 +1517,8 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setHintText(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      hintText_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setHintText(value);
       return this;
     }
     /**
@@ -1735,9 +1536,8 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearHintText() {
-      hintText_ = getDefaultInstance().getHintText();
-      bitField0_ = (bitField0_ & ~0x00000004);
-      onChanged();
+      copyOnWrite();
+      instance.clearHintText();
       return this;
     }
     /**
@@ -1756,17 +1556,11 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setHintTextBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      hintText_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setHintTextBytes(value);
       return this;
     }
 
-    private java.lang.Object value_ = "";
     /**
      *
      *
@@ -1781,16 +1575,9 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The value.
      */
+    @java.lang.Override
     public java.lang.String getValue() {
-      java.lang.Object ref = value_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        value_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getValue();
     }
     /**
      *
@@ -1806,16 +1593,9 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for value.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getValueBytes() {
-      java.lang.Object ref = value_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        value_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getValueBytes();
     }
     /**
      *
@@ -1833,12 +1613,8 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setValue(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      value_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setValue(value);
       return this;
     }
     /**
@@ -1856,9 +1632,8 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearValue() {
-      value_ = getDefaultInstance().getValue();
-      bitField0_ = (bitField0_ & ~0x00000008);
-      onChanged();
+      copyOnWrite();
+      instance.clearValue();
       return this;
     }
     /**
@@ -1877,17 +1652,11 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setValueBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      value_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setValueBytes(value);
       return this;
     }
 
-    private int type_ = 0;
     /**
      *
      *
@@ -1902,7 +1671,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getTypeValue() {
-      return type_;
+      return instance.getTypeValue();
     }
     /**
      *
@@ -1914,13 +1683,12 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.apps.card.v1.TextInput.Type type = 5;</code>
      *
-     * @param value The enum numeric value on the wire for type to set.
+     * @param value The type to set.
      * @return This builder for chaining.
      */
     public Builder setTypeValue(int value) {
-      type_ = value;
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setTypeValue(value);
       return this;
     }
     /**
@@ -1937,9 +1705,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.apps.card.v1.TextInput.Type getType() {
-      com.google.apps.card.v1.TextInput.Type result =
-          com.google.apps.card.v1.TextInput.Type.forNumber(type_);
-      return result == null ? com.google.apps.card.v1.TextInput.Type.UNRECOGNIZED : result;
+      return instance.getType();
     }
     /**
      *
@@ -1951,16 +1717,12 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.apps.card.v1.TextInput.Type type = 5;</code>
      *
-     * @param value The type to set.
+     * @param value The enum numeric value on the wire for type to set.
      * @return This builder for chaining.
      */
     public Builder setType(com.google.apps.card.v1.TextInput.Type value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      bitField0_ |= 0x00000010;
-      type_ = value.getNumber();
-      onChanged();
+      copyOnWrite();
+      instance.setType(value);
       return this;
     }
     /**
@@ -1976,18 +1738,11 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearType() {
-      bitField0_ = (bitField0_ & ~0x00000010);
-      type_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearType();
       return this;
     }
 
-    private com.google.apps.card.v1.Action onChangeAction_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Action,
-            com.google.apps.card.v1.Action.Builder,
-            com.google.apps.card.v1.ActionOrBuilder>
-        onChangeActionBuilder_;
     /**
      *
      *
@@ -2001,11 +1756,10 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
-     *
-     * @return Whether the onChangeAction field is set.
      */
+    @java.lang.Override
     public boolean hasOnChangeAction() {
-      return ((bitField0_ & 0x00000020) != 0);
+      return instance.hasOnChangeAction();
     }
     /**
      *
@@ -2020,17 +1774,10 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
-     *
-     * @return The onChangeAction.
      */
+    @java.lang.Override
     public com.google.apps.card.v1.Action getOnChangeAction() {
-      if (onChangeActionBuilder_ == null) {
-        return onChangeAction_ == null
-            ? com.google.apps.card.v1.Action.getDefaultInstance()
-            : onChangeAction_;
-      } else {
-        return onChangeActionBuilder_.getMessage();
-      }
+      return instance.getOnChangeAction();
     }
     /**
      *
@@ -2047,16 +1794,8 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
      */
     public Builder setOnChangeAction(com.google.apps.card.v1.Action value) {
-      if (onChangeActionBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        onChangeAction_ = value;
-      } else {
-        onChangeActionBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setOnChangeAction(value);
       return this;
     }
     /**
@@ -2074,13 +1813,8 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
      */
     public Builder setOnChangeAction(com.google.apps.card.v1.Action.Builder builderForValue) {
-      if (onChangeActionBuilder_ == null) {
-        onChangeAction_ = builderForValue.build();
-      } else {
-        onChangeActionBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setOnChangeAction(builderForValue.build());
       return this;
     }
     /**
@@ -2098,21 +1832,8 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
      */
     public Builder mergeOnChangeAction(com.google.apps.card.v1.Action value) {
-      if (onChangeActionBuilder_ == null) {
-        if (((bitField0_ & 0x00000020) != 0)
-            && onChangeAction_ != null
-            && onChangeAction_ != com.google.apps.card.v1.Action.getDefaultInstance()) {
-          getOnChangeActionBuilder().mergeFrom(value);
-        } else {
-          onChangeAction_ = value;
-        }
-      } else {
-        onChangeActionBuilder_.mergeFrom(value);
-      }
-      if (onChangeAction_ != null) {
-        bitField0_ |= 0x00000020;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeOnChangeAction(value);
       return this;
     }
     /**
@@ -2130,94 +1851,11 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
      */
     public Builder clearOnChangeAction() {
-      bitField0_ = (bitField0_ & ~0x00000020);
-      onChangeAction_ = null;
-      if (onChangeActionBuilder_ != null) {
-        onChangeActionBuilder_.dispose();
-        onChangeActionBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearOnChangeAction();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * What to do when a change occurs in the text input field. For example, a
-     * user adding to the field or deleting text.
-     *
-     * Examples of actions to take include running a custom function or opening
-     * a [dialog](https://developers.google.com/workspace/chat/dialogs)
-     * in Google Chat.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
-     */
-    public com.google.apps.card.v1.Action.Builder getOnChangeActionBuilder() {
-      bitField0_ |= 0x00000020;
-      onChanged();
-      return getOnChangeActionFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * What to do when a change occurs in the text input field. For example, a
-     * user adding to the field or deleting text.
-     *
-     * Examples of actions to take include running a custom function or opening
-     * a [dialog](https://developers.google.com/workspace/chat/dialogs)
-     * in Google Chat.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
-     */
-    public com.google.apps.card.v1.ActionOrBuilder getOnChangeActionOrBuilder() {
-      if (onChangeActionBuilder_ != null) {
-        return onChangeActionBuilder_.getMessageOrBuilder();
-      } else {
-        return onChangeAction_ == null
-            ? com.google.apps.card.v1.Action.getDefaultInstance()
-            : onChangeAction_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * What to do when a change occurs in the text input field. For example, a
-     * user adding to the field or deleting text.
-     *
-     * Examples of actions to take include running a custom function or opening
-     * a [dialog](https://developers.google.com/workspace/chat/dialogs)
-     * in Google Chat.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Action,
-            com.google.apps.card.v1.Action.Builder,
-            com.google.apps.card.v1.ActionOrBuilder>
-        getOnChangeActionFieldBuilder() {
-      if (onChangeActionBuilder_ == null) {
-        onChangeActionBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.Action,
-                com.google.apps.card.v1.Action.Builder,
-                com.google.apps.card.v1.ActionOrBuilder>(
-                getOnChangeAction(), getParentForChildren(), isClean());
-        onChangeAction_ = null;
-      }
-      return onChangeActionBuilder_;
-    }
 
-    private com.google.apps.card.v1.Suggestions initialSuggestions_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Suggestions,
-            com.google.apps.card.v1.Suggestions.Builder,
-            com.google.apps.card.v1.SuggestionsOrBuilder>
-        initialSuggestionsBuilder_;
     /**
      *
      *
@@ -2243,11 +1881,10 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
-     *
-     * @return Whether the initialSuggestions field is set.
      */
+    @java.lang.Override
     public boolean hasInitialSuggestions() {
-      return ((bitField0_ & 0x00000040) != 0);
+      return instance.hasInitialSuggestions();
     }
     /**
      *
@@ -2274,17 +1911,10 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
-     *
-     * @return The initialSuggestions.
      */
+    @java.lang.Override
     public com.google.apps.card.v1.Suggestions getInitialSuggestions() {
-      if (initialSuggestionsBuilder_ == null) {
-        return initialSuggestions_ == null
-            ? com.google.apps.card.v1.Suggestions.getDefaultInstance()
-            : initialSuggestions_;
-      } else {
-        return initialSuggestionsBuilder_.getMessage();
-      }
+      return instance.getInitialSuggestions();
     }
     /**
      *
@@ -2313,16 +1943,8 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
      */
     public Builder setInitialSuggestions(com.google.apps.card.v1.Suggestions value) {
-      if (initialSuggestionsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        initialSuggestions_ = value;
-      } else {
-        initialSuggestionsBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000040;
-      onChanged();
+      copyOnWrite();
+      instance.setInitialSuggestions(value);
       return this;
     }
     /**
@@ -2353,13 +1975,8 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder setInitialSuggestions(
         com.google.apps.card.v1.Suggestions.Builder builderForValue) {
-      if (initialSuggestionsBuilder_ == null) {
-        initialSuggestions_ = builderForValue.build();
-      } else {
-        initialSuggestionsBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000040;
-      onChanged();
+      copyOnWrite();
+      instance.setInitialSuggestions(builderForValue.build());
       return this;
     }
     /**
@@ -2389,21 +2006,8 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
      */
     public Builder mergeInitialSuggestions(com.google.apps.card.v1.Suggestions value) {
-      if (initialSuggestionsBuilder_ == null) {
-        if (((bitField0_ & 0x00000040) != 0)
-            && initialSuggestions_ != null
-            && initialSuggestions_ != com.google.apps.card.v1.Suggestions.getDefaultInstance()) {
-          getInitialSuggestionsBuilder().mergeFrom(value);
-        } else {
-          initialSuggestions_ = value;
-        }
-      } else {
-        initialSuggestionsBuilder_.mergeFrom(value);
-      }
-      if (initialSuggestions_ != null) {
-        bitField0_ |= 0x00000040;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeInitialSuggestions(value);
       return this;
     }
     /**
@@ -2433,130 +2037,11 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
      */
     public Builder clearInitialSuggestions() {
-      bitField0_ = (bitField0_ & ~0x00000040);
-      initialSuggestions_ = null;
-      if (initialSuggestionsBuilder_ != null) {
-        initialSuggestionsBuilder_.dispose();
-        initialSuggestionsBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearInitialSuggestions();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Suggested values that users can enter. These values appear when users click
-     * inside the text input field. As users type, the suggested values
-     * dynamically filter to match what the users have typed.
-     *
-     * For example, a text input field for programming language might suggest
-     * Java, JavaScript, Python, and C++. When users start typing `Jav`, the list
-     * of suggestions filters to show just `Java` and `JavaScript`.
-     *
-     * Suggested values help guide users to enter values that your app can make
-     * sense of. When referring to JavaScript, some users might enter `javascript`
-     * and others `java script`. Suggesting `JavaScript` can standardize how users
-     * interact with your app.
-     *
-     * When specified, `TextInput.type` is always `SINGLE_LINE`, even if it's set
-     * to `MULTIPLE_LINE`.
-     *
-     * [Google Workspace
-     * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
-     */
-    public com.google.apps.card.v1.Suggestions.Builder getInitialSuggestionsBuilder() {
-      bitField0_ |= 0x00000040;
-      onChanged();
-      return getInitialSuggestionsFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Suggested values that users can enter. These values appear when users click
-     * inside the text input field. As users type, the suggested values
-     * dynamically filter to match what the users have typed.
-     *
-     * For example, a text input field for programming language might suggest
-     * Java, JavaScript, Python, and C++. When users start typing `Jav`, the list
-     * of suggestions filters to show just `Java` and `JavaScript`.
-     *
-     * Suggested values help guide users to enter values that your app can make
-     * sense of. When referring to JavaScript, some users might enter `javascript`
-     * and others `java script`. Suggesting `JavaScript` can standardize how users
-     * interact with your app.
-     *
-     * When specified, `TextInput.type` is always `SINGLE_LINE`, even if it's set
-     * to `MULTIPLE_LINE`.
-     *
-     * [Google Workspace
-     * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
-     */
-    public com.google.apps.card.v1.SuggestionsOrBuilder getInitialSuggestionsOrBuilder() {
-      if (initialSuggestionsBuilder_ != null) {
-        return initialSuggestionsBuilder_.getMessageOrBuilder();
-      } else {
-        return initialSuggestions_ == null
-            ? com.google.apps.card.v1.Suggestions.getDefaultInstance()
-            : initialSuggestions_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Suggested values that users can enter. These values appear when users click
-     * inside the text input field. As users type, the suggested values
-     * dynamically filter to match what the users have typed.
-     *
-     * For example, a text input field for programming language might suggest
-     * Java, JavaScript, Python, and C++. When users start typing `Jav`, the list
-     * of suggestions filters to show just `Java` and `JavaScript`.
-     *
-     * Suggested values help guide users to enter values that your app can make
-     * sense of. When referring to JavaScript, some users might enter `javascript`
-     * and others `java script`. Suggesting `JavaScript` can standardize how users
-     * interact with your app.
-     *
-     * When specified, `TextInput.type` is always `SINGLE_LINE`, even if it's set
-     * to `MULTIPLE_LINE`.
-     *
-     * [Google Workspace
-     * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Suggestions,
-            com.google.apps.card.v1.Suggestions.Builder,
-            com.google.apps.card.v1.SuggestionsOrBuilder>
-        getInitialSuggestionsFieldBuilder() {
-      if (initialSuggestionsBuilder_ == null) {
-        initialSuggestionsBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.Suggestions,
-                com.google.apps.card.v1.Suggestions.Builder,
-                com.google.apps.card.v1.SuggestionsOrBuilder>(
-                getInitialSuggestions(), getParentForChildren(), isClean());
-        initialSuggestions_ = null;
-      }
-      return initialSuggestionsBuilder_;
-    }
 
-    private com.google.apps.card.v1.Action autoCompleteAction_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Action,
-            com.google.apps.card.v1.Action.Builder,
-            com.google.apps.card.v1.ActionOrBuilder>
-        autoCompleteActionBuilder_;
     /**
      *
      *
@@ -2575,11 +2060,10 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
-     *
-     * @return Whether the autoCompleteAction field is set.
      */
+    @java.lang.Override
     public boolean hasAutoCompleteAction() {
-      return ((bitField0_ & 0x00000080) != 0);
+      return instance.hasAutoCompleteAction();
     }
     /**
      *
@@ -2599,17 +2083,10 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
-     *
-     * @return The autoCompleteAction.
      */
+    @java.lang.Override
     public com.google.apps.card.v1.Action getAutoCompleteAction() {
-      if (autoCompleteActionBuilder_ == null) {
-        return autoCompleteAction_ == null
-            ? com.google.apps.card.v1.Action.getDefaultInstance()
-            : autoCompleteAction_;
-      } else {
-        return autoCompleteActionBuilder_.getMessage();
-      }
+      return instance.getAutoCompleteAction();
     }
     /**
      *
@@ -2631,16 +2108,8 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
      */
     public Builder setAutoCompleteAction(com.google.apps.card.v1.Action value) {
-      if (autoCompleteActionBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        autoCompleteAction_ = value;
-      } else {
-        autoCompleteActionBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000080;
-      onChanged();
+      copyOnWrite();
+      instance.setAutoCompleteAction(value);
       return this;
     }
     /**
@@ -2663,13 +2132,8 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
      */
     public Builder setAutoCompleteAction(com.google.apps.card.v1.Action.Builder builderForValue) {
-      if (autoCompleteActionBuilder_ == null) {
-        autoCompleteAction_ = builderForValue.build();
-      } else {
-        autoCompleteActionBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000080;
-      onChanged();
+      copyOnWrite();
+      instance.setAutoCompleteAction(builderForValue.build());
       return this;
     }
     /**
@@ -2692,21 +2156,8 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
      */
     public Builder mergeAutoCompleteAction(com.google.apps.card.v1.Action value) {
-      if (autoCompleteActionBuilder_ == null) {
-        if (((bitField0_ & 0x00000080) != 0)
-            && autoCompleteAction_ != null
-            && autoCompleteAction_ != com.google.apps.card.v1.Action.getDefaultInstance()) {
-          getAutoCompleteActionBuilder().mergeFrom(value);
-        } else {
-          autoCompleteAction_ = value;
-        }
-      } else {
-        autoCompleteActionBuilder_.mergeFrom(value);
-      }
-      if (autoCompleteAction_ != null) {
-        bitField0_ |= 0x00000080;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeAutoCompleteAction(value);
       return this;
     }
     /**
@@ -2729,104 +2180,11 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
      */
     public Builder clearAutoCompleteAction() {
-      bitField0_ = (bitField0_ & ~0x00000080);
-      autoCompleteAction_ = null;
-      if (autoCompleteActionBuilder_ != null) {
-        autoCompleteActionBuilder_.dispose();
-        autoCompleteActionBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearAutoCompleteAction();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Optional. Specify what action to take when the text input field provides
-     * suggestions to users who interact with it.
-     *
-     * If unspecified, the suggestions are set by `initialSuggestions` and
-     * are processed by the client.
-     *
-     * If specified, the app takes the action specified here, such as running
-     * a custom function.
-     *
-     * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
-     */
-    public com.google.apps.card.v1.Action.Builder getAutoCompleteActionBuilder() {
-      bitField0_ |= 0x00000080;
-      onChanged();
-      return getAutoCompleteActionFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Optional. Specify what action to take when the text input field provides
-     * suggestions to users who interact with it.
-     *
-     * If unspecified, the suggestions are set by `initialSuggestions` and
-     * are processed by the client.
-     *
-     * If specified, the app takes the action specified here, such as running
-     * a custom function.
-     *
-     * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
-     */
-    public com.google.apps.card.v1.ActionOrBuilder getAutoCompleteActionOrBuilder() {
-      if (autoCompleteActionBuilder_ != null) {
-        return autoCompleteActionBuilder_.getMessageOrBuilder();
-      } else {
-        return autoCompleteAction_ == null
-            ? com.google.apps.card.v1.Action.getDefaultInstance()
-            : autoCompleteAction_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Optional. Specify what action to take when the text input field provides
-     * suggestions to users who interact with it.
-     *
-     * If unspecified, the suggestions are set by `initialSuggestions` and
-     * are processed by the client.
-     *
-     * If specified, the app takes the action specified here, such as running
-     * a custom function.
-     *
-     * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Action,
-            com.google.apps.card.v1.Action.Builder,
-            com.google.apps.card.v1.ActionOrBuilder>
-        getAutoCompleteActionFieldBuilder() {
-      if (autoCompleteActionBuilder_ == null) {
-        autoCompleteActionBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.Action,
-                com.google.apps.card.v1.Action.Builder,
-                com.google.apps.card.v1.ActionOrBuilder>(
-                getAutoCompleteAction(), getParentForChildren(), isClean());
-        autoCompleteAction_ = null;
-      }
-      return autoCompleteActionBuilder_;
-    }
 
-    private java.lang.Object placeholderText_ = "";
     /**
      *
      *
@@ -2842,16 +2200,9 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The placeholderText.
      */
+    @java.lang.Override
     public java.lang.String getPlaceholderText() {
-      java.lang.Object ref = placeholderText_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        placeholderText_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getPlaceholderText();
     }
     /**
      *
@@ -2868,16 +2219,9 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for placeholderText.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getPlaceholderTextBytes() {
-      java.lang.Object ref = placeholderText_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        placeholderText_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getPlaceholderTextBytes();
     }
     /**
      *
@@ -2896,12 +2240,8 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setPlaceholderText(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      placeholderText_ = value;
-      bitField0_ |= 0x00000100;
-      onChanged();
+      copyOnWrite();
+      instance.setPlaceholderText(value);
       return this;
     }
     /**
@@ -2920,9 +2260,8 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearPlaceholderText() {
-      placeholderText_ = getDefaultInstance().getPlaceholderText();
-      bitField0_ = (bitField0_ & ~0x00000100);
-      onChanged();
+      copyOnWrite();
+      instance.clearPlaceholderText();
       return this;
     }
     /**
@@ -2942,74 +2281,101 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setPlaceholderTextBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      placeholderText_ = value;
-      bitField0_ |= 0x00000100;
-      onChanged();
+      copyOnWrite();
+      instance.setPlaceholderTextBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.apps.card.v1.TextInput)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.apps.card.v1.TextInput();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_",
+                "name_",
+                "label_",
+                "hintText_",
+                "value_",
+                "type_",
+                "onChangeAction_",
+                "initialSuggestions_",
+                "autoCompleteAction_",
+                "placeholderText_",
+              };
+          java.lang.String info =
+              "\u0000\t\u0000\u0001\u0001\f\t\u0000\u0000\u0000\u0001\u0208\u0002\u0208\u0003\u0208"
+                  + "\u0004\u0208\u0005\f\u0006\u1009\u0000\u0007\u1009\u0001\b\u1009\u0002\f\u0208";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.apps.card.v1.TextInput> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.apps.card.v1.TextInput.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.apps.card.v1.TextInput>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.apps.card.v1.TextInput)
   private static final com.google.apps.card.v1.TextInput DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.apps.card.v1.TextInput();
+    TextInput defaultInstance = new TextInput();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        TextInput.class, defaultInstance);
   }
 
   public static com.google.apps.card.v1.TextInput getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<TextInput> PARSER =
-      new com.google.protobuf.AbstractParser<TextInput>() {
-        @java.lang.Override
-        public TextInput parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<TextInput> PARSER;
 
   public static com.google.protobuf.Parser<TextInput> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<TextInput> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.apps.card.v1.TextInput getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

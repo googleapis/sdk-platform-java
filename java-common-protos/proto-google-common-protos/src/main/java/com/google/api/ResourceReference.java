@@ -29,44 +29,18 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.ResourceReference}
  */
-public final class ResourceReference extends com.google.protobuf.GeneratedMessageV3
+public final class ResourceReference
+    extends com.google.protobuf.GeneratedMessageLite<ResourceReference, ResourceReference.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.ResourceReference)
     ResourceReferenceOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use ResourceReference.newBuilder() to construct.
-  private ResourceReference(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private ResourceReference() {
     type_ = "";
     childType_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new ResourceReference();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.ResourceProto.internal_static_google_api_ResourceReference_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.ResourceProto
-        .internal_static_google_api_ResourceReference_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.ResourceReference.class, com.google.api.ResourceReference.Builder.class);
-  }
-
   public static final int TYPE_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object type_ = "";
+  private java.lang.String type_;
   /**
    *
    *
@@ -99,15 +73,7 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
    */
   @java.lang.Override
   public java.lang.String getType() {
-    java.lang.Object ref = type_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      type_ = s;
-      return s;
-    }
+    return type_;
   }
   /**
    *
@@ -141,21 +107,112 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getTypeBytes() {
-    java.lang.Object ref = type_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      type_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(type_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The resource type that the annotated field references.
+   *
+   * Example:
+   *
+   *     message Subscription {
+   *       string topic = 2 [(google.api.resource_reference) = {
+   *         type: "pubsub.googleapis.com/Topic"
+   *       }];
+   *     }
+   *
+   * Occasionally, a field may reference an arbitrary resource. In this case,
+   * APIs use the special value * in their resource reference.
+   *
+   * Example:
+   *
+   *     message GetIamPolicyRequest {
+   *       string resource = 2 [(google.api.resource_reference) = {
+   *         type: "*"
+   *       }];
+   *     }
+   * </pre>
+   *
+   * <code>string type = 1;</code>
+   *
+   * @param value The type to set.
+   */
+  private void setType(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    type_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The resource type that the annotated field references.
+   *
+   * Example:
+   *
+   *     message Subscription {
+   *       string topic = 2 [(google.api.resource_reference) = {
+   *         type: "pubsub.googleapis.com/Topic"
+   *       }];
+   *     }
+   *
+   * Occasionally, a field may reference an arbitrary resource. In this case,
+   * APIs use the special value * in their resource reference.
+   *
+   * Example:
+   *
+   *     message GetIamPolicyRequest {
+   *       string resource = 2 [(google.api.resource_reference) = {
+   *         type: "*"
+   *       }];
+   *     }
+   * </pre>
+   *
+   * <code>string type = 1;</code>
+   */
+  private void clearType() {
+
+    type_ = getDefaultInstance().getType();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The resource type that the annotated field references.
+   *
+   * Example:
+   *
+   *     message Subscription {
+   *       string topic = 2 [(google.api.resource_reference) = {
+   *         type: "pubsub.googleapis.com/Topic"
+   *       }];
+   *     }
+   *
+   * Occasionally, a field may reference an arbitrary resource. In this case,
+   * APIs use the special value * in their resource reference.
+   *
+   * Example:
+   *
+   *     message GetIamPolicyRequest {
+   *       string resource = 2 [(google.api.resource_reference) = {
+   *         type: "*"
+   *       }];
+   *     }
+   * </pre>
+   *
+   * <code>string type = 1;</code>
+   *
+   * @param value The bytes for type to set.
+   */
+  private void setTypeBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    type_ = value.toStringUtf8();
   }
 
   public static final int CHILD_TYPE_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object childType_ = "";
+  private java.lang.String childType_;
   /**
    *
    *
@@ -179,15 +236,7 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
    */
   @java.lang.Override
   public java.lang.String getChildType() {
-    java.lang.Object ref = childType_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      childType_ = s;
-      return s;
-    }
+    return childType_;
   }
   /**
    *
@@ -212,183 +261,164 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getChildTypeBytes() {
-    java.lang.Object ref = childType_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      childType_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(childType_);
   }
+  /**
+   *
+   *
+   * <pre>
+   * The resource type of a child collection that the annotated field
+   * references. This is useful for annotating the `parent` field that
+   * doesn't have a fixed resource type.
+   *
+   * Example:
+   *
+   *     message ListLogEntriesRequest {
+   *       string parent = 1 [(google.api.resource_reference) = {
+   *         child_type: "logging.googleapis.com/LogEntry"
+   *       };
+   *     }
+   * </pre>
+   *
+   * <code>string child_type = 2;</code>
+   *
+   * @param value The childType to set.
+   */
+  private void setChildType(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    childType_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The resource type of a child collection that the annotated field
+   * references. This is useful for annotating the `parent` field that
+   * doesn't have a fixed resource type.
+   *
+   * Example:
+   *
+   *     message ListLogEntriesRequest {
+   *       string parent = 1 [(google.api.resource_reference) = {
+   *         child_type: "logging.googleapis.com/LogEntry"
+   *       };
+   *     }
+   * </pre>
+   *
+   * <code>string child_type = 2;</code>
+   */
+  private void clearChildType() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(type_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, type_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(childType_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, childType_);
-    }
-    getUnknownFields().writeTo(output);
+    childType_ = getDefaultInstance().getChildType();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(type_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, type_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(childType_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, childType_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.ResourceReference)) {
-      return super.equals(obj);
-    }
-    com.google.api.ResourceReference other = (com.google.api.ResourceReference) obj;
-
-    if (!getType().equals(other.getType())) return false;
-    if (!getChildType().equals(other.getChildType())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + TYPE_FIELD_NUMBER;
-    hash = (53 * hash) + getType().hashCode();
-    hash = (37 * hash) + CHILD_TYPE_FIELD_NUMBER;
-    hash = (53 * hash) + getChildType().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * The resource type of a child collection that the annotated field
+   * references. This is useful for annotating the `parent` field that
+   * doesn't have a fixed resource type.
+   *
+   * Example:
+   *
+   *     message ListLogEntriesRequest {
+   *       string parent = 1 [(google.api.resource_reference) = {
+   *         child_type: "logging.googleapis.com/LogEntry"
+   *       };
+   *     }
+   * </pre>
+   *
+   * <code>string child_type = 2;</code>
+   *
+   * @param value The bytes for childType to set.
+   */
+  private void setChildTypeBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    childType_ = value.toStringUtf8();
   }
 
   public static com.google.api.ResourceReference parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.ResourceReference parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.ResourceReference parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.ResourceReference parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.ResourceReference parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.ResourceReference parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.ResourceReference parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.ResourceReference parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.ResourceReference parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.ResourceReference parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.ResourceReference parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.ResourceReference parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.ResourceReference prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -399,192 +429,17 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
    *
    * Protobuf type {@code google.api.ResourceReference}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.api.ResourceReference, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.ResourceReference)
       com.google.api.ResourceReferenceOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.ResourceProto.internal_static_google_api_ResourceReference_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.ResourceProto
-          .internal_static_google_api_ResourceReference_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.ResourceReference.class,
-              com.google.api.ResourceReference.Builder.class);
-    }
-
     // Construct using com.google.api.ResourceReference.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      type_ = "";
-      childType_ = "";
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.ResourceProto.internal_static_google_api_ResourceReference_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.ResourceReference getDefaultInstanceForType() {
-      return com.google.api.ResourceReference.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.ResourceReference build() {
-      com.google.api.ResourceReference result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.ResourceReference buildPartial() {
-      com.google.api.ResourceReference result = new com.google.api.ResourceReference(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.api.ResourceReference result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.type_ = type_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.childType_ = childType_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.ResourceReference) {
-        return mergeFrom((com.google.api.ResourceReference) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.ResourceReference other) {
-      if (other == com.google.api.ResourceReference.getDefaultInstance()) return this;
-      if (!other.getType().isEmpty()) {
-        type_ = other.type_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getChildType().isEmpty()) {
-        childType_ = other.childType_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                type_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                childType_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object type_ = "";
     /**
      *
      *
@@ -615,16 +470,9 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      *
      * @return The type.
      */
+    @java.lang.Override
     public java.lang.String getType() {
-      java.lang.Object ref = type_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        type_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getType();
     }
     /**
      *
@@ -656,16 +504,9 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      *
      * @return The bytes for type.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getTypeBytes() {
-      java.lang.Object ref = type_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        type_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getTypeBytes();
     }
     /**
      *
@@ -699,12 +540,8 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder setType(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      type_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setType(value);
       return this;
     }
     /**
@@ -738,9 +575,8 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder clearType() {
-      type_ = getDefaultInstance().getType();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearType();
       return this;
     }
     /**
@@ -775,17 +611,11 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder setTypeBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      type_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setTypeBytes(value);
       return this;
     }
 
-    private java.lang.Object childType_ = "";
     /**
      *
      *
@@ -807,16 +637,9 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      *
      * @return The childType.
      */
+    @java.lang.Override
     public java.lang.String getChildType() {
-      java.lang.Object ref = childType_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        childType_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getChildType();
     }
     /**
      *
@@ -839,16 +662,9 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      *
      * @return The bytes for childType.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getChildTypeBytes() {
-      java.lang.Object ref = childType_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        childType_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getChildTypeBytes();
     }
     /**
      *
@@ -873,12 +689,8 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder setChildType(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      childType_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setChildType(value);
       return this;
     }
     /**
@@ -903,9 +715,8 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder clearChildType() {
-      childType_ = getDefaultInstance().getChildType();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearChildType();
       return this;
     }
     /**
@@ -931,74 +742,92 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder setChildTypeBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      childType_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setChildTypeBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.api.ResourceReference)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.ResourceReference();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "type_", "childType_",
+              };
+          java.lang.String info =
+              "\u0000\u0002\u0000\u0000\u0001\u0002\u0002\u0000\u0000\u0000\u0001\u0208\u0002\u0208"
+                  + "";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.ResourceReference> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.ResourceReference.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.api.ResourceReference>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.ResourceReference)
   private static final com.google.api.ResourceReference DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.ResourceReference();
+    ResourceReference defaultInstance = new ResourceReference();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        ResourceReference.class, defaultInstance);
   }
 
   public static com.google.api.ResourceReference getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<ResourceReference> PARSER =
-      new com.google.protobuf.AbstractParser<ResourceReference>() {
-        @java.lang.Override
-        public ResourceReference parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<ResourceReference> PARSER;
 
   public static com.google.protobuf.Parser<ResourceReference> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<ResourceReference> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.ResourceReference getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

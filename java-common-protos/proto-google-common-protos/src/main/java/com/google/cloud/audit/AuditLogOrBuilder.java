@@ -22,7 +22,7 @@ package com.google.cloud.audit;
 public interface AuditLogOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.cloud.audit.AuditLog)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -145,16 +145,6 @@ public interface AuditLogOrBuilder
    * @return The resourceLocation.
    */
   com.google.cloud.audit.ResourceLocation getResourceLocation();
-  /**
-   *
-   *
-   * <pre>
-   * The resource location information.
-   * </pre>
-   *
-   * <code>.google.cloud.audit.ResourceLocation resource_location = 20;</code>
-   */
-  com.google.cloud.audit.ResourceLocationOrBuilder getResourceLocationOrBuilder();
 
   /**
    *
@@ -192,22 +182,6 @@ public interface AuditLogOrBuilder
    * @return The resourceOriginalState.
    */
   com.google.protobuf.Struct getResourceOriginalState();
-  /**
-   *
-   *
-   * <pre>
-   * The resource's original state before mutation. Present only for
-   * operations which have successfully modified the targeted resource(s).
-   * In general, this field should contain all changed fields, except those
-   * that are already been included in `request`, `response`, `metadata` or
-   * `service_data` fields.
-   * When the JSON object represented here has a proto equivalent,
-   * the proto name will be indicated in the `&#64;type` property.
-   * </pre>
-   *
-   * <code>.google.protobuf.Struct resource_original_state = 19;</code>
-   */
-  com.google.protobuf.StructOrBuilder getResourceOriginalStateOrBuilder();
 
   /**
    *
@@ -247,16 +221,6 @@ public interface AuditLogOrBuilder
    * @return The status.
    */
   com.google.rpc.Status getStatus();
-  /**
-   *
-   *
-   * <pre>
-   * The status of the overall operation.
-   * </pre>
-   *
-   * <code>.google.rpc.Status status = 2;</code>
-   */
-  com.google.rpc.StatusOrBuilder getStatusOrBuilder();
 
   /**
    *
@@ -282,16 +246,6 @@ public interface AuditLogOrBuilder
    * @return The authenticationInfo.
    */
   com.google.cloud.audit.AuthenticationInfo getAuthenticationInfo();
-  /**
-   *
-   *
-   * <pre>
-   * Authentication information.
-   * </pre>
-   *
-   * <code>.google.cloud.audit.AuthenticationInfo authentication_info = 3;</code>
-   */
-  com.google.cloud.audit.AuthenticationInfoOrBuilder getAuthenticationInfoOrBuilder();
 
   /**
    *
@@ -329,31 +283,6 @@ public interface AuditLogOrBuilder
    * <code>repeated .google.cloud.audit.AuthorizationInfo authorization_info = 9;</code>
    */
   int getAuthorizationInfoCount();
-  /**
-   *
-   *
-   * <pre>
-   * Authorization information. If there are multiple
-   * resources or permissions involved, then there is
-   * one AuthorizationInfo element for each {resource, permission} tuple.
-   * </pre>
-   *
-   * <code>repeated .google.cloud.audit.AuthorizationInfo authorization_info = 9;</code>
-   */
-  java.util.List<? extends com.google.cloud.audit.AuthorizationInfoOrBuilder>
-      getAuthorizationInfoOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Authorization information. If there are multiple
-   * resources or permissions involved, then there is
-   * one AuthorizationInfo element for each {resource, permission} tuple.
-   * </pre>
-   *
-   * <code>repeated .google.cloud.audit.AuthorizationInfo authorization_info = 9;</code>
-   */
-  com.google.cloud.audit.AuthorizationInfoOrBuilder getAuthorizationInfoOrBuilder(int index);
 
   /**
    *
@@ -383,18 +312,6 @@ public interface AuditLogOrBuilder
    * @return The policyViolationInfo.
    */
   com.google.cloud.audit.PolicyViolationInfo getPolicyViolationInfo();
-  /**
-   *
-   *
-   * <pre>
-   * Indicates the policy violations for this request. If the request
-   * is denied by the policy, violation information will be logged
-   * here.
-   * </pre>
-   *
-   * <code>.google.cloud.audit.PolicyViolationInfo policy_violation_info = 25;</code>
-   */
-  com.google.cloud.audit.PolicyViolationInfoOrBuilder getPolicyViolationInfoOrBuilder();
 
   /**
    *
@@ -420,16 +337,6 @@ public interface AuditLogOrBuilder
    * @return The requestMetadata.
    */
   com.google.cloud.audit.RequestMetadata getRequestMetadata();
-  /**
-   *
-   *
-   * <pre>
-   * Metadata about the operation.
-   * </pre>
-   *
-   * <code>.google.cloud.audit.RequestMetadata request_metadata = 4;</code>
-   */
-  com.google.cloud.audit.RequestMetadataOrBuilder getRequestMetadataOrBuilder();
 
   /**
    *
@@ -465,21 +372,6 @@ public interface AuditLogOrBuilder
    * @return The request.
    */
   com.google.protobuf.Struct getRequest();
-  /**
-   *
-   *
-   * <pre>
-   * The operation request. This may not include all request parameters,
-   * such as those that are too large, privacy-sensitive, or duplicated
-   * elsewhere in the log record.
-   * It should never include user-generated data, such as file contents.
-   * When the JSON object represented here has a proto equivalent, the proto
-   * name will be indicated in the `&#64;type` property.
-   * </pre>
-   *
-   * <code>.google.protobuf.Struct request = 16;</code>
-   */
-  com.google.protobuf.StructOrBuilder getRequestOrBuilder();
 
   /**
    *
@@ -515,21 +407,6 @@ public interface AuditLogOrBuilder
    * @return The response.
    */
   com.google.protobuf.Struct getResponse();
-  /**
-   *
-   *
-   * <pre>
-   * The operation response. This may not include all response elements,
-   * such as those that are too large, privacy-sensitive, or duplicated
-   * elsewhere in the log record.
-   * It should never include user-generated data, such as file contents.
-   * When the JSON object represented here has a proto equivalent, the proto
-   * name will be indicated in the `&#64;type` property.
-   * </pre>
-   *
-   * <code>.google.protobuf.Struct response = 17;</code>
-   */
-  com.google.protobuf.StructOrBuilder getResponseOrBuilder();
 
   /**
    *
@@ -557,17 +434,6 @@ public interface AuditLogOrBuilder
    * @return The metadata.
    */
   com.google.protobuf.Struct getMetadata();
-  /**
-   *
-   *
-   * <pre>
-   * Other service-specific data about the request, response, and other
-   * information associated with the current audited event.
-   * </pre>
-   *
-   * <code>.google.protobuf.Struct metadata = 18;</code>
-   */
-  com.google.protobuf.StructOrBuilder getMetadataOrBuilder();
 
   /**
    *
@@ -603,17 +469,4 @@ public interface AuditLogOrBuilder
    */
   @java.lang.Deprecated
   com.google.protobuf.Any getServiceData();
-  /**
-   *
-   *
-   * <pre>
-   * Deprecated. Use the `metadata` field instead.
-   * Other service-specific data about the request, response, and other
-   * activities.
-   * </pre>
-   *
-   * <code>.google.protobuf.Any service_data = 15 [deprecated = true];</code>
-   */
-  @java.lang.Deprecated
-  com.google.protobuf.AnyOrBuilder getServiceDataOrBuilder();
 }

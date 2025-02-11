@@ -22,7 +22,7 @@ package com.google.api;
 public interface HttpRuleOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.HttpRule)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -273,19 +273,6 @@ public interface HttpRuleOrBuilder
    * @return The custom.
    */
   com.google.api.CustomHttpPattern getCustom();
-  /**
-   *
-   *
-   * <pre>
-   * The custom pattern is used for specifying an HTTP method that is not
-   * included in the `pattern` field, such as HEAD, or "*" to leave the
-   * HTTP method unspecified for this rule. The wild-card rule is useful
-   * for services that provide content to Web (HTML) clients.
-   * </pre>
-   *
-   * <code>.google.api.CustomHttpPattern custom = 8;</code>
-   */
-  com.google.api.CustomHttpPatternOrBuilder getCustomOrBuilder();
 
   /**
    *
@@ -393,30 +380,6 @@ public interface HttpRuleOrBuilder
    * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
    */
   int getAdditionalBindingsCount();
-  /**
-   *
-   *
-   * <pre>
-   * Additional HTTP bindings for the selector. Nested bindings must
-   * not contain an `additional_bindings` field themselves (that is,
-   * the nesting may only be one level deep).
-   * </pre>
-   *
-   * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
-   */
-  java.util.List<? extends com.google.api.HttpRuleOrBuilder> getAdditionalBindingsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Additional HTTP bindings for the selector. Nested bindings must
-   * not contain an `additional_bindings` field themselves (that is,
-   * the nesting may only be one level deep).
-   * </pre>
-   *
-   * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
-   */
-  com.google.api.HttpRuleOrBuilder getAdditionalBindingsOrBuilder(int index);
 
-  com.google.api.HttpRule.PatternCase getPatternCase();
+  public com.google.api.HttpRule.PatternCase getPatternCase();
 }

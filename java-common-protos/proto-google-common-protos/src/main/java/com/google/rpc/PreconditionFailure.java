@@ -32,45 +32,20 @@ package com.google.rpc;
  *
  * Protobuf type {@code google.rpc.PreconditionFailure}
  */
-public final class PreconditionFailure extends com.google.protobuf.GeneratedMessageV3
+public final class PreconditionFailure
+    extends com.google.protobuf.GeneratedMessageLite<
+        PreconditionFailure, PreconditionFailure.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.rpc.PreconditionFailure)
     PreconditionFailureOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use PreconditionFailure.newBuilder() to construct.
-  private PreconditionFailure(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private PreconditionFailure() {
-    violations_ = java.util.Collections.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new PreconditionFailure();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.rpc.ErrorDetailsProto
-        .internal_static_google_rpc_PreconditionFailure_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.rpc.ErrorDetailsProto
-        .internal_static_google_rpc_PreconditionFailure_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.rpc.PreconditionFailure.class,
-            com.google.rpc.PreconditionFailure.Builder.class);
+    violations_ = emptyProtobufList();
   }
 
   public interface ViolationOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:google.rpc.PreconditionFailure.Violation)
-      com.google.protobuf.MessageOrBuilder {
+      com.google.protobuf.MessageLiteOrBuilder {
 
     /**
      *
@@ -170,47 +145,19 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
    *
    * Protobuf type {@code google.rpc.PreconditionFailure.Violation}
    */
-  public static final class Violation extends com.google.protobuf.GeneratedMessageV3
+  public static final class Violation
+      extends com.google.protobuf.GeneratedMessageLite<Violation, Violation.Builder>
       implements
       // @@protoc_insertion_point(message_implements:google.rpc.PreconditionFailure.Violation)
       ViolationOrBuilder {
-    private static final long serialVersionUID = 0L;
-    // Use Violation.newBuilder() to construct.
-    private Violation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-
     private Violation() {
       type_ = "";
       subject_ = "";
       description_ = "";
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-      return new Violation();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.rpc.ErrorDetailsProto
-          .internal_static_google_rpc_PreconditionFailure_Violation_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.rpc.ErrorDetailsProto
-          .internal_static_google_rpc_PreconditionFailure_Violation_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.rpc.PreconditionFailure.Violation.class,
-              com.google.rpc.PreconditionFailure.Violation.Builder.class);
-    }
-
     public static final int TYPE_FIELD_NUMBER = 1;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object type_ = "";
+    private java.lang.String type_;
     /**
      *
      *
@@ -226,15 +173,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      */
     @java.lang.Override
     public java.lang.String getType() {
-      java.lang.Object ref = type_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        type_ = s;
-        return s;
-      }
+      return type_;
     }
     /**
      *
@@ -251,21 +190,61 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getTypeBytes() {
-      java.lang.Object ref = type_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        type_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(type_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The type of PreconditionFailure. We recommend using a service-specific
+     * enum type to define the supported precondition violation subjects. For
+     * example, "TOS" for "Terms of Service violation".
+     * </pre>
+     *
+     * <code>string type = 1;</code>
+     *
+     * @param value The type to set.
+     */
+    private void setType(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      type_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The type of PreconditionFailure. We recommend using a service-specific
+     * enum type to define the supported precondition violation subjects. For
+     * example, "TOS" for "Terms of Service violation".
+     * </pre>
+     *
+     * <code>string type = 1;</code>
+     */
+    private void clearType() {
+
+      type_ = getDefaultInstance().getType();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The type of PreconditionFailure. We recommend using a service-specific
+     * enum type to define the supported precondition violation subjects. For
+     * example, "TOS" for "Terms of Service violation".
+     * </pre>
+     *
+     * <code>string type = 1;</code>
+     *
+     * @param value The bytes for type to set.
+     */
+    private void setTypeBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      type_ = value.toStringUtf8();
     }
 
     public static final int SUBJECT_FIELD_NUMBER = 2;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object subject_ = "";
+    private java.lang.String subject_;
     /**
      *
      *
@@ -281,15 +260,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      */
     @java.lang.Override
     public java.lang.String getSubject() {
-      java.lang.Object ref = subject_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        subject_ = s;
-        return s;
-      }
+      return subject_;
     }
     /**
      *
@@ -306,21 +277,61 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getSubjectBytes() {
-      java.lang.Object ref = subject_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        subject_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(subject_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The subject, relative to the type, that failed.
+     * For example, "google.com/cloud" relative to the "TOS" type would indicate
+     * which terms of service is being referenced.
+     * </pre>
+     *
+     * <code>string subject = 2;</code>
+     *
+     * @param value The subject to set.
+     */
+    private void setSubject(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      subject_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The subject, relative to the type, that failed.
+     * For example, "google.com/cloud" relative to the "TOS" type would indicate
+     * which terms of service is being referenced.
+     * </pre>
+     *
+     * <code>string subject = 2;</code>
+     */
+    private void clearSubject() {
+
+      subject_ = getDefaultInstance().getSubject();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The subject, relative to the type, that failed.
+     * For example, "google.com/cloud" relative to the "TOS" type would indicate
+     * which terms of service is being referenced.
+     * </pre>
+     *
+     * <code>string subject = 2;</code>
+     *
+     * @param value The bytes for subject to set.
+     */
+    private void setSubjectBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      subject_ = value.toStringUtf8();
     }
 
     public static final int DESCRIPTION_FIELD_NUMBER = 3;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object description_ = "";
+    private java.lang.String description_;
     /**
      *
      *
@@ -337,15 +348,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      */
     @java.lang.Override
     public java.lang.String getDescription() {
-      java.lang.Object ref = description_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        description_ = s;
-        return s;
-      }
+      return description_;
     }
     /**
      *
@@ -363,195 +366,144 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getDescriptionBytes() {
-      java.lang.Object ref = description_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        description_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(description_);
     }
+    /**
+     *
+     *
+     * <pre>
+     * A description of how the precondition failed. Developers can use this
+     * description to understand how to fix the failure.
+     *
+     * For example: "Terms of service not accepted".
+     * </pre>
+     *
+     * <code>string description = 3;</code>
+     *
+     * @param value The description to set.
+     */
+    private void setDescription(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
 
-    private byte memoizedIsInitialized = -1;
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
+      description_ = value;
     }
+    /**
+     *
+     *
+     * <pre>
+     * A description of how the precondition failed. Developers can use this
+     * description to understand how to fix the failure.
+     *
+     * For example: "Terms of service not accepted".
+     * </pre>
+     *
+     * <code>string description = 3;</code>
+     */
+    private void clearDescription() {
 
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(type_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, type_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(subject_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, subject_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, description_);
-      }
-      getUnknownFields().writeTo(output);
+      description_ = getDefaultInstance().getDescription();
     }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(type_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, type_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(subject_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, subject_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, description_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-        return true;
-      }
-      if (!(obj instanceof com.google.rpc.PreconditionFailure.Violation)) {
-        return super.equals(obj);
-      }
-      com.google.rpc.PreconditionFailure.Violation other =
-          (com.google.rpc.PreconditionFailure.Violation) obj;
-
-      if (!getType().equals(other.getType())) return false;
-      if (!getSubject().equals(other.getSubject())) return false;
-      if (!getDescription().equals(other.getDescription())) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + TYPE_FIELD_NUMBER;
-      hash = (53 * hash) + getType().hashCode();
-      hash = (37 * hash) + SUBJECT_FIELD_NUMBER;
-      hash = (53 * hash) + getSubject().hashCode();
-      hash = (37 * hash) + DESCRIPTION_FIELD_NUMBER;
-      hash = (53 * hash) + getDescription().hashCode();
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
+    /**
+     *
+     *
+     * <pre>
+     * A description of how the precondition failed. Developers can use this
+     * description to understand how to fix the failure.
+     *
+     * For example: "Terms of service not accepted".
+     * </pre>
+     *
+     * <code>string description = 3;</code>
+     *
+     * @param value The bytes for description to set.
+     */
+    private void setDescriptionBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      description_ = value.toStringUtf8();
     }
 
     public static com.google.rpc.PreconditionFailure.Violation parseFrom(java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.PreconditionFailure.Violation parseFrom(
         java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.PreconditionFailure.Violation parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.PreconditionFailure.Violation parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.PreconditionFailure.Violation parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.PreconditionFailure.Violation parseFrom(
         byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.PreconditionFailure.Violation parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.PreconditionFailure.Violation parseFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.rpc.PreconditionFailure.Violation parseDelimitedFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.PreconditionFailure.Violation parseDelimitedFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.rpc.PreconditionFailure.Violation parseFrom(
         com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.PreconditionFailure.Violation parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
+      return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
 
     public static Builder newBuilder(com.google.rpc.PreconditionFailure.Violation prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      *
      *
@@ -562,212 +514,16 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      * Protobuf type {@code google.rpc.PreconditionFailure.Violation}
      */
     public static final class Builder
-        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+        extends com.google.protobuf.GeneratedMessageLite.Builder<
+            com.google.rpc.PreconditionFailure.Violation, Builder>
         implements
         // @@protoc_insertion_point(builder_implements:google.rpc.PreconditionFailure.Violation)
         com.google.rpc.PreconditionFailure.ViolationOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return com.google.rpc.ErrorDetailsProto
-            .internal_static_google_rpc_PreconditionFailure_Violation_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.google.rpc.ErrorDetailsProto
-            .internal_static_google_rpc_PreconditionFailure_Violation_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.google.rpc.PreconditionFailure.Violation.class,
-                com.google.rpc.PreconditionFailure.Violation.Builder.class);
-      }
-
       // Construct using com.google.rpc.PreconditionFailure.Violation.newBuilder()
-      private Builder() {}
-
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
+      private Builder() {
+        super(DEFAULT_INSTANCE);
       }
 
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        type_ = "";
-        subject_ = "";
-        description_ = "";
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return com.google.rpc.ErrorDetailsProto
-            .internal_static_google_rpc_PreconditionFailure_Violation_descriptor;
-      }
-
-      @java.lang.Override
-      public com.google.rpc.PreconditionFailure.Violation getDefaultInstanceForType() {
-        return com.google.rpc.PreconditionFailure.Violation.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.google.rpc.PreconditionFailure.Violation build() {
-        com.google.rpc.PreconditionFailure.Violation result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.google.rpc.PreconditionFailure.Violation buildPartial() {
-        com.google.rpc.PreconditionFailure.Violation result =
-            new com.google.rpc.PreconditionFailure.Violation(this);
-        if (bitField0_ != 0) {
-          buildPartial0(result);
-        }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartial0(com.google.rpc.PreconditionFailure.Violation result) {
-        int from_bitField0_ = bitField0_;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.type_ = type_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.subject_ = subject_;
-        }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.description_ = description_;
-        }
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.rpc.PreconditionFailure.Violation) {
-          return mergeFrom((com.google.rpc.PreconditionFailure.Violation) other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.google.rpc.PreconditionFailure.Violation other) {
-        if (other == com.google.rpc.PreconditionFailure.Violation.getDefaultInstance()) return this;
-        if (!other.getType().isEmpty()) {
-          type_ = other.type_;
-          bitField0_ |= 0x00000001;
-          onChanged();
-        }
-        if (!other.getSubject().isEmpty()) {
-          subject_ = other.subject_;
-          bitField0_ |= 0x00000002;
-          onChanged();
-        }
-        if (!other.getDescription().isEmpty()) {
-          description_ = other.description_;
-          bitField0_ |= 0x00000004;
-          onChanged();
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10:
-                {
-                  type_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000001;
-                  break;
-                } // case 10
-              case 18:
-                {
-                  subject_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000002;
-                  break;
-                } // case 18
-              case 26:
-                {
-                  description_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000004;
-                  break;
-                } // case 26
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-
-      private int bitField0_;
-
-      private java.lang.Object type_ = "";
       /**
        *
        *
@@ -781,16 +537,9 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        *
        * @return The type.
        */
+      @java.lang.Override
       public java.lang.String getType() {
-        java.lang.Object ref = type_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          type_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getType();
       }
       /**
        *
@@ -805,16 +554,9 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        *
        * @return The bytes for type.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getTypeBytes() {
-        java.lang.Object ref = type_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          type_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getTypeBytes();
       }
       /**
        *
@@ -831,12 +573,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * @return This builder for chaining.
        */
       public Builder setType(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        type_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setType(value);
         return this;
       }
       /**
@@ -853,9 +591,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * @return This builder for chaining.
        */
       public Builder clearType() {
-        type_ = getDefaultInstance().getType();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
+        copyOnWrite();
+        instance.clearType();
         return this;
       }
       /**
@@ -873,17 +610,11 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * @return This builder for chaining.
        */
       public Builder setTypeBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        type_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setTypeBytes(value);
         return this;
       }
 
-      private java.lang.Object subject_ = "";
       /**
        *
        *
@@ -897,16 +628,9 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        *
        * @return The subject.
        */
+      @java.lang.Override
       public java.lang.String getSubject() {
-        java.lang.Object ref = subject_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          subject_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getSubject();
       }
       /**
        *
@@ -921,16 +645,9 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        *
        * @return The bytes for subject.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getSubjectBytes() {
-        java.lang.Object ref = subject_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          subject_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getSubjectBytes();
       }
       /**
        *
@@ -947,12 +664,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * @return This builder for chaining.
        */
       public Builder setSubject(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        subject_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setSubject(value);
         return this;
       }
       /**
@@ -969,9 +682,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * @return This builder for chaining.
        */
       public Builder clearSubject() {
-        subject_ = getDefaultInstance().getSubject();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
+        copyOnWrite();
+        instance.clearSubject();
         return this;
       }
       /**
@@ -989,17 +701,11 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * @return This builder for chaining.
        */
       public Builder setSubjectBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        subject_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setSubjectBytes(value);
         return this;
       }
 
-      private java.lang.Object description_ = "";
       /**
        *
        *
@@ -1014,16 +720,9 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        *
        * @return The description.
        */
+      @java.lang.Override
       public java.lang.String getDescription() {
-        java.lang.Object ref = description_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          description_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getDescription();
       }
       /**
        *
@@ -1039,16 +738,9 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        *
        * @return The bytes for description.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getDescriptionBytes() {
-        java.lang.Object ref = description_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          description_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getDescriptionBytes();
       }
       /**
        *
@@ -1066,12 +758,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * @return This builder for chaining.
        */
       public Builder setDescription(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        description_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
+        copyOnWrite();
+        instance.setDescription(value);
         return this;
       }
       /**
@@ -1089,9 +777,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * @return This builder for chaining.
        */
       public Builder clearDescription() {
-        description_ = getDefaultInstance().getDescription();
-        bitField0_ = (bitField0_ & ~0x00000004);
-        onChanged();
+        copyOnWrite();
+        instance.clearDescription();
         return this;
       }
       /**
@@ -1110,84 +797,100 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * @return This builder for chaining.
        */
       public Builder setDescriptionBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        description_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
+        copyOnWrite();
+        instance.setDescriptionBytes(value);
         return this;
       }
 
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
       // @@protoc_insertion_point(builder_scope:google.rpc.PreconditionFailure.Violation)
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0,
+        java.lang.Object arg1) {
+      switch (method) {
+        case NEW_MUTABLE_INSTANCE:
+          {
+            return new com.google.rpc.PreconditionFailure.Violation();
+          }
+        case NEW_BUILDER:
+          {
+            return new Builder();
+          }
+        case BUILD_MESSAGE_INFO:
+          {
+            java.lang.Object[] objects =
+                new java.lang.Object[] {
+                  "type_", "subject_", "description_",
+                };
+            java.lang.String info =
+                "\u0000\u0003\u0000\u0000\u0001\u0003\u0003\u0000\u0000\u0000\u0001\u0208\u0002\u0208"
+                    + "\u0003\u0208";
+            return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+          }
+          // fall through
+        case GET_DEFAULT_INSTANCE:
+          {
+            return DEFAULT_INSTANCE;
+          }
+        case GET_PARSER:
+          {
+            com.google.protobuf.Parser<com.google.rpc.PreconditionFailure.Violation> parser =
+                PARSER;
+            if (parser == null) {
+              synchronized (com.google.rpc.PreconditionFailure.Violation.class) {
+                parser = PARSER;
+                if (parser == null) {
+                  parser =
+                      new DefaultInstanceBasedParser<com.google.rpc.PreconditionFailure.Violation>(
+                          DEFAULT_INSTANCE);
+                  PARSER = parser;
+                }
+              }
+            }
+            return parser;
+          }
+        case GET_MEMOIZED_IS_INITIALIZED:
+          {
+            return (byte) 1;
+          }
+        case SET_MEMOIZED_IS_INITIALIZED:
+          {
+            return null;
+          }
+      }
+      throw new UnsupportedOperationException();
     }
 
     // @@protoc_insertion_point(class_scope:google.rpc.PreconditionFailure.Violation)
     private static final com.google.rpc.PreconditionFailure.Violation DEFAULT_INSTANCE;
 
     static {
-      DEFAULT_INSTANCE = new com.google.rpc.PreconditionFailure.Violation();
+      Violation defaultInstance = new Violation();
+      // New instances are implicitly immutable so no need to make
+      // immutable.
+      DEFAULT_INSTANCE = defaultInstance;
+      com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+          Violation.class, defaultInstance);
     }
 
     public static com.google.rpc.PreconditionFailure.Violation getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<Violation> PARSER =
-        new com.google.protobuf.AbstractParser<Violation>() {
-          @java.lang.Override
-          public Violation parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-          }
-        };
+    private static volatile com.google.protobuf.Parser<Violation> PARSER;
 
     public static com.google.protobuf.Parser<Violation> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<Violation> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.rpc.PreconditionFailure.Violation getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
+      return DEFAULT_INSTANCE.getParserForType();
     }
   }
 
   public static final int VIOLATIONS_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.rpc.PreconditionFailure.Violation> violations_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.rpc.PreconditionFailure.Violation>
+      violations_;
   /**
    *
    *
@@ -1210,7 +913,6 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
    *
    * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.rpc.PreconditionFailure.ViolationOrBuilder>
       getViolationsOrBuilderList() {
     return violations_;
@@ -1250,170 +952,181 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
    *
    * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
    */
-  @java.lang.Override
   public com.google.rpc.PreconditionFailure.ViolationOrBuilder getViolationsOrBuilder(int index) {
     return violations_.get(index);
   }
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  private void ensureViolationsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.rpc.PreconditionFailure.Violation> tmp =
+        violations_;
+    if (!tmp.isModifiable()) {
+      violations_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
   }
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    for (int i = 0; i < violations_.size(); i++) {
-      output.writeMessage(1, violations_.get(i));
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * Describes all precondition violations.
+   * </pre>
+   *
+   * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
+   */
+  private void setViolations(int index, com.google.rpc.PreconditionFailure.Violation value) {
+    value.getClass();
+    ensureViolationsIsMutable();
+    violations_.set(index, value);
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    for (int i = 0; i < violations_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, violations_.get(i));
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
+  /**
+   *
+   *
+   * <pre>
+   * Describes all precondition violations.
+   * </pre>
+   *
+   * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
+   */
+  private void addViolations(com.google.rpc.PreconditionFailure.Violation value) {
+    value.getClass();
+    ensureViolationsIsMutable();
+    violations_.add(value);
   }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.rpc.PreconditionFailure)) {
-      return super.equals(obj);
-    }
-    com.google.rpc.PreconditionFailure other = (com.google.rpc.PreconditionFailure) obj;
-
-    if (!getViolationsList().equals(other.getViolationsList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Describes all precondition violations.
+   * </pre>
+   *
+   * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
+   */
+  private void addViolations(int index, com.google.rpc.PreconditionFailure.Violation value) {
+    value.getClass();
+    ensureViolationsIsMutable();
+    violations_.add(index, value);
   }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (getViolationsCount() > 0) {
-      hash = (37 * hash) + VIOLATIONS_FIELD_NUMBER;
-      hash = (53 * hash) + getViolationsList().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Describes all precondition violations.
+   * </pre>
+   *
+   * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
+   */
+  private void addAllViolations(
+      java.lang.Iterable<? extends com.google.rpc.PreconditionFailure.Violation> values) {
+    ensureViolationsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, violations_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Describes all precondition violations.
+   * </pre>
+   *
+   * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
+   */
+  private void clearViolations() {
+    violations_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Describes all precondition violations.
+   * </pre>
+   *
+   * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
+   */
+  private void removeViolations(int index) {
+    ensureViolationsIsMutable();
+    violations_.remove(index);
   }
 
   public static com.google.rpc.PreconditionFailure parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.rpc.PreconditionFailure parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.rpc.PreconditionFailure parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.rpc.PreconditionFailure parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.rpc.PreconditionFailure parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.rpc.PreconditionFailure parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.rpc.PreconditionFailure parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.rpc.PreconditionFailure parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.rpc.PreconditionFailure parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.rpc.PreconditionFailure parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.rpc.PreconditionFailure parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.rpc.PreconditionFailure parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.rpc.PreconditionFailure prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -1427,239 +1140,16 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
    *
    * Protobuf type {@code google.rpc.PreconditionFailure}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.rpc.PreconditionFailure, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.rpc.PreconditionFailure)
       com.google.rpc.PreconditionFailureOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.rpc.ErrorDetailsProto
-          .internal_static_google_rpc_PreconditionFailure_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.rpc.ErrorDetailsProto
-          .internal_static_google_rpc_PreconditionFailure_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.rpc.PreconditionFailure.class,
-              com.google.rpc.PreconditionFailure.Builder.class);
-    }
-
     // Construct using com.google.rpc.PreconditionFailure.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      if (violationsBuilder_ == null) {
-        violations_ = java.util.Collections.emptyList();
-      } else {
-        violations_ = null;
-        violationsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000001);
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.rpc.ErrorDetailsProto
-          .internal_static_google_rpc_PreconditionFailure_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.rpc.PreconditionFailure getDefaultInstanceForType() {
-      return com.google.rpc.PreconditionFailure.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.rpc.PreconditionFailure build() {
-      com.google.rpc.PreconditionFailure result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.rpc.PreconditionFailure buildPartial() {
-      com.google.rpc.PreconditionFailure result = new com.google.rpc.PreconditionFailure(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.rpc.PreconditionFailure result) {
-      if (violationsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
-          violations_ = java.util.Collections.unmodifiableList(violations_);
-          bitField0_ = (bitField0_ & ~0x00000001);
-        }
-        result.violations_ = violations_;
-      } else {
-        result.violations_ = violationsBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.rpc.PreconditionFailure result) {
-      int from_bitField0_ = bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.rpc.PreconditionFailure) {
-        return mergeFrom((com.google.rpc.PreconditionFailure) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.rpc.PreconditionFailure other) {
-      if (other == com.google.rpc.PreconditionFailure.getDefaultInstance()) return this;
-      if (violationsBuilder_ == null) {
-        if (!other.violations_.isEmpty()) {
-          if (violations_.isEmpty()) {
-            violations_ = other.violations_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensureViolationsIsMutable();
-            violations_.addAll(other.violations_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.violations_.isEmpty()) {
-          if (violationsBuilder_.isEmpty()) {
-            violationsBuilder_.dispose();
-            violationsBuilder_ = null;
-            violations_ = other.violations_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-            violationsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getViolationsFieldBuilder()
-                    : null;
-          } else {
-            violationsBuilder_.addAllMessages(other.violations_);
-          }
-        }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                com.google.rpc.PreconditionFailure.Violation m =
-                    input.readMessage(
-                        com.google.rpc.PreconditionFailure.Violation.parser(), extensionRegistry);
-                if (violationsBuilder_ == null) {
-                  ensureViolationsIsMutable();
-                  violations_.add(m);
-                } else {
-                  violationsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 10
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.util.List<com.google.rpc.PreconditionFailure.Violation> violations_ =
-        java.util.Collections.emptyList();
-
-    private void ensureViolationsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
-        violations_ =
-            new java.util.ArrayList<com.google.rpc.PreconditionFailure.Violation>(violations_);
-        bitField0_ |= 0x00000001;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.rpc.PreconditionFailure.Violation,
-            com.google.rpc.PreconditionFailure.Violation.Builder,
-            com.google.rpc.PreconditionFailure.ViolationOrBuilder>
-        violationsBuilder_;
 
     /**
      *
@@ -1670,12 +1160,9 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      *
      * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.rpc.PreconditionFailure.Violation> getViolationsList() {
-      if (violationsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(violations_);
-      } else {
-        return violationsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getViolationsList());
     }
     /**
      *
@@ -1686,12 +1173,9 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      *
      * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
      */
+    @java.lang.Override
     public int getViolationsCount() {
-      if (violationsBuilder_ == null) {
-        return violations_.size();
-      } else {
-        return violationsBuilder_.getCount();
-      }
+      return instance.getViolationsCount();
     }
     /**
      *
@@ -1702,12 +1186,10 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      *
      * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
      */
+
+    @java.lang.Override
     public com.google.rpc.PreconditionFailure.Violation getViolations(int index) {
-      if (violationsBuilder_ == null) {
-        return violations_.get(index);
-      } else {
-        return violationsBuilder_.getMessage(index);
-      }
+      return instance.getViolations(index);
     }
     /**
      *
@@ -1719,16 +1201,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
      */
     public Builder setViolations(int index, com.google.rpc.PreconditionFailure.Violation value) {
-      if (violationsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureViolationsIsMutable();
-        violations_.set(index, value);
-        onChanged();
-      } else {
-        violationsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setViolations(index, value);
       return this;
     }
     /**
@@ -1742,13 +1216,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      */
     public Builder setViolations(
         int index, com.google.rpc.PreconditionFailure.Violation.Builder builderForValue) {
-      if (violationsBuilder_ == null) {
-        ensureViolationsIsMutable();
-        violations_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        violationsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setViolations(index, builderForValue.build());
       return this;
     }
     /**
@@ -1761,16 +1230,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
      */
     public Builder addViolations(com.google.rpc.PreconditionFailure.Violation value) {
-      if (violationsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureViolationsIsMutable();
-        violations_.add(value);
-        onChanged();
-      } else {
-        violationsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addViolations(value);
       return this;
     }
     /**
@@ -1783,16 +1244,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
      */
     public Builder addViolations(int index, com.google.rpc.PreconditionFailure.Violation value) {
-      if (violationsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureViolationsIsMutable();
-        violations_.add(index, value);
-        onChanged();
-      } else {
-        violationsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addViolations(index, value);
       return this;
     }
     /**
@@ -1806,13 +1259,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      */
     public Builder addViolations(
         com.google.rpc.PreconditionFailure.Violation.Builder builderForValue) {
-      if (violationsBuilder_ == null) {
-        ensureViolationsIsMutable();
-        violations_.add(builderForValue.build());
-        onChanged();
-      } else {
-        violationsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addViolations(builderForValue.build());
       return this;
     }
     /**
@@ -1826,13 +1274,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      */
     public Builder addViolations(
         int index, com.google.rpc.PreconditionFailure.Violation.Builder builderForValue) {
-      if (violationsBuilder_ == null) {
-        ensureViolationsIsMutable();
-        violations_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        violationsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addViolations(index, builderForValue.build());
       return this;
     }
     /**
@@ -1846,13 +1289,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      */
     public Builder addAllViolations(
         java.lang.Iterable<? extends com.google.rpc.PreconditionFailure.Violation> values) {
-      if (violationsBuilder_ == null) {
-        ensureViolationsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, violations_);
-        onChanged();
-      } else {
-        violationsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllViolations(values);
       return this;
     }
     /**
@@ -1865,13 +1303,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
      */
     public Builder clearViolations() {
-      if (violationsBuilder_ == null) {
-        violations_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-      } else {
-        violationsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearViolations();
       return this;
     }
     /**
@@ -1884,175 +1317,91 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
      */
     public Builder removeViolations(int index) {
-      if (violationsBuilder_ == null) {
-        ensureViolationsIsMutable();
-        violations_.remove(index);
-        onChanged();
-      } else {
-        violationsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeViolations(index);
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Describes all precondition violations.
-     * </pre>
-     *
-     * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
-     */
-    public com.google.rpc.PreconditionFailure.Violation.Builder getViolationsBuilder(int index) {
-      return getViolationsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Describes all precondition violations.
-     * </pre>
-     *
-     * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
-     */
-    public com.google.rpc.PreconditionFailure.ViolationOrBuilder getViolationsOrBuilder(int index) {
-      if (violationsBuilder_ == null) {
-        return violations_.get(index);
-      } else {
-        return violationsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Describes all precondition violations.
-     * </pre>
-     *
-     * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
-     */
-    public java.util.List<? extends com.google.rpc.PreconditionFailure.ViolationOrBuilder>
-        getViolationsOrBuilderList() {
-      if (violationsBuilder_ != null) {
-        return violationsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(violations_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Describes all precondition violations.
-     * </pre>
-     *
-     * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
-     */
-    public com.google.rpc.PreconditionFailure.Violation.Builder addViolationsBuilder() {
-      return getViolationsFieldBuilder()
-          .addBuilder(com.google.rpc.PreconditionFailure.Violation.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Describes all precondition violations.
-     * </pre>
-     *
-     * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
-     */
-    public com.google.rpc.PreconditionFailure.Violation.Builder addViolationsBuilder(int index) {
-      return getViolationsFieldBuilder()
-          .addBuilder(index, com.google.rpc.PreconditionFailure.Violation.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Describes all precondition violations.
-     * </pre>
-     *
-     * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
-     */
-    public java.util.List<com.google.rpc.PreconditionFailure.Violation.Builder>
-        getViolationsBuilderList() {
-      return getViolationsFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.rpc.PreconditionFailure.Violation,
-            com.google.rpc.PreconditionFailure.Violation.Builder,
-            com.google.rpc.PreconditionFailure.ViolationOrBuilder>
-        getViolationsFieldBuilder() {
-      if (violationsBuilder_ == null) {
-        violationsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.rpc.PreconditionFailure.Violation,
-                com.google.rpc.PreconditionFailure.Violation.Builder,
-                com.google.rpc.PreconditionFailure.ViolationOrBuilder>(
-                violations_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
-        violations_ = null;
-      }
-      return violationsBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.rpc.PreconditionFailure)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.rpc.PreconditionFailure();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "violations_", com.google.rpc.PreconditionFailure.Violation.class,
+              };
+          java.lang.String info =
+              "\u0000\u0001\u0000\u0000\u0001\u0001\u0001\u0000\u0001\u0000\u0001\u001b";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.rpc.PreconditionFailure> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.rpc.PreconditionFailure.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.rpc.PreconditionFailure>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.rpc.PreconditionFailure)
   private static final com.google.rpc.PreconditionFailure DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.rpc.PreconditionFailure();
+    PreconditionFailure defaultInstance = new PreconditionFailure();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        PreconditionFailure.class, defaultInstance);
   }
 
   public static com.google.rpc.PreconditionFailure getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<PreconditionFailure> PARSER =
-      new com.google.protobuf.AbstractParser<PreconditionFailure>() {
-        @java.lang.Override
-        public PreconditionFailure parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<PreconditionFailure> PARSER;
 
   public static com.google.protobuf.Parser<PreconditionFailure> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<PreconditionFailure> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.rpc.PreconditionFailure getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

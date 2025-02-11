@@ -48,44 +48,19 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.Endpoint}
  */
-public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
+public final class Endpoint
+    extends com.google.protobuf.GeneratedMessageLite<Endpoint, Endpoint.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.Endpoint)
     EndpointOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use Endpoint.newBuilder() to construct.
-  private Endpoint(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private Endpoint() {
     name_ = "";
-    aliases_ = com.google.protobuf.LazyStringArrayList.emptyList();
+    aliases_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
     target_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new Endpoint();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.EndpointProto.internal_static_google_api_Endpoint_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.EndpointProto.internal_static_google_api_Endpoint_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.Endpoint.class, com.google.api.Endpoint.Builder.class);
-  }
-
   public static final int NAME_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object name_ = "";
+  private java.lang.String name_;
   /**
    *
    *
@@ -99,15 +74,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getName() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      name_ = s;
-      return s;
-    }
+    return name_;
   }
   /**
    *
@@ -122,22 +89,55 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      name_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(name_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The canonical name of this endpoint.
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The name to set.
+   */
+  private void setName(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    name_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The canonical name of this endpoint.
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   */
+  private void clearName() {
+
+    name_ = getDefaultInstance().getName();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The canonical name of this endpoint.
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The bytes for name to set.
+   */
+  private void setNameBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    name_ = value.toStringUtf8();
   }
 
   public static final int ALIASES_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList aliases_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.Internal.ProtobufList<java.lang.String> aliases_;
   /**
    *
    *
@@ -151,7 +151,8 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    *
    * @return A list containing the aliases.
    */
-  public com.google.protobuf.ProtocolStringList getAliasesList() {
+  @java.lang.Override
+  public java.util.List<java.lang.String> getAliasesList() {
     return aliases_;
   }
   /**
@@ -167,6 +168,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The count of aliases.
    */
+  @java.lang.Override
   public int getAliasesCount() {
     return aliases_.size();
   }
@@ -184,6 +186,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the element to return.
    * @return The aliases at the given index.
    */
+  @java.lang.Override
   public java.lang.String getAliases(int index) {
     return aliases_.get(index);
   }
@@ -201,14 +204,106 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the value to return.
    * @return The bytes of the aliases at the given index.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getAliasesBytes(int index) {
-    return aliases_.getByteString(index);
+    return com.google.protobuf.ByteString.copyFromUtf8(aliases_.get(index));
+  }
+
+  private void ensureAliasesIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = aliases_;
+    if (!tmp.isModifiable()) {
+      aliases_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Aliases for this endpoint, these will be served by the same UrlMap as the
+   * parent endpoint, and will be provisioned in the GCP stack for the Regional
+   * Endpoints.
+   * </pre>
+   *
+   * <code>repeated string aliases = 2;</code>
+   *
+   * @param index The index to set the value at.
+   * @param value The aliases to set.
+   */
+  private void setAliases(int index, java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureAliasesIsMutable();
+    aliases_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Aliases for this endpoint, these will be served by the same UrlMap as the
+   * parent endpoint, and will be provisioned in the GCP stack for the Regional
+   * Endpoints.
+   * </pre>
+   *
+   * <code>repeated string aliases = 2;</code>
+   *
+   * @param value The aliases to add.
+   */
+  private void addAliases(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureAliasesIsMutable();
+    aliases_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Aliases for this endpoint, these will be served by the same UrlMap as the
+   * parent endpoint, and will be provisioned in the GCP stack for the Regional
+   * Endpoints.
+   * </pre>
+   *
+   * <code>repeated string aliases = 2;</code>
+   *
+   * @param values The aliases to add.
+   */
+  private void addAllAliases(java.lang.Iterable<java.lang.String> values) {
+    ensureAliasesIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, aliases_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Aliases for this endpoint, these will be served by the same UrlMap as the
+   * parent endpoint, and will be provisioned in the GCP stack for the Regional
+   * Endpoints.
+   * </pre>
+   *
+   * <code>repeated string aliases = 2;</code>
+   */
+  private void clearAliases() {
+    aliases_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Aliases for this endpoint, these will be served by the same UrlMap as the
+   * parent endpoint, and will be provisioned in the GCP stack for the Regional
+   * Endpoints.
+   * </pre>
+   *
+   * <code>repeated string aliases = 2;</code>
+   *
+   * @param value The bytes of the aliases to add.
+   */
+  private void addAliasesBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    ensureAliasesIsMutable();
+    aliases_.add(value.toStringUtf8());
   }
 
   public static final int TARGET_FIELD_NUMBER = 101;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object target_ = "";
+  private java.lang.String target_;
   /**
    *
    *
@@ -226,15 +321,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getTarget() {
-    java.lang.Object ref = target_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      target_ = s;
-      return s;
-    }
+    return target_;
   }
   /**
    *
@@ -253,19 +340,67 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getTargetBytes() {
-    java.lang.Object ref = target_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      target_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(target_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The specification of an Internet routable address of API frontend that will
+   * handle requests to this [API
+   * Endpoint](https://cloud.google.com/apis/design/glossary). It should be
+   * either a valid IPv4 address or a fully-qualified domain name. For example,
+   * "8.8.8.8" or "myservice.appspot.com".
+   * </pre>
+   *
+   * <code>string target = 101;</code>
+   *
+   * @param value The target to set.
+   */
+  private void setTarget(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    target_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The specification of an Internet routable address of API frontend that will
+   * handle requests to this [API
+   * Endpoint](https://cloud.google.com/apis/design/glossary). It should be
+   * either a valid IPv4 address or a fully-qualified domain name. For example,
+   * "8.8.8.8" or "myservice.appspot.com".
+   * </pre>
+   *
+   * <code>string target = 101;</code>
+   */
+  private void clearTarget() {
+
+    target_ = getDefaultInstance().getTarget();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The specification of an Internet routable address of API frontend that will
+   * handle requests to this [API
+   * Endpoint](https://cloud.google.com/apis/design/glossary). It should be
+   * either a valid IPv4 address or a fully-qualified domain name. For example,
+   * "8.8.8.8" or "myservice.appspot.com".
+   * </pre>
+   *
+   * <code>string target = 101;</code>
+   *
+   * @param value The bytes for target to set.
+   */
+  private void setTargetBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    target_ = value.toStringUtf8();
   }
 
   public static final int ALLOW_CORS_FIELD_NUMBER = 5;
-  private boolean allowCors_ = false;
+  private boolean allowCors_;
   /**
    *
    *
@@ -286,198 +421,126 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
   public boolean getAllowCors() {
     return allowCors_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Allowing
+   * [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing), aka
+   * cross-domain traffic, would allow the backends served from this endpoint to
+   * receive and respond to HTTP OPTIONS requests. The response will be used by
+   * the browser to determine whether the subsequent cross-origin request is
+   * allowed to proceed.
+   * </pre>
+   *
+   * <code>bool allow_cors = 5;</code>
+   *
+   * @param value The allowCors to set.
+   */
+  private void setAllowCors(boolean value) {
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    allowCors_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Allowing
+   * [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing), aka
+   * cross-domain traffic, would allow the backends served from this endpoint to
+   * receive and respond to HTTP OPTIONS requests. The response will be used by
+   * the browser to determine whether the subsequent cross-origin request is
+   * allowed to proceed.
+   * </pre>
+   *
+   * <code>bool allow_cors = 5;</code>
+   */
+  private void clearAllowCors() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
-    }
-    for (int i = 0; i < aliases_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, aliases_.getRaw(i));
-    }
-    if (allowCors_ != false) {
-      output.writeBool(5, allowCors_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(target_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 101, target_);
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
-    }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < aliases_.size(); i++) {
-        dataSize += computeStringSizeNoTag(aliases_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getAliasesList().size();
-    }
-    if (allowCors_ != false) {
-      size += com.google.protobuf.CodedOutputStream.computeBoolSize(5, allowCors_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(target_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(101, target_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.Endpoint)) {
-      return super.equals(obj);
-    }
-    com.google.api.Endpoint other = (com.google.api.Endpoint) obj;
-
-    if (!getName().equals(other.getName())) return false;
-    if (!getAliasesList().equals(other.getAliasesList())) return false;
-    if (!getTarget().equals(other.getTarget())) return false;
-    if (getAllowCors() != other.getAllowCors()) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getName().hashCode();
-    if (getAliasesCount() > 0) {
-      hash = (37 * hash) + ALIASES_FIELD_NUMBER;
-      hash = (53 * hash) + getAliasesList().hashCode();
-    }
-    hash = (37 * hash) + TARGET_FIELD_NUMBER;
-    hash = (53 * hash) + getTarget().hashCode();
-    hash = (37 * hash) + ALLOW_CORS_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getAllowCors());
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+    allowCors_ = false;
   }
 
   public static com.google.api.Endpoint parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.Endpoint parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.Endpoint parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.Endpoint parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.Endpoint parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.Endpoint parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.Endpoint parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.Endpoint parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.Endpoint parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.Endpoint parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.Endpoint parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.Endpoint parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.Endpoint prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -507,225 +570,16 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.api.Endpoint}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<com.google.api.Endpoint, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.Endpoint)
       com.google.api.EndpointOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.EndpointProto.internal_static_google_api_Endpoint_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.EndpointProto.internal_static_google_api_Endpoint_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.Endpoint.class, com.google.api.Endpoint.Builder.class);
-    }
-
     // Construct using com.google.api.Endpoint.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      name_ = "";
-      aliases_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      target_ = "";
-      allowCors_ = false;
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.EndpointProto.internal_static_google_api_Endpoint_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.Endpoint getDefaultInstanceForType() {
-      return com.google.api.Endpoint.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.Endpoint build() {
-      com.google.api.Endpoint result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.Endpoint buildPartial() {
-      com.google.api.Endpoint result = new com.google.api.Endpoint(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.api.Endpoint result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.name_ = name_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        aliases_.makeImmutable();
-        result.aliases_ = aliases_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.target_ = target_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.allowCors_ = allowCors_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.Endpoint) {
-        return mergeFrom((com.google.api.Endpoint) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.Endpoint other) {
-      if (other == com.google.api.Endpoint.getDefaultInstance()) return this;
-      if (!other.getName().isEmpty()) {
-        name_ = other.name_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.aliases_.isEmpty()) {
-        if (aliases_.isEmpty()) {
-          aliases_ = other.aliases_;
-          bitField0_ |= 0x00000002;
-        } else {
-          ensureAliasesIsMutable();
-          aliases_.addAll(other.aliases_);
-        }
-        onChanged();
-      }
-      if (!other.getTarget().isEmpty()) {
-        target_ = other.target_;
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
-      if (other.getAllowCors() != false) {
-        setAllowCors(other.getAllowCors());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                name_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureAliasesIsMutable();
-                aliases_.add(s);
-                break;
-              } // case 18
-            case 40:
-              {
-                allowCors_ = input.readBool();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 40
-            case 810:
-              {
-                target_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 810
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object name_ = "";
     /**
      *
      *
@@ -737,16 +591,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        name_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getName();
     }
     /**
      *
@@ -759,16 +606,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getNameBytes() {
-      java.lang.Object ref = name_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        name_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getNameBytes();
     }
     /**
      *
@@ -783,12 +623,8 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setName(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setName(value);
       return this;
     }
     /**
@@ -803,9 +639,8 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearName() {
-      name_ = getDefaultInstance().getName();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearName();
       return this;
     }
     /**
@@ -821,25 +656,11 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setNameBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setNameBytes(value);
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList aliases_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
-
-    private void ensureAliasesIsMutable() {
-      if (!aliases_.isModifiable()) {
-        aliases_ = new com.google.protobuf.LazyStringArrayList(aliases_);
-      }
-      bitField0_ |= 0x00000002;
-    }
     /**
      *
      *
@@ -853,9 +674,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * @return A list containing the aliases.
      */
-    public com.google.protobuf.ProtocolStringList getAliasesList() {
-      aliases_.makeImmutable();
-      return aliases_;
+    @java.lang.Override
+    public java.util.List<java.lang.String> getAliasesList() {
+      return java.util.Collections.unmodifiableList(instance.getAliasesList());
     }
     /**
      *
@@ -870,8 +691,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The count of aliases.
      */
+    @java.lang.Override
     public int getAliasesCount() {
-      return aliases_.size();
+      return instance.getAliasesCount();
     }
     /**
      *
@@ -887,8 +709,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the element to return.
      * @return The aliases at the given index.
      */
+    @java.lang.Override
     public java.lang.String getAliases(int index) {
-      return aliases_.get(index);
+      return instance.getAliases(index);
     }
     /**
      *
@@ -904,8 +727,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the value to return.
      * @return The bytes of the aliases at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getAliasesBytes(int index) {
-      return aliases_.getByteString(index);
+      return instance.getAliasesBytes(index);
     }
     /**
      *
@@ -923,13 +747,8 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAliases(int index, java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureAliasesIsMutable();
-      aliases_.set(index, value);
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setAliases(index, value);
       return this;
     }
     /**
@@ -947,13 +766,8 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAliases(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureAliasesIsMutable();
-      aliases_.add(value);
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.addAliases(value);
       return this;
     }
     /**
@@ -971,10 +785,8 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAllAliases(java.lang.Iterable<java.lang.String> values) {
-      ensureAliasesIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, aliases_);
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.addAllAliases(values);
       return this;
     }
     /**
@@ -991,10 +803,8 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAliases() {
-      aliases_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      ;
-      onChanged();
+      copyOnWrite();
+      instance.clearAliases();
       return this;
     }
     /**
@@ -1012,18 +822,11 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAliasesBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      ensureAliasesIsMutable();
-      aliases_.add(value);
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.addAliasesBytes(value);
       return this;
     }
 
-    private java.lang.Object target_ = "";
     /**
      *
      *
@@ -1039,16 +842,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The target.
      */
+    @java.lang.Override
     public java.lang.String getTarget() {
-      java.lang.Object ref = target_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        target_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getTarget();
     }
     /**
      *
@@ -1065,16 +861,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for target.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getTargetBytes() {
-      java.lang.Object ref = target_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        target_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getTargetBytes();
     }
     /**
      *
@@ -1093,12 +882,8 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setTarget(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      target_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setTarget(value);
       return this;
     }
     /**
@@ -1117,9 +902,8 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearTarget() {
-      target_ = getDefaultInstance().getTarget();
-      bitField0_ = (bitField0_ & ~0x00000004);
-      onChanged();
+      copyOnWrite();
+      instance.clearTarget();
       return this;
     }
     /**
@@ -1139,17 +923,11 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setTargetBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      target_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setTargetBytes(value);
       return this;
     }
 
-    private boolean allowCors_;
     /**
      *
      *
@@ -1168,7 +946,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean getAllowCors() {
-      return allowCors_;
+      return instance.getAllowCors();
     }
     /**
      *
@@ -1188,10 +966,8 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAllowCors(boolean value) {
-
-      allowCors_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setAllowCors(value);
       return this;
     }
     /**
@@ -1211,70 +987,90 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAllowCors() {
-      bitField0_ = (bitField0_ & ~0x00000008);
-      allowCors_ = false;
-      onChanged();
+      copyOnWrite();
+      instance.clearAllowCors();
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.api.Endpoint)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.Endpoint();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "name_", "aliases_", "allowCors_", "target_",
+              };
+          java.lang.String info =
+              "\u0000\u0004\u0000\u0000\u0001e\u0004\u0000\u0001\u0000\u0001\u0208\u0002\u021a\u0005"
+                  + "\u0007e\u0208";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.Endpoint> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.Endpoint.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser = new DefaultInstanceBasedParser<com.google.api.Endpoint>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.Endpoint)
   private static final com.google.api.Endpoint DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.Endpoint();
+    Endpoint defaultInstance = new Endpoint();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        Endpoint.class, defaultInstance);
   }
 
   public static com.google.api.Endpoint getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Endpoint> PARSER =
-      new com.google.protobuf.AbstractParser<Endpoint>() {
-        @java.lang.Override
-        public Endpoint parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<Endpoint> PARSER;
 
   public static com.google.protobuf.Parser<Endpoint> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<Endpoint> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.Endpoint getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

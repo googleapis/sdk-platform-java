@@ -22,7 +22,7 @@ package com.google.shopping.type;
 public interface PriceOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.shopping.type.Price)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

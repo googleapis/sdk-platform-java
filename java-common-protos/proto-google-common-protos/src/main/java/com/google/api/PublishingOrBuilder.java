@@ -22,7 +22,7 @@ package com.google.api;
 public interface PublishingOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.Publishing)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -57,28 +57,6 @@ public interface PublishingOrBuilder
    * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
    */
   int getMethodSettingsCount();
-  /**
-   *
-   *
-   * <pre>
-   * A list of API method settings, e.g. the behavior for methods that use the
-   * long-running operation pattern.
-   * </pre>
-   *
-   * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
-   */
-  java.util.List<? extends com.google.api.MethodSettingsOrBuilder> getMethodSettingsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * A list of API method settings, e.g. the behavior for methods that use the
-   * long-running operation pattern.
-   * </pre>
-   *
-   * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
-   */
-  com.google.api.MethodSettingsOrBuilder getMethodSettingsOrBuilder(int index);
 
   /**
    *
@@ -238,8 +216,8 @@ public interface PublishingOrBuilder
    *
    * <code>repeated string codeowner_github_teams = 105;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the codeownerGithubTeams at the given index.
+   * @param index The index of the element to return.
+   * @return The codeownerGithubTeams at the given index.
    */
   com.google.protobuf.ByteString getCodeownerGithubTeamsBytes(int index);
 
@@ -331,31 +309,6 @@ public interface PublishingOrBuilder
    * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
    */
   int getLibrarySettingsCount();
-  /**
-   *
-   *
-   * <pre>
-   * Client library settings.  If the same version string appears multiple
-   * times in this list, then the last one wins.  Settings from earlier
-   * settings with the same version string are discarded.
-   * </pre>
-   *
-   * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
-   */
-  java.util.List<? extends com.google.api.ClientLibrarySettingsOrBuilder>
-      getLibrarySettingsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Client library settings.  If the same version string appears multiple
-   * times in this list, then the last one wins.  Settings from earlier
-   * settings with the same version string are discarded.
-   * </pre>
-   *
-   * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
-   */
-  com.google.api.ClientLibrarySettingsOrBuilder getLibrarySettingsOrBuilder(int index);
 
   /**
    *

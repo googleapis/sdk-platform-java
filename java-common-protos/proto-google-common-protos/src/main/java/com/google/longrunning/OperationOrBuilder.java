@@ -22,7 +22,7 @@ package com.google.longrunning;
 public interface OperationOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.longrunning.Operation)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -83,19 +83,6 @@ public interface OperationOrBuilder
    * @return The metadata.
    */
   com.google.protobuf.Any getMetadata();
-  /**
-   *
-   *
-   * <pre>
-   * Service-specific metadata associated with the operation.  It typically
-   * contains progress information and common metadata such as create time.
-   * Some services might not provide such metadata.  Any method that returns a
-   * long-running operation should document the metadata type, if any.
-   * </pre>
-   *
-   * <code>.google.protobuf.Any metadata = 2;</code>
-   */
-  com.google.protobuf.AnyOrBuilder getMetadataOrBuilder();
 
   /**
    *
@@ -136,16 +123,6 @@ public interface OperationOrBuilder
    * @return The error.
    */
   com.google.rpc.Status getError();
-  /**
-   *
-   *
-   * <pre>
-   * The error result of the operation in case of failure or cancellation.
-   * </pre>
-   *
-   * <code>.google.rpc.Status error = 4;</code>
-   */
-  com.google.rpc.StatusOrBuilder getErrorOrBuilder();
 
   /**
    *
@@ -185,23 +162,6 @@ public interface OperationOrBuilder
    * @return The response.
    */
   com.google.protobuf.Any getResponse();
-  /**
-   *
-   *
-   * <pre>
-   * The normal, successful response of the operation.  If the original
-   * method returns no data on success, such as `Delete`, the response is
-   * `google.protobuf.Empty`.  If the original method is standard
-   * `Get`/`Create`/`Update`, the response should be the resource.  For other
-   * methods, the response should have the type `XxxResponse`, where `Xxx`
-   * is the original method name.  For example, if the original method name
-   * is `TakeSnapshot()`, the inferred response type is
-   * `TakeSnapshotResponse`.
-   * </pre>
-   *
-   * <code>.google.protobuf.Any response = 5;</code>
-   */
-  com.google.protobuf.AnyOrBuilder getResponseOrBuilder();
 
-  com.google.longrunning.Operation.ResultCase getResultCase();
+  public com.google.longrunning.Operation.ResultCase getResultCase();
 }

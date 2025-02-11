@@ -74,44 +74,19 @@ package com.google.apps.card.v1;
  *
  * Protobuf type {@code google.apps.card.v1.Grid}
  */
-public final class Grid extends com.google.protobuf.GeneratedMessageV3
+public final class Grid extends com.google.protobuf.GeneratedMessageLite<Grid, Grid.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.Grid)
     GridOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use Grid.newBuilder() to construct.
-  private Grid(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private Grid() {
     title_ = "";
-    items_ = java.util.Collections.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new Grid();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.apps.card.v1.CardProto.internal_static_google_apps_card_v1_Grid_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_Grid_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.apps.card.v1.Grid.class, com.google.apps.card.v1.Grid.Builder.class);
+    items_ = emptyProtobufList();
   }
 
   public interface GridItemOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:google.apps.card.v1.Grid.GridItem)
-      com.google.protobuf.MessageOrBuilder {
+      com.google.protobuf.MessageLiteOrBuilder {
 
     /**
      *
@@ -164,16 +139,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * @return The image.
      */
     com.google.apps.card.v1.ImageComponent getImage();
-    /**
-     *
-     *
-     * <pre>
-     * The image that displays in the grid item.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.ImageComponent image = 2;</code>
-     */
-    com.google.apps.card.v1.ImageComponentOrBuilder getImageOrBuilder();
 
     /**
      *
@@ -263,44 +228,16 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.apps.card.v1.Grid.GridItem}
    */
-  public static final class GridItem extends com.google.protobuf.GeneratedMessageV3
+  public static final class GridItem
+      extends com.google.protobuf.GeneratedMessageLite<GridItem, GridItem.Builder>
       implements
       // @@protoc_insertion_point(message_implements:google.apps.card.v1.Grid.GridItem)
       GridItemOrBuilder {
-    private static final long serialVersionUID = 0L;
-    // Use GridItem.newBuilder() to construct.
-    private GridItem(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-
     private GridItem() {
       id_ = "";
       title_ = "";
       subtitle_ = "";
-      layout_ = 0;
     }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-      return new GridItem();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Grid_GridItem_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Grid_GridItem_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.apps.card.v1.Grid.GridItem.class,
-              com.google.apps.card.v1.Grid.GridItem.Builder.class);
-    }
-
     /**
      *
      *
@@ -313,7 +250,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      *
      * Protobuf enum {@code google.apps.card.v1.Grid.GridItem.GridItemLayout}
      */
-    public enum GridItemLayout implements com.google.protobuf.ProtocolMessageEnum {
+    public enum GridItemLayout implements com.google.protobuf.Internal.EnumLite {
       /**
        *
        *
@@ -378,6 +315,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        */
       public static final int TEXT_ABOVE_VALUE = 2;
 
+      @java.lang.Override
       public final int getNumber() {
         if (this == UNRECOGNIZED) {
           throw new java.lang.IllegalArgumentException(
@@ -387,8 +325,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       }
 
       /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
+       * @param value The number of the enum to look for.
+       * @return The enum associated with the given number.
        * @deprecated Use {@link #forNumber(int)} instead.
        */
       @java.lang.Deprecated
@@ -396,10 +334,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         return forNumber(value);
       }
 
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       */
       public static GridItemLayout forNumber(int value) {
         switch (value) {
           case 0:
@@ -420,39 +354,26 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       private static final com.google.protobuf.Internal.EnumLiteMap<GridItemLayout>
           internalValueMap =
               new com.google.protobuf.Internal.EnumLiteMap<GridItemLayout>() {
+                @java.lang.Override
                 public GridItemLayout findValueByNumber(int number) {
                   return GridItemLayout.forNumber(number);
                 }
               };
 
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-        if (this == UNRECOGNIZED) {
-          throw new java.lang.IllegalStateException(
-              "Can't get the descriptor of an unrecognized enum value.");
+      public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+        return GridItemLayoutVerifier.INSTANCE;
+      }
+
+      private static final class GridItemLayoutVerifier
+          implements com.google.protobuf.Internal.EnumVerifier {
+        static final com.google.protobuf.Internal.EnumVerifier INSTANCE =
+            new GridItemLayoutVerifier();
+
+        @java.lang.Override
+        public boolean isInRange(int number) {
+          return GridItemLayout.forNumber(number) != null;
         }
-        return getDescriptor().getValues().get(ordinal());
-      }
-
-      public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-        return getDescriptor();
-      }
-
-      public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-        return com.google.apps.card.v1.Grid.GridItem.getDescriptor().getEnumTypes().get(0);
-      }
-
-      private static final GridItemLayout[] VALUES = values();
-
-      public static GridItemLayout valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-        }
-        if (desc.getIndex() == -1) {
-          return UNRECOGNIZED;
-        }
-        return VALUES[desc.getIndex()];
-      }
+      };
 
       private final int value;
 
@@ -465,9 +386,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
 
     private int bitField0_;
     public static final int ID_FIELD_NUMBER = 1;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object id_ = "";
+    private java.lang.String id_;
     /**
      *
      *
@@ -482,15 +401,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      }
+      return id_;
     }
     /**
      *
@@ -506,15 +417,54 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(id_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * A user-specified identifier for this grid item. This identifier is
+     * returned in the parent grid's `onClick` callback parameters.
+     * </pre>
+     *
+     * <code>string id = 1;</code>
+     *
+     * @param value The id to set.
+     */
+    private void setId(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      id_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * A user-specified identifier for this grid item. This identifier is
+     * returned in the parent grid's `onClick` callback parameters.
+     * </pre>
+     *
+     * <code>string id = 1;</code>
+     */
+    private void clearId() {
+
+      id_ = getDefaultInstance().getId();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * A user-specified identifier for this grid item. This identifier is
+     * returned in the parent grid's `onClick` callback parameters.
+     * </pre>
+     *
+     * <code>string id = 1;</code>
+     *
+     * @param value The bytes for id to set.
+     */
+    private void setIdBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      id_ = value.toStringUtf8();
     }
 
     public static final int IMAGE_FIELD_NUMBER = 2;
@@ -527,8 +477,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.ImageComponent image = 2;</code>
-     *
-     * @return Whether the image field is set.
      */
     @java.lang.Override
     public boolean hasImage() {
@@ -542,8 +490,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.ImageComponent image = 2;</code>
-     *
-     * @return The image.
      */
     @java.lang.Override
     public com.google.apps.card.v1.ImageComponent getImage() {
@@ -558,15 +504,49 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.apps.card.v1.ImageComponent image = 2;</code>
      */
-    @java.lang.Override
-    public com.google.apps.card.v1.ImageComponentOrBuilder getImageOrBuilder() {
-      return image_ == null ? com.google.apps.card.v1.ImageComponent.getDefaultInstance() : image_;
+    private void setImage(com.google.apps.card.v1.ImageComponent value) {
+      value.getClass();
+      image_ = value;
+      bitField0_ |= 0x00000001;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The image that displays in the grid item.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.ImageComponent image = 2;</code>
+     */
+    @java.lang.SuppressWarnings({"ReferenceEquality"})
+    private void mergeImage(com.google.apps.card.v1.ImageComponent value) {
+      value.getClass();
+      if (image_ != null && image_ != com.google.apps.card.v1.ImageComponent.getDefaultInstance()) {
+        image_ =
+            com.google.apps.card.v1.ImageComponent.newBuilder(image_)
+                .mergeFrom(value)
+                .buildPartial();
+      } else {
+        image_ = value;
+      }
+      bitField0_ |= 0x00000001;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The image that displays in the grid item.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.ImageComponent image = 2;</code>
+     */
+    private void clearImage() {
+      image_ = null;
+      bitField0_ = (bitField0_ & ~0x00000001);
     }
 
     public static final int TITLE_FIELD_NUMBER = 3;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object title_ = "";
+    private java.lang.String title_;
     /**
      *
      *
@@ -580,15 +560,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getTitle() {
-      java.lang.Object ref = title_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        title_ = s;
-        return s;
-      }
+      return title_;
     }
     /**
      *
@@ -603,21 +575,55 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getTitleBytes() {
-      java.lang.Object ref = title_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        title_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(title_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The grid item's title.
+     * </pre>
+     *
+     * <code>string title = 3;</code>
+     *
+     * @param value The title to set.
+     */
+    private void setTitle(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      title_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The grid item's title.
+     * </pre>
+     *
+     * <code>string title = 3;</code>
+     */
+    private void clearTitle() {
+
+      title_ = getDefaultInstance().getTitle();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The grid item's title.
+     * </pre>
+     *
+     * <code>string title = 3;</code>
+     *
+     * @param value The bytes for title to set.
+     */
+    private void setTitleBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      title_ = value.toStringUtf8();
     }
 
     public static final int SUBTITLE_FIELD_NUMBER = 4;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object subtitle_ = "";
+    private java.lang.String subtitle_;
     /**
      *
      *
@@ -631,15 +637,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getSubtitle() {
-      java.lang.Object ref = subtitle_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        subtitle_ = s;
-        return s;
-      }
+      return subtitle_;
     }
     /**
      *
@@ -654,19 +652,55 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getSubtitleBytes() {
-      java.lang.Object ref = subtitle_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        subtitle_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(subtitle_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The grid item's subtitle.
+     * </pre>
+     *
+     * <code>string subtitle = 4;</code>
+     *
+     * @param value The subtitle to set.
+     */
+    private void setSubtitle(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      subtitle_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The grid item's subtitle.
+     * </pre>
+     *
+     * <code>string subtitle = 4;</code>
+     */
+    private void clearSubtitle() {
+
+      subtitle_ = getDefaultInstance().getSubtitle();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The grid item's subtitle.
+     * </pre>
+     *
+     * <code>string subtitle = 4;</code>
+     *
+     * @param value The bytes for subtitle to set.
+     */
+    private void setSubtitleBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      subtitle_ = value.toStringUtf8();
     }
 
     public static final int LAYOUT_FIELD_NUMBER = 9;
-    private int layout_ = 0;
+    private int layout_;
     /**
      *
      *
@@ -701,211 +735,130 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
           ? com.google.apps.card.v1.Grid.GridItem.GridItemLayout.UNRECOGNIZED
           : result;
     }
-
-    private byte memoizedIsInitialized = -1;
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
+    /**
+     *
+     *
+     * <pre>
+     * The layout to use for the grid item.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Grid.GridItem.GridItemLayout layout = 9;</code>
+     *
+     * @param value The enum numeric value on the wire for layout to set.
+     */
+    private void setLayoutValue(int value) {
+      layout_ = value;
     }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(id_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeMessage(2, getImage());
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(title_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, title_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(subtitle_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, subtitle_);
-      }
-      if (layout_
-          != com.google.apps.card.v1.Grid.GridItem.GridItemLayout.GRID_ITEM_LAYOUT_UNSPECIFIED
-              .getNumber()) {
-        output.writeEnum(9, layout_);
-      }
-      getUnknownFields().writeTo(output);
+    /**
+     *
+     *
+     * <pre>
+     * The layout to use for the grid item.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Grid.GridItem.GridItemLayout layout = 9;</code>
+     *
+     * @param value The layout to set.
+     */
+    private void setLayout(com.google.apps.card.v1.Grid.GridItem.GridItemLayout value) {
+      layout_ = value.getNumber();
     }
+    /**
+     *
+     *
+     * <pre>
+     * The layout to use for the grid item.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Grid.GridItem.GridItemLayout layout = 9;</code>
+     */
+    private void clearLayout() {
 
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(id_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, getImage());
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(title_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, title_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(subtitle_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, subtitle_);
-      }
-      if (layout_
-          != com.google.apps.card.v1.Grid.GridItem.GridItemLayout.GRID_ITEM_LAYOUT_UNSPECIFIED
-              .getNumber()) {
-        size += com.google.protobuf.CodedOutputStream.computeEnumSize(9, layout_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-        return true;
-      }
-      if (!(obj instanceof com.google.apps.card.v1.Grid.GridItem)) {
-        return super.equals(obj);
-      }
-      com.google.apps.card.v1.Grid.GridItem other = (com.google.apps.card.v1.Grid.GridItem) obj;
-
-      if (!getId().equals(other.getId())) return false;
-      if (hasImage() != other.hasImage()) return false;
-      if (hasImage()) {
-        if (!getImage().equals(other.getImage())) return false;
-      }
-      if (!getTitle().equals(other.getTitle())) return false;
-      if (!getSubtitle().equals(other.getSubtitle())) return false;
-      if (layout_ != other.layout_) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + getId().hashCode();
-      if (hasImage()) {
-        hash = (37 * hash) + IMAGE_FIELD_NUMBER;
-        hash = (53 * hash) + getImage().hashCode();
-      }
-      hash = (37 * hash) + TITLE_FIELD_NUMBER;
-      hash = (53 * hash) + getTitle().hashCode();
-      hash = (37 * hash) + SUBTITLE_FIELD_NUMBER;
-      hash = (53 * hash) + getSubtitle().hashCode();
-      hash = (37 * hash) + LAYOUT_FIELD_NUMBER;
-      hash = (53 * hash) + layout_;
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
+      layout_ = 0;
     }
 
     public static com.google.apps.card.v1.Grid.GridItem parseFrom(java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.Grid.GridItem parseFrom(
         java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.Grid.GridItem parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.Grid.GridItem parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.Grid.GridItem parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.Grid.GridItem parseFrom(
         byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.Grid.GridItem parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.Grid.GridItem parseFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.Grid.GridItem parseDelimitedFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.Grid.GridItem parseDelimitedFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.Grid.GridItem parseFrom(
         com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.Grid.GridItem parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
+      return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
 
     public static Builder newBuilder(com.google.apps.card.v1.Grid.GridItem prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      *
      *
@@ -920,254 +873,16 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * Protobuf type {@code google.apps.card.v1.Grid.GridItem}
      */
     public static final class Builder
-        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+        extends com.google.protobuf.GeneratedMessageLite.Builder<
+            com.google.apps.card.v1.Grid.GridItem, Builder>
         implements
         // @@protoc_insertion_point(builder_implements:google.apps.card.v1.Grid.GridItem)
         com.google.apps.card.v1.Grid.GridItemOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_Grid_GridItem_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_Grid_GridItem_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.google.apps.card.v1.Grid.GridItem.class,
-                com.google.apps.card.v1.Grid.GridItem.Builder.class);
-      }
-
       // Construct using com.google.apps.card.v1.Grid.GridItem.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+        super(DEFAULT_INSTANCE);
       }
 
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-          getImageFieldBuilder();
-        }
-      }
-
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        id_ = "";
-        image_ = null;
-        if (imageBuilder_ != null) {
-          imageBuilder_.dispose();
-          imageBuilder_ = null;
-        }
-        title_ = "";
-        subtitle_ = "";
-        layout_ = 0;
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_Grid_GridItem_descriptor;
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.Grid.GridItem getDefaultInstanceForType() {
-        return com.google.apps.card.v1.Grid.GridItem.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.Grid.GridItem build() {
-        com.google.apps.card.v1.Grid.GridItem result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.Grid.GridItem buildPartial() {
-        com.google.apps.card.v1.Grid.GridItem result =
-            new com.google.apps.card.v1.Grid.GridItem(this);
-        if (bitField0_ != 0) {
-          buildPartial0(result);
-        }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartial0(com.google.apps.card.v1.Grid.GridItem result) {
-        int from_bitField0_ = bitField0_;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.id_ = id_;
-        }
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.image_ = imageBuilder_ == null ? image_ : imageBuilder_.build();
-          to_bitField0_ |= 0x00000001;
-        }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.title_ = title_;
-        }
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.subtitle_ = subtitle_;
-        }
-        if (((from_bitField0_ & 0x00000010) != 0)) {
-          result.layout_ = layout_;
-        }
-        result.bitField0_ |= to_bitField0_;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.apps.card.v1.Grid.GridItem) {
-          return mergeFrom((com.google.apps.card.v1.Grid.GridItem) other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.google.apps.card.v1.Grid.GridItem other) {
-        if (other == com.google.apps.card.v1.Grid.GridItem.getDefaultInstance()) return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
-          bitField0_ |= 0x00000001;
-          onChanged();
-        }
-        if (other.hasImage()) {
-          mergeImage(other.getImage());
-        }
-        if (!other.getTitle().isEmpty()) {
-          title_ = other.title_;
-          bitField0_ |= 0x00000004;
-          onChanged();
-        }
-        if (!other.getSubtitle().isEmpty()) {
-          subtitle_ = other.subtitle_;
-          bitField0_ |= 0x00000008;
-          onChanged();
-        }
-        if (other.layout_ != 0) {
-          setLayoutValue(other.getLayoutValue());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10:
-                {
-                  id_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000001;
-                  break;
-                } // case 10
-              case 18:
-                {
-                  input.readMessage(getImageFieldBuilder().getBuilder(), extensionRegistry);
-                  bitField0_ |= 0x00000002;
-                  break;
-                } // case 18
-              case 26:
-                {
-                  title_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000004;
-                  break;
-                } // case 26
-              case 34:
-                {
-                  subtitle_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000008;
-                  break;
-                } // case 34
-              case 72:
-                {
-                  layout_ = input.readEnum();
-                  bitField0_ |= 0x00000010;
-                  break;
-                } // case 72
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-
-      private int bitField0_;
-
-      private java.lang.Object id_ = "";
       /**
        *
        *
@@ -1180,16 +895,9 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The id.
        */
+      @java.lang.Override
       public java.lang.String getId() {
-        java.lang.Object ref = id_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          id_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getId();
       }
       /**
        *
@@ -1203,16 +911,9 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The bytes for id.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getIdBytes() {
-        java.lang.Object ref = id_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          id_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getIdBytes();
       }
       /**
        *
@@ -1228,12 +929,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setId(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        id_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setId(value);
         return this;
       }
       /**
@@ -1249,9 +946,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearId() {
-        id_ = getDefaultInstance().getId();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
+        copyOnWrite();
+        instance.clearId();
         return this;
       }
       /**
@@ -1268,22 +964,11 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setIdBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        id_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setIdBytes(value);
         return this;
       }
 
-      private com.google.apps.card.v1.ImageComponent image_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.apps.card.v1.ImageComponent,
-              com.google.apps.card.v1.ImageComponent.Builder,
-              com.google.apps.card.v1.ImageComponentOrBuilder>
-          imageBuilder_;
       /**
        *
        *
@@ -1292,11 +977,10 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        * </pre>
        *
        * <code>.google.apps.card.v1.ImageComponent image = 2;</code>
-       *
-       * @return Whether the image field is set.
        */
+      @java.lang.Override
       public boolean hasImage() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return instance.hasImage();
       }
       /**
        *
@@ -1306,17 +990,10 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        * </pre>
        *
        * <code>.google.apps.card.v1.ImageComponent image = 2;</code>
-       *
-       * @return The image.
        */
+      @java.lang.Override
       public com.google.apps.card.v1.ImageComponent getImage() {
-        if (imageBuilder_ == null) {
-          return image_ == null
-              ? com.google.apps.card.v1.ImageComponent.getDefaultInstance()
-              : image_;
-        } else {
-          return imageBuilder_.getMessage();
-        }
+        return instance.getImage();
       }
       /**
        *
@@ -1328,16 +1005,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        * <code>.google.apps.card.v1.ImageComponent image = 2;</code>
        */
       public Builder setImage(com.google.apps.card.v1.ImageComponent value) {
-        if (imageBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          image_ = value;
-        } else {
-          imageBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setImage(value);
         return this;
       }
       /**
@@ -1350,13 +1019,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        * <code>.google.apps.card.v1.ImageComponent image = 2;</code>
        */
       public Builder setImage(com.google.apps.card.v1.ImageComponent.Builder builderForValue) {
-        if (imageBuilder_ == null) {
-          image_ = builderForValue.build();
-        } else {
-          imageBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setImage(builderForValue.build());
         return this;
       }
       /**
@@ -1369,21 +1033,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        * <code>.google.apps.card.v1.ImageComponent image = 2;</code>
        */
       public Builder mergeImage(com.google.apps.card.v1.ImageComponent value) {
-        if (imageBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) != 0)
-              && image_ != null
-              && image_ != com.google.apps.card.v1.ImageComponent.getDefaultInstance()) {
-            getImageBuilder().mergeFrom(value);
-          } else {
-            image_ = value;
-          }
-        } else {
-          imageBuilder_.mergeFrom(value);
-        }
-        if (image_ != null) {
-          bitField0_ |= 0x00000002;
-          onChanged();
-        }
+        copyOnWrite();
+        instance.mergeImage(value);
         return this;
       }
       /**
@@ -1396,74 +1047,11 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        * <code>.google.apps.card.v1.ImageComponent image = 2;</code>
        */
       public Builder clearImage() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        image_ = null;
-        if (imageBuilder_ != null) {
-          imageBuilder_.dispose();
-          imageBuilder_ = null;
-        }
-        onChanged();
+        copyOnWrite();
+        instance.clearImage();
         return this;
       }
-      /**
-       *
-       *
-       * <pre>
-       * The image that displays in the grid item.
-       * </pre>
-       *
-       * <code>.google.apps.card.v1.ImageComponent image = 2;</code>
-       */
-      public com.google.apps.card.v1.ImageComponent.Builder getImageBuilder() {
-        bitField0_ |= 0x00000002;
-        onChanged();
-        return getImageFieldBuilder().getBuilder();
-      }
-      /**
-       *
-       *
-       * <pre>
-       * The image that displays in the grid item.
-       * </pre>
-       *
-       * <code>.google.apps.card.v1.ImageComponent image = 2;</code>
-       */
-      public com.google.apps.card.v1.ImageComponentOrBuilder getImageOrBuilder() {
-        if (imageBuilder_ != null) {
-          return imageBuilder_.getMessageOrBuilder();
-        } else {
-          return image_ == null
-              ? com.google.apps.card.v1.ImageComponent.getDefaultInstance()
-              : image_;
-        }
-      }
-      /**
-       *
-       *
-       * <pre>
-       * The image that displays in the grid item.
-       * </pre>
-       *
-       * <code>.google.apps.card.v1.ImageComponent image = 2;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.apps.card.v1.ImageComponent,
-              com.google.apps.card.v1.ImageComponent.Builder,
-              com.google.apps.card.v1.ImageComponentOrBuilder>
-          getImageFieldBuilder() {
-        if (imageBuilder_ == null) {
-          imageBuilder_ =
-              new com.google.protobuf.SingleFieldBuilderV3<
-                  com.google.apps.card.v1.ImageComponent,
-                  com.google.apps.card.v1.ImageComponent.Builder,
-                  com.google.apps.card.v1.ImageComponentOrBuilder>(
-                  getImage(), getParentForChildren(), isClean());
-          image_ = null;
-        }
-        return imageBuilder_;
-      }
 
-      private java.lang.Object title_ = "";
       /**
        *
        *
@@ -1475,16 +1063,9 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The title.
        */
+      @java.lang.Override
       public java.lang.String getTitle() {
-        java.lang.Object ref = title_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          title_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getTitle();
       }
       /**
        *
@@ -1497,16 +1078,9 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The bytes for title.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getTitleBytes() {
-        java.lang.Object ref = title_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          title_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getTitleBytes();
       }
       /**
        *
@@ -1521,12 +1095,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setTitle(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        title_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
+        copyOnWrite();
+        instance.setTitle(value);
         return this;
       }
       /**
@@ -1541,9 +1111,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearTitle() {
-        title_ = getDefaultInstance().getTitle();
-        bitField0_ = (bitField0_ & ~0x00000004);
-        onChanged();
+        copyOnWrite();
+        instance.clearTitle();
         return this;
       }
       /**
@@ -1559,17 +1128,11 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setTitleBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        title_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
+        copyOnWrite();
+        instance.setTitleBytes(value);
         return this;
       }
 
-      private java.lang.Object subtitle_ = "";
       /**
        *
        *
@@ -1581,16 +1144,9 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The subtitle.
        */
+      @java.lang.Override
       public java.lang.String getSubtitle() {
-        java.lang.Object ref = subtitle_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          subtitle_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getSubtitle();
       }
       /**
        *
@@ -1603,16 +1159,9 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The bytes for subtitle.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getSubtitleBytes() {
-        java.lang.Object ref = subtitle_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          subtitle_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getSubtitleBytes();
       }
       /**
        *
@@ -1627,12 +1176,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setSubtitle(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        subtitle_ = value;
-        bitField0_ |= 0x00000008;
-        onChanged();
+        copyOnWrite();
+        instance.setSubtitle(value);
         return this;
       }
       /**
@@ -1647,9 +1192,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearSubtitle() {
-        subtitle_ = getDefaultInstance().getSubtitle();
-        bitField0_ = (bitField0_ & ~0x00000008);
-        onChanged();
+        copyOnWrite();
+        instance.clearSubtitle();
         return this;
       }
       /**
@@ -1665,17 +1209,11 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setSubtitleBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        subtitle_ = value;
-        bitField0_ |= 0x00000008;
-        onChanged();
+        copyOnWrite();
+        instance.setSubtitleBytes(value);
         return this;
       }
 
-      private int layout_ = 0;
       /**
        *
        *
@@ -1689,7 +1227,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        */
       @java.lang.Override
       public int getLayoutValue() {
-        return layout_;
+        return instance.getLayoutValue();
       }
       /**
        *
@@ -1700,13 +1238,12 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>.google.apps.card.v1.Grid.GridItem.GridItemLayout layout = 9;</code>
        *
-       * @param value The enum numeric value on the wire for layout to set.
+       * @param value The layout to set.
        * @return This builder for chaining.
        */
       public Builder setLayoutValue(int value) {
-        layout_ = value;
-        bitField0_ |= 0x00000010;
-        onChanged();
+        copyOnWrite();
+        instance.setLayoutValue(value);
         return this;
       }
       /**
@@ -1722,11 +1259,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        */
       @java.lang.Override
       public com.google.apps.card.v1.Grid.GridItem.GridItemLayout getLayout() {
-        com.google.apps.card.v1.Grid.GridItem.GridItemLayout result =
-            com.google.apps.card.v1.Grid.GridItem.GridItemLayout.forNumber(layout_);
-        return result == null
-            ? com.google.apps.card.v1.Grid.GridItem.GridItemLayout.UNRECOGNIZED
-            : result;
+        return instance.getLayout();
       }
       /**
        *
@@ -1737,16 +1270,12 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>.google.apps.card.v1.Grid.GridItem.GridItemLayout layout = 9;</code>
        *
-       * @param value The layout to set.
+       * @param value The enum numeric value on the wire for layout to set.
        * @return This builder for chaining.
        */
       public Builder setLayout(com.google.apps.card.v1.Grid.GridItem.GridItemLayout value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000010;
-        layout_ = value.getNumber();
-        onChanged();
+        copyOnWrite();
+        instance.setLayout(value);
         return this;
       }
       /**
@@ -1761,81 +1290,99 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearLayout() {
-        bitField0_ = (bitField0_ & ~0x00000010);
-        layout_ = 0;
-        onChanged();
+        copyOnWrite();
+        instance.clearLayout();
         return this;
       }
 
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
       // @@protoc_insertion_point(builder_scope:google.apps.card.v1.Grid.GridItem)
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0,
+        java.lang.Object arg1) {
+      switch (method) {
+        case NEW_MUTABLE_INSTANCE:
+          {
+            return new com.google.apps.card.v1.Grid.GridItem();
+          }
+        case NEW_BUILDER:
+          {
+            return new Builder();
+          }
+        case BUILD_MESSAGE_INFO:
+          {
+            java.lang.Object[] objects =
+                new java.lang.Object[] {
+                  "bitField0_", "id_", "image_", "title_", "subtitle_", "layout_",
+                };
+            java.lang.String info =
+                "\u0000\u0005\u0000\u0001\u0001\t\u0005\u0000\u0000\u0000\u0001\u0208\u0002\u1009"
+                    + "\u0000\u0003\u0208\u0004\u0208\t\f";
+            return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+          }
+          // fall through
+        case GET_DEFAULT_INSTANCE:
+          {
+            return DEFAULT_INSTANCE;
+          }
+        case GET_PARSER:
+          {
+            com.google.protobuf.Parser<com.google.apps.card.v1.Grid.GridItem> parser = PARSER;
+            if (parser == null) {
+              synchronized (com.google.apps.card.v1.Grid.GridItem.class) {
+                parser = PARSER;
+                if (parser == null) {
+                  parser =
+                      new DefaultInstanceBasedParser<com.google.apps.card.v1.Grid.GridItem>(
+                          DEFAULT_INSTANCE);
+                  PARSER = parser;
+                }
+              }
+            }
+            return parser;
+          }
+        case GET_MEMOIZED_IS_INITIALIZED:
+          {
+            return (byte) 1;
+          }
+        case SET_MEMOIZED_IS_INITIALIZED:
+          {
+            return null;
+          }
+      }
+      throw new UnsupportedOperationException();
     }
 
     // @@protoc_insertion_point(class_scope:google.apps.card.v1.Grid.GridItem)
     private static final com.google.apps.card.v1.Grid.GridItem DEFAULT_INSTANCE;
 
     static {
-      DEFAULT_INSTANCE = new com.google.apps.card.v1.Grid.GridItem();
+      GridItem defaultInstance = new GridItem();
+      // New instances are implicitly immutable so no need to make
+      // immutable.
+      DEFAULT_INSTANCE = defaultInstance;
+      com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+          GridItem.class, defaultInstance);
     }
 
     public static com.google.apps.card.v1.Grid.GridItem getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<GridItem> PARSER =
-        new com.google.protobuf.AbstractParser<GridItem>() {
-          @java.lang.Override
-          public GridItem parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-          }
-        };
+    private static volatile com.google.protobuf.Parser<GridItem> PARSER;
 
     public static com.google.protobuf.Parser<GridItem> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<GridItem> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.Grid.GridItem getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
+      return DEFAULT_INSTANCE.getParserForType();
     }
   }
 
   private int bitField0_;
   public static final int TITLE_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object title_ = "";
+  private java.lang.String title_;
   /**
    *
    *
@@ -1849,15 +1396,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getTitle() {
-    java.lang.Object ref = title_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      title_ = s;
-      return s;
-    }
+    return title_;
   }
   /**
    *
@@ -1872,21 +1411,55 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getTitleBytes() {
-    java.lang.Object ref = title_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      title_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(title_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text that displays in the grid header.
+   * </pre>
+   *
+   * <code>string title = 1;</code>
+   *
+   * @param value The title to set.
+   */
+  private void setTitle(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    title_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text that displays in the grid header.
+   * </pre>
+   *
+   * <code>string title = 1;</code>
+   */
+  private void clearTitle() {
+
+    title_ = getDefaultInstance().getTitle();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text that displays in the grid header.
+   * </pre>
+   *
+   * <code>string title = 1;</code>
+   *
+   * @param value The bytes for title to set.
+   */
+  private void setTitleBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    title_ = value.toStringUtf8();
   }
 
   public static final int ITEMS_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.apps.card.v1.Grid.GridItem> items_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.apps.card.v1.Grid.GridItem> items_;
   /**
    *
    *
@@ -1909,7 +1482,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.apps.card.v1.Grid.GridItemOrBuilder>
       getItemsOrBuilderList() {
     return items_;
@@ -1949,9 +1521,97 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
    */
-  @java.lang.Override
   public com.google.apps.card.v1.Grid.GridItemOrBuilder getItemsOrBuilder(int index) {
     return items_.get(index);
+  }
+
+  private void ensureItemsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.apps.card.v1.Grid.GridItem> tmp = items_;
+    if (!tmp.isModifiable()) {
+      items_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * The items to display in the grid.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
+   */
+  private void setItems(int index, com.google.apps.card.v1.Grid.GridItem value) {
+    value.getClass();
+    ensureItemsIsMutable();
+    items_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The items to display in the grid.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
+   */
+  private void addItems(com.google.apps.card.v1.Grid.GridItem value) {
+    value.getClass();
+    ensureItemsIsMutable();
+    items_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The items to display in the grid.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
+   */
+  private void addItems(int index, com.google.apps.card.v1.Grid.GridItem value) {
+    value.getClass();
+    ensureItemsIsMutable();
+    items_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The items to display in the grid.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
+   */
+  private void addAllItems(
+      java.lang.Iterable<? extends com.google.apps.card.v1.Grid.GridItem> values) {
+    ensureItemsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, items_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The items to display in the grid.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
+   */
+  private void clearItems() {
+    items_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The items to display in the grid.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
+   */
+  private void removeItems(int index) {
+    ensureItemsIsMutable();
+    items_.remove(index);
   }
 
   public static final int BORDER_STYLE_FIELD_NUMBER = 3;
@@ -1964,8 +1624,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.BorderStyle border_style = 3;</code>
-   *
-   * @return Whether the borderStyle field is set.
    */
   @java.lang.Override
   public boolean hasBorderStyle() {
@@ -1979,8 +1637,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.BorderStyle border_style = 3;</code>
-   *
-   * @return The borderStyle.
    */
   @java.lang.Override
   public com.google.apps.card.v1.BorderStyle getBorderStyle() {
@@ -1997,15 +1653,50 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.apps.card.v1.BorderStyle border_style = 3;</code>
    */
-  @java.lang.Override
-  public com.google.apps.card.v1.BorderStyleOrBuilder getBorderStyleOrBuilder() {
-    return borderStyle_ == null
-        ? com.google.apps.card.v1.BorderStyle.getDefaultInstance()
-        : borderStyle_;
+  private void setBorderStyle(com.google.apps.card.v1.BorderStyle value) {
+    value.getClass();
+    borderStyle_ = value;
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The border style to apply to each grid item.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.BorderStyle border_style = 3;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeBorderStyle(com.google.apps.card.v1.BorderStyle value) {
+    value.getClass();
+    if (borderStyle_ != null
+        && borderStyle_ != com.google.apps.card.v1.BorderStyle.getDefaultInstance()) {
+      borderStyle_ =
+          com.google.apps.card.v1.BorderStyle.newBuilder(borderStyle_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      borderStyle_ = value;
+    }
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The border style to apply to each grid item.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.BorderStyle border_style = 3;</code>
+   */
+  private void clearBorderStyle() {
+    borderStyle_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static final int COLUMN_COUNT_FIELD_NUMBER = 4;
-  private int columnCount_ = 0;
+  private int columnCount_;
   /**
    *
    *
@@ -2023,6 +1714,38 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
   public int getColumnCount() {
     return columnCount_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The number of columns to display in the grid. A default value
+   * is used if this field isn't specified, and that default value is
+   * different depending on where the grid is shown (dialog versus companion).
+   * </pre>
+   *
+   * <code>int32 column_count = 4;</code>
+   *
+   * @param value The columnCount to set.
+   */
+  private void setColumnCount(int value) {
+
+    columnCount_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The number of columns to display in the grid. A default value
+   * is used if this field isn't specified, and that default value is
+   * different depending on where the grid is shown (dialog versus companion).
+   * </pre>
+   *
+   * <code>int32 column_count = 4;</code>
+   */
+  private void clearColumnCount() {
+
+    columnCount_ = 0;
+  }
 
   public static final int ON_CLICK_FIELD_NUMBER = 5;
   private com.google.apps.card.v1.OnClick onClick_;
@@ -2036,8 +1759,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.OnClick on_click = 5;</code>
-   *
-   * @return Whether the onClick field is set.
    */
   @java.lang.Override
   public boolean hasOnClick() {
@@ -2053,8 +1774,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.OnClick on_click = 5;</code>
-   *
-   * @return The onClick.
    */
   @java.lang.Override
   public com.google.apps.card.v1.OnClick getOnClick() {
@@ -2071,216 +1790,130 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.apps.card.v1.OnClick on_click = 5;</code>
    */
-  @java.lang.Override
-  public com.google.apps.card.v1.OnClickOrBuilder getOnClickOrBuilder() {
-    return onClick_ == null ? com.google.apps.card.v1.OnClick.getDefaultInstance() : onClick_;
+  private void setOnClick(com.google.apps.card.v1.OnClick value) {
+    value.getClass();
+    onClick_ = value;
+    bitField0_ |= 0x00000002;
   }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * This callback is reused by each individual grid item, but with the
+   * item's identifier and index in the items list added to the callback's
+   * parameters.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.OnClick on_click = 5;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeOnClick(com.google.apps.card.v1.OnClick value) {
+    value.getClass();
+    if (onClick_ != null && onClick_ != com.google.apps.card.v1.OnClick.getDefaultInstance()) {
+      onClick_ =
+          com.google.apps.card.v1.OnClick.newBuilder(onClick_).mergeFrom(value).buildPartial();
+    } else {
+      onClick_ = value;
+    }
+    bitField0_ |= 0x00000002;
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(title_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, title_);
-    }
-    for (int i = 0; i < items_.size(); i++) {
-      output.writeMessage(2, items_.get(i));
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(3, getBorderStyle());
-    }
-    if (columnCount_ != 0) {
-      output.writeInt32(4, columnCount_);
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      output.writeMessage(5, getOnClick());
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(title_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, title_);
-    }
-    for (int i = 0; i < items_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, items_.get(i));
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, getBorderStyle());
-    }
-    if (columnCount_ != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeInt32Size(4, columnCount_);
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(5, getOnClick());
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.apps.card.v1.Grid)) {
-      return super.equals(obj);
-    }
-    com.google.apps.card.v1.Grid other = (com.google.apps.card.v1.Grid) obj;
-
-    if (!getTitle().equals(other.getTitle())) return false;
-    if (!getItemsList().equals(other.getItemsList())) return false;
-    if (hasBorderStyle() != other.hasBorderStyle()) return false;
-    if (hasBorderStyle()) {
-      if (!getBorderStyle().equals(other.getBorderStyle())) return false;
-    }
-    if (getColumnCount() != other.getColumnCount()) return false;
-    if (hasOnClick() != other.hasOnClick()) return false;
-    if (hasOnClick()) {
-      if (!getOnClick().equals(other.getOnClick())) return false;
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + TITLE_FIELD_NUMBER;
-    hash = (53 * hash) + getTitle().hashCode();
-    if (getItemsCount() > 0) {
-      hash = (37 * hash) + ITEMS_FIELD_NUMBER;
-      hash = (53 * hash) + getItemsList().hashCode();
-    }
-    if (hasBorderStyle()) {
-      hash = (37 * hash) + BORDER_STYLE_FIELD_NUMBER;
-      hash = (53 * hash) + getBorderStyle().hashCode();
-    }
-    hash = (37 * hash) + COLUMN_COUNT_FIELD_NUMBER;
-    hash = (53 * hash) + getColumnCount();
-    if (hasOnClick()) {
-      hash = (37 * hash) + ON_CLICK_FIELD_NUMBER;
-      hash = (53 * hash) + getOnClick().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * This callback is reused by each individual grid item, but with the
+   * item's identifier and index in the items list added to the callback's
+   * parameters.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.OnClick on_click = 5;</code>
+   */
+  private void clearOnClick() {
+    onClick_ = null;
+    bitField0_ = (bitField0_ & ~0x00000002);
   }
 
   public static com.google.apps.card.v1.Grid parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.Grid parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Grid parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.Grid parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Grid parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.Grid parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Grid parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.Grid parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Grid parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.Grid parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Grid parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.Grid parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.apps.card.v1.Grid prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -2336,299 +1969,17 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.apps.card.v1.Grid}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.apps.card.v1.Grid, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.apps.card.v1.Grid)
       com.google.apps.card.v1.GridOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.apps.card.v1.CardProto.internal_static_google_apps_card_v1_Grid_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Grid_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.apps.card.v1.Grid.class, com.google.apps.card.v1.Grid.Builder.class);
-    }
-
     // Construct using com.google.apps.card.v1.Grid.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getItemsFieldBuilder();
-        getBorderStyleFieldBuilder();
-        getOnClickFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      title_ = "";
-      if (itemsBuilder_ == null) {
-        items_ = java.util.Collections.emptyList();
-      } else {
-        items_ = null;
-        itemsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000002);
-      borderStyle_ = null;
-      if (borderStyleBuilder_ != null) {
-        borderStyleBuilder_.dispose();
-        borderStyleBuilder_ = null;
-      }
-      columnCount_ = 0;
-      onClick_ = null;
-      if (onClickBuilder_ != null) {
-        onClickBuilder_.dispose();
-        onClickBuilder_ = null;
-      }
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.apps.card.v1.CardProto.internal_static_google_apps_card_v1_Grid_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.Grid getDefaultInstanceForType() {
-      return com.google.apps.card.v1.Grid.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.Grid build() {
-      com.google.apps.card.v1.Grid result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.Grid buildPartial() {
-      com.google.apps.card.v1.Grid result = new com.google.apps.card.v1.Grid(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.apps.card.v1.Grid result) {
-      if (itemsBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)) {
-          items_ = java.util.Collections.unmodifiableList(items_);
-          bitField0_ = (bitField0_ & ~0x00000002);
-        }
-        result.items_ = items_;
-      } else {
-        result.items_ = itemsBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.apps.card.v1.Grid result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.title_ = title_;
-      }
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.borderStyle_ =
-            borderStyleBuilder_ == null ? borderStyle_ : borderStyleBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.columnCount_ = columnCount_;
-      }
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.onClick_ = onClickBuilder_ == null ? onClick_ : onClickBuilder_.build();
-        to_bitField0_ |= 0x00000002;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.apps.card.v1.Grid) {
-        return mergeFrom((com.google.apps.card.v1.Grid) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.apps.card.v1.Grid other) {
-      if (other == com.google.apps.card.v1.Grid.getDefaultInstance()) return this;
-      if (!other.getTitle().isEmpty()) {
-        title_ = other.title_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (itemsBuilder_ == null) {
-        if (!other.items_.isEmpty()) {
-          if (items_.isEmpty()) {
-            items_ = other.items_;
-            bitField0_ = (bitField0_ & ~0x00000002);
-          } else {
-            ensureItemsIsMutable();
-            items_.addAll(other.items_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.items_.isEmpty()) {
-          if (itemsBuilder_.isEmpty()) {
-            itemsBuilder_.dispose();
-            itemsBuilder_ = null;
-            items_ = other.items_;
-            bitField0_ = (bitField0_ & ~0x00000002);
-            itemsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getItemsFieldBuilder()
-                    : null;
-          } else {
-            itemsBuilder_.addAllMessages(other.items_);
-          }
-        }
-      }
-      if (other.hasBorderStyle()) {
-        mergeBorderStyle(other.getBorderStyle());
-      }
-      if (other.getColumnCount() != 0) {
-        setColumnCount(other.getColumnCount());
-      }
-      if (other.hasOnClick()) {
-        mergeOnClick(other.getOnClick());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                title_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                com.google.apps.card.v1.Grid.GridItem m =
-                    input.readMessage(
-                        com.google.apps.card.v1.Grid.GridItem.parser(), extensionRegistry);
-                if (itemsBuilder_ == null) {
-                  ensureItemsIsMutable();
-                  items_.add(m);
-                } else {
-                  itemsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 18
-            case 26:
-              {
-                input.readMessage(getBorderStyleFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 26
-            case 32:
-              {
-                columnCount_ = input.readInt32();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 32
-            case 42:
-              {
-                input.readMessage(getOnClickFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 42
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object title_ = "";
     /**
      *
      *
@@ -2640,16 +1991,9 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The title.
      */
+    @java.lang.Override
     public java.lang.String getTitle() {
-      java.lang.Object ref = title_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        title_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getTitle();
     }
     /**
      *
@@ -2662,16 +2006,9 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for title.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getTitleBytes() {
-      java.lang.Object ref = title_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        title_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getTitleBytes();
     }
     /**
      *
@@ -2686,12 +2023,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setTitle(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      title_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setTitle(value);
       return this;
     }
     /**
@@ -2706,9 +2039,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearTitle() {
-      title_ = getDefaultInstance().getTitle();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearTitle();
       return this;
     }
     /**
@@ -2724,32 +2056,11 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setTitleBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      title_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setTitleBytes(value);
       return this;
     }
 
-    private java.util.List<com.google.apps.card.v1.Grid.GridItem> items_ =
-        java.util.Collections.emptyList();
-
-    private void ensureItemsIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
-        items_ = new java.util.ArrayList<com.google.apps.card.v1.Grid.GridItem>(items_);
-        bitField0_ |= 0x00000002;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.apps.card.v1.Grid.GridItem,
-            com.google.apps.card.v1.Grid.GridItem.Builder,
-            com.google.apps.card.v1.Grid.GridItemOrBuilder>
-        itemsBuilder_;
-
     /**
      *
      *
@@ -2759,12 +2070,9 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.apps.card.v1.Grid.GridItem> getItemsList() {
-      if (itemsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(items_);
-      } else {
-        return itemsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getItemsList());
     }
     /**
      *
@@ -2775,12 +2083,9 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
      */
+    @java.lang.Override
     public int getItemsCount() {
-      if (itemsBuilder_ == null) {
-        return items_.size();
-      } else {
-        return itemsBuilder_.getCount();
-      }
+      return instance.getItemsCount();
     }
     /**
      *
@@ -2791,12 +2096,10 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
      */
+
+    @java.lang.Override
     public com.google.apps.card.v1.Grid.GridItem getItems(int index) {
-      if (itemsBuilder_ == null) {
-        return items_.get(index);
-      } else {
-        return itemsBuilder_.getMessage(index);
-      }
+      return instance.getItems(index);
     }
     /**
      *
@@ -2808,16 +2111,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
      */
     public Builder setItems(int index, com.google.apps.card.v1.Grid.GridItem value) {
-      if (itemsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureItemsIsMutable();
-        items_.set(index, value);
-        onChanged();
-      } else {
-        itemsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setItems(index, value);
       return this;
     }
     /**
@@ -2831,13 +2126,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder setItems(
         int index, com.google.apps.card.v1.Grid.GridItem.Builder builderForValue) {
-      if (itemsBuilder_ == null) {
-        ensureItemsIsMutable();
-        items_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        itemsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setItems(index, builderForValue.build());
       return this;
     }
     /**
@@ -2850,16 +2140,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
      */
     public Builder addItems(com.google.apps.card.v1.Grid.GridItem value) {
-      if (itemsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureItemsIsMutable();
-        items_.add(value);
-        onChanged();
-      } else {
-        itemsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addItems(value);
       return this;
     }
     /**
@@ -2872,16 +2154,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
      */
     public Builder addItems(int index, com.google.apps.card.v1.Grid.GridItem value) {
-      if (itemsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureItemsIsMutable();
-        items_.add(index, value);
-        onChanged();
-      } else {
-        itemsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addItems(index, value);
       return this;
     }
     /**
@@ -2894,13 +2168,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
      */
     public Builder addItems(com.google.apps.card.v1.Grid.GridItem.Builder builderForValue) {
-      if (itemsBuilder_ == null) {
-        ensureItemsIsMutable();
-        items_.add(builderForValue.build());
-        onChanged();
-      } else {
-        itemsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addItems(builderForValue.build());
       return this;
     }
     /**
@@ -2914,13 +2183,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addItems(
         int index, com.google.apps.card.v1.Grid.GridItem.Builder builderForValue) {
-      if (itemsBuilder_ == null) {
-        ensureItemsIsMutable();
-        items_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        itemsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addItems(index, builderForValue.build());
       return this;
     }
     /**
@@ -2934,13 +2198,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addAllItems(
         java.lang.Iterable<? extends com.google.apps.card.v1.Grid.GridItem> values) {
-      if (itemsBuilder_ == null) {
-        ensureItemsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, items_);
-        onChanged();
-      } else {
-        itemsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllItems(values);
       return this;
     }
     /**
@@ -2953,13 +2212,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
      */
     public Builder clearItems() {
-      if (itemsBuilder_ == null) {
-        items_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
-      } else {
-        itemsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearItems();
       return this;
     }
     /**
@@ -2972,122 +2226,11 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
      */
     public Builder removeItems(int index) {
-      if (itemsBuilder_ == null) {
-        ensureItemsIsMutable();
-        items_.remove(index);
-        onChanged();
-      } else {
-        itemsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeItems(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * The items to display in the grid.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
-     */
-    public com.google.apps.card.v1.Grid.GridItem.Builder getItemsBuilder(int index) {
-      return getItemsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The items to display in the grid.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
-     */
-    public com.google.apps.card.v1.Grid.GridItemOrBuilder getItemsOrBuilder(int index) {
-      if (itemsBuilder_ == null) {
-        return items_.get(index);
-      } else {
-        return itemsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The items to display in the grid.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
-     */
-    public java.util.List<? extends com.google.apps.card.v1.Grid.GridItemOrBuilder>
-        getItemsOrBuilderList() {
-      if (itemsBuilder_ != null) {
-        return itemsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(items_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The items to display in the grid.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
-     */
-    public com.google.apps.card.v1.Grid.GridItem.Builder addItemsBuilder() {
-      return getItemsFieldBuilder()
-          .addBuilder(com.google.apps.card.v1.Grid.GridItem.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The items to display in the grid.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
-     */
-    public com.google.apps.card.v1.Grid.GridItem.Builder addItemsBuilder(int index) {
-      return getItemsFieldBuilder()
-          .addBuilder(index, com.google.apps.card.v1.Grid.GridItem.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The items to display in the grid.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
-     */
-    public java.util.List<com.google.apps.card.v1.Grid.GridItem.Builder> getItemsBuilderList() {
-      return getItemsFieldBuilder().getBuilderList();
-    }
 
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.apps.card.v1.Grid.GridItem,
-            com.google.apps.card.v1.Grid.GridItem.Builder,
-            com.google.apps.card.v1.Grid.GridItemOrBuilder>
-        getItemsFieldBuilder() {
-      if (itemsBuilder_ == null) {
-        itemsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.apps.card.v1.Grid.GridItem,
-                com.google.apps.card.v1.Grid.GridItem.Builder,
-                com.google.apps.card.v1.Grid.GridItemOrBuilder>(
-                items_, ((bitField0_ & 0x00000002) != 0), getParentForChildren(), isClean());
-        items_ = null;
-      }
-      return itemsBuilder_;
-    }
-
-    private com.google.apps.card.v1.BorderStyle borderStyle_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.BorderStyle,
-            com.google.apps.card.v1.BorderStyle.Builder,
-            com.google.apps.card.v1.BorderStyleOrBuilder>
-        borderStyleBuilder_;
     /**
      *
      *
@@ -3096,11 +2239,10 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.BorderStyle border_style = 3;</code>
-     *
-     * @return Whether the borderStyle field is set.
      */
+    @java.lang.Override
     public boolean hasBorderStyle() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return instance.hasBorderStyle();
     }
     /**
      *
@@ -3110,17 +2252,10 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.BorderStyle border_style = 3;</code>
-     *
-     * @return The borderStyle.
      */
+    @java.lang.Override
     public com.google.apps.card.v1.BorderStyle getBorderStyle() {
-      if (borderStyleBuilder_ == null) {
-        return borderStyle_ == null
-            ? com.google.apps.card.v1.BorderStyle.getDefaultInstance()
-            : borderStyle_;
-      } else {
-        return borderStyleBuilder_.getMessage();
-      }
+      return instance.getBorderStyle();
     }
     /**
      *
@@ -3132,16 +2267,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.BorderStyle border_style = 3;</code>
      */
     public Builder setBorderStyle(com.google.apps.card.v1.BorderStyle value) {
-      if (borderStyleBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        borderStyle_ = value;
-      } else {
-        borderStyleBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setBorderStyle(value);
       return this;
     }
     /**
@@ -3154,13 +2281,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.BorderStyle border_style = 3;</code>
      */
     public Builder setBorderStyle(com.google.apps.card.v1.BorderStyle.Builder builderForValue) {
-      if (borderStyleBuilder_ == null) {
-        borderStyle_ = builderForValue.build();
-      } else {
-        borderStyleBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setBorderStyle(builderForValue.build());
       return this;
     }
     /**
@@ -3173,21 +2295,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.BorderStyle border_style = 3;</code>
      */
     public Builder mergeBorderStyle(com.google.apps.card.v1.BorderStyle value) {
-      if (borderStyleBuilder_ == null) {
-        if (((bitField0_ & 0x00000004) != 0)
-            && borderStyle_ != null
-            && borderStyle_ != com.google.apps.card.v1.BorderStyle.getDefaultInstance()) {
-          getBorderStyleBuilder().mergeFrom(value);
-        } else {
-          borderStyle_ = value;
-        }
-      } else {
-        borderStyleBuilder_.mergeFrom(value);
-      }
-      if (borderStyle_ != null) {
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeBorderStyle(value);
       return this;
     }
     /**
@@ -3200,74 +2309,11 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.BorderStyle border_style = 3;</code>
      */
     public Builder clearBorderStyle() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      borderStyle_ = null;
-      if (borderStyleBuilder_ != null) {
-        borderStyleBuilder_.dispose();
-        borderStyleBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearBorderStyle();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * The border style to apply to each grid item.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.BorderStyle border_style = 3;</code>
-     */
-    public com.google.apps.card.v1.BorderStyle.Builder getBorderStyleBuilder() {
-      bitField0_ |= 0x00000004;
-      onChanged();
-      return getBorderStyleFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The border style to apply to each grid item.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.BorderStyle border_style = 3;</code>
-     */
-    public com.google.apps.card.v1.BorderStyleOrBuilder getBorderStyleOrBuilder() {
-      if (borderStyleBuilder_ != null) {
-        return borderStyleBuilder_.getMessageOrBuilder();
-      } else {
-        return borderStyle_ == null
-            ? com.google.apps.card.v1.BorderStyle.getDefaultInstance()
-            : borderStyle_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The border style to apply to each grid item.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.BorderStyle border_style = 3;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.BorderStyle,
-            com.google.apps.card.v1.BorderStyle.Builder,
-            com.google.apps.card.v1.BorderStyleOrBuilder>
-        getBorderStyleFieldBuilder() {
-      if (borderStyleBuilder_ == null) {
-        borderStyleBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.BorderStyle,
-                com.google.apps.card.v1.BorderStyle.Builder,
-                com.google.apps.card.v1.BorderStyleOrBuilder>(
-                getBorderStyle(), getParentForChildren(), isClean());
-        borderStyle_ = null;
-      }
-      return borderStyleBuilder_;
-    }
 
-    private int columnCount_;
     /**
      *
      *
@@ -3283,7 +2329,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getColumnCount() {
-      return columnCount_;
+      return instance.getColumnCount();
     }
     /**
      *
@@ -3300,10 +2346,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setColumnCount(int value) {
-
-      columnCount_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setColumnCount(value);
       return this;
     }
     /**
@@ -3320,18 +2364,11 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearColumnCount() {
-      bitField0_ = (bitField0_ & ~0x00000008);
-      columnCount_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearColumnCount();
       return this;
     }
 
-    private com.google.apps.card.v1.OnClick onClick_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.OnClick,
-            com.google.apps.card.v1.OnClick.Builder,
-            com.google.apps.card.v1.OnClickOrBuilder>
-        onClickBuilder_;
     /**
      *
      *
@@ -3342,11 +2379,10 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.OnClick on_click = 5;</code>
-     *
-     * @return Whether the onClick field is set.
      */
+    @java.lang.Override
     public boolean hasOnClick() {
-      return ((bitField0_ & 0x00000010) != 0);
+      return instance.hasOnClick();
     }
     /**
      *
@@ -3358,15 +2394,10 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.OnClick on_click = 5;</code>
-     *
-     * @return The onClick.
      */
+    @java.lang.Override
     public com.google.apps.card.v1.OnClick getOnClick() {
-      if (onClickBuilder_ == null) {
-        return onClick_ == null ? com.google.apps.card.v1.OnClick.getDefaultInstance() : onClick_;
-      } else {
-        return onClickBuilder_.getMessage();
-      }
+      return instance.getOnClick();
     }
     /**
      *
@@ -3380,16 +2411,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.OnClick on_click = 5;</code>
      */
     public Builder setOnClick(com.google.apps.card.v1.OnClick value) {
-      if (onClickBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        onClick_ = value;
-      } else {
-        onClickBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setOnClick(value);
       return this;
     }
     /**
@@ -3404,13 +2427,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.OnClick on_click = 5;</code>
      */
     public Builder setOnClick(com.google.apps.card.v1.OnClick.Builder builderForValue) {
-      if (onClickBuilder_ == null) {
-        onClick_ = builderForValue.build();
-      } else {
-        onClickBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setOnClick(builderForValue.build());
       return this;
     }
     /**
@@ -3425,21 +2443,8 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.OnClick on_click = 5;</code>
      */
     public Builder mergeOnClick(com.google.apps.card.v1.OnClick value) {
-      if (onClickBuilder_ == null) {
-        if (((bitField0_ & 0x00000010) != 0)
-            && onClick_ != null
-            && onClick_ != com.google.apps.card.v1.OnClick.getDefaultInstance()) {
-          getOnClickBuilder().mergeFrom(value);
-        } else {
-          onClick_ = value;
-        }
-      } else {
-        onClickBuilder_.mergeFrom(value);
-      }
-      if (onClick_ != null) {
-        bitField0_ |= 0x00000010;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeOnClick(value);
       return this;
     }
     /**
@@ -3454,135 +2459,96 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.OnClick on_click = 5;</code>
      */
     public Builder clearOnClick() {
-      bitField0_ = (bitField0_ & ~0x00000010);
-      onClick_ = null;
-      if (onClickBuilder_ != null) {
-        onClickBuilder_.dispose();
-        onClickBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearOnClick();
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * This callback is reused by each individual grid item, but with the
-     * item's identifier and index in the items list added to the callback's
-     * parameters.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.OnClick on_click = 5;</code>
-     */
-    public com.google.apps.card.v1.OnClick.Builder getOnClickBuilder() {
-      bitField0_ |= 0x00000010;
-      onChanged();
-      return getOnClickFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * This callback is reused by each individual grid item, but with the
-     * item's identifier and index in the items list added to the callback's
-     * parameters.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.OnClick on_click = 5;</code>
-     */
-    public com.google.apps.card.v1.OnClickOrBuilder getOnClickOrBuilder() {
-      if (onClickBuilder_ != null) {
-        return onClickBuilder_.getMessageOrBuilder();
-      } else {
-        return onClick_ == null ? com.google.apps.card.v1.OnClick.getDefaultInstance() : onClick_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * This callback is reused by each individual grid item, but with the
-     * item's identifier and index in the items list added to the callback's
-     * parameters.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.OnClick on_click = 5;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.OnClick,
-            com.google.apps.card.v1.OnClick.Builder,
-            com.google.apps.card.v1.OnClickOrBuilder>
-        getOnClickFieldBuilder() {
-      if (onClickBuilder_ == null) {
-        onClickBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.OnClick,
-                com.google.apps.card.v1.OnClick.Builder,
-                com.google.apps.card.v1.OnClickOrBuilder>(
-                getOnClick(), getParentForChildren(), isClean());
-        onClick_ = null;
-      }
-      return onClickBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.apps.card.v1.Grid)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.apps.card.v1.Grid();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_",
+                "title_",
+                "items_",
+                com.google.apps.card.v1.Grid.GridItem.class,
+                "borderStyle_",
+                "columnCount_",
+                "onClick_",
+              };
+          java.lang.String info =
+              "\u0000\u0005\u0000\u0001\u0001\u0005\u0005\u0000\u0001\u0000\u0001\u0208\u0002\u001b"
+                  + "\u0003\u1009\u0000\u0004\u0004\u0005\u1009\u0001";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.apps.card.v1.Grid> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.apps.card.v1.Grid.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.apps.card.v1.Grid>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.apps.card.v1.Grid)
   private static final com.google.apps.card.v1.Grid DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.apps.card.v1.Grid();
+    Grid defaultInstance = new Grid();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(Grid.class, defaultInstance);
   }
 
   public static com.google.apps.card.v1.Grid getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Grid> PARSER =
-      new com.google.protobuf.AbstractParser<Grid>() {
-        @java.lang.Override
-        public Grid parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<Grid> PARSER;
 
   public static com.google.protobuf.Parser<Grid> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<Grid> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.apps.card.v1.Grid getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

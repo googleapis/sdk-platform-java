@@ -22,7 +22,7 @@ package com.google.api;
 public interface DocumentationOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.Documentation)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -85,26 +85,6 @@ public interface DocumentationOrBuilder
    * <code>repeated .google.api.Page pages = 5;</code>
    */
   int getPagesCount();
-  /**
-   *
-   *
-   * <pre>
-   * The top level pages for the documentation set.
-   * </pre>
-   *
-   * <code>repeated .google.api.Page pages = 5;</code>
-   */
-  java.util.List<? extends com.google.api.PageOrBuilder> getPagesOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * The top level pages for the documentation set.
-   * </pre>
-   *
-   * <code>repeated .google.api.Page pages = 5;</code>
-   */
-  com.google.api.PageOrBuilder getPagesOrBuilder(int index);
 
   /**
    *
@@ -142,30 +122,6 @@ public interface DocumentationOrBuilder
    * <code>repeated .google.api.DocumentationRule rules = 3;</code>
    */
   int getRulesCount();
-  /**
-   *
-   *
-   * <pre>
-   * A list of documentation rules that apply to individual API elements.
-   *
-   * **NOTE:** All service configuration rules follow "last one wins" order.
-   * </pre>
-   *
-   * <code>repeated .google.api.DocumentationRule rules = 3;</code>
-   */
-  java.util.List<? extends com.google.api.DocumentationRuleOrBuilder> getRulesOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * A list of documentation rules that apply to individual API elements.
-   *
-   * **NOTE:** All service configuration rules follow "last one wins" order.
-   * </pre>
-   *
-   * <code>repeated .google.api.DocumentationRule rules = 3;</code>
-   */
-  com.google.api.DocumentationRuleOrBuilder getRulesOrBuilder(int index);
 
   /**
    *

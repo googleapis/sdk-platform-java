@@ -37,46 +37,18 @@ package com.google.longrunning;
  *
  * Protobuf type {@code google.longrunning.OperationInfo}
  */
-public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
+public final class OperationInfo
+    extends com.google.protobuf.GeneratedMessageLite<OperationInfo, OperationInfo.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.longrunning.OperationInfo)
     OperationInfoOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use OperationInfo.newBuilder() to construct.
-  private OperationInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private OperationInfo() {
     responseType_ = "";
     metadataType_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new OperationInfo();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.longrunning.OperationsProto
-        .internal_static_google_longrunning_OperationInfo_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.longrunning.OperationsProto
-        .internal_static_google_longrunning_OperationInfo_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.longrunning.OperationInfo.class,
-            com.google.longrunning.OperationInfo.Builder.class);
-  }
-
   public static final int RESPONSE_TYPE_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object responseType_ = "";
+  private java.lang.String responseType_;
   /**
    *
    *
@@ -97,15 +69,7 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getResponseType() {
-    java.lang.Object ref = responseType_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      responseType_ = s;
-      return s;
-    }
+    return responseType_;
   }
   /**
    *
@@ -127,21 +91,76 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getResponseTypeBytes() {
-    java.lang.Object ref = responseType_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      responseType_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(responseType_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. The message name of the primary return type for this
+   * long-running operation.
+   * This type will be used to deserialize the LRO's response.
+   *
+   * If the response is in a different package from the rpc, a fully-qualified
+   * message name must be used (e.g. `google.protobuf.Struct`).
+   *
+   * Note: Altering this value constitutes a breaking change.
+   * </pre>
+   *
+   * <code>string response_type = 1;</code>
+   *
+   * @param value The responseType to set.
+   */
+  private void setResponseType(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    responseType_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. The message name of the primary return type for this
+   * long-running operation.
+   * This type will be used to deserialize the LRO's response.
+   *
+   * If the response is in a different package from the rpc, a fully-qualified
+   * message name must be used (e.g. `google.protobuf.Struct`).
+   *
+   * Note: Altering this value constitutes a breaking change.
+   * </pre>
+   *
+   * <code>string response_type = 1;</code>
+   */
+  private void clearResponseType() {
+
+    responseType_ = getDefaultInstance().getResponseType();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. The message name of the primary return type for this
+   * long-running operation.
+   * This type will be used to deserialize the LRO's response.
+   *
+   * If the response is in a different package from the rpc, a fully-qualified
+   * message name must be used (e.g. `google.protobuf.Struct`).
+   *
+   * Note: Altering this value constitutes a breaking change.
+   * </pre>
+   *
+   * <code>string response_type = 1;</code>
+   *
+   * @param value The bytes for responseType to set.
+   */
+  private void setResponseTypeBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    responseType_ = value.toStringUtf8();
   }
 
   public static final int METADATA_TYPE_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object metadataType_ = "";
+  private java.lang.String metadataType_;
   /**
    *
    *
@@ -161,15 +180,7 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getMetadataType() {
-    java.lang.Object ref = metadataType_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      metadataType_ = s;
-      return s;
-    }
+    return metadataType_;
   }
   /**
    *
@@ -190,183 +201,152 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getMetadataTypeBytes() {
-    java.lang.Object ref = metadataType_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      metadataType_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(metadataType_);
   }
+  /**
+   *
+   *
+   * <pre>
+   * Required. The message name of the metadata type for this long-running
+   * operation.
+   *
+   * If the response is in a different package from the rpc, a fully-qualified
+   * message name must be used (e.g. `google.protobuf.Struct`).
+   *
+   * Note: Altering this value constitutes a breaking change.
+   * </pre>
+   *
+   * <code>string metadata_type = 2;</code>
+   *
+   * @param value The metadataType to set.
+   */
+  private void setMetadataType(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    metadataType_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Required. The message name of the metadata type for this long-running
+   * operation.
+   *
+   * If the response is in a different package from the rpc, a fully-qualified
+   * message name must be used (e.g. `google.protobuf.Struct`).
+   *
+   * Note: Altering this value constitutes a breaking change.
+   * </pre>
+   *
+   * <code>string metadata_type = 2;</code>
+   */
+  private void clearMetadataType() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(responseType_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, responseType_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(metadataType_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, metadataType_);
-    }
-    getUnknownFields().writeTo(output);
+    metadataType_ = getDefaultInstance().getMetadataType();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(responseType_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, responseType_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(metadataType_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, metadataType_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.longrunning.OperationInfo)) {
-      return super.equals(obj);
-    }
-    com.google.longrunning.OperationInfo other = (com.google.longrunning.OperationInfo) obj;
-
-    if (!getResponseType().equals(other.getResponseType())) return false;
-    if (!getMetadataType().equals(other.getMetadataType())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + RESPONSE_TYPE_FIELD_NUMBER;
-    hash = (53 * hash) + getResponseType().hashCode();
-    hash = (37 * hash) + METADATA_TYPE_FIELD_NUMBER;
-    hash = (53 * hash) + getMetadataType().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Required. The message name of the metadata type for this long-running
+   * operation.
+   *
+   * If the response is in a different package from the rpc, a fully-qualified
+   * message name must be used (e.g. `google.protobuf.Struct`).
+   *
+   * Note: Altering this value constitutes a breaking change.
+   * </pre>
+   *
+   * <code>string metadata_type = 2;</code>
+   *
+   * @param value The bytes for metadataType to set.
+   */
+  private void setMetadataTypeBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    metadataType_ = value.toStringUtf8();
   }
 
   public static com.google.longrunning.OperationInfo parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.longrunning.OperationInfo parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.longrunning.OperationInfo parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.longrunning.OperationInfo parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.longrunning.OperationInfo parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.longrunning.OperationInfo parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.longrunning.OperationInfo parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.longrunning.OperationInfo parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.longrunning.OperationInfo parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.longrunning.OperationInfo parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.longrunning.OperationInfo parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.longrunning.OperationInfo parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.longrunning.OperationInfo prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -385,194 +365,17 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.longrunning.OperationInfo}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.longrunning.OperationInfo, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.longrunning.OperationInfo)
       com.google.longrunning.OperationInfoOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.longrunning.OperationsProto
-          .internal_static_google_longrunning_OperationInfo_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.longrunning.OperationsProto
-          .internal_static_google_longrunning_OperationInfo_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.longrunning.OperationInfo.class,
-              com.google.longrunning.OperationInfo.Builder.class);
-    }
-
     // Construct using com.google.longrunning.OperationInfo.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      responseType_ = "";
-      metadataType_ = "";
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.longrunning.OperationsProto
-          .internal_static_google_longrunning_OperationInfo_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.longrunning.OperationInfo getDefaultInstanceForType() {
-      return com.google.longrunning.OperationInfo.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.longrunning.OperationInfo build() {
-      com.google.longrunning.OperationInfo result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.longrunning.OperationInfo buildPartial() {
-      com.google.longrunning.OperationInfo result = new com.google.longrunning.OperationInfo(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.longrunning.OperationInfo result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.responseType_ = responseType_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.metadataType_ = metadataType_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.longrunning.OperationInfo) {
-        return mergeFrom((com.google.longrunning.OperationInfo) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.longrunning.OperationInfo other) {
-      if (other == com.google.longrunning.OperationInfo.getDefaultInstance()) return this;
-      if (!other.getResponseType().isEmpty()) {
-        responseType_ = other.responseType_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getMetadataType().isEmpty()) {
-        metadataType_ = other.metadataType_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                responseType_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                metadataType_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object responseType_ = "";
     /**
      *
      *
@@ -591,16 +394,9 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The responseType.
      */
+    @java.lang.Override
     public java.lang.String getResponseType() {
-      java.lang.Object ref = responseType_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        responseType_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getResponseType();
     }
     /**
      *
@@ -620,16 +416,9 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for responseType.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getResponseTypeBytes() {
-      java.lang.Object ref = responseType_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        responseType_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getResponseTypeBytes();
     }
     /**
      *
@@ -651,12 +440,8 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setResponseType(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      responseType_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setResponseType(value);
       return this;
     }
     /**
@@ -678,9 +463,8 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearResponseType() {
-      responseType_ = getDefaultInstance().getResponseType();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearResponseType();
       return this;
     }
     /**
@@ -703,17 +487,11 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setResponseTypeBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      responseType_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setResponseTypeBytes(value);
       return this;
     }
 
-    private java.lang.Object metadataType_ = "";
     /**
      *
      *
@@ -731,16 +509,9 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The metadataType.
      */
+    @java.lang.Override
     public java.lang.String getMetadataType() {
-      java.lang.Object ref = metadataType_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        metadataType_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getMetadataType();
     }
     /**
      *
@@ -759,16 +530,9 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for metadataType.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getMetadataTypeBytes() {
-      java.lang.Object ref = metadataType_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        metadataType_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getMetadataTypeBytes();
     }
     /**
      *
@@ -789,12 +553,8 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setMetadataType(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      metadataType_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setMetadataType(value);
       return this;
     }
     /**
@@ -815,9 +575,8 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearMetadataType() {
-      metadataType_ = getDefaultInstance().getMetadataType();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearMetadataType();
       return this;
     }
     /**
@@ -839,74 +598,92 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setMetadataTypeBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      metadataType_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setMetadataTypeBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.longrunning.OperationInfo)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.longrunning.OperationInfo();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "responseType_", "metadataType_",
+              };
+          java.lang.String info =
+              "\u0000\u0002\u0000\u0000\u0001\u0002\u0002\u0000\u0000\u0000\u0001\u0208\u0002\u0208"
+                  + "";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.longrunning.OperationInfo> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.longrunning.OperationInfo.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.longrunning.OperationInfo>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.longrunning.OperationInfo)
   private static final com.google.longrunning.OperationInfo DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.longrunning.OperationInfo();
+    OperationInfo defaultInstance = new OperationInfo();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        OperationInfo.class, defaultInstance);
   }
 
   public static com.google.longrunning.OperationInfo getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<OperationInfo> PARSER =
-      new com.google.protobuf.AbstractParser<OperationInfo>() {
-        @java.lang.Override
-        public OperationInfo parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<OperationInfo> PARSER;
 
   public static com.google.protobuf.Parser<OperationInfo> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<OperationInfo> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.longrunning.OperationInfo getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

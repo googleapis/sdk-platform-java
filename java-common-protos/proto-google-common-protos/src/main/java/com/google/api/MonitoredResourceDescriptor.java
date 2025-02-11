@@ -37,50 +37,22 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.MonitoredResourceDescriptor}
  */
-public final class MonitoredResourceDescriptor extends com.google.protobuf.GeneratedMessageV3
+public final class MonitoredResourceDescriptor
+    extends com.google.protobuf.GeneratedMessageLite<
+        MonitoredResourceDescriptor, MonitoredResourceDescriptor.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.MonitoredResourceDescriptor)
     MonitoredResourceDescriptorOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use MonitoredResourceDescriptor.newBuilder() to construct.
-  private MonitoredResourceDescriptor(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private MonitoredResourceDescriptor() {
     name_ = "";
     type_ = "";
     displayName_ = "";
     description_ = "";
-    labels_ = java.util.Collections.emptyList();
-    launchStage_ = 0;
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new MonitoredResourceDescriptor();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.MonitoredResourceProto
-        .internal_static_google_api_MonitoredResourceDescriptor_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.MonitoredResourceProto
-        .internal_static_google_api_MonitoredResourceDescriptor_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.MonitoredResourceDescriptor.class,
-            com.google.api.MonitoredResourceDescriptor.Builder.class);
+    labels_ = emptyProtobufList();
   }
 
   public static final int NAME_FIELD_NUMBER = 5;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object name_ = "";
+  private java.lang.String name_;
   /**
    *
    *
@@ -99,15 +71,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    */
   @java.lang.Override
   public java.lang.String getName() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      name_ = s;
-      return s;
-    }
+    return name_;
   }
   /**
    *
@@ -127,21 +91,70 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      name_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(name_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The resource name of the monitored resource descriptor:
+   * `"projects/{project_id}/monitoredResourceDescriptors/{type}"` where
+   * {type} is the value of the `type` field in this object and
+   * {project_id} is a project ID that provides API-specific context for
+   * accessing the type.  APIs that do not use project information can use the
+   * resource name format `"monitoredResourceDescriptors/{type}"`.
+   * </pre>
+   *
+   * <code>string name = 5;</code>
+   *
+   * @param value The name to set.
+   */
+  private void setName(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    name_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The resource name of the monitored resource descriptor:
+   * `"projects/{project_id}/monitoredResourceDescriptors/{type}"` where
+   * {type} is the value of the `type` field in this object and
+   * {project_id} is a project ID that provides API-specific context for
+   * accessing the type.  APIs that do not use project information can use the
+   * resource name format `"monitoredResourceDescriptors/{type}"`.
+   * </pre>
+   *
+   * <code>string name = 5;</code>
+   */
+  private void clearName() {
+
+    name_ = getDefaultInstance().getName();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The resource name of the monitored resource descriptor:
+   * `"projects/{project_id}/monitoredResourceDescriptors/{type}"` where
+   * {type} is the value of the `type` field in this object and
+   * {project_id} is a project ID that provides API-specific context for
+   * accessing the type.  APIs that do not use project information can use the
+   * resource name format `"monitoredResourceDescriptors/{type}"`.
+   * </pre>
+   *
+   * <code>string name = 5;</code>
+   *
+   * @param value The bytes for name to set.
+   */
+  private void setNameBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    name_ = value.toStringUtf8();
   }
 
   public static final int TYPE_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object type_ = "";
+  private java.lang.String type_;
   /**
    *
    *
@@ -160,15 +173,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    */
   @java.lang.Override
   public java.lang.String getType() {
-    java.lang.Object ref = type_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      type_ = s;
-      return s;
-    }
+    return type_;
   }
   /**
    *
@@ -188,21 +193,70 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getTypeBytes() {
-    java.lang.Object ref = type_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      type_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(type_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. The monitored resource type. For example, the type
+   * `"cloudsql_database"` represents databases in Google Cloud SQL.
+   *  For a list of types, see [Monitored resource
+   *  types](https://cloud.google.com/monitoring/api/resources)
+   * and [Logging resource
+   * types](https://cloud.google.com/logging/docs/api/v2/resource-list).
+   * </pre>
+   *
+   * <code>string type = 1;</code>
+   *
+   * @param value The type to set.
+   */
+  private void setType(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    type_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. The monitored resource type. For example, the type
+   * `"cloudsql_database"` represents databases in Google Cloud SQL.
+   *  For a list of types, see [Monitored resource
+   *  types](https://cloud.google.com/monitoring/api/resources)
+   * and [Logging resource
+   * types](https://cloud.google.com/logging/docs/api/v2/resource-list).
+   * </pre>
+   *
+   * <code>string type = 1;</code>
+   */
+  private void clearType() {
+
+    type_ = getDefaultInstance().getType();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. The monitored resource type. For example, the type
+   * `"cloudsql_database"` represents databases in Google Cloud SQL.
+   *  For a list of types, see [Monitored resource
+   *  types](https://cloud.google.com/monitoring/api/resources)
+   * and [Logging resource
+   * types](https://cloud.google.com/logging/docs/api/v2/resource-list).
+   * </pre>
+   *
+   * <code>string type = 1;</code>
+   *
+   * @param value The bytes for type to set.
+   */
+  private void setTypeBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    type_ = value.toStringUtf8();
   }
 
   public static final int DISPLAY_NAME_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object displayName_ = "";
+  private java.lang.String displayName_;
   /**
    *
    *
@@ -219,15 +273,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    */
   @java.lang.Override
   public java.lang.String getDisplayName() {
-    java.lang.Object ref = displayName_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      displayName_ = s;
-      return s;
-    }
+    return displayName_;
   }
   /**
    *
@@ -245,21 +291,64 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getDisplayNameBytes() {
-    java.lang.Object ref = displayName_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      displayName_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(displayName_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. A concise name for the monitored resource type that might be
+   * displayed in user interfaces. It should be a Title Cased Noun Phrase,
+   * without any article or other determiners. For example,
+   * `"Google Cloud SQL Database"`.
+   * </pre>
+   *
+   * <code>string display_name = 2;</code>
+   *
+   * @param value The displayName to set.
+   */
+  private void setDisplayName(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    displayName_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. A concise name for the monitored resource type that might be
+   * displayed in user interfaces. It should be a Title Cased Noun Phrase,
+   * without any article or other determiners. For example,
+   * `"Google Cloud SQL Database"`.
+   * </pre>
+   *
+   * <code>string display_name = 2;</code>
+   */
+  private void clearDisplayName() {
+
+    displayName_ = getDefaultInstance().getDisplayName();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. A concise name for the monitored resource type that might be
+   * displayed in user interfaces. It should be a Title Cased Noun Phrase,
+   * without any article or other determiners. For example,
+   * `"Google Cloud SQL Database"`.
+   * </pre>
+   *
+   * <code>string display_name = 2;</code>
+   *
+   * @param value The bytes for displayName to set.
+   */
+  private void setDisplayNameBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    displayName_ = value.toStringUtf8();
   }
 
   public static final int DESCRIPTION_FIELD_NUMBER = 3;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object description_ = "";
+  private java.lang.String description_;
   /**
    *
    *
@@ -274,15 +363,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    */
   @java.lang.Override
   public java.lang.String getDescription() {
-    java.lang.Object ref = description_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      description_ = s;
-      return s;
-    }
+    return description_;
   }
   /**
    *
@@ -298,21 +379,58 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getDescriptionBytes() {
-    java.lang.Object ref = description_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      description_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(description_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. A detailed description of the monitored resource type that might
+   * be used in documentation.
+   * </pre>
+   *
+   * <code>string description = 3;</code>
+   *
+   * @param value The description to set.
+   */
+  private void setDescription(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    description_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. A detailed description of the monitored resource type that might
+   * be used in documentation.
+   * </pre>
+   *
+   * <code>string description = 3;</code>
+   */
+  private void clearDescription() {
+
+    description_ = getDefaultInstance().getDescription();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. A detailed description of the monitored resource type that might
+   * be used in documentation.
+   * </pre>
+   *
+   * <code>string description = 3;</code>
+   *
+   * @param value The bytes for description to set.
+   */
+  private void setDescriptionBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    description_ = value.toStringUtf8();
   }
 
   public static final int LABELS_FIELD_NUMBER = 4;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.api.LabelDescriptor> labels_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.api.LabelDescriptor> labels_;
   /**
    *
    *
@@ -339,7 +457,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    *
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.api.LabelDescriptorOrBuilder>
       getLabelsOrBuilderList() {
     return labels_;
@@ -385,13 +502,112 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    *
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
    */
-  @java.lang.Override
   public com.google.api.LabelDescriptorOrBuilder getLabelsOrBuilder(int index) {
     return labels_.get(index);
   }
 
+  private void ensureLabelsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.api.LabelDescriptor> tmp = labels_;
+    if (!tmp.isModifiable()) {
+      labels_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * Required. A set of labels used to describe instances of this monitored
+   * resource type. For example, an individual Google Cloud SQL database is
+   * identified by values for the labels `"database_id"` and `"zone"`.
+   * </pre>
+   *
+   * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
+   */
+  private void setLabels(int index, com.google.api.LabelDescriptor value) {
+    value.getClass();
+    ensureLabelsIsMutable();
+    labels_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. A set of labels used to describe instances of this monitored
+   * resource type. For example, an individual Google Cloud SQL database is
+   * identified by values for the labels `"database_id"` and `"zone"`.
+   * </pre>
+   *
+   * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
+   */
+  private void addLabels(com.google.api.LabelDescriptor value) {
+    value.getClass();
+    ensureLabelsIsMutable();
+    labels_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. A set of labels used to describe instances of this monitored
+   * resource type. For example, an individual Google Cloud SQL database is
+   * identified by values for the labels `"database_id"` and `"zone"`.
+   * </pre>
+   *
+   * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
+   */
+  private void addLabels(int index, com.google.api.LabelDescriptor value) {
+    value.getClass();
+    ensureLabelsIsMutable();
+    labels_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. A set of labels used to describe instances of this monitored
+   * resource type. For example, an individual Google Cloud SQL database is
+   * identified by values for the labels `"database_id"` and `"zone"`.
+   * </pre>
+   *
+   * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
+   */
+  private void addAllLabels(java.lang.Iterable<? extends com.google.api.LabelDescriptor> values) {
+    ensureLabelsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, labels_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. A set of labels used to describe instances of this monitored
+   * resource type. For example, an individual Google Cloud SQL database is
+   * identified by values for the labels `"database_id"` and `"zone"`.
+   * </pre>
+   *
+   * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
+   */
+  private void clearLabels() {
+    labels_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. A set of labels used to describe instances of this monitored
+   * resource type. For example, an individual Google Cloud SQL database is
+   * identified by values for the labels `"database_id"` and `"zone"`.
+   * </pre>
+   *
+   * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
+   */
+  private void removeLabels(int index) {
+    ensureLabelsIsMutable();
+    labels_.remove(index);
+  }
+
   public static final int LAUNCH_STAGE_FIELD_NUMBER = 7;
-  private int launchStage_ = 0;
+  private int launchStage_;
   /**
    *
    *
@@ -423,213 +639,130 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
     com.google.api.LaunchStage result = com.google.api.LaunchStage.forNumber(launchStage_);
     return result == null ? com.google.api.LaunchStage.UNRECOGNIZED : result;
   }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The launch stage of the monitored resource definition.
+   * </pre>
+   *
+   * <code>.google.api.LaunchStage launch_stage = 7;</code>
+   *
+   * @param value The enum numeric value on the wire for launchStage to set.
+   */
+  private void setLaunchStageValue(int value) {
+    launchStage_ = value;
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(type_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, type_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(displayName_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, displayName_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, description_);
-    }
-    for (int i = 0; i < labels_.size(); i++) {
-      output.writeMessage(4, labels_.get(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, name_);
-    }
-    if (launchStage_ != com.google.api.LaunchStage.LAUNCH_STAGE_UNSPECIFIED.getNumber()) {
-      output.writeEnum(7, launchStage_);
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The launch stage of the monitored resource definition.
+   * </pre>
+   *
+   * <code>.google.api.LaunchStage launch_stage = 7;</code>
+   *
+   * @param value The launchStage to set.
+   */
+  private void setLaunchStage(com.google.api.LaunchStage value) {
+    launchStage_ = value.getNumber();
   }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The launch stage of the monitored resource definition.
+   * </pre>
+   *
+   * <code>.google.api.LaunchStage launch_stage = 7;</code>
+   */
+  private void clearLaunchStage() {
 
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(type_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, type_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(displayName_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, displayName_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, description_);
-    }
-    for (int i = 0; i < labels_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, labels_.get(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, name_);
-    }
-    if (launchStage_ != com.google.api.LaunchStage.LAUNCH_STAGE_UNSPECIFIED.getNumber()) {
-      size += com.google.protobuf.CodedOutputStream.computeEnumSize(7, launchStage_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.MonitoredResourceDescriptor)) {
-      return super.equals(obj);
-    }
-    com.google.api.MonitoredResourceDescriptor other =
-        (com.google.api.MonitoredResourceDescriptor) obj;
-
-    if (!getName().equals(other.getName())) return false;
-    if (!getType().equals(other.getType())) return false;
-    if (!getDisplayName().equals(other.getDisplayName())) return false;
-    if (!getDescription().equals(other.getDescription())) return false;
-    if (!getLabelsList().equals(other.getLabelsList())) return false;
-    if (launchStage_ != other.launchStage_) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getName().hashCode();
-    hash = (37 * hash) + TYPE_FIELD_NUMBER;
-    hash = (53 * hash) + getType().hashCode();
-    hash = (37 * hash) + DISPLAY_NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getDisplayName().hashCode();
-    hash = (37 * hash) + DESCRIPTION_FIELD_NUMBER;
-    hash = (53 * hash) + getDescription().hashCode();
-    if (getLabelsCount() > 0) {
-      hash = (37 * hash) + LABELS_FIELD_NUMBER;
-      hash = (53 * hash) + getLabelsList().hashCode();
-    }
-    hash = (37 * hash) + LAUNCH_STAGE_FIELD_NUMBER;
-    hash = (53 * hash) + launchStage_;
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+    launchStage_ = 0;
   }
 
   public static com.google.api.MonitoredResourceDescriptor parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.MonitoredResourceDescriptor parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.MonitoredResourceDescriptor parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.MonitoredResourceDescriptor parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.MonitoredResourceDescriptor parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.MonitoredResourceDescriptor parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.MonitoredResourceDescriptor parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.MonitoredResourceDescriptor parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.MonitoredResourceDescriptor parseDelimitedFrom(
       java.io.InputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.MonitoredResourceDescriptor parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.MonitoredResourceDescriptor parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.MonitoredResourceDescriptor parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.MonitoredResourceDescriptor prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -648,297 +781,17 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    *
    * Protobuf type {@code google.api.MonitoredResourceDescriptor}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.api.MonitoredResourceDescriptor, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.MonitoredResourceDescriptor)
       com.google.api.MonitoredResourceDescriptorOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.MonitoredResourceProto
-          .internal_static_google_api_MonitoredResourceDescriptor_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.MonitoredResourceProto
-          .internal_static_google_api_MonitoredResourceDescriptor_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.MonitoredResourceDescriptor.class,
-              com.google.api.MonitoredResourceDescriptor.Builder.class);
-    }
-
     // Construct using com.google.api.MonitoredResourceDescriptor.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      name_ = "";
-      type_ = "";
-      displayName_ = "";
-      description_ = "";
-      if (labelsBuilder_ == null) {
-        labels_ = java.util.Collections.emptyList();
-      } else {
-        labels_ = null;
-        labelsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000010);
-      launchStage_ = 0;
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.MonitoredResourceProto
-          .internal_static_google_api_MonitoredResourceDescriptor_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.MonitoredResourceDescriptor getDefaultInstanceForType() {
-      return com.google.api.MonitoredResourceDescriptor.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.MonitoredResourceDescriptor build() {
-      com.google.api.MonitoredResourceDescriptor result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.MonitoredResourceDescriptor buildPartial() {
-      com.google.api.MonitoredResourceDescriptor result =
-          new com.google.api.MonitoredResourceDescriptor(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.api.MonitoredResourceDescriptor result) {
-      if (labelsBuilder_ == null) {
-        if (((bitField0_ & 0x00000010) != 0)) {
-          labels_ = java.util.Collections.unmodifiableList(labels_);
-          bitField0_ = (bitField0_ & ~0x00000010);
-        }
-        result.labels_ = labels_;
-      } else {
-        result.labels_ = labelsBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.api.MonitoredResourceDescriptor result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.name_ = name_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.type_ = type_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.displayName_ = displayName_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.description_ = description_;
-      }
-      if (((from_bitField0_ & 0x00000020) != 0)) {
-        result.launchStage_ = launchStage_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.MonitoredResourceDescriptor) {
-        return mergeFrom((com.google.api.MonitoredResourceDescriptor) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.MonitoredResourceDescriptor other) {
-      if (other == com.google.api.MonitoredResourceDescriptor.getDefaultInstance()) return this;
-      if (!other.getName().isEmpty()) {
-        name_ = other.name_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getType().isEmpty()) {
-        type_ = other.type_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      if (!other.getDisplayName().isEmpty()) {
-        displayName_ = other.displayName_;
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
-      if (!other.getDescription().isEmpty()) {
-        description_ = other.description_;
-        bitField0_ |= 0x00000008;
-        onChanged();
-      }
-      if (labelsBuilder_ == null) {
-        if (!other.labels_.isEmpty()) {
-          if (labels_.isEmpty()) {
-            labels_ = other.labels_;
-            bitField0_ = (bitField0_ & ~0x00000010);
-          } else {
-            ensureLabelsIsMutable();
-            labels_.addAll(other.labels_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.labels_.isEmpty()) {
-          if (labelsBuilder_.isEmpty()) {
-            labelsBuilder_.dispose();
-            labelsBuilder_ = null;
-            labels_ = other.labels_;
-            bitField0_ = (bitField0_ & ~0x00000010);
-            labelsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getLabelsFieldBuilder()
-                    : null;
-          } else {
-            labelsBuilder_.addAllMessages(other.labels_);
-          }
-        }
-      }
-      if (other.launchStage_ != 0) {
-        setLaunchStageValue(other.getLaunchStageValue());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                type_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 10
-            case 18:
-              {
-                displayName_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 18
-            case 26:
-              {
-                description_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 26
-            case 34:
-              {
-                com.google.api.LabelDescriptor m =
-                    input.readMessage(com.google.api.LabelDescriptor.parser(), extensionRegistry);
-                if (labelsBuilder_ == null) {
-                  ensureLabelsIsMutable();
-                  labels_.add(m);
-                } else {
-                  labelsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 34
-            case 42:
-              {
-                name_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 42
-            case 56:
-              {
-                launchStage_ = input.readEnum();
-                bitField0_ |= 0x00000020;
-                break;
-              } // case 56
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object name_ = "";
     /**
      *
      *
@@ -955,16 +808,9 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        name_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getName();
     }
     /**
      *
@@ -982,16 +828,9 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getNameBytes() {
-      java.lang.Object ref = name_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        name_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getNameBytes();
     }
     /**
      *
@@ -1011,12 +850,8 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * @return This builder for chaining.
      */
     public Builder setName(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setName(value);
       return this;
     }
     /**
@@ -1036,9 +871,8 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * @return This builder for chaining.
      */
     public Builder clearName() {
-      name_ = getDefaultInstance().getName();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearName();
       return this;
     }
     /**
@@ -1059,17 +893,11 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * @return This builder for chaining.
      */
     public Builder setNameBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setNameBytes(value);
       return this;
     }
 
-    private java.lang.Object type_ = "";
     /**
      *
      *
@@ -1086,16 +914,9 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * @return The type.
      */
+    @java.lang.Override
     public java.lang.String getType() {
-      java.lang.Object ref = type_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        type_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getType();
     }
     /**
      *
@@ -1113,16 +934,9 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * @return The bytes for type.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getTypeBytes() {
-      java.lang.Object ref = type_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        type_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getTypeBytes();
     }
     /**
      *
@@ -1142,12 +956,8 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * @return This builder for chaining.
      */
     public Builder setType(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      type_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setType(value);
       return this;
     }
     /**
@@ -1167,9 +977,8 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * @return This builder for chaining.
      */
     public Builder clearType() {
-      type_ = getDefaultInstance().getType();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearType();
       return this;
     }
     /**
@@ -1190,17 +999,11 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * @return This builder for chaining.
      */
     public Builder setTypeBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      type_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setTypeBytes(value);
       return this;
     }
 
-    private java.lang.Object displayName_ = "";
     /**
      *
      *
@@ -1215,16 +1018,9 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * @return The displayName.
      */
+    @java.lang.Override
     public java.lang.String getDisplayName() {
-      java.lang.Object ref = displayName_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        displayName_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getDisplayName();
     }
     /**
      *
@@ -1240,16 +1036,9 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * @return The bytes for displayName.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getDisplayNameBytes() {
-      java.lang.Object ref = displayName_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        displayName_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getDisplayNameBytes();
     }
     /**
      *
@@ -1267,12 +1056,8 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * @return This builder for chaining.
      */
     public Builder setDisplayName(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      displayName_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setDisplayName(value);
       return this;
     }
     /**
@@ -1290,9 +1075,8 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * @return This builder for chaining.
      */
     public Builder clearDisplayName() {
-      displayName_ = getDefaultInstance().getDisplayName();
-      bitField0_ = (bitField0_ & ~0x00000004);
-      onChanged();
+      copyOnWrite();
+      instance.clearDisplayName();
       return this;
     }
     /**
@@ -1311,17 +1095,11 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * @return This builder for chaining.
      */
     public Builder setDisplayNameBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      displayName_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setDisplayNameBytes(value);
       return this;
     }
 
-    private java.lang.Object description_ = "";
     /**
      *
      *
@@ -1334,16 +1112,9 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * @return The description.
      */
+    @java.lang.Override
     public java.lang.String getDescription() {
-      java.lang.Object ref = description_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        description_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getDescription();
     }
     /**
      *
@@ -1357,16 +1128,9 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * @return The bytes for description.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getDescriptionBytes() {
-      java.lang.Object ref = description_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        description_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getDescriptionBytes();
     }
     /**
      *
@@ -1382,12 +1146,8 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * @return This builder for chaining.
      */
     public Builder setDescription(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      description_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setDescription(value);
       return this;
     }
     /**
@@ -1403,9 +1163,8 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * @return This builder for chaining.
      */
     public Builder clearDescription() {
-      description_ = getDefaultInstance().getDescription();
-      bitField0_ = (bitField0_ & ~0x00000008);
-      onChanged();
+      copyOnWrite();
+      instance.clearDescription();
       return this;
     }
     /**
@@ -1422,32 +1181,11 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * @return This builder for chaining.
      */
     public Builder setDescriptionBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      description_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setDescriptionBytes(value);
       return this;
     }
 
-    private java.util.List<com.google.api.LabelDescriptor> labels_ =
-        java.util.Collections.emptyList();
-
-    private void ensureLabelsIsMutable() {
-      if (!((bitField0_ & 0x00000010) != 0)) {
-        labels_ = new java.util.ArrayList<com.google.api.LabelDescriptor>(labels_);
-        bitField0_ |= 0x00000010;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.LabelDescriptor,
-            com.google.api.LabelDescriptor.Builder,
-            com.google.api.LabelDescriptorOrBuilder>
-        labelsBuilder_;
-
     /**
      *
      *
@@ -1459,12 +1197,9 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.api.LabelDescriptor> getLabelsList() {
-      if (labelsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(labels_);
-      } else {
-        return labelsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getLabelsList());
     }
     /**
      *
@@ -1477,12 +1212,9 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
+    @java.lang.Override
     public int getLabelsCount() {
-      if (labelsBuilder_ == null) {
-        return labels_.size();
-      } else {
-        return labelsBuilder_.getCount();
-      }
+      return instance.getLabelsCount();
     }
     /**
      *
@@ -1495,12 +1227,10 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
+
+    @java.lang.Override
     public com.google.api.LabelDescriptor getLabels(int index) {
-      if (labelsBuilder_ == null) {
-        return labels_.get(index);
-      } else {
-        return labelsBuilder_.getMessage(index);
-      }
+      return instance.getLabels(index);
     }
     /**
      *
@@ -1514,16 +1244,8 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
     public Builder setLabels(int index, com.google.api.LabelDescriptor value) {
-      if (labelsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureLabelsIsMutable();
-        labels_.set(index, value);
-        onChanged();
-      } else {
-        labelsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setLabels(index, value);
       return this;
     }
     /**
@@ -1538,13 +1260,8 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
     public Builder setLabels(int index, com.google.api.LabelDescriptor.Builder builderForValue) {
-      if (labelsBuilder_ == null) {
-        ensureLabelsIsMutable();
-        labels_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        labelsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setLabels(index, builderForValue.build());
       return this;
     }
     /**
@@ -1559,16 +1276,8 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
     public Builder addLabels(com.google.api.LabelDescriptor value) {
-      if (labelsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureLabelsIsMutable();
-        labels_.add(value);
-        onChanged();
-      } else {
-        labelsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addLabels(value);
       return this;
     }
     /**
@@ -1583,16 +1292,8 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
     public Builder addLabels(int index, com.google.api.LabelDescriptor value) {
-      if (labelsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureLabelsIsMutable();
-        labels_.add(index, value);
-        onChanged();
-      } else {
-        labelsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addLabels(index, value);
       return this;
     }
     /**
@@ -1607,13 +1308,8 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
     public Builder addLabels(com.google.api.LabelDescriptor.Builder builderForValue) {
-      if (labelsBuilder_ == null) {
-        ensureLabelsIsMutable();
-        labels_.add(builderForValue.build());
-        onChanged();
-      } else {
-        labelsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addLabels(builderForValue.build());
       return this;
     }
     /**
@@ -1628,13 +1324,8 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
     public Builder addLabels(int index, com.google.api.LabelDescriptor.Builder builderForValue) {
-      if (labelsBuilder_ == null) {
-        ensureLabelsIsMutable();
-        labels_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        labelsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addLabels(index, builderForValue.build());
       return this;
     }
     /**
@@ -1650,13 +1341,8 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      */
     public Builder addAllLabels(
         java.lang.Iterable<? extends com.google.api.LabelDescriptor> values) {
-      if (labelsBuilder_ == null) {
-        ensureLabelsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, labels_);
-        onChanged();
-      } else {
-        labelsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllLabels(values);
       return this;
     }
     /**
@@ -1671,13 +1357,8 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
     public Builder clearLabels() {
-      if (labelsBuilder_ == null) {
-        labels_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000010);
-        onChanged();
-      } else {
-        labelsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearLabels();
       return this;
     }
     /**
@@ -1692,129 +1373,11 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
     public Builder removeLabels(int index) {
-      if (labelsBuilder_ == null) {
-        ensureLabelsIsMutable();
-        labels_.remove(index);
-        onChanged();
-      } else {
-        labelsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeLabels(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
-     * </pre>
-     *
-     * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
-     */
-    public com.google.api.LabelDescriptor.Builder getLabelsBuilder(int index) {
-      return getLabelsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
-     * </pre>
-     *
-     * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
-     */
-    public com.google.api.LabelDescriptorOrBuilder getLabelsOrBuilder(int index) {
-      if (labelsBuilder_ == null) {
-        return labels_.get(index);
-      } else {
-        return labelsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
-     * </pre>
-     *
-     * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
-     */
-    public java.util.List<? extends com.google.api.LabelDescriptorOrBuilder>
-        getLabelsOrBuilderList() {
-      if (labelsBuilder_ != null) {
-        return labelsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(labels_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
-     * </pre>
-     *
-     * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
-     */
-    public com.google.api.LabelDescriptor.Builder addLabelsBuilder() {
-      return getLabelsFieldBuilder()
-          .addBuilder(com.google.api.LabelDescriptor.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
-     * </pre>
-     *
-     * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
-     */
-    public com.google.api.LabelDescriptor.Builder addLabelsBuilder(int index) {
-      return getLabelsFieldBuilder()
-          .addBuilder(index, com.google.api.LabelDescriptor.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
-     * </pre>
-     *
-     * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
-     */
-    public java.util.List<com.google.api.LabelDescriptor.Builder> getLabelsBuilderList() {
-      return getLabelsFieldBuilder().getBuilderList();
-    }
 
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.LabelDescriptor,
-            com.google.api.LabelDescriptor.Builder,
-            com.google.api.LabelDescriptorOrBuilder>
-        getLabelsFieldBuilder() {
-      if (labelsBuilder_ == null) {
-        labelsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.api.LabelDescriptor,
-                com.google.api.LabelDescriptor.Builder,
-                com.google.api.LabelDescriptorOrBuilder>(
-                labels_, ((bitField0_ & 0x00000010) != 0), getParentForChildren(), isClean());
-        labels_ = null;
-      }
-      return labelsBuilder_;
-    }
-
-    private int launchStage_ = 0;
     /**
      *
      *
@@ -1828,7 +1391,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      */
     @java.lang.Override
     public int getLaunchStageValue() {
-      return launchStage_;
+      return instance.getLaunchStageValue();
     }
     /**
      *
@@ -1839,13 +1402,12 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <code>.google.api.LaunchStage launch_stage = 7;</code>
      *
-     * @param value The enum numeric value on the wire for launchStage to set.
+     * @param value The launchStage to set.
      * @return This builder for chaining.
      */
     public Builder setLaunchStageValue(int value) {
-      launchStage_ = value;
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setLaunchStageValue(value);
       return this;
     }
     /**
@@ -1861,8 +1423,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      */
     @java.lang.Override
     public com.google.api.LaunchStage getLaunchStage() {
-      com.google.api.LaunchStage result = com.google.api.LaunchStage.forNumber(launchStage_);
-      return result == null ? com.google.api.LaunchStage.UNRECOGNIZED : result;
+      return instance.getLaunchStage();
     }
     /**
      *
@@ -1873,16 +1434,12 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <code>.google.api.LaunchStage launch_stage = 7;</code>
      *
-     * @param value The launchStage to set.
+     * @param value The enum numeric value on the wire for launchStage to set.
      * @return This builder for chaining.
      */
     public Builder setLaunchStage(com.google.api.LaunchStage value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      bitField0_ |= 0x00000020;
-      launchStage_ = value.getNumber();
-      onChanged();
+      copyOnWrite();
+      instance.setLaunchStage(value);
       return this;
     }
     /**
@@ -1897,70 +1454,98 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * @return This builder for chaining.
      */
     public Builder clearLaunchStage() {
-      bitField0_ = (bitField0_ & ~0x00000020);
-      launchStage_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearLaunchStage();
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.api.MonitoredResourceDescriptor)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.MonitoredResourceDescriptor();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "type_",
+                "displayName_",
+                "description_",
+                "labels_",
+                com.google.api.LabelDescriptor.class,
+                "name_",
+                "launchStage_",
+              };
+          java.lang.String info =
+              "\u0000\u0006\u0000\u0000\u0001\u0007\u0006\u0000\u0001\u0000\u0001\u0208\u0002\u0208"
+                  + "\u0003\u0208\u0004\u001b\u0005\u0208\u0007\f";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.MonitoredResourceDescriptor> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.MonitoredResourceDescriptor.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.api.MonitoredResourceDescriptor>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.MonitoredResourceDescriptor)
   private static final com.google.api.MonitoredResourceDescriptor DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.MonitoredResourceDescriptor();
+    MonitoredResourceDescriptor defaultInstance = new MonitoredResourceDescriptor();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        MonitoredResourceDescriptor.class, defaultInstance);
   }
 
   public static com.google.api.MonitoredResourceDescriptor getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<MonitoredResourceDescriptor> PARSER =
-      new com.google.protobuf.AbstractParser<MonitoredResourceDescriptor>() {
-        @java.lang.Override
-        public MonitoredResourceDescriptor parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<MonitoredResourceDescriptor> PARSER;
 
   public static com.google.protobuf.Parser<MonitoredResourceDescriptor> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<MonitoredResourceDescriptor> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.MonitoredResourceDescriptor getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

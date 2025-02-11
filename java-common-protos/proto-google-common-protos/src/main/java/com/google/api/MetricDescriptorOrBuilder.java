@@ -22,7 +22,7 @@ package com.google.api;
 public interface MetricDescriptorOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.MetricDescriptor)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -133,36 +133,6 @@ public interface MetricDescriptorOrBuilder
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
   int getLabelsCount();
-  /**
-   *
-   *
-   * <pre>
-   * The set of labels that can be used to describe a specific
-   * instance of this metric type. For example, the
-   * `appengine.googleapis.com/http/server/response_latencies` metric
-   * type has a label for the HTTP response code, `response_code`, so
-   * you can look at latencies for successful responses or just
-   * for responses that failed.
-   * </pre>
-   *
-   * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
-   */
-  java.util.List<? extends com.google.api.LabelDescriptorOrBuilder> getLabelsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * The set of labels that can be used to describe a specific
-   * instance of this metric type. For example, the
-   * `appengine.googleapis.com/http/server/response_latencies` metric
-   * type has a label for the HTTP response code, `response_code`, so
-   * you can look at latencies for successful responses or just
-   * for responses that failed.
-   * </pre>
-   *
-   * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
-   */
-  com.google.api.LabelDescriptorOrBuilder getLabelsOrBuilder(int index);
 
   /**
    *
@@ -525,16 +495,6 @@ public interface MetricDescriptorOrBuilder
    * @return The metadata.
    */
   com.google.api.MetricDescriptor.MetricDescriptorMetadata getMetadata();
-  /**
-   *
-   *
-   * <pre>
-   * Optional. Metadata which can be used to guide usage of the metric.
-   * </pre>
-   *
-   * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
-   */
-  com.google.api.MetricDescriptor.MetricDescriptorMetadataOrBuilder getMetadataOrBuilder();
 
   /**
    *
@@ -627,8 +587,8 @@ public interface MetricDescriptorOrBuilder
    *
    * <code>repeated string monitored_resource_types = 13;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the monitoredResourceTypes at the given index.
+   * @param index The index of the element to return.
+   * @return The monitoredResourceTypes at the given index.
    */
   com.google.protobuf.ByteString getMonitoredResourceTypesBytes(int index);
 }

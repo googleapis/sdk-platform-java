@@ -22,7 +22,7 @@ package com.google.iam.v2;
 public interface ListPoliciesResponseOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.iam.v2.ListPoliciesResponse)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -54,26 +54,6 @@ public interface ListPoliciesResponseOrBuilder
    * <code>repeated .google.iam.v2.Policy policies = 1;</code>
    */
   int getPoliciesCount();
-  /**
-   *
-   *
-   * <pre>
-   * Metadata for the policies that are attached to the resource.
-   * </pre>
-   *
-   * <code>repeated .google.iam.v2.Policy policies = 1;</code>
-   */
-  java.util.List<? extends com.google.iam.v2.PolicyOrBuilder> getPoliciesOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Metadata for the policies that are attached to the resource.
-   * </pre>
-   *
-   * <code>repeated .google.iam.v2.Policy policies = 1;</code>
-   */
-  com.google.iam.v2.PolicyOrBuilder getPoliciesOrBuilder(int index);
 
   /**
    *

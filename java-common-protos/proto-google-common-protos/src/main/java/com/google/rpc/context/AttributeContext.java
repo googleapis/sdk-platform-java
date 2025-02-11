@@ -44,45 +44,19 @@ package com.google.rpc.context;
  *
  * Protobuf type {@code google.rpc.context.AttributeContext}
  */
-public final class AttributeContext extends com.google.protobuf.GeneratedMessageV3
+public final class AttributeContext
+    extends com.google.protobuf.GeneratedMessageLite<AttributeContext, AttributeContext.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.rpc.context.AttributeContext)
     AttributeContextOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use AttributeContext.newBuilder() to construct.
-  private AttributeContext(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private AttributeContext() {
-    extensions_ = java.util.Collections.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new AttributeContext();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.rpc.context.AttributeContextProto
-        .internal_static_google_rpc_context_AttributeContext_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.rpc.context.AttributeContextProto
-        .internal_static_google_rpc_context_AttributeContext_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.rpc.context.AttributeContext.class,
-            com.google.rpc.context.AttributeContext.Builder.class);
+    extensions_ = emptyProtobufList();
   }
 
   public interface PeerOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:google.rpc.context.AttributeContext.Peer)
-      com.google.protobuf.MessageOrBuilder {
+      com.google.protobuf.MessageLiteOrBuilder {
 
     /**
      *
@@ -164,6 +138,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; labels = 6;</code>
      */
+
     /* nullable */
     java.lang.String getLabelsOrDefault(
         java.lang.String key,
@@ -250,59 +225,19 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * Protobuf type {@code google.rpc.context.AttributeContext.Peer}
    */
-  public static final class Peer extends com.google.protobuf.GeneratedMessageV3
+  public static final class Peer
+      extends com.google.protobuf.GeneratedMessageLite<Peer, Peer.Builder>
       implements
       // @@protoc_insertion_point(message_implements:google.rpc.context.AttributeContext.Peer)
       PeerOrBuilder {
-    private static final long serialVersionUID = 0L;
-    // Use Peer.newBuilder() to construct.
-    private Peer(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-
     private Peer() {
       ip_ = "";
       principal_ = "";
       regionCode_ = "";
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-      return new Peer();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.rpc.context.AttributeContextProto
-          .internal_static_google_rpc_context_AttributeContext_Peer_descriptor;
-    }
-
-    @SuppressWarnings({"rawtypes"})
-    @java.lang.Override
-    protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-        int number) {
-      switch (number) {
-        case 6:
-          return internalGetLabels();
-        default:
-          throw new RuntimeException("Invalid map field number: " + number);
-      }
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.rpc.context.AttributeContextProto
-          .internal_static_google_rpc_context_AttributeContext_Peer_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.rpc.context.AttributeContext.Peer.class,
-              com.google.rpc.context.AttributeContext.Peer.Builder.class);
-    }
-
     public static final int IP_FIELD_NUMBER = 1;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object ip_ = "";
+    private java.lang.String ip_;
     /**
      *
      *
@@ -316,15 +251,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getIp() {
-      java.lang.Object ref = ip_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        ip_ = s;
-        return s;
-      }
+      return ip_;
     }
     /**
      *
@@ -339,19 +266,55 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getIpBytes() {
-      java.lang.Object ref = ip_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        ip_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(ip_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The IP address of the peer.
+     * </pre>
+     *
+     * <code>string ip = 1;</code>
+     *
+     * @param value The ip to set.
+     */
+    private void setIp(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      ip_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The IP address of the peer.
+     * </pre>
+     *
+     * <code>string ip = 1;</code>
+     */
+    private void clearIp() {
+
+      ip_ = getDefaultInstance().getIp();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The IP address of the peer.
+     * </pre>
+     *
+     * <code>string ip = 1;</code>
+     *
+     * @param value The bytes for ip to set.
+     */
+    private void setIpBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      ip_ = value.toStringUtf8();
     }
 
     public static final int PORT_FIELD_NUMBER = 2;
-    private long port_ = 0L;
+    private long port_;
     /**
      *
      *
@@ -367,32 +330,67 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public long getPort() {
       return port_;
     }
+    /**
+     *
+     *
+     * <pre>
+     * The network port of the peer.
+     * </pre>
+     *
+     * <code>int64 port = 2;</code>
+     *
+     * @param value The port to set.
+     */
+    private void setPort(long value) {
+
+      port_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The network port of the peer.
+     * </pre>
+     *
+     * <code>int64 port = 2;</code>
+     */
+    private void clearPort() {
+
+      port_ = 0L;
+    }
 
     public static final int LABELS_FIELD_NUMBER = 6;
 
     private static final class LabelsDefaultEntryHolder {
-      static final com.google.protobuf.MapEntry<java.lang.String, java.lang.String> defaultEntry =
-          com.google.protobuf.MapEntry.<java.lang.String, java.lang.String>newDefaultInstance(
-              com.google.rpc.context.AttributeContextProto
-                  .internal_static_google_rpc_context_AttributeContext_Peer_LabelsEntry_descriptor,
-              com.google.protobuf.WireFormat.FieldType.STRING,
-              "",
-              com.google.protobuf.WireFormat.FieldType.STRING,
-              "");
+      static final com.google.protobuf.MapEntryLite<java.lang.String, java.lang.String>
+          defaultEntry =
+              com.google.protobuf.MapEntryLite
+                  .<java.lang.String, java.lang.String>newDefaultInstance(
+                      com.google.protobuf.WireFormat.FieldType.STRING,
+                      "",
+                      com.google.protobuf.WireFormat.FieldType.STRING,
+                      "");
     }
 
-    @SuppressWarnings("serial")
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String> labels_;
+    private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String> labels_ =
+        com.google.protobuf.MapFieldLite.emptyMapField();
 
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String> internalGetLabels() {
-      if (labels_ == null) {
-        return com.google.protobuf.MapField.emptyMapField(LabelsDefaultEntryHolder.defaultEntry);
+    private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
+        internalGetLabels() {
+      return labels_;
+    }
+
+    private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
+        internalGetMutableLabels() {
+      if (!labels_.isMutable()) {
+        labels_ = labels_.mutableCopy();
       }
       return labels_;
     }
 
+    @java.lang.Override
     public int getLabelsCount() {
-      return internalGetLabels().getMap().size();
+      return internalGetLabels().size();
     }
     /**
      *
@@ -405,10 +403,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public boolean containsLabels(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      return internalGetLabels().getMap().containsKey(key);
+      java.lang.Class<?> keyClass = key.getClass();
+      return internalGetLabels().containsKey(key);
     }
     /** Use {@link #getLabelsMap()} instead. */
     @java.lang.Override
@@ -427,7 +423,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.util.Map<java.lang.String, java.lang.String> getLabelsMap() {
-      return internalGetLabels().getMap();
+      return java.util.Collections.unmodifiableMap(internalGetLabels());
     }
     /**
      *
@@ -443,10 +439,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         java.lang.String key,
         /* nullable */
         java.lang.String defaultValue) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
     /**
@@ -460,20 +454,28 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getLabelsOrThrow(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels();
       if (!map.containsKey(key)) {
         throw new java.lang.IllegalArgumentException();
       }
       return map.get(key);
     }
+    /**
+     *
+     *
+     * <pre>
+     * The labels associated with the peer.
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; labels = 6;</code>
+     */
+    private java.util.Map<java.lang.String, java.lang.String> getMutableLabelsMap() {
+      return internalGetMutableLabels();
+    }
 
     public static final int PRINCIPAL_FIELD_NUMBER = 7;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object principal_ = "";
+    private java.lang.String principal_;
     /**
      *
      *
@@ -489,15 +491,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getPrincipal() {
-      java.lang.Object ref = principal_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        principal_ = s;
-        return s;
-      }
+      return principal_;
     }
     /**
      *
@@ -514,21 +508,61 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getPrincipalBytes() {
-      java.lang.Object ref = principal_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        principal_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(principal_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The identity of this peer. Similar to `Request.auth.principal`, but
+     * relative to the peer instead of the request. For example, the
+     * identity associated with a load balancer that forwarded the request.
+     * </pre>
+     *
+     * <code>string principal = 7;</code>
+     *
+     * @param value The principal to set.
+     */
+    private void setPrincipal(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      principal_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The identity of this peer. Similar to `Request.auth.principal`, but
+     * relative to the peer instead of the request. For example, the
+     * identity associated with a load balancer that forwarded the request.
+     * </pre>
+     *
+     * <code>string principal = 7;</code>
+     */
+    private void clearPrincipal() {
+
+      principal_ = getDefaultInstance().getPrincipal();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The identity of this peer. Similar to `Request.auth.principal`, but
+     * relative to the peer instead of the request. For example, the
+     * identity associated with a load balancer that forwarded the request.
+     * </pre>
+     *
+     * <code>string principal = 7;</code>
+     *
+     * @param value The bytes for principal to set.
+     */
+    private void setPrincipalBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      principal_ = value.toStringUtf8();
     }
 
     public static final int REGION_CODE_FIELD_NUMBER = 8;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object regionCode_ = "";
+    private java.lang.String regionCode_;
     /**
      *
      *
@@ -544,15 +578,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getRegionCode() {
-      java.lang.Object ref = regionCode_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        regionCode_ = s;
-        return s;
-      }
+      return regionCode_;
     }
     /**
      *
@@ -569,221 +595,141 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getRegionCodeBytes() {
-      java.lang.Object ref = regionCode_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        regionCode_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(regionCode_);
     }
+    /**
+     *
+     *
+     * <pre>
+     * The CLDR country/region code associated with the above IP address.
+     * If the IP address is private, the `region_code` should reflect the
+     * physical location where this peer is running.
+     * </pre>
+     *
+     * <code>string region_code = 8;</code>
+     *
+     * @param value The regionCode to set.
+     */
+    private void setRegionCode(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
 
-    private byte memoizedIsInitialized = -1;
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
+      regionCode_ = value;
     }
+    /**
+     *
+     *
+     * <pre>
+     * The CLDR country/region code associated with the above IP address.
+     * If the IP address is private, the `region_code` should reflect the
+     * physical location where this peer is running.
+     * </pre>
+     *
+     * <code>string region_code = 8;</code>
+     */
+    private void clearRegionCode() {
 
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(ip_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, ip_);
-      }
-      if (port_ != 0L) {
-        output.writeInt64(2, port_);
-      }
-      com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
-          output, internalGetLabels(), LabelsDefaultEntryHolder.defaultEntry, 6);
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principal_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, principal_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(regionCode_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 8, regionCode_);
-      }
-      getUnknownFields().writeTo(output);
+      regionCode_ = getDefaultInstance().getRegionCode();
     }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(ip_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, ip_);
-      }
-      if (port_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream.computeInt64Size(2, port_);
-      }
-      for (java.util.Map.Entry<java.lang.String, java.lang.String> entry :
-          internalGetLabels().getMap().entrySet()) {
-        com.google.protobuf.MapEntry<java.lang.String, java.lang.String> labels__ =
-            LabelsDefaultEntryHolder.defaultEntry
-                .newBuilderForType()
-                .setKey(entry.getKey())
-                .setValue(entry.getValue())
-                .build();
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(6, labels__);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principal_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, principal_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(regionCode_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, regionCode_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-        return true;
-      }
-      if (!(obj instanceof com.google.rpc.context.AttributeContext.Peer)) {
-        return super.equals(obj);
-      }
-      com.google.rpc.context.AttributeContext.Peer other =
-          (com.google.rpc.context.AttributeContext.Peer) obj;
-
-      if (!getIp().equals(other.getIp())) return false;
-      if (getPort() != other.getPort()) return false;
-      if (!internalGetLabels().equals(other.internalGetLabels())) return false;
-      if (!getPrincipal().equals(other.getPrincipal())) return false;
-      if (!getRegionCode().equals(other.getRegionCode())) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + IP_FIELD_NUMBER;
-      hash = (53 * hash) + getIp().hashCode();
-      hash = (37 * hash) + PORT_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(getPort());
-      if (!internalGetLabels().getMap().isEmpty()) {
-        hash = (37 * hash) + LABELS_FIELD_NUMBER;
-        hash = (53 * hash) + internalGetLabels().hashCode();
-      }
-      hash = (37 * hash) + PRINCIPAL_FIELD_NUMBER;
-      hash = (53 * hash) + getPrincipal().hashCode();
-      hash = (37 * hash) + REGION_CODE_FIELD_NUMBER;
-      hash = (53 * hash) + getRegionCode().hashCode();
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
+    /**
+     *
+     *
+     * <pre>
+     * The CLDR country/region code associated with the above IP address.
+     * If the IP address is private, the `region_code` should reflect the
+     * physical location where this peer is running.
+     * </pre>
+     *
+     * <code>string region_code = 8;</code>
+     *
+     * @param value The bytes for regionCode to set.
+     */
+    private void setRegionCodeBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      regionCode_ = value.toStringUtf8();
     }
 
     public static com.google.rpc.context.AttributeContext.Peer parseFrom(java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.context.AttributeContext.Peer parseFrom(
         java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Peer parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.context.AttributeContext.Peer parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Peer parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.context.AttributeContext.Peer parseFrom(
         byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Peer parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.context.AttributeContext.Peer parseFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Peer parseDelimitedFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.context.AttributeContext.Peer parseDelimitedFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Peer parseFrom(
         com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.context.AttributeContext.Peer parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
+      return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
 
     public static Builder newBuilder(com.google.rpc.context.AttributeContext.Peer prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      *
      *
@@ -797,266 +743,16 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * Protobuf type {@code google.rpc.context.AttributeContext.Peer}
      */
     public static final class Builder
-        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+        extends com.google.protobuf.GeneratedMessageLite.Builder<
+            com.google.rpc.context.AttributeContext.Peer, Builder>
         implements
         // @@protoc_insertion_point(builder_implements:google.rpc.context.AttributeContext.Peer)
         com.google.rpc.context.AttributeContext.PeerOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return com.google.rpc.context.AttributeContextProto
-            .internal_static_google_rpc_context_AttributeContext_Peer_descriptor;
-      }
-
-      @SuppressWarnings({"rawtypes"})
-      protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-          int number) {
-        switch (number) {
-          case 6:
-            return internalGetLabels();
-          default:
-            throw new RuntimeException("Invalid map field number: " + number);
-        }
-      }
-
-      @SuppressWarnings({"rawtypes"})
-      protected com.google.protobuf.MapFieldReflectionAccessor internalGetMutableMapFieldReflection(
-          int number) {
-        switch (number) {
-          case 6:
-            return internalGetMutableLabels();
-          default:
-            throw new RuntimeException("Invalid map field number: " + number);
-        }
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.google.rpc.context.AttributeContextProto
-            .internal_static_google_rpc_context_AttributeContext_Peer_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.google.rpc.context.AttributeContext.Peer.class,
-                com.google.rpc.context.AttributeContext.Peer.Builder.class);
-      }
-
       // Construct using com.google.rpc.context.AttributeContext.Peer.newBuilder()
-      private Builder() {}
-
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
+      private Builder() {
+        super(DEFAULT_INSTANCE);
       }
 
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        ip_ = "";
-        port_ = 0L;
-        internalGetMutableLabels().clear();
-        principal_ = "";
-        regionCode_ = "";
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return com.google.rpc.context.AttributeContextProto
-            .internal_static_google_rpc_context_AttributeContext_Peer_descriptor;
-      }
-
-      @java.lang.Override
-      public com.google.rpc.context.AttributeContext.Peer getDefaultInstanceForType() {
-        return com.google.rpc.context.AttributeContext.Peer.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.google.rpc.context.AttributeContext.Peer build() {
-        com.google.rpc.context.AttributeContext.Peer result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.google.rpc.context.AttributeContext.Peer buildPartial() {
-        com.google.rpc.context.AttributeContext.Peer result =
-            new com.google.rpc.context.AttributeContext.Peer(this);
-        if (bitField0_ != 0) {
-          buildPartial0(result);
-        }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartial0(com.google.rpc.context.AttributeContext.Peer result) {
-        int from_bitField0_ = bitField0_;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.ip_ = ip_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.port_ = port_;
-        }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.labels_ = internalGetLabels();
-          result.labels_.makeImmutable();
-        }
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.principal_ = principal_;
-        }
-        if (((from_bitField0_ & 0x00000010) != 0)) {
-          result.regionCode_ = regionCode_;
-        }
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.rpc.context.AttributeContext.Peer) {
-          return mergeFrom((com.google.rpc.context.AttributeContext.Peer) other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.google.rpc.context.AttributeContext.Peer other) {
-        if (other == com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()) return this;
-        if (!other.getIp().isEmpty()) {
-          ip_ = other.ip_;
-          bitField0_ |= 0x00000001;
-          onChanged();
-        }
-        if (other.getPort() != 0L) {
-          setPort(other.getPort());
-        }
-        internalGetMutableLabels().mergeFrom(other.internalGetLabels());
-        bitField0_ |= 0x00000004;
-        if (!other.getPrincipal().isEmpty()) {
-          principal_ = other.principal_;
-          bitField0_ |= 0x00000008;
-          onChanged();
-        }
-        if (!other.getRegionCode().isEmpty()) {
-          regionCode_ = other.regionCode_;
-          bitField0_ |= 0x00000010;
-          onChanged();
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10:
-                {
-                  ip_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000001;
-                  break;
-                } // case 10
-              case 16:
-                {
-                  port_ = input.readInt64();
-                  bitField0_ |= 0x00000002;
-                  break;
-                } // case 16
-              case 50:
-                {
-                  com.google.protobuf.MapEntry<java.lang.String, java.lang.String> labels__ =
-                      input.readMessage(
-                          LabelsDefaultEntryHolder.defaultEntry.getParserForType(),
-                          extensionRegistry);
-                  internalGetMutableLabels()
-                      .getMutableMap()
-                      .put(labels__.getKey(), labels__.getValue());
-                  bitField0_ |= 0x00000004;
-                  break;
-                } // case 50
-              case 58:
-                {
-                  principal_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000008;
-                  break;
-                } // case 58
-              case 66:
-                {
-                  regionCode_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000010;
-                  break;
-                } // case 66
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-
-      private int bitField0_;
-
-      private java.lang.Object ip_ = "";
       /**
        *
        *
@@ -1068,16 +764,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The ip.
        */
+      @java.lang.Override
       public java.lang.String getIp() {
-        java.lang.Object ref = ip_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          ip_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getIp();
       }
       /**
        *
@@ -1090,16 +779,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for ip.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getIpBytes() {
-        java.lang.Object ref = ip_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          ip_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getIpBytes();
       }
       /**
        *
@@ -1114,12 +796,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setIp(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ip_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setIp(value);
         return this;
       }
       /**
@@ -1134,9 +812,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearIp() {
-        ip_ = getDefaultInstance().getIp();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
+        copyOnWrite();
+        instance.clearIp();
         return this;
       }
       /**
@@ -1152,17 +829,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setIpBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        ip_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setIpBytes(value);
         return this;
       }
 
-      private long port_;
       /**
        *
        *
@@ -1176,7 +847,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Override
       public long getPort() {
-        return port_;
+        return instance.getPort();
       }
       /**
        *
@@ -1191,10 +862,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setPort(long value) {
-
-        port_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setPort(value);
         return this;
       }
       /**
@@ -1209,36 +878,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearPort() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        port_ = 0L;
-        onChanged();
+        copyOnWrite();
+        instance.clearPort();
         return this;
       }
 
-      private com.google.protobuf.MapField<java.lang.String, java.lang.String> labels_;
-
-      private com.google.protobuf.MapField<java.lang.String, java.lang.String> internalGetLabels() {
-        if (labels_ == null) {
-          return com.google.protobuf.MapField.emptyMapField(LabelsDefaultEntryHolder.defaultEntry);
-        }
-        return labels_;
-      }
-
-      private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-          internalGetMutableLabels() {
-        if (labels_ == null) {
-          labels_ = com.google.protobuf.MapField.newMapField(LabelsDefaultEntryHolder.defaultEntry);
-        }
-        if (!labels_.isMutable()) {
-          labels_ = labels_.copy();
-        }
-        bitField0_ |= 0x00000004;
-        onChanged();
-        return labels_;
-      }
-
+      @java.lang.Override
       public int getLabelsCount() {
-        return internalGetLabels().getMap().size();
+        return instance.getLabelsMap().size();
       }
       /**
        *
@@ -1251,10 +898,29 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Override
       public boolean containsLabels(java.lang.String key) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        return internalGetLabels().getMap().containsKey(key);
+        java.lang.Class<?> keyClass = key.getClass();
+        return instance.getLabelsMap().containsKey(key);
+      }
+
+      public Builder clearLabels() {
+        copyOnWrite();
+        instance.getMutableLabelsMap().clear();
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * The labels associated with the peer.
+       * </pre>
+       *
+       * <code>map&lt;string, string&gt; labels = 6;</code>
+       */
+      public Builder removeLabels(java.lang.String key) {
+        java.lang.Class<?> keyClass = key.getClass();
+        copyOnWrite();
+        instance.getMutableLabelsMap().remove(key);
+        return this;
       }
       /** Use {@link #getLabelsMap()} instead. */
       @java.lang.Override
@@ -1273,7 +939,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Override
       public java.util.Map<java.lang.String, java.lang.String> getLabelsMap() {
-        return internalGetLabels().getMap();
+        return java.util.Collections.unmodifiableMap(instance.getLabelsMap());
       }
       /**
        *
@@ -1289,10 +955,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           java.lang.String key,
           /* nullable */
           java.lang.String defaultValue) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
+        java.lang.Class<?> keyClass = key.getClass();
+        java.util.Map<java.lang.String, java.lang.String> map = instance.getLabelsMap();
         return map.containsKey(key) ? map.get(key) : defaultValue;
       }
       /**
@@ -1306,42 +970,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Override
       public java.lang.String getLabelsOrThrow(java.lang.String key) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
+        java.lang.Class<?> keyClass = key.getClass();
+        java.util.Map<java.lang.String, java.lang.String> map = instance.getLabelsMap();
         if (!map.containsKey(key)) {
           throw new java.lang.IllegalArgumentException();
         }
         return map.get(key);
-      }
-
-      public Builder clearLabels() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        internalGetMutableLabels().getMutableMap().clear();
-        return this;
-      }
-      /**
-       *
-       *
-       * <pre>
-       * The labels associated with the peer.
-       * </pre>
-       *
-       * <code>map&lt;string, string&gt; labels = 6;</code>
-       */
-      public Builder removeLabels(java.lang.String key) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        internalGetMutableLabels().getMutableMap().remove(key);
-        return this;
-      }
-      /** Use alternate mutation accessors instead. */
-      @java.lang.Deprecated
-      public java.util.Map<java.lang.String, java.lang.String> getMutableLabels() {
-        bitField0_ |= 0x00000004;
-        return internalGetMutableLabels().getMutableMap();
       }
       /**
        *
@@ -1353,14 +987,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>map&lt;string, string&gt; labels = 6;</code>
        */
       public Builder putLabels(java.lang.String key, java.lang.String value) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        if (value == null) {
-          throw new NullPointerException("map value");
-        }
-        internalGetMutableLabels().getMutableMap().put(key, value);
-        bitField0_ |= 0x00000004;
+        java.lang.Class<?> keyClass = key.getClass();
+        java.lang.Class<?> valueClass = value.getClass();
+        copyOnWrite();
+        instance.getMutableLabelsMap().put(key, value);
         return this;
       }
       /**
@@ -1373,12 +1003,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>map&lt;string, string&gt; labels = 6;</code>
        */
       public Builder putAllLabels(java.util.Map<java.lang.String, java.lang.String> values) {
-        internalGetMutableLabels().getMutableMap().putAll(values);
-        bitField0_ |= 0x00000004;
+        copyOnWrite();
+        instance.getMutableLabelsMap().putAll(values);
         return this;
       }
 
-      private java.lang.Object principal_ = "";
       /**
        *
        *
@@ -1392,16 +1021,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The principal.
        */
+      @java.lang.Override
       public java.lang.String getPrincipal() {
-        java.lang.Object ref = principal_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          principal_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getPrincipal();
       }
       /**
        *
@@ -1416,16 +1038,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for principal.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getPrincipalBytes() {
-        java.lang.Object ref = principal_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          principal_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getPrincipalBytes();
       }
       /**
        *
@@ -1442,12 +1057,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setPrincipal(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        principal_ = value;
-        bitField0_ |= 0x00000008;
-        onChanged();
+        copyOnWrite();
+        instance.setPrincipal(value);
         return this;
       }
       /**
@@ -1464,9 +1075,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearPrincipal() {
-        principal_ = getDefaultInstance().getPrincipal();
-        bitField0_ = (bitField0_ & ~0x00000008);
-        onChanged();
+        copyOnWrite();
+        instance.clearPrincipal();
         return this;
       }
       /**
@@ -1484,17 +1094,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setPrincipalBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        principal_ = value;
-        bitField0_ |= 0x00000008;
-        onChanged();
+        copyOnWrite();
+        instance.setPrincipalBytes(value);
         return this;
       }
 
-      private java.lang.Object regionCode_ = "";
       /**
        *
        *
@@ -1508,16 +1112,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The regionCode.
        */
+      @java.lang.Override
       public java.lang.String getRegionCode() {
-        java.lang.Object ref = regionCode_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          regionCode_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getRegionCode();
       }
       /**
        *
@@ -1532,16 +1129,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for regionCode.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getRegionCodeBytes() {
-        java.lang.Object ref = regionCode_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          regionCode_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getRegionCodeBytes();
       }
       /**
        *
@@ -1558,12 +1148,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setRegionCode(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        regionCode_ = value;
-        bitField0_ |= 0x00000010;
-        onChanged();
+        copyOnWrite();
+        instance.setRegionCode(value);
         return this;
       }
       /**
@@ -1580,9 +1166,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearRegionCode() {
-        regionCode_ = getDefaultInstance().getRegionCode();
-        bitField0_ = (bitField0_ & ~0x00000010);
-        onChanged();
+        copyOnWrite();
+        instance.clearRegionCode();
         return this;
       }
       /**
@@ -1600,84 +1185,105 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setRegionCodeBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        regionCode_ = value;
-        bitField0_ |= 0x00000010;
-        onChanged();
+        copyOnWrite();
+        instance.setRegionCodeBytes(value);
         return this;
       }
 
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
       // @@protoc_insertion_point(builder_scope:google.rpc.context.AttributeContext.Peer)
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0,
+        java.lang.Object arg1) {
+      switch (method) {
+        case NEW_MUTABLE_INSTANCE:
+          {
+            return new com.google.rpc.context.AttributeContext.Peer();
+          }
+        case NEW_BUILDER:
+          {
+            return new Builder();
+          }
+        case BUILD_MESSAGE_INFO:
+          {
+            java.lang.Object[] objects =
+                new java.lang.Object[] {
+                  "ip_",
+                  "port_",
+                  "labels_",
+                  LabelsDefaultEntryHolder.defaultEntry,
+                  "principal_",
+                  "regionCode_",
+                };
+            java.lang.String info =
+                "\u0000\u0005\u0000\u0000\u0001\b\u0005\u0001\u0000\u0000\u0001\u0208\u0002\u0002"
+                    + "\u00062\u0007\u0208\b\u0208";
+            return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+          }
+          // fall through
+        case GET_DEFAULT_INSTANCE:
+          {
+            return DEFAULT_INSTANCE;
+          }
+        case GET_PARSER:
+          {
+            com.google.protobuf.Parser<com.google.rpc.context.AttributeContext.Peer> parser =
+                PARSER;
+            if (parser == null) {
+              synchronized (com.google.rpc.context.AttributeContext.Peer.class) {
+                parser = PARSER;
+                if (parser == null) {
+                  parser =
+                      new DefaultInstanceBasedParser<com.google.rpc.context.AttributeContext.Peer>(
+                          DEFAULT_INSTANCE);
+                  PARSER = parser;
+                }
+              }
+            }
+            return parser;
+          }
+        case GET_MEMOIZED_IS_INITIALIZED:
+          {
+            return (byte) 1;
+          }
+        case SET_MEMOIZED_IS_INITIALIZED:
+          {
+            return null;
+          }
+      }
+      throw new UnsupportedOperationException();
     }
 
     // @@protoc_insertion_point(class_scope:google.rpc.context.AttributeContext.Peer)
     private static final com.google.rpc.context.AttributeContext.Peer DEFAULT_INSTANCE;
 
     static {
-      DEFAULT_INSTANCE = new com.google.rpc.context.AttributeContext.Peer();
+      Peer defaultInstance = new Peer();
+      // New instances are implicitly immutable so no need to make
+      // immutable.
+      DEFAULT_INSTANCE = defaultInstance;
+      com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(Peer.class, defaultInstance);
     }
 
     public static com.google.rpc.context.AttributeContext.Peer getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<Peer> PARSER =
-        new com.google.protobuf.AbstractParser<Peer>() {
-          @java.lang.Override
-          public Peer parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-          }
-        };
+    private static volatile com.google.protobuf.Parser<Peer> PARSER;
 
     public static com.google.protobuf.Parser<Peer> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<Peer> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.rpc.context.AttributeContext.Peer getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
+      return DEFAULT_INSTANCE.getParserForType();
     }
   }
 
   public interface ApiOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:google.rpc.context.AttributeContext.Api)
-      com.google.protobuf.MessageOrBuilder {
+      com.google.protobuf.MessageLiteOrBuilder {
 
     /**
      *
@@ -1802,16 +1408,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * Protobuf type {@code google.rpc.context.AttributeContext.Api}
    */
-  public static final class Api extends com.google.protobuf.GeneratedMessageV3
+  public static final class Api extends com.google.protobuf.GeneratedMessageLite<Api, Api.Builder>
       implements
       // @@protoc_insertion_point(message_implements:google.rpc.context.AttributeContext.Api)
       ApiOrBuilder {
-    private static final long serialVersionUID = 0L;
-    // Use Api.newBuilder() to construct.
-    private Api(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-
     private Api() {
       service_ = "";
       operation_ = "";
@@ -1819,31 +1419,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       version_ = "";
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-      return new Api();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.rpc.context.AttributeContextProto
-          .internal_static_google_rpc_context_AttributeContext_Api_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.rpc.context.AttributeContextProto
-          .internal_static_google_rpc_context_AttributeContext_Api_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.rpc.context.AttributeContext.Api.class,
-              com.google.rpc.context.AttributeContext.Api.Builder.class);
-    }
-
     public static final int SERVICE_FIELD_NUMBER = 1;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object service_ = "";
+    private java.lang.String service_;
     /**
      *
      *
@@ -1859,15 +1436,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getService() {
-      java.lang.Object ref = service_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        service_ = s;
-        return s;
-      }
+      return service_;
     }
     /**
      *
@@ -1884,21 +1453,61 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getServiceBytes() {
-      java.lang.Object ref = service_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        service_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(service_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The API service name. It is a logical identifier for a networked API,
+     * such as "pubsub.googleapis.com". The naming syntax depends on the
+     * API management system being used for handling the request.
+     * </pre>
+     *
+     * <code>string service = 1;</code>
+     *
+     * @param value The service to set.
+     */
+    private void setService(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      service_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The API service name. It is a logical identifier for a networked API,
+     * such as "pubsub.googleapis.com". The naming syntax depends on the
+     * API management system being used for handling the request.
+     * </pre>
+     *
+     * <code>string service = 1;</code>
+     */
+    private void clearService() {
+
+      service_ = getDefaultInstance().getService();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The API service name. It is a logical identifier for a networked API,
+     * such as "pubsub.googleapis.com". The naming syntax depends on the
+     * API management system being used for handling the request.
+     * </pre>
+     *
+     * <code>string service = 1;</code>
+     *
+     * @param value The bytes for service to set.
+     */
+    private void setServiceBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      service_ = value.toStringUtf8();
     }
 
     public static final int OPERATION_FIELD_NUMBER = 2;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object operation_ = "";
+    private java.lang.String operation_;
     /**
      *
      *
@@ -1914,15 +1523,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getOperation() {
-      java.lang.Object ref = operation_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        operation_ = s;
-        return s;
-      }
+      return operation_;
     }
     /**
      *
@@ -1939,21 +1540,61 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getOperationBytes() {
-      java.lang.Object ref = operation_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        operation_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(operation_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The API operation name. For gRPC requests, it is the fully qualified API
+     * method name, such as "google.pubsub.v1.Publisher.Publish". For OpenAPI
+     * requests, it is the `operationId`, such as "getPet".
+     * </pre>
+     *
+     * <code>string operation = 2;</code>
+     *
+     * @param value The operation to set.
+     */
+    private void setOperation(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      operation_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The API operation name. For gRPC requests, it is the fully qualified API
+     * method name, such as "google.pubsub.v1.Publisher.Publish". For OpenAPI
+     * requests, it is the `operationId`, such as "getPet".
+     * </pre>
+     *
+     * <code>string operation = 2;</code>
+     */
+    private void clearOperation() {
+
+      operation_ = getDefaultInstance().getOperation();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The API operation name. For gRPC requests, it is the fully qualified API
+     * method name, such as "google.pubsub.v1.Publisher.Publish". For OpenAPI
+     * requests, it is the `operationId`, such as "getPet".
+     * </pre>
+     *
+     * <code>string operation = 2;</code>
+     *
+     * @param value The bytes for operation to set.
+     */
+    private void setOperationBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      operation_ = value.toStringUtf8();
     }
 
     public static final int PROTOCOL_FIELD_NUMBER = 3;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object protocol_ = "";
+    private java.lang.String protocol_;
     /**
      *
      *
@@ -1968,15 +1609,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getProtocol() {
-      java.lang.Object ref = protocol_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        protocol_ = s;
-        return s;
-      }
+      return protocol_;
     }
     /**
      *
@@ -1992,21 +1625,58 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getProtocolBytes() {
-      java.lang.Object ref = protocol_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        protocol_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(protocol_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The API protocol used for sending the request, such as "http", "https",
+     * "grpc", or "internal".
+     * </pre>
+     *
+     * <code>string protocol = 3;</code>
+     *
+     * @param value The protocol to set.
+     */
+    private void setProtocol(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      protocol_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The API protocol used for sending the request, such as "http", "https",
+     * "grpc", or "internal".
+     * </pre>
+     *
+     * <code>string protocol = 3;</code>
+     */
+    private void clearProtocol() {
+
+      protocol_ = getDefaultInstance().getProtocol();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The API protocol used for sending the request, such as "http", "https",
+     * "grpc", or "internal".
+     * </pre>
+     *
+     * <code>string protocol = 3;</code>
+     *
+     * @param value The bytes for protocol to set.
+     */
+    private void setProtocolBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      protocol_ = value.toStringUtf8();
     }
 
     public static final int VERSION_FIELD_NUMBER = 4;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object version_ = "";
+    private java.lang.String version_;
     /**
      *
      *
@@ -2021,15 +1691,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getVersion() {
-      java.lang.Object ref = version_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        version_ = s;
-        return s;
-      }
+      return version_;
     }
     /**
      *
@@ -2045,204 +1707,138 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getVersionBytes() {
-      java.lang.Object ref = version_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        version_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(version_);
     }
+    /**
+     *
+     *
+     * <pre>
+     * The API version associated with the API operation above, such as "v1" or
+     * "v1alpha1".
+     * </pre>
+     *
+     * <code>string version = 4;</code>
+     *
+     * @param value The version to set.
+     */
+    private void setVersion(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
 
-    private byte memoizedIsInitialized = -1;
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
+      version_ = value;
     }
+    /**
+     *
+     *
+     * <pre>
+     * The API version associated with the API operation above, such as "v1" or
+     * "v1alpha1".
+     * </pre>
+     *
+     * <code>string version = 4;</code>
+     */
+    private void clearVersion() {
 
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(service_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, service_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(operation_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, operation_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(protocol_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, protocol_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(version_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, version_);
-      }
-      getUnknownFields().writeTo(output);
+      version_ = getDefaultInstance().getVersion();
     }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(service_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, service_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(operation_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, operation_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(protocol_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, protocol_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(version_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, version_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-        return true;
-      }
-      if (!(obj instanceof com.google.rpc.context.AttributeContext.Api)) {
-        return super.equals(obj);
-      }
-      com.google.rpc.context.AttributeContext.Api other =
-          (com.google.rpc.context.AttributeContext.Api) obj;
-
-      if (!getService().equals(other.getService())) return false;
-      if (!getOperation().equals(other.getOperation())) return false;
-      if (!getProtocol().equals(other.getProtocol())) return false;
-      if (!getVersion().equals(other.getVersion())) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + SERVICE_FIELD_NUMBER;
-      hash = (53 * hash) + getService().hashCode();
-      hash = (37 * hash) + OPERATION_FIELD_NUMBER;
-      hash = (53 * hash) + getOperation().hashCode();
-      hash = (37 * hash) + PROTOCOL_FIELD_NUMBER;
-      hash = (53 * hash) + getProtocol().hashCode();
-      hash = (37 * hash) + VERSION_FIELD_NUMBER;
-      hash = (53 * hash) + getVersion().hashCode();
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
+    /**
+     *
+     *
+     * <pre>
+     * The API version associated with the API operation above, such as "v1" or
+     * "v1alpha1".
+     * </pre>
+     *
+     * <code>string version = 4;</code>
+     *
+     * @param value The bytes for version to set.
+     */
+    private void setVersionBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      version_ = value.toStringUtf8();
     }
 
     public static com.google.rpc.context.AttributeContext.Api parseFrom(java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.context.AttributeContext.Api parseFrom(
         java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Api parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.context.AttributeContext.Api parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Api parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.context.AttributeContext.Api parseFrom(
         byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Api parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.context.AttributeContext.Api parseFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Api parseDelimitedFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.context.AttributeContext.Api parseDelimitedFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Api parseFrom(
         com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.context.AttributeContext.Api parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
+      return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
 
     public static Builder newBuilder(com.google.rpc.context.AttributeContext.Api prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      *
      *
@@ -2255,227 +1851,16 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * Protobuf type {@code google.rpc.context.AttributeContext.Api}
      */
     public static final class Builder
-        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+        extends com.google.protobuf.GeneratedMessageLite.Builder<
+            com.google.rpc.context.AttributeContext.Api, Builder>
         implements
         // @@protoc_insertion_point(builder_implements:google.rpc.context.AttributeContext.Api)
         com.google.rpc.context.AttributeContext.ApiOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return com.google.rpc.context.AttributeContextProto
-            .internal_static_google_rpc_context_AttributeContext_Api_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.google.rpc.context.AttributeContextProto
-            .internal_static_google_rpc_context_AttributeContext_Api_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.google.rpc.context.AttributeContext.Api.class,
-                com.google.rpc.context.AttributeContext.Api.Builder.class);
-      }
-
       // Construct using com.google.rpc.context.AttributeContext.Api.newBuilder()
-      private Builder() {}
-
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
+      private Builder() {
+        super(DEFAULT_INSTANCE);
       }
 
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        service_ = "";
-        operation_ = "";
-        protocol_ = "";
-        version_ = "";
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return com.google.rpc.context.AttributeContextProto
-            .internal_static_google_rpc_context_AttributeContext_Api_descriptor;
-      }
-
-      @java.lang.Override
-      public com.google.rpc.context.AttributeContext.Api getDefaultInstanceForType() {
-        return com.google.rpc.context.AttributeContext.Api.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.google.rpc.context.AttributeContext.Api build() {
-        com.google.rpc.context.AttributeContext.Api result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.google.rpc.context.AttributeContext.Api buildPartial() {
-        com.google.rpc.context.AttributeContext.Api result =
-            new com.google.rpc.context.AttributeContext.Api(this);
-        if (bitField0_ != 0) {
-          buildPartial0(result);
-        }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartial0(com.google.rpc.context.AttributeContext.Api result) {
-        int from_bitField0_ = bitField0_;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.service_ = service_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.operation_ = operation_;
-        }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.protocol_ = protocol_;
-        }
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.version_ = version_;
-        }
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.rpc.context.AttributeContext.Api) {
-          return mergeFrom((com.google.rpc.context.AttributeContext.Api) other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.google.rpc.context.AttributeContext.Api other) {
-        if (other == com.google.rpc.context.AttributeContext.Api.getDefaultInstance()) return this;
-        if (!other.getService().isEmpty()) {
-          service_ = other.service_;
-          bitField0_ |= 0x00000001;
-          onChanged();
-        }
-        if (!other.getOperation().isEmpty()) {
-          operation_ = other.operation_;
-          bitField0_ |= 0x00000002;
-          onChanged();
-        }
-        if (!other.getProtocol().isEmpty()) {
-          protocol_ = other.protocol_;
-          bitField0_ |= 0x00000004;
-          onChanged();
-        }
-        if (!other.getVersion().isEmpty()) {
-          version_ = other.version_;
-          bitField0_ |= 0x00000008;
-          onChanged();
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10:
-                {
-                  service_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000001;
-                  break;
-                } // case 10
-              case 18:
-                {
-                  operation_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000002;
-                  break;
-                } // case 18
-              case 26:
-                {
-                  protocol_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000004;
-                  break;
-                } // case 26
-              case 34:
-                {
-                  version_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000008;
-                  break;
-                } // case 34
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-
-      private int bitField0_;
-
-      private java.lang.Object service_ = "";
       /**
        *
        *
@@ -2489,16 +1874,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The service.
        */
+      @java.lang.Override
       public java.lang.String getService() {
-        java.lang.Object ref = service_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          service_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getService();
       }
       /**
        *
@@ -2513,16 +1891,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for service.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getServiceBytes() {
-        java.lang.Object ref = service_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          service_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getServiceBytes();
       }
       /**
        *
@@ -2539,12 +1910,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setService(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        service_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setService(value);
         return this;
       }
       /**
@@ -2561,9 +1928,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearService() {
-        service_ = getDefaultInstance().getService();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
+        copyOnWrite();
+        instance.clearService();
         return this;
       }
       /**
@@ -2581,17 +1947,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setServiceBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        service_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setServiceBytes(value);
         return this;
       }
 
-      private java.lang.Object operation_ = "";
       /**
        *
        *
@@ -2605,16 +1965,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The operation.
        */
+      @java.lang.Override
       public java.lang.String getOperation() {
-        java.lang.Object ref = operation_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          operation_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getOperation();
       }
       /**
        *
@@ -2629,16 +1982,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for operation.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getOperationBytes() {
-        java.lang.Object ref = operation_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          operation_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getOperationBytes();
       }
       /**
        *
@@ -2655,12 +2001,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setOperation(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        operation_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setOperation(value);
         return this;
       }
       /**
@@ -2677,9 +2019,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearOperation() {
-        operation_ = getDefaultInstance().getOperation();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
+        copyOnWrite();
+        instance.clearOperation();
         return this;
       }
       /**
@@ -2697,17 +2038,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setOperationBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        operation_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setOperationBytes(value);
         return this;
       }
 
-      private java.lang.Object protocol_ = "";
       /**
        *
        *
@@ -2720,16 +2055,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The protocol.
        */
+      @java.lang.Override
       public java.lang.String getProtocol() {
-        java.lang.Object ref = protocol_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          protocol_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getProtocol();
       }
       /**
        *
@@ -2743,16 +2071,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for protocol.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getProtocolBytes() {
-        java.lang.Object ref = protocol_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          protocol_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getProtocolBytes();
       }
       /**
        *
@@ -2768,12 +2089,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setProtocol(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        protocol_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
+        copyOnWrite();
+        instance.setProtocol(value);
         return this;
       }
       /**
@@ -2789,9 +2106,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearProtocol() {
-        protocol_ = getDefaultInstance().getProtocol();
-        bitField0_ = (bitField0_ & ~0x00000004);
-        onChanged();
+        copyOnWrite();
+        instance.clearProtocol();
         return this;
       }
       /**
@@ -2808,17 +2124,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setProtocolBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        protocol_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
+        copyOnWrite();
+        instance.setProtocolBytes(value);
         return this;
       }
 
-      private java.lang.Object version_ = "";
       /**
        *
        *
@@ -2831,16 +2141,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The version.
        */
+      @java.lang.Override
       public java.lang.String getVersion() {
-        java.lang.Object ref = version_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          version_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getVersion();
       }
       /**
        *
@@ -2854,16 +2157,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for version.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getVersionBytes() {
-        java.lang.Object ref = version_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          version_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getVersionBytes();
       }
       /**
        *
@@ -2879,12 +2175,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setVersion(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        version_ = value;
-        bitField0_ |= 0x00000008;
-        onChanged();
+        copyOnWrite();
+        instance.setVersion(value);
         return this;
       }
       /**
@@ -2900,9 +2192,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearVersion() {
-        version_ = getDefaultInstance().getVersion();
-        bitField0_ = (bitField0_ & ~0x00000008);
-        onChanged();
+        copyOnWrite();
+        instance.clearVersion();
         return this;
       }
       /**
@@ -2919,84 +2210,99 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setVersionBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        version_ = value;
-        bitField0_ |= 0x00000008;
-        onChanged();
+        copyOnWrite();
+        instance.setVersionBytes(value);
         return this;
       }
 
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
       // @@protoc_insertion_point(builder_scope:google.rpc.context.AttributeContext.Api)
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0,
+        java.lang.Object arg1) {
+      switch (method) {
+        case NEW_MUTABLE_INSTANCE:
+          {
+            return new com.google.rpc.context.AttributeContext.Api();
+          }
+        case NEW_BUILDER:
+          {
+            return new Builder();
+          }
+        case BUILD_MESSAGE_INFO:
+          {
+            java.lang.Object[] objects =
+                new java.lang.Object[] {
+                  "service_", "operation_", "protocol_", "version_",
+                };
+            java.lang.String info =
+                "\u0000\u0004\u0000\u0000\u0001\u0004\u0004\u0000\u0000\u0000\u0001\u0208\u0002\u0208"
+                    + "\u0003\u0208\u0004\u0208";
+            return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+          }
+          // fall through
+        case GET_DEFAULT_INSTANCE:
+          {
+            return DEFAULT_INSTANCE;
+          }
+        case GET_PARSER:
+          {
+            com.google.protobuf.Parser<com.google.rpc.context.AttributeContext.Api> parser = PARSER;
+            if (parser == null) {
+              synchronized (com.google.rpc.context.AttributeContext.Api.class) {
+                parser = PARSER;
+                if (parser == null) {
+                  parser =
+                      new DefaultInstanceBasedParser<com.google.rpc.context.AttributeContext.Api>(
+                          DEFAULT_INSTANCE);
+                  PARSER = parser;
+                }
+              }
+            }
+            return parser;
+          }
+        case GET_MEMOIZED_IS_INITIALIZED:
+          {
+            return (byte) 1;
+          }
+        case SET_MEMOIZED_IS_INITIALIZED:
+          {
+            return null;
+          }
+      }
+      throw new UnsupportedOperationException();
     }
 
     // @@protoc_insertion_point(class_scope:google.rpc.context.AttributeContext.Api)
     private static final com.google.rpc.context.AttributeContext.Api DEFAULT_INSTANCE;
 
     static {
-      DEFAULT_INSTANCE = new com.google.rpc.context.AttributeContext.Api();
+      Api defaultInstance = new Api();
+      // New instances are implicitly immutable so no need to make
+      // immutable.
+      DEFAULT_INSTANCE = defaultInstance;
+      com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(Api.class, defaultInstance);
     }
 
     public static com.google.rpc.context.AttributeContext.Api getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<Api> PARSER =
-        new com.google.protobuf.AbstractParser<Api>() {
-          @java.lang.Override
-          public Api parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-          }
-        };
+    private static volatile com.google.protobuf.Parser<Api> PARSER;
 
     public static com.google.protobuf.Parser<Api> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<Api> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.rpc.context.AttributeContext.Api getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
+      return DEFAULT_INSTANCE.getParserForType();
     }
   }
 
   public interface AuthOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:google.rpc.context.AttributeContext.Auth)
-      com.google.protobuf.MessageOrBuilder {
+      com.google.protobuf.MessageLiteOrBuilder {
 
     /**
      *
@@ -3129,8 +2435,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>repeated string audiences = 2;</code>
      *
-     * @param index The index of the value to return.
-     * @return The bytes of the audiences at the given index.
+     * @param index The index of the element to return.
+     * @return The audiences at the given index.
      */
     com.google.protobuf.ByteString getAudiencesBytes(int index);
 
@@ -3217,30 +2523,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The claims.
      */
     com.google.protobuf.Struct getClaims();
-    /**
-     *
-     *
-     * <pre>
-     * Structured claims presented with the credential. JWTs include
-     * `{key: value}` pairs for standard and private claims. The following
-     * is a subset of the standard required and optional claims that would
-     * typically be presented for a Google-based JWT:
-     *
-     *    {'iss': 'accounts.google.com',
-     *     'sub': '113289723416554971153',
-     *     'aud': ['123456789012', 'pubsub.googleapis.com'],
-     *     'azp': '123456789012.apps.googleusercontent.com',
-     *     'email': 'jsmith&#64;example.com',
-     *     'iat': 1353601026,
-     *     'exp': 1353604926}
-     *
-     * SAML assertions are similarly specified, but with an identity provider
-     * dependent structure.
-     * </pre>
-     *
-     * <code>.google.protobuf.Struct claims = 4;</code>
-     */
-    com.google.protobuf.StructOrBuilder getClaimsOrBuilder();
 
     /**
      *
@@ -3312,8 +2594,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>repeated string access_levels = 5;</code>
      *
-     * @param index The index of the value to return.
-     * @return The bytes of the accessLevels at the given index.
+     * @param index The index of the element to return.
+     * @return The accessLevels at the given index.
      */
     com.google.protobuf.ByteString getAccessLevelsBytes(int index);
   }
@@ -3328,49 +2610,21 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * Protobuf type {@code google.rpc.context.AttributeContext.Auth}
    */
-  public static final class Auth extends com.google.protobuf.GeneratedMessageV3
+  public static final class Auth
+      extends com.google.protobuf.GeneratedMessageLite<Auth, Auth.Builder>
       implements
       // @@protoc_insertion_point(message_implements:google.rpc.context.AttributeContext.Auth)
       AuthOrBuilder {
-    private static final long serialVersionUID = 0L;
-    // Use Auth.newBuilder() to construct.
-    private Auth(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-
     private Auth() {
       principal_ = "";
-      audiences_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      audiences_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
       presenter_ = "";
-      accessLevels_ = com.google.protobuf.LazyStringArrayList.emptyList();
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-      return new Auth();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.rpc.context.AttributeContextProto
-          .internal_static_google_rpc_context_AttributeContext_Auth_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.rpc.context.AttributeContextProto
-          .internal_static_google_rpc_context_AttributeContext_Auth_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.rpc.context.AttributeContext.Auth.class,
-              com.google.rpc.context.AttributeContext.Auth.Builder.class);
+      accessLevels_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
     }
 
     private int bitField0_;
     public static final int PRINCIPAL_FIELD_NUMBER = 1;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object principal_ = "";
+    private java.lang.String principal_;
     /**
      *
      *
@@ -3388,15 +2642,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getPrincipal() {
-      java.lang.Object ref = principal_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        principal_ = s;
-        return s;
-      }
+      return principal_;
     }
     /**
      *
@@ -3415,22 +2661,67 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getPrincipalBytes() {
-      java.lang.Object ref = principal_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        principal_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(principal_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The authenticated principal. Reflects the issuer (`iss`) and subject
+     * (`sub`) claims within a JWT. The issuer and subject should be `/`
+     * delimited, with `/` percent-encoded within the subject fragment. For
+     * Google accounts, the principal format is:
+     * "https://accounts.google.com/{id}"
+     * </pre>
+     *
+     * <code>string principal = 1;</code>
+     *
+     * @param value The principal to set.
+     */
+    private void setPrincipal(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      principal_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The authenticated principal. Reflects the issuer (`iss`) and subject
+     * (`sub`) claims within a JWT. The issuer and subject should be `/`
+     * delimited, with `/` percent-encoded within the subject fragment. For
+     * Google accounts, the principal format is:
+     * "https://accounts.google.com/{id}"
+     * </pre>
+     *
+     * <code>string principal = 1;</code>
+     */
+    private void clearPrincipal() {
+
+      principal_ = getDefaultInstance().getPrincipal();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The authenticated principal. Reflects the issuer (`iss`) and subject
+     * (`sub`) claims within a JWT. The issuer and subject should be `/`
+     * delimited, with `/` percent-encoded within the subject fragment. For
+     * Google accounts, the principal format is:
+     * "https://accounts.google.com/{id}"
+     * </pre>
+     *
+     * <code>string principal = 1;</code>
+     *
+     * @param value The bytes for principal to set.
+     */
+    private void setPrincipalBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      principal_ = value.toStringUtf8();
     }
 
     public static final int AUDIENCES_FIELD_NUMBER = 2;
-
-    @SuppressWarnings("serial")
-    private com.google.protobuf.LazyStringArrayList audiences_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
+    private com.google.protobuf.Internal.ProtobufList<java.lang.String> audiences_;
     /**
      *
      *
@@ -3455,7 +2746,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return A list containing the audiences.
      */
-    public com.google.protobuf.ProtocolStringList getAudiencesList() {
+    @java.lang.Override
+    public java.util.List<java.lang.String> getAudiencesList() {
       return audiences_;
     }
     /**
@@ -3482,6 +2774,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The count of audiences.
      */
+    @java.lang.Override
     public int getAudiencesCount() {
       return audiences_.size();
     }
@@ -3510,6 +2803,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @param index The index of the element to return.
      * @return The audiences at the given index.
      */
+    @java.lang.Override
     public java.lang.String getAudiences(int index) {
       return audiences_.get(index);
     }
@@ -3538,14 +2832,161 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @param index The index of the value to return.
      * @return The bytes of the audiences at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getAudiencesBytes(int index) {
-      return audiences_.getByteString(index);
+      return com.google.protobuf.ByteString.copyFromUtf8(audiences_.get(index));
+    }
+
+    private void ensureAudiencesIsMutable() {
+      com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = audiences_;
+      if (!tmp.isModifiable()) {
+        audiences_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The intended audience(s) for this authentication information. Reflects
+     * the audience (`aud`) claim within a JWT. The audience
+     * value(s) depends on the `issuer`, but typically include one or more of
+     * the following pieces of information:
+     *
+     * *  The services intended to receive the credential. For example,
+     *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
+     * *  A set of service-based scopes. For example,
+     *    ["https://www.googleapis.com/auth/cloud-platform"].
+     * *  The client id of an app, such as the Firebase project id for JWTs
+     *    from Firebase Auth.
+     *
+     * Consult the documentation for the credential issuer to determine the
+     * information provided.
+     * </pre>
+     *
+     * <code>repeated string audiences = 2;</code>
+     *
+     * @param index The index to set the value at.
+     * @param value The audiences to set.
+     */
+    private void setAudiences(int index, java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+      ensureAudiencesIsMutable();
+      audiences_.set(index, value);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The intended audience(s) for this authentication information. Reflects
+     * the audience (`aud`) claim within a JWT. The audience
+     * value(s) depends on the `issuer`, but typically include one or more of
+     * the following pieces of information:
+     *
+     * *  The services intended to receive the credential. For example,
+     *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
+     * *  A set of service-based scopes. For example,
+     *    ["https://www.googleapis.com/auth/cloud-platform"].
+     * *  The client id of an app, such as the Firebase project id for JWTs
+     *    from Firebase Auth.
+     *
+     * Consult the documentation for the credential issuer to determine the
+     * information provided.
+     * </pre>
+     *
+     * <code>repeated string audiences = 2;</code>
+     *
+     * @param value The audiences to add.
+     */
+    private void addAudiences(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+      ensureAudiencesIsMutable();
+      audiences_.add(value);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The intended audience(s) for this authentication information. Reflects
+     * the audience (`aud`) claim within a JWT. The audience
+     * value(s) depends on the `issuer`, but typically include one or more of
+     * the following pieces of information:
+     *
+     * *  The services intended to receive the credential. For example,
+     *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
+     * *  A set of service-based scopes. For example,
+     *    ["https://www.googleapis.com/auth/cloud-platform"].
+     * *  The client id of an app, such as the Firebase project id for JWTs
+     *    from Firebase Auth.
+     *
+     * Consult the documentation for the credential issuer to determine the
+     * information provided.
+     * </pre>
+     *
+     * <code>repeated string audiences = 2;</code>
+     *
+     * @param values The audiences to add.
+     */
+    private void addAllAudiences(java.lang.Iterable<java.lang.String> values) {
+      ensureAudiencesIsMutable();
+      com.google.protobuf.AbstractMessageLite.addAll(values, audiences_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The intended audience(s) for this authentication information. Reflects
+     * the audience (`aud`) claim within a JWT. The audience
+     * value(s) depends on the `issuer`, but typically include one or more of
+     * the following pieces of information:
+     *
+     * *  The services intended to receive the credential. For example,
+     *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
+     * *  A set of service-based scopes. For example,
+     *    ["https://www.googleapis.com/auth/cloud-platform"].
+     * *  The client id of an app, such as the Firebase project id for JWTs
+     *    from Firebase Auth.
+     *
+     * Consult the documentation for the credential issuer to determine the
+     * information provided.
+     * </pre>
+     *
+     * <code>repeated string audiences = 2;</code>
+     */
+    private void clearAudiences() {
+      audiences_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The intended audience(s) for this authentication information. Reflects
+     * the audience (`aud`) claim within a JWT. The audience
+     * value(s) depends on the `issuer`, but typically include one or more of
+     * the following pieces of information:
+     *
+     * *  The services intended to receive the credential. For example,
+     *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
+     * *  A set of service-based scopes. For example,
+     *    ["https://www.googleapis.com/auth/cloud-platform"].
+     * *  The client id of an app, such as the Firebase project id for JWTs
+     *    from Firebase Auth.
+     *
+     * Consult the documentation for the credential issuer to determine the
+     * information provided.
+     * </pre>
+     *
+     * <code>repeated string audiences = 2;</code>
+     *
+     * @param value The bytes of the audiences to add.
+     */
+    private void addAudiencesBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      ensureAudiencesIsMutable();
+      audiences_.add(value.toStringUtf8());
     }
 
     public static final int PRESENTER_FIELD_NUMBER = 3;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object presenter_ = "";
+    private java.lang.String presenter_;
     /**
      *
      *
@@ -3562,15 +3003,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getPresenter() {
-      java.lang.Object ref = presenter_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        presenter_ = s;
-        return s;
-      }
+      return presenter_;
     }
     /**
      *
@@ -3588,15 +3021,60 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getPresenterBytes() {
-      java.lang.Object ref = presenter_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        presenter_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(presenter_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The authorized presenter of the credential. Reflects the optional
+     * Authorized Presenter (`azp`) claim within a JWT or the
+     * OAuth client id. For example, a Google Cloud Platform client id looks
+     * as follows: "123456789012.apps.googleusercontent.com".
+     * </pre>
+     *
+     * <code>string presenter = 3;</code>
+     *
+     * @param value The presenter to set.
+     */
+    private void setPresenter(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      presenter_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The authorized presenter of the credential. Reflects the optional
+     * Authorized Presenter (`azp`) claim within a JWT or the
+     * OAuth client id. For example, a Google Cloud Platform client id looks
+     * as follows: "123456789012.apps.googleusercontent.com".
+     * </pre>
+     *
+     * <code>string presenter = 3;</code>
+     */
+    private void clearPresenter() {
+
+      presenter_ = getDefaultInstance().getPresenter();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The authorized presenter of the credential. Reflects the optional
+     * Authorized Presenter (`azp`) claim within a JWT or the
+     * OAuth client id. For example, a Google Cloud Platform client id looks
+     * as follows: "123456789012.apps.googleusercontent.com".
+     * </pre>
+     *
+     * <code>string presenter = 3;</code>
+     *
+     * @param value The bytes for presenter to set.
+     */
+    private void setPresenterBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      presenter_ = value.toStringUtf8();
     }
 
     public static final int CLAIMS_FIELD_NUMBER = 4;
@@ -3623,8 +3101,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.protobuf.Struct claims = 4;</code>
-     *
-     * @return Whether the claims field is set.
      */
     @java.lang.Override
     public boolean hasClaims() {
@@ -3652,8 +3128,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.protobuf.Struct claims = 4;</code>
-     *
-     * @return The claims.
      */
     @java.lang.Override
     public com.google.protobuf.Struct getClaims() {
@@ -3682,16 +3156,74 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>.google.protobuf.Struct claims = 4;</code>
      */
-    @java.lang.Override
-    public com.google.protobuf.StructOrBuilder getClaimsOrBuilder() {
-      return claims_ == null ? com.google.protobuf.Struct.getDefaultInstance() : claims_;
+    private void setClaims(com.google.protobuf.Struct value) {
+      value.getClass();
+      claims_ = value;
+      bitField0_ |= 0x00000001;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Structured claims presented with the credential. JWTs include
+     * `{key: value}` pairs for standard and private claims. The following
+     * is a subset of the standard required and optional claims that would
+     * typically be presented for a Google-based JWT:
+     *
+     *    {'iss': 'accounts.google.com',
+     *     'sub': '113289723416554971153',
+     *     'aud': ['123456789012', 'pubsub.googleapis.com'],
+     *     'azp': '123456789012.apps.googleusercontent.com',
+     *     'email': 'jsmith&#64;example.com',
+     *     'iat': 1353601026,
+     *     'exp': 1353604926}
+     *
+     * SAML assertions are similarly specified, but with an identity provider
+     * dependent structure.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct claims = 4;</code>
+     */
+    @java.lang.SuppressWarnings({"ReferenceEquality"})
+    private void mergeClaims(com.google.protobuf.Struct value) {
+      value.getClass();
+      if (claims_ != null && claims_ != com.google.protobuf.Struct.getDefaultInstance()) {
+        claims_ = com.google.protobuf.Struct.newBuilder(claims_).mergeFrom(value).buildPartial();
+      } else {
+        claims_ = value;
+      }
+      bitField0_ |= 0x00000001;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Structured claims presented with the credential. JWTs include
+     * `{key: value}` pairs for standard and private claims. The following
+     * is a subset of the standard required and optional claims that would
+     * typically be presented for a Google-based JWT:
+     *
+     *    {'iss': 'accounts.google.com',
+     *     'sub': '113289723416554971153',
+     *     'aud': ['123456789012', 'pubsub.googleapis.com'],
+     *     'azp': '123456789012.apps.googleusercontent.com',
+     *     'email': 'jsmith&#64;example.com',
+     *     'iat': 1353601026,
+     *     'exp': 1353604926}
+     *
+     * SAML assertions are similarly specified, but with an identity provider
+     * dependent structure.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct claims = 4;</code>
+     */
+    private void clearClaims() {
+      claims_ = null;
+      bitField0_ = (bitField0_ & ~0x00000001);
     }
 
     public static final int ACCESS_LEVELS_FIELD_NUMBER = 5;
-
-    @SuppressWarnings("serial")
-    private com.google.protobuf.LazyStringArrayList accessLevels_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
+    private com.google.protobuf.Internal.ProtobufList<java.lang.String> accessLevels_;
     /**
      *
      *
@@ -3709,7 +3241,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return A list containing the accessLevels.
      */
-    public com.google.protobuf.ProtocolStringList getAccessLevelsList() {
+    @java.lang.Override
+    public java.util.List<java.lang.String> getAccessLevelsList() {
       return accessLevels_;
     }
     /**
@@ -3729,6 +3262,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The count of accessLevels.
      */
+    @java.lang.Override
     public int getAccessLevelsCount() {
       return accessLevels_.size();
     }
@@ -3750,6 +3284,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @param index The index of the element to return.
      * @return The accessLevels at the given index.
      */
+    @java.lang.Override
     public java.lang.String getAccessLevels(int index) {
       return accessLevels_.get(index);
     }
@@ -3771,225 +3306,206 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @param index The index of the value to return.
      * @return The bytes of the accessLevels at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getAccessLevelsBytes(int index) {
-      return accessLevels_.getByteString(index);
+      return com.google.protobuf.ByteString.copyFromUtf8(accessLevels_.get(index));
     }
 
-    private byte memoizedIsInitialized = -1;
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
+    private void ensureAccessLevelsIsMutable() {
+      com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = accessLevels_;
+      if (!tmp.isModifiable()) {
+        accessLevels_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+      }
     }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principal_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, principal_);
-      }
-      for (int i = 0; i < audiences_.size(); i++) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, audiences_.getRaw(i));
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(presenter_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, presenter_);
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeMessage(4, getClaims());
-      }
-      for (int i = 0; i < accessLevels_.size(); i++) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, accessLevels_.getRaw(i));
-      }
-      getUnknownFields().writeTo(output);
+    /**
+     *
+     *
+     * <pre>
+     * A list of access level resource names that allow resources to be
+     * accessed by authenticated requester. It is part of Secure GCP processing
+     * for the incoming request. An access level string has the format:
+     * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+     *
+     * Example:
+     * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
+     * </pre>
+     *
+     * <code>repeated string access_levels = 5;</code>
+     *
+     * @param index The index to set the value at.
+     * @param value The accessLevels to set.
+     */
+    private void setAccessLevels(int index, java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+      ensureAccessLevelsIsMutable();
+      accessLevels_.set(index, value);
     }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principal_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, principal_);
-      }
-      {
-        int dataSize = 0;
-        for (int i = 0; i < audiences_.size(); i++) {
-          dataSize += computeStringSizeNoTag(audiences_.getRaw(i));
-        }
-        size += dataSize;
-        size += 1 * getAudiencesList().size();
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(presenter_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, presenter_);
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, getClaims());
-      }
-      {
-        int dataSize = 0;
-        for (int i = 0; i < accessLevels_.size(); i++) {
-          dataSize += computeStringSizeNoTag(accessLevels_.getRaw(i));
-        }
-        size += dataSize;
-        size += 1 * getAccessLevelsList().size();
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
+    /**
+     *
+     *
+     * <pre>
+     * A list of access level resource names that allow resources to be
+     * accessed by authenticated requester. It is part of Secure GCP processing
+     * for the incoming request. An access level string has the format:
+     * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+     *
+     * Example:
+     * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
+     * </pre>
+     *
+     * <code>repeated string access_levels = 5;</code>
+     *
+     * @param value The accessLevels to add.
+     */
+    private void addAccessLevels(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+      ensureAccessLevelsIsMutable();
+      accessLevels_.add(value);
     }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-        return true;
-      }
-      if (!(obj instanceof com.google.rpc.context.AttributeContext.Auth)) {
-        return super.equals(obj);
-      }
-      com.google.rpc.context.AttributeContext.Auth other =
-          (com.google.rpc.context.AttributeContext.Auth) obj;
-
-      if (!getPrincipal().equals(other.getPrincipal())) return false;
-      if (!getAudiencesList().equals(other.getAudiencesList())) return false;
-      if (!getPresenter().equals(other.getPresenter())) return false;
-      if (hasClaims() != other.hasClaims()) return false;
-      if (hasClaims()) {
-        if (!getClaims().equals(other.getClaims())) return false;
-      }
-      if (!getAccessLevelsList().equals(other.getAccessLevelsList())) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
+    /**
+     *
+     *
+     * <pre>
+     * A list of access level resource names that allow resources to be
+     * accessed by authenticated requester. It is part of Secure GCP processing
+     * for the incoming request. An access level string has the format:
+     * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+     *
+     * Example:
+     * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
+     * </pre>
+     *
+     * <code>repeated string access_levels = 5;</code>
+     *
+     * @param values The accessLevels to add.
+     */
+    private void addAllAccessLevels(java.lang.Iterable<java.lang.String> values) {
+      ensureAccessLevelsIsMutable();
+      com.google.protobuf.AbstractMessageLite.addAll(values, accessLevels_);
     }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + PRINCIPAL_FIELD_NUMBER;
-      hash = (53 * hash) + getPrincipal().hashCode();
-      if (getAudiencesCount() > 0) {
-        hash = (37 * hash) + AUDIENCES_FIELD_NUMBER;
-        hash = (53 * hash) + getAudiencesList().hashCode();
-      }
-      hash = (37 * hash) + PRESENTER_FIELD_NUMBER;
-      hash = (53 * hash) + getPresenter().hashCode();
-      if (hasClaims()) {
-        hash = (37 * hash) + CLAIMS_FIELD_NUMBER;
-        hash = (53 * hash) + getClaims().hashCode();
-      }
-      if (getAccessLevelsCount() > 0) {
-        hash = (37 * hash) + ACCESS_LEVELS_FIELD_NUMBER;
-        hash = (53 * hash) + getAccessLevelsList().hashCode();
-      }
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
+    /**
+     *
+     *
+     * <pre>
+     * A list of access level resource names that allow resources to be
+     * accessed by authenticated requester. It is part of Secure GCP processing
+     * for the incoming request. An access level string has the format:
+     * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+     *
+     * Example:
+     * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
+     * </pre>
+     *
+     * <code>repeated string access_levels = 5;</code>
+     */
+    private void clearAccessLevels() {
+      accessLevels_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * A list of access level resource names that allow resources to be
+     * accessed by authenticated requester. It is part of Secure GCP processing
+     * for the incoming request. An access level string has the format:
+     * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+     *
+     * Example:
+     * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
+     * </pre>
+     *
+     * <code>repeated string access_levels = 5;</code>
+     *
+     * @param value The bytes of the accessLevels to add.
+     */
+    private void addAccessLevelsBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      ensureAccessLevelsIsMutable();
+      accessLevels_.add(value.toStringUtf8());
     }
 
     public static com.google.rpc.context.AttributeContext.Auth parseFrom(java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.context.AttributeContext.Auth parseFrom(
         java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Auth parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.context.AttributeContext.Auth parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Auth parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.context.AttributeContext.Auth parseFrom(
         byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Auth parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.context.AttributeContext.Auth parseFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Auth parseDelimitedFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.context.AttributeContext.Auth parseDelimitedFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Auth parseFrom(
         com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.context.AttributeContext.Auth parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
+      return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
 
     public static Builder newBuilder(com.google.rpc.context.AttributeContext.Auth prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      *
      *
@@ -4002,270 +3518,16 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * Protobuf type {@code google.rpc.context.AttributeContext.Auth}
      */
     public static final class Builder
-        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+        extends com.google.protobuf.GeneratedMessageLite.Builder<
+            com.google.rpc.context.AttributeContext.Auth, Builder>
         implements
         // @@protoc_insertion_point(builder_implements:google.rpc.context.AttributeContext.Auth)
         com.google.rpc.context.AttributeContext.AuthOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return com.google.rpc.context.AttributeContextProto
-            .internal_static_google_rpc_context_AttributeContext_Auth_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.google.rpc.context.AttributeContextProto
-            .internal_static_google_rpc_context_AttributeContext_Auth_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.google.rpc.context.AttributeContext.Auth.class,
-                com.google.rpc.context.AttributeContext.Auth.Builder.class);
-      }
-
       // Construct using com.google.rpc.context.AttributeContext.Auth.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+        super(DEFAULT_INSTANCE);
       }
 
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-          getClaimsFieldBuilder();
-        }
-      }
-
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        principal_ = "";
-        audiences_ = com.google.protobuf.LazyStringArrayList.emptyList();
-        presenter_ = "";
-        claims_ = null;
-        if (claimsBuilder_ != null) {
-          claimsBuilder_.dispose();
-          claimsBuilder_ = null;
-        }
-        accessLevels_ = com.google.protobuf.LazyStringArrayList.emptyList();
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return com.google.rpc.context.AttributeContextProto
-            .internal_static_google_rpc_context_AttributeContext_Auth_descriptor;
-      }
-
-      @java.lang.Override
-      public com.google.rpc.context.AttributeContext.Auth getDefaultInstanceForType() {
-        return com.google.rpc.context.AttributeContext.Auth.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.google.rpc.context.AttributeContext.Auth build() {
-        com.google.rpc.context.AttributeContext.Auth result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.google.rpc.context.AttributeContext.Auth buildPartial() {
-        com.google.rpc.context.AttributeContext.Auth result =
-            new com.google.rpc.context.AttributeContext.Auth(this);
-        if (bitField0_ != 0) {
-          buildPartial0(result);
-        }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartial0(com.google.rpc.context.AttributeContext.Auth result) {
-        int from_bitField0_ = bitField0_;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.principal_ = principal_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          audiences_.makeImmutable();
-          result.audiences_ = audiences_;
-        }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.presenter_ = presenter_;
-        }
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.claims_ = claimsBuilder_ == null ? claims_ : claimsBuilder_.build();
-          to_bitField0_ |= 0x00000001;
-        }
-        if (((from_bitField0_ & 0x00000010) != 0)) {
-          accessLevels_.makeImmutable();
-          result.accessLevels_ = accessLevels_;
-        }
-        result.bitField0_ |= to_bitField0_;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.rpc.context.AttributeContext.Auth) {
-          return mergeFrom((com.google.rpc.context.AttributeContext.Auth) other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.google.rpc.context.AttributeContext.Auth other) {
-        if (other == com.google.rpc.context.AttributeContext.Auth.getDefaultInstance()) return this;
-        if (!other.getPrincipal().isEmpty()) {
-          principal_ = other.principal_;
-          bitField0_ |= 0x00000001;
-          onChanged();
-        }
-        if (!other.audiences_.isEmpty()) {
-          if (audiences_.isEmpty()) {
-            audiences_ = other.audiences_;
-            bitField0_ |= 0x00000002;
-          } else {
-            ensureAudiencesIsMutable();
-            audiences_.addAll(other.audiences_);
-          }
-          onChanged();
-        }
-        if (!other.getPresenter().isEmpty()) {
-          presenter_ = other.presenter_;
-          bitField0_ |= 0x00000004;
-          onChanged();
-        }
-        if (other.hasClaims()) {
-          mergeClaims(other.getClaims());
-        }
-        if (!other.accessLevels_.isEmpty()) {
-          if (accessLevels_.isEmpty()) {
-            accessLevels_ = other.accessLevels_;
-            bitField0_ |= 0x00000010;
-          } else {
-            ensureAccessLevelsIsMutable();
-            accessLevels_.addAll(other.accessLevels_);
-          }
-          onChanged();
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10:
-                {
-                  principal_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000001;
-                  break;
-                } // case 10
-              case 18:
-                {
-                  java.lang.String s = input.readStringRequireUtf8();
-                  ensureAudiencesIsMutable();
-                  audiences_.add(s);
-                  break;
-                } // case 18
-              case 26:
-                {
-                  presenter_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000004;
-                  break;
-                } // case 26
-              case 34:
-                {
-                  input.readMessage(getClaimsFieldBuilder().getBuilder(), extensionRegistry);
-                  bitField0_ |= 0x00000008;
-                  break;
-                } // case 34
-              case 42:
-                {
-                  java.lang.String s = input.readStringRequireUtf8();
-                  ensureAccessLevelsIsMutable();
-                  accessLevels_.add(s);
-                  break;
-                } // case 42
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-
-      private int bitField0_;
-
-      private java.lang.Object principal_ = "";
       /**
        *
        *
@@ -4281,16 +3543,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The principal.
        */
+      @java.lang.Override
       public java.lang.String getPrincipal() {
-        java.lang.Object ref = principal_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          principal_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getPrincipal();
       }
       /**
        *
@@ -4307,16 +3562,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for principal.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getPrincipalBytes() {
-        java.lang.Object ref = principal_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          principal_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getPrincipalBytes();
       }
       /**
        *
@@ -4335,12 +3583,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setPrincipal(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        principal_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setPrincipal(value);
         return this;
       }
       /**
@@ -4359,9 +3603,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearPrincipal() {
-        principal_ = getDefaultInstance().getPrincipal();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
+        copyOnWrite();
+        instance.clearPrincipal();
         return this;
       }
       /**
@@ -4381,25 +3624,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setPrincipalBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        principal_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setPrincipalBytes(value);
         return this;
       }
 
-      private com.google.protobuf.LazyStringArrayList audiences_ =
-          com.google.protobuf.LazyStringArrayList.emptyList();
-
-      private void ensureAudiencesIsMutable() {
-        if (!audiences_.isModifiable()) {
-          audiences_ = new com.google.protobuf.LazyStringArrayList(audiences_);
-        }
-        bitField0_ |= 0x00000002;
-      }
       /**
        *
        *
@@ -4424,9 +3653,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return A list containing the audiences.
        */
-      public com.google.protobuf.ProtocolStringList getAudiencesList() {
-        audiences_.makeImmutable();
-        return audiences_;
+      @java.lang.Override
+      public java.util.List<java.lang.String> getAudiencesList() {
+        return java.util.Collections.unmodifiableList(instance.getAudiencesList());
       }
       /**
        *
@@ -4452,8 +3681,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The count of audiences.
        */
+      @java.lang.Override
       public int getAudiencesCount() {
-        return audiences_.size();
+        return instance.getAudiencesCount();
       }
       /**
        *
@@ -4480,8 +3710,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @param index The index of the element to return.
        * @return The audiences at the given index.
        */
+      @java.lang.Override
       public java.lang.String getAudiences(int index) {
-        return audiences_.get(index);
+        return instance.getAudiences(index);
       }
       /**
        *
@@ -4508,8 +3739,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @param index The index of the value to return.
        * @return The bytes of the audiences at the given index.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getAudiencesBytes(int index) {
-        return audiences_.getByteString(index);
+        return instance.getAudiencesBytes(index);
       }
       /**
        *
@@ -4538,13 +3770,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setAudiences(int index, java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureAudiencesIsMutable();
-        audiences_.set(index, value);
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setAudiences(index, value);
         return this;
       }
       /**
@@ -4573,13 +3800,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder addAudiences(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureAudiencesIsMutable();
-        audiences_.add(value);
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.addAudiences(value);
         return this;
       }
       /**
@@ -4608,10 +3830,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder addAllAudiences(java.lang.Iterable<java.lang.String> values) {
-        ensureAudiencesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, audiences_);
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.addAllAudiences(values);
         return this;
       }
       /**
@@ -4639,10 +3859,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearAudiences() {
-        audiences_ = com.google.protobuf.LazyStringArrayList.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        ;
-        onChanged();
+        copyOnWrite();
+        instance.clearAudiences();
         return this;
       }
       /**
@@ -4671,18 +3889,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder addAudiencesBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        ensureAudiencesIsMutable();
-        audiences_.add(value);
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.addAudiencesBytes(value);
         return this;
       }
 
-      private java.lang.Object presenter_ = "";
       /**
        *
        *
@@ -4697,16 +3908,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The presenter.
        */
+      @java.lang.Override
       public java.lang.String getPresenter() {
-        java.lang.Object ref = presenter_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          presenter_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getPresenter();
       }
       /**
        *
@@ -4722,16 +3926,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for presenter.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getPresenterBytes() {
-        java.lang.Object ref = presenter_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          presenter_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getPresenterBytes();
       }
       /**
        *
@@ -4749,12 +3946,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setPresenter(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        presenter_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
+        copyOnWrite();
+        instance.setPresenter(value);
         return this;
       }
       /**
@@ -4772,9 +3965,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearPresenter() {
-        presenter_ = getDefaultInstance().getPresenter();
-        bitField0_ = (bitField0_ & ~0x00000004);
-        onChanged();
+        copyOnWrite();
+        instance.clearPresenter();
         return this;
       }
       /**
@@ -4793,22 +3985,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setPresenterBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        presenter_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
+        copyOnWrite();
+        instance.setPresenterBytes(value);
         return this;
       }
 
-      private com.google.protobuf.Struct claims_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Struct,
-              com.google.protobuf.Struct.Builder,
-              com.google.protobuf.StructOrBuilder>
-          claimsBuilder_;
       /**
        *
        *
@@ -4831,11 +4012,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * </pre>
        *
        * <code>.google.protobuf.Struct claims = 4;</code>
-       *
-       * @return Whether the claims field is set.
        */
+      @java.lang.Override
       public boolean hasClaims() {
-        return ((bitField0_ & 0x00000008) != 0);
+        return instance.hasClaims();
       }
       /**
        *
@@ -4859,15 +4039,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * </pre>
        *
        * <code>.google.protobuf.Struct claims = 4;</code>
-       *
-       * @return The claims.
        */
+      @java.lang.Override
       public com.google.protobuf.Struct getClaims() {
-        if (claimsBuilder_ == null) {
-          return claims_ == null ? com.google.protobuf.Struct.getDefaultInstance() : claims_;
-        } else {
-          return claimsBuilder_.getMessage();
-        }
+        return instance.getClaims();
       }
       /**
        *
@@ -4893,16 +4068,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Struct claims = 4;</code>
        */
       public Builder setClaims(com.google.protobuf.Struct value) {
-        if (claimsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          claims_ = value;
-        } else {
-          claimsBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000008;
-        onChanged();
+        copyOnWrite();
+        instance.setClaims(value);
         return this;
       }
       /**
@@ -4929,13 +4096,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Struct claims = 4;</code>
        */
       public Builder setClaims(com.google.protobuf.Struct.Builder builderForValue) {
-        if (claimsBuilder_ == null) {
-          claims_ = builderForValue.build();
-        } else {
-          claimsBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000008;
-        onChanged();
+        copyOnWrite();
+        instance.setClaims(builderForValue.build());
         return this;
       }
       /**
@@ -4962,21 +4124,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Struct claims = 4;</code>
        */
       public Builder mergeClaims(com.google.protobuf.Struct value) {
-        if (claimsBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) != 0)
-              && claims_ != null
-              && claims_ != com.google.protobuf.Struct.getDefaultInstance()) {
-            getClaimsBuilder().mergeFrom(value);
-          } else {
-            claims_ = value;
-          }
-        } else {
-          claimsBuilder_.mergeFrom(value);
-        }
-        if (claims_ != null) {
-          bitField0_ |= 0x00000008;
-          onChanged();
-        }
+        copyOnWrite();
+        instance.mergeClaims(value);
         return this;
       }
       /**
@@ -5003,122 +4152,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Struct claims = 4;</code>
        */
       public Builder clearClaims() {
-        bitField0_ = (bitField0_ & ~0x00000008);
-        claims_ = null;
-        if (claimsBuilder_ != null) {
-          claimsBuilder_.dispose();
-          claimsBuilder_ = null;
-        }
-        onChanged();
+        copyOnWrite();
+        instance.clearClaims();
         return this;
       }
-      /**
-       *
-       *
-       * <pre>
-       * Structured claims presented with the credential. JWTs include
-       * `{key: value}` pairs for standard and private claims. The following
-       * is a subset of the standard required and optional claims that would
-       * typically be presented for a Google-based JWT:
-       *
-       *    {'iss': 'accounts.google.com',
-       *     'sub': '113289723416554971153',
-       *     'aud': ['123456789012', 'pubsub.googleapis.com'],
-       *     'azp': '123456789012.apps.googleusercontent.com',
-       *     'email': 'jsmith&#64;example.com',
-       *     'iat': 1353601026,
-       *     'exp': 1353604926}
-       *
-       * SAML assertions are similarly specified, but with an identity provider
-       * dependent structure.
-       * </pre>
-       *
-       * <code>.google.protobuf.Struct claims = 4;</code>
-       */
-      public com.google.protobuf.Struct.Builder getClaimsBuilder() {
-        bitField0_ |= 0x00000008;
-        onChanged();
-        return getClaimsFieldBuilder().getBuilder();
-      }
-      /**
-       *
-       *
-       * <pre>
-       * Structured claims presented with the credential. JWTs include
-       * `{key: value}` pairs for standard and private claims. The following
-       * is a subset of the standard required and optional claims that would
-       * typically be presented for a Google-based JWT:
-       *
-       *    {'iss': 'accounts.google.com',
-       *     'sub': '113289723416554971153',
-       *     'aud': ['123456789012', 'pubsub.googleapis.com'],
-       *     'azp': '123456789012.apps.googleusercontent.com',
-       *     'email': 'jsmith&#64;example.com',
-       *     'iat': 1353601026,
-       *     'exp': 1353604926}
-       *
-       * SAML assertions are similarly specified, but with an identity provider
-       * dependent structure.
-       * </pre>
-       *
-       * <code>.google.protobuf.Struct claims = 4;</code>
-       */
-      public com.google.protobuf.StructOrBuilder getClaimsOrBuilder() {
-        if (claimsBuilder_ != null) {
-          return claimsBuilder_.getMessageOrBuilder();
-        } else {
-          return claims_ == null ? com.google.protobuf.Struct.getDefaultInstance() : claims_;
-        }
-      }
-      /**
-       *
-       *
-       * <pre>
-       * Structured claims presented with the credential. JWTs include
-       * `{key: value}` pairs for standard and private claims. The following
-       * is a subset of the standard required and optional claims that would
-       * typically be presented for a Google-based JWT:
-       *
-       *    {'iss': 'accounts.google.com',
-       *     'sub': '113289723416554971153',
-       *     'aud': ['123456789012', 'pubsub.googleapis.com'],
-       *     'azp': '123456789012.apps.googleusercontent.com',
-       *     'email': 'jsmith&#64;example.com',
-       *     'iat': 1353601026,
-       *     'exp': 1353604926}
-       *
-       * SAML assertions are similarly specified, but with an identity provider
-       * dependent structure.
-       * </pre>
-       *
-       * <code>.google.protobuf.Struct claims = 4;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Struct,
-              com.google.protobuf.Struct.Builder,
-              com.google.protobuf.StructOrBuilder>
-          getClaimsFieldBuilder() {
-        if (claimsBuilder_ == null) {
-          claimsBuilder_ =
-              new com.google.protobuf.SingleFieldBuilderV3<
-                  com.google.protobuf.Struct,
-                  com.google.protobuf.Struct.Builder,
-                  com.google.protobuf.StructOrBuilder>(
-                  getClaims(), getParentForChildren(), isClean());
-          claims_ = null;
-        }
-        return claimsBuilder_;
-      }
 
-      private com.google.protobuf.LazyStringArrayList accessLevels_ =
-          com.google.protobuf.LazyStringArrayList.emptyList();
-
-      private void ensureAccessLevelsIsMutable() {
-        if (!accessLevels_.isModifiable()) {
-          accessLevels_ = new com.google.protobuf.LazyStringArrayList(accessLevels_);
-        }
-        bitField0_ |= 0x00000010;
-      }
       /**
        *
        *
@@ -5136,9 +4174,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return A list containing the accessLevels.
        */
-      public com.google.protobuf.ProtocolStringList getAccessLevelsList() {
-        accessLevels_.makeImmutable();
-        return accessLevels_;
+      @java.lang.Override
+      public java.util.List<java.lang.String> getAccessLevelsList() {
+        return java.util.Collections.unmodifiableList(instance.getAccessLevelsList());
       }
       /**
        *
@@ -5157,8 +4195,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The count of accessLevels.
        */
+      @java.lang.Override
       public int getAccessLevelsCount() {
-        return accessLevels_.size();
+        return instance.getAccessLevelsCount();
       }
       /**
        *
@@ -5178,8 +4217,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @param index The index of the element to return.
        * @return The accessLevels at the given index.
        */
+      @java.lang.Override
       public java.lang.String getAccessLevels(int index) {
-        return accessLevels_.get(index);
+        return instance.getAccessLevels(index);
       }
       /**
        *
@@ -5199,8 +4239,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @param index The index of the value to return.
        * @return The bytes of the accessLevels at the given index.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getAccessLevelsBytes(int index) {
-        return accessLevels_.getByteString(index);
+        return instance.getAccessLevelsBytes(index);
       }
       /**
        *
@@ -5222,13 +4263,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setAccessLevels(int index, java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureAccessLevelsIsMutable();
-        accessLevels_.set(index, value);
-        bitField0_ |= 0x00000010;
-        onChanged();
+        copyOnWrite();
+        instance.setAccessLevels(index, value);
         return this;
       }
       /**
@@ -5250,13 +4286,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder addAccessLevels(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureAccessLevelsIsMutable();
-        accessLevels_.add(value);
-        bitField0_ |= 0x00000010;
-        onChanged();
+        copyOnWrite();
+        instance.addAccessLevels(value);
         return this;
       }
       /**
@@ -5278,10 +4309,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder addAllAccessLevels(java.lang.Iterable<java.lang.String> values) {
-        ensureAccessLevelsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, accessLevels_);
-        bitField0_ |= 0x00000010;
-        onChanged();
+        copyOnWrite();
+        instance.addAllAccessLevels(values);
         return this;
       }
       /**
@@ -5302,10 +4331,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearAccessLevels() {
-        accessLevels_ = com.google.protobuf.LazyStringArrayList.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000010);
-        ;
-        onChanged();
+        copyOnWrite();
+        instance.clearAccessLevels();
         return this;
       }
       /**
@@ -5327,85 +4354,105 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder addAccessLevelsBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        ensureAccessLevelsIsMutable();
-        accessLevels_.add(value);
-        bitField0_ |= 0x00000010;
-        onChanged();
+        copyOnWrite();
+        instance.addAccessLevelsBytes(value);
         return this;
       }
 
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
       // @@protoc_insertion_point(builder_scope:google.rpc.context.AttributeContext.Auth)
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0,
+        java.lang.Object arg1) {
+      switch (method) {
+        case NEW_MUTABLE_INSTANCE:
+          {
+            return new com.google.rpc.context.AttributeContext.Auth();
+          }
+        case NEW_BUILDER:
+          {
+            return new Builder();
+          }
+        case BUILD_MESSAGE_INFO:
+          {
+            java.lang.Object[] objects =
+                new java.lang.Object[] {
+                  "bitField0_",
+                  "principal_",
+                  "audiences_",
+                  "presenter_",
+                  "claims_",
+                  "accessLevels_",
+                };
+            java.lang.String info =
+                "\u0000\u0005\u0000\u0001\u0001\u0005\u0005\u0000\u0002\u0000\u0001\u0208\u0002\u021a"
+                    + "\u0003\u0208\u0004\u1009\u0000\u0005\u021a";
+            return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+          }
+          // fall through
+        case GET_DEFAULT_INSTANCE:
+          {
+            return DEFAULT_INSTANCE;
+          }
+        case GET_PARSER:
+          {
+            com.google.protobuf.Parser<com.google.rpc.context.AttributeContext.Auth> parser =
+                PARSER;
+            if (parser == null) {
+              synchronized (com.google.rpc.context.AttributeContext.Auth.class) {
+                parser = PARSER;
+                if (parser == null) {
+                  parser =
+                      new DefaultInstanceBasedParser<com.google.rpc.context.AttributeContext.Auth>(
+                          DEFAULT_INSTANCE);
+                  PARSER = parser;
+                }
+              }
+            }
+            return parser;
+          }
+        case GET_MEMOIZED_IS_INITIALIZED:
+          {
+            return (byte) 1;
+          }
+        case SET_MEMOIZED_IS_INITIALIZED:
+          {
+            return null;
+          }
+      }
+      throw new UnsupportedOperationException();
     }
 
     // @@protoc_insertion_point(class_scope:google.rpc.context.AttributeContext.Auth)
     private static final com.google.rpc.context.AttributeContext.Auth DEFAULT_INSTANCE;
 
     static {
-      DEFAULT_INSTANCE = new com.google.rpc.context.AttributeContext.Auth();
+      Auth defaultInstance = new Auth();
+      // New instances are implicitly immutable so no need to make
+      // immutable.
+      DEFAULT_INSTANCE = defaultInstance;
+      com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(Auth.class, defaultInstance);
     }
 
     public static com.google.rpc.context.AttributeContext.Auth getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<Auth> PARSER =
-        new com.google.protobuf.AbstractParser<Auth>() {
-          @java.lang.Override
-          public Auth parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-          }
-        };
+    private static volatile com.google.protobuf.Parser<Auth> PARSER;
 
     public static com.google.protobuf.Parser<Auth> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<Auth> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.rpc.context.AttributeContext.Auth getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
+      return DEFAULT_INSTANCE.getParserForType();
     }
   }
 
   public interface RequestOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:google.rpc.context.AttributeContext.Request)
-      com.google.protobuf.MessageOrBuilder {
+      com.google.protobuf.MessageLiteOrBuilder {
 
     /**
      *
@@ -5511,6 +4558,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; headers = 3;</code>
      */
+
     /* nullable */
     java.lang.String getHeadersOrDefault(
         java.lang.String key,
@@ -5657,17 +4705,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The time.
      */
     com.google.protobuf.Timestamp getTime();
-    /**
-     *
-     *
-     * <pre>
-     * The timestamp when the `destination` service receives the last byte of
-     * the request.
-     * </pre>
-     *
-     * <code>.google.protobuf.Timestamp time = 9;</code>
-     */
-    com.google.protobuf.TimestampOrBuilder getTimeOrBuilder();
 
     /**
      *
@@ -5766,17 +4803,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The auth.
      */
     com.google.rpc.context.AttributeContext.Auth getAuth();
-    /**
-     *
-     *
-     * <pre>
-     * The request authentication. May be absent for unauthenticated requests.
-     * Derived from the HTTP request `Authorization` header or equivalent.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Auth auth = 13;</code>
-     */
-    com.google.rpc.context.AttributeContext.AuthOrBuilder getAuthOrBuilder();
   }
   /**
    *
@@ -5789,16 +4815,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * Protobuf type {@code google.rpc.context.AttributeContext.Request}
    */
-  public static final class Request extends com.google.protobuf.GeneratedMessageV3
+  public static final class Request
+      extends com.google.protobuf.GeneratedMessageLite<Request, Request.Builder>
       implements
       // @@protoc_insertion_point(message_implements:google.rpc.context.AttributeContext.Request)
       RequestOrBuilder {
-    private static final long serialVersionUID = 0L;
-    // Use Request.newBuilder() to construct.
-    private Request(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-
     private Request() {
       id_ = "";
       method_ = "";
@@ -5810,44 +4831,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       reason_ = "";
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-      return new Request();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.rpc.context.AttributeContextProto
-          .internal_static_google_rpc_context_AttributeContext_Request_descriptor;
-    }
-
-    @SuppressWarnings({"rawtypes"})
-    @java.lang.Override
-    protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-        int number) {
-      switch (number) {
-        case 3:
-          return internalGetHeaders();
-        default:
-          throw new RuntimeException("Invalid map field number: " + number);
-      }
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.rpc.context.AttributeContextProto
-          .internal_static_google_rpc_context_AttributeContext_Request_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.rpc.context.AttributeContext.Request.class,
-              com.google.rpc.context.AttributeContext.Request.Builder.class);
-    }
-
     private int bitField0_;
     public static final int ID_FIELD_NUMBER = 1;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object id_ = "";
+    private java.lang.String id_;
     /**
      *
      *
@@ -5863,15 +4849,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      }
+      return id_;
     }
     /**
      *
@@ -5888,21 +4866,61 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(id_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The unique ID for a request, which can be propagated to downstream
+     * systems. The ID should have low probability of collision
+     * within a single day for a specific service.
+     * </pre>
+     *
+     * <code>string id = 1;</code>
+     *
+     * @param value The id to set.
+     */
+    private void setId(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      id_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The unique ID for a request, which can be propagated to downstream
+     * systems. The ID should have low probability of collision
+     * within a single day for a specific service.
+     * </pre>
+     *
+     * <code>string id = 1;</code>
+     */
+    private void clearId() {
+
+      id_ = getDefaultInstance().getId();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The unique ID for a request, which can be propagated to downstream
+     * systems. The ID should have low probability of collision
+     * within a single day for a specific service.
+     * </pre>
+     *
+     * <code>string id = 1;</code>
+     *
+     * @param value The bytes for id to set.
+     */
+    private void setIdBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      id_ = value.toStringUtf8();
     }
 
     public static final int METHOD_FIELD_NUMBER = 2;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object method_ = "";
+    private java.lang.String method_;
     /**
      *
      *
@@ -5916,15 +4934,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getMethod() {
-      java.lang.Object ref = method_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        method_ = s;
-        return s;
-      }
+      return method_;
     }
     /**
      *
@@ -5939,42 +4949,85 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getMethodBytes() {
-      java.lang.Object ref = method_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        method_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(method_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP request method, such as `GET`, `POST`.
+     * </pre>
+     *
+     * <code>string method = 2;</code>
+     *
+     * @param value The method to set.
+     */
+    private void setMethod(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      method_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP request method, such as `GET`, `POST`.
+     * </pre>
+     *
+     * <code>string method = 2;</code>
+     */
+    private void clearMethod() {
+
+      method_ = getDefaultInstance().getMethod();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP request method, such as `GET`, `POST`.
+     * </pre>
+     *
+     * <code>string method = 2;</code>
+     *
+     * @param value The bytes for method to set.
+     */
+    private void setMethodBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      method_ = value.toStringUtf8();
     }
 
     public static final int HEADERS_FIELD_NUMBER = 3;
 
     private static final class HeadersDefaultEntryHolder {
-      static final com.google.protobuf.MapEntry<java.lang.String, java.lang.String> defaultEntry =
-          com.google.protobuf.MapEntry.<java.lang.String, java.lang.String>newDefaultInstance(
-              com.google.rpc.context.AttributeContextProto
-                  .internal_static_google_rpc_context_AttributeContext_Request_HeadersEntry_descriptor,
-              com.google.protobuf.WireFormat.FieldType.STRING,
-              "",
-              com.google.protobuf.WireFormat.FieldType.STRING,
-              "");
+      static final com.google.protobuf.MapEntryLite<java.lang.String, java.lang.String>
+          defaultEntry =
+              com.google.protobuf.MapEntryLite
+                  .<java.lang.String, java.lang.String>newDefaultInstance(
+                      com.google.protobuf.WireFormat.FieldType.STRING,
+                      "",
+                      com.google.protobuf.WireFormat.FieldType.STRING,
+                      "");
     }
 
-    @SuppressWarnings("serial")
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String> headers_;
+    private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String> headers_ =
+        com.google.protobuf.MapFieldLite.emptyMapField();
 
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String> internalGetHeaders() {
-      if (headers_ == null) {
-        return com.google.protobuf.MapField.emptyMapField(HeadersDefaultEntryHolder.defaultEntry);
+    private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
+        internalGetHeaders() {
+      return headers_;
+    }
+
+    private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
+        internalGetMutableHeaders() {
+      if (!headers_.isMutable()) {
+        headers_ = headers_.mutableCopy();
       }
       return headers_;
     }
 
+    @java.lang.Override
     public int getHeadersCount() {
-      return internalGetHeaders().getMap().size();
+      return internalGetHeaders().size();
     }
     /**
      *
@@ -5989,10 +5042,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public boolean containsHeaders(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      return internalGetHeaders().getMap().containsKey(key);
+      java.lang.Class<?> keyClass = key.getClass();
+      return internalGetHeaders().containsKey(key);
     }
     /** Use {@link #getHeadersMap()} instead. */
     @java.lang.Override
@@ -6013,7 +5064,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.util.Map<java.lang.String, java.lang.String> getHeadersMap() {
-      return internalGetHeaders().getMap();
+      return java.util.Collections.unmodifiableMap(internalGetHeaders());
     }
     /**
      *
@@ -6031,10 +5082,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         java.lang.String key,
         /* nullable */
         java.lang.String defaultValue) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
     /**
@@ -6050,20 +5099,30 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getHeadersOrThrow(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders();
       if (!map.containsKey(key)) {
         throw new java.lang.IllegalArgumentException();
       }
       return map.get(key);
     }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP request headers. If multiple headers share the same key, they
+     * must be merged according to the HTTP spec. All header keys must be
+     * lowercased, because HTTP header keys are case-insensitive.
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; headers = 3;</code>
+     */
+    private java.util.Map<java.lang.String, java.lang.String> getMutableHeadersMap() {
+      return internalGetMutableHeaders();
+    }
 
     public static final int PATH_FIELD_NUMBER = 4;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object path_ = "";
+    private java.lang.String path_;
     /**
      *
      *
@@ -6077,15 +5136,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getPath() {
-      java.lang.Object ref = path_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        path_ = s;
-        return s;
-      }
+      return path_;
     }
     /**
      *
@@ -6100,21 +5151,55 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getPathBytes() {
-      java.lang.Object ref = path_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        path_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(path_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP URL path, excluding the query parameters.
+     * </pre>
+     *
+     * <code>string path = 4;</code>
+     *
+     * @param value The path to set.
+     */
+    private void setPath(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      path_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP URL path, excluding the query parameters.
+     * </pre>
+     *
+     * <code>string path = 4;</code>
+     */
+    private void clearPath() {
+
+      path_ = getDefaultInstance().getPath();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP URL path, excluding the query parameters.
+     * </pre>
+     *
+     * <code>string path = 4;</code>
+     *
+     * @param value The bytes for path to set.
+     */
+    private void setPathBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      path_ = value.toStringUtf8();
     }
 
     public static final int HOST_FIELD_NUMBER = 5;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object host_ = "";
+    private java.lang.String host_;
     /**
      *
      *
@@ -6128,15 +5213,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getHost() {
-      java.lang.Object ref = host_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        host_ = s;
-        return s;
-      }
+      return host_;
     }
     /**
      *
@@ -6151,21 +5228,55 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getHostBytes() {
-      java.lang.Object ref = host_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        host_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(host_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP request `Host` header value.
+     * </pre>
+     *
+     * <code>string host = 5;</code>
+     *
+     * @param value The host to set.
+     */
+    private void setHost(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      host_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP request `Host` header value.
+     * </pre>
+     *
+     * <code>string host = 5;</code>
+     */
+    private void clearHost() {
+
+      host_ = getDefaultInstance().getHost();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP request `Host` header value.
+     * </pre>
+     *
+     * <code>string host = 5;</code>
+     *
+     * @param value The bytes for host to set.
+     */
+    private void setHostBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      host_ = value.toStringUtf8();
     }
 
     public static final int SCHEME_FIELD_NUMBER = 6;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object scheme_ = "";
+    private java.lang.String scheme_;
     /**
      *
      *
@@ -6179,15 +5290,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getScheme() {
-      java.lang.Object ref = scheme_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        scheme_ = s;
-        return s;
-      }
+      return scheme_;
     }
     /**
      *
@@ -6202,21 +5305,55 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getSchemeBytes() {
-      java.lang.Object ref = scheme_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        scheme_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(scheme_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP URL scheme, such as `http` and `https`.
+     * </pre>
+     *
+     * <code>string scheme = 6;</code>
+     *
+     * @param value The scheme to set.
+     */
+    private void setScheme(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      scheme_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP URL scheme, such as `http` and `https`.
+     * </pre>
+     *
+     * <code>string scheme = 6;</code>
+     */
+    private void clearScheme() {
+
+      scheme_ = getDefaultInstance().getScheme();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP URL scheme, such as `http` and `https`.
+     * </pre>
+     *
+     * <code>string scheme = 6;</code>
+     *
+     * @param value The bytes for scheme to set.
+     */
+    private void setSchemeBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      scheme_ = value.toStringUtf8();
     }
 
     public static final int QUERY_FIELD_NUMBER = 7;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object query_ = "";
+    private java.lang.String query_;
     /**
      *
      *
@@ -6231,15 +5368,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getQuery() {
-      java.lang.Object ref = query_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        query_ = s;
-        return s;
-      }
+      return query_;
     }
     /**
      *
@@ -6255,15 +5384,54 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getQueryBytes() {
-      java.lang.Object ref = query_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        query_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(query_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP URL query in the format of `name1=value1&amp;name2=value2`, as it
+     * appears in the first line of the HTTP request. No decoding is performed.
+     * </pre>
+     *
+     * <code>string query = 7;</code>
+     *
+     * @param value The query to set.
+     */
+    private void setQuery(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      query_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP URL query in the format of `name1=value1&amp;name2=value2`, as it
+     * appears in the first line of the HTTP request. No decoding is performed.
+     * </pre>
+     *
+     * <code>string query = 7;</code>
+     */
+    private void clearQuery() {
+
+      query_ = getDefaultInstance().getQuery();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP URL query in the format of `name1=value1&amp;name2=value2`, as it
+     * appears in the first line of the HTTP request. No decoding is performed.
+     * </pre>
+     *
+     * <code>string query = 7;</code>
+     *
+     * @param value The bytes for query to set.
+     */
+    private void setQueryBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      query_ = value.toStringUtf8();
     }
 
     public static final int TIME_FIELD_NUMBER = 9;
@@ -6277,8 +5445,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.protobuf.Timestamp time = 9;</code>
-     *
-     * @return Whether the time field is set.
      */
     @java.lang.Override
     public boolean hasTime() {
@@ -6293,8 +5459,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.protobuf.Timestamp time = 9;</code>
-     *
-     * @return The time.
      */
     @java.lang.Override
     public com.google.protobuf.Timestamp getTime() {
@@ -6310,13 +5474,48 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>.google.protobuf.Timestamp time = 9;</code>
      */
-    @java.lang.Override
-    public com.google.protobuf.TimestampOrBuilder getTimeOrBuilder() {
-      return time_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : time_;
+    private void setTime(com.google.protobuf.Timestamp value) {
+      value.getClass();
+      time_ = value;
+      bitField0_ |= 0x00000001;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The timestamp when the `destination` service receives the last byte of
+     * the request.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp time = 9;</code>
+     */
+    @java.lang.SuppressWarnings({"ReferenceEquality"})
+    private void mergeTime(com.google.protobuf.Timestamp value) {
+      value.getClass();
+      if (time_ != null && time_ != com.google.protobuf.Timestamp.getDefaultInstance()) {
+        time_ = com.google.protobuf.Timestamp.newBuilder(time_).mergeFrom(value).buildPartial();
+      } else {
+        time_ = value;
+      }
+      bitField0_ |= 0x00000001;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The timestamp when the `destination` service receives the last byte of
+     * the request.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp time = 9;</code>
+     */
+    private void clearTime() {
+      time_ = null;
+      bitField0_ = (bitField0_ & ~0x00000001);
     }
 
     public static final int SIZE_FIELD_NUMBER = 10;
-    private long size_ = 0L;
+    private long size_;
     /**
      *
      *
@@ -6332,11 +5531,37 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public long getSize() {
       return size_;
     }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP request size in bytes. If unknown, it must be -1.
+     * </pre>
+     *
+     * <code>int64 size = 10;</code>
+     *
+     * @param value The size to set.
+     */
+    private void setSize(long value) {
+
+      size_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP request size in bytes. If unknown, it must be -1.
+     * </pre>
+     *
+     * <code>int64 size = 10;</code>
+     */
+    private void clearSize() {
+
+      size_ = 0L;
+    }
 
     public static final int PROTOCOL_FIELD_NUMBER = 11;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object protocol_ = "";
+    private java.lang.String protocol_;
     /**
      *
      *
@@ -6353,15 +5578,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getProtocol() {
-      java.lang.Object ref = protocol_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        protocol_ = s;
-        return s;
-      }
+      return protocol_;
     }
     /**
      *
@@ -6379,21 +5596,64 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getProtocolBytes() {
-      java.lang.Object ref = protocol_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        protocol_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(protocol_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The network protocol used with the request, such as "http/1.1",
+     * "spdy/3", "h2", "h2c", "webrtc", "tcp", "udp", "quic". See
+     * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
+     * for details.
+     * </pre>
+     *
+     * <code>string protocol = 11;</code>
+     *
+     * @param value The protocol to set.
+     */
+    private void setProtocol(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      protocol_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The network protocol used with the request, such as "http/1.1",
+     * "spdy/3", "h2", "h2c", "webrtc", "tcp", "udp", "quic". See
+     * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
+     * for details.
+     * </pre>
+     *
+     * <code>string protocol = 11;</code>
+     */
+    private void clearProtocol() {
+
+      protocol_ = getDefaultInstance().getProtocol();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The network protocol used with the request, such as "http/1.1",
+     * "spdy/3", "h2", "h2c", "webrtc", "tcp", "udp", "quic". See
+     * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
+     * for details.
+     * </pre>
+     *
+     * <code>string protocol = 11;</code>
+     *
+     * @param value The bytes for protocol to set.
+     */
+    private void setProtocolBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      protocol_ = value.toStringUtf8();
     }
 
     public static final int REASON_FIELD_NUMBER = 12;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object reason_ = "";
+    private java.lang.String reason_;
     /**
      *
      *
@@ -6408,15 +5668,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getReason() {
-      java.lang.Object ref = reason_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        reason_ = s;
-        return s;
-      }
+      return reason_;
     }
     /**
      *
@@ -6432,15 +5684,54 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getReasonBytes() {
-      java.lang.Object ref = reason_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        reason_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(reason_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * A special parameter for request reason. It is used by security systems
+     * to associate auditing information with a request.
+     * </pre>
+     *
+     * <code>string reason = 12;</code>
+     *
+     * @param value The reason to set.
+     */
+    private void setReason(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      reason_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * A special parameter for request reason. It is used by security systems
+     * to associate auditing information with a request.
+     * </pre>
+     *
+     * <code>string reason = 12;</code>
+     */
+    private void clearReason() {
+
+      reason_ = getDefaultInstance().getReason();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * A special parameter for request reason. It is used by security systems
+     * to associate auditing information with a request.
+     * </pre>
+     *
+     * <code>string reason = 12;</code>
+     *
+     * @param value The bytes for reason to set.
+     */
+    private void setReasonBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      reason_ = value.toStringUtf8();
     }
 
     public static final int AUTH_FIELD_NUMBER = 13;
@@ -6454,8 +5745,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Auth auth = 13;</code>
-     *
-     * @return Whether the auth field is set.
      */
     @java.lang.Override
     public boolean hasAuth() {
@@ -6470,8 +5759,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Auth auth = 13;</code>
-     *
-     * @return The auth.
      */
     @java.lang.Override
     public com.google.rpc.context.AttributeContext.Auth getAuth() {
@@ -6489,290 +5776,132 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>.google.rpc.context.AttributeContext.Auth auth = 13;</code>
      */
-    @java.lang.Override
-    public com.google.rpc.context.AttributeContext.AuthOrBuilder getAuthOrBuilder() {
-      return auth_ == null
-          ? com.google.rpc.context.AttributeContext.Auth.getDefaultInstance()
-          : auth_;
+    private void setAuth(com.google.rpc.context.AttributeContext.Auth value) {
+      value.getClass();
+      auth_ = value;
+      bitField0_ |= 0x00000002;
     }
-
-    private byte memoizedIsInitialized = -1;
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
+    /**
+     *
+     *
+     * <pre>
+     * The request authentication. May be absent for unauthenticated requests.
+     * Derived from the HTTP request `Authorization` header or equivalent.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Auth auth = 13;</code>
+     */
+    @java.lang.SuppressWarnings({"ReferenceEquality"})
+    private void mergeAuth(com.google.rpc.context.AttributeContext.Auth value) {
+      value.getClass();
+      if (auth_ != null
+          && auth_ != com.google.rpc.context.AttributeContext.Auth.getDefaultInstance()) {
+        auth_ =
+            com.google.rpc.context.AttributeContext.Auth.newBuilder(auth_)
+                .mergeFrom(value)
+                .buildPartial();
+      } else {
+        auth_ = value;
+      }
+      bitField0_ |= 0x00000002;
     }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(id_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(method_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, method_);
-      }
-      com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
-          output, internalGetHeaders(), HeadersDefaultEntryHolder.defaultEntry, 3);
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(path_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, path_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(host_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, host_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(scheme_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, scheme_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(query_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, query_);
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeMessage(9, getTime());
-      }
-      if (size_ != 0L) {
-        output.writeInt64(10, size_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(protocol_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 11, protocol_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(reason_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 12, reason_);
-      }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        output.writeMessage(13, getAuth());
-      }
-      getUnknownFields().writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(id_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(method_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, method_);
-      }
-      for (java.util.Map.Entry<java.lang.String, java.lang.String> entry :
-          internalGetHeaders().getMap().entrySet()) {
-        com.google.protobuf.MapEntry<java.lang.String, java.lang.String> headers__ =
-            HeadersDefaultEntryHolder.defaultEntry
-                .newBuilderForType()
-                .setKey(entry.getKey())
-                .setValue(entry.getValue())
-                .build();
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, headers__);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(path_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, path_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(host_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, host_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(scheme_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, scheme_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(query_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, query_);
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(9, getTime());
-      }
-      if (size_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream.computeInt64Size(10, size_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(protocol_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(11, protocol_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(reason_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(12, reason_);
-      }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(13, getAuth());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-        return true;
-      }
-      if (!(obj instanceof com.google.rpc.context.AttributeContext.Request)) {
-        return super.equals(obj);
-      }
-      com.google.rpc.context.AttributeContext.Request other =
-          (com.google.rpc.context.AttributeContext.Request) obj;
-
-      if (!getId().equals(other.getId())) return false;
-      if (!getMethod().equals(other.getMethod())) return false;
-      if (!internalGetHeaders().equals(other.internalGetHeaders())) return false;
-      if (!getPath().equals(other.getPath())) return false;
-      if (!getHost().equals(other.getHost())) return false;
-      if (!getScheme().equals(other.getScheme())) return false;
-      if (!getQuery().equals(other.getQuery())) return false;
-      if (hasTime() != other.hasTime()) return false;
-      if (hasTime()) {
-        if (!getTime().equals(other.getTime())) return false;
-      }
-      if (getSize() != other.getSize()) return false;
-      if (!getProtocol().equals(other.getProtocol())) return false;
-      if (!getReason().equals(other.getReason())) return false;
-      if (hasAuth() != other.hasAuth()) return false;
-      if (hasAuth()) {
-        if (!getAuth().equals(other.getAuth())) return false;
-      }
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + getId().hashCode();
-      hash = (37 * hash) + METHOD_FIELD_NUMBER;
-      hash = (53 * hash) + getMethod().hashCode();
-      if (!internalGetHeaders().getMap().isEmpty()) {
-        hash = (37 * hash) + HEADERS_FIELD_NUMBER;
-        hash = (53 * hash) + internalGetHeaders().hashCode();
-      }
-      hash = (37 * hash) + PATH_FIELD_NUMBER;
-      hash = (53 * hash) + getPath().hashCode();
-      hash = (37 * hash) + HOST_FIELD_NUMBER;
-      hash = (53 * hash) + getHost().hashCode();
-      hash = (37 * hash) + SCHEME_FIELD_NUMBER;
-      hash = (53 * hash) + getScheme().hashCode();
-      hash = (37 * hash) + QUERY_FIELD_NUMBER;
-      hash = (53 * hash) + getQuery().hashCode();
-      if (hasTime()) {
-        hash = (37 * hash) + TIME_FIELD_NUMBER;
-        hash = (53 * hash) + getTime().hashCode();
-      }
-      hash = (37 * hash) + SIZE_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(getSize());
-      hash = (37 * hash) + PROTOCOL_FIELD_NUMBER;
-      hash = (53 * hash) + getProtocol().hashCode();
-      hash = (37 * hash) + REASON_FIELD_NUMBER;
-      hash = (53 * hash) + getReason().hashCode();
-      if (hasAuth()) {
-        hash = (37 * hash) + AUTH_FIELD_NUMBER;
-        hash = (53 * hash) + getAuth().hashCode();
-      }
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
+    /**
+     *
+     *
+     * <pre>
+     * The request authentication. May be absent for unauthenticated requests.
+     * Derived from the HTTP request `Authorization` header or equivalent.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Auth auth = 13;</code>
+     */
+    private void clearAuth() {
+      auth_ = null;
+      bitField0_ = (bitField0_ & ~0x00000002);
     }
 
     public static com.google.rpc.context.AttributeContext.Request parseFrom(
         java.nio.ByteBuffer data) throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.context.AttributeContext.Request parseFrom(
         java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Request parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.context.AttributeContext.Request parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Request parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.context.AttributeContext.Request parseFrom(
         byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Request parseFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.context.AttributeContext.Request parseFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Request parseDelimitedFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.context.AttributeContext.Request parseDelimitedFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Request parseFrom(
         com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.context.AttributeContext.Request parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
+      return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
 
     public static Builder newBuilder(com.google.rpc.context.AttributeContext.Request prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      *
      *
@@ -6785,390 +5914,16 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * Protobuf type {@code google.rpc.context.AttributeContext.Request}
      */
     public static final class Builder
-        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+        extends com.google.protobuf.GeneratedMessageLite.Builder<
+            com.google.rpc.context.AttributeContext.Request, Builder>
         implements
         // @@protoc_insertion_point(builder_implements:google.rpc.context.AttributeContext.Request)
         com.google.rpc.context.AttributeContext.RequestOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return com.google.rpc.context.AttributeContextProto
-            .internal_static_google_rpc_context_AttributeContext_Request_descriptor;
-      }
-
-      @SuppressWarnings({"rawtypes"})
-      protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-          int number) {
-        switch (number) {
-          case 3:
-            return internalGetHeaders();
-          default:
-            throw new RuntimeException("Invalid map field number: " + number);
-        }
-      }
-
-      @SuppressWarnings({"rawtypes"})
-      protected com.google.protobuf.MapFieldReflectionAccessor internalGetMutableMapFieldReflection(
-          int number) {
-        switch (number) {
-          case 3:
-            return internalGetMutableHeaders();
-          default:
-            throw new RuntimeException("Invalid map field number: " + number);
-        }
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.google.rpc.context.AttributeContextProto
-            .internal_static_google_rpc_context_AttributeContext_Request_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.google.rpc.context.AttributeContext.Request.class,
-                com.google.rpc.context.AttributeContext.Request.Builder.class);
-      }
-
       // Construct using com.google.rpc.context.AttributeContext.Request.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+        super(DEFAULT_INSTANCE);
       }
 
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-          getTimeFieldBuilder();
-          getAuthFieldBuilder();
-        }
-      }
-
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        id_ = "";
-        method_ = "";
-        internalGetMutableHeaders().clear();
-        path_ = "";
-        host_ = "";
-        scheme_ = "";
-        query_ = "";
-        time_ = null;
-        if (timeBuilder_ != null) {
-          timeBuilder_.dispose();
-          timeBuilder_ = null;
-        }
-        size_ = 0L;
-        protocol_ = "";
-        reason_ = "";
-        auth_ = null;
-        if (authBuilder_ != null) {
-          authBuilder_.dispose();
-          authBuilder_ = null;
-        }
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return com.google.rpc.context.AttributeContextProto
-            .internal_static_google_rpc_context_AttributeContext_Request_descriptor;
-      }
-
-      @java.lang.Override
-      public com.google.rpc.context.AttributeContext.Request getDefaultInstanceForType() {
-        return com.google.rpc.context.AttributeContext.Request.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.google.rpc.context.AttributeContext.Request build() {
-        com.google.rpc.context.AttributeContext.Request result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.google.rpc.context.AttributeContext.Request buildPartial() {
-        com.google.rpc.context.AttributeContext.Request result =
-            new com.google.rpc.context.AttributeContext.Request(this);
-        if (bitField0_ != 0) {
-          buildPartial0(result);
-        }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartial0(com.google.rpc.context.AttributeContext.Request result) {
-        int from_bitField0_ = bitField0_;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.id_ = id_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.method_ = method_;
-        }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.headers_ = internalGetHeaders();
-          result.headers_.makeImmutable();
-        }
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.path_ = path_;
-        }
-        if (((from_bitField0_ & 0x00000010) != 0)) {
-          result.host_ = host_;
-        }
-        if (((from_bitField0_ & 0x00000020) != 0)) {
-          result.scheme_ = scheme_;
-        }
-        if (((from_bitField0_ & 0x00000040) != 0)) {
-          result.query_ = query_;
-        }
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000080) != 0)) {
-          result.time_ = timeBuilder_ == null ? time_ : timeBuilder_.build();
-          to_bitField0_ |= 0x00000001;
-        }
-        if (((from_bitField0_ & 0x00000100) != 0)) {
-          result.size_ = size_;
-        }
-        if (((from_bitField0_ & 0x00000200) != 0)) {
-          result.protocol_ = protocol_;
-        }
-        if (((from_bitField0_ & 0x00000400) != 0)) {
-          result.reason_ = reason_;
-        }
-        if (((from_bitField0_ & 0x00000800) != 0)) {
-          result.auth_ = authBuilder_ == null ? auth_ : authBuilder_.build();
-          to_bitField0_ |= 0x00000002;
-        }
-        result.bitField0_ |= to_bitField0_;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.rpc.context.AttributeContext.Request) {
-          return mergeFrom((com.google.rpc.context.AttributeContext.Request) other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.google.rpc.context.AttributeContext.Request other) {
-        if (other == com.google.rpc.context.AttributeContext.Request.getDefaultInstance())
-          return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
-          bitField0_ |= 0x00000001;
-          onChanged();
-        }
-        if (!other.getMethod().isEmpty()) {
-          method_ = other.method_;
-          bitField0_ |= 0x00000002;
-          onChanged();
-        }
-        internalGetMutableHeaders().mergeFrom(other.internalGetHeaders());
-        bitField0_ |= 0x00000004;
-        if (!other.getPath().isEmpty()) {
-          path_ = other.path_;
-          bitField0_ |= 0x00000008;
-          onChanged();
-        }
-        if (!other.getHost().isEmpty()) {
-          host_ = other.host_;
-          bitField0_ |= 0x00000010;
-          onChanged();
-        }
-        if (!other.getScheme().isEmpty()) {
-          scheme_ = other.scheme_;
-          bitField0_ |= 0x00000020;
-          onChanged();
-        }
-        if (!other.getQuery().isEmpty()) {
-          query_ = other.query_;
-          bitField0_ |= 0x00000040;
-          onChanged();
-        }
-        if (other.hasTime()) {
-          mergeTime(other.getTime());
-        }
-        if (other.getSize() != 0L) {
-          setSize(other.getSize());
-        }
-        if (!other.getProtocol().isEmpty()) {
-          protocol_ = other.protocol_;
-          bitField0_ |= 0x00000200;
-          onChanged();
-        }
-        if (!other.getReason().isEmpty()) {
-          reason_ = other.reason_;
-          bitField0_ |= 0x00000400;
-          onChanged();
-        }
-        if (other.hasAuth()) {
-          mergeAuth(other.getAuth());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10:
-                {
-                  id_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000001;
-                  break;
-                } // case 10
-              case 18:
-                {
-                  method_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000002;
-                  break;
-                } // case 18
-              case 26:
-                {
-                  com.google.protobuf.MapEntry<java.lang.String, java.lang.String> headers__ =
-                      input.readMessage(
-                          HeadersDefaultEntryHolder.defaultEntry.getParserForType(),
-                          extensionRegistry);
-                  internalGetMutableHeaders()
-                      .getMutableMap()
-                      .put(headers__.getKey(), headers__.getValue());
-                  bitField0_ |= 0x00000004;
-                  break;
-                } // case 26
-              case 34:
-                {
-                  path_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000008;
-                  break;
-                } // case 34
-              case 42:
-                {
-                  host_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000010;
-                  break;
-                } // case 42
-              case 50:
-                {
-                  scheme_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000020;
-                  break;
-                } // case 50
-              case 58:
-                {
-                  query_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000040;
-                  break;
-                } // case 58
-              case 74:
-                {
-                  input.readMessage(getTimeFieldBuilder().getBuilder(), extensionRegistry);
-                  bitField0_ |= 0x00000080;
-                  break;
-                } // case 74
-              case 80:
-                {
-                  size_ = input.readInt64();
-                  bitField0_ |= 0x00000100;
-                  break;
-                } // case 80
-              case 90:
-                {
-                  protocol_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000200;
-                  break;
-                } // case 90
-              case 98:
-                {
-                  reason_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000400;
-                  break;
-                } // case 98
-              case 106:
-                {
-                  input.readMessage(getAuthFieldBuilder().getBuilder(), extensionRegistry);
-                  bitField0_ |= 0x00000800;
-                  break;
-                } // case 106
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-
-      private int bitField0_;
-
-      private java.lang.Object id_ = "";
       /**
        *
        *
@@ -7182,16 +5937,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The id.
        */
+      @java.lang.Override
       public java.lang.String getId() {
-        java.lang.Object ref = id_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          id_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getId();
       }
       /**
        *
@@ -7206,16 +5954,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for id.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getIdBytes() {
-        java.lang.Object ref = id_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          id_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getIdBytes();
       }
       /**
        *
@@ -7232,12 +5973,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setId(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        id_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setId(value);
         return this;
       }
       /**
@@ -7254,9 +5991,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearId() {
-        id_ = getDefaultInstance().getId();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
+        copyOnWrite();
+        instance.clearId();
         return this;
       }
       /**
@@ -7274,17 +6010,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setIdBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        id_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setIdBytes(value);
         return this;
       }
 
-      private java.lang.Object method_ = "";
       /**
        *
        *
@@ -7296,16 +6026,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The method.
        */
+      @java.lang.Override
       public java.lang.String getMethod() {
-        java.lang.Object ref = method_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          method_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getMethod();
       }
       /**
        *
@@ -7318,16 +6041,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for method.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getMethodBytes() {
-        java.lang.Object ref = method_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          method_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getMethodBytes();
       }
       /**
        *
@@ -7342,12 +6058,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setMethod(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        method_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setMethod(value);
         return this;
       }
       /**
@@ -7362,9 +6074,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearMethod() {
-        method_ = getDefaultInstance().getMethod();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
+        copyOnWrite();
+        instance.clearMethod();
         return this;
       }
       /**
@@ -7380,42 +6091,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setMethodBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        method_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setMethodBytes(value);
         return this;
       }
 
-      private com.google.protobuf.MapField<java.lang.String, java.lang.String> headers_;
-
-      private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-          internalGetHeaders() {
-        if (headers_ == null) {
-          return com.google.protobuf.MapField.emptyMapField(HeadersDefaultEntryHolder.defaultEntry);
-        }
-        return headers_;
-      }
-
-      private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-          internalGetMutableHeaders() {
-        if (headers_ == null) {
-          headers_ =
-              com.google.protobuf.MapField.newMapField(HeadersDefaultEntryHolder.defaultEntry);
-        }
-        if (!headers_.isMutable()) {
-          headers_ = headers_.copy();
-        }
-        bitField0_ |= 0x00000004;
-        onChanged();
-        return headers_;
-      }
-
+      @java.lang.Override
       public int getHeadersCount() {
-        return internalGetHeaders().getMap().size();
+        return instance.getHeadersMap().size();
       }
       /**
        *
@@ -7430,10 +6113,31 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Override
       public boolean containsHeaders(java.lang.String key) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        return internalGetHeaders().getMap().containsKey(key);
+        java.lang.Class<?> keyClass = key.getClass();
+        return instance.getHeadersMap().containsKey(key);
+      }
+
+      public Builder clearHeaders() {
+        copyOnWrite();
+        instance.getMutableHeadersMap().clear();
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * The HTTP request headers. If multiple headers share the same key, they
+       * must be merged according to the HTTP spec. All header keys must be
+       * lowercased, because HTTP header keys are case-insensitive.
+       * </pre>
+       *
+       * <code>map&lt;string, string&gt; headers = 3;</code>
+       */
+      public Builder removeHeaders(java.lang.String key) {
+        java.lang.Class<?> keyClass = key.getClass();
+        copyOnWrite();
+        instance.getMutableHeadersMap().remove(key);
+        return this;
       }
       /** Use {@link #getHeadersMap()} instead. */
       @java.lang.Override
@@ -7454,7 +6158,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Override
       public java.util.Map<java.lang.String, java.lang.String> getHeadersMap() {
-        return internalGetHeaders().getMap();
+        return java.util.Collections.unmodifiableMap(instance.getHeadersMap());
       }
       /**
        *
@@ -7472,10 +6176,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           java.lang.String key,
           /* nullable */
           java.lang.String defaultValue) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders().getMap();
+        java.lang.Class<?> keyClass = key.getClass();
+        java.util.Map<java.lang.String, java.lang.String> map = instance.getHeadersMap();
         return map.containsKey(key) ? map.get(key) : defaultValue;
       }
       /**
@@ -7491,44 +6193,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Override
       public java.lang.String getHeadersOrThrow(java.lang.String key) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders().getMap();
+        java.lang.Class<?> keyClass = key.getClass();
+        java.util.Map<java.lang.String, java.lang.String> map = instance.getHeadersMap();
         if (!map.containsKey(key)) {
           throw new java.lang.IllegalArgumentException();
         }
         return map.get(key);
-      }
-
-      public Builder clearHeaders() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        internalGetMutableHeaders().getMutableMap().clear();
-        return this;
-      }
-      /**
-       *
-       *
-       * <pre>
-       * The HTTP request headers. If multiple headers share the same key, they
-       * must be merged according to the HTTP spec. All header keys must be
-       * lowercased, because HTTP header keys are case-insensitive.
-       * </pre>
-       *
-       * <code>map&lt;string, string&gt; headers = 3;</code>
-       */
-      public Builder removeHeaders(java.lang.String key) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        internalGetMutableHeaders().getMutableMap().remove(key);
-        return this;
-      }
-      /** Use alternate mutation accessors instead. */
-      @java.lang.Deprecated
-      public java.util.Map<java.lang.String, java.lang.String> getMutableHeaders() {
-        bitField0_ |= 0x00000004;
-        return internalGetMutableHeaders().getMutableMap();
       }
       /**
        *
@@ -7542,14 +6212,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>map&lt;string, string&gt; headers = 3;</code>
        */
       public Builder putHeaders(java.lang.String key, java.lang.String value) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        if (value == null) {
-          throw new NullPointerException("map value");
-        }
-        internalGetMutableHeaders().getMutableMap().put(key, value);
-        bitField0_ |= 0x00000004;
+        java.lang.Class<?> keyClass = key.getClass();
+        java.lang.Class<?> valueClass = value.getClass();
+        copyOnWrite();
+        instance.getMutableHeadersMap().put(key, value);
         return this;
       }
       /**
@@ -7564,12 +6230,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>map&lt;string, string&gt; headers = 3;</code>
        */
       public Builder putAllHeaders(java.util.Map<java.lang.String, java.lang.String> values) {
-        internalGetMutableHeaders().getMutableMap().putAll(values);
-        bitField0_ |= 0x00000004;
+        copyOnWrite();
+        instance.getMutableHeadersMap().putAll(values);
         return this;
       }
 
-      private java.lang.Object path_ = "";
       /**
        *
        *
@@ -7581,16 +6246,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The path.
        */
+      @java.lang.Override
       public java.lang.String getPath() {
-        java.lang.Object ref = path_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          path_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getPath();
       }
       /**
        *
@@ -7603,16 +6261,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for path.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getPathBytes() {
-        java.lang.Object ref = path_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          path_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getPathBytes();
       }
       /**
        *
@@ -7627,12 +6278,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setPath(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        path_ = value;
-        bitField0_ |= 0x00000008;
-        onChanged();
+        copyOnWrite();
+        instance.setPath(value);
         return this;
       }
       /**
@@ -7647,9 +6294,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearPath() {
-        path_ = getDefaultInstance().getPath();
-        bitField0_ = (bitField0_ & ~0x00000008);
-        onChanged();
+        copyOnWrite();
+        instance.clearPath();
         return this;
       }
       /**
@@ -7665,17 +6311,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setPathBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        path_ = value;
-        bitField0_ |= 0x00000008;
-        onChanged();
+        copyOnWrite();
+        instance.setPathBytes(value);
         return this;
       }
 
-      private java.lang.Object host_ = "";
       /**
        *
        *
@@ -7687,16 +6327,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The host.
        */
+      @java.lang.Override
       public java.lang.String getHost() {
-        java.lang.Object ref = host_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          host_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getHost();
       }
       /**
        *
@@ -7709,16 +6342,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for host.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getHostBytes() {
-        java.lang.Object ref = host_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          host_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getHostBytes();
       }
       /**
        *
@@ -7733,12 +6359,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setHost(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        host_ = value;
-        bitField0_ |= 0x00000010;
-        onChanged();
+        copyOnWrite();
+        instance.setHost(value);
         return this;
       }
       /**
@@ -7753,9 +6375,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearHost() {
-        host_ = getDefaultInstance().getHost();
-        bitField0_ = (bitField0_ & ~0x00000010);
-        onChanged();
+        copyOnWrite();
+        instance.clearHost();
         return this;
       }
       /**
@@ -7771,17 +6392,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setHostBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        host_ = value;
-        bitField0_ |= 0x00000010;
-        onChanged();
+        copyOnWrite();
+        instance.setHostBytes(value);
         return this;
       }
 
-      private java.lang.Object scheme_ = "";
       /**
        *
        *
@@ -7793,16 +6408,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The scheme.
        */
+      @java.lang.Override
       public java.lang.String getScheme() {
-        java.lang.Object ref = scheme_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          scheme_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getScheme();
       }
       /**
        *
@@ -7815,16 +6423,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for scheme.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getSchemeBytes() {
-        java.lang.Object ref = scheme_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          scheme_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getSchemeBytes();
       }
       /**
        *
@@ -7839,12 +6440,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setScheme(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        scheme_ = value;
-        bitField0_ |= 0x00000020;
-        onChanged();
+        copyOnWrite();
+        instance.setScheme(value);
         return this;
       }
       /**
@@ -7859,9 +6456,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearScheme() {
-        scheme_ = getDefaultInstance().getScheme();
-        bitField0_ = (bitField0_ & ~0x00000020);
-        onChanged();
+        copyOnWrite();
+        instance.clearScheme();
         return this;
       }
       /**
@@ -7877,17 +6473,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setSchemeBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        scheme_ = value;
-        bitField0_ |= 0x00000020;
-        onChanged();
+        copyOnWrite();
+        instance.setSchemeBytes(value);
         return this;
       }
 
-      private java.lang.Object query_ = "";
       /**
        *
        *
@@ -7900,16 +6490,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The query.
        */
+      @java.lang.Override
       public java.lang.String getQuery() {
-        java.lang.Object ref = query_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          query_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getQuery();
       }
       /**
        *
@@ -7923,16 +6506,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for query.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getQueryBytes() {
-        java.lang.Object ref = query_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          query_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getQueryBytes();
       }
       /**
        *
@@ -7948,12 +6524,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setQuery(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        query_ = value;
-        bitField0_ |= 0x00000040;
-        onChanged();
+        copyOnWrite();
+        instance.setQuery(value);
         return this;
       }
       /**
@@ -7969,9 +6541,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearQuery() {
-        query_ = getDefaultInstance().getQuery();
-        bitField0_ = (bitField0_ & ~0x00000040);
-        onChanged();
+        copyOnWrite();
+        instance.clearQuery();
         return this;
       }
       /**
@@ -7988,22 +6559,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setQueryBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        query_ = value;
-        bitField0_ |= 0x00000040;
-        onChanged();
+        copyOnWrite();
+        instance.setQueryBytes(value);
         return this;
       }
 
-      private com.google.protobuf.Timestamp time_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Timestamp,
-              com.google.protobuf.Timestamp.Builder,
-              com.google.protobuf.TimestampOrBuilder>
-          timeBuilder_;
       /**
        *
        *
@@ -8013,11 +6573,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * </pre>
        *
        * <code>.google.protobuf.Timestamp time = 9;</code>
-       *
-       * @return Whether the time field is set.
        */
+      @java.lang.Override
       public boolean hasTime() {
-        return ((bitField0_ & 0x00000080) != 0);
+        return instance.hasTime();
       }
       /**
        *
@@ -8028,15 +6587,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * </pre>
        *
        * <code>.google.protobuf.Timestamp time = 9;</code>
-       *
-       * @return The time.
        */
+      @java.lang.Override
       public com.google.protobuf.Timestamp getTime() {
-        if (timeBuilder_ == null) {
-          return time_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : time_;
-        } else {
-          return timeBuilder_.getMessage();
-        }
+        return instance.getTime();
       }
       /**
        *
@@ -8049,16 +6603,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Timestamp time = 9;</code>
        */
       public Builder setTime(com.google.protobuf.Timestamp value) {
-        if (timeBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          time_ = value;
-        } else {
-          timeBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000080;
-        onChanged();
+        copyOnWrite();
+        instance.setTime(value);
         return this;
       }
       /**
@@ -8072,13 +6618,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Timestamp time = 9;</code>
        */
       public Builder setTime(com.google.protobuf.Timestamp.Builder builderForValue) {
-        if (timeBuilder_ == null) {
-          time_ = builderForValue.build();
-        } else {
-          timeBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000080;
-        onChanged();
+        copyOnWrite();
+        instance.setTime(builderForValue.build());
         return this;
       }
       /**
@@ -8092,21 +6633,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Timestamp time = 9;</code>
        */
       public Builder mergeTime(com.google.protobuf.Timestamp value) {
-        if (timeBuilder_ == null) {
-          if (((bitField0_ & 0x00000080) != 0)
-              && time_ != null
-              && time_ != com.google.protobuf.Timestamp.getDefaultInstance()) {
-            getTimeBuilder().mergeFrom(value);
-          } else {
-            time_ = value;
-          }
-        } else {
-          timeBuilder_.mergeFrom(value);
-        }
-        if (time_ != null) {
-          bitField0_ |= 0x00000080;
-          onChanged();
-        }
+        copyOnWrite();
+        instance.mergeTime(value);
         return this;
       }
       /**
@@ -8120,75 +6648,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Timestamp time = 9;</code>
        */
       public Builder clearTime() {
-        bitField0_ = (bitField0_ & ~0x00000080);
-        time_ = null;
-        if (timeBuilder_ != null) {
-          timeBuilder_.dispose();
-          timeBuilder_ = null;
-        }
-        onChanged();
+        copyOnWrite();
+        instance.clearTime();
         return this;
       }
-      /**
-       *
-       *
-       * <pre>
-       * The timestamp when the `destination` service receives the last byte of
-       * the request.
-       * </pre>
-       *
-       * <code>.google.protobuf.Timestamp time = 9;</code>
-       */
-      public com.google.protobuf.Timestamp.Builder getTimeBuilder() {
-        bitField0_ |= 0x00000080;
-        onChanged();
-        return getTimeFieldBuilder().getBuilder();
-      }
-      /**
-       *
-       *
-       * <pre>
-       * The timestamp when the `destination` service receives the last byte of
-       * the request.
-       * </pre>
-       *
-       * <code>.google.protobuf.Timestamp time = 9;</code>
-       */
-      public com.google.protobuf.TimestampOrBuilder getTimeOrBuilder() {
-        if (timeBuilder_ != null) {
-          return timeBuilder_.getMessageOrBuilder();
-        } else {
-          return time_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : time_;
-        }
-      }
-      /**
-       *
-       *
-       * <pre>
-       * The timestamp when the `destination` service receives the last byte of
-       * the request.
-       * </pre>
-       *
-       * <code>.google.protobuf.Timestamp time = 9;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Timestamp,
-              com.google.protobuf.Timestamp.Builder,
-              com.google.protobuf.TimestampOrBuilder>
-          getTimeFieldBuilder() {
-        if (timeBuilder_ == null) {
-          timeBuilder_ =
-              new com.google.protobuf.SingleFieldBuilderV3<
-                  com.google.protobuf.Timestamp,
-                  com.google.protobuf.Timestamp.Builder,
-                  com.google.protobuf.TimestampOrBuilder>(
-                  getTime(), getParentForChildren(), isClean());
-          time_ = null;
-        }
-        return timeBuilder_;
-      }
 
-      private long size_;
       /**
        *
        *
@@ -8202,7 +6666,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Override
       public long getSize() {
-        return size_;
+        return instance.getSize();
       }
       /**
        *
@@ -8217,10 +6681,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setSize(long value) {
-
-        size_ = value;
-        bitField0_ |= 0x00000100;
-        onChanged();
+        copyOnWrite();
+        instance.setSize(value);
         return this;
       }
       /**
@@ -8235,13 +6697,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearSize() {
-        bitField0_ = (bitField0_ & ~0x00000100);
-        size_ = 0L;
-        onChanged();
+        copyOnWrite();
+        instance.clearSize();
         return this;
       }
 
-      private java.lang.Object protocol_ = "";
       /**
        *
        *
@@ -8256,16 +6716,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The protocol.
        */
+      @java.lang.Override
       public java.lang.String getProtocol() {
-        java.lang.Object ref = protocol_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          protocol_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getProtocol();
       }
       /**
        *
@@ -8281,16 +6734,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for protocol.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getProtocolBytes() {
-        java.lang.Object ref = protocol_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          protocol_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getProtocolBytes();
       }
       /**
        *
@@ -8308,12 +6754,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setProtocol(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        protocol_ = value;
-        bitField0_ |= 0x00000200;
-        onChanged();
+        copyOnWrite();
+        instance.setProtocol(value);
         return this;
       }
       /**
@@ -8331,9 +6773,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearProtocol() {
-        protocol_ = getDefaultInstance().getProtocol();
-        bitField0_ = (bitField0_ & ~0x00000200);
-        onChanged();
+        copyOnWrite();
+        instance.clearProtocol();
         return this;
       }
       /**
@@ -8352,17 +6793,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setProtocolBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        protocol_ = value;
-        bitField0_ |= 0x00000200;
-        onChanged();
+        copyOnWrite();
+        instance.setProtocolBytes(value);
         return this;
       }
 
-      private java.lang.Object reason_ = "";
       /**
        *
        *
@@ -8375,16 +6810,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The reason.
        */
+      @java.lang.Override
       public java.lang.String getReason() {
-        java.lang.Object ref = reason_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          reason_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getReason();
       }
       /**
        *
@@ -8398,16 +6826,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for reason.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getReasonBytes() {
-        java.lang.Object ref = reason_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          reason_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getReasonBytes();
       }
       /**
        *
@@ -8423,12 +6844,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setReason(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        reason_ = value;
-        bitField0_ |= 0x00000400;
-        onChanged();
+        copyOnWrite();
+        instance.setReason(value);
         return this;
       }
       /**
@@ -8444,9 +6861,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearReason() {
-        reason_ = getDefaultInstance().getReason();
-        bitField0_ = (bitField0_ & ~0x00000400);
-        onChanged();
+        copyOnWrite();
+        instance.clearReason();
         return this;
       }
       /**
@@ -8463,22 +6879,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setReasonBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        reason_ = value;
-        bitField0_ |= 0x00000400;
-        onChanged();
+        copyOnWrite();
+        instance.setReasonBytes(value);
         return this;
       }
 
-      private com.google.rpc.context.AttributeContext.Auth auth_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.rpc.context.AttributeContext.Auth,
-              com.google.rpc.context.AttributeContext.Auth.Builder,
-              com.google.rpc.context.AttributeContext.AuthOrBuilder>
-          authBuilder_;
       /**
        *
        *
@@ -8488,11 +6893,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * </pre>
        *
        * <code>.google.rpc.context.AttributeContext.Auth auth = 13;</code>
-       *
-       * @return Whether the auth field is set.
        */
+      @java.lang.Override
       public boolean hasAuth() {
-        return ((bitField0_ & 0x00000800) != 0);
+        return instance.hasAuth();
       }
       /**
        *
@@ -8503,17 +6907,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * </pre>
        *
        * <code>.google.rpc.context.AttributeContext.Auth auth = 13;</code>
-       *
-       * @return The auth.
        */
+      @java.lang.Override
       public com.google.rpc.context.AttributeContext.Auth getAuth() {
-        if (authBuilder_ == null) {
-          return auth_ == null
-              ? com.google.rpc.context.AttributeContext.Auth.getDefaultInstance()
-              : auth_;
-        } else {
-          return authBuilder_.getMessage();
-        }
+        return instance.getAuth();
       }
       /**
        *
@@ -8526,16 +6923,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.rpc.context.AttributeContext.Auth auth = 13;</code>
        */
       public Builder setAuth(com.google.rpc.context.AttributeContext.Auth value) {
-        if (authBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          auth_ = value;
-        } else {
-          authBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000800;
-        onChanged();
+        copyOnWrite();
+        instance.setAuth(value);
         return this;
       }
       /**
@@ -8549,13 +6938,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.rpc.context.AttributeContext.Auth auth = 13;</code>
        */
       public Builder setAuth(com.google.rpc.context.AttributeContext.Auth.Builder builderForValue) {
-        if (authBuilder_ == null) {
-          auth_ = builderForValue.build();
-        } else {
-          authBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000800;
-        onChanged();
+        copyOnWrite();
+        instance.setAuth(builderForValue.build());
         return this;
       }
       /**
@@ -8569,21 +6953,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.rpc.context.AttributeContext.Auth auth = 13;</code>
        */
       public Builder mergeAuth(com.google.rpc.context.AttributeContext.Auth value) {
-        if (authBuilder_ == null) {
-          if (((bitField0_ & 0x00000800) != 0)
-              && auth_ != null
-              && auth_ != com.google.rpc.context.AttributeContext.Auth.getDefaultInstance()) {
-            getAuthBuilder().mergeFrom(value);
-          } else {
-            auth_ = value;
-          }
-        } else {
-          authBuilder_.mergeFrom(value);
-        }
-        if (auth_ != null) {
-          bitField0_ |= 0x00000800;
-          onChanged();
-        }
+        copyOnWrite();
+        instance.mergeAuth(value);
         return this;
       }
       /**
@@ -8597,144 +6968,115 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.rpc.context.AttributeContext.Auth auth = 13;</code>
        */
       public Builder clearAuth() {
-        bitField0_ = (bitField0_ & ~0x00000800);
-        auth_ = null;
-        if (authBuilder_ != null) {
-          authBuilder_.dispose();
-          authBuilder_ = null;
-        }
-        onChanged();
+        copyOnWrite();
+        instance.clearAuth();
         return this;
-      }
-      /**
-       *
-       *
-       * <pre>
-       * The request authentication. May be absent for unauthenticated requests.
-       * Derived from the HTTP request `Authorization` header or equivalent.
-       * </pre>
-       *
-       * <code>.google.rpc.context.AttributeContext.Auth auth = 13;</code>
-       */
-      public com.google.rpc.context.AttributeContext.Auth.Builder getAuthBuilder() {
-        bitField0_ |= 0x00000800;
-        onChanged();
-        return getAuthFieldBuilder().getBuilder();
-      }
-      /**
-       *
-       *
-       * <pre>
-       * The request authentication. May be absent for unauthenticated requests.
-       * Derived from the HTTP request `Authorization` header or equivalent.
-       * </pre>
-       *
-       * <code>.google.rpc.context.AttributeContext.Auth auth = 13;</code>
-       */
-      public com.google.rpc.context.AttributeContext.AuthOrBuilder getAuthOrBuilder() {
-        if (authBuilder_ != null) {
-          return authBuilder_.getMessageOrBuilder();
-        } else {
-          return auth_ == null
-              ? com.google.rpc.context.AttributeContext.Auth.getDefaultInstance()
-              : auth_;
-        }
-      }
-      /**
-       *
-       *
-       * <pre>
-       * The request authentication. May be absent for unauthenticated requests.
-       * Derived from the HTTP request `Authorization` header or equivalent.
-       * </pre>
-       *
-       * <code>.google.rpc.context.AttributeContext.Auth auth = 13;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.rpc.context.AttributeContext.Auth,
-              com.google.rpc.context.AttributeContext.Auth.Builder,
-              com.google.rpc.context.AttributeContext.AuthOrBuilder>
-          getAuthFieldBuilder() {
-        if (authBuilder_ == null) {
-          authBuilder_ =
-              new com.google.protobuf.SingleFieldBuilderV3<
-                  com.google.rpc.context.AttributeContext.Auth,
-                  com.google.rpc.context.AttributeContext.Auth.Builder,
-                  com.google.rpc.context.AttributeContext.AuthOrBuilder>(
-                  getAuth(), getParentForChildren(), isClean());
-          auth_ = null;
-        }
-        return authBuilder_;
-      }
-
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
       }
 
       // @@protoc_insertion_point(builder_scope:google.rpc.context.AttributeContext.Request)
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0,
+        java.lang.Object arg1) {
+      switch (method) {
+        case NEW_MUTABLE_INSTANCE:
+          {
+            return new com.google.rpc.context.AttributeContext.Request();
+          }
+        case NEW_BUILDER:
+          {
+            return new Builder();
+          }
+        case BUILD_MESSAGE_INFO:
+          {
+            java.lang.Object[] objects =
+                new java.lang.Object[] {
+                  "bitField0_",
+                  "id_",
+                  "method_",
+                  "headers_",
+                  HeadersDefaultEntryHolder.defaultEntry,
+                  "path_",
+                  "host_",
+                  "scheme_",
+                  "query_",
+                  "time_",
+                  "size_",
+                  "protocol_",
+                  "reason_",
+                  "auth_",
+                };
+            java.lang.String info =
+                "\u0000\f\u0000\u0001\u0001\r\f\u0001\u0000\u0000\u0001\u0208\u0002\u0208\u00032\u0004"
+                    + "\u0208\u0005\u0208\u0006\u0208\u0007\u0208\t\u1009\u0000\n\u0002\u000b\u0208\f\u0208"
+                    + "\r\u1009\u0001";
+            return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+          }
+          // fall through
+        case GET_DEFAULT_INSTANCE:
+          {
+            return DEFAULT_INSTANCE;
+          }
+        case GET_PARSER:
+          {
+            com.google.protobuf.Parser<com.google.rpc.context.AttributeContext.Request> parser =
+                PARSER;
+            if (parser == null) {
+              synchronized (com.google.rpc.context.AttributeContext.Request.class) {
+                parser = PARSER;
+                if (parser == null) {
+                  parser =
+                      new DefaultInstanceBasedParser<
+                          com.google.rpc.context.AttributeContext.Request>(DEFAULT_INSTANCE);
+                  PARSER = parser;
+                }
+              }
+            }
+            return parser;
+          }
+        case GET_MEMOIZED_IS_INITIALIZED:
+          {
+            return (byte) 1;
+          }
+        case SET_MEMOIZED_IS_INITIALIZED:
+          {
+            return null;
+          }
+      }
+      throw new UnsupportedOperationException();
     }
 
     // @@protoc_insertion_point(class_scope:google.rpc.context.AttributeContext.Request)
     private static final com.google.rpc.context.AttributeContext.Request DEFAULT_INSTANCE;
 
     static {
-      DEFAULT_INSTANCE = new com.google.rpc.context.AttributeContext.Request();
+      Request defaultInstance = new Request();
+      // New instances are implicitly immutable so no need to make
+      // immutable.
+      DEFAULT_INSTANCE = defaultInstance;
+      com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+          Request.class, defaultInstance);
     }
 
     public static com.google.rpc.context.AttributeContext.Request getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<Request> PARSER =
-        new com.google.protobuf.AbstractParser<Request>() {
-          @java.lang.Override
-          public Request parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-          }
-        };
+    private static volatile com.google.protobuf.Parser<Request> PARSER;
 
     public static com.google.protobuf.Parser<Request> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<Request> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.rpc.context.AttributeContext.Request getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
+      return DEFAULT_INSTANCE.getParserForType();
     }
   }
 
   public interface ResponseOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:google.rpc.context.AttributeContext.Response)
-      com.google.protobuf.MessageOrBuilder {
+      com.google.protobuf.MessageLiteOrBuilder {
 
     /**
      *
@@ -8812,6 +7154,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; headers = 3;</code>
      */
+
     /* nullable */
     java.lang.String getHeadersOrDefault(
         java.lang.String key,
@@ -8856,17 +7199,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The time.
      */
     com.google.protobuf.Timestamp getTime();
-    /**
-     *
-     *
-     * <pre>
-     * The timestamp when the `destination` service sends the last byte of
-     * the response.
-     * </pre>
-     *
-     * <code>.google.protobuf.Timestamp time = 4;</code>
-     */
-    com.google.protobuf.TimestampOrBuilder getTimeOrBuilder();
 
     /**
      *
@@ -8898,19 +7230,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The backendLatency.
      */
     com.google.protobuf.Duration getBackendLatency();
-    /**
-     *
-     *
-     * <pre>
-     * The amount of time it takes the backend service to fully respond to a
-     * request. Measured from when the destination service starts to send the
-     * request to the backend until when the destination service receives the
-     * complete response from the backend.
-     * </pre>
-     *
-     * <code>.google.protobuf.Duration backend_latency = 5;</code>
-     */
-    com.google.protobuf.DurationOrBuilder getBackendLatencyOrBuilder();
   }
   /**
    *
@@ -8922,54 +7241,16 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * Protobuf type {@code google.rpc.context.AttributeContext.Response}
    */
-  public static final class Response extends com.google.protobuf.GeneratedMessageV3
+  public static final class Response
+      extends com.google.protobuf.GeneratedMessageLite<Response, Response.Builder>
       implements
       // @@protoc_insertion_point(message_implements:google.rpc.context.AttributeContext.Response)
       ResponseOrBuilder {
-    private static final long serialVersionUID = 0L;
-    // Use Response.newBuilder() to construct.
-    private Response(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-
     private Response() {}
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-      return new Response();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.rpc.context.AttributeContextProto
-          .internal_static_google_rpc_context_AttributeContext_Response_descriptor;
-    }
-
-    @SuppressWarnings({"rawtypes"})
-    @java.lang.Override
-    protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-        int number) {
-      switch (number) {
-        case 3:
-          return internalGetHeaders();
-        default:
-          throw new RuntimeException("Invalid map field number: " + number);
-      }
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.rpc.context.AttributeContextProto
-          .internal_static_google_rpc_context_AttributeContext_Response_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.rpc.context.AttributeContext.Response.class,
-              com.google.rpc.context.AttributeContext.Response.Builder.class);
-    }
 
     private int bitField0_;
     public static final int CODE_FIELD_NUMBER = 1;
-    private long code_ = 0L;
+    private long code_;
     /**
      *
      *
@@ -8985,9 +7266,37 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public long getCode() {
       return code_;
     }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP response status code, such as `200` and `404`.
+     * </pre>
+     *
+     * <code>int64 code = 1;</code>
+     *
+     * @param value The code to set.
+     */
+    private void setCode(long value) {
+
+      code_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP response status code, such as `200` and `404`.
+     * </pre>
+     *
+     * <code>int64 code = 1;</code>
+     */
+    private void clearCode() {
+
+      code_ = 0L;
+    }
 
     public static final int SIZE_FIELD_NUMBER = 2;
-    private long size_ = 0L;
+    private long size_;
     /**
      *
      *
@@ -9003,32 +7312,67 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public long getSize() {
       return size_;
     }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP response size in bytes. If unknown, it must be -1.
+     * </pre>
+     *
+     * <code>int64 size = 2;</code>
+     *
+     * @param value The size to set.
+     */
+    private void setSize(long value) {
+
+      size_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP response size in bytes. If unknown, it must be -1.
+     * </pre>
+     *
+     * <code>int64 size = 2;</code>
+     */
+    private void clearSize() {
+
+      size_ = 0L;
+    }
 
     public static final int HEADERS_FIELD_NUMBER = 3;
 
     private static final class HeadersDefaultEntryHolder {
-      static final com.google.protobuf.MapEntry<java.lang.String, java.lang.String> defaultEntry =
-          com.google.protobuf.MapEntry.<java.lang.String, java.lang.String>newDefaultInstance(
-              com.google.rpc.context.AttributeContextProto
-                  .internal_static_google_rpc_context_AttributeContext_Response_HeadersEntry_descriptor,
-              com.google.protobuf.WireFormat.FieldType.STRING,
-              "",
-              com.google.protobuf.WireFormat.FieldType.STRING,
-              "");
+      static final com.google.protobuf.MapEntryLite<java.lang.String, java.lang.String>
+          defaultEntry =
+              com.google.protobuf.MapEntryLite
+                  .<java.lang.String, java.lang.String>newDefaultInstance(
+                      com.google.protobuf.WireFormat.FieldType.STRING,
+                      "",
+                      com.google.protobuf.WireFormat.FieldType.STRING,
+                      "");
     }
 
-    @SuppressWarnings("serial")
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String> headers_;
+    private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String> headers_ =
+        com.google.protobuf.MapFieldLite.emptyMapField();
 
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String> internalGetHeaders() {
-      if (headers_ == null) {
-        return com.google.protobuf.MapField.emptyMapField(HeadersDefaultEntryHolder.defaultEntry);
+    private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
+        internalGetHeaders() {
+      return headers_;
+    }
+
+    private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
+        internalGetMutableHeaders() {
+      if (!headers_.isMutable()) {
+        headers_ = headers_.mutableCopy();
       }
       return headers_;
     }
 
+    @java.lang.Override
     public int getHeadersCount() {
-      return internalGetHeaders().getMap().size();
+      return internalGetHeaders().size();
     }
     /**
      *
@@ -9043,10 +7387,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public boolean containsHeaders(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      return internalGetHeaders().getMap().containsKey(key);
+      java.lang.Class<?> keyClass = key.getClass();
+      return internalGetHeaders().containsKey(key);
     }
     /** Use {@link #getHeadersMap()} instead. */
     @java.lang.Override
@@ -9067,7 +7409,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.util.Map<java.lang.String, java.lang.String> getHeadersMap() {
-      return internalGetHeaders().getMap();
+      return java.util.Collections.unmodifiableMap(internalGetHeaders());
     }
     /**
      *
@@ -9085,10 +7427,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         java.lang.String key,
         /* nullable */
         java.lang.String defaultValue) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
     /**
@@ -9104,14 +7444,26 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getHeadersOrThrow(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders();
       if (!map.containsKey(key)) {
         throw new java.lang.IllegalArgumentException();
       }
       return map.get(key);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The HTTP response headers. If multiple headers share the same key, they
+     * must be merged according to HTTP spec. All header keys must be
+     * lowercased, because HTTP header keys are case-insensitive.
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; headers = 3;</code>
+     */
+    private java.util.Map<java.lang.String, java.lang.String> getMutableHeadersMap() {
+      return internalGetMutableHeaders();
     }
 
     public static final int TIME_FIELD_NUMBER = 4;
@@ -9125,8 +7477,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.protobuf.Timestamp time = 4;</code>
-     *
-     * @return Whether the time field is set.
      */
     @java.lang.Override
     public boolean hasTime() {
@@ -9141,8 +7491,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.protobuf.Timestamp time = 4;</code>
-     *
-     * @return The time.
      */
     @java.lang.Override
     public com.google.protobuf.Timestamp getTime() {
@@ -9158,9 +7506,44 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>.google.protobuf.Timestamp time = 4;</code>
      */
-    @java.lang.Override
-    public com.google.protobuf.TimestampOrBuilder getTimeOrBuilder() {
-      return time_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : time_;
+    private void setTime(com.google.protobuf.Timestamp value) {
+      value.getClass();
+      time_ = value;
+      bitField0_ |= 0x00000001;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The timestamp when the `destination` service sends the last byte of
+     * the response.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp time = 4;</code>
+     */
+    @java.lang.SuppressWarnings({"ReferenceEquality"})
+    private void mergeTime(com.google.protobuf.Timestamp value) {
+      value.getClass();
+      if (time_ != null && time_ != com.google.protobuf.Timestamp.getDefaultInstance()) {
+        time_ = com.google.protobuf.Timestamp.newBuilder(time_).mergeFrom(value).buildPartial();
+      } else {
+        time_ = value;
+      }
+      bitField0_ |= 0x00000001;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The timestamp when the `destination` service sends the last byte of
+     * the response.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp time = 4;</code>
+     */
+    private void clearTime() {
+      time_ = null;
+      bitField0_ = (bitField0_ & ~0x00000001);
     }
 
     public static final int BACKEND_LATENCY_FIELD_NUMBER = 5;
@@ -9176,8 +7559,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.protobuf.Duration backend_latency = 5;</code>
-     *
-     * @return Whether the backendLatency field is set.
      */
     @java.lang.Override
     public boolean hasBackendLatency() {
@@ -9194,8 +7575,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.protobuf.Duration backend_latency = 5;</code>
-     *
-     * @return The backendLatency.
      */
     @java.lang.Override
     public com.google.protobuf.Duration getBackendLatency() {
@@ -9215,227 +7594,136 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>.google.protobuf.Duration backend_latency = 5;</code>
      */
-    @java.lang.Override
-    public com.google.protobuf.DurationOrBuilder getBackendLatencyOrBuilder() {
-      return backendLatency_ == null
-          ? com.google.protobuf.Duration.getDefaultInstance()
-          : backendLatency_;
+    private void setBackendLatency(com.google.protobuf.Duration value) {
+      value.getClass();
+      backendLatency_ = value;
+      bitField0_ |= 0x00000002;
     }
-
-    private byte memoizedIsInitialized = -1;
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
+    /**
+     *
+     *
+     * <pre>
+     * The amount of time it takes the backend service to fully respond to a
+     * request. Measured from when the destination service starts to send the
+     * request to the backend until when the destination service receives the
+     * complete response from the backend.
+     * </pre>
+     *
+     * <code>.google.protobuf.Duration backend_latency = 5;</code>
+     */
+    @java.lang.SuppressWarnings({"ReferenceEquality"})
+    private void mergeBackendLatency(com.google.protobuf.Duration value) {
+      value.getClass();
+      if (backendLatency_ != null
+          && backendLatency_ != com.google.protobuf.Duration.getDefaultInstance()) {
+        backendLatency_ =
+            com.google.protobuf.Duration.newBuilder(backendLatency_)
+                .mergeFrom(value)
+                .buildPartial();
+      } else {
+        backendLatency_ = value;
+      }
+      bitField0_ |= 0x00000002;
     }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-      if (code_ != 0L) {
-        output.writeInt64(1, code_);
-      }
-      if (size_ != 0L) {
-        output.writeInt64(2, size_);
-      }
-      com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
-          output, internalGetHeaders(), HeadersDefaultEntryHolder.defaultEntry, 3);
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeMessage(4, getTime());
-      }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        output.writeMessage(5, getBackendLatency());
-      }
-      getUnknownFields().writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (code_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream.computeInt64Size(1, code_);
-      }
-      if (size_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream.computeInt64Size(2, size_);
-      }
-      for (java.util.Map.Entry<java.lang.String, java.lang.String> entry :
-          internalGetHeaders().getMap().entrySet()) {
-        com.google.protobuf.MapEntry<java.lang.String, java.lang.String> headers__ =
-            HeadersDefaultEntryHolder.defaultEntry
-                .newBuilderForType()
-                .setKey(entry.getKey())
-                .setValue(entry.getValue())
-                .build();
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, headers__);
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, getTime());
-      }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(5, getBackendLatency());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-        return true;
-      }
-      if (!(obj instanceof com.google.rpc.context.AttributeContext.Response)) {
-        return super.equals(obj);
-      }
-      com.google.rpc.context.AttributeContext.Response other =
-          (com.google.rpc.context.AttributeContext.Response) obj;
-
-      if (getCode() != other.getCode()) return false;
-      if (getSize() != other.getSize()) return false;
-      if (!internalGetHeaders().equals(other.internalGetHeaders())) return false;
-      if (hasTime() != other.hasTime()) return false;
-      if (hasTime()) {
-        if (!getTime().equals(other.getTime())) return false;
-      }
-      if (hasBackendLatency() != other.hasBackendLatency()) return false;
-      if (hasBackendLatency()) {
-        if (!getBackendLatency().equals(other.getBackendLatency())) return false;
-      }
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + CODE_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(getCode());
-      hash = (37 * hash) + SIZE_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(getSize());
-      if (!internalGetHeaders().getMap().isEmpty()) {
-        hash = (37 * hash) + HEADERS_FIELD_NUMBER;
-        hash = (53 * hash) + internalGetHeaders().hashCode();
-      }
-      if (hasTime()) {
-        hash = (37 * hash) + TIME_FIELD_NUMBER;
-        hash = (53 * hash) + getTime().hashCode();
-      }
-      if (hasBackendLatency()) {
-        hash = (37 * hash) + BACKEND_LATENCY_FIELD_NUMBER;
-        hash = (53 * hash) + getBackendLatency().hashCode();
-      }
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
+    /**
+     *
+     *
+     * <pre>
+     * The amount of time it takes the backend service to fully respond to a
+     * request. Measured from when the destination service starts to send the
+     * request to the backend until when the destination service receives the
+     * complete response from the backend.
+     * </pre>
+     *
+     * <code>.google.protobuf.Duration backend_latency = 5;</code>
+     */
+    private void clearBackendLatency() {
+      backendLatency_ = null;
+      bitField0_ = (bitField0_ & ~0x00000002);
     }
 
     public static com.google.rpc.context.AttributeContext.Response parseFrom(
         java.nio.ByteBuffer data) throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.context.AttributeContext.Response parseFrom(
         java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Response parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.context.AttributeContext.Response parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Response parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.context.AttributeContext.Response parseFrom(
         byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Response parseFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.context.AttributeContext.Response parseFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Response parseDelimitedFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.context.AttributeContext.Response parseDelimitedFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Response parseFrom(
         com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.context.AttributeContext.Response parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
+      return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
 
     public static Builder newBuilder(com.google.rpc.context.AttributeContext.Response prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      *
      *
@@ -9447,285 +7735,16 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * Protobuf type {@code google.rpc.context.AttributeContext.Response}
      */
     public static final class Builder
-        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+        extends com.google.protobuf.GeneratedMessageLite.Builder<
+            com.google.rpc.context.AttributeContext.Response, Builder>
         implements
         // @@protoc_insertion_point(builder_implements:google.rpc.context.AttributeContext.Response)
         com.google.rpc.context.AttributeContext.ResponseOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return com.google.rpc.context.AttributeContextProto
-            .internal_static_google_rpc_context_AttributeContext_Response_descriptor;
-      }
-
-      @SuppressWarnings({"rawtypes"})
-      protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-          int number) {
-        switch (number) {
-          case 3:
-            return internalGetHeaders();
-          default:
-            throw new RuntimeException("Invalid map field number: " + number);
-        }
-      }
-
-      @SuppressWarnings({"rawtypes"})
-      protected com.google.protobuf.MapFieldReflectionAccessor internalGetMutableMapFieldReflection(
-          int number) {
-        switch (number) {
-          case 3:
-            return internalGetMutableHeaders();
-          default:
-            throw new RuntimeException("Invalid map field number: " + number);
-        }
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.google.rpc.context.AttributeContextProto
-            .internal_static_google_rpc_context_AttributeContext_Response_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.google.rpc.context.AttributeContext.Response.class,
-                com.google.rpc.context.AttributeContext.Response.Builder.class);
-      }
-
       // Construct using com.google.rpc.context.AttributeContext.Response.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+        super(DEFAULT_INSTANCE);
       }
 
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-          getTimeFieldBuilder();
-          getBackendLatencyFieldBuilder();
-        }
-      }
-
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        code_ = 0L;
-        size_ = 0L;
-        internalGetMutableHeaders().clear();
-        time_ = null;
-        if (timeBuilder_ != null) {
-          timeBuilder_.dispose();
-          timeBuilder_ = null;
-        }
-        backendLatency_ = null;
-        if (backendLatencyBuilder_ != null) {
-          backendLatencyBuilder_.dispose();
-          backendLatencyBuilder_ = null;
-        }
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return com.google.rpc.context.AttributeContextProto
-            .internal_static_google_rpc_context_AttributeContext_Response_descriptor;
-      }
-
-      @java.lang.Override
-      public com.google.rpc.context.AttributeContext.Response getDefaultInstanceForType() {
-        return com.google.rpc.context.AttributeContext.Response.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.google.rpc.context.AttributeContext.Response build() {
-        com.google.rpc.context.AttributeContext.Response result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.google.rpc.context.AttributeContext.Response buildPartial() {
-        com.google.rpc.context.AttributeContext.Response result =
-            new com.google.rpc.context.AttributeContext.Response(this);
-        if (bitField0_ != 0) {
-          buildPartial0(result);
-        }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartial0(com.google.rpc.context.AttributeContext.Response result) {
-        int from_bitField0_ = bitField0_;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.code_ = code_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.size_ = size_;
-        }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.headers_ = internalGetHeaders();
-          result.headers_.makeImmutable();
-        }
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.time_ = timeBuilder_ == null ? time_ : timeBuilder_.build();
-          to_bitField0_ |= 0x00000001;
-        }
-        if (((from_bitField0_ & 0x00000010) != 0)) {
-          result.backendLatency_ =
-              backendLatencyBuilder_ == null ? backendLatency_ : backendLatencyBuilder_.build();
-          to_bitField0_ |= 0x00000002;
-        }
-        result.bitField0_ |= to_bitField0_;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.rpc.context.AttributeContext.Response) {
-          return mergeFrom((com.google.rpc.context.AttributeContext.Response) other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.google.rpc.context.AttributeContext.Response other) {
-        if (other == com.google.rpc.context.AttributeContext.Response.getDefaultInstance())
-          return this;
-        if (other.getCode() != 0L) {
-          setCode(other.getCode());
-        }
-        if (other.getSize() != 0L) {
-          setSize(other.getSize());
-        }
-        internalGetMutableHeaders().mergeFrom(other.internalGetHeaders());
-        bitField0_ |= 0x00000004;
-        if (other.hasTime()) {
-          mergeTime(other.getTime());
-        }
-        if (other.hasBackendLatency()) {
-          mergeBackendLatency(other.getBackendLatency());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 8:
-                {
-                  code_ = input.readInt64();
-                  bitField0_ |= 0x00000001;
-                  break;
-                } // case 8
-              case 16:
-                {
-                  size_ = input.readInt64();
-                  bitField0_ |= 0x00000002;
-                  break;
-                } // case 16
-              case 26:
-                {
-                  com.google.protobuf.MapEntry<java.lang.String, java.lang.String> headers__ =
-                      input.readMessage(
-                          HeadersDefaultEntryHolder.defaultEntry.getParserForType(),
-                          extensionRegistry);
-                  internalGetMutableHeaders()
-                      .getMutableMap()
-                      .put(headers__.getKey(), headers__.getValue());
-                  bitField0_ |= 0x00000004;
-                  break;
-                } // case 26
-              case 34:
-                {
-                  input.readMessage(getTimeFieldBuilder().getBuilder(), extensionRegistry);
-                  bitField0_ |= 0x00000008;
-                  break;
-                } // case 34
-              case 42:
-                {
-                  input.readMessage(
-                      getBackendLatencyFieldBuilder().getBuilder(), extensionRegistry);
-                  bitField0_ |= 0x00000010;
-                  break;
-                } // case 42
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-
-      private int bitField0_;
-
-      private long code_;
       /**
        *
        *
@@ -9739,7 +7758,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Override
       public long getCode() {
-        return code_;
+        return instance.getCode();
       }
       /**
        *
@@ -9754,10 +7773,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setCode(long value) {
-
-        code_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setCode(value);
         return this;
       }
       /**
@@ -9772,13 +7789,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearCode() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        code_ = 0L;
-        onChanged();
+        copyOnWrite();
+        instance.clearCode();
         return this;
       }
 
-      private long size_;
       /**
        *
        *
@@ -9792,7 +7807,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Override
       public long getSize() {
-        return size_;
+        return instance.getSize();
       }
       /**
        *
@@ -9807,10 +7822,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setSize(long value) {
-
-        size_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setSize(value);
         return this;
       }
       /**
@@ -9825,38 +7838,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearSize() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        size_ = 0L;
-        onChanged();
+        copyOnWrite();
+        instance.clearSize();
         return this;
       }
 
-      private com.google.protobuf.MapField<java.lang.String, java.lang.String> headers_;
-
-      private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-          internalGetHeaders() {
-        if (headers_ == null) {
-          return com.google.protobuf.MapField.emptyMapField(HeadersDefaultEntryHolder.defaultEntry);
-        }
-        return headers_;
-      }
-
-      private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-          internalGetMutableHeaders() {
-        if (headers_ == null) {
-          headers_ =
-              com.google.protobuf.MapField.newMapField(HeadersDefaultEntryHolder.defaultEntry);
-        }
-        if (!headers_.isMutable()) {
-          headers_ = headers_.copy();
-        }
-        bitField0_ |= 0x00000004;
-        onChanged();
-        return headers_;
-      }
-
+      @java.lang.Override
       public int getHeadersCount() {
-        return internalGetHeaders().getMap().size();
+        return instance.getHeadersMap().size();
       }
       /**
        *
@@ -9871,10 +7860,31 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Override
       public boolean containsHeaders(java.lang.String key) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        return internalGetHeaders().getMap().containsKey(key);
+        java.lang.Class<?> keyClass = key.getClass();
+        return instance.getHeadersMap().containsKey(key);
+      }
+
+      public Builder clearHeaders() {
+        copyOnWrite();
+        instance.getMutableHeadersMap().clear();
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * The HTTP response headers. If multiple headers share the same key, they
+       * must be merged according to HTTP spec. All header keys must be
+       * lowercased, because HTTP header keys are case-insensitive.
+       * </pre>
+       *
+       * <code>map&lt;string, string&gt; headers = 3;</code>
+       */
+      public Builder removeHeaders(java.lang.String key) {
+        java.lang.Class<?> keyClass = key.getClass();
+        copyOnWrite();
+        instance.getMutableHeadersMap().remove(key);
+        return this;
       }
       /** Use {@link #getHeadersMap()} instead. */
       @java.lang.Override
@@ -9895,7 +7905,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Override
       public java.util.Map<java.lang.String, java.lang.String> getHeadersMap() {
-        return internalGetHeaders().getMap();
+        return java.util.Collections.unmodifiableMap(instance.getHeadersMap());
       }
       /**
        *
@@ -9913,10 +7923,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           java.lang.String key,
           /* nullable */
           java.lang.String defaultValue) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders().getMap();
+        java.lang.Class<?> keyClass = key.getClass();
+        java.util.Map<java.lang.String, java.lang.String> map = instance.getHeadersMap();
         return map.containsKey(key) ? map.get(key) : defaultValue;
       }
       /**
@@ -9932,44 +7940,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Override
       public java.lang.String getHeadersOrThrow(java.lang.String key) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders().getMap();
+        java.lang.Class<?> keyClass = key.getClass();
+        java.util.Map<java.lang.String, java.lang.String> map = instance.getHeadersMap();
         if (!map.containsKey(key)) {
           throw new java.lang.IllegalArgumentException();
         }
         return map.get(key);
-      }
-
-      public Builder clearHeaders() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        internalGetMutableHeaders().getMutableMap().clear();
-        return this;
-      }
-      /**
-       *
-       *
-       * <pre>
-       * The HTTP response headers. If multiple headers share the same key, they
-       * must be merged according to HTTP spec. All header keys must be
-       * lowercased, because HTTP header keys are case-insensitive.
-       * </pre>
-       *
-       * <code>map&lt;string, string&gt; headers = 3;</code>
-       */
-      public Builder removeHeaders(java.lang.String key) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        internalGetMutableHeaders().getMutableMap().remove(key);
-        return this;
-      }
-      /** Use alternate mutation accessors instead. */
-      @java.lang.Deprecated
-      public java.util.Map<java.lang.String, java.lang.String> getMutableHeaders() {
-        bitField0_ |= 0x00000004;
-        return internalGetMutableHeaders().getMutableMap();
       }
       /**
        *
@@ -9983,14 +7959,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>map&lt;string, string&gt; headers = 3;</code>
        */
       public Builder putHeaders(java.lang.String key, java.lang.String value) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        if (value == null) {
-          throw new NullPointerException("map value");
-        }
-        internalGetMutableHeaders().getMutableMap().put(key, value);
-        bitField0_ |= 0x00000004;
+        java.lang.Class<?> keyClass = key.getClass();
+        java.lang.Class<?> valueClass = value.getClass();
+        copyOnWrite();
+        instance.getMutableHeadersMap().put(key, value);
         return this;
       }
       /**
@@ -10005,17 +7977,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>map&lt;string, string&gt; headers = 3;</code>
        */
       public Builder putAllHeaders(java.util.Map<java.lang.String, java.lang.String> values) {
-        internalGetMutableHeaders().getMutableMap().putAll(values);
-        bitField0_ |= 0x00000004;
+        copyOnWrite();
+        instance.getMutableHeadersMap().putAll(values);
         return this;
       }
 
-      private com.google.protobuf.Timestamp time_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Timestamp,
-              com.google.protobuf.Timestamp.Builder,
-              com.google.protobuf.TimestampOrBuilder>
-          timeBuilder_;
       /**
        *
        *
@@ -10025,11 +7991,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * </pre>
        *
        * <code>.google.protobuf.Timestamp time = 4;</code>
-       *
-       * @return Whether the time field is set.
        */
+      @java.lang.Override
       public boolean hasTime() {
-        return ((bitField0_ & 0x00000008) != 0);
+        return instance.hasTime();
       }
       /**
        *
@@ -10040,15 +8005,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * </pre>
        *
        * <code>.google.protobuf.Timestamp time = 4;</code>
-       *
-       * @return The time.
        */
+      @java.lang.Override
       public com.google.protobuf.Timestamp getTime() {
-        if (timeBuilder_ == null) {
-          return time_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : time_;
-        } else {
-          return timeBuilder_.getMessage();
-        }
+        return instance.getTime();
       }
       /**
        *
@@ -10061,16 +8021,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Timestamp time = 4;</code>
        */
       public Builder setTime(com.google.protobuf.Timestamp value) {
-        if (timeBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          time_ = value;
-        } else {
-          timeBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000008;
-        onChanged();
+        copyOnWrite();
+        instance.setTime(value);
         return this;
       }
       /**
@@ -10084,13 +8036,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Timestamp time = 4;</code>
        */
       public Builder setTime(com.google.protobuf.Timestamp.Builder builderForValue) {
-        if (timeBuilder_ == null) {
-          time_ = builderForValue.build();
-        } else {
-          timeBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000008;
-        onChanged();
+        copyOnWrite();
+        instance.setTime(builderForValue.build());
         return this;
       }
       /**
@@ -10104,21 +8051,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Timestamp time = 4;</code>
        */
       public Builder mergeTime(com.google.protobuf.Timestamp value) {
-        if (timeBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) != 0)
-              && time_ != null
-              && time_ != com.google.protobuf.Timestamp.getDefaultInstance()) {
-            getTimeBuilder().mergeFrom(value);
-          } else {
-            time_ = value;
-          }
-        } else {
-          timeBuilder_.mergeFrom(value);
-        }
-        if (time_ != null) {
-          bitField0_ |= 0x00000008;
-          onChanged();
-        }
+        copyOnWrite();
+        instance.mergeTime(value);
         return this;
       }
       /**
@@ -10132,80 +8066,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Timestamp time = 4;</code>
        */
       public Builder clearTime() {
-        bitField0_ = (bitField0_ & ~0x00000008);
-        time_ = null;
-        if (timeBuilder_ != null) {
-          timeBuilder_.dispose();
-          timeBuilder_ = null;
-        }
-        onChanged();
+        copyOnWrite();
+        instance.clearTime();
         return this;
       }
-      /**
-       *
-       *
-       * <pre>
-       * The timestamp when the `destination` service sends the last byte of
-       * the response.
-       * </pre>
-       *
-       * <code>.google.protobuf.Timestamp time = 4;</code>
-       */
-      public com.google.protobuf.Timestamp.Builder getTimeBuilder() {
-        bitField0_ |= 0x00000008;
-        onChanged();
-        return getTimeFieldBuilder().getBuilder();
-      }
-      /**
-       *
-       *
-       * <pre>
-       * The timestamp when the `destination` service sends the last byte of
-       * the response.
-       * </pre>
-       *
-       * <code>.google.protobuf.Timestamp time = 4;</code>
-       */
-      public com.google.protobuf.TimestampOrBuilder getTimeOrBuilder() {
-        if (timeBuilder_ != null) {
-          return timeBuilder_.getMessageOrBuilder();
-        } else {
-          return time_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : time_;
-        }
-      }
-      /**
-       *
-       *
-       * <pre>
-       * The timestamp when the `destination` service sends the last byte of
-       * the response.
-       * </pre>
-       *
-       * <code>.google.protobuf.Timestamp time = 4;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Timestamp,
-              com.google.protobuf.Timestamp.Builder,
-              com.google.protobuf.TimestampOrBuilder>
-          getTimeFieldBuilder() {
-        if (timeBuilder_ == null) {
-          timeBuilder_ =
-              new com.google.protobuf.SingleFieldBuilderV3<
-                  com.google.protobuf.Timestamp,
-                  com.google.protobuf.Timestamp.Builder,
-                  com.google.protobuf.TimestampOrBuilder>(
-                  getTime(), getParentForChildren(), isClean());
-          time_ = null;
-        }
-        return timeBuilder_;
-      }
 
-      private com.google.protobuf.Duration backendLatency_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Duration,
-              com.google.protobuf.Duration.Builder,
-              com.google.protobuf.DurationOrBuilder>
-          backendLatencyBuilder_;
       /**
        *
        *
@@ -10217,11 +8082,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * </pre>
        *
        * <code>.google.protobuf.Duration backend_latency = 5;</code>
-       *
-       * @return Whether the backendLatency field is set.
        */
+      @java.lang.Override
       public boolean hasBackendLatency() {
-        return ((bitField0_ & 0x00000010) != 0);
+        return instance.hasBackendLatency();
       }
       /**
        *
@@ -10234,17 +8098,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * </pre>
        *
        * <code>.google.protobuf.Duration backend_latency = 5;</code>
-       *
-       * @return The backendLatency.
        */
+      @java.lang.Override
       public com.google.protobuf.Duration getBackendLatency() {
-        if (backendLatencyBuilder_ == null) {
-          return backendLatency_ == null
-              ? com.google.protobuf.Duration.getDefaultInstance()
-              : backendLatency_;
-        } else {
-          return backendLatencyBuilder_.getMessage();
-        }
+        return instance.getBackendLatency();
       }
       /**
        *
@@ -10259,16 +8116,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Duration backend_latency = 5;</code>
        */
       public Builder setBackendLatency(com.google.protobuf.Duration value) {
-        if (backendLatencyBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          backendLatency_ = value;
-        } else {
-          backendLatencyBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000010;
-        onChanged();
+        copyOnWrite();
+        instance.setBackendLatency(value);
         return this;
       }
       /**
@@ -10284,13 +8133,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Duration backend_latency = 5;</code>
        */
       public Builder setBackendLatency(com.google.protobuf.Duration.Builder builderForValue) {
-        if (backendLatencyBuilder_ == null) {
-          backendLatency_ = builderForValue.build();
-        } else {
-          backendLatencyBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000010;
-        onChanged();
+        copyOnWrite();
+        instance.setBackendLatency(builderForValue.build());
         return this;
       }
       /**
@@ -10306,21 +8150,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Duration backend_latency = 5;</code>
        */
       public Builder mergeBackendLatency(com.google.protobuf.Duration value) {
-        if (backendLatencyBuilder_ == null) {
-          if (((bitField0_ & 0x00000010) != 0)
-              && backendLatency_ != null
-              && backendLatency_ != com.google.protobuf.Duration.getDefaultInstance()) {
-            getBackendLatencyBuilder().mergeFrom(value);
-          } else {
-            backendLatency_ = value;
-          }
-        } else {
-          backendLatencyBuilder_.mergeFrom(value);
-        }
-        if (backendLatency_ != null) {
-          bitField0_ |= 0x00000010;
-          onChanged();
-        }
+        copyOnWrite();
+        instance.mergeBackendLatency(value);
         return this;
       }
       /**
@@ -10336,150 +8167,107 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Duration backend_latency = 5;</code>
        */
       public Builder clearBackendLatency() {
-        bitField0_ = (bitField0_ & ~0x00000010);
-        backendLatency_ = null;
-        if (backendLatencyBuilder_ != null) {
-          backendLatencyBuilder_.dispose();
-          backendLatencyBuilder_ = null;
-        }
-        onChanged();
+        copyOnWrite();
+        instance.clearBackendLatency();
         return this;
-      }
-      /**
-       *
-       *
-       * <pre>
-       * The amount of time it takes the backend service to fully respond to a
-       * request. Measured from when the destination service starts to send the
-       * request to the backend until when the destination service receives the
-       * complete response from the backend.
-       * </pre>
-       *
-       * <code>.google.protobuf.Duration backend_latency = 5;</code>
-       */
-      public com.google.protobuf.Duration.Builder getBackendLatencyBuilder() {
-        bitField0_ |= 0x00000010;
-        onChanged();
-        return getBackendLatencyFieldBuilder().getBuilder();
-      }
-      /**
-       *
-       *
-       * <pre>
-       * The amount of time it takes the backend service to fully respond to a
-       * request. Measured from when the destination service starts to send the
-       * request to the backend until when the destination service receives the
-       * complete response from the backend.
-       * </pre>
-       *
-       * <code>.google.protobuf.Duration backend_latency = 5;</code>
-       */
-      public com.google.protobuf.DurationOrBuilder getBackendLatencyOrBuilder() {
-        if (backendLatencyBuilder_ != null) {
-          return backendLatencyBuilder_.getMessageOrBuilder();
-        } else {
-          return backendLatency_ == null
-              ? com.google.protobuf.Duration.getDefaultInstance()
-              : backendLatency_;
-        }
-      }
-      /**
-       *
-       *
-       * <pre>
-       * The amount of time it takes the backend service to fully respond to a
-       * request. Measured from when the destination service starts to send the
-       * request to the backend until when the destination service receives the
-       * complete response from the backend.
-       * </pre>
-       *
-       * <code>.google.protobuf.Duration backend_latency = 5;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Duration,
-              com.google.protobuf.Duration.Builder,
-              com.google.protobuf.DurationOrBuilder>
-          getBackendLatencyFieldBuilder() {
-        if (backendLatencyBuilder_ == null) {
-          backendLatencyBuilder_ =
-              new com.google.protobuf.SingleFieldBuilderV3<
-                  com.google.protobuf.Duration,
-                  com.google.protobuf.Duration.Builder,
-                  com.google.protobuf.DurationOrBuilder>(
-                  getBackendLatency(), getParentForChildren(), isClean());
-          backendLatency_ = null;
-        }
-        return backendLatencyBuilder_;
-      }
-
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
       }
 
       // @@protoc_insertion_point(builder_scope:google.rpc.context.AttributeContext.Response)
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0,
+        java.lang.Object arg1) {
+      switch (method) {
+        case NEW_MUTABLE_INSTANCE:
+          {
+            return new com.google.rpc.context.AttributeContext.Response();
+          }
+        case NEW_BUILDER:
+          {
+            return new Builder();
+          }
+        case BUILD_MESSAGE_INFO:
+          {
+            java.lang.Object[] objects =
+                new java.lang.Object[] {
+                  "bitField0_",
+                  "code_",
+                  "size_",
+                  "headers_",
+                  HeadersDefaultEntryHolder.defaultEntry,
+                  "time_",
+                  "backendLatency_",
+                };
+            java.lang.String info =
+                "\u0000\u0005\u0000\u0001\u0001\u0005\u0005\u0001\u0000\u0000\u0001\u0002\u0002\u0002"
+                    + "\u00032\u0004\u1009\u0000\u0005\u1009\u0001";
+            return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+          }
+          // fall through
+        case GET_DEFAULT_INSTANCE:
+          {
+            return DEFAULT_INSTANCE;
+          }
+        case GET_PARSER:
+          {
+            com.google.protobuf.Parser<com.google.rpc.context.AttributeContext.Response> parser =
+                PARSER;
+            if (parser == null) {
+              synchronized (com.google.rpc.context.AttributeContext.Response.class) {
+                parser = PARSER;
+                if (parser == null) {
+                  parser =
+                      new DefaultInstanceBasedParser<
+                          com.google.rpc.context.AttributeContext.Response>(DEFAULT_INSTANCE);
+                  PARSER = parser;
+                }
+              }
+            }
+            return parser;
+          }
+        case GET_MEMOIZED_IS_INITIALIZED:
+          {
+            return (byte) 1;
+          }
+        case SET_MEMOIZED_IS_INITIALIZED:
+          {
+            return null;
+          }
+      }
+      throw new UnsupportedOperationException();
     }
 
     // @@protoc_insertion_point(class_scope:google.rpc.context.AttributeContext.Response)
     private static final com.google.rpc.context.AttributeContext.Response DEFAULT_INSTANCE;
 
     static {
-      DEFAULT_INSTANCE = new com.google.rpc.context.AttributeContext.Response();
+      Response defaultInstance = new Response();
+      // New instances are implicitly immutable so no need to make
+      // immutable.
+      DEFAULT_INSTANCE = defaultInstance;
+      com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+          Response.class, defaultInstance);
     }
 
     public static com.google.rpc.context.AttributeContext.Response getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<Response> PARSER =
-        new com.google.protobuf.AbstractParser<Response>() {
-          @java.lang.Override
-          public Response parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-          }
-        };
+    private static volatile com.google.protobuf.Parser<Response> PARSER;
 
     public static com.google.protobuf.Parser<Response> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<Response> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.rpc.context.AttributeContext.Response getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
+      return DEFAULT_INSTANCE.getParserForType();
     }
   }
 
   public interface ResourceOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:google.rpc.context.AttributeContext.Resource)
-      com.google.protobuf.MessageOrBuilder {
+      com.google.protobuf.MessageLiteOrBuilder {
 
     /**
      *
@@ -10636,6 +8424,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; labels = 4;</code>
      */
+
     /* nullable */
     java.lang.String getLabelsOrDefault(
         java.lang.String key,
@@ -10748,6 +8537,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; annotations = 6;</code>
      */
+
     /* nullable */
     java.lang.String getAnnotationsOrDefault(
         java.lang.String key,
@@ -10820,17 +8610,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The createTime.
      */
     com.google.protobuf.Timestamp getCreateTime();
-    /**
-     *
-     *
-     * <pre>
-     * Output only. The timestamp when the resource was created. This may
-     * be either the time creation was initiated or when it was completed.
-     * </pre>
-     *
-     * <code>.google.protobuf.Timestamp create_time = 8;</code>
-     */
-    com.google.protobuf.TimestampOrBuilder getCreateTimeOrBuilder();
 
     /**
      *
@@ -10860,18 +8639,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The updateTime.
      */
     com.google.protobuf.Timestamp getUpdateTime();
-    /**
-     *
-     *
-     * <pre>
-     * Output only. The timestamp when the resource was last updated. Any
-     * change to the resource made by users must refresh this value.
-     * Changes to a resource made by the service should refresh this value.
-     * </pre>
-     *
-     * <code>.google.protobuf.Timestamp update_time = 9;</code>
-     */
-    com.google.protobuf.TimestampOrBuilder getUpdateTimeOrBuilder();
 
     /**
      *
@@ -10899,17 +8666,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The deleteTime.
      */
     com.google.protobuf.Timestamp getDeleteTime();
-    /**
-     *
-     *
-     * <pre>
-     * Output only. The timestamp when the resource was deleted.
-     * If the resource is not deleted, this must be empty.
-     * </pre>
-     *
-     * <code>.google.protobuf.Timestamp delete_time = 10;</code>
-     */
-    com.google.protobuf.TimestampOrBuilder getDeleteTimeOrBuilder();
 
     /**
      *
@@ -10990,16 +8746,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * Protobuf type {@code google.rpc.context.AttributeContext.Resource}
    */
-  public static final class Resource extends com.google.protobuf.GeneratedMessageV3
+  public static final class Resource
+      extends com.google.protobuf.GeneratedMessageLite<Resource, Resource.Builder>
       implements
       // @@protoc_insertion_point(message_implements:google.rpc.context.AttributeContext.Resource)
       ResourceOrBuilder {
-    private static final long serialVersionUID = 0L;
-    // Use Resource.newBuilder() to construct.
-    private Resource(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-
     private Resource() {
       service_ = "";
       name_ = "";
@@ -11010,46 +8761,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       location_ = "";
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-      return new Resource();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.rpc.context.AttributeContextProto
-          .internal_static_google_rpc_context_AttributeContext_Resource_descriptor;
-    }
-
-    @SuppressWarnings({"rawtypes"})
-    @java.lang.Override
-    protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-        int number) {
-      switch (number) {
-        case 4:
-          return internalGetLabels();
-        case 6:
-          return internalGetAnnotations();
-        default:
-          throw new RuntimeException("Invalid map field number: " + number);
-      }
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.rpc.context.AttributeContextProto
-          .internal_static_google_rpc_context_AttributeContext_Resource_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.rpc.context.AttributeContext.Resource.class,
-              com.google.rpc.context.AttributeContext.Resource.Builder.class);
-    }
-
     private int bitField0_;
     public static final int SERVICE_FIELD_NUMBER = 1;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object service_ = "";
+    private java.lang.String service_;
     /**
      *
      *
@@ -11065,15 +8779,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getService() {
-      java.lang.Object ref = service_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        service_ = s;
-        return s;
-      }
+      return service_;
     }
     /**
      *
@@ -11090,21 +8796,61 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getServiceBytes() {
-      java.lang.Object ref = service_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        service_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(service_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The name of the service that this resource belongs to, such as
+     * `pubsub.googleapis.com`. The service may be different from the DNS
+     * hostname that actually serves the request.
+     * </pre>
+     *
+     * <code>string service = 1;</code>
+     *
+     * @param value The service to set.
+     */
+    private void setService(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      service_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The name of the service that this resource belongs to, such as
+     * `pubsub.googleapis.com`. The service may be different from the DNS
+     * hostname that actually serves the request.
+     * </pre>
+     *
+     * <code>string service = 1;</code>
+     */
+    private void clearService() {
+
+      service_ = getDefaultInstance().getService();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The name of the service that this resource belongs to, such as
+     * `pubsub.googleapis.com`. The service may be different from the DNS
+     * hostname that actually serves the request.
+     * </pre>
+     *
+     * <code>string service = 1;</code>
+     *
+     * @param value The bytes for service to set.
+     */
+    private void setServiceBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      service_ = value.toStringUtf8();
     }
 
     public static final int NAME_FIELD_NUMBER = 2;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object name_ = "";
+    private java.lang.String name_;
     /**
      *
      *
@@ -11129,15 +8875,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        name_ = s;
-        return s;
-      }
+      return name_;
     }
     /**
      *
@@ -11163,21 +8901,88 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getNameBytes() {
-      java.lang.Object ref = name_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        name_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(name_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The stable identifier (name) of a resource on the `service`. A resource
+     * can be logically identified as "//{resource.service}/{resource.name}".
+     * The differences between a resource name and a URI are:
+     *
+     * *   Resource name is a logical identifier, independent of network
+     *     protocol and API version. For example,
+     *     `//pubsub.googleapis.com/projects/123/topics/news-feed`.
+     * *   URI often includes protocol and version information, so it can
+     *     be used directly by applications. For example,
+     *     `https://pubsub.googleapis.com/v1/projects/123/topics/news-feed`.
+     *
+     * See https://cloud.google.com/apis/design/resource_names for details.
+     * </pre>
+     *
+     * <code>string name = 2;</code>
+     *
+     * @param value The name to set.
+     */
+    private void setName(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      name_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The stable identifier (name) of a resource on the `service`. A resource
+     * can be logically identified as "//{resource.service}/{resource.name}".
+     * The differences between a resource name and a URI are:
+     *
+     * *   Resource name is a logical identifier, independent of network
+     *     protocol and API version. For example,
+     *     `//pubsub.googleapis.com/projects/123/topics/news-feed`.
+     * *   URI often includes protocol and version information, so it can
+     *     be used directly by applications. For example,
+     *     `https://pubsub.googleapis.com/v1/projects/123/topics/news-feed`.
+     *
+     * See https://cloud.google.com/apis/design/resource_names for details.
+     * </pre>
+     *
+     * <code>string name = 2;</code>
+     */
+    private void clearName() {
+
+      name_ = getDefaultInstance().getName();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The stable identifier (name) of a resource on the `service`. A resource
+     * can be logically identified as "//{resource.service}/{resource.name}".
+     * The differences between a resource name and a URI are:
+     *
+     * *   Resource name is a logical identifier, independent of network
+     *     protocol and API version. For example,
+     *     `//pubsub.googleapis.com/projects/123/topics/news-feed`.
+     * *   URI often includes protocol and version information, so it can
+     *     be used directly by applications. For example,
+     *     `https://pubsub.googleapis.com/v1/projects/123/topics/news-feed`.
+     *
+     * See https://cloud.google.com/apis/design/resource_names for details.
+     * </pre>
+     *
+     * <code>string name = 2;</code>
+     *
+     * @param value The bytes for name to set.
+     */
+    private void setNameBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      name_ = value.toStringUtf8();
     }
 
     public static final int TYPE_FIELD_NUMBER = 3;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object type_ = "";
+    private java.lang.String type_;
     /**
      *
      *
@@ -11195,15 +9000,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getType() {
-      java.lang.Object ref = type_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        type_ = s;
-        return s;
-      }
+      return type_;
     }
     /**
      *
@@ -11222,42 +9019,97 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getTypeBytes() {
-      java.lang.Object ref = type_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        type_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(type_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The type of the resource. The syntax is platform-specific because
+     * different platforms define their resources differently.
+     *
+     * For Google APIs, the type format must be "{service}/{kind}", such as
+     * "pubsub.googleapis.com/Topic".
+     * </pre>
+     *
+     * <code>string type = 3;</code>
+     *
+     * @param value The type to set.
+     */
+    private void setType(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      type_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The type of the resource. The syntax is platform-specific because
+     * different platforms define their resources differently.
+     *
+     * For Google APIs, the type format must be "{service}/{kind}", such as
+     * "pubsub.googleapis.com/Topic".
+     * </pre>
+     *
+     * <code>string type = 3;</code>
+     */
+    private void clearType() {
+
+      type_ = getDefaultInstance().getType();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The type of the resource. The syntax is platform-specific because
+     * different platforms define their resources differently.
+     *
+     * For Google APIs, the type format must be "{service}/{kind}", such as
+     * "pubsub.googleapis.com/Topic".
+     * </pre>
+     *
+     * <code>string type = 3;</code>
+     *
+     * @param value The bytes for type to set.
+     */
+    private void setTypeBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      type_ = value.toStringUtf8();
     }
 
     public static final int LABELS_FIELD_NUMBER = 4;
 
     private static final class LabelsDefaultEntryHolder {
-      static final com.google.protobuf.MapEntry<java.lang.String, java.lang.String> defaultEntry =
-          com.google.protobuf.MapEntry.<java.lang.String, java.lang.String>newDefaultInstance(
-              com.google.rpc.context.AttributeContextProto
-                  .internal_static_google_rpc_context_AttributeContext_Resource_LabelsEntry_descriptor,
-              com.google.protobuf.WireFormat.FieldType.STRING,
-              "",
-              com.google.protobuf.WireFormat.FieldType.STRING,
-              "");
+      static final com.google.protobuf.MapEntryLite<java.lang.String, java.lang.String>
+          defaultEntry =
+              com.google.protobuf.MapEntryLite
+                  .<java.lang.String, java.lang.String>newDefaultInstance(
+                      com.google.protobuf.WireFormat.FieldType.STRING,
+                      "",
+                      com.google.protobuf.WireFormat.FieldType.STRING,
+                      "");
     }
 
-    @SuppressWarnings("serial")
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String> labels_;
+    private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String> labels_ =
+        com.google.protobuf.MapFieldLite.emptyMapField();
 
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String> internalGetLabels() {
-      if (labels_ == null) {
-        return com.google.protobuf.MapField.emptyMapField(LabelsDefaultEntryHolder.defaultEntry);
+    private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
+        internalGetLabels() {
+      return labels_;
+    }
+
+    private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
+        internalGetMutableLabels() {
+      if (!labels_.isMutable()) {
+        labels_ = labels_.mutableCopy();
       }
       return labels_;
     }
 
+    @java.lang.Override
     public int getLabelsCount() {
-      return internalGetLabels().getMap().size();
+      return internalGetLabels().size();
     }
     /**
      *
@@ -11271,10 +9123,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public boolean containsLabels(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      return internalGetLabels().getMap().containsKey(key);
+      java.lang.Class<?> keyClass = key.getClass();
+      return internalGetLabels().containsKey(key);
     }
     /** Use {@link #getLabelsMap()} instead. */
     @java.lang.Override
@@ -11294,7 +9144,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.util.Map<java.lang.String, java.lang.String> getLabelsMap() {
-      return internalGetLabels().getMap();
+      return java.util.Collections.unmodifiableMap(internalGetLabels());
     }
     /**
      *
@@ -11311,10 +9161,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         java.lang.String key,
         /* nullable */
         java.lang.String defaultValue) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
     /**
@@ -11329,20 +9177,29 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getLabelsOrThrow(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels();
       if (!map.containsKey(key)) {
         throw new java.lang.IllegalArgumentException();
       }
       return map.get(key);
     }
+    /**
+     *
+     *
+     * <pre>
+     * The labels or tags on the resource, such as AWS resource tags and
+     * Kubernetes resource labels.
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; labels = 4;</code>
+     */
+    private java.util.Map<java.lang.String, java.lang.String> getMutableLabelsMap() {
+      return internalGetMutableLabels();
+    }
 
     public static final int UID_FIELD_NUMBER = 5;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object uid_ = "";
+    private java.lang.String uid_;
     /**
      *
      *
@@ -11360,15 +9217,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getUid() {
-      java.lang.Object ref = uid_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        uid_ = s;
-        return s;
-      }
+      return uid_;
     }
     /**
      *
@@ -11387,44 +9236,97 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getUidBytes() {
-      java.lang.Object ref = uid_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        uid_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(uid_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The unique identifier of the resource. UID is unique in the time
+     * and space for this resource within the scope of the service. It is
+     * typically generated by the server on successful creation of a resource
+     * and must not be changed. UID is used to uniquely identify resources
+     * with resource name reuses. This should be a UUID4.
+     * </pre>
+     *
+     * <code>string uid = 5;</code>
+     *
+     * @param value The uid to set.
+     */
+    private void setUid(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      uid_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The unique identifier of the resource. UID is unique in the time
+     * and space for this resource within the scope of the service. It is
+     * typically generated by the server on successful creation of a resource
+     * and must not be changed. UID is used to uniquely identify resources
+     * with resource name reuses. This should be a UUID4.
+     * </pre>
+     *
+     * <code>string uid = 5;</code>
+     */
+    private void clearUid() {
+
+      uid_ = getDefaultInstance().getUid();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The unique identifier of the resource. UID is unique in the time
+     * and space for this resource within the scope of the service. It is
+     * typically generated by the server on successful creation of a resource
+     * and must not be changed. UID is used to uniquely identify resources
+     * with resource name reuses. This should be a UUID4.
+     * </pre>
+     *
+     * <code>string uid = 5;</code>
+     *
+     * @param value The bytes for uid to set.
+     */
+    private void setUidBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      uid_ = value.toStringUtf8();
     }
 
     public static final int ANNOTATIONS_FIELD_NUMBER = 6;
 
     private static final class AnnotationsDefaultEntryHolder {
-      static final com.google.protobuf.MapEntry<java.lang.String, java.lang.String> defaultEntry =
-          com.google.protobuf.MapEntry.<java.lang.String, java.lang.String>newDefaultInstance(
-              com.google.rpc.context.AttributeContextProto
-                  .internal_static_google_rpc_context_AttributeContext_Resource_AnnotationsEntry_descriptor,
-              com.google.protobuf.WireFormat.FieldType.STRING,
-              "",
-              com.google.protobuf.WireFormat.FieldType.STRING,
-              "");
+      static final com.google.protobuf.MapEntryLite<java.lang.String, java.lang.String>
+          defaultEntry =
+              com.google.protobuf.MapEntryLite
+                  .<java.lang.String, java.lang.String>newDefaultInstance(
+                      com.google.protobuf.WireFormat.FieldType.STRING,
+                      "",
+                      com.google.protobuf.WireFormat.FieldType.STRING,
+                      "");
     }
 
-    @SuppressWarnings("serial")
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String> annotations_;
+    private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String> annotations_ =
+        com.google.protobuf.MapFieldLite.emptyMapField();
 
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+    private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
         internalGetAnnotations() {
-      if (annotations_ == null) {
-        return com.google.protobuf.MapField.emptyMapField(
-            AnnotationsDefaultEntryHolder.defaultEntry);
+      return annotations_;
+    }
+
+    private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
+        internalGetMutableAnnotations() {
+      if (!annotations_.isMutable()) {
+        annotations_ = annotations_.mutableCopy();
       }
       return annotations_;
     }
 
+    @java.lang.Override
     public int getAnnotationsCount() {
-      return internalGetAnnotations().getMap().size();
+      return internalGetAnnotations().size();
     }
     /**
      *
@@ -11442,10 +9344,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public boolean containsAnnotations(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      return internalGetAnnotations().getMap().containsKey(key);
+      java.lang.Class<?> keyClass = key.getClass();
+      return internalGetAnnotations().containsKey(key);
     }
     /** Use {@link #getAnnotationsMap()} instead. */
     @java.lang.Override
@@ -11469,7 +9369,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.util.Map<java.lang.String, java.lang.String> getAnnotationsMap() {
-      return internalGetAnnotations().getMap();
+      return java.util.Collections.unmodifiableMap(internalGetAnnotations());
     }
     /**
      *
@@ -11490,10 +9390,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         java.lang.String key,
         /* nullable */
         java.lang.String defaultValue) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map = internalGetAnnotations().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = internalGetAnnotations();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
     /**
@@ -11512,20 +9410,33 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getAnnotationsOrThrow(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map = internalGetAnnotations().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = internalGetAnnotations();
       if (!map.containsKey(key)) {
         throw new java.lang.IllegalArgumentException();
       }
       return map.get(key);
     }
+    /**
+     *
+     *
+     * <pre>
+     * Annotations is an unstructured key-value map stored with a resource that
+     * may be set by external tools to store and retrieve arbitrary metadata.
+     * They are not queryable and should be preserved when modifying objects.
+     *
+     * More info:
+     * https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; annotations = 6;</code>
+     */
+    private java.util.Map<java.lang.String, java.lang.String> getMutableAnnotationsMap() {
+      return internalGetMutableAnnotations();
+    }
 
     public static final int DISPLAY_NAME_FIELD_NUMBER = 7;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object displayName_ = "";
+    private java.lang.String displayName_;
     /**
      *
      *
@@ -11539,15 +9450,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getDisplayName() {
-      java.lang.Object ref = displayName_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        displayName_ = s;
-        return s;
-      }
+      return displayName_;
     }
     /**
      *
@@ -11562,15 +9465,51 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getDisplayNameBytes() {
-      java.lang.Object ref = displayName_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        displayName_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(displayName_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Mutable. The display name set by clients. Must be &lt;= 63 characters.
+     * </pre>
+     *
+     * <code>string display_name = 7;</code>
+     *
+     * @param value The displayName to set.
+     */
+    private void setDisplayName(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      displayName_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Mutable. The display name set by clients. Must be &lt;= 63 characters.
+     * </pre>
+     *
+     * <code>string display_name = 7;</code>
+     */
+    private void clearDisplayName() {
+
+      displayName_ = getDefaultInstance().getDisplayName();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Mutable. The display name set by clients. Must be &lt;= 63 characters.
+     * </pre>
+     *
+     * <code>string display_name = 7;</code>
+     *
+     * @param value The bytes for displayName to set.
+     */
+    private void setDisplayNameBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      displayName_ = value.toStringUtf8();
     }
 
     public static final int CREATE_TIME_FIELD_NUMBER = 8;
@@ -11584,8 +9523,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.protobuf.Timestamp create_time = 8;</code>
-     *
-     * @return Whether the createTime field is set.
      */
     @java.lang.Override
     public boolean hasCreateTime() {
@@ -11600,8 +9537,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.protobuf.Timestamp create_time = 8;</code>
-     *
-     * @return The createTime.
      */
     @java.lang.Override
     public com.google.protobuf.Timestamp getCreateTime() {
@@ -11617,9 +9552,46 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>.google.protobuf.Timestamp create_time = 8;</code>
      */
-    @java.lang.Override
-    public com.google.protobuf.TimestampOrBuilder getCreateTimeOrBuilder() {
-      return createTime_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : createTime_;
+    private void setCreateTime(com.google.protobuf.Timestamp value) {
+      value.getClass();
+      createTime_ = value;
+      bitField0_ |= 0x00000001;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was created. This may
+     * be either the time creation was initiated or when it was completed.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp create_time = 8;</code>
+     */
+    @java.lang.SuppressWarnings({"ReferenceEquality"})
+    private void mergeCreateTime(com.google.protobuf.Timestamp value) {
+      value.getClass();
+      if (createTime_ != null
+          && createTime_ != com.google.protobuf.Timestamp.getDefaultInstance()) {
+        createTime_ =
+            com.google.protobuf.Timestamp.newBuilder(createTime_).mergeFrom(value).buildPartial();
+      } else {
+        createTime_ = value;
+      }
+      bitField0_ |= 0x00000001;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was created. This may
+     * be either the time creation was initiated or when it was completed.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp create_time = 8;</code>
+     */
+    private void clearCreateTime() {
+      createTime_ = null;
+      bitField0_ = (bitField0_ & ~0x00000001);
     }
 
     public static final int UPDATE_TIME_FIELD_NUMBER = 9;
@@ -11634,8 +9606,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.protobuf.Timestamp update_time = 9;</code>
-     *
-     * @return Whether the updateTime field is set.
      */
     @java.lang.Override
     public boolean hasUpdateTime() {
@@ -11651,8 +9621,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.protobuf.Timestamp update_time = 9;</code>
-     *
-     * @return The updateTime.
      */
     @java.lang.Override
     public com.google.protobuf.Timestamp getUpdateTime() {
@@ -11669,9 +9637,48 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>.google.protobuf.Timestamp update_time = 9;</code>
      */
-    @java.lang.Override
-    public com.google.protobuf.TimestampOrBuilder getUpdateTimeOrBuilder() {
-      return updateTime_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : updateTime_;
+    private void setUpdateTime(com.google.protobuf.Timestamp value) {
+      value.getClass();
+      updateTime_ = value;
+      bitField0_ |= 0x00000002;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was last updated. Any
+     * change to the resource made by users must refresh this value.
+     * Changes to a resource made by the service should refresh this value.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp update_time = 9;</code>
+     */
+    @java.lang.SuppressWarnings({"ReferenceEquality"})
+    private void mergeUpdateTime(com.google.protobuf.Timestamp value) {
+      value.getClass();
+      if (updateTime_ != null
+          && updateTime_ != com.google.protobuf.Timestamp.getDefaultInstance()) {
+        updateTime_ =
+            com.google.protobuf.Timestamp.newBuilder(updateTime_).mergeFrom(value).buildPartial();
+      } else {
+        updateTime_ = value;
+      }
+      bitField0_ |= 0x00000002;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was last updated. Any
+     * change to the resource made by users must refresh this value.
+     * Changes to a resource made by the service should refresh this value.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp update_time = 9;</code>
+     */
+    private void clearUpdateTime() {
+      updateTime_ = null;
+      bitField0_ = (bitField0_ & ~0x00000002);
     }
 
     public static final int DELETE_TIME_FIELD_NUMBER = 10;
@@ -11685,8 +9692,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.protobuf.Timestamp delete_time = 10;</code>
-     *
-     * @return Whether the deleteTime field is set.
      */
     @java.lang.Override
     public boolean hasDeleteTime() {
@@ -11701,8 +9706,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.protobuf.Timestamp delete_time = 10;</code>
-     *
-     * @return The deleteTime.
      */
     @java.lang.Override
     public com.google.protobuf.Timestamp getDeleteTime() {
@@ -11718,15 +9721,50 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>.google.protobuf.Timestamp delete_time = 10;</code>
      */
-    @java.lang.Override
-    public com.google.protobuf.TimestampOrBuilder getDeleteTimeOrBuilder() {
-      return deleteTime_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : deleteTime_;
+    private void setDeleteTime(com.google.protobuf.Timestamp value) {
+      value.getClass();
+      deleteTime_ = value;
+      bitField0_ |= 0x00000004;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was deleted.
+     * If the resource is not deleted, this must be empty.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp delete_time = 10;</code>
+     */
+    @java.lang.SuppressWarnings({"ReferenceEquality"})
+    private void mergeDeleteTime(com.google.protobuf.Timestamp value) {
+      value.getClass();
+      if (deleteTime_ != null
+          && deleteTime_ != com.google.protobuf.Timestamp.getDefaultInstance()) {
+        deleteTime_ =
+            com.google.protobuf.Timestamp.newBuilder(deleteTime_).mergeFrom(value).buildPartial();
+      } else {
+        deleteTime_ = value;
+      }
+      bitField0_ |= 0x00000004;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Output only. The timestamp when the resource was deleted.
+     * If the resource is not deleted, this must be empty.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp delete_time = 10;</code>
+     */
+    private void clearDeleteTime() {
+      deleteTime_ = null;
+      bitField0_ = (bitField0_ & ~0x00000004);
     }
 
     public static final int ETAG_FIELD_NUMBER = 11;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object etag_ = "";
+    private java.lang.String etag_;
     /**
      *
      *
@@ -11742,15 +9780,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getEtag() {
-      java.lang.Object ref = etag_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        etag_ = s;
-        return s;
-      }
+      return etag_;
     }
     /**
      *
@@ -11767,21 +9797,61 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getEtagBytes() {
-      java.lang.Object ref = etag_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        etag_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(etag_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Output only. An opaque value that uniquely identifies a version or
+     * generation of a resource. It can be used to confirm that the client
+     * and server agree on the ordering of a resource being written.
+     * </pre>
+     *
+     * <code>string etag = 11;</code>
+     *
+     * @param value The etag to set.
+     */
+    private void setEtag(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      etag_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Output only. An opaque value that uniquely identifies a version or
+     * generation of a resource. It can be used to confirm that the client
+     * and server agree on the ordering of a resource being written.
+     * </pre>
+     *
+     * <code>string etag = 11;</code>
+     */
+    private void clearEtag() {
+
+      etag_ = getDefaultInstance().getEtag();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Output only. An opaque value that uniquely identifies a version or
+     * generation of a resource. It can be used to confirm that the client
+     * and server agree on the ordering of a resource being written.
+     * </pre>
+     *
+     * <code>string etag = 11;</code>
+     *
+     * @param value The bytes for etag to set.
+     */
+    private void setEtagBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      etag_ = value.toStringUtf8();
     }
 
     public static final int LOCATION_FIELD_NUMBER = 12;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object location_ = "";
+    private java.lang.String location_;
     /**
      *
      *
@@ -11802,15 +9872,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public java.lang.String getLocation() {
-      java.lang.Object ref = location_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        location_ = s;
-        return s;
-      }
+      return location_;
     }
     /**
      *
@@ -11832,307 +9894,156 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getLocationBytes() {
-      java.lang.Object ref = location_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        location_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(location_);
     }
+    /**
+     *
+     *
+     * <pre>
+     * Immutable. The location of the resource. The location encoding is
+     * specific to the service provider, and new encoding may be introduced
+     * as the service evolves.
+     *
+     * For Google Cloud products, the encoding is what is used by Google Cloud
+     * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
+     * semantics of `location` is identical to the
+     * `cloud.googleapis.com/location` label used by some Google Cloud APIs.
+     * </pre>
+     *
+     * <code>string location = 12;</code>
+     *
+     * @param value The location to set.
+     */
+    private void setLocation(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
 
-    private byte memoizedIsInitialized = -1;
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
+      location_ = value;
     }
+    /**
+     *
+     *
+     * <pre>
+     * Immutable. The location of the resource. The location encoding is
+     * specific to the service provider, and new encoding may be introduced
+     * as the service evolves.
+     *
+     * For Google Cloud products, the encoding is what is used by Google Cloud
+     * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
+     * semantics of `location` is identical to the
+     * `cloud.googleapis.com/location` label used by some Google Cloud APIs.
+     * </pre>
+     *
+     * <code>string location = 12;</code>
+     */
+    private void clearLocation() {
 
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(service_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, service_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, name_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(type_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, type_);
-      }
-      com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
-          output, internalGetLabels(), LabelsDefaultEntryHolder.defaultEntry, 4);
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(uid_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, uid_);
-      }
-      com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
-          output, internalGetAnnotations(), AnnotationsDefaultEntryHolder.defaultEntry, 6);
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(displayName_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, displayName_);
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeMessage(8, getCreateTime());
-      }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        output.writeMessage(9, getUpdateTime());
-      }
-      if (((bitField0_ & 0x00000004) != 0)) {
-        output.writeMessage(10, getDeleteTime());
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(etag_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 11, etag_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(location_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 12, location_);
-      }
-      getUnknownFields().writeTo(output);
+      location_ = getDefaultInstance().getLocation();
     }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(service_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, service_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, name_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(type_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, type_);
-      }
-      for (java.util.Map.Entry<java.lang.String, java.lang.String> entry :
-          internalGetLabels().getMap().entrySet()) {
-        com.google.protobuf.MapEntry<java.lang.String, java.lang.String> labels__ =
-            LabelsDefaultEntryHolder.defaultEntry
-                .newBuilderForType()
-                .setKey(entry.getKey())
-                .setValue(entry.getValue())
-                .build();
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, labels__);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(uid_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, uid_);
-      }
-      for (java.util.Map.Entry<java.lang.String, java.lang.String> entry :
-          internalGetAnnotations().getMap().entrySet()) {
-        com.google.protobuf.MapEntry<java.lang.String, java.lang.String> annotations__ =
-            AnnotationsDefaultEntryHolder.defaultEntry
-                .newBuilderForType()
-                .setKey(entry.getKey())
-                .setValue(entry.getValue())
-                .build();
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(6, annotations__);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(displayName_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, displayName_);
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(8, getCreateTime());
-      }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(9, getUpdateTime());
-      }
-      if (((bitField0_ & 0x00000004) != 0)) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(10, getDeleteTime());
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(etag_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(11, etag_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(location_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(12, location_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-        return true;
-      }
-      if (!(obj instanceof com.google.rpc.context.AttributeContext.Resource)) {
-        return super.equals(obj);
-      }
-      com.google.rpc.context.AttributeContext.Resource other =
-          (com.google.rpc.context.AttributeContext.Resource) obj;
-
-      if (!getService().equals(other.getService())) return false;
-      if (!getName().equals(other.getName())) return false;
-      if (!getType().equals(other.getType())) return false;
-      if (!internalGetLabels().equals(other.internalGetLabels())) return false;
-      if (!getUid().equals(other.getUid())) return false;
-      if (!internalGetAnnotations().equals(other.internalGetAnnotations())) return false;
-      if (!getDisplayName().equals(other.getDisplayName())) return false;
-      if (hasCreateTime() != other.hasCreateTime()) return false;
-      if (hasCreateTime()) {
-        if (!getCreateTime().equals(other.getCreateTime())) return false;
-      }
-      if (hasUpdateTime() != other.hasUpdateTime()) return false;
-      if (hasUpdateTime()) {
-        if (!getUpdateTime().equals(other.getUpdateTime())) return false;
-      }
-      if (hasDeleteTime() != other.hasDeleteTime()) return false;
-      if (hasDeleteTime()) {
-        if (!getDeleteTime().equals(other.getDeleteTime())) return false;
-      }
-      if (!getEtag().equals(other.getEtag())) return false;
-      if (!getLocation().equals(other.getLocation())) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + SERVICE_FIELD_NUMBER;
-      hash = (53 * hash) + getService().hashCode();
-      hash = (37 * hash) + NAME_FIELD_NUMBER;
-      hash = (53 * hash) + getName().hashCode();
-      hash = (37 * hash) + TYPE_FIELD_NUMBER;
-      hash = (53 * hash) + getType().hashCode();
-      if (!internalGetLabels().getMap().isEmpty()) {
-        hash = (37 * hash) + LABELS_FIELD_NUMBER;
-        hash = (53 * hash) + internalGetLabels().hashCode();
-      }
-      hash = (37 * hash) + UID_FIELD_NUMBER;
-      hash = (53 * hash) + getUid().hashCode();
-      if (!internalGetAnnotations().getMap().isEmpty()) {
-        hash = (37 * hash) + ANNOTATIONS_FIELD_NUMBER;
-        hash = (53 * hash) + internalGetAnnotations().hashCode();
-      }
-      hash = (37 * hash) + DISPLAY_NAME_FIELD_NUMBER;
-      hash = (53 * hash) + getDisplayName().hashCode();
-      if (hasCreateTime()) {
-        hash = (37 * hash) + CREATE_TIME_FIELD_NUMBER;
-        hash = (53 * hash) + getCreateTime().hashCode();
-      }
-      if (hasUpdateTime()) {
-        hash = (37 * hash) + UPDATE_TIME_FIELD_NUMBER;
-        hash = (53 * hash) + getUpdateTime().hashCode();
-      }
-      if (hasDeleteTime()) {
-        hash = (37 * hash) + DELETE_TIME_FIELD_NUMBER;
-        hash = (53 * hash) + getDeleteTime().hashCode();
-      }
-      hash = (37 * hash) + ETAG_FIELD_NUMBER;
-      hash = (53 * hash) + getEtag().hashCode();
-      hash = (37 * hash) + LOCATION_FIELD_NUMBER;
-      hash = (53 * hash) + getLocation().hashCode();
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
+    /**
+     *
+     *
+     * <pre>
+     * Immutable. The location of the resource. The location encoding is
+     * specific to the service provider, and new encoding may be introduced
+     * as the service evolves.
+     *
+     * For Google Cloud products, the encoding is what is used by Google Cloud
+     * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
+     * semantics of `location` is identical to the
+     * `cloud.googleapis.com/location` label used by some Google Cloud APIs.
+     * </pre>
+     *
+     * <code>string location = 12;</code>
+     *
+     * @param value The bytes for location to set.
+     */
+    private void setLocationBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      location_ = value.toStringUtf8();
     }
 
     public static com.google.rpc.context.AttributeContext.Resource parseFrom(
         java.nio.ByteBuffer data) throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.context.AttributeContext.Resource parseFrom(
         java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Resource parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.context.AttributeContext.Resource parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Resource parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.rpc.context.AttributeContext.Resource parseFrom(
         byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Resource parseFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.context.AttributeContext.Resource parseFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Resource parseDelimitedFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.context.AttributeContext.Resource parseDelimitedFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.rpc.context.AttributeContext.Resource parseFrom(
         com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.rpc.context.AttributeContext.Resource parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
+      return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
 
     public static Builder newBuilder(com.google.rpc.context.AttributeContext.Resource prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      *
      *
@@ -12145,407 +10056,16 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * Protobuf type {@code google.rpc.context.AttributeContext.Resource}
      */
     public static final class Builder
-        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+        extends com.google.protobuf.GeneratedMessageLite.Builder<
+            com.google.rpc.context.AttributeContext.Resource, Builder>
         implements
         // @@protoc_insertion_point(builder_implements:google.rpc.context.AttributeContext.Resource)
         com.google.rpc.context.AttributeContext.ResourceOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return com.google.rpc.context.AttributeContextProto
-            .internal_static_google_rpc_context_AttributeContext_Resource_descriptor;
-      }
-
-      @SuppressWarnings({"rawtypes"})
-      protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-          int number) {
-        switch (number) {
-          case 4:
-            return internalGetLabels();
-          case 6:
-            return internalGetAnnotations();
-          default:
-            throw new RuntimeException("Invalid map field number: " + number);
-        }
-      }
-
-      @SuppressWarnings({"rawtypes"})
-      protected com.google.protobuf.MapFieldReflectionAccessor internalGetMutableMapFieldReflection(
-          int number) {
-        switch (number) {
-          case 4:
-            return internalGetMutableLabels();
-          case 6:
-            return internalGetMutableAnnotations();
-          default:
-            throw new RuntimeException("Invalid map field number: " + number);
-        }
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.google.rpc.context.AttributeContextProto
-            .internal_static_google_rpc_context_AttributeContext_Resource_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.google.rpc.context.AttributeContext.Resource.class,
-                com.google.rpc.context.AttributeContext.Resource.Builder.class);
-      }
-
       // Construct using com.google.rpc.context.AttributeContext.Resource.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+        super(DEFAULT_INSTANCE);
       }
 
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-          getCreateTimeFieldBuilder();
-          getUpdateTimeFieldBuilder();
-          getDeleteTimeFieldBuilder();
-        }
-      }
-
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        service_ = "";
-        name_ = "";
-        type_ = "";
-        internalGetMutableLabels().clear();
-        uid_ = "";
-        internalGetMutableAnnotations().clear();
-        displayName_ = "";
-        createTime_ = null;
-        if (createTimeBuilder_ != null) {
-          createTimeBuilder_.dispose();
-          createTimeBuilder_ = null;
-        }
-        updateTime_ = null;
-        if (updateTimeBuilder_ != null) {
-          updateTimeBuilder_.dispose();
-          updateTimeBuilder_ = null;
-        }
-        deleteTime_ = null;
-        if (deleteTimeBuilder_ != null) {
-          deleteTimeBuilder_.dispose();
-          deleteTimeBuilder_ = null;
-        }
-        etag_ = "";
-        location_ = "";
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return com.google.rpc.context.AttributeContextProto
-            .internal_static_google_rpc_context_AttributeContext_Resource_descriptor;
-      }
-
-      @java.lang.Override
-      public com.google.rpc.context.AttributeContext.Resource getDefaultInstanceForType() {
-        return com.google.rpc.context.AttributeContext.Resource.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.google.rpc.context.AttributeContext.Resource build() {
-        com.google.rpc.context.AttributeContext.Resource result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.google.rpc.context.AttributeContext.Resource buildPartial() {
-        com.google.rpc.context.AttributeContext.Resource result =
-            new com.google.rpc.context.AttributeContext.Resource(this);
-        if (bitField0_ != 0) {
-          buildPartial0(result);
-        }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartial0(com.google.rpc.context.AttributeContext.Resource result) {
-        int from_bitField0_ = bitField0_;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.service_ = service_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.name_ = name_;
-        }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.type_ = type_;
-        }
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.labels_ = internalGetLabels();
-          result.labels_.makeImmutable();
-        }
-        if (((from_bitField0_ & 0x00000010) != 0)) {
-          result.uid_ = uid_;
-        }
-        if (((from_bitField0_ & 0x00000020) != 0)) {
-          result.annotations_ = internalGetAnnotations();
-          result.annotations_.makeImmutable();
-        }
-        if (((from_bitField0_ & 0x00000040) != 0)) {
-          result.displayName_ = displayName_;
-        }
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000080) != 0)) {
-          result.createTime_ =
-              createTimeBuilder_ == null ? createTime_ : createTimeBuilder_.build();
-          to_bitField0_ |= 0x00000001;
-        }
-        if (((from_bitField0_ & 0x00000100) != 0)) {
-          result.updateTime_ =
-              updateTimeBuilder_ == null ? updateTime_ : updateTimeBuilder_.build();
-          to_bitField0_ |= 0x00000002;
-        }
-        if (((from_bitField0_ & 0x00000200) != 0)) {
-          result.deleteTime_ =
-              deleteTimeBuilder_ == null ? deleteTime_ : deleteTimeBuilder_.build();
-          to_bitField0_ |= 0x00000004;
-        }
-        if (((from_bitField0_ & 0x00000400) != 0)) {
-          result.etag_ = etag_;
-        }
-        if (((from_bitField0_ & 0x00000800) != 0)) {
-          result.location_ = location_;
-        }
-        result.bitField0_ |= to_bitField0_;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.rpc.context.AttributeContext.Resource) {
-          return mergeFrom((com.google.rpc.context.AttributeContext.Resource) other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.google.rpc.context.AttributeContext.Resource other) {
-        if (other == com.google.rpc.context.AttributeContext.Resource.getDefaultInstance())
-          return this;
-        if (!other.getService().isEmpty()) {
-          service_ = other.service_;
-          bitField0_ |= 0x00000001;
-          onChanged();
-        }
-        if (!other.getName().isEmpty()) {
-          name_ = other.name_;
-          bitField0_ |= 0x00000002;
-          onChanged();
-        }
-        if (!other.getType().isEmpty()) {
-          type_ = other.type_;
-          bitField0_ |= 0x00000004;
-          onChanged();
-        }
-        internalGetMutableLabels().mergeFrom(other.internalGetLabels());
-        bitField0_ |= 0x00000008;
-        if (!other.getUid().isEmpty()) {
-          uid_ = other.uid_;
-          bitField0_ |= 0x00000010;
-          onChanged();
-        }
-        internalGetMutableAnnotations().mergeFrom(other.internalGetAnnotations());
-        bitField0_ |= 0x00000020;
-        if (!other.getDisplayName().isEmpty()) {
-          displayName_ = other.displayName_;
-          bitField0_ |= 0x00000040;
-          onChanged();
-        }
-        if (other.hasCreateTime()) {
-          mergeCreateTime(other.getCreateTime());
-        }
-        if (other.hasUpdateTime()) {
-          mergeUpdateTime(other.getUpdateTime());
-        }
-        if (other.hasDeleteTime()) {
-          mergeDeleteTime(other.getDeleteTime());
-        }
-        if (!other.getEtag().isEmpty()) {
-          etag_ = other.etag_;
-          bitField0_ |= 0x00000400;
-          onChanged();
-        }
-        if (!other.getLocation().isEmpty()) {
-          location_ = other.location_;
-          bitField0_ |= 0x00000800;
-          onChanged();
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10:
-                {
-                  service_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000001;
-                  break;
-                } // case 10
-              case 18:
-                {
-                  name_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000002;
-                  break;
-                } // case 18
-              case 26:
-                {
-                  type_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000004;
-                  break;
-                } // case 26
-              case 34:
-                {
-                  com.google.protobuf.MapEntry<java.lang.String, java.lang.String> labels__ =
-                      input.readMessage(
-                          LabelsDefaultEntryHolder.defaultEntry.getParserForType(),
-                          extensionRegistry);
-                  internalGetMutableLabels()
-                      .getMutableMap()
-                      .put(labels__.getKey(), labels__.getValue());
-                  bitField0_ |= 0x00000008;
-                  break;
-                } // case 34
-              case 42:
-                {
-                  uid_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000010;
-                  break;
-                } // case 42
-              case 50:
-                {
-                  com.google.protobuf.MapEntry<java.lang.String, java.lang.String> annotations__ =
-                      input.readMessage(
-                          AnnotationsDefaultEntryHolder.defaultEntry.getParserForType(),
-                          extensionRegistry);
-                  internalGetMutableAnnotations()
-                      .getMutableMap()
-                      .put(annotations__.getKey(), annotations__.getValue());
-                  bitField0_ |= 0x00000020;
-                  break;
-                } // case 50
-              case 58:
-                {
-                  displayName_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000040;
-                  break;
-                } // case 58
-              case 66:
-                {
-                  input.readMessage(getCreateTimeFieldBuilder().getBuilder(), extensionRegistry);
-                  bitField0_ |= 0x00000080;
-                  break;
-                } // case 66
-              case 74:
-                {
-                  input.readMessage(getUpdateTimeFieldBuilder().getBuilder(), extensionRegistry);
-                  bitField0_ |= 0x00000100;
-                  break;
-                } // case 74
-              case 82:
-                {
-                  input.readMessage(getDeleteTimeFieldBuilder().getBuilder(), extensionRegistry);
-                  bitField0_ |= 0x00000200;
-                  break;
-                } // case 82
-              case 90:
-                {
-                  etag_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000400;
-                  break;
-                } // case 90
-              case 98:
-                {
-                  location_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000800;
-                  break;
-                } // case 98
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-
-      private int bitField0_;
-
-      private java.lang.Object service_ = "";
       /**
        *
        *
@@ -12559,16 +10079,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The service.
        */
+      @java.lang.Override
       public java.lang.String getService() {
-        java.lang.Object ref = service_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          service_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getService();
       }
       /**
        *
@@ -12583,16 +10096,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for service.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getServiceBytes() {
-        java.lang.Object ref = service_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          service_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getServiceBytes();
       }
       /**
        *
@@ -12609,12 +10115,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setService(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        service_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setService(value);
         return this;
       }
       /**
@@ -12631,9 +10133,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearService() {
-        service_ = getDefaultInstance().getService();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
+        copyOnWrite();
+        instance.clearService();
         return this;
       }
       /**
@@ -12651,17 +10152,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setServiceBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        service_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setServiceBytes(value);
         return this;
       }
 
-      private java.lang.Object name_ = "";
       /**
        *
        *
@@ -12684,16 +10179,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The name.
        */
+      @java.lang.Override
       public java.lang.String getName() {
-        java.lang.Object ref = name_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          name_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getName();
       }
       /**
        *
@@ -12717,16 +10205,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for name.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getNameBytes() {
-        java.lang.Object ref = name_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          name_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getNameBytes();
       }
       /**
        *
@@ -12752,12 +10233,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setName(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        name_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setName(value);
         return this;
       }
       /**
@@ -12783,9 +10260,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearName() {
-        name_ = getDefaultInstance().getName();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
+        copyOnWrite();
+        instance.clearName();
         return this;
       }
       /**
@@ -12812,17 +10288,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setNameBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        name_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setNameBytes(value);
         return this;
       }
 
-      private java.lang.Object type_ = "";
       /**
        *
        *
@@ -12838,16 +10308,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The type.
        */
+      @java.lang.Override
       public java.lang.String getType() {
-        java.lang.Object ref = type_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          type_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getType();
       }
       /**
        *
@@ -12864,16 +10327,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for type.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getTypeBytes() {
-        java.lang.Object ref = type_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          type_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getTypeBytes();
       }
       /**
        *
@@ -12892,12 +10348,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setType(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        type_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
+        copyOnWrite();
+        instance.setType(value);
         return this;
       }
       /**
@@ -12916,9 +10368,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearType() {
-        type_ = getDefaultInstance().getType();
-        bitField0_ = (bitField0_ & ~0x00000004);
-        onChanged();
+        copyOnWrite();
+        instance.clearType();
         return this;
       }
       /**
@@ -12938,40 +10389,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setTypeBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        type_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
+        copyOnWrite();
+        instance.setTypeBytes(value);
         return this;
       }
 
-      private com.google.protobuf.MapField<java.lang.String, java.lang.String> labels_;
-
-      private com.google.protobuf.MapField<java.lang.String, java.lang.String> internalGetLabels() {
-        if (labels_ == null) {
-          return com.google.protobuf.MapField.emptyMapField(LabelsDefaultEntryHolder.defaultEntry);
-        }
-        return labels_;
-      }
-
-      private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-          internalGetMutableLabels() {
-        if (labels_ == null) {
-          labels_ = com.google.protobuf.MapField.newMapField(LabelsDefaultEntryHolder.defaultEntry);
-        }
-        if (!labels_.isMutable()) {
-          labels_ = labels_.copy();
-        }
-        bitField0_ |= 0x00000008;
-        onChanged();
-        return labels_;
-      }
-
+      @java.lang.Override
       public int getLabelsCount() {
-        return internalGetLabels().getMap().size();
+        return instance.getLabelsMap().size();
       }
       /**
        *
@@ -12985,10 +10410,30 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Override
       public boolean containsLabels(java.lang.String key) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        return internalGetLabels().getMap().containsKey(key);
+        java.lang.Class<?> keyClass = key.getClass();
+        return instance.getLabelsMap().containsKey(key);
+      }
+
+      public Builder clearLabels() {
+        copyOnWrite();
+        instance.getMutableLabelsMap().clear();
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * The labels or tags on the resource, such as AWS resource tags and
+       * Kubernetes resource labels.
+       * </pre>
+       *
+       * <code>map&lt;string, string&gt; labels = 4;</code>
+       */
+      public Builder removeLabels(java.lang.String key) {
+        java.lang.Class<?> keyClass = key.getClass();
+        copyOnWrite();
+        instance.getMutableLabelsMap().remove(key);
+        return this;
       }
       /** Use {@link #getLabelsMap()} instead. */
       @java.lang.Override
@@ -13008,7 +10453,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Override
       public java.util.Map<java.lang.String, java.lang.String> getLabelsMap() {
-        return internalGetLabels().getMap();
+        return java.util.Collections.unmodifiableMap(instance.getLabelsMap());
       }
       /**
        *
@@ -13025,10 +10470,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           java.lang.String key,
           /* nullable */
           java.lang.String defaultValue) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
+        java.lang.Class<?> keyClass = key.getClass();
+        java.util.Map<java.lang.String, java.lang.String> map = instance.getLabelsMap();
         return map.containsKey(key) ? map.get(key) : defaultValue;
       }
       /**
@@ -13043,43 +10486,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Override
       public java.lang.String getLabelsOrThrow(java.lang.String key) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
+        java.lang.Class<?> keyClass = key.getClass();
+        java.util.Map<java.lang.String, java.lang.String> map = instance.getLabelsMap();
         if (!map.containsKey(key)) {
           throw new java.lang.IllegalArgumentException();
         }
         return map.get(key);
-      }
-
-      public Builder clearLabels() {
-        bitField0_ = (bitField0_ & ~0x00000008);
-        internalGetMutableLabels().getMutableMap().clear();
-        return this;
-      }
-      /**
-       *
-       *
-       * <pre>
-       * The labels or tags on the resource, such as AWS resource tags and
-       * Kubernetes resource labels.
-       * </pre>
-       *
-       * <code>map&lt;string, string&gt; labels = 4;</code>
-       */
-      public Builder removeLabels(java.lang.String key) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        internalGetMutableLabels().getMutableMap().remove(key);
-        return this;
-      }
-      /** Use alternate mutation accessors instead. */
-      @java.lang.Deprecated
-      public java.util.Map<java.lang.String, java.lang.String> getMutableLabels() {
-        bitField0_ |= 0x00000008;
-        return internalGetMutableLabels().getMutableMap();
       }
       /**
        *
@@ -13092,14 +10504,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>map&lt;string, string&gt; labels = 4;</code>
        */
       public Builder putLabels(java.lang.String key, java.lang.String value) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        if (value == null) {
-          throw new NullPointerException("map value");
-        }
-        internalGetMutableLabels().getMutableMap().put(key, value);
-        bitField0_ |= 0x00000008;
+        java.lang.Class<?> keyClass = key.getClass();
+        java.lang.Class<?> valueClass = value.getClass();
+        copyOnWrite();
+        instance.getMutableLabelsMap().put(key, value);
         return this;
       }
       /**
@@ -13113,12 +10521,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>map&lt;string, string&gt; labels = 4;</code>
        */
       public Builder putAllLabels(java.util.Map<java.lang.String, java.lang.String> values) {
-        internalGetMutableLabels().getMutableMap().putAll(values);
-        bitField0_ |= 0x00000008;
+        copyOnWrite();
+        instance.getMutableLabelsMap().putAll(values);
         return this;
       }
 
-      private java.lang.Object uid_ = "";
       /**
        *
        *
@@ -13134,16 +10541,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The uid.
        */
+      @java.lang.Override
       public java.lang.String getUid() {
-        java.lang.Object ref = uid_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          uid_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getUid();
       }
       /**
        *
@@ -13160,16 +10560,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for uid.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getUidBytes() {
-        java.lang.Object ref = uid_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          uid_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getUidBytes();
       }
       /**
        *
@@ -13188,12 +10581,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setUid(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        uid_ = value;
-        bitField0_ |= 0x00000010;
-        onChanged();
+        copyOnWrite();
+        instance.setUid(value);
         return this;
       }
       /**
@@ -13212,9 +10601,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearUid() {
-        uid_ = getDefaultInstance().getUid();
-        bitField0_ = (bitField0_ & ~0x00000010);
-        onChanged();
+        copyOnWrite();
+        instance.clearUid();
         return this;
       }
       /**
@@ -13234,43 +10622,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setUidBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        uid_ = value;
-        bitField0_ |= 0x00000010;
-        onChanged();
+        copyOnWrite();
+        instance.setUidBytes(value);
         return this;
       }
 
-      private com.google.protobuf.MapField<java.lang.String, java.lang.String> annotations_;
-
-      private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-          internalGetAnnotations() {
-        if (annotations_ == null) {
-          return com.google.protobuf.MapField.emptyMapField(
-              AnnotationsDefaultEntryHolder.defaultEntry);
-        }
-        return annotations_;
-      }
-
-      private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-          internalGetMutableAnnotations() {
-        if (annotations_ == null) {
-          annotations_ =
-              com.google.protobuf.MapField.newMapField(AnnotationsDefaultEntryHolder.defaultEntry);
-        }
-        if (!annotations_.isMutable()) {
-          annotations_ = annotations_.copy();
-        }
-        bitField0_ |= 0x00000020;
-        onChanged();
-        return annotations_;
-      }
-
+      @java.lang.Override
       public int getAnnotationsCount() {
-        return internalGetAnnotations().getMap().size();
+        return instance.getAnnotationsMap().size();
       }
       /**
        *
@@ -13288,10 +10647,34 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Override
       public boolean containsAnnotations(java.lang.String key) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        return internalGetAnnotations().getMap().containsKey(key);
+        java.lang.Class<?> keyClass = key.getClass();
+        return instance.getAnnotationsMap().containsKey(key);
+      }
+
+      public Builder clearAnnotations() {
+        copyOnWrite();
+        instance.getMutableAnnotationsMap().clear();
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Annotations is an unstructured key-value map stored with a resource that
+       * may be set by external tools to store and retrieve arbitrary metadata.
+       * They are not queryable and should be preserved when modifying objects.
+       *
+       * More info:
+       * https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+       * </pre>
+       *
+       * <code>map&lt;string, string&gt; annotations = 6;</code>
+       */
+      public Builder removeAnnotations(java.lang.String key) {
+        java.lang.Class<?> keyClass = key.getClass();
+        copyOnWrite();
+        instance.getMutableAnnotationsMap().remove(key);
+        return this;
       }
       /** Use {@link #getAnnotationsMap()} instead. */
       @java.lang.Override
@@ -13315,7 +10698,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Override
       public java.util.Map<java.lang.String, java.lang.String> getAnnotationsMap() {
-        return internalGetAnnotations().getMap();
+        return java.util.Collections.unmodifiableMap(instance.getAnnotationsMap());
       }
       /**
        *
@@ -13336,10 +10719,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           java.lang.String key,
           /* nullable */
           java.lang.String defaultValue) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        java.util.Map<java.lang.String, java.lang.String> map = internalGetAnnotations().getMap();
+        java.lang.Class<?> keyClass = key.getClass();
+        java.util.Map<java.lang.String, java.lang.String> map = instance.getAnnotationsMap();
         return map.containsKey(key) ? map.get(key) : defaultValue;
       }
       /**
@@ -13358,47 +10739,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Override
       public java.lang.String getAnnotationsOrThrow(java.lang.String key) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        java.util.Map<java.lang.String, java.lang.String> map = internalGetAnnotations().getMap();
+        java.lang.Class<?> keyClass = key.getClass();
+        java.util.Map<java.lang.String, java.lang.String> map = instance.getAnnotationsMap();
         if (!map.containsKey(key)) {
           throw new java.lang.IllegalArgumentException();
         }
         return map.get(key);
-      }
-
-      public Builder clearAnnotations() {
-        bitField0_ = (bitField0_ & ~0x00000020);
-        internalGetMutableAnnotations().getMutableMap().clear();
-        return this;
-      }
-      /**
-       *
-       *
-       * <pre>
-       * Annotations is an unstructured key-value map stored with a resource that
-       * may be set by external tools to store and retrieve arbitrary metadata.
-       * They are not queryable and should be preserved when modifying objects.
-       *
-       * More info:
-       * https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-       * </pre>
-       *
-       * <code>map&lt;string, string&gt; annotations = 6;</code>
-       */
-      public Builder removeAnnotations(java.lang.String key) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        internalGetMutableAnnotations().getMutableMap().remove(key);
-        return this;
-      }
-      /** Use alternate mutation accessors instead. */
-      @java.lang.Deprecated
-      public java.util.Map<java.lang.String, java.lang.String> getMutableAnnotations() {
-        bitField0_ |= 0x00000020;
-        return internalGetMutableAnnotations().getMutableMap();
       }
       /**
        *
@@ -13415,14 +10761,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>map&lt;string, string&gt; annotations = 6;</code>
        */
       public Builder putAnnotations(java.lang.String key, java.lang.String value) {
-        if (key == null) {
-          throw new NullPointerException("map key");
-        }
-        if (value == null) {
-          throw new NullPointerException("map value");
-        }
-        internalGetMutableAnnotations().getMutableMap().put(key, value);
-        bitField0_ |= 0x00000020;
+        java.lang.Class<?> keyClass = key.getClass();
+        java.lang.Class<?> valueClass = value.getClass();
+        copyOnWrite();
+        instance.getMutableAnnotationsMap().put(key, value);
         return this;
       }
       /**
@@ -13440,12 +10782,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>map&lt;string, string&gt; annotations = 6;</code>
        */
       public Builder putAllAnnotations(java.util.Map<java.lang.String, java.lang.String> values) {
-        internalGetMutableAnnotations().getMutableMap().putAll(values);
-        bitField0_ |= 0x00000020;
+        copyOnWrite();
+        instance.getMutableAnnotationsMap().putAll(values);
         return this;
       }
 
-      private java.lang.Object displayName_ = "";
       /**
        *
        *
@@ -13457,16 +10798,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The displayName.
        */
+      @java.lang.Override
       public java.lang.String getDisplayName() {
-        java.lang.Object ref = displayName_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          displayName_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getDisplayName();
       }
       /**
        *
@@ -13479,16 +10813,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for displayName.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getDisplayNameBytes() {
-        java.lang.Object ref = displayName_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          displayName_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getDisplayNameBytes();
       }
       /**
        *
@@ -13503,12 +10830,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setDisplayName(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        displayName_ = value;
-        bitField0_ |= 0x00000040;
-        onChanged();
+        copyOnWrite();
+        instance.setDisplayName(value);
         return this;
       }
       /**
@@ -13523,9 +10846,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearDisplayName() {
-        displayName_ = getDefaultInstance().getDisplayName();
-        bitField0_ = (bitField0_ & ~0x00000040);
-        onChanged();
+        copyOnWrite();
+        instance.clearDisplayName();
         return this;
       }
       /**
@@ -13541,22 +10863,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setDisplayNameBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        displayName_ = value;
-        bitField0_ |= 0x00000040;
-        onChanged();
+        copyOnWrite();
+        instance.setDisplayNameBytes(value);
         return this;
       }
 
-      private com.google.protobuf.Timestamp createTime_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Timestamp,
-              com.google.protobuf.Timestamp.Builder,
-              com.google.protobuf.TimestampOrBuilder>
-          createTimeBuilder_;
       /**
        *
        *
@@ -13566,11 +10877,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * </pre>
        *
        * <code>.google.protobuf.Timestamp create_time = 8;</code>
-       *
-       * @return Whether the createTime field is set.
        */
+      @java.lang.Override
       public boolean hasCreateTime() {
-        return ((bitField0_ & 0x00000080) != 0);
+        return instance.hasCreateTime();
       }
       /**
        *
@@ -13581,17 +10891,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * </pre>
        *
        * <code>.google.protobuf.Timestamp create_time = 8;</code>
-       *
-       * @return The createTime.
        */
+      @java.lang.Override
       public com.google.protobuf.Timestamp getCreateTime() {
-        if (createTimeBuilder_ == null) {
-          return createTime_ == null
-              ? com.google.protobuf.Timestamp.getDefaultInstance()
-              : createTime_;
-        } else {
-          return createTimeBuilder_.getMessage();
-        }
+        return instance.getCreateTime();
       }
       /**
        *
@@ -13604,16 +10907,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Timestamp create_time = 8;</code>
        */
       public Builder setCreateTime(com.google.protobuf.Timestamp value) {
-        if (createTimeBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          createTime_ = value;
-        } else {
-          createTimeBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000080;
-        onChanged();
+        copyOnWrite();
+        instance.setCreateTime(value);
         return this;
       }
       /**
@@ -13627,13 +10922,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Timestamp create_time = 8;</code>
        */
       public Builder setCreateTime(com.google.protobuf.Timestamp.Builder builderForValue) {
-        if (createTimeBuilder_ == null) {
-          createTime_ = builderForValue.build();
-        } else {
-          createTimeBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000080;
-        onChanged();
+        copyOnWrite();
+        instance.setCreateTime(builderForValue.build());
         return this;
       }
       /**
@@ -13647,21 +10937,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Timestamp create_time = 8;</code>
        */
       public Builder mergeCreateTime(com.google.protobuf.Timestamp value) {
-        if (createTimeBuilder_ == null) {
-          if (((bitField0_ & 0x00000080) != 0)
-              && createTime_ != null
-              && createTime_ != com.google.protobuf.Timestamp.getDefaultInstance()) {
-            getCreateTimeBuilder().mergeFrom(value);
-          } else {
-            createTime_ = value;
-          }
-        } else {
-          createTimeBuilder_.mergeFrom(value);
-        }
-        if (createTime_ != null) {
-          bitField0_ |= 0x00000080;
-          onChanged();
-        }
+        copyOnWrite();
+        instance.mergeCreateTime(value);
         return this;
       }
       /**
@@ -13675,82 +10952,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Timestamp create_time = 8;</code>
        */
       public Builder clearCreateTime() {
-        bitField0_ = (bitField0_ & ~0x00000080);
-        createTime_ = null;
-        if (createTimeBuilder_ != null) {
-          createTimeBuilder_.dispose();
-          createTimeBuilder_ = null;
-        }
-        onChanged();
+        copyOnWrite();
+        instance.clearCreateTime();
         return this;
       }
-      /**
-       *
-       *
-       * <pre>
-       * Output only. The timestamp when the resource was created. This may
-       * be either the time creation was initiated or when it was completed.
-       * </pre>
-       *
-       * <code>.google.protobuf.Timestamp create_time = 8;</code>
-       */
-      public com.google.protobuf.Timestamp.Builder getCreateTimeBuilder() {
-        bitField0_ |= 0x00000080;
-        onChanged();
-        return getCreateTimeFieldBuilder().getBuilder();
-      }
-      /**
-       *
-       *
-       * <pre>
-       * Output only. The timestamp when the resource was created. This may
-       * be either the time creation was initiated or when it was completed.
-       * </pre>
-       *
-       * <code>.google.protobuf.Timestamp create_time = 8;</code>
-       */
-      public com.google.protobuf.TimestampOrBuilder getCreateTimeOrBuilder() {
-        if (createTimeBuilder_ != null) {
-          return createTimeBuilder_.getMessageOrBuilder();
-        } else {
-          return createTime_ == null
-              ? com.google.protobuf.Timestamp.getDefaultInstance()
-              : createTime_;
-        }
-      }
-      /**
-       *
-       *
-       * <pre>
-       * Output only. The timestamp when the resource was created. This may
-       * be either the time creation was initiated or when it was completed.
-       * </pre>
-       *
-       * <code>.google.protobuf.Timestamp create_time = 8;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Timestamp,
-              com.google.protobuf.Timestamp.Builder,
-              com.google.protobuf.TimestampOrBuilder>
-          getCreateTimeFieldBuilder() {
-        if (createTimeBuilder_ == null) {
-          createTimeBuilder_ =
-              new com.google.protobuf.SingleFieldBuilderV3<
-                  com.google.protobuf.Timestamp,
-                  com.google.protobuf.Timestamp.Builder,
-                  com.google.protobuf.TimestampOrBuilder>(
-                  getCreateTime(), getParentForChildren(), isClean());
-          createTime_ = null;
-        }
-        return createTimeBuilder_;
-      }
 
-      private com.google.protobuf.Timestamp updateTime_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Timestamp,
-              com.google.protobuf.Timestamp.Builder,
-              com.google.protobuf.TimestampOrBuilder>
-          updateTimeBuilder_;
       /**
        *
        *
@@ -13761,11 +10967,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * </pre>
        *
        * <code>.google.protobuf.Timestamp update_time = 9;</code>
-       *
-       * @return Whether the updateTime field is set.
        */
+      @java.lang.Override
       public boolean hasUpdateTime() {
-        return ((bitField0_ & 0x00000100) != 0);
+        return instance.hasUpdateTime();
       }
       /**
        *
@@ -13777,17 +10982,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * </pre>
        *
        * <code>.google.protobuf.Timestamp update_time = 9;</code>
-       *
-       * @return The updateTime.
        */
+      @java.lang.Override
       public com.google.protobuf.Timestamp getUpdateTime() {
-        if (updateTimeBuilder_ == null) {
-          return updateTime_ == null
-              ? com.google.protobuf.Timestamp.getDefaultInstance()
-              : updateTime_;
-        } else {
-          return updateTimeBuilder_.getMessage();
-        }
+        return instance.getUpdateTime();
       }
       /**
        *
@@ -13801,16 +10999,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Timestamp update_time = 9;</code>
        */
       public Builder setUpdateTime(com.google.protobuf.Timestamp value) {
-        if (updateTimeBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          updateTime_ = value;
-        } else {
-          updateTimeBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000100;
-        onChanged();
+        copyOnWrite();
+        instance.setUpdateTime(value);
         return this;
       }
       /**
@@ -13825,13 +11015,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Timestamp update_time = 9;</code>
        */
       public Builder setUpdateTime(com.google.protobuf.Timestamp.Builder builderForValue) {
-        if (updateTimeBuilder_ == null) {
-          updateTime_ = builderForValue.build();
-        } else {
-          updateTimeBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000100;
-        onChanged();
+        copyOnWrite();
+        instance.setUpdateTime(builderForValue.build());
         return this;
       }
       /**
@@ -13846,21 +11031,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Timestamp update_time = 9;</code>
        */
       public Builder mergeUpdateTime(com.google.protobuf.Timestamp value) {
-        if (updateTimeBuilder_ == null) {
-          if (((bitField0_ & 0x00000100) != 0)
-              && updateTime_ != null
-              && updateTime_ != com.google.protobuf.Timestamp.getDefaultInstance()) {
-            getUpdateTimeBuilder().mergeFrom(value);
-          } else {
-            updateTime_ = value;
-          }
-        } else {
-          updateTimeBuilder_.mergeFrom(value);
-        }
-        if (updateTime_ != null) {
-          bitField0_ |= 0x00000100;
-          onChanged();
-        }
+        copyOnWrite();
+        instance.mergeUpdateTime(value);
         return this;
       }
       /**
@@ -13875,85 +11047,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Timestamp update_time = 9;</code>
        */
       public Builder clearUpdateTime() {
-        bitField0_ = (bitField0_ & ~0x00000100);
-        updateTime_ = null;
-        if (updateTimeBuilder_ != null) {
-          updateTimeBuilder_.dispose();
-          updateTimeBuilder_ = null;
-        }
-        onChanged();
+        copyOnWrite();
+        instance.clearUpdateTime();
         return this;
       }
-      /**
-       *
-       *
-       * <pre>
-       * Output only. The timestamp when the resource was last updated. Any
-       * change to the resource made by users must refresh this value.
-       * Changes to a resource made by the service should refresh this value.
-       * </pre>
-       *
-       * <code>.google.protobuf.Timestamp update_time = 9;</code>
-       */
-      public com.google.protobuf.Timestamp.Builder getUpdateTimeBuilder() {
-        bitField0_ |= 0x00000100;
-        onChanged();
-        return getUpdateTimeFieldBuilder().getBuilder();
-      }
-      /**
-       *
-       *
-       * <pre>
-       * Output only. The timestamp when the resource was last updated. Any
-       * change to the resource made by users must refresh this value.
-       * Changes to a resource made by the service should refresh this value.
-       * </pre>
-       *
-       * <code>.google.protobuf.Timestamp update_time = 9;</code>
-       */
-      public com.google.protobuf.TimestampOrBuilder getUpdateTimeOrBuilder() {
-        if (updateTimeBuilder_ != null) {
-          return updateTimeBuilder_.getMessageOrBuilder();
-        } else {
-          return updateTime_ == null
-              ? com.google.protobuf.Timestamp.getDefaultInstance()
-              : updateTime_;
-        }
-      }
-      /**
-       *
-       *
-       * <pre>
-       * Output only. The timestamp when the resource was last updated. Any
-       * change to the resource made by users must refresh this value.
-       * Changes to a resource made by the service should refresh this value.
-       * </pre>
-       *
-       * <code>.google.protobuf.Timestamp update_time = 9;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Timestamp,
-              com.google.protobuf.Timestamp.Builder,
-              com.google.protobuf.TimestampOrBuilder>
-          getUpdateTimeFieldBuilder() {
-        if (updateTimeBuilder_ == null) {
-          updateTimeBuilder_ =
-              new com.google.protobuf.SingleFieldBuilderV3<
-                  com.google.protobuf.Timestamp,
-                  com.google.protobuf.Timestamp.Builder,
-                  com.google.protobuf.TimestampOrBuilder>(
-                  getUpdateTime(), getParentForChildren(), isClean());
-          updateTime_ = null;
-        }
-        return updateTimeBuilder_;
-      }
 
-      private com.google.protobuf.Timestamp deleteTime_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Timestamp,
-              com.google.protobuf.Timestamp.Builder,
-              com.google.protobuf.TimestampOrBuilder>
-          deleteTimeBuilder_;
       /**
        *
        *
@@ -13963,11 +11061,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * </pre>
        *
        * <code>.google.protobuf.Timestamp delete_time = 10;</code>
-       *
-       * @return Whether the deleteTime field is set.
        */
+      @java.lang.Override
       public boolean hasDeleteTime() {
-        return ((bitField0_ & 0x00000200) != 0);
+        return instance.hasDeleteTime();
       }
       /**
        *
@@ -13978,17 +11075,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * </pre>
        *
        * <code>.google.protobuf.Timestamp delete_time = 10;</code>
-       *
-       * @return The deleteTime.
        */
+      @java.lang.Override
       public com.google.protobuf.Timestamp getDeleteTime() {
-        if (deleteTimeBuilder_ == null) {
-          return deleteTime_ == null
-              ? com.google.protobuf.Timestamp.getDefaultInstance()
-              : deleteTime_;
-        } else {
-          return deleteTimeBuilder_.getMessage();
-        }
+        return instance.getDeleteTime();
       }
       /**
        *
@@ -14001,16 +11091,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Timestamp delete_time = 10;</code>
        */
       public Builder setDeleteTime(com.google.protobuf.Timestamp value) {
-        if (deleteTimeBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          deleteTime_ = value;
-        } else {
-          deleteTimeBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000200;
-        onChanged();
+        copyOnWrite();
+        instance.setDeleteTime(value);
         return this;
       }
       /**
@@ -14024,13 +11106,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Timestamp delete_time = 10;</code>
        */
       public Builder setDeleteTime(com.google.protobuf.Timestamp.Builder builderForValue) {
-        if (deleteTimeBuilder_ == null) {
-          deleteTime_ = builderForValue.build();
-        } else {
-          deleteTimeBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000200;
-        onChanged();
+        copyOnWrite();
+        instance.setDeleteTime(builderForValue.build());
         return this;
       }
       /**
@@ -14044,21 +11121,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Timestamp delete_time = 10;</code>
        */
       public Builder mergeDeleteTime(com.google.protobuf.Timestamp value) {
-        if (deleteTimeBuilder_ == null) {
-          if (((bitField0_ & 0x00000200) != 0)
-              && deleteTime_ != null
-              && deleteTime_ != com.google.protobuf.Timestamp.getDefaultInstance()) {
-            getDeleteTimeBuilder().mergeFrom(value);
-          } else {
-            deleteTime_ = value;
-          }
-        } else {
-          deleteTimeBuilder_.mergeFrom(value);
-        }
-        if (deleteTime_ != null) {
-          bitField0_ |= 0x00000200;
-          onChanged();
-        }
+        copyOnWrite();
+        instance.mergeDeleteTime(value);
         return this;
       }
       /**
@@ -14072,77 +11136,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <code>.google.protobuf.Timestamp delete_time = 10;</code>
        */
       public Builder clearDeleteTime() {
-        bitField0_ = (bitField0_ & ~0x00000200);
-        deleteTime_ = null;
-        if (deleteTimeBuilder_ != null) {
-          deleteTimeBuilder_.dispose();
-          deleteTimeBuilder_ = null;
-        }
-        onChanged();
+        copyOnWrite();
+        instance.clearDeleteTime();
         return this;
       }
-      /**
-       *
-       *
-       * <pre>
-       * Output only. The timestamp when the resource was deleted.
-       * If the resource is not deleted, this must be empty.
-       * </pre>
-       *
-       * <code>.google.protobuf.Timestamp delete_time = 10;</code>
-       */
-      public com.google.protobuf.Timestamp.Builder getDeleteTimeBuilder() {
-        bitField0_ |= 0x00000200;
-        onChanged();
-        return getDeleteTimeFieldBuilder().getBuilder();
-      }
-      /**
-       *
-       *
-       * <pre>
-       * Output only. The timestamp when the resource was deleted.
-       * If the resource is not deleted, this must be empty.
-       * </pre>
-       *
-       * <code>.google.protobuf.Timestamp delete_time = 10;</code>
-       */
-      public com.google.protobuf.TimestampOrBuilder getDeleteTimeOrBuilder() {
-        if (deleteTimeBuilder_ != null) {
-          return deleteTimeBuilder_.getMessageOrBuilder();
-        } else {
-          return deleteTime_ == null
-              ? com.google.protobuf.Timestamp.getDefaultInstance()
-              : deleteTime_;
-        }
-      }
-      /**
-       *
-       *
-       * <pre>
-       * Output only. The timestamp when the resource was deleted.
-       * If the resource is not deleted, this must be empty.
-       * </pre>
-       *
-       * <code>.google.protobuf.Timestamp delete_time = 10;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Timestamp,
-              com.google.protobuf.Timestamp.Builder,
-              com.google.protobuf.TimestampOrBuilder>
-          getDeleteTimeFieldBuilder() {
-        if (deleteTimeBuilder_ == null) {
-          deleteTimeBuilder_ =
-              new com.google.protobuf.SingleFieldBuilderV3<
-                  com.google.protobuf.Timestamp,
-                  com.google.protobuf.Timestamp.Builder,
-                  com.google.protobuf.TimestampOrBuilder>(
-                  getDeleteTime(), getParentForChildren(), isClean());
-          deleteTime_ = null;
-        }
-        return deleteTimeBuilder_;
-      }
 
-      private java.lang.Object etag_ = "";
       /**
        *
        *
@@ -14156,16 +11154,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The etag.
        */
+      @java.lang.Override
       public java.lang.String getEtag() {
-        java.lang.Object ref = etag_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          etag_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getEtag();
       }
       /**
        *
@@ -14180,16 +11171,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for etag.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getEtagBytes() {
-        java.lang.Object ref = etag_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          etag_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getEtagBytes();
       }
       /**
        *
@@ -14206,12 +11190,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setEtag(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        etag_ = value;
-        bitField0_ |= 0x00000400;
-        onChanged();
+        copyOnWrite();
+        instance.setEtag(value);
         return this;
       }
       /**
@@ -14228,9 +11208,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearEtag() {
-        etag_ = getDefaultInstance().getEtag();
-        bitField0_ = (bitField0_ & ~0x00000400);
-        onChanged();
+        copyOnWrite();
+        instance.clearEtag();
         return this;
       }
       /**
@@ -14248,17 +11227,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setEtagBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        etag_ = value;
-        bitField0_ |= 0x00000400;
-        onChanged();
+        copyOnWrite();
+        instance.setEtagBytes(value);
         return this;
       }
 
-      private java.lang.Object location_ = "";
       /**
        *
        *
@@ -14277,16 +11250,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The location.
        */
+      @java.lang.Override
       public java.lang.String getLocation() {
-        java.lang.Object ref = location_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          location_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getLocation();
       }
       /**
        *
@@ -14306,16 +11272,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The bytes for location.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getLocationBytes() {
-        java.lang.Object ref = location_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          location_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getLocationBytes();
       }
       /**
        *
@@ -14337,12 +11296,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setLocation(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        location_ = value;
-        bitField0_ |= 0x00000800;
-        onChanged();
+        copyOnWrite();
+        instance.setLocation(value);
         return this;
       }
       /**
@@ -14364,9 +11319,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearLocation() {
-        location_ = getDefaultInstance().getLocation();
-        bitField0_ = (bitField0_ & ~0x00000800);
-        onChanged();
+        copyOnWrite();
+        instance.clearLocation();
         return this;
       }
       /**
@@ -14389,77 +11343,109 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder setLocationBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        location_ = value;
-        bitField0_ |= 0x00000800;
-        onChanged();
+        copyOnWrite();
+        instance.setLocationBytes(value);
         return this;
       }
 
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
       // @@protoc_insertion_point(builder_scope:google.rpc.context.AttributeContext.Resource)
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0,
+        java.lang.Object arg1) {
+      switch (method) {
+        case NEW_MUTABLE_INSTANCE:
+          {
+            return new com.google.rpc.context.AttributeContext.Resource();
+          }
+        case NEW_BUILDER:
+          {
+            return new Builder();
+          }
+        case BUILD_MESSAGE_INFO:
+          {
+            java.lang.Object[] objects =
+                new java.lang.Object[] {
+                  "bitField0_",
+                  "service_",
+                  "name_",
+                  "type_",
+                  "labels_",
+                  LabelsDefaultEntryHolder.defaultEntry,
+                  "uid_",
+                  "annotations_",
+                  AnnotationsDefaultEntryHolder.defaultEntry,
+                  "displayName_",
+                  "createTime_",
+                  "updateTime_",
+                  "deleteTime_",
+                  "etag_",
+                  "location_",
+                };
+            java.lang.String info =
+                "\u0000\f\u0000\u0001\u0001\f\f\u0002\u0000\u0000\u0001\u0208\u0002\u0208\u0003\u0208"
+                    + "\u00042\u0005\u0208\u00062\u0007\u0208\b\u1009\u0000\t\u1009\u0001\n\u1009\u0002"
+                    + "\u000b\u0208\f\u0208";
+            return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+          }
+          // fall through
+        case GET_DEFAULT_INSTANCE:
+          {
+            return DEFAULT_INSTANCE;
+          }
+        case GET_PARSER:
+          {
+            com.google.protobuf.Parser<com.google.rpc.context.AttributeContext.Resource> parser =
+                PARSER;
+            if (parser == null) {
+              synchronized (com.google.rpc.context.AttributeContext.Resource.class) {
+                parser = PARSER;
+                if (parser == null) {
+                  parser =
+                      new DefaultInstanceBasedParser<
+                          com.google.rpc.context.AttributeContext.Resource>(DEFAULT_INSTANCE);
+                  PARSER = parser;
+                }
+              }
+            }
+            return parser;
+          }
+        case GET_MEMOIZED_IS_INITIALIZED:
+          {
+            return (byte) 1;
+          }
+        case SET_MEMOIZED_IS_INITIALIZED:
+          {
+            return null;
+          }
+      }
+      throw new UnsupportedOperationException();
     }
 
     // @@protoc_insertion_point(class_scope:google.rpc.context.AttributeContext.Resource)
     private static final com.google.rpc.context.AttributeContext.Resource DEFAULT_INSTANCE;
 
     static {
-      DEFAULT_INSTANCE = new com.google.rpc.context.AttributeContext.Resource();
+      Resource defaultInstance = new Resource();
+      // New instances are implicitly immutable so no need to make
+      // immutable.
+      DEFAULT_INSTANCE = defaultInstance;
+      com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+          Resource.class, defaultInstance);
     }
 
     public static com.google.rpc.context.AttributeContext.Resource getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<Resource> PARSER =
-        new com.google.protobuf.AbstractParser<Resource>() {
-          @java.lang.Override
-          public Resource parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-          }
-        };
+    private static volatile com.google.protobuf.Parser<Resource> PARSER;
 
     public static com.google.protobuf.Parser<Resource> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<Resource> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.rpc.context.AttributeContext.Resource getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
+      return DEFAULT_INSTANCE.getParserForType();
     }
   }
 
@@ -14476,8 +11462,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    * </pre>
    *
    * <code>.google.rpc.context.AttributeContext.Peer origin = 7;</code>
-   *
-   * @return Whether the origin field is set.
    */
   @java.lang.Override
   public boolean hasOrigin() {
@@ -14493,8 +11477,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    * </pre>
    *
    * <code>.google.rpc.context.AttributeContext.Peer origin = 7;</code>
-   *
-   * @return The origin.
    */
   @java.lang.Override
   public com.google.rpc.context.AttributeContext.Peer getOrigin() {
@@ -14513,11 +11495,50 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * <code>.google.rpc.context.AttributeContext.Peer origin = 7;</code>
    */
-  @java.lang.Override
-  public com.google.rpc.context.AttributeContext.PeerOrBuilder getOriginOrBuilder() {
-    return origin_ == null
-        ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
-        : origin_;
+  private void setOrigin(com.google.rpc.context.AttributeContext.Peer value) {
+    value.getClass();
+    origin_ = value;
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The origin of a network activity. In a multi hop network activity,
+   * the origin represents the sender of the first hop. For the first hop,
+   * the `source` and the `origin` must have the same content.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Peer origin = 7;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeOrigin(com.google.rpc.context.AttributeContext.Peer value) {
+    value.getClass();
+    if (origin_ != null
+        && origin_ != com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()) {
+      origin_ =
+          com.google.rpc.context.AttributeContext.Peer.newBuilder(origin_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      origin_ = value;
+    }
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The origin of a network activity. In a multi hop network activity,
+   * the origin represents the sender of the first hop. For the first hop,
+   * the `source` and the `origin` must have the same content.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Peer origin = 7;</code>
+   */
+  private void clearOrigin() {
+    origin_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static final int SOURCE_FIELD_NUMBER = 1;
@@ -14532,8 +11553,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    * </pre>
    *
    * <code>.google.rpc.context.AttributeContext.Peer source = 1;</code>
-   *
-   * @return Whether the source field is set.
    */
   @java.lang.Override
   public boolean hasSource() {
@@ -14549,8 +11568,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    * </pre>
    *
    * <code>.google.rpc.context.AttributeContext.Peer source = 1;</code>
-   *
-   * @return The source.
    */
   @java.lang.Override
   public com.google.rpc.context.AttributeContext.Peer getSource() {
@@ -14569,11 +11586,50 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * <code>.google.rpc.context.AttributeContext.Peer source = 1;</code>
    */
-  @java.lang.Override
-  public com.google.rpc.context.AttributeContext.PeerOrBuilder getSourceOrBuilder() {
-    return source_ == null
-        ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
-        : source_;
+  private void setSource(com.google.rpc.context.AttributeContext.Peer value) {
+    value.getClass();
+    source_ = value;
+    bitField0_ |= 0x00000002;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The source of a network activity, such as starting a TCP connection.
+   * In a multi hop network activity, the source represents the sender of the
+   * last hop.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Peer source = 1;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeSource(com.google.rpc.context.AttributeContext.Peer value) {
+    value.getClass();
+    if (source_ != null
+        && source_ != com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()) {
+      source_ =
+          com.google.rpc.context.AttributeContext.Peer.newBuilder(source_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      source_ = value;
+    }
+    bitField0_ |= 0x00000002;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The source of a network activity, such as starting a TCP connection.
+   * In a multi hop network activity, the source represents the sender of the
+   * last hop.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Peer source = 1;</code>
+   */
+  private void clearSource() {
+    source_ = null;
+    bitField0_ = (bitField0_ & ~0x00000002);
   }
 
   public static final int DESTINATION_FIELD_NUMBER = 2;
@@ -14588,8 +11644,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    * </pre>
    *
    * <code>.google.rpc.context.AttributeContext.Peer destination = 2;</code>
-   *
-   * @return Whether the destination field is set.
    */
   @java.lang.Override
   public boolean hasDestination() {
@@ -14605,8 +11659,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    * </pre>
    *
    * <code>.google.rpc.context.AttributeContext.Peer destination = 2;</code>
-   *
-   * @return The destination.
    */
   @java.lang.Override
   public com.google.rpc.context.AttributeContext.Peer getDestination() {
@@ -14625,11 +11677,50 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * <code>.google.rpc.context.AttributeContext.Peer destination = 2;</code>
    */
-  @java.lang.Override
-  public com.google.rpc.context.AttributeContext.PeerOrBuilder getDestinationOrBuilder() {
-    return destination_ == null
-        ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
-        : destination_;
+  private void setDestination(com.google.rpc.context.AttributeContext.Peer value) {
+    value.getClass();
+    destination_ = value;
+    bitField0_ |= 0x00000004;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The destination of a network activity, such as accepting a TCP connection.
+   * In a multi hop network activity, the destination represents the receiver of
+   * the last hop.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Peer destination = 2;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeDestination(com.google.rpc.context.AttributeContext.Peer value) {
+    value.getClass();
+    if (destination_ != null
+        && destination_ != com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()) {
+      destination_ =
+          com.google.rpc.context.AttributeContext.Peer.newBuilder(destination_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      destination_ = value;
+    }
+    bitField0_ |= 0x00000004;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The destination of a network activity, such as accepting a TCP connection.
+   * In a multi hop network activity, the destination represents the receiver of
+   * the last hop.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Peer destination = 2;</code>
+   */
+  private void clearDestination() {
+    destination_ = null;
+    bitField0_ = (bitField0_ & ~0x00000004);
   }
 
   public static final int REQUEST_FIELD_NUMBER = 3;
@@ -14642,8 +11733,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    * </pre>
    *
    * <code>.google.rpc.context.AttributeContext.Request request = 3;</code>
-   *
-   * @return Whether the request field is set.
    */
   @java.lang.Override
   public boolean hasRequest() {
@@ -14657,8 +11746,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    * </pre>
    *
    * <code>.google.rpc.context.AttributeContext.Request request = 3;</code>
-   *
-   * @return The request.
    */
   @java.lang.Override
   public com.google.rpc.context.AttributeContext.Request getRequest() {
@@ -14675,11 +11762,46 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * <code>.google.rpc.context.AttributeContext.Request request = 3;</code>
    */
-  @java.lang.Override
-  public com.google.rpc.context.AttributeContext.RequestOrBuilder getRequestOrBuilder() {
-    return request_ == null
-        ? com.google.rpc.context.AttributeContext.Request.getDefaultInstance()
-        : request_;
+  private void setRequest(com.google.rpc.context.AttributeContext.Request value) {
+    value.getClass();
+    request_ = value;
+    bitField0_ |= 0x00000008;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Represents a network request, such as an HTTP request.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Request request = 3;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeRequest(com.google.rpc.context.AttributeContext.Request value) {
+    value.getClass();
+    if (request_ != null
+        && request_ != com.google.rpc.context.AttributeContext.Request.getDefaultInstance()) {
+      request_ =
+          com.google.rpc.context.AttributeContext.Request.newBuilder(request_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      request_ = value;
+    }
+    bitField0_ |= 0x00000008;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Represents a network request, such as an HTTP request.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Request request = 3;</code>
+   */
+  private void clearRequest() {
+    request_ = null;
+    bitField0_ = (bitField0_ & ~0x00000008);
   }
 
   public static final int RESPONSE_FIELD_NUMBER = 4;
@@ -14692,8 +11814,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    * </pre>
    *
    * <code>.google.rpc.context.AttributeContext.Response response = 4;</code>
-   *
-   * @return Whether the response field is set.
    */
   @java.lang.Override
   public boolean hasResponse() {
@@ -14707,8 +11827,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    * </pre>
    *
    * <code>.google.rpc.context.AttributeContext.Response response = 4;</code>
-   *
-   * @return The response.
    */
   @java.lang.Override
   public com.google.rpc.context.AttributeContext.Response getResponse() {
@@ -14725,11 +11843,46 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * <code>.google.rpc.context.AttributeContext.Response response = 4;</code>
    */
-  @java.lang.Override
-  public com.google.rpc.context.AttributeContext.ResponseOrBuilder getResponseOrBuilder() {
-    return response_ == null
-        ? com.google.rpc.context.AttributeContext.Response.getDefaultInstance()
-        : response_;
+  private void setResponse(com.google.rpc.context.AttributeContext.Response value) {
+    value.getClass();
+    response_ = value;
+    bitField0_ |= 0x00000010;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Represents a network response, such as an HTTP response.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Response response = 4;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeResponse(com.google.rpc.context.AttributeContext.Response value) {
+    value.getClass();
+    if (response_ != null
+        && response_ != com.google.rpc.context.AttributeContext.Response.getDefaultInstance()) {
+      response_ =
+          com.google.rpc.context.AttributeContext.Response.newBuilder(response_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      response_ = value;
+    }
+    bitField0_ |= 0x00000010;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Represents a network response, such as an HTTP response.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Response response = 4;</code>
+   */
+  private void clearResponse() {
+    response_ = null;
+    bitField0_ = (bitField0_ & ~0x00000010);
   }
 
   public static final int RESOURCE_FIELD_NUMBER = 5;
@@ -14744,8 +11897,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    * </pre>
    *
    * <code>.google.rpc.context.AttributeContext.Resource resource = 5;</code>
-   *
-   * @return Whether the resource field is set.
    */
   @java.lang.Override
   public boolean hasResource() {
@@ -14761,8 +11912,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    * </pre>
    *
    * <code>.google.rpc.context.AttributeContext.Resource resource = 5;</code>
-   *
-   * @return The resource.
    */
   @java.lang.Override
   public com.google.rpc.context.AttributeContext.Resource getResource() {
@@ -14781,11 +11930,50 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * <code>.google.rpc.context.AttributeContext.Resource resource = 5;</code>
    */
-  @java.lang.Override
-  public com.google.rpc.context.AttributeContext.ResourceOrBuilder getResourceOrBuilder() {
-    return resource_ == null
-        ? com.google.rpc.context.AttributeContext.Resource.getDefaultInstance()
-        : resource_;
+  private void setResource(com.google.rpc.context.AttributeContext.Resource value) {
+    value.getClass();
+    resource_ = value;
+    bitField0_ |= 0x00000020;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Represents a target resource that is involved with a network activity.
+   * If multiple resources are involved with an activity, this must be the
+   * primary one.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Resource resource = 5;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeResource(com.google.rpc.context.AttributeContext.Resource value) {
+    value.getClass();
+    if (resource_ != null
+        && resource_ != com.google.rpc.context.AttributeContext.Resource.getDefaultInstance()) {
+      resource_ =
+          com.google.rpc.context.AttributeContext.Resource.newBuilder(resource_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      resource_ = value;
+    }
+    bitField0_ |= 0x00000020;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Represents a target resource that is involved with a network activity.
+   * If multiple resources are involved with an activity, this must be the
+   * primary one.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Resource resource = 5;</code>
+   */
+  private void clearResource() {
+    resource_ = null;
+    bitField0_ = (bitField0_ & ~0x00000020);
   }
 
   public static final int API_FIELD_NUMBER = 6;
@@ -14798,8 +11986,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    * </pre>
    *
    * <code>.google.rpc.context.AttributeContext.Api api = 6;</code>
-   *
-   * @return Whether the api field is set.
    */
   @java.lang.Override
   public boolean hasApi() {
@@ -14813,8 +11999,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    * </pre>
    *
    * <code>.google.rpc.context.AttributeContext.Api api = 6;</code>
-   *
-   * @return The api.
    */
   @java.lang.Override
   public com.google.rpc.context.AttributeContext.Api getApi() {
@@ -14829,15 +12013,49 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * <code>.google.rpc.context.AttributeContext.Api api = 6;</code>
    */
-  @java.lang.Override
-  public com.google.rpc.context.AttributeContext.ApiOrBuilder getApiOrBuilder() {
-    return api_ == null ? com.google.rpc.context.AttributeContext.Api.getDefaultInstance() : api_;
+  private void setApi(com.google.rpc.context.AttributeContext.Api value) {
+    value.getClass();
+    api_ = value;
+    bitField0_ |= 0x00000040;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Represents an API operation that is involved to a network activity.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Api api = 6;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeApi(com.google.rpc.context.AttributeContext.Api value) {
+    value.getClass();
+    if (api_ != null && api_ != com.google.rpc.context.AttributeContext.Api.getDefaultInstance()) {
+      api_ =
+          com.google.rpc.context.AttributeContext.Api.newBuilder(api_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      api_ = value;
+    }
+    bitField0_ |= 0x00000040;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Represents an API operation that is involved to a network activity.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Api api = 6;</code>
+   */
+  private void clearApi() {
+    api_ = null;
+    bitField0_ = (bitField0_ & ~0x00000040);
   }
 
   public static final int EXTENSIONS_FIELD_NUMBER = 8;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.protobuf.Any> extensions_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.protobuf.Any> extensions_;
   /**
    *
    *
@@ -14860,7 +12078,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * <code>repeated .google.protobuf.Any extensions = 8;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.protobuf.AnyOrBuilder> getExtensionsOrBuilderList() {
     return extensions_;
   }
@@ -14899,269 +12116,180 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * <code>repeated .google.protobuf.Any extensions = 8;</code>
    */
-  @java.lang.Override
   public com.google.protobuf.AnyOrBuilder getExtensionsOrBuilder(int index) {
     return extensions_.get(index);
   }
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  private void ensureExtensionsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.protobuf.Any> tmp = extensions_;
+    if (!tmp.isModifiable()) {
+      extensions_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
   }
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (((bitField0_ & 0x00000002) != 0)) {
-      output.writeMessage(1, getSource());
-    }
-    if (((bitField0_ & 0x00000004) != 0)) {
-      output.writeMessage(2, getDestination());
-    }
-    if (((bitField0_ & 0x00000008) != 0)) {
-      output.writeMessage(3, getRequest());
-    }
-    if (((bitField0_ & 0x00000010) != 0)) {
-      output.writeMessage(4, getResponse());
-    }
-    if (((bitField0_ & 0x00000020) != 0)) {
-      output.writeMessage(5, getResource());
-    }
-    if (((bitField0_ & 0x00000040) != 0)) {
-      output.writeMessage(6, getApi());
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(7, getOrigin());
-    }
-    for (int i = 0; i < extensions_.size(); i++) {
-      output.writeMessage(8, extensions_.get(i));
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * Supports extensions for advanced use cases, such as logs and metrics.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 8;</code>
+   */
+  private void setExtensions(int index, com.google.protobuf.Any value) {
+    value.getClass();
+    ensureExtensionsIsMutable();
+    extensions_.set(index, value);
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (((bitField0_ & 0x00000002) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getSource());
-    }
-    if (((bitField0_ & 0x00000004) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, getDestination());
-    }
-    if (((bitField0_ & 0x00000008) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, getRequest());
-    }
-    if (((bitField0_ & 0x00000010) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, getResponse());
-    }
-    if (((bitField0_ & 0x00000020) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(5, getResource());
-    }
-    if (((bitField0_ & 0x00000040) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(6, getApi());
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(7, getOrigin());
-    }
-    for (int i = 0; i < extensions_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(8, extensions_.get(i));
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
+  /**
+   *
+   *
+   * <pre>
+   * Supports extensions for advanced use cases, such as logs and metrics.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 8;</code>
+   */
+  private void addExtensions(com.google.protobuf.Any value) {
+    value.getClass();
+    ensureExtensionsIsMutable();
+    extensions_.add(value);
   }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.rpc.context.AttributeContext)) {
-      return super.equals(obj);
-    }
-    com.google.rpc.context.AttributeContext other = (com.google.rpc.context.AttributeContext) obj;
-
-    if (hasOrigin() != other.hasOrigin()) return false;
-    if (hasOrigin()) {
-      if (!getOrigin().equals(other.getOrigin())) return false;
-    }
-    if (hasSource() != other.hasSource()) return false;
-    if (hasSource()) {
-      if (!getSource().equals(other.getSource())) return false;
-    }
-    if (hasDestination() != other.hasDestination()) return false;
-    if (hasDestination()) {
-      if (!getDestination().equals(other.getDestination())) return false;
-    }
-    if (hasRequest() != other.hasRequest()) return false;
-    if (hasRequest()) {
-      if (!getRequest().equals(other.getRequest())) return false;
-    }
-    if (hasResponse() != other.hasResponse()) return false;
-    if (hasResponse()) {
-      if (!getResponse().equals(other.getResponse())) return false;
-    }
-    if (hasResource() != other.hasResource()) return false;
-    if (hasResource()) {
-      if (!getResource().equals(other.getResource())) return false;
-    }
-    if (hasApi() != other.hasApi()) return false;
-    if (hasApi()) {
-      if (!getApi().equals(other.getApi())) return false;
-    }
-    if (!getExtensionsList().equals(other.getExtensionsList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Supports extensions for advanced use cases, such as logs and metrics.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 8;</code>
+   */
+  private void addExtensions(int index, com.google.protobuf.Any value) {
+    value.getClass();
+    ensureExtensionsIsMutable();
+    extensions_.add(index, value);
   }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (hasOrigin()) {
-      hash = (37 * hash) + ORIGIN_FIELD_NUMBER;
-      hash = (53 * hash) + getOrigin().hashCode();
-    }
-    if (hasSource()) {
-      hash = (37 * hash) + SOURCE_FIELD_NUMBER;
-      hash = (53 * hash) + getSource().hashCode();
-    }
-    if (hasDestination()) {
-      hash = (37 * hash) + DESTINATION_FIELD_NUMBER;
-      hash = (53 * hash) + getDestination().hashCode();
-    }
-    if (hasRequest()) {
-      hash = (37 * hash) + REQUEST_FIELD_NUMBER;
-      hash = (53 * hash) + getRequest().hashCode();
-    }
-    if (hasResponse()) {
-      hash = (37 * hash) + RESPONSE_FIELD_NUMBER;
-      hash = (53 * hash) + getResponse().hashCode();
-    }
-    if (hasResource()) {
-      hash = (37 * hash) + RESOURCE_FIELD_NUMBER;
-      hash = (53 * hash) + getResource().hashCode();
-    }
-    if (hasApi()) {
-      hash = (37 * hash) + API_FIELD_NUMBER;
-      hash = (53 * hash) + getApi().hashCode();
-    }
-    if (getExtensionsCount() > 0) {
-      hash = (37 * hash) + EXTENSIONS_FIELD_NUMBER;
-      hash = (53 * hash) + getExtensionsList().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Supports extensions for advanced use cases, such as logs and metrics.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 8;</code>
+   */
+  private void addAllExtensions(java.lang.Iterable<? extends com.google.protobuf.Any> values) {
+    ensureExtensionsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, extensions_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Supports extensions for advanced use cases, such as logs and metrics.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 8;</code>
+   */
+  private void clearExtensions() {
+    extensions_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Supports extensions for advanced use cases, such as logs and metrics.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 8;</code>
+   */
+  private void removeExtensions(int index) {
+    ensureExtensionsIsMutable();
+    extensions_.remove(index);
   }
 
   public static com.google.rpc.context.AttributeContext parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.rpc.context.AttributeContext parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.rpc.context.AttributeContext parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.rpc.context.AttributeContext parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.rpc.context.AttributeContext parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.rpc.context.AttributeContext parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.rpc.context.AttributeContext parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.rpc.context.AttributeContext parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.rpc.context.AttributeContext parseDelimitedFrom(
       java.io.InputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.rpc.context.AttributeContext parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.rpc.context.AttributeContext parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.rpc.context.AttributeContext parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.rpc.context.AttributeContext prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -15187,374 +12315,17 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * Protobuf type {@code google.rpc.context.AttributeContext}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.rpc.context.AttributeContext, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.rpc.context.AttributeContext)
       com.google.rpc.context.AttributeContextOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.rpc.context.AttributeContextProto
-          .internal_static_google_rpc_context_AttributeContext_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.rpc.context.AttributeContextProto
-          .internal_static_google_rpc_context_AttributeContext_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.rpc.context.AttributeContext.class,
-              com.google.rpc.context.AttributeContext.Builder.class);
-    }
-
     // Construct using com.google.rpc.context.AttributeContext.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getOriginFieldBuilder();
-        getSourceFieldBuilder();
-        getDestinationFieldBuilder();
-        getRequestFieldBuilder();
-        getResponseFieldBuilder();
-        getResourceFieldBuilder();
-        getApiFieldBuilder();
-        getExtensionsFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      origin_ = null;
-      if (originBuilder_ != null) {
-        originBuilder_.dispose();
-        originBuilder_ = null;
-      }
-      source_ = null;
-      if (sourceBuilder_ != null) {
-        sourceBuilder_.dispose();
-        sourceBuilder_ = null;
-      }
-      destination_ = null;
-      if (destinationBuilder_ != null) {
-        destinationBuilder_.dispose();
-        destinationBuilder_ = null;
-      }
-      request_ = null;
-      if (requestBuilder_ != null) {
-        requestBuilder_.dispose();
-        requestBuilder_ = null;
-      }
-      response_ = null;
-      if (responseBuilder_ != null) {
-        responseBuilder_.dispose();
-        responseBuilder_ = null;
-      }
-      resource_ = null;
-      if (resourceBuilder_ != null) {
-        resourceBuilder_.dispose();
-        resourceBuilder_ = null;
-      }
-      api_ = null;
-      if (apiBuilder_ != null) {
-        apiBuilder_.dispose();
-        apiBuilder_ = null;
-      }
-      if (extensionsBuilder_ == null) {
-        extensions_ = java.util.Collections.emptyList();
-      } else {
-        extensions_ = null;
-        extensionsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000080);
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.rpc.context.AttributeContextProto
-          .internal_static_google_rpc_context_AttributeContext_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.rpc.context.AttributeContext getDefaultInstanceForType() {
-      return com.google.rpc.context.AttributeContext.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.rpc.context.AttributeContext build() {
-      com.google.rpc.context.AttributeContext result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.rpc.context.AttributeContext buildPartial() {
-      com.google.rpc.context.AttributeContext result =
-          new com.google.rpc.context.AttributeContext(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.rpc.context.AttributeContext result) {
-      if (extensionsBuilder_ == null) {
-        if (((bitField0_ & 0x00000080) != 0)) {
-          extensions_ = java.util.Collections.unmodifiableList(extensions_);
-          bitField0_ = (bitField0_ & ~0x00000080);
-        }
-        result.extensions_ = extensions_;
-      } else {
-        result.extensions_ = extensionsBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.rpc.context.AttributeContext result) {
-      int from_bitField0_ = bitField0_;
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.origin_ = originBuilder_ == null ? origin_ : originBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.source_ = sourceBuilder_ == null ? source_ : sourceBuilder_.build();
-        to_bitField0_ |= 0x00000002;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.destination_ =
-            destinationBuilder_ == null ? destination_ : destinationBuilder_.build();
-        to_bitField0_ |= 0x00000004;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.request_ = requestBuilder_ == null ? request_ : requestBuilder_.build();
-        to_bitField0_ |= 0x00000008;
-      }
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.response_ = responseBuilder_ == null ? response_ : responseBuilder_.build();
-        to_bitField0_ |= 0x00000010;
-      }
-      if (((from_bitField0_ & 0x00000020) != 0)) {
-        result.resource_ = resourceBuilder_ == null ? resource_ : resourceBuilder_.build();
-        to_bitField0_ |= 0x00000020;
-      }
-      if (((from_bitField0_ & 0x00000040) != 0)) {
-        result.api_ = apiBuilder_ == null ? api_ : apiBuilder_.build();
-        to_bitField0_ |= 0x00000040;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.rpc.context.AttributeContext) {
-        return mergeFrom((com.google.rpc.context.AttributeContext) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.rpc.context.AttributeContext other) {
-      if (other == com.google.rpc.context.AttributeContext.getDefaultInstance()) return this;
-      if (other.hasOrigin()) {
-        mergeOrigin(other.getOrigin());
-      }
-      if (other.hasSource()) {
-        mergeSource(other.getSource());
-      }
-      if (other.hasDestination()) {
-        mergeDestination(other.getDestination());
-      }
-      if (other.hasRequest()) {
-        mergeRequest(other.getRequest());
-      }
-      if (other.hasResponse()) {
-        mergeResponse(other.getResponse());
-      }
-      if (other.hasResource()) {
-        mergeResource(other.getResource());
-      }
-      if (other.hasApi()) {
-        mergeApi(other.getApi());
-      }
-      if (extensionsBuilder_ == null) {
-        if (!other.extensions_.isEmpty()) {
-          if (extensions_.isEmpty()) {
-            extensions_ = other.extensions_;
-            bitField0_ = (bitField0_ & ~0x00000080);
-          } else {
-            ensureExtensionsIsMutable();
-            extensions_.addAll(other.extensions_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.extensions_.isEmpty()) {
-          if (extensionsBuilder_.isEmpty()) {
-            extensionsBuilder_.dispose();
-            extensionsBuilder_ = null;
-            extensions_ = other.extensions_;
-            bitField0_ = (bitField0_ & ~0x00000080);
-            extensionsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getExtensionsFieldBuilder()
-                    : null;
-          } else {
-            extensionsBuilder_.addAllMessages(other.extensions_);
-          }
-        }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                input.readMessage(getSourceFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 10
-            case 18:
-              {
-                input.readMessage(getDestinationFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 18
-            case 26:
-              {
-                input.readMessage(getRequestFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 26
-            case 34:
-              {
-                input.readMessage(getResponseFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 34
-            case 42:
-              {
-                input.readMessage(getResourceFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000020;
-                break;
-              } // case 42
-            case 50:
-              {
-                input.readMessage(getApiFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000040;
-                break;
-              } // case 50
-            case 58:
-              {
-                input.readMessage(getOriginFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 58
-            case 66:
-              {
-                com.google.protobuf.Any m =
-                    input.readMessage(com.google.protobuf.Any.parser(), extensionRegistry);
-                if (extensionsBuilder_ == null) {
-                  ensureExtensionsIsMutable();
-                  extensions_.add(m);
-                } else {
-                  extensionsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 66
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private com.google.rpc.context.AttributeContext.Peer origin_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.context.AttributeContext.Peer,
-            com.google.rpc.context.AttributeContext.Peer.Builder,
-            com.google.rpc.context.AttributeContext.PeerOrBuilder>
-        originBuilder_;
     /**
      *
      *
@@ -15565,11 +12336,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Peer origin = 7;</code>
-     *
-     * @return Whether the origin field is set.
      */
+    @java.lang.Override
     public boolean hasOrigin() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return instance.hasOrigin();
     }
     /**
      *
@@ -15581,17 +12351,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Peer origin = 7;</code>
-     *
-     * @return The origin.
      */
+    @java.lang.Override
     public com.google.rpc.context.AttributeContext.Peer getOrigin() {
-      if (originBuilder_ == null) {
-        return origin_ == null
-            ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
-            : origin_;
-      } else {
-        return originBuilder_.getMessage();
-      }
+      return instance.getOrigin();
     }
     /**
      *
@@ -15605,16 +12368,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Peer origin = 7;</code>
      */
     public Builder setOrigin(com.google.rpc.context.AttributeContext.Peer value) {
-      if (originBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        origin_ = value;
-      } else {
-        originBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setOrigin(value);
       return this;
     }
     /**
@@ -15629,13 +12384,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Peer origin = 7;</code>
      */
     public Builder setOrigin(com.google.rpc.context.AttributeContext.Peer.Builder builderForValue) {
-      if (originBuilder_ == null) {
-        origin_ = builderForValue.build();
-      } else {
-        originBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setOrigin(builderForValue.build());
       return this;
     }
     /**
@@ -15650,21 +12400,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Peer origin = 7;</code>
      */
     public Builder mergeOrigin(com.google.rpc.context.AttributeContext.Peer value) {
-      if (originBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)
-            && origin_ != null
-            && origin_ != com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()) {
-          getOriginBuilder().mergeFrom(value);
-        } else {
-          origin_ = value;
-        }
-      } else {
-        originBuilder_.mergeFrom(value);
-      }
-      if (origin_ != null) {
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeOrigin(value);
       return this;
     }
     /**
@@ -15679,85 +12416,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Peer origin = 7;</code>
      */
     public Builder clearOrigin() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      origin_ = null;
-      if (originBuilder_ != null) {
-        originBuilder_.dispose();
-        originBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearOrigin();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * The origin of a network activity. In a multi hop network activity,
-     * the origin represents the sender of the first hop. For the first hop,
-     * the `source` and the `origin` must have the same content.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Peer origin = 7;</code>
-     */
-    public com.google.rpc.context.AttributeContext.Peer.Builder getOriginBuilder() {
-      bitField0_ |= 0x00000001;
-      onChanged();
-      return getOriginFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The origin of a network activity. In a multi hop network activity,
-     * the origin represents the sender of the first hop. For the first hop,
-     * the `source` and the `origin` must have the same content.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Peer origin = 7;</code>
-     */
-    public com.google.rpc.context.AttributeContext.PeerOrBuilder getOriginOrBuilder() {
-      if (originBuilder_ != null) {
-        return originBuilder_.getMessageOrBuilder();
-      } else {
-        return origin_ == null
-            ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
-            : origin_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The origin of a network activity. In a multi hop network activity,
-     * the origin represents the sender of the first hop. For the first hop,
-     * the `source` and the `origin` must have the same content.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Peer origin = 7;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.context.AttributeContext.Peer,
-            com.google.rpc.context.AttributeContext.Peer.Builder,
-            com.google.rpc.context.AttributeContext.PeerOrBuilder>
-        getOriginFieldBuilder() {
-      if (originBuilder_ == null) {
-        originBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.rpc.context.AttributeContext.Peer,
-                com.google.rpc.context.AttributeContext.Peer.Builder,
-                com.google.rpc.context.AttributeContext.PeerOrBuilder>(
-                getOrigin(), getParentForChildren(), isClean());
-        origin_ = null;
-      }
-      return originBuilder_;
-    }
 
-    private com.google.rpc.context.AttributeContext.Peer source_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.context.AttributeContext.Peer,
-            com.google.rpc.context.AttributeContext.Peer.Builder,
-            com.google.rpc.context.AttributeContext.PeerOrBuilder>
-        sourceBuilder_;
     /**
      *
      *
@@ -15768,11 +12431,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Peer source = 1;</code>
-     *
-     * @return Whether the source field is set.
      */
+    @java.lang.Override
     public boolean hasSource() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return instance.hasSource();
     }
     /**
      *
@@ -15784,17 +12446,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Peer source = 1;</code>
-     *
-     * @return The source.
      */
+    @java.lang.Override
     public com.google.rpc.context.AttributeContext.Peer getSource() {
-      if (sourceBuilder_ == null) {
-        return source_ == null
-            ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
-            : source_;
-      } else {
-        return sourceBuilder_.getMessage();
-      }
+      return instance.getSource();
     }
     /**
      *
@@ -15808,16 +12463,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Peer source = 1;</code>
      */
     public Builder setSource(com.google.rpc.context.AttributeContext.Peer value) {
-      if (sourceBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        source_ = value;
-      } else {
-        sourceBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setSource(value);
       return this;
     }
     /**
@@ -15832,13 +12479,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Peer source = 1;</code>
      */
     public Builder setSource(com.google.rpc.context.AttributeContext.Peer.Builder builderForValue) {
-      if (sourceBuilder_ == null) {
-        source_ = builderForValue.build();
-      } else {
-        sourceBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setSource(builderForValue.build());
       return this;
     }
     /**
@@ -15853,21 +12495,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Peer source = 1;</code>
      */
     public Builder mergeSource(com.google.rpc.context.AttributeContext.Peer value) {
-      if (sourceBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)
-            && source_ != null
-            && source_ != com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()) {
-          getSourceBuilder().mergeFrom(value);
-        } else {
-          source_ = value;
-        }
-      } else {
-        sourceBuilder_.mergeFrom(value);
-      }
-      if (source_ != null) {
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeSource(value);
       return this;
     }
     /**
@@ -15882,85 +12511,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Peer source = 1;</code>
      */
     public Builder clearSource() {
-      bitField0_ = (bitField0_ & ~0x00000002);
-      source_ = null;
-      if (sourceBuilder_ != null) {
-        sourceBuilder_.dispose();
-        sourceBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearSource();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * The source of a network activity, such as starting a TCP connection.
-     * In a multi hop network activity, the source represents the sender of the
-     * last hop.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Peer source = 1;</code>
-     */
-    public com.google.rpc.context.AttributeContext.Peer.Builder getSourceBuilder() {
-      bitField0_ |= 0x00000002;
-      onChanged();
-      return getSourceFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The source of a network activity, such as starting a TCP connection.
-     * In a multi hop network activity, the source represents the sender of the
-     * last hop.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Peer source = 1;</code>
-     */
-    public com.google.rpc.context.AttributeContext.PeerOrBuilder getSourceOrBuilder() {
-      if (sourceBuilder_ != null) {
-        return sourceBuilder_.getMessageOrBuilder();
-      } else {
-        return source_ == null
-            ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
-            : source_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The source of a network activity, such as starting a TCP connection.
-     * In a multi hop network activity, the source represents the sender of the
-     * last hop.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Peer source = 1;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.context.AttributeContext.Peer,
-            com.google.rpc.context.AttributeContext.Peer.Builder,
-            com.google.rpc.context.AttributeContext.PeerOrBuilder>
-        getSourceFieldBuilder() {
-      if (sourceBuilder_ == null) {
-        sourceBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.rpc.context.AttributeContext.Peer,
-                com.google.rpc.context.AttributeContext.Peer.Builder,
-                com.google.rpc.context.AttributeContext.PeerOrBuilder>(
-                getSource(), getParentForChildren(), isClean());
-        source_ = null;
-      }
-      return sourceBuilder_;
-    }
 
-    private com.google.rpc.context.AttributeContext.Peer destination_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.context.AttributeContext.Peer,
-            com.google.rpc.context.AttributeContext.Peer.Builder,
-            com.google.rpc.context.AttributeContext.PeerOrBuilder>
-        destinationBuilder_;
     /**
      *
      *
@@ -15971,11 +12526,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Peer destination = 2;</code>
-     *
-     * @return Whether the destination field is set.
      */
+    @java.lang.Override
     public boolean hasDestination() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return instance.hasDestination();
     }
     /**
      *
@@ -15987,17 +12541,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Peer destination = 2;</code>
-     *
-     * @return The destination.
      */
+    @java.lang.Override
     public com.google.rpc.context.AttributeContext.Peer getDestination() {
-      if (destinationBuilder_ == null) {
-        return destination_ == null
-            ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
-            : destination_;
-      } else {
-        return destinationBuilder_.getMessage();
-      }
+      return instance.getDestination();
     }
     /**
      *
@@ -16011,16 +12558,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Peer destination = 2;</code>
      */
     public Builder setDestination(com.google.rpc.context.AttributeContext.Peer value) {
-      if (destinationBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        destination_ = value;
-      } else {
-        destinationBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setDestination(value);
       return this;
     }
     /**
@@ -16036,13 +12575,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     public Builder setDestination(
         com.google.rpc.context.AttributeContext.Peer.Builder builderForValue) {
-      if (destinationBuilder_ == null) {
-        destination_ = builderForValue.build();
-      } else {
-        destinationBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setDestination(builderForValue.build());
       return this;
     }
     /**
@@ -16057,21 +12591,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Peer destination = 2;</code>
      */
     public Builder mergeDestination(com.google.rpc.context.AttributeContext.Peer value) {
-      if (destinationBuilder_ == null) {
-        if (((bitField0_ & 0x00000004) != 0)
-            && destination_ != null
-            && destination_ != com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()) {
-          getDestinationBuilder().mergeFrom(value);
-        } else {
-          destination_ = value;
-        }
-      } else {
-        destinationBuilder_.mergeFrom(value);
-      }
-      if (destination_ != null) {
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeDestination(value);
       return this;
     }
     /**
@@ -16086,85 +12607,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Peer destination = 2;</code>
      */
     public Builder clearDestination() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      destination_ = null;
-      if (destinationBuilder_ != null) {
-        destinationBuilder_.dispose();
-        destinationBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearDestination();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * The destination of a network activity, such as accepting a TCP connection.
-     * In a multi hop network activity, the destination represents the receiver of
-     * the last hop.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Peer destination = 2;</code>
-     */
-    public com.google.rpc.context.AttributeContext.Peer.Builder getDestinationBuilder() {
-      bitField0_ |= 0x00000004;
-      onChanged();
-      return getDestinationFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The destination of a network activity, such as accepting a TCP connection.
-     * In a multi hop network activity, the destination represents the receiver of
-     * the last hop.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Peer destination = 2;</code>
-     */
-    public com.google.rpc.context.AttributeContext.PeerOrBuilder getDestinationOrBuilder() {
-      if (destinationBuilder_ != null) {
-        return destinationBuilder_.getMessageOrBuilder();
-      } else {
-        return destination_ == null
-            ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
-            : destination_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The destination of a network activity, such as accepting a TCP connection.
-     * In a multi hop network activity, the destination represents the receiver of
-     * the last hop.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Peer destination = 2;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.context.AttributeContext.Peer,
-            com.google.rpc.context.AttributeContext.Peer.Builder,
-            com.google.rpc.context.AttributeContext.PeerOrBuilder>
-        getDestinationFieldBuilder() {
-      if (destinationBuilder_ == null) {
-        destinationBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.rpc.context.AttributeContext.Peer,
-                com.google.rpc.context.AttributeContext.Peer.Builder,
-                com.google.rpc.context.AttributeContext.PeerOrBuilder>(
-                getDestination(), getParentForChildren(), isClean());
-        destination_ = null;
-      }
-      return destinationBuilder_;
-    }
 
-    private com.google.rpc.context.AttributeContext.Request request_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.context.AttributeContext.Request,
-            com.google.rpc.context.AttributeContext.Request.Builder,
-            com.google.rpc.context.AttributeContext.RequestOrBuilder>
-        requestBuilder_;
     /**
      *
      *
@@ -16173,11 +12620,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Request request = 3;</code>
-     *
-     * @return Whether the request field is set.
      */
+    @java.lang.Override
     public boolean hasRequest() {
-      return ((bitField0_ & 0x00000008) != 0);
+      return instance.hasRequest();
     }
     /**
      *
@@ -16187,17 +12633,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Request request = 3;</code>
-     *
-     * @return The request.
      */
+    @java.lang.Override
     public com.google.rpc.context.AttributeContext.Request getRequest() {
-      if (requestBuilder_ == null) {
-        return request_ == null
-            ? com.google.rpc.context.AttributeContext.Request.getDefaultInstance()
-            : request_;
-      } else {
-        return requestBuilder_.getMessage();
-      }
+      return instance.getRequest();
     }
     /**
      *
@@ -16209,16 +12648,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Request request = 3;</code>
      */
     public Builder setRequest(com.google.rpc.context.AttributeContext.Request value) {
-      if (requestBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        request_ = value;
-      } else {
-        requestBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setRequest(value);
       return this;
     }
     /**
@@ -16232,13 +12663,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     public Builder setRequest(
         com.google.rpc.context.AttributeContext.Request.Builder builderForValue) {
-      if (requestBuilder_ == null) {
-        request_ = builderForValue.build();
-      } else {
-        requestBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setRequest(builderForValue.build());
       return this;
     }
     /**
@@ -16251,21 +12677,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Request request = 3;</code>
      */
     public Builder mergeRequest(com.google.rpc.context.AttributeContext.Request value) {
-      if (requestBuilder_ == null) {
-        if (((bitField0_ & 0x00000008) != 0)
-            && request_ != null
-            && request_ != com.google.rpc.context.AttributeContext.Request.getDefaultInstance()) {
-          getRequestBuilder().mergeFrom(value);
-        } else {
-          request_ = value;
-        }
-      } else {
-        requestBuilder_.mergeFrom(value);
-      }
-      if (request_ != null) {
-        bitField0_ |= 0x00000008;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeRequest(value);
       return this;
     }
     /**
@@ -16278,79 +12691,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Request request = 3;</code>
      */
     public Builder clearRequest() {
-      bitField0_ = (bitField0_ & ~0x00000008);
-      request_ = null;
-      if (requestBuilder_ != null) {
-        requestBuilder_.dispose();
-        requestBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearRequest();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Represents a network request, such as an HTTP request.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Request request = 3;</code>
-     */
-    public com.google.rpc.context.AttributeContext.Request.Builder getRequestBuilder() {
-      bitField0_ |= 0x00000008;
-      onChanged();
-      return getRequestFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Represents a network request, such as an HTTP request.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Request request = 3;</code>
-     */
-    public com.google.rpc.context.AttributeContext.RequestOrBuilder getRequestOrBuilder() {
-      if (requestBuilder_ != null) {
-        return requestBuilder_.getMessageOrBuilder();
-      } else {
-        return request_ == null
-            ? com.google.rpc.context.AttributeContext.Request.getDefaultInstance()
-            : request_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Represents a network request, such as an HTTP request.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Request request = 3;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.context.AttributeContext.Request,
-            com.google.rpc.context.AttributeContext.Request.Builder,
-            com.google.rpc.context.AttributeContext.RequestOrBuilder>
-        getRequestFieldBuilder() {
-      if (requestBuilder_ == null) {
-        requestBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.rpc.context.AttributeContext.Request,
-                com.google.rpc.context.AttributeContext.Request.Builder,
-                com.google.rpc.context.AttributeContext.RequestOrBuilder>(
-                getRequest(), getParentForChildren(), isClean());
-        request_ = null;
-      }
-      return requestBuilder_;
-    }
 
-    private com.google.rpc.context.AttributeContext.Response response_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.context.AttributeContext.Response,
-            com.google.rpc.context.AttributeContext.Response.Builder,
-            com.google.rpc.context.AttributeContext.ResponseOrBuilder>
-        responseBuilder_;
     /**
      *
      *
@@ -16359,11 +12704,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Response response = 4;</code>
-     *
-     * @return Whether the response field is set.
      */
+    @java.lang.Override
     public boolean hasResponse() {
-      return ((bitField0_ & 0x00000010) != 0);
+      return instance.hasResponse();
     }
     /**
      *
@@ -16373,17 +12717,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Response response = 4;</code>
-     *
-     * @return The response.
      */
+    @java.lang.Override
     public com.google.rpc.context.AttributeContext.Response getResponse() {
-      if (responseBuilder_ == null) {
-        return response_ == null
-            ? com.google.rpc.context.AttributeContext.Response.getDefaultInstance()
-            : response_;
-      } else {
-        return responseBuilder_.getMessage();
-      }
+      return instance.getResponse();
     }
     /**
      *
@@ -16395,16 +12732,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Response response = 4;</code>
      */
     public Builder setResponse(com.google.rpc.context.AttributeContext.Response value) {
-      if (responseBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        response_ = value;
-      } else {
-        responseBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setResponse(value);
       return this;
     }
     /**
@@ -16418,13 +12747,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     public Builder setResponse(
         com.google.rpc.context.AttributeContext.Response.Builder builderForValue) {
-      if (responseBuilder_ == null) {
-        response_ = builderForValue.build();
-      } else {
-        responseBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setResponse(builderForValue.build());
       return this;
     }
     /**
@@ -16437,21 +12761,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Response response = 4;</code>
      */
     public Builder mergeResponse(com.google.rpc.context.AttributeContext.Response value) {
-      if (responseBuilder_ == null) {
-        if (((bitField0_ & 0x00000010) != 0)
-            && response_ != null
-            && response_ != com.google.rpc.context.AttributeContext.Response.getDefaultInstance()) {
-          getResponseBuilder().mergeFrom(value);
-        } else {
-          response_ = value;
-        }
-      } else {
-        responseBuilder_.mergeFrom(value);
-      }
-      if (response_ != null) {
-        bitField0_ |= 0x00000010;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeResponse(value);
       return this;
     }
     /**
@@ -16464,79 +12775,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Response response = 4;</code>
      */
     public Builder clearResponse() {
-      bitField0_ = (bitField0_ & ~0x00000010);
-      response_ = null;
-      if (responseBuilder_ != null) {
-        responseBuilder_.dispose();
-        responseBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearResponse();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Represents a network response, such as an HTTP response.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Response response = 4;</code>
-     */
-    public com.google.rpc.context.AttributeContext.Response.Builder getResponseBuilder() {
-      bitField0_ |= 0x00000010;
-      onChanged();
-      return getResponseFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Represents a network response, such as an HTTP response.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Response response = 4;</code>
-     */
-    public com.google.rpc.context.AttributeContext.ResponseOrBuilder getResponseOrBuilder() {
-      if (responseBuilder_ != null) {
-        return responseBuilder_.getMessageOrBuilder();
-      } else {
-        return response_ == null
-            ? com.google.rpc.context.AttributeContext.Response.getDefaultInstance()
-            : response_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Represents a network response, such as an HTTP response.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Response response = 4;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.context.AttributeContext.Response,
-            com.google.rpc.context.AttributeContext.Response.Builder,
-            com.google.rpc.context.AttributeContext.ResponseOrBuilder>
-        getResponseFieldBuilder() {
-      if (responseBuilder_ == null) {
-        responseBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.rpc.context.AttributeContext.Response,
-                com.google.rpc.context.AttributeContext.Response.Builder,
-                com.google.rpc.context.AttributeContext.ResponseOrBuilder>(
-                getResponse(), getParentForChildren(), isClean());
-        response_ = null;
-      }
-      return responseBuilder_;
-    }
 
-    private com.google.rpc.context.AttributeContext.Resource resource_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.context.AttributeContext.Resource,
-            com.google.rpc.context.AttributeContext.Resource.Builder,
-            com.google.rpc.context.AttributeContext.ResourceOrBuilder>
-        resourceBuilder_;
     /**
      *
      *
@@ -16547,11 +12790,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Resource resource = 5;</code>
-     *
-     * @return Whether the resource field is set.
      */
+    @java.lang.Override
     public boolean hasResource() {
-      return ((bitField0_ & 0x00000020) != 0);
+      return instance.hasResource();
     }
     /**
      *
@@ -16563,17 +12805,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Resource resource = 5;</code>
-     *
-     * @return The resource.
      */
+    @java.lang.Override
     public com.google.rpc.context.AttributeContext.Resource getResource() {
-      if (resourceBuilder_ == null) {
-        return resource_ == null
-            ? com.google.rpc.context.AttributeContext.Resource.getDefaultInstance()
-            : resource_;
-      } else {
-        return resourceBuilder_.getMessage();
-      }
+      return instance.getResource();
     }
     /**
      *
@@ -16587,16 +12822,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Resource resource = 5;</code>
      */
     public Builder setResource(com.google.rpc.context.AttributeContext.Resource value) {
-      if (resourceBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        resource_ = value;
-      } else {
-        resourceBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setResource(value);
       return this;
     }
     /**
@@ -16612,13 +12839,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     public Builder setResource(
         com.google.rpc.context.AttributeContext.Resource.Builder builderForValue) {
-      if (resourceBuilder_ == null) {
-        resource_ = builderForValue.build();
-      } else {
-        resourceBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setResource(builderForValue.build());
       return this;
     }
     /**
@@ -16633,21 +12855,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Resource resource = 5;</code>
      */
     public Builder mergeResource(com.google.rpc.context.AttributeContext.Resource value) {
-      if (resourceBuilder_ == null) {
-        if (((bitField0_ & 0x00000020) != 0)
-            && resource_ != null
-            && resource_ != com.google.rpc.context.AttributeContext.Resource.getDefaultInstance()) {
-          getResourceBuilder().mergeFrom(value);
-        } else {
-          resource_ = value;
-        }
-      } else {
-        resourceBuilder_.mergeFrom(value);
-      }
-      if (resource_ != null) {
-        bitField0_ |= 0x00000020;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeResource(value);
       return this;
     }
     /**
@@ -16662,85 +12871,11 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Resource resource = 5;</code>
      */
     public Builder clearResource() {
-      bitField0_ = (bitField0_ & ~0x00000020);
-      resource_ = null;
-      if (resourceBuilder_ != null) {
-        resourceBuilder_.dispose();
-        resourceBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearResource();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Represents a target resource that is involved with a network activity.
-     * If multiple resources are involved with an activity, this must be the
-     * primary one.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Resource resource = 5;</code>
-     */
-    public com.google.rpc.context.AttributeContext.Resource.Builder getResourceBuilder() {
-      bitField0_ |= 0x00000020;
-      onChanged();
-      return getResourceFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Represents a target resource that is involved with a network activity.
-     * If multiple resources are involved with an activity, this must be the
-     * primary one.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Resource resource = 5;</code>
-     */
-    public com.google.rpc.context.AttributeContext.ResourceOrBuilder getResourceOrBuilder() {
-      if (resourceBuilder_ != null) {
-        return resourceBuilder_.getMessageOrBuilder();
-      } else {
-        return resource_ == null
-            ? com.google.rpc.context.AttributeContext.Resource.getDefaultInstance()
-            : resource_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Represents a target resource that is involved with a network activity.
-     * If multiple resources are involved with an activity, this must be the
-     * primary one.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Resource resource = 5;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.context.AttributeContext.Resource,
-            com.google.rpc.context.AttributeContext.Resource.Builder,
-            com.google.rpc.context.AttributeContext.ResourceOrBuilder>
-        getResourceFieldBuilder() {
-      if (resourceBuilder_ == null) {
-        resourceBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.rpc.context.AttributeContext.Resource,
-                com.google.rpc.context.AttributeContext.Resource.Builder,
-                com.google.rpc.context.AttributeContext.ResourceOrBuilder>(
-                getResource(), getParentForChildren(), isClean());
-        resource_ = null;
-      }
-      return resourceBuilder_;
-    }
 
-    private com.google.rpc.context.AttributeContext.Api api_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.context.AttributeContext.Api,
-            com.google.rpc.context.AttributeContext.Api.Builder,
-            com.google.rpc.context.AttributeContext.ApiOrBuilder>
-        apiBuilder_;
     /**
      *
      *
@@ -16749,11 +12884,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Api api = 6;</code>
-     *
-     * @return Whether the api field is set.
      */
+    @java.lang.Override
     public boolean hasApi() {
-      return ((bitField0_ & 0x00000040) != 0);
+      return instance.hasApi();
     }
     /**
      *
@@ -16763,17 +12897,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * </pre>
      *
      * <code>.google.rpc.context.AttributeContext.Api api = 6;</code>
-     *
-     * @return The api.
      */
+    @java.lang.Override
     public com.google.rpc.context.AttributeContext.Api getApi() {
-      if (apiBuilder_ == null) {
-        return api_ == null
-            ? com.google.rpc.context.AttributeContext.Api.getDefaultInstance()
-            : api_;
-      } else {
-        return apiBuilder_.getMessage();
-      }
+      return instance.getApi();
     }
     /**
      *
@@ -16785,16 +12912,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Api api = 6;</code>
      */
     public Builder setApi(com.google.rpc.context.AttributeContext.Api value) {
-      if (apiBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        api_ = value;
-      } else {
-        apiBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000040;
-      onChanged();
+      copyOnWrite();
+      instance.setApi(value);
       return this;
     }
     /**
@@ -16807,13 +12926,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Api api = 6;</code>
      */
     public Builder setApi(com.google.rpc.context.AttributeContext.Api.Builder builderForValue) {
-      if (apiBuilder_ == null) {
-        api_ = builderForValue.build();
-      } else {
-        apiBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000040;
-      onChanged();
+      copyOnWrite();
+      instance.setApi(builderForValue.build());
       return this;
     }
     /**
@@ -16826,21 +12940,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Api api = 6;</code>
      */
     public Builder mergeApi(com.google.rpc.context.AttributeContext.Api value) {
-      if (apiBuilder_ == null) {
-        if (((bitField0_ & 0x00000040) != 0)
-            && api_ != null
-            && api_ != com.google.rpc.context.AttributeContext.Api.getDefaultInstance()) {
-          getApiBuilder().mergeFrom(value);
-        } else {
-          api_ = value;
-        }
-      } else {
-        apiBuilder_.mergeFrom(value);
-      }
-      if (api_ != null) {
-        bitField0_ |= 0x00000040;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeApi(value);
       return this;
     }
     /**
@@ -16853,87 +12954,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>.google.rpc.context.AttributeContext.Api api = 6;</code>
      */
     public Builder clearApi() {
-      bitField0_ = (bitField0_ & ~0x00000040);
-      api_ = null;
-      if (apiBuilder_ != null) {
-        apiBuilder_.dispose();
-        apiBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearApi();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Represents an API operation that is involved to a network activity.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Api api = 6;</code>
-     */
-    public com.google.rpc.context.AttributeContext.Api.Builder getApiBuilder() {
-      bitField0_ |= 0x00000040;
-      onChanged();
-      return getApiFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Represents an API operation that is involved to a network activity.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Api api = 6;</code>
-     */
-    public com.google.rpc.context.AttributeContext.ApiOrBuilder getApiOrBuilder() {
-      if (apiBuilder_ != null) {
-        return apiBuilder_.getMessageOrBuilder();
-      } else {
-        return api_ == null
-            ? com.google.rpc.context.AttributeContext.Api.getDefaultInstance()
-            : api_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Represents an API operation that is involved to a network activity.
-     * </pre>
-     *
-     * <code>.google.rpc.context.AttributeContext.Api api = 6;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.context.AttributeContext.Api,
-            com.google.rpc.context.AttributeContext.Api.Builder,
-            com.google.rpc.context.AttributeContext.ApiOrBuilder>
-        getApiFieldBuilder() {
-      if (apiBuilder_ == null) {
-        apiBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.rpc.context.AttributeContext.Api,
-                com.google.rpc.context.AttributeContext.Api.Builder,
-                com.google.rpc.context.AttributeContext.ApiOrBuilder>(
-                getApi(), getParentForChildren(), isClean());
-        api_ = null;
-      }
-      return apiBuilder_;
-    }
-
-    private java.util.List<com.google.protobuf.Any> extensions_ = java.util.Collections.emptyList();
-
-    private void ensureExtensionsIsMutable() {
-      if (!((bitField0_ & 0x00000080) != 0)) {
-        extensions_ = new java.util.ArrayList<com.google.protobuf.Any>(extensions_);
-        bitField0_ |= 0x00000080;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.protobuf.Any,
-            com.google.protobuf.Any.Builder,
-            com.google.protobuf.AnyOrBuilder>
-        extensionsBuilder_;
 
     /**
      *
@@ -16944,12 +12968,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>repeated .google.protobuf.Any extensions = 8;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.protobuf.Any> getExtensionsList() {
-      if (extensionsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(extensions_);
-      } else {
-        return extensionsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getExtensionsList());
     }
     /**
      *
@@ -16960,12 +12981,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>repeated .google.protobuf.Any extensions = 8;</code>
      */
+    @java.lang.Override
     public int getExtensionsCount() {
-      if (extensionsBuilder_ == null) {
-        return extensions_.size();
-      } else {
-        return extensionsBuilder_.getCount();
-      }
+      return instance.getExtensionsCount();
     }
     /**
      *
@@ -16976,12 +12994,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>repeated .google.protobuf.Any extensions = 8;</code>
      */
+
+    @java.lang.Override
     public com.google.protobuf.Any getExtensions(int index) {
-      if (extensionsBuilder_ == null) {
-        return extensions_.get(index);
-      } else {
-        return extensionsBuilder_.getMessage(index);
-      }
+      return instance.getExtensions(index);
     }
     /**
      *
@@ -16993,16 +13009,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>repeated .google.protobuf.Any extensions = 8;</code>
      */
     public Builder setExtensions(int index, com.google.protobuf.Any value) {
-      if (extensionsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureExtensionsIsMutable();
-        extensions_.set(index, value);
-        onChanged();
-      } else {
-        extensionsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setExtensions(index, value);
       return this;
     }
     /**
@@ -17015,13 +13023,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>repeated .google.protobuf.Any extensions = 8;</code>
      */
     public Builder setExtensions(int index, com.google.protobuf.Any.Builder builderForValue) {
-      if (extensionsBuilder_ == null) {
-        ensureExtensionsIsMutable();
-        extensions_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        extensionsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setExtensions(index, builderForValue.build());
       return this;
     }
     /**
@@ -17034,16 +13037,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>repeated .google.protobuf.Any extensions = 8;</code>
      */
     public Builder addExtensions(com.google.protobuf.Any value) {
-      if (extensionsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureExtensionsIsMutable();
-        extensions_.add(value);
-        onChanged();
-      } else {
-        extensionsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addExtensions(value);
       return this;
     }
     /**
@@ -17056,16 +13051,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>repeated .google.protobuf.Any extensions = 8;</code>
      */
     public Builder addExtensions(int index, com.google.protobuf.Any value) {
-      if (extensionsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureExtensionsIsMutable();
-        extensions_.add(index, value);
-        onChanged();
-      } else {
-        extensionsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addExtensions(index, value);
       return this;
     }
     /**
@@ -17078,13 +13065,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>repeated .google.protobuf.Any extensions = 8;</code>
      */
     public Builder addExtensions(com.google.protobuf.Any.Builder builderForValue) {
-      if (extensionsBuilder_ == null) {
-        ensureExtensionsIsMutable();
-        extensions_.add(builderForValue.build());
-        onChanged();
-      } else {
-        extensionsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addExtensions(builderForValue.build());
       return this;
     }
     /**
@@ -17097,13 +13079,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>repeated .google.protobuf.Any extensions = 8;</code>
      */
     public Builder addExtensions(int index, com.google.protobuf.Any.Builder builderForValue) {
-      if (extensionsBuilder_ == null) {
-        ensureExtensionsIsMutable();
-        extensions_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        extensionsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addExtensions(index, builderForValue.build());
       return this;
     }
     /**
@@ -17116,13 +13093,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>repeated .google.protobuf.Any extensions = 8;</code>
      */
     public Builder addAllExtensions(java.lang.Iterable<? extends com.google.protobuf.Any> values) {
-      if (extensionsBuilder_ == null) {
-        ensureExtensionsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, extensions_);
-        onChanged();
-      } else {
-        extensionsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllExtensions(values);
       return this;
     }
     /**
@@ -17135,13 +13107,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>repeated .google.protobuf.Any extensions = 8;</code>
      */
     public Builder clearExtensions() {
-      if (extensionsBuilder_ == null) {
-        extensions_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000080);
-        onChanged();
-      } else {
-        extensionsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearExtensions();
       return this;
     }
     /**
@@ -17154,172 +13121,102 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>repeated .google.protobuf.Any extensions = 8;</code>
      */
     public Builder removeExtensions(int index) {
-      if (extensionsBuilder_ == null) {
-        ensureExtensionsIsMutable();
-        extensions_.remove(index);
-        onChanged();
-      } else {
-        extensionsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeExtensions(index);
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Supports extensions for advanced use cases, such as logs and metrics.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Any extensions = 8;</code>
-     */
-    public com.google.protobuf.Any.Builder getExtensionsBuilder(int index) {
-      return getExtensionsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Supports extensions for advanced use cases, such as logs and metrics.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Any extensions = 8;</code>
-     */
-    public com.google.protobuf.AnyOrBuilder getExtensionsOrBuilder(int index) {
-      if (extensionsBuilder_ == null) {
-        return extensions_.get(index);
-      } else {
-        return extensionsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Supports extensions for advanced use cases, such as logs and metrics.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Any extensions = 8;</code>
-     */
-    public java.util.List<? extends com.google.protobuf.AnyOrBuilder> getExtensionsOrBuilderList() {
-      if (extensionsBuilder_ != null) {
-        return extensionsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(extensions_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Supports extensions for advanced use cases, such as logs and metrics.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Any extensions = 8;</code>
-     */
-    public com.google.protobuf.Any.Builder addExtensionsBuilder() {
-      return getExtensionsFieldBuilder().addBuilder(com.google.protobuf.Any.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Supports extensions for advanced use cases, such as logs and metrics.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Any extensions = 8;</code>
-     */
-    public com.google.protobuf.Any.Builder addExtensionsBuilder(int index) {
-      return getExtensionsFieldBuilder()
-          .addBuilder(index, com.google.protobuf.Any.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Supports extensions for advanced use cases, such as logs and metrics.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Any extensions = 8;</code>
-     */
-    public java.util.List<com.google.protobuf.Any.Builder> getExtensionsBuilderList() {
-      return getExtensionsFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.protobuf.Any,
-            com.google.protobuf.Any.Builder,
-            com.google.protobuf.AnyOrBuilder>
-        getExtensionsFieldBuilder() {
-      if (extensionsBuilder_ == null) {
-        extensionsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.protobuf.Any,
-                com.google.protobuf.Any.Builder,
-                com.google.protobuf.AnyOrBuilder>(
-                extensions_, ((bitField0_ & 0x00000080) != 0), getParentForChildren(), isClean());
-        extensions_ = null;
-      }
-      return extensionsBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.rpc.context.AttributeContext)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.rpc.context.AttributeContext();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_",
+                "source_",
+                "destination_",
+                "request_",
+                "response_",
+                "resource_",
+                "api_",
+                "origin_",
+                "extensions_",
+                com.google.protobuf.Any.class,
+              };
+          java.lang.String info =
+              "\u0000\b\u0000\u0001\u0001\b\b\u0000\u0001\u0000\u0001\u1009\u0001\u0002\u1009\u0002"
+                  + "\u0003\u1009\u0003\u0004\u1009\u0004\u0005\u1009\u0005\u0006\u1009\u0006\u0007\u1009"
+                  + "\u0000\b\u001b";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.rpc.context.AttributeContext> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.rpc.context.AttributeContext.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.rpc.context.AttributeContext>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.rpc.context.AttributeContext)
   private static final com.google.rpc.context.AttributeContext DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.rpc.context.AttributeContext();
+    AttributeContext defaultInstance = new AttributeContext();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        AttributeContext.class, defaultInstance);
   }
 
   public static com.google.rpc.context.AttributeContext getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<AttributeContext> PARSER =
-      new com.google.protobuf.AbstractParser<AttributeContext>() {
-        @java.lang.Override
-        public AttributeContext parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<AttributeContext> PARSER;
 
   public static com.google.protobuf.Parser<AttributeContext> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<AttributeContext> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.rpc.context.AttributeContext getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

@@ -22,7 +22,7 @@ package com.google.api;
 public interface VisibilityOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.Visibility)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -60,28 +60,4 @@ public interface VisibilityOrBuilder
    * <code>repeated .google.api.VisibilityRule rules = 1;</code>
    */
   int getRulesCount();
-  /**
-   *
-   *
-   * <pre>
-   * A list of visibility rules that apply to individual API elements.
-   *
-   * **NOTE:** All service configuration rules follow "last one wins" order.
-   * </pre>
-   *
-   * <code>repeated .google.api.VisibilityRule rules = 1;</code>
-   */
-  java.util.List<? extends com.google.api.VisibilityRuleOrBuilder> getRulesOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * A list of visibility rules that apply to individual API elements.
-   *
-   * **NOTE:** All service configuration rules follow "last one wins" order.
-   * </pre>
-   *
-   * <code>repeated .google.api.VisibilityRule rules = 1;</code>
-   */
-  com.google.api.VisibilityRuleOrBuilder getRulesOrBuilder(int index);
 }

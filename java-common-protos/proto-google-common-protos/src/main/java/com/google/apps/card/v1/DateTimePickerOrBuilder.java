@@ -22,7 +22,7 @@ package com.google.apps.card.v1;
 public interface DateTimePickerOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.apps.card.v1.DateTimePicker)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -173,15 +173,4 @@ public interface DateTimePickerOrBuilder
    * @return The onChangeAction.
    */
   com.google.apps.card.v1.Action getOnChangeAction();
-  /**
-   *
-   *
-   * <pre>
-   * Triggered when the user clicks **Save** or **Clear** from the
-   * `DateTimePicker` interface.
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
-   */
-  com.google.apps.card.v1.ActionOrBuilder getOnChangeActionOrBuilder();
 }

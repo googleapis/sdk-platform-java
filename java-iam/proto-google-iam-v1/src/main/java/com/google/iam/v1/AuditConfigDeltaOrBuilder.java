@@ -22,7 +22,7 @@ package com.google.iam.v1;
 public interface AuditConfigDeltaOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.iam.v1.AuditConfigDelta)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

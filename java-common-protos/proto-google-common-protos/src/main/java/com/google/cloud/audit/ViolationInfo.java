@@ -28,44 +28,16 @@ package com.google.cloud.audit;
  *
  * Protobuf type {@code google.cloud.audit.ViolationInfo}
  */
-public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
+public final class ViolationInfo
+    extends com.google.protobuf.GeneratedMessageLite<ViolationInfo, ViolationInfo.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.cloud.audit.ViolationInfo)
     ViolationInfoOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use ViolationInfo.newBuilder() to construct.
-  private ViolationInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private ViolationInfo() {
     constraint_ = "";
     errorMessage_ = "";
     checkedValue_ = "";
-    policyType_ = 0;
   }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new ViolationInfo();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.cloud.audit.AuditLogProto
-        .internal_static_google_cloud_audit_ViolationInfo_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.cloud.audit.AuditLogProto
-        .internal_static_google_cloud_audit_ViolationInfo_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.cloud.audit.ViolationInfo.class,
-            com.google.cloud.audit.ViolationInfo.Builder.class);
-  }
-
   /**
    *
    *
@@ -75,7 +47,7 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf enum {@code google.cloud.audit.ViolationInfo.PolicyType}
    */
-  public enum PolicyType implements com.google.protobuf.ProtocolMessageEnum {
+  public enum PolicyType implements com.google.protobuf.Internal.EnumLite {
     /**
      *
      *
@@ -160,6 +132,7 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      */
     public static final int CUSTOM_CONSTRAINT_VALUE = 3;
 
+    @java.lang.Override
     public final int getNumber() {
       if (this == UNRECOGNIZED) {
         throw new java.lang.IllegalArgumentException(
@@ -169,8 +142,8 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
     }
 
     /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
+     * @param value The number of the enum to look for.
+     * @return The enum associated with the given number.
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
@@ -178,10 +151,6 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
       return forNumber(value);
     }
 
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
     public static PolicyType forNumber(int value) {
       switch (value) {
         case 0:
@@ -203,38 +172,25 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
 
     private static final com.google.protobuf.Internal.EnumLiteMap<PolicyType> internalValueMap =
         new com.google.protobuf.Internal.EnumLiteMap<PolicyType>() {
+          @java.lang.Override
           public PolicyType findValueByNumber(int number) {
             return PolicyType.forNumber(number);
           }
         };
 
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalStateException(
-            "Can't get the descriptor of an unrecognized enum value.");
+    public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+      return PolicyTypeVerifier.INSTANCE;
+    }
+
+    private static final class PolicyTypeVerifier
+        implements com.google.protobuf.Internal.EnumVerifier {
+      static final com.google.protobuf.Internal.EnumVerifier INSTANCE = new PolicyTypeVerifier();
+
+      @java.lang.Override
+      public boolean isInRange(int number) {
+        return PolicyType.forNumber(number) != null;
       }
-      return getDescriptor().getValues().get(ordinal());
-    }
-
-    public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-      return getDescriptor();
-    }
-
-    public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-      return com.google.cloud.audit.ViolationInfo.getDescriptor().getEnumTypes().get(0);
-    }
-
-    private static final PolicyType[] VALUES = values();
-
-    public static PolicyType valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
+    };
 
     private final int value;
 
@@ -246,9 +202,7 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int CONSTRAINT_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object constraint_ = "";
+  private java.lang.String constraint_;
   /**
    *
    *
@@ -262,15 +216,7 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getConstraint() {
-    java.lang.Object ref = constraint_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      constraint_ = s;
-      return s;
-    }
+    return constraint_;
   }
   /**
    *
@@ -285,21 +231,55 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getConstraintBytes() {
-    java.lang.Object ref = constraint_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      constraint_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(constraint_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Constraint name
+   * </pre>
+   *
+   * <code>string constraint = 1 [(.google.api.field_behavior) = OPTIONAL];</code>
+   *
+   * @param value The constraint to set.
+   */
+  private void setConstraint(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    constraint_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Constraint name
+   * </pre>
+   *
+   * <code>string constraint = 1 [(.google.api.field_behavior) = OPTIONAL];</code>
+   */
+  private void clearConstraint() {
+
+    constraint_ = getDefaultInstance().getConstraint();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Constraint name
+   * </pre>
+   *
+   * <code>string constraint = 1 [(.google.api.field_behavior) = OPTIONAL];</code>
+   *
+   * @param value The bytes for constraint to set.
+   */
+  private void setConstraintBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    constraint_ = value.toStringUtf8();
   }
 
   public static final int ERROR_MESSAGE_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object errorMessage_ = "";
+  private java.lang.String errorMessage_;
   /**
    *
    *
@@ -313,15 +293,7 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getErrorMessage() {
-    java.lang.Object ref = errorMessage_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      errorMessage_ = s;
-      return s;
-    }
+    return errorMessage_;
   }
   /**
    *
@@ -336,21 +308,55 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getErrorMessageBytes() {
-    java.lang.Object ref = errorMessage_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      errorMessage_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(errorMessage_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Error message that policy is indicating.
+   * </pre>
+   *
+   * <code>string error_message = 2 [(.google.api.field_behavior) = OPTIONAL];</code>
+   *
+   * @param value The errorMessage to set.
+   */
+  private void setErrorMessage(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    errorMessage_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Error message that policy is indicating.
+   * </pre>
+   *
+   * <code>string error_message = 2 [(.google.api.field_behavior) = OPTIONAL];</code>
+   */
+  private void clearErrorMessage() {
+
+    errorMessage_ = getDefaultInstance().getErrorMessage();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Error message that policy is indicating.
+   * </pre>
+   *
+   * <code>string error_message = 2 [(.google.api.field_behavior) = OPTIONAL];</code>
+   *
+   * @param value The bytes for errorMessage to set.
+   */
+  private void setErrorMessageBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    errorMessage_ = value.toStringUtf8();
   }
 
   public static final int CHECKED_VALUE_FIELD_NUMBER = 3;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object checkedValue_ = "";
+  private java.lang.String checkedValue_;
   /**
    *
    *
@@ -366,15 +372,7 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getCheckedValue() {
-    java.lang.Object ref = checkedValue_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      checkedValue_ = s;
-      return s;
-    }
+    return checkedValue_;
   }
   /**
    *
@@ -391,19 +389,61 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getCheckedValueBytes() {
-    java.lang.Object ref = checkedValue_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      checkedValue_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(checkedValue_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Value that is being checked for the policy.
+   * This could be in encrypted form (if pii sensitive).
+   * This field will only be emitted in LIST_POLICY types
+   * </pre>
+   *
+   * <code>string checked_value = 3 [(.google.api.field_behavior) = OPTIONAL];</code>
+   *
+   * @param value The checkedValue to set.
+   */
+  private void setCheckedValue(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    checkedValue_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Value that is being checked for the policy.
+   * This could be in encrypted form (if pii sensitive).
+   * This field will only be emitted in LIST_POLICY types
+   * </pre>
+   *
+   * <code>string checked_value = 3 [(.google.api.field_behavior) = OPTIONAL];</code>
+   */
+  private void clearCheckedValue() {
+
+    checkedValue_ = getDefaultInstance().getCheckedValue();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Value that is being checked for the policy.
+   * This could be in encrypted form (if pii sensitive).
+   * This field will only be emitted in LIST_POLICY types
+   * </pre>
+   *
+   * <code>string checked_value = 3 [(.google.api.field_behavior) = OPTIONAL];</code>
+   *
+   * @param value The bytes for checkedValue to set.
+   */
+  private void setCheckedValueBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    checkedValue_ = value.toStringUtf8();
   }
 
   public static final int POLICY_TYPE_FIELD_NUMBER = 4;
-  private int policyType_ = 0;
+  private int policyType_;
   /**
    *
    *
@@ -440,193 +480,135 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
         com.google.cloud.audit.ViolationInfo.PolicyType.forNumber(policyType_);
     return result == null ? com.google.cloud.audit.ViolationInfo.PolicyType.UNRECOGNIZED : result;
   }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Indicates the type of the policy.
+   * </pre>
+   *
+   * <code>
+   * .google.cloud.audit.ViolationInfo.PolicyType policy_type = 4 [(.google.api.field_behavior) = OPTIONAL];
+   * </code>
+   *
+   * @param value The enum numeric value on the wire for policyType to set.
+   */
+  private void setPolicyTypeValue(int value) {
+    policyType_ = value;
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(constraint_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, constraint_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(errorMessage_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, errorMessage_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(checkedValue_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, checkedValue_);
-    }
-    if (policyType_
-        != com.google.cloud.audit.ViolationInfo.PolicyType.POLICY_TYPE_UNSPECIFIED.getNumber()) {
-      output.writeEnum(4, policyType_);
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Indicates the type of the policy.
+   * </pre>
+   *
+   * <code>
+   * .google.cloud.audit.ViolationInfo.PolicyType policy_type = 4 [(.google.api.field_behavior) = OPTIONAL];
+   * </code>
+   *
+   * @param value The policyType to set.
+   */
+  private void setPolicyType(com.google.cloud.audit.ViolationInfo.PolicyType value) {
+    policyType_ = value.getNumber();
   }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Indicates the type of the policy.
+   * </pre>
+   *
+   * <code>
+   * .google.cloud.audit.ViolationInfo.PolicyType policy_type = 4 [(.google.api.field_behavior) = OPTIONAL];
+   * </code>
+   */
+  private void clearPolicyType() {
 
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(constraint_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, constraint_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(errorMessage_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, errorMessage_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(checkedValue_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, checkedValue_);
-    }
-    if (policyType_
-        != com.google.cloud.audit.ViolationInfo.PolicyType.POLICY_TYPE_UNSPECIFIED.getNumber()) {
-      size += com.google.protobuf.CodedOutputStream.computeEnumSize(4, policyType_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.cloud.audit.ViolationInfo)) {
-      return super.equals(obj);
-    }
-    com.google.cloud.audit.ViolationInfo other = (com.google.cloud.audit.ViolationInfo) obj;
-
-    if (!getConstraint().equals(other.getConstraint())) return false;
-    if (!getErrorMessage().equals(other.getErrorMessage())) return false;
-    if (!getCheckedValue().equals(other.getCheckedValue())) return false;
-    if (policyType_ != other.policyType_) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + CONSTRAINT_FIELD_NUMBER;
-    hash = (53 * hash) + getConstraint().hashCode();
-    hash = (37 * hash) + ERROR_MESSAGE_FIELD_NUMBER;
-    hash = (53 * hash) + getErrorMessage().hashCode();
-    hash = (37 * hash) + CHECKED_VALUE_FIELD_NUMBER;
-    hash = (53 * hash) + getCheckedValue().hashCode();
-    hash = (37 * hash) + POLICY_TYPE_FIELD_NUMBER;
-    hash = (53 * hash) + policyType_;
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+    policyType_ = 0;
   }
 
   public static com.google.cloud.audit.ViolationInfo parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.ViolationInfo parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.ViolationInfo parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.ViolationInfo parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.ViolationInfo parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.ViolationInfo parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.ViolationInfo parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.ViolationInfo parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.cloud.audit.ViolationInfo parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.ViolationInfo parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.cloud.audit.ViolationInfo parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.ViolationInfo parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.cloud.audit.ViolationInfo prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -636,222 +618,17 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.cloud.audit.ViolationInfo}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.cloud.audit.ViolationInfo, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.cloud.audit.ViolationInfo)
       com.google.cloud.audit.ViolationInfoOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_ViolationInfo_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_ViolationInfo_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.cloud.audit.ViolationInfo.class,
-              com.google.cloud.audit.ViolationInfo.Builder.class);
-    }
-
     // Construct using com.google.cloud.audit.ViolationInfo.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      constraint_ = "";
-      errorMessage_ = "";
-      checkedValue_ = "";
-      policyType_ = 0;
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_ViolationInfo_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.ViolationInfo getDefaultInstanceForType() {
-      return com.google.cloud.audit.ViolationInfo.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.ViolationInfo build() {
-      com.google.cloud.audit.ViolationInfo result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.ViolationInfo buildPartial() {
-      com.google.cloud.audit.ViolationInfo result = new com.google.cloud.audit.ViolationInfo(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.cloud.audit.ViolationInfo result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.constraint_ = constraint_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.errorMessage_ = errorMessage_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.checkedValue_ = checkedValue_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.policyType_ = policyType_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.cloud.audit.ViolationInfo) {
-        return mergeFrom((com.google.cloud.audit.ViolationInfo) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.cloud.audit.ViolationInfo other) {
-      if (other == com.google.cloud.audit.ViolationInfo.getDefaultInstance()) return this;
-      if (!other.getConstraint().isEmpty()) {
-        constraint_ = other.constraint_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getErrorMessage().isEmpty()) {
-        errorMessage_ = other.errorMessage_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      if (!other.getCheckedValue().isEmpty()) {
-        checkedValue_ = other.checkedValue_;
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
-      if (other.policyType_ != 0) {
-        setPolicyTypeValue(other.getPolicyTypeValue());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                constraint_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                errorMessage_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 26:
-              {
-                checkedValue_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 26
-            case 32:
-              {
-                policyType_ = input.readEnum();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 32
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object constraint_ = "";
     /**
      *
      *
@@ -863,16 +640,9 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The constraint.
      */
+    @java.lang.Override
     public java.lang.String getConstraint() {
-      java.lang.Object ref = constraint_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        constraint_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getConstraint();
     }
     /**
      *
@@ -885,16 +655,9 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for constraint.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getConstraintBytes() {
-      java.lang.Object ref = constraint_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        constraint_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getConstraintBytes();
     }
     /**
      *
@@ -909,12 +672,8 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setConstraint(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      constraint_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setConstraint(value);
       return this;
     }
     /**
@@ -929,9 +688,8 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearConstraint() {
-      constraint_ = getDefaultInstance().getConstraint();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearConstraint();
       return this;
     }
     /**
@@ -947,17 +705,11 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setConstraintBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      constraint_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setConstraintBytes(value);
       return this;
     }
 
-    private java.lang.Object errorMessage_ = "";
     /**
      *
      *
@@ -969,16 +721,9 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The errorMessage.
      */
+    @java.lang.Override
     public java.lang.String getErrorMessage() {
-      java.lang.Object ref = errorMessage_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        errorMessage_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getErrorMessage();
     }
     /**
      *
@@ -991,16 +736,9 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for errorMessage.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getErrorMessageBytes() {
-      java.lang.Object ref = errorMessage_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        errorMessage_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getErrorMessageBytes();
     }
     /**
      *
@@ -1015,12 +753,8 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setErrorMessage(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      errorMessage_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setErrorMessage(value);
       return this;
     }
     /**
@@ -1035,9 +769,8 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearErrorMessage() {
-      errorMessage_ = getDefaultInstance().getErrorMessage();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearErrorMessage();
       return this;
     }
     /**
@@ -1053,17 +786,11 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setErrorMessageBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      errorMessage_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setErrorMessageBytes(value);
       return this;
     }
 
-    private java.lang.Object checkedValue_ = "";
     /**
      *
      *
@@ -1077,16 +804,9 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The checkedValue.
      */
+    @java.lang.Override
     public java.lang.String getCheckedValue() {
-      java.lang.Object ref = checkedValue_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        checkedValue_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getCheckedValue();
     }
     /**
      *
@@ -1101,16 +821,9 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for checkedValue.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getCheckedValueBytes() {
-      java.lang.Object ref = checkedValue_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        checkedValue_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getCheckedValueBytes();
     }
     /**
      *
@@ -1127,12 +840,8 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setCheckedValue(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkedValue_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setCheckedValue(value);
       return this;
     }
     /**
@@ -1149,9 +858,8 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearCheckedValue() {
-      checkedValue_ = getDefaultInstance().getCheckedValue();
-      bitField0_ = (bitField0_ & ~0x00000004);
-      onChanged();
+      copyOnWrite();
+      instance.clearCheckedValue();
       return this;
     }
     /**
@@ -1169,17 +877,11 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setCheckedValueBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      checkedValue_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setCheckedValueBytes(value);
       return this;
     }
 
-    private int policyType_ = 0;
     /**
      *
      *
@@ -1195,7 +897,7 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getPolicyTypeValue() {
-      return policyType_;
+      return instance.getPolicyTypeValue();
     }
     /**
      *
@@ -1208,13 +910,12 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      * .google.cloud.audit.ViolationInfo.PolicyType policy_type = 4 [(.google.api.field_behavior) = OPTIONAL];
      * </code>
      *
-     * @param value The enum numeric value on the wire for policyType to set.
+     * @param value The policyType to set.
      * @return This builder for chaining.
      */
     public Builder setPolicyTypeValue(int value) {
-      policyType_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setPolicyTypeValue(value);
       return this;
     }
     /**
@@ -1232,9 +933,7 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.cloud.audit.ViolationInfo.PolicyType getPolicyType() {
-      com.google.cloud.audit.ViolationInfo.PolicyType result =
-          com.google.cloud.audit.ViolationInfo.PolicyType.forNumber(policyType_);
-      return result == null ? com.google.cloud.audit.ViolationInfo.PolicyType.UNRECOGNIZED : result;
+      return instance.getPolicyType();
     }
     /**
      *
@@ -1247,16 +946,12 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      * .google.cloud.audit.ViolationInfo.PolicyType policy_type = 4 [(.google.api.field_behavior) = OPTIONAL];
      * </code>
      *
-     * @param value The policyType to set.
+     * @param value The enum numeric value on the wire for policyType to set.
      * @return This builder for chaining.
      */
     public Builder setPolicyType(com.google.cloud.audit.ViolationInfo.PolicyType value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      bitField0_ |= 0x00000008;
-      policyType_ = value.getNumber();
-      onChanged();
+      copyOnWrite();
+      instance.setPolicyType(value);
       return this;
     }
     /**
@@ -1273,70 +968,92 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearPolicyType() {
-      bitField0_ = (bitField0_ & ~0x00000008);
-      policyType_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearPolicyType();
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.cloud.audit.ViolationInfo)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.cloud.audit.ViolationInfo();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "constraint_", "errorMessage_", "checkedValue_", "policyType_",
+              };
+          java.lang.String info =
+              "\u0000\u0004\u0000\u0000\u0001\u0004\u0004\u0000\u0000\u0000\u0001\u0208\u0002\u0208"
+                  + "\u0003\u0208\u0004\f";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.cloud.audit.ViolationInfo> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.cloud.audit.ViolationInfo.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.cloud.audit.ViolationInfo>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.cloud.audit.ViolationInfo)
   private static final com.google.cloud.audit.ViolationInfo DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.cloud.audit.ViolationInfo();
+    ViolationInfo defaultInstance = new ViolationInfo();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        ViolationInfo.class, defaultInstance);
   }
 
   public static com.google.cloud.audit.ViolationInfo getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<ViolationInfo> PARSER =
-      new com.google.protobuf.AbstractParser<ViolationInfo>() {
-        @java.lang.Override
-        public ViolationInfo parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<ViolationInfo> PARSER;
 
   public static com.google.protobuf.Parser<ViolationInfo> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<ViolationInfo> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.cloud.audit.ViolationInfo getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

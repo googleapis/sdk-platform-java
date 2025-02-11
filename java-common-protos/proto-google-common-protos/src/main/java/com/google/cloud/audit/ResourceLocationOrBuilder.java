@@ -22,7 +22,7 @@ package com.google.cloud.audit;
 public interface ResourceLocationOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.cloud.audit.ResourceLocation)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -98,8 +98,8 @@ public interface ResourceLocationOrBuilder
    *
    * <code>repeated string current_locations = 1;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the currentLocations at the given index.
+   * @param index The index of the element to return.
+   * @return The currentLocations at the given index.
    */
   com.google.protobuf.ByteString getCurrentLocationsBytes(int index);
 
@@ -177,8 +177,8 @@ public interface ResourceLocationOrBuilder
    *
    * <code>repeated string original_locations = 2;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the originalLocations at the given index.
+   * @param index The index of the element to return.
+   * @return The originalLocations at the given index.
    */
   com.google.protobuf.ByteString getOriginalLocationsBytes(int index);
 }

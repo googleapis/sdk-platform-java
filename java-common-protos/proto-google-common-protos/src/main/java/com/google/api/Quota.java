@@ -76,43 +76,17 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.Quota}
  */
-public final class Quota extends com.google.protobuf.GeneratedMessageV3
+public final class Quota extends com.google.protobuf.GeneratedMessageLite<Quota, Quota.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.Quota)
     QuotaOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use Quota.newBuilder() to construct.
-  private Quota(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private Quota() {
-    limits_ = java.util.Collections.emptyList();
-    metricRules_ = java.util.Collections.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new Quota();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.QuotaProto.internal_static_google_api_Quota_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.QuotaProto.internal_static_google_api_Quota_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.Quota.class, com.google.api.Quota.Builder.class);
+    limits_ = emptyProtobufList();
+    metricRules_ = emptyProtobufList();
   }
 
   public static final int LIMITS_FIELD_NUMBER = 3;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.api.QuotaLimit> limits_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.api.QuotaLimit> limits_;
   /**
    *
    *
@@ -135,7 +109,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.api.QuotaLimitOrBuilder> getLimitsOrBuilderList() {
     return limits_;
   }
@@ -174,15 +147,100 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
    */
-  @java.lang.Override
   public com.google.api.QuotaLimitOrBuilder getLimitsOrBuilder(int index) {
     return limits_.get(index);
   }
 
-  public static final int METRIC_RULES_FIELD_NUMBER = 4;
+  private void ensureLimitsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.api.QuotaLimit> tmp = limits_;
+    if (!tmp.isModifiable()) {
+      limits_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
 
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.api.MetricRule> metricRules_;
+  /**
+   *
+   *
+   * <pre>
+   * List of QuotaLimit definitions for the service.
+   * </pre>
+   *
+   * <code>repeated .google.api.QuotaLimit limits = 3;</code>
+   */
+  private void setLimits(int index, com.google.api.QuotaLimit value) {
+    value.getClass();
+    ensureLimitsIsMutable();
+    limits_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of QuotaLimit definitions for the service.
+   * </pre>
+   *
+   * <code>repeated .google.api.QuotaLimit limits = 3;</code>
+   */
+  private void addLimits(com.google.api.QuotaLimit value) {
+    value.getClass();
+    ensureLimitsIsMutable();
+    limits_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of QuotaLimit definitions for the service.
+   * </pre>
+   *
+   * <code>repeated .google.api.QuotaLimit limits = 3;</code>
+   */
+  private void addLimits(int index, com.google.api.QuotaLimit value) {
+    value.getClass();
+    ensureLimitsIsMutable();
+    limits_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of QuotaLimit definitions for the service.
+   * </pre>
+   *
+   * <code>repeated .google.api.QuotaLimit limits = 3;</code>
+   */
+  private void addAllLimits(java.lang.Iterable<? extends com.google.api.QuotaLimit> values) {
+    ensureLimitsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, limits_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of QuotaLimit definitions for the service.
+   * </pre>
+   *
+   * <code>repeated .google.api.QuotaLimit limits = 3;</code>
+   */
+  private void clearLimits() {
+    limits_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of QuotaLimit definitions for the service.
+   * </pre>
+   *
+   * <code>repeated .google.api.QuotaLimit limits = 3;</code>
+   */
+  private void removeLimits(int index) {
+    ensureLimitsIsMutable();
+    limits_.remove(index);
+  }
+
+  public static final int METRIC_RULES_FIELD_NUMBER = 4;
+  private com.google.protobuf.Internal.ProtobufList<com.google.api.MetricRule> metricRules_;
   /**
    *
    *
@@ -207,7 +265,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.api.MetricRuleOrBuilder>
       getMetricRulesOrBuilderList() {
     return metricRules_;
@@ -250,181 +307,185 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
    */
-  @java.lang.Override
   public com.google.api.MetricRuleOrBuilder getMetricRulesOrBuilder(int index) {
     return metricRules_.get(index);
   }
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  private void ensureMetricRulesIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.api.MetricRule> tmp = metricRules_;
+    if (!tmp.isModifiable()) {
+      metricRules_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
   }
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    for (int i = 0; i < limits_.size(); i++) {
-      output.writeMessage(3, limits_.get(i));
-    }
-    for (int i = 0; i < metricRules_.size(); i++) {
-      output.writeMessage(4, metricRules_.get(i));
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * List of MetricRule definitions, each one mapping a selected method to one
+   * or more metrics.
+   * </pre>
+   *
+   * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
+   */
+  private void setMetricRules(int index, com.google.api.MetricRule value) {
+    value.getClass();
+    ensureMetricRulesIsMutable();
+    metricRules_.set(index, value);
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    for (int i = 0; i < limits_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, limits_.get(i));
-    }
-    for (int i = 0; i < metricRules_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, metricRules_.get(i));
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
+  /**
+   *
+   *
+   * <pre>
+   * List of MetricRule definitions, each one mapping a selected method to one
+   * or more metrics.
+   * </pre>
+   *
+   * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
+   */
+  private void addMetricRules(com.google.api.MetricRule value) {
+    value.getClass();
+    ensureMetricRulesIsMutable();
+    metricRules_.add(value);
   }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.Quota)) {
-      return super.equals(obj);
-    }
-    com.google.api.Quota other = (com.google.api.Quota) obj;
-
-    if (!getLimitsList().equals(other.getLimitsList())) return false;
-    if (!getMetricRulesList().equals(other.getMetricRulesList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * List of MetricRule definitions, each one mapping a selected method to one
+   * or more metrics.
+   * </pre>
+   *
+   * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
+   */
+  private void addMetricRules(int index, com.google.api.MetricRule value) {
+    value.getClass();
+    ensureMetricRulesIsMutable();
+    metricRules_.add(index, value);
   }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (getLimitsCount() > 0) {
-      hash = (37 * hash) + LIMITS_FIELD_NUMBER;
-      hash = (53 * hash) + getLimitsList().hashCode();
-    }
-    if (getMetricRulesCount() > 0) {
-      hash = (37 * hash) + METRIC_RULES_FIELD_NUMBER;
-      hash = (53 * hash) + getMetricRulesList().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * List of MetricRule definitions, each one mapping a selected method to one
+   * or more metrics.
+   * </pre>
+   *
+   * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
+   */
+  private void addAllMetricRules(java.lang.Iterable<? extends com.google.api.MetricRule> values) {
+    ensureMetricRulesIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, metricRules_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of MetricRule definitions, each one mapping a selected method to one
+   * or more metrics.
+   * </pre>
+   *
+   * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
+   */
+  private void clearMetricRules() {
+    metricRules_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of MetricRule definitions, each one mapping a selected method to one
+   * or more metrics.
+   * </pre>
+   *
+   * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
+   */
+  private void removeMetricRules(int index) {
+    ensureMetricRulesIsMutable();
+    metricRules_.remove(index);
   }
 
   public static com.google.api.Quota parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.Quota parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.Quota parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.Quota parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.Quota parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.Quota parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.Quota parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.Quota parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.Quota parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.Quota parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.Quota parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.Quota parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.Quota prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -482,287 +543,15 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.api.Quota}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<com.google.api.Quota, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.Quota)
       com.google.api.QuotaOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.QuotaProto.internal_static_google_api_Quota_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.QuotaProto.internal_static_google_api_Quota_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.Quota.class, com.google.api.Quota.Builder.class);
-    }
-
     // Construct using com.google.api.Quota.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      if (limitsBuilder_ == null) {
-        limits_ = java.util.Collections.emptyList();
-      } else {
-        limits_ = null;
-        limitsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000001);
-      if (metricRulesBuilder_ == null) {
-        metricRules_ = java.util.Collections.emptyList();
-      } else {
-        metricRules_ = null;
-        metricRulesBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000002);
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.QuotaProto.internal_static_google_api_Quota_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.Quota getDefaultInstanceForType() {
-      return com.google.api.Quota.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.Quota build() {
-      com.google.api.Quota result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.Quota buildPartial() {
-      com.google.api.Quota result = new com.google.api.Quota(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.api.Quota result) {
-      if (limitsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
-          limits_ = java.util.Collections.unmodifiableList(limits_);
-          bitField0_ = (bitField0_ & ~0x00000001);
-        }
-        result.limits_ = limits_;
-      } else {
-        result.limits_ = limitsBuilder_.build();
-      }
-      if (metricRulesBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)) {
-          metricRules_ = java.util.Collections.unmodifiableList(metricRules_);
-          bitField0_ = (bitField0_ & ~0x00000002);
-        }
-        result.metricRules_ = metricRules_;
-      } else {
-        result.metricRules_ = metricRulesBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.api.Quota result) {
-      int from_bitField0_ = bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.Quota) {
-        return mergeFrom((com.google.api.Quota) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.Quota other) {
-      if (other == com.google.api.Quota.getDefaultInstance()) return this;
-      if (limitsBuilder_ == null) {
-        if (!other.limits_.isEmpty()) {
-          if (limits_.isEmpty()) {
-            limits_ = other.limits_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensureLimitsIsMutable();
-            limits_.addAll(other.limits_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.limits_.isEmpty()) {
-          if (limitsBuilder_.isEmpty()) {
-            limitsBuilder_.dispose();
-            limitsBuilder_ = null;
-            limits_ = other.limits_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-            limitsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getLimitsFieldBuilder()
-                    : null;
-          } else {
-            limitsBuilder_.addAllMessages(other.limits_);
-          }
-        }
-      }
-      if (metricRulesBuilder_ == null) {
-        if (!other.metricRules_.isEmpty()) {
-          if (metricRules_.isEmpty()) {
-            metricRules_ = other.metricRules_;
-            bitField0_ = (bitField0_ & ~0x00000002);
-          } else {
-            ensureMetricRulesIsMutable();
-            metricRules_.addAll(other.metricRules_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.metricRules_.isEmpty()) {
-          if (metricRulesBuilder_.isEmpty()) {
-            metricRulesBuilder_.dispose();
-            metricRulesBuilder_ = null;
-            metricRules_ = other.metricRules_;
-            bitField0_ = (bitField0_ & ~0x00000002);
-            metricRulesBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getMetricRulesFieldBuilder()
-                    : null;
-          } else {
-            metricRulesBuilder_.addAllMessages(other.metricRules_);
-          }
-        }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 26:
-              {
-                com.google.api.QuotaLimit m =
-                    input.readMessage(com.google.api.QuotaLimit.parser(), extensionRegistry);
-                if (limitsBuilder_ == null) {
-                  ensureLimitsIsMutable();
-                  limits_.add(m);
-                } else {
-                  limitsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 26
-            case 34:
-              {
-                com.google.api.MetricRule m =
-                    input.readMessage(com.google.api.MetricRule.parser(), extensionRegistry);
-                if (metricRulesBuilder_ == null) {
-                  ensureMetricRulesIsMutable();
-                  metricRules_.add(m);
-                } else {
-                  metricRulesBuilder_.addMessage(m);
-                }
-                break;
-              } // case 34
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.util.List<com.google.api.QuotaLimit> limits_ = java.util.Collections.emptyList();
-
-    private void ensureLimitsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
-        limits_ = new java.util.ArrayList<com.google.api.QuotaLimit>(limits_);
-        bitField0_ |= 0x00000001;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.QuotaLimit,
-            com.google.api.QuotaLimit.Builder,
-            com.google.api.QuotaLimitOrBuilder>
-        limitsBuilder_;
 
     /**
      *
@@ -773,12 +562,9 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.api.QuotaLimit> getLimitsList() {
-      if (limitsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(limits_);
-      } else {
-        return limitsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getLimitsList());
     }
     /**
      *
@@ -789,12 +575,9 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
      */
+    @java.lang.Override
     public int getLimitsCount() {
-      if (limitsBuilder_ == null) {
-        return limits_.size();
-      } else {
-        return limitsBuilder_.getCount();
-      }
+      return instance.getLimitsCount();
     }
     /**
      *
@@ -805,12 +588,10 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
      */
+
+    @java.lang.Override
     public com.google.api.QuotaLimit getLimits(int index) {
-      if (limitsBuilder_ == null) {
-        return limits_.get(index);
-      } else {
-        return limitsBuilder_.getMessage(index);
-      }
+      return instance.getLimits(index);
     }
     /**
      *
@@ -822,16 +603,8 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
      */
     public Builder setLimits(int index, com.google.api.QuotaLimit value) {
-      if (limitsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureLimitsIsMutable();
-        limits_.set(index, value);
-        onChanged();
-      } else {
-        limitsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setLimits(index, value);
       return this;
     }
     /**
@@ -844,13 +617,8 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
      */
     public Builder setLimits(int index, com.google.api.QuotaLimit.Builder builderForValue) {
-      if (limitsBuilder_ == null) {
-        ensureLimitsIsMutable();
-        limits_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        limitsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setLimits(index, builderForValue.build());
       return this;
     }
     /**
@@ -863,16 +631,8 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
      */
     public Builder addLimits(com.google.api.QuotaLimit value) {
-      if (limitsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureLimitsIsMutable();
-        limits_.add(value);
-        onChanged();
-      } else {
-        limitsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addLimits(value);
       return this;
     }
     /**
@@ -885,16 +645,8 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
      */
     public Builder addLimits(int index, com.google.api.QuotaLimit value) {
-      if (limitsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureLimitsIsMutable();
-        limits_.add(index, value);
-        onChanged();
-      } else {
-        limitsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addLimits(index, value);
       return this;
     }
     /**
@@ -907,13 +659,8 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
      */
     public Builder addLimits(com.google.api.QuotaLimit.Builder builderForValue) {
-      if (limitsBuilder_ == null) {
-        ensureLimitsIsMutable();
-        limits_.add(builderForValue.build());
-        onChanged();
-      } else {
-        limitsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addLimits(builderForValue.build());
       return this;
     }
     /**
@@ -926,13 +673,8 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
      */
     public Builder addLimits(int index, com.google.api.QuotaLimit.Builder builderForValue) {
-      if (limitsBuilder_ == null) {
-        ensureLimitsIsMutable();
-        limits_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        limitsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addLimits(index, builderForValue.build());
       return this;
     }
     /**
@@ -945,13 +687,8 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
      */
     public Builder addAllLimits(java.lang.Iterable<? extends com.google.api.QuotaLimit> values) {
-      if (limitsBuilder_ == null) {
-        ensureLimitsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, limits_);
-        onChanged();
-      } else {
-        limitsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllLimits(values);
       return this;
     }
     /**
@@ -964,13 +701,8 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
      */
     public Builder clearLimits() {
-      if (limitsBuilder_ == null) {
-        limits_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-      } else {
-        limitsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearLimits();
       return this;
     }
     /**
@@ -983,129 +715,10 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
      */
     public Builder removeLimits(int index) {
-      if (limitsBuilder_ == null) {
-        ensureLimitsIsMutable();
-        limits_.remove(index);
-        onChanged();
-      } else {
-        limitsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeLimits(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * List of QuotaLimit definitions for the service.
-     * </pre>
-     *
-     * <code>repeated .google.api.QuotaLimit limits = 3;</code>
-     */
-    public com.google.api.QuotaLimit.Builder getLimitsBuilder(int index) {
-      return getLimitsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of QuotaLimit definitions for the service.
-     * </pre>
-     *
-     * <code>repeated .google.api.QuotaLimit limits = 3;</code>
-     */
-    public com.google.api.QuotaLimitOrBuilder getLimitsOrBuilder(int index) {
-      if (limitsBuilder_ == null) {
-        return limits_.get(index);
-      } else {
-        return limitsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of QuotaLimit definitions for the service.
-     * </pre>
-     *
-     * <code>repeated .google.api.QuotaLimit limits = 3;</code>
-     */
-    public java.util.List<? extends com.google.api.QuotaLimitOrBuilder> getLimitsOrBuilderList() {
-      if (limitsBuilder_ != null) {
-        return limitsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(limits_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of QuotaLimit definitions for the service.
-     * </pre>
-     *
-     * <code>repeated .google.api.QuotaLimit limits = 3;</code>
-     */
-    public com.google.api.QuotaLimit.Builder addLimitsBuilder() {
-      return getLimitsFieldBuilder().addBuilder(com.google.api.QuotaLimit.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of QuotaLimit definitions for the service.
-     * </pre>
-     *
-     * <code>repeated .google.api.QuotaLimit limits = 3;</code>
-     */
-    public com.google.api.QuotaLimit.Builder addLimitsBuilder(int index) {
-      return getLimitsFieldBuilder()
-          .addBuilder(index, com.google.api.QuotaLimit.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of QuotaLimit definitions for the service.
-     * </pre>
-     *
-     * <code>repeated .google.api.QuotaLimit limits = 3;</code>
-     */
-    public java.util.List<com.google.api.QuotaLimit.Builder> getLimitsBuilderList() {
-      return getLimitsFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.QuotaLimit,
-            com.google.api.QuotaLimit.Builder,
-            com.google.api.QuotaLimitOrBuilder>
-        getLimitsFieldBuilder() {
-      if (limitsBuilder_ == null) {
-        limitsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.api.QuotaLimit,
-                com.google.api.QuotaLimit.Builder,
-                com.google.api.QuotaLimitOrBuilder>(
-                limits_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
-        limits_ = null;
-      }
-      return limitsBuilder_;
-    }
-
-    private java.util.List<com.google.api.MetricRule> metricRules_ =
-        java.util.Collections.emptyList();
-
-    private void ensureMetricRulesIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
-        metricRules_ = new java.util.ArrayList<com.google.api.MetricRule>(metricRules_);
-        bitField0_ |= 0x00000002;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.MetricRule,
-            com.google.api.MetricRule.Builder,
-            com.google.api.MetricRuleOrBuilder>
-        metricRulesBuilder_;
 
     /**
      *
@@ -1117,12 +730,9 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.api.MetricRule> getMetricRulesList() {
-      if (metricRulesBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(metricRules_);
-      } else {
-        return metricRulesBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getMetricRulesList());
     }
     /**
      *
@@ -1134,12 +744,9 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
      */
+    @java.lang.Override
     public int getMetricRulesCount() {
-      if (metricRulesBuilder_ == null) {
-        return metricRules_.size();
-      } else {
-        return metricRulesBuilder_.getCount();
-      }
+      return instance.getMetricRulesCount();
     }
     /**
      *
@@ -1151,12 +758,10 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
      */
+
+    @java.lang.Override
     public com.google.api.MetricRule getMetricRules(int index) {
-      if (metricRulesBuilder_ == null) {
-        return metricRules_.get(index);
-      } else {
-        return metricRulesBuilder_.getMessage(index);
-      }
+      return instance.getMetricRules(index);
     }
     /**
      *
@@ -1169,16 +774,8 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
      */
     public Builder setMetricRules(int index, com.google.api.MetricRule value) {
-      if (metricRulesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureMetricRulesIsMutable();
-        metricRules_.set(index, value);
-        onChanged();
-      } else {
-        metricRulesBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setMetricRules(index, value);
       return this;
     }
     /**
@@ -1192,13 +789,8 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
      */
     public Builder setMetricRules(int index, com.google.api.MetricRule.Builder builderForValue) {
-      if (metricRulesBuilder_ == null) {
-        ensureMetricRulesIsMutable();
-        metricRules_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        metricRulesBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setMetricRules(index, builderForValue.build());
       return this;
     }
     /**
@@ -1212,16 +804,8 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
      */
     public Builder addMetricRules(com.google.api.MetricRule value) {
-      if (metricRulesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureMetricRulesIsMutable();
-        metricRules_.add(value);
-        onChanged();
-      } else {
-        metricRulesBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addMetricRules(value);
       return this;
     }
     /**
@@ -1235,16 +819,8 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
      */
     public Builder addMetricRules(int index, com.google.api.MetricRule value) {
-      if (metricRulesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureMetricRulesIsMutable();
-        metricRules_.add(index, value);
-        onChanged();
-      } else {
-        metricRulesBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addMetricRules(index, value);
       return this;
     }
     /**
@@ -1258,13 +834,8 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
      */
     public Builder addMetricRules(com.google.api.MetricRule.Builder builderForValue) {
-      if (metricRulesBuilder_ == null) {
-        ensureMetricRulesIsMutable();
-        metricRules_.add(builderForValue.build());
-        onChanged();
-      } else {
-        metricRulesBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addMetricRules(builderForValue.build());
       return this;
     }
     /**
@@ -1278,13 +849,8 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
      */
     public Builder addMetricRules(int index, com.google.api.MetricRule.Builder builderForValue) {
-      if (metricRulesBuilder_ == null) {
-        ensureMetricRulesIsMutable();
-        metricRules_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        metricRulesBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addMetricRules(index, builderForValue.build());
       return this;
     }
     /**
@@ -1299,13 +865,8 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addAllMetricRules(
         java.lang.Iterable<? extends com.google.api.MetricRule> values) {
-      if (metricRulesBuilder_ == null) {
-        ensureMetricRulesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, metricRules_);
-        onChanged();
-      } else {
-        metricRulesBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllMetricRules(values);
       return this;
     }
     /**
@@ -1319,13 +880,8 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
      */
     public Builder clearMetricRules() {
-      if (metricRulesBuilder_ == null) {
-        metricRules_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
-      } else {
-        metricRulesBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearMetricRules();
       return this;
     }
     /**
@@ -1339,180 +895,92 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
      */
     public Builder removeMetricRules(int index) {
-      if (metricRulesBuilder_ == null) {
-        ensureMetricRulesIsMutable();
-        metricRules_.remove(index);
-        onChanged();
-      } else {
-        metricRulesBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeMetricRules(index);
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of MetricRule definitions, each one mapping a selected method to one
-     * or more metrics.
-     * </pre>
-     *
-     * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
-     */
-    public com.google.api.MetricRule.Builder getMetricRulesBuilder(int index) {
-      return getMetricRulesFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of MetricRule definitions, each one mapping a selected method to one
-     * or more metrics.
-     * </pre>
-     *
-     * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
-     */
-    public com.google.api.MetricRuleOrBuilder getMetricRulesOrBuilder(int index) {
-      if (metricRulesBuilder_ == null) {
-        return metricRules_.get(index);
-      } else {
-        return metricRulesBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of MetricRule definitions, each one mapping a selected method to one
-     * or more metrics.
-     * </pre>
-     *
-     * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
-     */
-    public java.util.List<? extends com.google.api.MetricRuleOrBuilder>
-        getMetricRulesOrBuilderList() {
-      if (metricRulesBuilder_ != null) {
-        return metricRulesBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(metricRules_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of MetricRule definitions, each one mapping a selected method to one
-     * or more metrics.
-     * </pre>
-     *
-     * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
-     */
-    public com.google.api.MetricRule.Builder addMetricRulesBuilder() {
-      return getMetricRulesFieldBuilder()
-          .addBuilder(com.google.api.MetricRule.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of MetricRule definitions, each one mapping a selected method to one
-     * or more metrics.
-     * </pre>
-     *
-     * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
-     */
-    public com.google.api.MetricRule.Builder addMetricRulesBuilder(int index) {
-      return getMetricRulesFieldBuilder()
-          .addBuilder(index, com.google.api.MetricRule.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of MetricRule definitions, each one mapping a selected method to one
-     * or more metrics.
-     * </pre>
-     *
-     * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
-     */
-    public java.util.List<com.google.api.MetricRule.Builder> getMetricRulesBuilderList() {
-      return getMetricRulesFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.MetricRule,
-            com.google.api.MetricRule.Builder,
-            com.google.api.MetricRuleOrBuilder>
-        getMetricRulesFieldBuilder() {
-      if (metricRulesBuilder_ == null) {
-        metricRulesBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.api.MetricRule,
-                com.google.api.MetricRule.Builder,
-                com.google.api.MetricRuleOrBuilder>(
-                metricRules_, ((bitField0_ & 0x00000002) != 0), getParentForChildren(), isClean());
-        metricRules_ = null;
-      }
-      return metricRulesBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.api.Quota)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.Quota();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "limits_",
+                com.google.api.QuotaLimit.class,
+                "metricRules_",
+                com.google.api.MetricRule.class,
+              };
+          java.lang.String info =
+              "\u0000\u0002\u0000\u0000\u0003\u0004\u0002\u0000\u0002\u0000\u0003\u001b\u0004\u001b"
+                  + "";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.Quota> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.Quota.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser = new DefaultInstanceBasedParser<com.google.api.Quota>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.Quota)
   private static final com.google.api.Quota DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.Quota();
+    Quota defaultInstance = new Quota();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(Quota.class, defaultInstance);
   }
 
   public static com.google.api.Quota getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Quota> PARSER =
-      new com.google.protobuf.AbstractParser<Quota>() {
-        @java.lang.Override
-        public Quota parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<Quota> PARSER;
 
   public static com.google.protobuf.Parser<Quota> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<Quota> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.Quota getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

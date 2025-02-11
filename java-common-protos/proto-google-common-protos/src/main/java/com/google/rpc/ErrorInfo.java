@@ -51,55 +51,18 @@ package com.google.rpc;
  *
  * Protobuf type {@code google.rpc.ErrorInfo}
  */
-public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
+public final class ErrorInfo
+    extends com.google.protobuf.GeneratedMessageLite<ErrorInfo, ErrorInfo.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.rpc.ErrorInfo)
     ErrorInfoOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use ErrorInfo.newBuilder() to construct.
-  private ErrorInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private ErrorInfo() {
     reason_ = "";
     domain_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new ErrorInfo();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_ErrorInfo_descriptor;
-  }
-
-  @SuppressWarnings({"rawtypes"})
-  @java.lang.Override
-  protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-      int number) {
-    switch (number) {
-      case 3:
-        return internalGetMetadata();
-      default:
-        throw new RuntimeException("Invalid map field number: " + number);
-    }
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_ErrorInfo_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.rpc.ErrorInfo.class, com.google.rpc.ErrorInfo.Builder.class);
-  }
-
   public static final int REASON_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object reason_ = "";
+  private java.lang.String reason_;
   /**
    *
    *
@@ -117,15 +80,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getReason() {
-    java.lang.Object ref = reason_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      reason_ = s;
-      return s;
-    }
+    return reason_;
   }
   /**
    *
@@ -144,21 +99,67 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getReasonBytes() {
-    java.lang.Object ref = reason_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      reason_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(reason_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The reason of the error. This is a constant value that identifies the
+   * proximate cause of the error. Error reasons are unique within a particular
+   * domain of errors. This should be at most 63 characters and match a
+   * regular expression of `[A-Z][A-Z0-9_]+[A-Z0-9]`, which represents
+   * UPPER_SNAKE_CASE.
+   * </pre>
+   *
+   * <code>string reason = 1;</code>
+   *
+   * @param value The reason to set.
+   */
+  private void setReason(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    reason_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The reason of the error. This is a constant value that identifies the
+   * proximate cause of the error. Error reasons are unique within a particular
+   * domain of errors. This should be at most 63 characters and match a
+   * regular expression of `[A-Z][A-Z0-9_]+[A-Z0-9]`, which represents
+   * UPPER_SNAKE_CASE.
+   * </pre>
+   *
+   * <code>string reason = 1;</code>
+   */
+  private void clearReason() {
+
+    reason_ = getDefaultInstance().getReason();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The reason of the error. This is a constant value that identifies the
+   * proximate cause of the error. Error reasons are unique within a particular
+   * domain of errors. This should be at most 63 characters and match a
+   * regular expression of `[A-Z][A-Z0-9_]+[A-Z0-9]`, which represents
+   * UPPER_SNAKE_CASE.
+   * </pre>
+   *
+   * <code>string reason = 1;</code>
+   *
+   * @param value The bytes for reason to set.
+   */
+  private void setReasonBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    reason_ = value.toStringUtf8();
   }
 
   public static final int DOMAIN_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object domain_ = "";
+  private java.lang.String domain_;
   /**
    *
    *
@@ -177,15 +178,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getDomain() {
-    java.lang.Object ref = domain_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      domain_ = s;
-      return s;
-    }
+    return domain_;
   }
   /**
    *
@@ -205,42 +198,98 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getDomainBytes() {
-    java.lang.Object ref = domain_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      domain_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(domain_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The logical grouping to which the "reason" belongs. The error domain
+   * is typically the registered service name of the tool or product that
+   * generates the error. Example: "pubsub.googleapis.com". If the error is
+   * generated by some common infrastructure, the error domain must be a
+   * globally unique value that identifies the infrastructure. For Google API
+   * infrastructure, the error domain is "googleapis.com".
+   * </pre>
+   *
+   * <code>string domain = 2;</code>
+   *
+   * @param value The domain to set.
+   */
+  private void setDomain(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    domain_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The logical grouping to which the "reason" belongs. The error domain
+   * is typically the registered service name of the tool or product that
+   * generates the error. Example: "pubsub.googleapis.com". If the error is
+   * generated by some common infrastructure, the error domain must be a
+   * globally unique value that identifies the infrastructure. For Google API
+   * infrastructure, the error domain is "googleapis.com".
+   * </pre>
+   *
+   * <code>string domain = 2;</code>
+   */
+  private void clearDomain() {
+
+    domain_ = getDefaultInstance().getDomain();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The logical grouping to which the "reason" belongs. The error domain
+   * is typically the registered service name of the tool or product that
+   * generates the error. Example: "pubsub.googleapis.com". If the error is
+   * generated by some common infrastructure, the error domain must be a
+   * globally unique value that identifies the infrastructure. For Google API
+   * infrastructure, the error domain is "googleapis.com".
+   * </pre>
+   *
+   * <code>string domain = 2;</code>
+   *
+   * @param value The bytes for domain to set.
+   */
+  private void setDomainBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    domain_ = value.toStringUtf8();
   }
 
   public static final int METADATA_FIELD_NUMBER = 3;
 
   private static final class MetadataDefaultEntryHolder {
-    static final com.google.protobuf.MapEntry<java.lang.String, java.lang.String> defaultEntry =
-        com.google.protobuf.MapEntry.<java.lang.String, java.lang.String>newDefaultInstance(
-            com.google.rpc.ErrorDetailsProto
-                .internal_static_google_rpc_ErrorInfo_MetadataEntry_descriptor,
+    static final com.google.protobuf.MapEntryLite<java.lang.String, java.lang.String> defaultEntry =
+        com.google.protobuf.MapEntryLite.<java.lang.String, java.lang.String>newDefaultInstance(
             com.google.protobuf.WireFormat.FieldType.STRING,
             "",
             com.google.protobuf.WireFormat.FieldType.STRING,
             "");
   }
 
-  @SuppressWarnings("serial")
-  private com.google.protobuf.MapField<java.lang.String, java.lang.String> metadata_;
+  private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String> metadata_ =
+      com.google.protobuf.MapFieldLite.emptyMapField();
 
-  private com.google.protobuf.MapField<java.lang.String, java.lang.String> internalGetMetadata() {
-    if (metadata_ == null) {
-      return com.google.protobuf.MapField.emptyMapField(MetadataDefaultEntryHolder.defaultEntry);
+  private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
+      internalGetMetadata() {
+    return metadata_;
+  }
+
+  private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
+      internalGetMutableMetadata() {
+    if (!metadata_.isMutable()) {
+      metadata_ = metadata_.mutableCopy();
     }
     return metadata_;
   }
 
+  @java.lang.Override
   public int getMetadataCount() {
-    return internalGetMetadata().getMap().size();
+    return internalGetMetadata().size();
   }
   /**
    *
@@ -261,10 +310,8 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public boolean containsMetadata(java.lang.String key) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
-    return internalGetMetadata().getMap().containsKey(key);
+    java.lang.Class<?> keyClass = key.getClass();
+    return internalGetMetadata().containsKey(key);
   }
   /** Use {@link #getMetadataMap()} instead. */
   @java.lang.Override
@@ -291,7 +338,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.util.Map<java.lang.String, java.lang.String> getMetadataMap() {
-    return internalGetMetadata().getMap();
+    return java.util.Collections.unmodifiableMap(internalGetMetadata());
   }
   /**
    *
@@ -315,10 +362,8 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
       java.lang.String key,
       /* nullable */
       java.lang.String defaultValue) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
-    java.util.Map<java.lang.String, java.lang.String> map = internalGetMetadata().getMap();
+    java.lang.Class<?> keyClass = key.getClass();
+    java.util.Map<java.lang.String, java.lang.String> map = internalGetMetadata();
     return map.containsKey(key) ? map.get(key) : defaultValue;
   }
   /**
@@ -340,199 +385,115 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getMetadataOrThrow(java.lang.String key) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
-    java.util.Map<java.lang.String, java.lang.String> map = internalGetMetadata().getMap();
+    java.lang.Class<?> keyClass = key.getClass();
+    java.util.Map<java.lang.String, java.lang.String> map = internalGetMetadata();
     if (!map.containsKey(key)) {
       throw new java.lang.IllegalArgumentException();
     }
     return map.get(key);
   }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
-  }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(reason_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, reason_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(domain_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, domain_);
-    }
-    com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
-        output, internalGetMetadata(), MetadataDefaultEntryHolder.defaultEntry, 3);
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(reason_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, reason_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(domain_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, domain_);
-    }
-    for (java.util.Map.Entry<java.lang.String, java.lang.String> entry :
-        internalGetMetadata().getMap().entrySet()) {
-      com.google.protobuf.MapEntry<java.lang.String, java.lang.String> metadata__ =
-          MetadataDefaultEntryHolder.defaultEntry
-              .newBuilderForType()
-              .setKey(entry.getKey())
-              .setValue(entry.getValue())
-              .build();
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, metadata__);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.rpc.ErrorInfo)) {
-      return super.equals(obj);
-    }
-    com.google.rpc.ErrorInfo other = (com.google.rpc.ErrorInfo) obj;
-
-    if (!getReason().equals(other.getReason())) return false;
-    if (!getDomain().equals(other.getDomain())) return false;
-    if (!internalGetMetadata().equals(other.internalGetMetadata())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + REASON_FIELD_NUMBER;
-    hash = (53 * hash) + getReason().hashCode();
-    hash = (37 * hash) + DOMAIN_FIELD_NUMBER;
-    hash = (53 * hash) + getDomain().hashCode();
-    if (!internalGetMetadata().getMap().isEmpty()) {
-      hash = (37 * hash) + METADATA_FIELD_NUMBER;
-      hash = (53 * hash) + internalGetMetadata().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Additional structured details about this error.
+   *
+   * Keys must match a regular expression of `[a-z][a-zA-Z0-9-_]+` but should
+   * ideally be lowerCamelCase. Also, they must be limited to 64 characters in
+   * length. When identifying the current value of an exceeded limit, the units
+   * should be contained in the key, not the value.  For example, rather than
+   * `{"instanceLimit": "100/request"}`, should be returned as,
+   * `{"instanceLimitPerRequest": "100"}`, if the client exceeds the number of
+   * instances that can be created in a single (batch) request.
+   * </pre>
+   *
+   * <code>map&lt;string, string&gt; metadata = 3;</code>
+   */
+  private java.util.Map<java.lang.String, java.lang.String> getMutableMetadataMap() {
+    return internalGetMutableMetadata();
   }
 
   public static com.google.rpc.ErrorInfo parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.rpc.ErrorInfo parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.rpc.ErrorInfo parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.rpc.ErrorInfo parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.rpc.ErrorInfo parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.rpc.ErrorInfo parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.rpc.ErrorInfo parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.rpc.ErrorInfo parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.rpc.ErrorInfo parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.rpc.ErrorInfo parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.rpc.ErrorInfo parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.rpc.ErrorInfo parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.rpc.ErrorInfo prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -565,232 +526,16 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.rpc.ErrorInfo}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<com.google.rpc.ErrorInfo, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.rpc.ErrorInfo)
       com.google.rpc.ErrorInfoOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_ErrorInfo_descriptor;
-    }
-
-    @SuppressWarnings({"rawtypes"})
-    protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-        int number) {
-      switch (number) {
-        case 3:
-          return internalGetMetadata();
-        default:
-          throw new RuntimeException("Invalid map field number: " + number);
-      }
-    }
-
-    @SuppressWarnings({"rawtypes"})
-    protected com.google.protobuf.MapFieldReflectionAccessor internalGetMutableMapFieldReflection(
-        int number) {
-      switch (number) {
-        case 3:
-          return internalGetMutableMetadata();
-        default:
-          throw new RuntimeException("Invalid map field number: " + number);
-      }
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.rpc.ErrorDetailsProto
-          .internal_static_google_rpc_ErrorInfo_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.rpc.ErrorInfo.class, com.google.rpc.ErrorInfo.Builder.class);
-    }
-
     // Construct using com.google.rpc.ErrorInfo.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      reason_ = "";
-      domain_ = "";
-      internalGetMutableMetadata().clear();
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_ErrorInfo_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.rpc.ErrorInfo getDefaultInstanceForType() {
-      return com.google.rpc.ErrorInfo.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.rpc.ErrorInfo build() {
-      com.google.rpc.ErrorInfo result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.rpc.ErrorInfo buildPartial() {
-      com.google.rpc.ErrorInfo result = new com.google.rpc.ErrorInfo(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.rpc.ErrorInfo result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.reason_ = reason_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.domain_ = domain_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.metadata_ = internalGetMetadata();
-        result.metadata_.makeImmutable();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.rpc.ErrorInfo) {
-        return mergeFrom((com.google.rpc.ErrorInfo) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.rpc.ErrorInfo other) {
-      if (other == com.google.rpc.ErrorInfo.getDefaultInstance()) return this;
-      if (!other.getReason().isEmpty()) {
-        reason_ = other.reason_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getDomain().isEmpty()) {
-        domain_ = other.domain_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      internalGetMutableMetadata().mergeFrom(other.internalGetMetadata());
-      bitField0_ |= 0x00000004;
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                reason_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                domain_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 26:
-              {
-                com.google.protobuf.MapEntry<java.lang.String, java.lang.String> metadata__ =
-                    input.readMessage(
-                        MetadataDefaultEntryHolder.defaultEntry.getParserForType(),
-                        extensionRegistry);
-                internalGetMutableMetadata()
-                    .getMutableMap()
-                    .put(metadata__.getKey(), metadata__.getValue());
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 26
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object reason_ = "";
     /**
      *
      *
@@ -806,16 +551,9 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The reason.
      */
+    @java.lang.Override
     public java.lang.String getReason() {
-      java.lang.Object ref = reason_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        reason_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getReason();
     }
     /**
      *
@@ -832,16 +570,9 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for reason.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getReasonBytes() {
-      java.lang.Object ref = reason_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        reason_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getReasonBytes();
     }
     /**
      *
@@ -860,12 +591,8 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setReason(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      reason_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setReason(value);
       return this;
     }
     /**
@@ -884,9 +611,8 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearReason() {
-      reason_ = getDefaultInstance().getReason();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearReason();
       return this;
     }
     /**
@@ -906,17 +632,11 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setReasonBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      reason_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setReasonBytes(value);
       return this;
     }
 
-    private java.lang.Object domain_ = "";
     /**
      *
      *
@@ -933,16 +653,9 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The domain.
      */
+    @java.lang.Override
     public java.lang.String getDomain() {
-      java.lang.Object ref = domain_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        domain_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getDomain();
     }
     /**
      *
@@ -960,16 +673,9 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for domain.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getDomainBytes() {
-      java.lang.Object ref = domain_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        domain_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getDomainBytes();
     }
     /**
      *
@@ -989,12 +695,8 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDomain(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      domain_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setDomain(value);
       return this;
     }
     /**
@@ -1014,9 +716,8 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDomain() {
-      domain_ = getDefaultInstance().getDomain();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearDomain();
       return this;
     }
     /**
@@ -1037,41 +738,14 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDomainBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      domain_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setDomainBytes(value);
       return this;
     }
 
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String> metadata_;
-
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String> internalGetMetadata() {
-      if (metadata_ == null) {
-        return com.google.protobuf.MapField.emptyMapField(MetadataDefaultEntryHolder.defaultEntry);
-      }
-      return metadata_;
-    }
-
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-        internalGetMutableMetadata() {
-      if (metadata_ == null) {
-        metadata_ =
-            com.google.protobuf.MapField.newMapField(MetadataDefaultEntryHolder.defaultEntry);
-      }
-      if (!metadata_.isMutable()) {
-        metadata_ = metadata_.copy();
-      }
-      bitField0_ |= 0x00000004;
-      onChanged();
-      return metadata_;
-    }
-
+    @java.lang.Override
     public int getMetadataCount() {
-      return internalGetMetadata().getMap().size();
+      return instance.getMetadataMap().size();
     }
     /**
      *
@@ -1092,10 +766,37 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean containsMetadata(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      return internalGetMetadata().getMap().containsKey(key);
+      java.lang.Class<?> keyClass = key.getClass();
+      return instance.getMetadataMap().containsKey(key);
+    }
+
+    public Builder clearMetadata() {
+      copyOnWrite();
+      instance.getMutableMetadataMap().clear();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Additional structured details about this error.
+     *
+     * Keys must match a regular expression of `[a-z][a-zA-Z0-9-_]+` but should
+     * ideally be lowerCamelCase. Also, they must be limited to 64 characters in
+     * length. When identifying the current value of an exceeded limit, the units
+     * should be contained in the key, not the value.  For example, rather than
+     * `{"instanceLimit": "100/request"}`, should be returned as,
+     * `{"instanceLimitPerRequest": "100"}`, if the client exceeds the number of
+     * instances that can be created in a single (batch) request.
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; metadata = 3;</code>
+     */
+    public Builder removeMetadata(java.lang.String key) {
+      java.lang.Class<?> keyClass = key.getClass();
+      copyOnWrite();
+      instance.getMutableMetadataMap().remove(key);
+      return this;
     }
     /** Use {@link #getMetadataMap()} instead. */
     @java.lang.Override
@@ -1122,7 +823,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.util.Map<java.lang.String, java.lang.String> getMetadataMap() {
-      return internalGetMetadata().getMap();
+      return java.util.Collections.unmodifiableMap(instance.getMetadataMap());
     }
     /**
      *
@@ -1146,10 +847,8 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
         java.lang.String key,
         /* nullable */
         java.lang.String defaultValue) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map = internalGetMetadata().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = instance.getMetadataMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
     /**
@@ -1171,50 +870,12 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getMetadataOrThrow(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map = internalGetMetadata().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = instance.getMetadataMap();
       if (!map.containsKey(key)) {
         throw new java.lang.IllegalArgumentException();
       }
       return map.get(key);
-    }
-
-    public Builder clearMetadata() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      internalGetMutableMetadata().getMutableMap().clear();
-      return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Additional structured details about this error.
-     *
-     * Keys must match a regular expression of `[a-z][a-zA-Z0-9-_]+` but should
-     * ideally be lowerCamelCase. Also, they must be limited to 64 characters in
-     * length. When identifying the current value of an exceeded limit, the units
-     * should be contained in the key, not the value.  For example, rather than
-     * `{"instanceLimit": "100/request"}`, should be returned as,
-     * `{"instanceLimitPerRequest": "100"}`, if the client exceeds the number of
-     * instances that can be created in a single (batch) request.
-     * </pre>
-     *
-     * <code>map&lt;string, string&gt; metadata = 3;</code>
-     */
-    public Builder removeMetadata(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      internalGetMutableMetadata().getMutableMap().remove(key);
-      return this;
-    }
-    /** Use alternate mutation accessors instead. */
-    @java.lang.Deprecated
-    public java.util.Map<java.lang.String, java.lang.String> getMutableMetadata() {
-      bitField0_ |= 0x00000004;
-      return internalGetMutableMetadata().getMutableMap();
     }
     /**
      *
@@ -1234,14 +895,10 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      * <code>map&lt;string, string&gt; metadata = 3;</code>
      */
     public Builder putMetadata(java.lang.String key, java.lang.String value) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      if (value == null) {
-        throw new NullPointerException("map value");
-      }
-      internalGetMutableMetadata().getMutableMap().put(key, value);
-      bitField0_ |= 0x00000004;
+      java.lang.Class<?> keyClass = key.getClass();
+      java.lang.Class<?> valueClass = value.getClass();
+      copyOnWrite();
+      instance.getMutableMetadataMap().put(key, value);
       return this;
     }
     /**
@@ -1262,69 +919,90 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      * <code>map&lt;string, string&gt; metadata = 3;</code>
      */
     public Builder putAllMetadata(java.util.Map<java.lang.String, java.lang.String> values) {
-      internalGetMutableMetadata().getMutableMap().putAll(values);
-      bitField0_ |= 0x00000004;
+      copyOnWrite();
+      instance.getMutableMetadataMap().putAll(values);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.rpc.ErrorInfo)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.rpc.ErrorInfo();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "reason_", "domain_", "metadata_", MetadataDefaultEntryHolder.defaultEntry,
+              };
+          java.lang.String info =
+              "\u0000\u0003\u0000\u0000\u0001\u0003\u0003\u0001\u0000\u0000\u0001\u0208\u0002\u0208"
+                  + "\u00032";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.rpc.ErrorInfo> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.rpc.ErrorInfo.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser = new DefaultInstanceBasedParser<com.google.rpc.ErrorInfo>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.rpc.ErrorInfo)
   private static final com.google.rpc.ErrorInfo DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.rpc.ErrorInfo();
+    ErrorInfo defaultInstance = new ErrorInfo();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        ErrorInfo.class, defaultInstance);
   }
 
   public static com.google.rpc.ErrorInfo getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<ErrorInfo> PARSER =
-      new com.google.protobuf.AbstractParser<ErrorInfo>() {
-        @java.lang.Override
-        public ErrorInfo parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<ErrorInfo> PARSER;
 
   public static com.google.protobuf.Parser<ErrorInfo> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<ErrorInfo> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.rpc.ErrorInfo getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

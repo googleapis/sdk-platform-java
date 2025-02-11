@@ -43,43 +43,17 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.ProjectProperties}
  */
-public final class ProjectProperties extends com.google.protobuf.GeneratedMessageV3
+public final class ProjectProperties
+    extends com.google.protobuf.GeneratedMessageLite<ProjectProperties, ProjectProperties.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.ProjectProperties)
     ProjectPropertiesOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use ProjectProperties.newBuilder() to construct.
-  private ProjectProperties(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private ProjectProperties() {
-    properties_ = java.util.Collections.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new ProjectProperties();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.ConsumerProto.internal_static_google_api_ProjectProperties_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.ConsumerProto
-        .internal_static_google_api_ProjectProperties_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.ProjectProperties.class, com.google.api.ProjectProperties.Builder.class);
+    properties_ = emptyProtobufList();
   }
 
   public static final int PROPERTIES_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.api.Property> properties_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.api.Property> properties_;
   /**
    *
    *
@@ -102,7 +76,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
    *
    * <code>repeated .google.api.Property properties = 1;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.api.PropertyOrBuilder> getPropertiesOrBuilderList() {
     return properties_;
   }
@@ -141,170 +114,179 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
    *
    * <code>repeated .google.api.Property properties = 1;</code>
    */
-  @java.lang.Override
   public com.google.api.PropertyOrBuilder getPropertiesOrBuilder(int index) {
     return properties_.get(index);
   }
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  private void ensurePropertiesIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.api.Property> tmp = properties_;
+    if (!tmp.isModifiable()) {
+      properties_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
   }
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    for (int i = 0; i < properties_.size(); i++) {
-      output.writeMessage(1, properties_.get(i));
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * List of per consumer project-specific properties.
+   * </pre>
+   *
+   * <code>repeated .google.api.Property properties = 1;</code>
+   */
+  private void setProperties(int index, com.google.api.Property value) {
+    value.getClass();
+    ensurePropertiesIsMutable();
+    properties_.set(index, value);
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    for (int i = 0; i < properties_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, properties_.get(i));
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
+  /**
+   *
+   *
+   * <pre>
+   * List of per consumer project-specific properties.
+   * </pre>
+   *
+   * <code>repeated .google.api.Property properties = 1;</code>
+   */
+  private void addProperties(com.google.api.Property value) {
+    value.getClass();
+    ensurePropertiesIsMutable();
+    properties_.add(value);
   }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.ProjectProperties)) {
-      return super.equals(obj);
-    }
-    com.google.api.ProjectProperties other = (com.google.api.ProjectProperties) obj;
-
-    if (!getPropertiesList().equals(other.getPropertiesList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * List of per consumer project-specific properties.
+   * </pre>
+   *
+   * <code>repeated .google.api.Property properties = 1;</code>
+   */
+  private void addProperties(int index, com.google.api.Property value) {
+    value.getClass();
+    ensurePropertiesIsMutable();
+    properties_.add(index, value);
   }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (getPropertiesCount() > 0) {
-      hash = (37 * hash) + PROPERTIES_FIELD_NUMBER;
-      hash = (53 * hash) + getPropertiesList().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * List of per consumer project-specific properties.
+   * </pre>
+   *
+   * <code>repeated .google.api.Property properties = 1;</code>
+   */
+  private void addAllProperties(java.lang.Iterable<? extends com.google.api.Property> values) {
+    ensurePropertiesIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, properties_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of per consumer project-specific properties.
+   * </pre>
+   *
+   * <code>repeated .google.api.Property properties = 1;</code>
+   */
+  private void clearProperties() {
+    properties_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of per consumer project-specific properties.
+   * </pre>
+   *
+   * <code>repeated .google.api.Property properties = 1;</code>
+   */
+  private void removeProperties(int index) {
+    ensurePropertiesIsMutable();
+    properties_.remove(index);
   }
 
   public static com.google.api.ProjectProperties parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.ProjectProperties parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.ProjectProperties parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.ProjectProperties parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.ProjectProperties parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.ProjectProperties parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.ProjectProperties parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.ProjectProperties parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.ProjectProperties parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.ProjectProperties parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.ProjectProperties parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.ProjectProperties parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.ProjectProperties prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -329,234 +311,16 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
    *
    * Protobuf type {@code google.api.ProjectProperties}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.api.ProjectProperties, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.ProjectProperties)
       com.google.api.ProjectPropertiesOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.ConsumerProto.internal_static_google_api_ProjectProperties_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.ConsumerProto
-          .internal_static_google_api_ProjectProperties_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.ProjectProperties.class,
-              com.google.api.ProjectProperties.Builder.class);
-    }
-
     // Construct using com.google.api.ProjectProperties.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      if (propertiesBuilder_ == null) {
-        properties_ = java.util.Collections.emptyList();
-      } else {
-        properties_ = null;
-        propertiesBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000001);
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.ConsumerProto.internal_static_google_api_ProjectProperties_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.ProjectProperties getDefaultInstanceForType() {
-      return com.google.api.ProjectProperties.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.ProjectProperties build() {
-      com.google.api.ProjectProperties result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.ProjectProperties buildPartial() {
-      com.google.api.ProjectProperties result = new com.google.api.ProjectProperties(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.api.ProjectProperties result) {
-      if (propertiesBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
-          properties_ = java.util.Collections.unmodifiableList(properties_);
-          bitField0_ = (bitField0_ & ~0x00000001);
-        }
-        result.properties_ = properties_;
-      } else {
-        result.properties_ = propertiesBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.api.ProjectProperties result) {
-      int from_bitField0_ = bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.ProjectProperties) {
-        return mergeFrom((com.google.api.ProjectProperties) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.ProjectProperties other) {
-      if (other == com.google.api.ProjectProperties.getDefaultInstance()) return this;
-      if (propertiesBuilder_ == null) {
-        if (!other.properties_.isEmpty()) {
-          if (properties_.isEmpty()) {
-            properties_ = other.properties_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensurePropertiesIsMutable();
-            properties_.addAll(other.properties_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.properties_.isEmpty()) {
-          if (propertiesBuilder_.isEmpty()) {
-            propertiesBuilder_.dispose();
-            propertiesBuilder_ = null;
-            properties_ = other.properties_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-            propertiesBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getPropertiesFieldBuilder()
-                    : null;
-          } else {
-            propertiesBuilder_.addAllMessages(other.properties_);
-          }
-        }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                com.google.api.Property m =
-                    input.readMessage(com.google.api.Property.parser(), extensionRegistry);
-                if (propertiesBuilder_ == null) {
-                  ensurePropertiesIsMutable();
-                  properties_.add(m);
-                } else {
-                  propertiesBuilder_.addMessage(m);
-                }
-                break;
-              } // case 10
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.util.List<com.google.api.Property> properties_ = java.util.Collections.emptyList();
-
-    private void ensurePropertiesIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
-        properties_ = new java.util.ArrayList<com.google.api.Property>(properties_);
-        bitField0_ |= 0x00000001;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.Property,
-            com.google.api.Property.Builder,
-            com.google.api.PropertyOrBuilder>
-        propertiesBuilder_;
 
     /**
      *
@@ -567,12 +331,9 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
      *
      * <code>repeated .google.api.Property properties = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.api.Property> getPropertiesList() {
-      if (propertiesBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(properties_);
-      } else {
-        return propertiesBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getPropertiesList());
     }
     /**
      *
@@ -583,12 +344,9 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
      *
      * <code>repeated .google.api.Property properties = 1;</code>
      */
+    @java.lang.Override
     public int getPropertiesCount() {
-      if (propertiesBuilder_ == null) {
-        return properties_.size();
-      } else {
-        return propertiesBuilder_.getCount();
-      }
+      return instance.getPropertiesCount();
     }
     /**
      *
@@ -599,12 +357,10 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
      *
      * <code>repeated .google.api.Property properties = 1;</code>
      */
+
+    @java.lang.Override
     public com.google.api.Property getProperties(int index) {
-      if (propertiesBuilder_ == null) {
-        return properties_.get(index);
-      } else {
-        return propertiesBuilder_.getMessage(index);
-      }
+      return instance.getProperties(index);
     }
     /**
      *
@@ -616,16 +372,8 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
      * <code>repeated .google.api.Property properties = 1;</code>
      */
     public Builder setProperties(int index, com.google.api.Property value) {
-      if (propertiesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensurePropertiesIsMutable();
-        properties_.set(index, value);
-        onChanged();
-      } else {
-        propertiesBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setProperties(index, value);
       return this;
     }
     /**
@@ -638,13 +386,8 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
      * <code>repeated .google.api.Property properties = 1;</code>
      */
     public Builder setProperties(int index, com.google.api.Property.Builder builderForValue) {
-      if (propertiesBuilder_ == null) {
-        ensurePropertiesIsMutable();
-        properties_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        propertiesBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setProperties(index, builderForValue.build());
       return this;
     }
     /**
@@ -657,16 +400,8 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
      * <code>repeated .google.api.Property properties = 1;</code>
      */
     public Builder addProperties(com.google.api.Property value) {
-      if (propertiesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensurePropertiesIsMutable();
-        properties_.add(value);
-        onChanged();
-      } else {
-        propertiesBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addProperties(value);
       return this;
     }
     /**
@@ -679,16 +414,8 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
      * <code>repeated .google.api.Property properties = 1;</code>
      */
     public Builder addProperties(int index, com.google.api.Property value) {
-      if (propertiesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensurePropertiesIsMutable();
-        properties_.add(index, value);
-        onChanged();
-      } else {
-        propertiesBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addProperties(index, value);
       return this;
     }
     /**
@@ -701,13 +428,8 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
      * <code>repeated .google.api.Property properties = 1;</code>
      */
     public Builder addProperties(com.google.api.Property.Builder builderForValue) {
-      if (propertiesBuilder_ == null) {
-        ensurePropertiesIsMutable();
-        properties_.add(builderForValue.build());
-        onChanged();
-      } else {
-        propertiesBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addProperties(builderForValue.build());
       return this;
     }
     /**
@@ -720,13 +442,8 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
      * <code>repeated .google.api.Property properties = 1;</code>
      */
     public Builder addProperties(int index, com.google.api.Property.Builder builderForValue) {
-      if (propertiesBuilder_ == null) {
-        ensurePropertiesIsMutable();
-        properties_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        propertiesBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addProperties(index, builderForValue.build());
       return this;
     }
     /**
@@ -739,13 +456,8 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
      * <code>repeated .google.api.Property properties = 1;</code>
      */
     public Builder addAllProperties(java.lang.Iterable<? extends com.google.api.Property> values) {
-      if (propertiesBuilder_ == null) {
-        ensurePropertiesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, properties_);
-        onChanged();
-      } else {
-        propertiesBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllProperties(values);
       return this;
     }
     /**
@@ -758,13 +470,8 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
      * <code>repeated .google.api.Property properties = 1;</code>
      */
     public Builder clearProperties() {
-      if (propertiesBuilder_ == null) {
-        properties_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-      } else {
-        propertiesBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearProperties();
       return this;
     }
     /**
@@ -777,172 +484,91 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
      * <code>repeated .google.api.Property properties = 1;</code>
      */
     public Builder removeProperties(int index) {
-      if (propertiesBuilder_ == null) {
-        ensurePropertiesIsMutable();
-        properties_.remove(index);
-        onChanged();
-      } else {
-        propertiesBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeProperties(index);
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of per consumer project-specific properties.
-     * </pre>
-     *
-     * <code>repeated .google.api.Property properties = 1;</code>
-     */
-    public com.google.api.Property.Builder getPropertiesBuilder(int index) {
-      return getPropertiesFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of per consumer project-specific properties.
-     * </pre>
-     *
-     * <code>repeated .google.api.Property properties = 1;</code>
-     */
-    public com.google.api.PropertyOrBuilder getPropertiesOrBuilder(int index) {
-      if (propertiesBuilder_ == null) {
-        return properties_.get(index);
-      } else {
-        return propertiesBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of per consumer project-specific properties.
-     * </pre>
-     *
-     * <code>repeated .google.api.Property properties = 1;</code>
-     */
-    public java.util.List<? extends com.google.api.PropertyOrBuilder> getPropertiesOrBuilderList() {
-      if (propertiesBuilder_ != null) {
-        return propertiesBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(properties_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of per consumer project-specific properties.
-     * </pre>
-     *
-     * <code>repeated .google.api.Property properties = 1;</code>
-     */
-    public com.google.api.Property.Builder addPropertiesBuilder() {
-      return getPropertiesFieldBuilder().addBuilder(com.google.api.Property.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of per consumer project-specific properties.
-     * </pre>
-     *
-     * <code>repeated .google.api.Property properties = 1;</code>
-     */
-    public com.google.api.Property.Builder addPropertiesBuilder(int index) {
-      return getPropertiesFieldBuilder()
-          .addBuilder(index, com.google.api.Property.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of per consumer project-specific properties.
-     * </pre>
-     *
-     * <code>repeated .google.api.Property properties = 1;</code>
-     */
-    public java.util.List<com.google.api.Property.Builder> getPropertiesBuilderList() {
-      return getPropertiesFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.Property,
-            com.google.api.Property.Builder,
-            com.google.api.PropertyOrBuilder>
-        getPropertiesFieldBuilder() {
-      if (propertiesBuilder_ == null) {
-        propertiesBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.api.Property,
-                com.google.api.Property.Builder,
-                com.google.api.PropertyOrBuilder>(
-                properties_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
-        properties_ = null;
-      }
-      return propertiesBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.api.ProjectProperties)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.ProjectProperties();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "properties_", com.google.api.Property.class,
+              };
+          java.lang.String info =
+              "\u0000\u0001\u0000\u0000\u0001\u0001\u0001\u0000\u0001\u0000\u0001\u001b";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.ProjectProperties> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.ProjectProperties.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.api.ProjectProperties>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.ProjectProperties)
   private static final com.google.api.ProjectProperties DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.ProjectProperties();
+    ProjectProperties defaultInstance = new ProjectProperties();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        ProjectProperties.class, defaultInstance);
   }
 
   public static com.google.api.ProjectProperties getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<ProjectProperties> PARSER =
-      new com.google.protobuf.AbstractParser<ProjectProperties>() {
-        @java.lang.Override
-        public ProjectProperties parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<ProjectProperties> PARSER;
 
   public static com.google.protobuf.Parser<ProjectProperties> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<ProjectProperties> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.ProjectProperties getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

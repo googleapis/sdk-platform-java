@@ -22,7 +22,7 @@ package com.google.api;
 public interface SelectiveGapicGenerationOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.SelectiveGapicGeneration)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -74,8 +74,8 @@ public interface SelectiveGapicGenerationOrBuilder
    *
    * <code>repeated string methods = 1;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the methods at the given index.
+   * @param index The index of the element to return.
+   * @return The methods at the given index.
    */
   com.google.protobuf.ByteString getMethodsBytes(int index);
 

@@ -291,50 +291,22 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.HttpRule}
  */
-public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
+public final class HttpRule
+    extends com.google.protobuf.GeneratedMessageLite<HttpRule, HttpRule.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.HttpRule)
     HttpRuleOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use HttpRule.newBuilder() to construct.
-  private HttpRule(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private HttpRule() {
     selector_ = "";
     body_ = "";
     responseBody_ = "";
-    additionalBindings_ = java.util.Collections.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new HttpRule();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.HttpProto.internal_static_google_api_HttpRule_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.HttpProto.internal_static_google_api_HttpRule_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.HttpRule.class, com.google.api.HttpRule.Builder.class);
+    additionalBindings_ = emptyProtobufList();
   }
 
   private int patternCase_ = 0;
-
-  @SuppressWarnings("serial")
   private java.lang.Object pattern_;
 
-  public enum PatternCase
-      implements
-          com.google.protobuf.Internal.EnumLite,
-          com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+  public enum PatternCase {
     GET(2),
     PUT(3),
     POST(4),
@@ -347,11 +319,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
     private PatternCase(int value) {
       this.value = value;
     }
-    /**
-     * @param value The number of the enum to look for.
-     * @return The enum associated with the given number.
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
+    /** @deprecated Use {@link #forNumber(int)} instead. */
     @java.lang.Deprecated
     public static PatternCase valueOf(int value) {
       return forNumber(value);
@@ -383,14 +351,18 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
     }
   };
 
+  @java.lang.Override
   public PatternCase getPatternCase() {
     return PatternCase.forNumber(patternCase_);
   }
 
-  public static final int SELECTOR_FIELD_NUMBER = 1;
+  private void clearPattern() {
+    patternCase_ = 0;
+    pattern_ = null;
+  }
 
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object selector_ = "";
+  public static final int SELECTOR_FIELD_NUMBER = 1;
+  private java.lang.String selector_;
   /**
    *
    *
@@ -407,15 +379,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getSelector() {
-    java.lang.Object ref = selector_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      selector_ = s;
-      return s;
-    }
+    return selector_;
   }
   /**
    *
@@ -433,15 +397,60 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getSelectorBytes() {
-    java.lang.Object ref = selector_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      selector_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(selector_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Selects a method to which this rule applies.
+   *
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
+   * </pre>
+   *
+   * <code>string selector = 1;</code>
+   *
+   * @param value The selector to set.
+   */
+  private void setSelector(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    selector_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Selects a method to which this rule applies.
+   *
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
+   * </pre>
+   *
+   * <code>string selector = 1;</code>
+   */
+  private void clearSelector() {
+
+    selector_ = getDefaultInstance().getSelector();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Selects a method to which this rule applies.
+   *
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
+   * </pre>
+   *
+   * <code>string selector = 1;</code>
+   *
+   * @param value The bytes for selector to set.
+   */
+  private void setSelectorBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    selector_ = value.toStringUtf8();
   }
 
   public static final int GET_FIELD_NUMBER = 2;
@@ -457,6 +466,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the get field is set.
    */
+  @java.lang.Override
   public boolean hasGet() {
     return patternCase_ == 2;
   }
@@ -472,21 +482,13 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The get.
    */
+  @java.lang.Override
   public java.lang.String getGet() {
-    java.lang.Object ref = "";
+    java.lang.String ref = "";
     if (patternCase_ == 2) {
-      ref = pattern_;
+      ref = (java.lang.String) pattern_;
     }
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      if (patternCase_ == 2) {
-        pattern_ = s;
-      }
-      return s;
-    }
+    return ref;
   }
   /**
    *
@@ -500,21 +502,63 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for get.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getGetBytes() {
-    java.lang.Object ref = "";
+    java.lang.String ref = "";
     if (patternCase_ == 2) {
-      ref = pattern_;
+      ref = (java.lang.String) pattern_;
     }
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      if (patternCase_ == 2) {
-        pattern_ = b;
-      }
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
+    return com.google.protobuf.ByteString.copyFromUtf8(ref);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Maps to HTTP GET. Used for listing and getting information about
+   * resources.
+   * </pre>
+   *
+   * <code>string get = 2;</code>
+   *
+   * @param value The get to set.
+   */
+  private void setGet(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    patternCase_ = 2;
+    pattern_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Maps to HTTP GET. Used for listing and getting information about
+   * resources.
+   * </pre>
+   *
+   * <code>string get = 2;</code>
+   */
+  private void clearGet() {
+    if (patternCase_ == 2) {
+      patternCase_ = 0;
+      pattern_ = null;
     }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Maps to HTTP GET. Used for listing and getting information about
+   * resources.
+   * </pre>
+   *
+   * <code>string get = 2;</code>
+   *
+   * @param value The bytes for get to set.
+   */
+  private void setGetBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    pattern_ = value.toStringUtf8();
+    patternCase_ = 2;
   }
 
   public static final int PUT_FIELD_NUMBER = 3;
@@ -529,6 +573,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the put field is set.
    */
+  @java.lang.Override
   public boolean hasPut() {
     return patternCase_ == 3;
   }
@@ -543,21 +588,13 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The put.
    */
+  @java.lang.Override
   public java.lang.String getPut() {
-    java.lang.Object ref = "";
+    java.lang.String ref = "";
     if (patternCase_ == 3) {
-      ref = pattern_;
+      ref = (java.lang.String) pattern_;
     }
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      if (patternCase_ == 3) {
-        pattern_ = s;
-      }
-      return s;
-    }
+    return ref;
   }
   /**
    *
@@ -570,21 +607,60 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for put.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getPutBytes() {
-    java.lang.Object ref = "";
+    java.lang.String ref = "";
     if (patternCase_ == 3) {
-      ref = pattern_;
+      ref = (java.lang.String) pattern_;
     }
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      if (patternCase_ == 3) {
-        pattern_ = b;
-      }
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
+    return com.google.protobuf.ByteString.copyFromUtf8(ref);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Maps to HTTP PUT. Used for replacing a resource.
+   * </pre>
+   *
+   * <code>string put = 3;</code>
+   *
+   * @param value The put to set.
+   */
+  private void setPut(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    patternCase_ = 3;
+    pattern_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Maps to HTTP PUT. Used for replacing a resource.
+   * </pre>
+   *
+   * <code>string put = 3;</code>
+   */
+  private void clearPut() {
+    if (patternCase_ == 3) {
+      patternCase_ = 0;
+      pattern_ = null;
     }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Maps to HTTP PUT. Used for replacing a resource.
+   * </pre>
+   *
+   * <code>string put = 3;</code>
+   *
+   * @param value The bytes for put to set.
+   */
+  private void setPutBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    pattern_ = value.toStringUtf8();
+    patternCase_ = 3;
   }
 
   public static final int POST_FIELD_NUMBER = 4;
@@ -599,6 +675,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the post field is set.
    */
+  @java.lang.Override
   public boolean hasPost() {
     return patternCase_ == 4;
   }
@@ -613,21 +690,13 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The post.
    */
+  @java.lang.Override
   public java.lang.String getPost() {
-    java.lang.Object ref = "";
+    java.lang.String ref = "";
     if (patternCase_ == 4) {
-      ref = pattern_;
+      ref = (java.lang.String) pattern_;
     }
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      if (patternCase_ == 4) {
-        pattern_ = s;
-      }
-      return s;
-    }
+    return ref;
   }
   /**
    *
@@ -640,21 +709,60 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for post.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getPostBytes() {
-    java.lang.Object ref = "";
+    java.lang.String ref = "";
     if (patternCase_ == 4) {
-      ref = pattern_;
+      ref = (java.lang.String) pattern_;
     }
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      if (patternCase_ == 4) {
-        pattern_ = b;
-      }
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
+    return com.google.protobuf.ByteString.copyFromUtf8(ref);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Maps to HTTP POST. Used for creating a resource or performing an action.
+   * </pre>
+   *
+   * <code>string post = 4;</code>
+   *
+   * @param value The post to set.
+   */
+  private void setPost(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    patternCase_ = 4;
+    pattern_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Maps to HTTP POST. Used for creating a resource or performing an action.
+   * </pre>
+   *
+   * <code>string post = 4;</code>
+   */
+  private void clearPost() {
+    if (patternCase_ == 4) {
+      patternCase_ = 0;
+      pattern_ = null;
     }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Maps to HTTP POST. Used for creating a resource or performing an action.
+   * </pre>
+   *
+   * <code>string post = 4;</code>
+   *
+   * @param value The bytes for post to set.
+   */
+  private void setPostBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    pattern_ = value.toStringUtf8();
+    patternCase_ = 4;
   }
 
   public static final int DELETE_FIELD_NUMBER = 5;
@@ -669,6 +777,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the delete field is set.
    */
+  @java.lang.Override
   public boolean hasDelete() {
     return patternCase_ == 5;
   }
@@ -683,21 +792,13 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The delete.
    */
+  @java.lang.Override
   public java.lang.String getDelete() {
-    java.lang.Object ref = "";
+    java.lang.String ref = "";
     if (patternCase_ == 5) {
-      ref = pattern_;
+      ref = (java.lang.String) pattern_;
     }
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      if (patternCase_ == 5) {
-        pattern_ = s;
-      }
-      return s;
-    }
+    return ref;
   }
   /**
    *
@@ -710,21 +811,60 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for delete.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getDeleteBytes() {
-    java.lang.Object ref = "";
+    java.lang.String ref = "";
     if (patternCase_ == 5) {
-      ref = pattern_;
+      ref = (java.lang.String) pattern_;
     }
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      if (patternCase_ == 5) {
-        pattern_ = b;
-      }
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
+    return com.google.protobuf.ByteString.copyFromUtf8(ref);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Maps to HTTP DELETE. Used for deleting a resource.
+   * </pre>
+   *
+   * <code>string delete = 5;</code>
+   *
+   * @param value The delete to set.
+   */
+  private void setDelete(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    patternCase_ = 5;
+    pattern_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Maps to HTTP DELETE. Used for deleting a resource.
+   * </pre>
+   *
+   * <code>string delete = 5;</code>
+   */
+  private void clearDelete() {
+    if (patternCase_ == 5) {
+      patternCase_ = 0;
+      pattern_ = null;
     }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Maps to HTTP DELETE. Used for deleting a resource.
+   * </pre>
+   *
+   * <code>string delete = 5;</code>
+   *
+   * @param value The bytes for delete to set.
+   */
+  private void setDeleteBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    pattern_ = value.toStringUtf8();
+    patternCase_ = 5;
   }
 
   public static final int PATCH_FIELD_NUMBER = 6;
@@ -739,6 +879,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the patch field is set.
    */
+  @java.lang.Override
   public boolean hasPatch() {
     return patternCase_ == 6;
   }
@@ -753,21 +894,13 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The patch.
    */
+  @java.lang.Override
   public java.lang.String getPatch() {
-    java.lang.Object ref = "";
+    java.lang.String ref = "";
     if (patternCase_ == 6) {
-      ref = pattern_;
+      ref = (java.lang.String) pattern_;
     }
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      if (patternCase_ == 6) {
-        pattern_ = s;
-      }
-      return s;
-    }
+    return ref;
   }
   /**
    *
@@ -780,21 +913,60 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for patch.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getPatchBytes() {
-    java.lang.Object ref = "";
+    java.lang.String ref = "";
     if (patternCase_ == 6) {
-      ref = pattern_;
+      ref = (java.lang.String) pattern_;
     }
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      if (patternCase_ == 6) {
-        pattern_ = b;
-      }
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
+    return com.google.protobuf.ByteString.copyFromUtf8(ref);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Maps to HTTP PATCH. Used for updating a resource.
+   * </pre>
+   *
+   * <code>string patch = 6;</code>
+   *
+   * @param value The patch to set.
+   */
+  private void setPatch(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    patternCase_ = 6;
+    pattern_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Maps to HTTP PATCH. Used for updating a resource.
+   * </pre>
+   *
+   * <code>string patch = 6;</code>
+   */
+  private void clearPatch() {
+    if (patternCase_ == 6) {
+      patternCase_ = 0;
+      pattern_ = null;
     }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Maps to HTTP PATCH. Used for updating a resource.
+   * </pre>
+   *
+   * <code>string patch = 6;</code>
+   *
+   * @param value The bytes for patch to set.
+   */
+  private void setPatchBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    pattern_ = value.toStringUtf8();
+    patternCase_ = 6;
   }
 
   public static final int CUSTOM_FIELD_NUMBER = 8;
@@ -809,8 +981,6 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.CustomHttpPattern custom = 8;</code>
-   *
-   * @return Whether the custom field is set.
    */
   @java.lang.Override
   public boolean hasCustom() {
@@ -827,8 +997,6 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.CustomHttpPattern custom = 8;</code>
-   *
-   * @return The custom.
    */
   @java.lang.Override
   public com.google.api.CustomHttpPattern getCustom() {
@@ -849,18 +1017,56 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.CustomHttpPattern custom = 8;</code>
    */
-  @java.lang.Override
-  public com.google.api.CustomHttpPatternOrBuilder getCustomOrBuilder() {
-    if (patternCase_ == 8) {
-      return (com.google.api.CustomHttpPattern) pattern_;
+  private void setCustom(com.google.api.CustomHttpPattern value) {
+    value.getClass();
+    pattern_ = value;
+    patternCase_ = 8;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The custom pattern is used for specifying an HTTP method that is not
+   * included in the `pattern` field, such as HEAD, or "*" to leave the
+   * HTTP method unspecified for this rule. The wild-card rule is useful
+   * for services that provide content to Web (HTML) clients.
+   * </pre>
+   *
+   * <code>.google.api.CustomHttpPattern custom = 8;</code>
+   */
+  private void mergeCustom(com.google.api.CustomHttpPattern value) {
+    value.getClass();
+    if (patternCase_ == 8 && pattern_ != com.google.api.CustomHttpPattern.getDefaultInstance()) {
+      pattern_ =
+          com.google.api.CustomHttpPattern.newBuilder((com.google.api.CustomHttpPattern) pattern_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      pattern_ = value;
     }
-    return com.google.api.CustomHttpPattern.getDefaultInstance();
+    patternCase_ = 8;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The custom pattern is used for specifying an HTTP method that is not
+   * included in the `pattern` field, such as HEAD, or "*" to leave the
+   * HTTP method unspecified for this rule. The wild-card rule is useful
+   * for services that provide content to Web (HTML) clients.
+   * </pre>
+   *
+   * <code>.google.api.CustomHttpPattern custom = 8;</code>
+   */
+  private void clearCustom() {
+    if (patternCase_ == 8) {
+      patternCase_ = 0;
+      pattern_ = null;
+    }
   }
 
   public static final int BODY_FIELD_NUMBER = 7;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object body_ = "";
+  private java.lang.String body_;
   /**
    *
    *
@@ -879,15 +1085,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getBody() {
-    java.lang.Object ref = body_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      body_ = s;
-      return s;
-    }
+    return body_;
   }
   /**
    *
@@ -907,21 +1105,70 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getBodyBytes() {
-    java.lang.Object ref = body_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      body_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(body_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name of the request field whose value is mapped to the HTTP request
+   * body, or `*` for mapping all request fields not captured by the path
+   * pattern to the HTTP body, or omitted for not having any HTTP request body.
+   *
+   * NOTE: the referred field must be present at the top-level of the request
+   * message type.
+   * </pre>
+   *
+   * <code>string body = 7;</code>
+   *
+   * @param value The body to set.
+   */
+  private void setBody(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    body_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name of the request field whose value is mapped to the HTTP request
+   * body, or `*` for mapping all request fields not captured by the path
+   * pattern to the HTTP body, or omitted for not having any HTTP request body.
+   *
+   * NOTE: the referred field must be present at the top-level of the request
+   * message type.
+   * </pre>
+   *
+   * <code>string body = 7;</code>
+   */
+  private void clearBody() {
+
+    body_ = getDefaultInstance().getBody();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name of the request field whose value is mapped to the HTTP request
+   * body, or `*` for mapping all request fields not captured by the path
+   * pattern to the HTTP body, or omitted for not having any HTTP request body.
+   *
+   * NOTE: the referred field must be present at the top-level of the request
+   * message type.
+   * </pre>
+   *
+   * <code>string body = 7;</code>
+   *
+   * @param value The bytes for body to set.
+   */
+  private void setBodyBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    body_ = value.toStringUtf8();
   }
 
   public static final int RESPONSE_BODY_FIELD_NUMBER = 12;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object responseBody_ = "";
+  private java.lang.String responseBody_;
   /**
    *
    *
@@ -940,15 +1187,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getResponseBody() {
-    java.lang.Object ref = responseBody_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      responseBody_ = s;
-      return s;
-    }
+    return responseBody_;
   }
   /**
    *
@@ -968,21 +1207,70 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getResponseBodyBytes() {
-    java.lang.Object ref = responseBody_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      responseBody_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(responseBody_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The name of the response field whose value is mapped to the HTTP
+   * response body. When omitted, the entire response message will be used
+   * as the HTTP response body.
+   *
+   * NOTE: The referred field must be present at the top-level of the response
+   * message type.
+   * </pre>
+   *
+   * <code>string response_body = 12;</code>
+   *
+   * @param value The responseBody to set.
+   */
+  private void setResponseBody(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    responseBody_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The name of the response field whose value is mapped to the HTTP
+   * response body. When omitted, the entire response message will be used
+   * as the HTTP response body.
+   *
+   * NOTE: The referred field must be present at the top-level of the response
+   * message type.
+   * </pre>
+   *
+   * <code>string response_body = 12;</code>
+   */
+  private void clearResponseBody() {
+
+    responseBody_ = getDefaultInstance().getResponseBody();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The name of the response field whose value is mapped to the HTTP
+   * response body. When omitted, the entire response message will be used
+   * as the HTTP response body.
+   *
+   * NOTE: The referred field must be present at the top-level of the response
+   * message type.
+   * </pre>
+   *
+   * <code>string response_body = 12;</code>
+   *
+   * @param value The bytes for responseBody to set.
+   */
+  private void setResponseBodyBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    responseBody_ = value.toStringUtf8();
   }
 
   public static final int ADDITIONAL_BINDINGS_FIELD_NUMBER = 11;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.api.HttpRule> additionalBindings_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.api.HttpRule> additionalBindings_;
   /**
    *
    *
@@ -1009,7 +1297,6 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.api.HttpRuleOrBuilder>
       getAdditionalBindingsOrBuilderList() {
     return additionalBindings_;
@@ -1055,287 +1342,192 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
    */
-  @java.lang.Override
   public com.google.api.HttpRuleOrBuilder getAdditionalBindingsOrBuilder(int index) {
     return additionalBindings_.get(index);
   }
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  private void ensureAdditionalBindingsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.api.HttpRule> tmp = additionalBindings_;
+    if (!tmp.isModifiable()) {
+      additionalBindings_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
   }
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(selector_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, selector_);
-    }
-    if (patternCase_ == 2) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, pattern_);
-    }
-    if (patternCase_ == 3) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, pattern_);
-    }
-    if (patternCase_ == 4) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, pattern_);
-    }
-    if (patternCase_ == 5) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, pattern_);
-    }
-    if (patternCase_ == 6) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, pattern_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(body_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 7, body_);
-    }
-    if (patternCase_ == 8) {
-      output.writeMessage(8, (com.google.api.CustomHttpPattern) pattern_);
-    }
-    for (int i = 0; i < additionalBindings_.size(); i++) {
-      output.writeMessage(11, additionalBindings_.get(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(responseBody_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 12, responseBody_);
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * Additional HTTP bindings for the selector. Nested bindings must
+   * not contain an `additional_bindings` field themselves (that is,
+   * the nesting may only be one level deep).
+   * </pre>
+   *
+   * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
+   */
+  private void setAdditionalBindings(int index, com.google.api.HttpRule value) {
+    value.getClass();
+    ensureAdditionalBindingsIsMutable();
+    additionalBindings_.set(index, value);
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(selector_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, selector_);
-    }
-    if (patternCase_ == 2) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, pattern_);
-    }
-    if (patternCase_ == 3) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, pattern_);
-    }
-    if (patternCase_ == 4) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, pattern_);
-    }
-    if (patternCase_ == 5) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, pattern_);
-    }
-    if (patternCase_ == 6) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, pattern_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(body_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, body_);
-    }
-    if (patternCase_ == 8) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(
-              8, (com.google.api.CustomHttpPattern) pattern_);
-    }
-    for (int i = 0; i < additionalBindings_.size(); i++) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(11, additionalBindings_.get(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(responseBody_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(12, responseBody_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
+  /**
+   *
+   *
+   * <pre>
+   * Additional HTTP bindings for the selector. Nested bindings must
+   * not contain an `additional_bindings` field themselves (that is,
+   * the nesting may only be one level deep).
+   * </pre>
+   *
+   * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
+   */
+  private void addAdditionalBindings(com.google.api.HttpRule value) {
+    value.getClass();
+    ensureAdditionalBindingsIsMutable();
+    additionalBindings_.add(value);
   }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.HttpRule)) {
-      return super.equals(obj);
-    }
-    com.google.api.HttpRule other = (com.google.api.HttpRule) obj;
-
-    if (!getSelector().equals(other.getSelector())) return false;
-    if (!getBody().equals(other.getBody())) return false;
-    if (!getResponseBody().equals(other.getResponseBody())) return false;
-    if (!getAdditionalBindingsList().equals(other.getAdditionalBindingsList())) return false;
-    if (!getPatternCase().equals(other.getPatternCase())) return false;
-    switch (patternCase_) {
-      case 2:
-        if (!getGet().equals(other.getGet())) return false;
-        break;
-      case 3:
-        if (!getPut().equals(other.getPut())) return false;
-        break;
-      case 4:
-        if (!getPost().equals(other.getPost())) return false;
-        break;
-      case 5:
-        if (!getDelete().equals(other.getDelete())) return false;
-        break;
-      case 6:
-        if (!getPatch().equals(other.getPatch())) return false;
-        break;
-      case 8:
-        if (!getCustom().equals(other.getCustom())) return false;
-        break;
-      case 0:
-      default:
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Additional HTTP bindings for the selector. Nested bindings must
+   * not contain an `additional_bindings` field themselves (that is,
+   * the nesting may only be one level deep).
+   * </pre>
+   *
+   * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
+   */
+  private void addAdditionalBindings(int index, com.google.api.HttpRule value) {
+    value.getClass();
+    ensureAdditionalBindingsIsMutable();
+    additionalBindings_.add(index, value);
   }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + SELECTOR_FIELD_NUMBER;
-    hash = (53 * hash) + getSelector().hashCode();
-    hash = (37 * hash) + BODY_FIELD_NUMBER;
-    hash = (53 * hash) + getBody().hashCode();
-    hash = (37 * hash) + RESPONSE_BODY_FIELD_NUMBER;
-    hash = (53 * hash) + getResponseBody().hashCode();
-    if (getAdditionalBindingsCount() > 0) {
-      hash = (37 * hash) + ADDITIONAL_BINDINGS_FIELD_NUMBER;
-      hash = (53 * hash) + getAdditionalBindingsList().hashCode();
-    }
-    switch (patternCase_) {
-      case 2:
-        hash = (37 * hash) + GET_FIELD_NUMBER;
-        hash = (53 * hash) + getGet().hashCode();
-        break;
-      case 3:
-        hash = (37 * hash) + PUT_FIELD_NUMBER;
-        hash = (53 * hash) + getPut().hashCode();
-        break;
-      case 4:
-        hash = (37 * hash) + POST_FIELD_NUMBER;
-        hash = (53 * hash) + getPost().hashCode();
-        break;
-      case 5:
-        hash = (37 * hash) + DELETE_FIELD_NUMBER;
-        hash = (53 * hash) + getDelete().hashCode();
-        break;
-      case 6:
-        hash = (37 * hash) + PATCH_FIELD_NUMBER;
-        hash = (53 * hash) + getPatch().hashCode();
-        break;
-      case 8:
-        hash = (37 * hash) + CUSTOM_FIELD_NUMBER;
-        hash = (53 * hash) + getCustom().hashCode();
-        break;
-      case 0:
-      default:
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Additional HTTP bindings for the selector. Nested bindings must
+   * not contain an `additional_bindings` field themselves (that is,
+   * the nesting may only be one level deep).
+   * </pre>
+   *
+   * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
+   */
+  private void addAllAdditionalBindings(
+      java.lang.Iterable<? extends com.google.api.HttpRule> values) {
+    ensureAdditionalBindingsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, additionalBindings_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Additional HTTP bindings for the selector. Nested bindings must
+   * not contain an `additional_bindings` field themselves (that is,
+   * the nesting may only be one level deep).
+   * </pre>
+   *
+   * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
+   */
+  private void clearAdditionalBindings() {
+    additionalBindings_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Additional HTTP bindings for the selector. Nested bindings must
+   * not contain an `additional_bindings` field themselves (that is,
+   * the nesting may only be one level deep).
+   * </pre>
+   *
+   * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
+   */
+  private void removeAdditionalBindings(int index) {
+    ensureAdditionalBindingsIsMutable();
+    additionalBindings_.remove(index);
   }
 
   public static com.google.api.HttpRule parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.HttpRule parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.HttpRule parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.HttpRule parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.HttpRule parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.HttpRule parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.HttpRule parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.HttpRule parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.HttpRule parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.HttpRule parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.HttpRule parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.HttpRule parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.HttpRule prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -1608,379 +1800,27 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.api.HttpRule}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<com.google.api.HttpRule, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.HttpRule)
       com.google.api.HttpRuleOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.HttpProto.internal_static_google_api_HttpRule_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.HttpProto.internal_static_google_api_HttpRule_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.HttpRule.class, com.google.api.HttpRule.Builder.class);
-    }
-
     // Construct using com.google.api.HttpRule.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
     @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      selector_ = "";
-      if (customBuilder_ != null) {
-        customBuilder_.clear();
-      }
-      body_ = "";
-      responseBody_ = "";
-      if (additionalBindingsBuilder_ == null) {
-        additionalBindings_ = java.util.Collections.emptyList();
-      } else {
-        additionalBindings_ = null;
-        additionalBindingsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000200);
-      patternCase_ = 0;
-      pattern_ = null;
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.HttpProto.internal_static_google_api_HttpRule_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.HttpRule getDefaultInstanceForType() {
-      return com.google.api.HttpRule.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.HttpRule build() {
-      com.google.api.HttpRule result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.HttpRule buildPartial() {
-      com.google.api.HttpRule result = new com.google.api.HttpRule(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      buildPartialOneofs(result);
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.api.HttpRule result) {
-      if (additionalBindingsBuilder_ == null) {
-        if (((bitField0_ & 0x00000200) != 0)) {
-          additionalBindings_ = java.util.Collections.unmodifiableList(additionalBindings_);
-          bitField0_ = (bitField0_ & ~0x00000200);
-        }
-        result.additionalBindings_ = additionalBindings_;
-      } else {
-        result.additionalBindings_ = additionalBindingsBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.api.HttpRule result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.selector_ = selector_;
-      }
-      if (((from_bitField0_ & 0x00000080) != 0)) {
-        result.body_ = body_;
-      }
-      if (((from_bitField0_ & 0x00000100) != 0)) {
-        result.responseBody_ = responseBody_;
-      }
-    }
-
-    private void buildPartialOneofs(com.google.api.HttpRule result) {
-      result.patternCase_ = patternCase_;
-      result.pattern_ = this.pattern_;
-      if (patternCase_ == 8 && customBuilder_ != null) {
-        result.pattern_ = customBuilder_.build();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.HttpRule) {
-        return mergeFrom((com.google.api.HttpRule) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.HttpRule other) {
-      if (other == com.google.api.HttpRule.getDefaultInstance()) return this;
-      if (!other.getSelector().isEmpty()) {
-        selector_ = other.selector_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getBody().isEmpty()) {
-        body_ = other.body_;
-        bitField0_ |= 0x00000080;
-        onChanged();
-      }
-      if (!other.getResponseBody().isEmpty()) {
-        responseBody_ = other.responseBody_;
-        bitField0_ |= 0x00000100;
-        onChanged();
-      }
-      if (additionalBindingsBuilder_ == null) {
-        if (!other.additionalBindings_.isEmpty()) {
-          if (additionalBindings_.isEmpty()) {
-            additionalBindings_ = other.additionalBindings_;
-            bitField0_ = (bitField0_ & ~0x00000200);
-          } else {
-            ensureAdditionalBindingsIsMutable();
-            additionalBindings_.addAll(other.additionalBindings_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.additionalBindings_.isEmpty()) {
-          if (additionalBindingsBuilder_.isEmpty()) {
-            additionalBindingsBuilder_.dispose();
-            additionalBindingsBuilder_ = null;
-            additionalBindings_ = other.additionalBindings_;
-            bitField0_ = (bitField0_ & ~0x00000200);
-            additionalBindingsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getAdditionalBindingsFieldBuilder()
-                    : null;
-          } else {
-            additionalBindingsBuilder_.addAllMessages(other.additionalBindings_);
-          }
-        }
-      }
-      switch (other.getPatternCase()) {
-        case GET:
-          {
-            patternCase_ = 2;
-            pattern_ = other.pattern_;
-            onChanged();
-            break;
-          }
-        case PUT:
-          {
-            patternCase_ = 3;
-            pattern_ = other.pattern_;
-            onChanged();
-            break;
-          }
-        case POST:
-          {
-            patternCase_ = 4;
-            pattern_ = other.pattern_;
-            onChanged();
-            break;
-          }
-        case DELETE:
-          {
-            patternCase_ = 5;
-            pattern_ = other.pattern_;
-            onChanged();
-            break;
-          }
-        case PATCH:
-          {
-            patternCase_ = 6;
-            pattern_ = other.pattern_;
-            onChanged();
-            break;
-          }
-        case CUSTOM:
-          {
-            mergeCustom(other.getCustom());
-            break;
-          }
-        case PATTERN_NOT_SET:
-          {
-            break;
-          }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                selector_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                patternCase_ = 2;
-                pattern_ = s;
-                break;
-              } // case 18
-            case 26:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                patternCase_ = 3;
-                pattern_ = s;
-                break;
-              } // case 26
-            case 34:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                patternCase_ = 4;
-                pattern_ = s;
-                break;
-              } // case 34
-            case 42:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                patternCase_ = 5;
-                pattern_ = s;
-                break;
-              } // case 42
-            case 50:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                patternCase_ = 6;
-                pattern_ = s;
-                break;
-              } // case 50
-            case 58:
-              {
-                body_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000080;
-                break;
-              } // case 58
-            case 66:
-              {
-                input.readMessage(getCustomFieldBuilder().getBuilder(), extensionRegistry);
-                patternCase_ = 8;
-                break;
-              } // case 66
-            case 90:
-              {
-                com.google.api.HttpRule m =
-                    input.readMessage(com.google.api.HttpRule.parser(), extensionRegistry);
-                if (additionalBindingsBuilder_ == null) {
-                  ensureAdditionalBindingsIsMutable();
-                  additionalBindings_.add(m);
-                } else {
-                  additionalBindingsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 90
-            case 98:
-              {
-                responseBody_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000100;
-                break;
-              } // case 98
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int patternCase_ = 0;
-    private java.lang.Object pattern_;
-
     public PatternCase getPatternCase() {
-      return PatternCase.forNumber(patternCase_);
+      return instance.getPatternCase();
     }
 
     public Builder clearPattern() {
-      patternCase_ = 0;
-      pattern_ = null;
-      onChanged();
+      copyOnWrite();
+      instance.clearPattern();
       return this;
     }
 
-    private int bitField0_;
-
-    private java.lang.Object selector_ = "";
     /**
      *
      *
@@ -1995,16 +1835,9 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The selector.
      */
+    @java.lang.Override
     public java.lang.String getSelector() {
-      java.lang.Object ref = selector_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        selector_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getSelector();
     }
     /**
      *
@@ -2020,16 +1853,9 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for selector.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getSelectorBytes() {
-      java.lang.Object ref = selector_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        selector_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getSelectorBytes();
     }
     /**
      *
@@ -2047,12 +1873,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setSelector(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      selector_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setSelector(value);
       return this;
     }
     /**
@@ -2070,9 +1892,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearSelector() {
-      selector_ = getDefaultInstance().getSelector();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearSelector();
       return this;
     }
     /**
@@ -2091,13 +1912,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setSelectorBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      selector_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setSelectorBytes(value);
       return this;
     }
 
@@ -2115,7 +1931,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean hasGet() {
-      return patternCase_ == 2;
+      return instance.hasGet();
     }
     /**
      *
@@ -2131,20 +1947,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getGet() {
-      java.lang.Object ref = "";
-      if (patternCase_ == 2) {
-        ref = pattern_;
-      }
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (patternCase_ == 2) {
-          pattern_ = s;
-        }
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getGet();
     }
     /**
      *
@@ -2160,20 +1963,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getGetBytes() {
-      java.lang.Object ref = "";
-      if (patternCase_ == 2) {
-        ref = pattern_;
-      }
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        if (patternCase_ == 2) {
-          pattern_ = b;
-        }
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getGetBytes();
     }
     /**
      *
@@ -2189,12 +1979,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setGet(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      patternCase_ = 2;
-      pattern_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setGet(value);
       return this;
     }
     /**
@@ -2210,11 +1996,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearGet() {
-      if (patternCase_ == 2) {
-        patternCase_ = 0;
-        pattern_ = null;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.clearGet();
       return this;
     }
     /**
@@ -2231,13 +2014,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setGetBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      patternCase_ = 2;
-      pattern_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setGetBytes(value);
       return this;
     }
 
@@ -2254,7 +2032,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean hasPut() {
-      return patternCase_ == 3;
+      return instance.hasPut();
     }
     /**
      *
@@ -2269,20 +2047,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getPut() {
-      java.lang.Object ref = "";
-      if (patternCase_ == 3) {
-        ref = pattern_;
-      }
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (patternCase_ == 3) {
-          pattern_ = s;
-        }
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getPut();
     }
     /**
      *
@@ -2297,20 +2062,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getPutBytes() {
-      java.lang.Object ref = "";
-      if (patternCase_ == 3) {
-        ref = pattern_;
-      }
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        if (patternCase_ == 3) {
-          pattern_ = b;
-        }
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getPutBytes();
     }
     /**
      *
@@ -2325,12 +2077,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setPut(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      patternCase_ = 3;
-      pattern_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setPut(value);
       return this;
     }
     /**
@@ -2345,11 +2093,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearPut() {
-      if (patternCase_ == 3) {
-        patternCase_ = 0;
-        pattern_ = null;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.clearPut();
       return this;
     }
     /**
@@ -2365,13 +2110,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setPutBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      patternCase_ = 3;
-      pattern_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setPutBytes(value);
       return this;
     }
 
@@ -2388,7 +2128,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean hasPost() {
-      return patternCase_ == 4;
+      return instance.hasPost();
     }
     /**
      *
@@ -2403,20 +2143,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getPost() {
-      java.lang.Object ref = "";
-      if (patternCase_ == 4) {
-        ref = pattern_;
-      }
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (patternCase_ == 4) {
-          pattern_ = s;
-        }
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getPost();
     }
     /**
      *
@@ -2431,20 +2158,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getPostBytes() {
-      java.lang.Object ref = "";
-      if (patternCase_ == 4) {
-        ref = pattern_;
-      }
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        if (patternCase_ == 4) {
-          pattern_ = b;
-        }
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getPostBytes();
     }
     /**
      *
@@ -2459,12 +2173,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setPost(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      patternCase_ = 4;
-      pattern_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setPost(value);
       return this;
     }
     /**
@@ -2479,11 +2189,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearPost() {
-      if (patternCase_ == 4) {
-        patternCase_ = 0;
-        pattern_ = null;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.clearPost();
       return this;
     }
     /**
@@ -2499,13 +2206,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setPostBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      patternCase_ = 4;
-      pattern_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setPostBytes(value);
       return this;
     }
 
@@ -2522,7 +2224,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean hasDelete() {
-      return patternCase_ == 5;
+      return instance.hasDelete();
     }
     /**
      *
@@ -2537,20 +2239,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getDelete() {
-      java.lang.Object ref = "";
-      if (patternCase_ == 5) {
-        ref = pattern_;
-      }
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (patternCase_ == 5) {
-          pattern_ = s;
-        }
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getDelete();
     }
     /**
      *
@@ -2565,20 +2254,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getDeleteBytes() {
-      java.lang.Object ref = "";
-      if (patternCase_ == 5) {
-        ref = pattern_;
-      }
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        if (patternCase_ == 5) {
-          pattern_ = b;
-        }
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getDeleteBytes();
     }
     /**
      *
@@ -2593,12 +2269,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDelete(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      patternCase_ = 5;
-      pattern_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setDelete(value);
       return this;
     }
     /**
@@ -2613,11 +2285,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDelete() {
-      if (patternCase_ == 5) {
-        patternCase_ = 0;
-        pattern_ = null;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.clearDelete();
       return this;
     }
     /**
@@ -2633,13 +2302,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDeleteBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      patternCase_ = 5;
-      pattern_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setDeleteBytes(value);
       return this;
     }
 
@@ -2656,7 +2320,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean hasPatch() {
-      return patternCase_ == 6;
+      return instance.hasPatch();
     }
     /**
      *
@@ -2671,20 +2335,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getPatch() {
-      java.lang.Object ref = "";
-      if (patternCase_ == 6) {
-        ref = pattern_;
-      }
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (patternCase_ == 6) {
-          pattern_ = s;
-        }
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getPatch();
     }
     /**
      *
@@ -2699,20 +2350,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getPatchBytes() {
-      java.lang.Object ref = "";
-      if (patternCase_ == 6) {
-        ref = pattern_;
-      }
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        if (patternCase_ == 6) {
-          pattern_ = b;
-        }
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getPatchBytes();
     }
     /**
      *
@@ -2727,12 +2365,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setPatch(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      patternCase_ = 6;
-      pattern_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setPatch(value);
       return this;
     }
     /**
@@ -2747,11 +2381,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearPatch() {
-      if (patternCase_ == 6) {
-        patternCase_ = 0;
-        pattern_ = null;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.clearPatch();
       return this;
     }
     /**
@@ -2767,21 +2398,11 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setPatchBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      patternCase_ = 6;
-      pattern_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setPatchBytes(value);
       return this;
     }
 
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.CustomHttpPattern,
-            com.google.api.CustomHttpPattern.Builder,
-            com.google.api.CustomHttpPatternOrBuilder>
-        customBuilder_;
     /**
      *
      *
@@ -2793,12 +2414,10 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.CustomHttpPattern custom = 8;</code>
-     *
-     * @return Whether the custom field is set.
      */
     @java.lang.Override
     public boolean hasCustom() {
-      return patternCase_ == 8;
+      return instance.hasCustom();
     }
     /**
      *
@@ -2811,22 +2430,10 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.CustomHttpPattern custom = 8;</code>
-     *
-     * @return The custom.
      */
     @java.lang.Override
     public com.google.api.CustomHttpPattern getCustom() {
-      if (customBuilder_ == null) {
-        if (patternCase_ == 8) {
-          return (com.google.api.CustomHttpPattern) pattern_;
-        }
-        return com.google.api.CustomHttpPattern.getDefaultInstance();
-      } else {
-        if (patternCase_ == 8) {
-          return customBuilder_.getMessage();
-        }
-        return com.google.api.CustomHttpPattern.getDefaultInstance();
-      }
+      return instance.getCustom();
     }
     /**
      *
@@ -2841,16 +2448,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.CustomHttpPattern custom = 8;</code>
      */
     public Builder setCustom(com.google.api.CustomHttpPattern value) {
-      if (customBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        pattern_ = value;
-        onChanged();
-      } else {
-        customBuilder_.setMessage(value);
-      }
-      patternCase_ = 8;
+      copyOnWrite();
+      instance.setCustom(value);
       return this;
     }
     /**
@@ -2866,13 +2465,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.CustomHttpPattern custom = 8;</code>
      */
     public Builder setCustom(com.google.api.CustomHttpPattern.Builder builderForValue) {
-      if (customBuilder_ == null) {
-        pattern_ = builderForValue.build();
-        onChanged();
-      } else {
-        customBuilder_.setMessage(builderForValue.build());
-      }
-      patternCase_ = 8;
+      copyOnWrite();
+      instance.setCustom(builderForValue.build());
       return this;
     }
     /**
@@ -2888,26 +2482,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.CustomHttpPattern custom = 8;</code>
      */
     public Builder mergeCustom(com.google.api.CustomHttpPattern value) {
-      if (customBuilder_ == null) {
-        if (patternCase_ == 8
-            && pattern_ != com.google.api.CustomHttpPattern.getDefaultInstance()) {
-          pattern_ =
-              com.google.api.CustomHttpPattern.newBuilder(
-                      (com.google.api.CustomHttpPattern) pattern_)
-                  .mergeFrom(value)
-                  .buildPartial();
-        } else {
-          pattern_ = value;
-        }
-        onChanged();
-      } else {
-        if (patternCase_ == 8) {
-          customBuilder_.mergeFrom(value);
-        } else {
-          customBuilder_.setMessage(value);
-        }
-      }
-      patternCase_ = 8;
+      copyOnWrite();
+      instance.mergeCustom(value);
       return this;
     }
     /**
@@ -2923,94 +2499,11 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.CustomHttpPattern custom = 8;</code>
      */
     public Builder clearCustom() {
-      if (customBuilder_ == null) {
-        if (patternCase_ == 8) {
-          patternCase_ = 0;
-          pattern_ = null;
-          onChanged();
-        }
-      } else {
-        if (patternCase_ == 8) {
-          patternCase_ = 0;
-          pattern_ = null;
-        }
-        customBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearCustom();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * The custom pattern is used for specifying an HTTP method that is not
-     * included in the `pattern` field, such as HEAD, or "*" to leave the
-     * HTTP method unspecified for this rule. The wild-card rule is useful
-     * for services that provide content to Web (HTML) clients.
-     * </pre>
-     *
-     * <code>.google.api.CustomHttpPattern custom = 8;</code>
-     */
-    public com.google.api.CustomHttpPattern.Builder getCustomBuilder() {
-      return getCustomFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The custom pattern is used for specifying an HTTP method that is not
-     * included in the `pattern` field, such as HEAD, or "*" to leave the
-     * HTTP method unspecified for this rule. The wild-card rule is useful
-     * for services that provide content to Web (HTML) clients.
-     * </pre>
-     *
-     * <code>.google.api.CustomHttpPattern custom = 8;</code>
-     */
-    @java.lang.Override
-    public com.google.api.CustomHttpPatternOrBuilder getCustomOrBuilder() {
-      if ((patternCase_ == 8) && (customBuilder_ != null)) {
-        return customBuilder_.getMessageOrBuilder();
-      } else {
-        if (patternCase_ == 8) {
-          return (com.google.api.CustomHttpPattern) pattern_;
-        }
-        return com.google.api.CustomHttpPattern.getDefaultInstance();
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The custom pattern is used for specifying an HTTP method that is not
-     * included in the `pattern` field, such as HEAD, or "*" to leave the
-     * HTTP method unspecified for this rule. The wild-card rule is useful
-     * for services that provide content to Web (HTML) clients.
-     * </pre>
-     *
-     * <code>.google.api.CustomHttpPattern custom = 8;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.CustomHttpPattern,
-            com.google.api.CustomHttpPattern.Builder,
-            com.google.api.CustomHttpPatternOrBuilder>
-        getCustomFieldBuilder() {
-      if (customBuilder_ == null) {
-        if (!(patternCase_ == 8)) {
-          pattern_ = com.google.api.CustomHttpPattern.getDefaultInstance();
-        }
-        customBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.api.CustomHttpPattern,
-                com.google.api.CustomHttpPattern.Builder,
-                com.google.api.CustomHttpPatternOrBuilder>(
-                (com.google.api.CustomHttpPattern) pattern_, getParentForChildren(), isClean());
-        pattern_ = null;
-      }
-      patternCase_ = 8;
-      onChanged();
-      return customBuilder_;
-    }
 
-    private java.lang.Object body_ = "";
     /**
      *
      *
@@ -3027,16 +2520,9 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The body.
      */
+    @java.lang.Override
     public java.lang.String getBody() {
-      java.lang.Object ref = body_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        body_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getBody();
     }
     /**
      *
@@ -3054,16 +2540,9 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for body.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getBodyBytes() {
-      java.lang.Object ref = body_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        body_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getBodyBytes();
     }
     /**
      *
@@ -3083,12 +2562,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setBody(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      body_ = value;
-      bitField0_ |= 0x00000080;
-      onChanged();
+      copyOnWrite();
+      instance.setBody(value);
       return this;
     }
     /**
@@ -3108,9 +2583,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearBody() {
-      body_ = getDefaultInstance().getBody();
-      bitField0_ = (bitField0_ & ~0x00000080);
-      onChanged();
+      copyOnWrite();
+      instance.clearBody();
       return this;
     }
     /**
@@ -3131,17 +2605,11 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setBodyBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      body_ = value;
-      bitField0_ |= 0x00000080;
-      onChanged();
+      copyOnWrite();
+      instance.setBodyBytes(value);
       return this;
     }
 
-    private java.lang.Object responseBody_ = "";
     /**
      *
      *
@@ -3158,16 +2626,9 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The responseBody.
      */
+    @java.lang.Override
     public java.lang.String getResponseBody() {
-      java.lang.Object ref = responseBody_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        responseBody_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getResponseBody();
     }
     /**
      *
@@ -3185,16 +2646,9 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for responseBody.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getResponseBodyBytes() {
-      java.lang.Object ref = responseBody_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        responseBody_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getResponseBodyBytes();
     }
     /**
      *
@@ -3214,12 +2668,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setResponseBody(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      responseBody_ = value;
-      bitField0_ |= 0x00000100;
-      onChanged();
+      copyOnWrite();
+      instance.setResponseBody(value);
       return this;
     }
     /**
@@ -3239,9 +2689,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearResponseBody() {
-      responseBody_ = getDefaultInstance().getResponseBody();
-      bitField0_ = (bitField0_ & ~0x00000100);
-      onChanged();
+      copyOnWrite();
+      instance.clearResponseBody();
       return this;
     }
     /**
@@ -3262,32 +2711,11 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setResponseBodyBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      responseBody_ = value;
-      bitField0_ |= 0x00000100;
-      onChanged();
+      copyOnWrite();
+      instance.setResponseBodyBytes(value);
       return this;
     }
 
-    private java.util.List<com.google.api.HttpRule> additionalBindings_ =
-        java.util.Collections.emptyList();
-
-    private void ensureAdditionalBindingsIsMutable() {
-      if (!((bitField0_ & 0x00000200) != 0)) {
-        additionalBindings_ = new java.util.ArrayList<com.google.api.HttpRule>(additionalBindings_);
-        bitField0_ |= 0x00000200;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.HttpRule,
-            com.google.api.HttpRule.Builder,
-            com.google.api.HttpRuleOrBuilder>
-        additionalBindingsBuilder_;
-
     /**
      *
      *
@@ -3299,12 +2727,9 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.api.HttpRule> getAdditionalBindingsList() {
-      if (additionalBindingsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(additionalBindings_);
-      } else {
-        return additionalBindingsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getAdditionalBindingsList());
     }
     /**
      *
@@ -3317,12 +2742,9 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
      */
+    @java.lang.Override
     public int getAdditionalBindingsCount() {
-      if (additionalBindingsBuilder_ == null) {
-        return additionalBindings_.size();
-      } else {
-        return additionalBindingsBuilder_.getCount();
-      }
+      return instance.getAdditionalBindingsCount();
     }
     /**
      *
@@ -3335,12 +2757,10 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
      */
+
+    @java.lang.Override
     public com.google.api.HttpRule getAdditionalBindings(int index) {
-      if (additionalBindingsBuilder_ == null) {
-        return additionalBindings_.get(index);
-      } else {
-        return additionalBindingsBuilder_.getMessage(index);
-      }
+      return instance.getAdditionalBindings(index);
     }
     /**
      *
@@ -3354,16 +2774,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
      */
     public Builder setAdditionalBindings(int index, com.google.api.HttpRule value) {
-      if (additionalBindingsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureAdditionalBindingsIsMutable();
-        additionalBindings_.set(index, value);
-        onChanged();
-      } else {
-        additionalBindingsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setAdditionalBindings(index, value);
       return this;
     }
     /**
@@ -3379,13 +2791,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder setAdditionalBindings(
         int index, com.google.api.HttpRule.Builder builderForValue) {
-      if (additionalBindingsBuilder_ == null) {
-        ensureAdditionalBindingsIsMutable();
-        additionalBindings_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        additionalBindingsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setAdditionalBindings(index, builderForValue.build());
       return this;
     }
     /**
@@ -3400,16 +2807,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
      */
     public Builder addAdditionalBindings(com.google.api.HttpRule value) {
-      if (additionalBindingsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureAdditionalBindingsIsMutable();
-        additionalBindings_.add(value);
-        onChanged();
-      } else {
-        additionalBindingsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addAdditionalBindings(value);
       return this;
     }
     /**
@@ -3424,16 +2823,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
      */
     public Builder addAdditionalBindings(int index, com.google.api.HttpRule value) {
-      if (additionalBindingsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureAdditionalBindingsIsMutable();
-        additionalBindings_.add(index, value);
-        onChanged();
-      } else {
-        additionalBindingsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addAdditionalBindings(index, value);
       return this;
     }
     /**
@@ -3448,13 +2839,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
      */
     public Builder addAdditionalBindings(com.google.api.HttpRule.Builder builderForValue) {
-      if (additionalBindingsBuilder_ == null) {
-        ensureAdditionalBindingsIsMutable();
-        additionalBindings_.add(builderForValue.build());
-        onChanged();
-      } else {
-        additionalBindingsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addAdditionalBindings(builderForValue.build());
       return this;
     }
     /**
@@ -3470,13 +2856,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addAdditionalBindings(
         int index, com.google.api.HttpRule.Builder builderForValue) {
-      if (additionalBindingsBuilder_ == null) {
-        ensureAdditionalBindingsIsMutable();
-        additionalBindings_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        additionalBindingsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addAdditionalBindings(index, builderForValue.build());
       return this;
     }
     /**
@@ -3492,13 +2873,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addAllAdditionalBindings(
         java.lang.Iterable<? extends com.google.api.HttpRule> values) {
-      if (additionalBindingsBuilder_ == null) {
-        ensureAdditionalBindingsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, additionalBindings_);
-        onChanged();
-      } else {
-        additionalBindingsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllAdditionalBindings(values);
       return this;
     }
     /**
@@ -3513,13 +2889,8 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
      */
     public Builder clearAdditionalBindings() {
-      if (additionalBindingsBuilder_ == null) {
-        additionalBindings_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000200);
-        onChanged();
-      } else {
-        additionalBindingsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearAdditionalBindings();
       return this;
     }
     /**
@@ -3534,189 +2905,98 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
      */
     public Builder removeAdditionalBindings(int index) {
-      if (additionalBindingsBuilder_ == null) {
-        ensureAdditionalBindingsIsMutable();
-        additionalBindings_.remove(index);
-        onChanged();
-      } else {
-        additionalBindingsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeAdditionalBindings(index);
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Additional HTTP bindings for the selector. Nested bindings must
-     * not contain an `additional_bindings` field themselves (that is,
-     * the nesting may only be one level deep).
-     * </pre>
-     *
-     * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
-     */
-    public com.google.api.HttpRule.Builder getAdditionalBindingsBuilder(int index) {
-      return getAdditionalBindingsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Additional HTTP bindings for the selector. Nested bindings must
-     * not contain an `additional_bindings` field themselves (that is,
-     * the nesting may only be one level deep).
-     * </pre>
-     *
-     * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
-     */
-    public com.google.api.HttpRuleOrBuilder getAdditionalBindingsOrBuilder(int index) {
-      if (additionalBindingsBuilder_ == null) {
-        return additionalBindings_.get(index);
-      } else {
-        return additionalBindingsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Additional HTTP bindings for the selector. Nested bindings must
-     * not contain an `additional_bindings` field themselves (that is,
-     * the nesting may only be one level deep).
-     * </pre>
-     *
-     * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
-     */
-    public java.util.List<? extends com.google.api.HttpRuleOrBuilder>
-        getAdditionalBindingsOrBuilderList() {
-      if (additionalBindingsBuilder_ != null) {
-        return additionalBindingsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(additionalBindings_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Additional HTTP bindings for the selector. Nested bindings must
-     * not contain an `additional_bindings` field themselves (that is,
-     * the nesting may only be one level deep).
-     * </pre>
-     *
-     * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
-     */
-    public com.google.api.HttpRule.Builder addAdditionalBindingsBuilder() {
-      return getAdditionalBindingsFieldBuilder()
-          .addBuilder(com.google.api.HttpRule.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Additional HTTP bindings for the selector. Nested bindings must
-     * not contain an `additional_bindings` field themselves (that is,
-     * the nesting may only be one level deep).
-     * </pre>
-     *
-     * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
-     */
-    public com.google.api.HttpRule.Builder addAdditionalBindingsBuilder(int index) {
-      return getAdditionalBindingsFieldBuilder()
-          .addBuilder(index, com.google.api.HttpRule.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Additional HTTP bindings for the selector. Nested bindings must
-     * not contain an `additional_bindings` field themselves (that is,
-     * the nesting may only be one level deep).
-     * </pre>
-     *
-     * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
-     */
-    public java.util.List<com.google.api.HttpRule.Builder> getAdditionalBindingsBuilderList() {
-      return getAdditionalBindingsFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.HttpRule,
-            com.google.api.HttpRule.Builder,
-            com.google.api.HttpRuleOrBuilder>
-        getAdditionalBindingsFieldBuilder() {
-      if (additionalBindingsBuilder_ == null) {
-        additionalBindingsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.api.HttpRule,
-                com.google.api.HttpRule.Builder,
-                com.google.api.HttpRuleOrBuilder>(
-                additionalBindings_,
-                ((bitField0_ & 0x00000200) != 0),
-                getParentForChildren(),
-                isClean());
-        additionalBindings_ = null;
-      }
-      return additionalBindingsBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.api.HttpRule)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.HttpRule();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "pattern_",
+                "patternCase_",
+                "selector_",
+                "body_",
+                com.google.api.CustomHttpPattern.class,
+                "additionalBindings_",
+                com.google.api.HttpRule.class,
+                "responseBody_",
+              };
+          java.lang.String info =
+              "\u0000\n\u0001\u0000\u0001\f\n\u0000\u0001\u0000\u0001\u0208\u0002\u023b\u0000\u0003"
+                  + "\u023b\u0000\u0004\u023b\u0000\u0005\u023b\u0000\u0006\u023b\u0000\u0007\u0208\b"
+                  + "<\u0000\u000b\u001b\f\u0208";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.HttpRule> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.HttpRule.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser = new DefaultInstanceBasedParser<com.google.api.HttpRule>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.HttpRule)
   private static final com.google.api.HttpRule DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.HttpRule();
+    HttpRule defaultInstance = new HttpRule();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        HttpRule.class, defaultInstance);
   }
 
   public static com.google.api.HttpRule getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<HttpRule> PARSER =
-      new com.google.protobuf.AbstractParser<HttpRule>() {
-        @java.lang.Override
-        public HttpRule parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<HttpRule> PARSER;
 
   public static com.google.protobuf.Parser<HttpRule> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<HttpRule> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.HttpRule getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

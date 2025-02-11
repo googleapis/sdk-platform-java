@@ -44,16 +44,11 @@ package com.google.type;
  *
  * Protobuf type {@code google.type.PostalAddress}
  */
-public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
+public final class PostalAddress
+    extends com.google.protobuf.GeneratedMessageLite<PostalAddress, PostalAddress.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.type.PostalAddress)
     PostalAddressOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use PostalAddress.newBuilder() to construct.
-  private PostalAddress(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private PostalAddress() {
     regionCode_ = "";
     languageCode_ = "";
@@ -62,32 +57,13 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
     administrativeArea_ = "";
     locality_ = "";
     sublocality_ = "";
-    addressLines_ = com.google.protobuf.LazyStringArrayList.emptyList();
-    recipients_ = com.google.protobuf.LazyStringArrayList.emptyList();
+    addressLines_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+    recipients_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
     organization_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new PostalAddress();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.type.PostalAddressProto.internal_static_google_type_PostalAddress_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.type.PostalAddressProto
-        .internal_static_google_type_PostalAddress_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.type.PostalAddress.class, com.google.type.PostalAddress.Builder.class);
-  }
-
   public static final int REVISION_FIELD_NUMBER = 1;
-  private int revision_ = 0;
+  private int revision_;
   /**
    *
    *
@@ -106,11 +82,43 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
   public int getRevision() {
     return revision_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The schema revision of the `PostalAddress`. This must be set to 0, which is
+   * the latest revision.
+   *
+   * All new revisions **must** be backward compatible with old revisions.
+   * </pre>
+   *
+   * <code>int32 revision = 1;</code>
+   *
+   * @param value The revision to set.
+   */
+  private void setRevision(int value) {
+
+    revision_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The schema revision of the `PostalAddress`. This must be set to 0, which is
+   * the latest revision.
+   *
+   * All new revisions **must** be backward compatible with old revisions.
+   * </pre>
+   *
+   * <code>int32 revision = 1;</code>
+   */
+  private void clearRevision() {
+
+    revision_ = 0;
+  }
 
   public static final int REGION_CODE_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object regionCode_ = "";
+  private java.lang.String regionCode_;
   /**
    *
    *
@@ -128,15 +136,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getRegionCode() {
-    java.lang.Object ref = regionCode_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      regionCode_ = s;
-      return s;
-    }
+    return regionCode_;
   }
   /**
    *
@@ -155,21 +155,67 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getRegionCodeBytes() {
-    java.lang.Object ref = regionCode_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      regionCode_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(regionCode_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. CLDR region code of the country/region of the address. This
+   * is never inferred and it is up to the user to ensure the value is
+   * correct. See http://cldr.unicode.org/ and
+   * http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+   * for details. Example: "CH" for Switzerland.
+   * </pre>
+   *
+   * <code>string region_code = 2;</code>
+   *
+   * @param value The regionCode to set.
+   */
+  private void setRegionCode(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    regionCode_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. CLDR region code of the country/region of the address. This
+   * is never inferred and it is up to the user to ensure the value is
+   * correct. See http://cldr.unicode.org/ and
+   * http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+   * for details. Example: "CH" for Switzerland.
+   * </pre>
+   *
+   * <code>string region_code = 2;</code>
+   */
+  private void clearRegionCode() {
+
+    regionCode_ = getDefaultInstance().getRegionCode();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. CLDR region code of the country/region of the address. This
+   * is never inferred and it is up to the user to ensure the value is
+   * correct. See http://cldr.unicode.org/ and
+   * http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+   * for details. Example: "CH" for Switzerland.
+   * </pre>
+   *
+   * <code>string region_code = 2;</code>
+   *
+   * @param value The bytes for regionCode to set.
+   */
+  private void setRegionCodeBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    regionCode_ = value.toStringUtf8();
   }
 
   public static final int LANGUAGE_CODE_FIELD_NUMBER = 3;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object languageCode_ = "";
+  private java.lang.String languageCode_;
   /**
    *
    *
@@ -194,15 +240,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getLanguageCode() {
-    java.lang.Object ref = languageCode_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      languageCode_ = s;
-      return s;
-    }
+    return languageCode_;
   }
   /**
    *
@@ -228,21 +266,88 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getLanguageCodeBytes() {
-    java.lang.Object ref = languageCode_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      languageCode_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(languageCode_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. BCP-47 language code of the contents of this address (if
+   * known). This is often the UI language of the input form or is expected
+   * to match one of the languages used in the address' country/region, or their
+   * transliterated equivalents.
+   * This can affect formatting in certain countries, but is not critical
+   * to the correctness of the data and will never affect any validation or
+   * other non-formatting related operations.
+   *
+   * If this value is not known, it should be omitted (rather than specifying a
+   * possibly incorrect default).
+   *
+   * Examples: "zh-Hant", "ja", "ja-Latn", "en".
+   * </pre>
+   *
+   * <code>string language_code = 3;</code>
+   *
+   * @param value The languageCode to set.
+   */
+  private void setLanguageCode(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    languageCode_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. BCP-47 language code of the contents of this address (if
+   * known). This is often the UI language of the input form or is expected
+   * to match one of the languages used in the address' country/region, or their
+   * transliterated equivalents.
+   * This can affect formatting in certain countries, but is not critical
+   * to the correctness of the data and will never affect any validation or
+   * other non-formatting related operations.
+   *
+   * If this value is not known, it should be omitted (rather than specifying a
+   * possibly incorrect default).
+   *
+   * Examples: "zh-Hant", "ja", "ja-Latn", "en".
+   * </pre>
+   *
+   * <code>string language_code = 3;</code>
+   */
+  private void clearLanguageCode() {
+
+    languageCode_ = getDefaultInstance().getLanguageCode();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. BCP-47 language code of the contents of this address (if
+   * known). This is often the UI language of the input form or is expected
+   * to match one of the languages used in the address' country/region, or their
+   * transliterated equivalents.
+   * This can affect formatting in certain countries, but is not critical
+   * to the correctness of the data and will never affect any validation or
+   * other non-formatting related operations.
+   *
+   * If this value is not known, it should be omitted (rather than specifying a
+   * possibly incorrect default).
+   *
+   * Examples: "zh-Hant", "ja", "ja-Latn", "en".
+   * </pre>
+   *
+   * <code>string language_code = 3;</code>
+   *
+   * @param value The bytes for languageCode to set.
+   */
+  private void setLanguageCodeBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    languageCode_ = value.toStringUtf8();
   }
 
   public static final int POSTAL_CODE_FIELD_NUMBER = 4;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object postalCode_ = "";
+  private java.lang.String postalCode_;
   /**
    *
    *
@@ -259,15 +364,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getPostalCode() {
-    java.lang.Object ref = postalCode_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      postalCode_ = s;
-      return s;
-    }
+    return postalCode_;
   }
   /**
    *
@@ -285,21 +382,64 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getPostalCodeBytes() {
-    java.lang.Object ref = postalCode_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      postalCode_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(postalCode_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Postal code of the address. Not all countries use or require
+   * postal codes to be present, but where they are used, they may trigger
+   * additional validation with other parts of the address (e.g. state/zip
+   * validation in the U.S.A.).
+   * </pre>
+   *
+   * <code>string postal_code = 4;</code>
+   *
+   * @param value The postalCode to set.
+   */
+  private void setPostalCode(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    postalCode_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Postal code of the address. Not all countries use or require
+   * postal codes to be present, but where they are used, they may trigger
+   * additional validation with other parts of the address (e.g. state/zip
+   * validation in the U.S.A.).
+   * </pre>
+   *
+   * <code>string postal_code = 4;</code>
+   */
+  private void clearPostalCode() {
+
+    postalCode_ = getDefaultInstance().getPostalCode();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Postal code of the address. Not all countries use or require
+   * postal codes to be present, but where they are used, they may trigger
+   * additional validation with other parts of the address (e.g. state/zip
+   * validation in the U.S.A.).
+   * </pre>
+   *
+   * <code>string postal_code = 4;</code>
+   *
+   * @param value The bytes for postalCode to set.
+   */
+  private void setPostalCodeBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    postalCode_ = value.toStringUtf8();
   }
 
   public static final int SORTING_CODE_FIELD_NUMBER = 5;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object sortingCode_ = "";
+  private java.lang.String sortingCode_;
   /**
    *
    *
@@ -317,15 +457,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getSortingCode() {
-    java.lang.Object ref = sortingCode_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      sortingCode_ = s;
-      return s;
-    }
+    return sortingCode_;
   }
   /**
    *
@@ -344,21 +476,67 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getSortingCodeBytes() {
-    java.lang.Object ref = sortingCode_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      sortingCode_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(sortingCode_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Additional, country-specific, sorting code. This is not used
+   * in most regions. Where it is used, the value is either a string like
+   * "CEDEX", optionally followed by a number (e.g. "CEDEX 7"), or just a number
+   * alone, representing the "sector code" (Jamaica), "delivery area indicator"
+   * (Malawi) or "post office indicator" (e.g. Côte d'Ivoire).
+   * </pre>
+   *
+   * <code>string sorting_code = 5;</code>
+   *
+   * @param value The sortingCode to set.
+   */
+  private void setSortingCode(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    sortingCode_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Additional, country-specific, sorting code. This is not used
+   * in most regions. Where it is used, the value is either a string like
+   * "CEDEX", optionally followed by a number (e.g. "CEDEX 7"), or just a number
+   * alone, representing the "sector code" (Jamaica), "delivery area indicator"
+   * (Malawi) or "post office indicator" (e.g. Côte d'Ivoire).
+   * </pre>
+   *
+   * <code>string sorting_code = 5;</code>
+   */
+  private void clearSortingCode() {
+
+    sortingCode_ = getDefaultInstance().getSortingCode();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Additional, country-specific, sorting code. This is not used
+   * in most regions. Where it is used, the value is either a string like
+   * "CEDEX", optionally followed by a number (e.g. "CEDEX 7"), or just a number
+   * alone, representing the "sector code" (Jamaica), "delivery area indicator"
+   * (Malawi) or "post office indicator" (e.g. Côte d'Ivoire).
+   * </pre>
+   *
+   * <code>string sorting_code = 5;</code>
+   *
+   * @param value The bytes for sortingCode to set.
+   */
+  private void setSortingCodeBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    sortingCode_ = value.toStringUtf8();
   }
 
   public static final int ADMINISTRATIVE_AREA_FIELD_NUMBER = 6;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object administrativeArea_ = "";
+  private java.lang.String administrativeArea_;
   /**
    *
    *
@@ -378,15 +556,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getAdministrativeArea() {
-    java.lang.Object ref = administrativeArea_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      administrativeArea_ = s;
-      return s;
-    }
+    return administrativeArea_;
   }
   /**
    *
@@ -407,21 +577,73 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getAdministrativeAreaBytes() {
-    java.lang.Object ref = administrativeArea_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      administrativeArea_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(administrativeArea_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Highest administrative subdivision which is used for postal
+   * addresses of a country or region.
+   * For example, this can be a state, a province, an oblast, or a prefecture.
+   * Specifically, for Spain this is the province and not the autonomous
+   * community (e.g. "Barcelona" and not "Catalonia").
+   * Many countries don't use an administrative area in postal addresses. E.g.
+   * in Switzerland this should be left unpopulated.
+   * </pre>
+   *
+   * <code>string administrative_area = 6;</code>
+   *
+   * @param value The administrativeArea to set.
+   */
+  private void setAdministrativeArea(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    administrativeArea_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Highest administrative subdivision which is used for postal
+   * addresses of a country or region.
+   * For example, this can be a state, a province, an oblast, or a prefecture.
+   * Specifically, for Spain this is the province and not the autonomous
+   * community (e.g. "Barcelona" and not "Catalonia").
+   * Many countries don't use an administrative area in postal addresses. E.g.
+   * in Switzerland this should be left unpopulated.
+   * </pre>
+   *
+   * <code>string administrative_area = 6;</code>
+   */
+  private void clearAdministrativeArea() {
+
+    administrativeArea_ = getDefaultInstance().getAdministrativeArea();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Highest administrative subdivision which is used for postal
+   * addresses of a country or region.
+   * For example, this can be a state, a province, an oblast, or a prefecture.
+   * Specifically, for Spain this is the province and not the autonomous
+   * community (e.g. "Barcelona" and not "Catalonia").
+   * Many countries don't use an administrative area in postal addresses. E.g.
+   * in Switzerland this should be left unpopulated.
+   * </pre>
+   *
+   * <code>string administrative_area = 6;</code>
+   *
+   * @param value The bytes for administrativeArea to set.
+   */
+  private void setAdministrativeAreaBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    administrativeArea_ = value.toStringUtf8();
   }
 
   public static final int LOCALITY_FIELD_NUMBER = 7;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object locality_ = "";
+  private java.lang.String locality_;
   /**
    *
    *
@@ -438,15 +660,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getLocality() {
-    java.lang.Object ref = locality_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      locality_ = s;
-      return s;
-    }
+    return locality_;
   }
   /**
    *
@@ -464,21 +678,64 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getLocalityBytes() {
-    java.lang.Object ref = locality_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      locality_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(locality_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Generally refers to the city/town portion of the address.
+   * Examples: US city, IT comune, UK post town.
+   * In regions of the world where localities are not well defined or do not fit
+   * into this structure well, leave locality empty and use address_lines.
+   * </pre>
+   *
+   * <code>string locality = 7;</code>
+   *
+   * @param value The locality to set.
+   */
+  private void setLocality(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    locality_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Generally refers to the city/town portion of the address.
+   * Examples: US city, IT comune, UK post town.
+   * In regions of the world where localities are not well defined or do not fit
+   * into this structure well, leave locality empty and use address_lines.
+   * </pre>
+   *
+   * <code>string locality = 7;</code>
+   */
+  private void clearLocality() {
+
+    locality_ = getDefaultInstance().getLocality();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Generally refers to the city/town portion of the address.
+   * Examples: US city, IT comune, UK post town.
+   * In regions of the world where localities are not well defined or do not fit
+   * into this structure well, leave locality empty and use address_lines.
+   * </pre>
+   *
+   * <code>string locality = 7;</code>
+   *
+   * @param value The bytes for locality to set.
+   */
+  private void setLocalityBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    locality_ = value.toStringUtf8();
   }
 
   public static final int SUBLOCALITY_FIELD_NUMBER = 8;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object sublocality_ = "";
+  private java.lang.String sublocality_;
   /**
    *
    *
@@ -493,15 +750,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getSublocality() {
-    java.lang.Object ref = sublocality_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      sublocality_ = s;
-      return s;
-    }
+    return sublocality_;
   }
   /**
    *
@@ -517,22 +766,58 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getSublocalityBytes() {
-    java.lang.Object ref = sublocality_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      sublocality_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(sublocality_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Sublocality of the address.
+   * For example, this can be neighborhoods, boroughs, districts.
+   * </pre>
+   *
+   * <code>string sublocality = 8;</code>
+   *
+   * @param value The sublocality to set.
+   */
+  private void setSublocality(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    sublocality_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Sublocality of the address.
+   * For example, this can be neighborhoods, boroughs, districts.
+   * </pre>
+   *
+   * <code>string sublocality = 8;</code>
+   */
+  private void clearSublocality() {
+
+    sublocality_ = getDefaultInstance().getSublocality();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Sublocality of the address.
+   * For example, this can be neighborhoods, boroughs, districts.
+   * </pre>
+   *
+   * <code>string sublocality = 8;</code>
+   *
+   * @param value The bytes for sublocality to set.
+   */
+  private void setSublocalityBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    sublocality_ = value.toStringUtf8();
   }
 
   public static final int ADDRESS_LINES_FIELD_NUMBER = 9;
-
-  @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList addressLines_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.Internal.ProtobufList<java.lang.String> addressLines_;
   /**
    *
    *
@@ -565,7 +850,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return A list containing the addressLines.
    */
-  public com.google.protobuf.ProtocolStringList getAddressLinesList() {
+  @java.lang.Override
+  public java.util.List<java.lang.String> getAddressLinesList() {
     return addressLines_;
   }
   /**
@@ -600,6 +886,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The count of addressLines.
    */
+  @java.lang.Override
   public int getAddressLinesCount() {
     return addressLines_.size();
   }
@@ -636,6 +923,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the element to return.
    * @return The addressLines at the given index.
    */
+  @java.lang.Override
   public java.lang.String getAddressLines(int index) {
     return addressLines_.get(index);
   }
@@ -672,15 +960,201 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the value to return.
    * @return The bytes of the addressLines at the given index.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getAddressLinesBytes(int index) {
-    return addressLines_.getByteString(index);
+    return com.google.protobuf.ByteString.copyFromUtf8(addressLines_.get(index));
+  }
+
+  private void ensureAddressLinesIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = addressLines_;
+    if (!tmp.isModifiable()) {
+      addressLines_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Unstructured address lines describing the lower levels of an address.
+   *
+   * Because values in address_lines do not have type information and may
+   * sometimes contain multiple values in a single field (e.g.
+   * "Austin, TX"), it is important that the line order is clear. The order of
+   * address lines should be "envelope order" for the country/region of the
+   * address. In places where this can vary (e.g. Japan), address_language is
+   * used to make it explicit (e.g. "ja" for large-to-small ordering and
+   * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
+   * an address can be selected based on the language.
+   *
+   * The minimum permitted structural representation of an address consists
+   * of a region_code with all remaining information placed in the
+   * address_lines. It would be possible to format such an address very
+   * approximately without geocoding, but no semantic reasoning could be
+   * made about any of the address components until it was at least
+   * partially resolved.
+   *
+   * Creating an address only containing a region_code and address_lines, and
+   * then geocoding is the recommended way to handle completely unstructured
+   * addresses (as opposed to guessing which parts of the address should be
+   * localities or administrative areas).
+   * </pre>
+   *
+   * <code>repeated string address_lines = 9;</code>
+   *
+   * @param index The index to set the value at.
+   * @param value The addressLines to set.
+   */
+  private void setAddressLines(int index, java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureAddressLinesIsMutable();
+    addressLines_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Unstructured address lines describing the lower levels of an address.
+   *
+   * Because values in address_lines do not have type information and may
+   * sometimes contain multiple values in a single field (e.g.
+   * "Austin, TX"), it is important that the line order is clear. The order of
+   * address lines should be "envelope order" for the country/region of the
+   * address. In places where this can vary (e.g. Japan), address_language is
+   * used to make it explicit (e.g. "ja" for large-to-small ordering and
+   * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
+   * an address can be selected based on the language.
+   *
+   * The minimum permitted structural representation of an address consists
+   * of a region_code with all remaining information placed in the
+   * address_lines. It would be possible to format such an address very
+   * approximately without geocoding, but no semantic reasoning could be
+   * made about any of the address components until it was at least
+   * partially resolved.
+   *
+   * Creating an address only containing a region_code and address_lines, and
+   * then geocoding is the recommended way to handle completely unstructured
+   * addresses (as opposed to guessing which parts of the address should be
+   * localities or administrative areas).
+   * </pre>
+   *
+   * <code>repeated string address_lines = 9;</code>
+   *
+   * @param value The addressLines to add.
+   */
+  private void addAddressLines(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureAddressLinesIsMutable();
+    addressLines_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Unstructured address lines describing the lower levels of an address.
+   *
+   * Because values in address_lines do not have type information and may
+   * sometimes contain multiple values in a single field (e.g.
+   * "Austin, TX"), it is important that the line order is clear. The order of
+   * address lines should be "envelope order" for the country/region of the
+   * address. In places where this can vary (e.g. Japan), address_language is
+   * used to make it explicit (e.g. "ja" for large-to-small ordering and
+   * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
+   * an address can be selected based on the language.
+   *
+   * The minimum permitted structural representation of an address consists
+   * of a region_code with all remaining information placed in the
+   * address_lines. It would be possible to format such an address very
+   * approximately without geocoding, but no semantic reasoning could be
+   * made about any of the address components until it was at least
+   * partially resolved.
+   *
+   * Creating an address only containing a region_code and address_lines, and
+   * then geocoding is the recommended way to handle completely unstructured
+   * addresses (as opposed to guessing which parts of the address should be
+   * localities or administrative areas).
+   * </pre>
+   *
+   * <code>repeated string address_lines = 9;</code>
+   *
+   * @param values The addressLines to add.
+   */
+  private void addAllAddressLines(java.lang.Iterable<java.lang.String> values) {
+    ensureAddressLinesIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, addressLines_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Unstructured address lines describing the lower levels of an address.
+   *
+   * Because values in address_lines do not have type information and may
+   * sometimes contain multiple values in a single field (e.g.
+   * "Austin, TX"), it is important that the line order is clear. The order of
+   * address lines should be "envelope order" for the country/region of the
+   * address. In places where this can vary (e.g. Japan), address_language is
+   * used to make it explicit (e.g. "ja" for large-to-small ordering and
+   * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
+   * an address can be selected based on the language.
+   *
+   * The minimum permitted structural representation of an address consists
+   * of a region_code with all remaining information placed in the
+   * address_lines. It would be possible to format such an address very
+   * approximately without geocoding, but no semantic reasoning could be
+   * made about any of the address components until it was at least
+   * partially resolved.
+   *
+   * Creating an address only containing a region_code and address_lines, and
+   * then geocoding is the recommended way to handle completely unstructured
+   * addresses (as opposed to guessing which parts of the address should be
+   * localities or administrative areas).
+   * </pre>
+   *
+   * <code>repeated string address_lines = 9;</code>
+   */
+  private void clearAddressLines() {
+    addressLines_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Unstructured address lines describing the lower levels of an address.
+   *
+   * Because values in address_lines do not have type information and may
+   * sometimes contain multiple values in a single field (e.g.
+   * "Austin, TX"), it is important that the line order is clear. The order of
+   * address lines should be "envelope order" for the country/region of the
+   * address. In places where this can vary (e.g. Japan), address_language is
+   * used to make it explicit (e.g. "ja" for large-to-small ordering and
+   * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
+   * an address can be selected based on the language.
+   *
+   * The minimum permitted structural representation of an address consists
+   * of a region_code with all remaining information placed in the
+   * address_lines. It would be possible to format such an address very
+   * approximately without geocoding, but no semantic reasoning could be
+   * made about any of the address components until it was at least
+   * partially resolved.
+   *
+   * Creating an address only containing a region_code and address_lines, and
+   * then geocoding is the recommended way to handle completely unstructured
+   * addresses (as opposed to guessing which parts of the address should be
+   * localities or administrative areas).
+   * </pre>
+   *
+   * <code>repeated string address_lines = 9;</code>
+   *
+   * @param value The bytes of the addressLines to add.
+   */
+  private void addAddressLinesBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    ensureAddressLinesIsMutable();
+    addressLines_.add(value.toStringUtf8());
   }
 
   public static final int RECIPIENTS_FIELD_NUMBER = 10;
-
-  @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList recipients_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.Internal.ProtobufList<java.lang.String> recipients_;
   /**
    *
    *
@@ -694,7 +1168,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return A list containing the recipients.
    */
-  public com.google.protobuf.ProtocolStringList getRecipientsList() {
+  @java.lang.Override
+  public java.util.List<java.lang.String> getRecipientsList() {
     return recipients_;
   }
   /**
@@ -710,6 +1185,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The count of recipients.
    */
+  @java.lang.Override
   public int getRecipientsCount() {
     return recipients_.size();
   }
@@ -727,6 +1203,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the element to return.
    * @return The recipients at the given index.
    */
+  @java.lang.Override
   public java.lang.String getRecipients(int index) {
     return recipients_.get(index);
   }
@@ -744,14 +1221,106 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the value to return.
    * @return The bytes of the recipients at the given index.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getRecipientsBytes(int index) {
-    return recipients_.getByteString(index);
+    return com.google.protobuf.ByteString.copyFromUtf8(recipients_.get(index));
+  }
+
+  private void ensureRecipientsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = recipients_;
+    if (!tmp.isModifiable()) {
+      recipients_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The recipient at the address.
+   * This field may, under certain circumstances, contain multiline information.
+   * For example, it might contain "care of" information.
+   * </pre>
+   *
+   * <code>repeated string recipients = 10;</code>
+   *
+   * @param index The index to set the value at.
+   * @param value The recipients to set.
+   */
+  private void setRecipients(int index, java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureRecipientsIsMutable();
+    recipients_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The recipient at the address.
+   * This field may, under certain circumstances, contain multiline information.
+   * For example, it might contain "care of" information.
+   * </pre>
+   *
+   * <code>repeated string recipients = 10;</code>
+   *
+   * @param value The recipients to add.
+   */
+  private void addRecipients(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureRecipientsIsMutable();
+    recipients_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The recipient at the address.
+   * This field may, under certain circumstances, contain multiline information.
+   * For example, it might contain "care of" information.
+   * </pre>
+   *
+   * <code>repeated string recipients = 10;</code>
+   *
+   * @param values The recipients to add.
+   */
+  private void addAllRecipients(java.lang.Iterable<java.lang.String> values) {
+    ensureRecipientsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, recipients_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The recipient at the address.
+   * This field may, under certain circumstances, contain multiline information.
+   * For example, it might contain "care of" information.
+   * </pre>
+   *
+   * <code>repeated string recipients = 10;</code>
+   */
+  private void clearRecipients() {
+    recipients_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The recipient at the address.
+   * This field may, under certain circumstances, contain multiline information.
+   * For example, it might contain "care of" information.
+   * </pre>
+   *
+   * <code>repeated string recipients = 10;</code>
+   *
+   * @param value The bytes of the recipients to add.
+   */
+  private void addRecipientsBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    ensureRecipientsIsMutable();
+    recipients_.add(value.toStringUtf8());
   }
 
   public static final int ORGANIZATION_FIELD_NUMBER = 11;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object organization_ = "";
+  private java.lang.String organization_;
   /**
    *
    *
@@ -765,15 +1334,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getOrganization() {
-    java.lang.Object ref = organization_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      organization_ = s;
-      return s;
-    }
+    return organization_;
   }
   /**
    *
@@ -788,278 +1349,134 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getOrganizationBytes() {
-    java.lang.Object ref = organization_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      organization_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(organization_);
   }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The name of the organization at the address.
+   * </pre>
+   *
+   * <code>string organization = 11;</code>
+   *
+   * @param value The organization to set.
+   */
+  private void setOrganization(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    organization_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The name of the organization at the address.
+   * </pre>
+   *
+   * <code>string organization = 11;</code>
+   */
+  private void clearOrganization() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (revision_ != 0) {
-      output.writeInt32(1, revision_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(regionCode_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, regionCode_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(languageCode_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, languageCode_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(postalCode_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, postalCode_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(sortingCode_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, sortingCode_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(administrativeArea_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, administrativeArea_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(locality_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 7, locality_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(sublocality_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 8, sublocality_);
-    }
-    for (int i = 0; i < addressLines_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 9, addressLines_.getRaw(i));
-    }
-    for (int i = 0; i < recipients_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 10, recipients_.getRaw(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(organization_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 11, organization_);
-    }
-    getUnknownFields().writeTo(output);
+    organization_ = getDefaultInstance().getOrganization();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (revision_ != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeInt32Size(1, revision_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(regionCode_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, regionCode_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(languageCode_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, languageCode_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(postalCode_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, postalCode_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(sortingCode_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, sortingCode_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(administrativeArea_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, administrativeArea_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(locality_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, locality_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(sublocality_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, sublocality_);
-    }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < addressLines_.size(); i++) {
-        dataSize += computeStringSizeNoTag(addressLines_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getAddressLinesList().size();
-    }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < recipients_.size(); i++) {
-        dataSize += computeStringSizeNoTag(recipients_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getRecipientsList().size();
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(organization_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(11, organization_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.type.PostalAddress)) {
-      return super.equals(obj);
-    }
-    com.google.type.PostalAddress other = (com.google.type.PostalAddress) obj;
-
-    if (getRevision() != other.getRevision()) return false;
-    if (!getRegionCode().equals(other.getRegionCode())) return false;
-    if (!getLanguageCode().equals(other.getLanguageCode())) return false;
-    if (!getPostalCode().equals(other.getPostalCode())) return false;
-    if (!getSortingCode().equals(other.getSortingCode())) return false;
-    if (!getAdministrativeArea().equals(other.getAdministrativeArea())) return false;
-    if (!getLocality().equals(other.getLocality())) return false;
-    if (!getSublocality().equals(other.getSublocality())) return false;
-    if (!getAddressLinesList().equals(other.getAddressLinesList())) return false;
-    if (!getRecipientsList().equals(other.getRecipientsList())) return false;
-    if (!getOrganization().equals(other.getOrganization())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + REVISION_FIELD_NUMBER;
-    hash = (53 * hash) + getRevision();
-    hash = (37 * hash) + REGION_CODE_FIELD_NUMBER;
-    hash = (53 * hash) + getRegionCode().hashCode();
-    hash = (37 * hash) + LANGUAGE_CODE_FIELD_NUMBER;
-    hash = (53 * hash) + getLanguageCode().hashCode();
-    hash = (37 * hash) + POSTAL_CODE_FIELD_NUMBER;
-    hash = (53 * hash) + getPostalCode().hashCode();
-    hash = (37 * hash) + SORTING_CODE_FIELD_NUMBER;
-    hash = (53 * hash) + getSortingCode().hashCode();
-    hash = (37 * hash) + ADMINISTRATIVE_AREA_FIELD_NUMBER;
-    hash = (53 * hash) + getAdministrativeArea().hashCode();
-    hash = (37 * hash) + LOCALITY_FIELD_NUMBER;
-    hash = (53 * hash) + getLocality().hashCode();
-    hash = (37 * hash) + SUBLOCALITY_FIELD_NUMBER;
-    hash = (53 * hash) + getSublocality().hashCode();
-    if (getAddressLinesCount() > 0) {
-      hash = (37 * hash) + ADDRESS_LINES_FIELD_NUMBER;
-      hash = (53 * hash) + getAddressLinesList().hashCode();
-    }
-    if (getRecipientsCount() > 0) {
-      hash = (37 * hash) + RECIPIENTS_FIELD_NUMBER;
-      hash = (53 * hash) + getRecipientsList().hashCode();
-    }
-    hash = (37 * hash) + ORGANIZATION_FIELD_NUMBER;
-    hash = (53 * hash) + getOrganization().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The name of the organization at the address.
+   * </pre>
+   *
+   * <code>string organization = 11;</code>
+   *
+   * @param value The bytes for organization to set.
+   */
+  private void setOrganizationBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    organization_ = value.toStringUtf8();
   }
 
   public static com.google.type.PostalAddress parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.type.PostalAddress parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.type.PostalAddress parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.type.PostalAddress parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.type.PostalAddress parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.type.PostalAddress parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.type.PostalAddress parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.type.PostalAddress parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.type.PostalAddress parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.type.PostalAddress parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.type.PostalAddress parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.type.PostalAddress parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.type.PostalAddress prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -1085,340 +1502,17 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.type.PostalAddress}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.type.PostalAddress, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.type.PostalAddress)
       com.google.type.PostalAddressOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.type.PostalAddressProto
-          .internal_static_google_type_PostalAddress_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.type.PostalAddressProto
-          .internal_static_google_type_PostalAddress_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.type.PostalAddress.class, com.google.type.PostalAddress.Builder.class);
-    }
-
     // Construct using com.google.type.PostalAddress.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      revision_ = 0;
-      regionCode_ = "";
-      languageCode_ = "";
-      postalCode_ = "";
-      sortingCode_ = "";
-      administrativeArea_ = "";
-      locality_ = "";
-      sublocality_ = "";
-      addressLines_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      recipients_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      organization_ = "";
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.type.PostalAddressProto
-          .internal_static_google_type_PostalAddress_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.type.PostalAddress getDefaultInstanceForType() {
-      return com.google.type.PostalAddress.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.type.PostalAddress build() {
-      com.google.type.PostalAddress result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.type.PostalAddress buildPartial() {
-      com.google.type.PostalAddress result = new com.google.type.PostalAddress(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.type.PostalAddress result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.revision_ = revision_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.regionCode_ = regionCode_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.languageCode_ = languageCode_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.postalCode_ = postalCode_;
-      }
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.sortingCode_ = sortingCode_;
-      }
-      if (((from_bitField0_ & 0x00000020) != 0)) {
-        result.administrativeArea_ = administrativeArea_;
-      }
-      if (((from_bitField0_ & 0x00000040) != 0)) {
-        result.locality_ = locality_;
-      }
-      if (((from_bitField0_ & 0x00000080) != 0)) {
-        result.sublocality_ = sublocality_;
-      }
-      if (((from_bitField0_ & 0x00000100) != 0)) {
-        addressLines_.makeImmutable();
-        result.addressLines_ = addressLines_;
-      }
-      if (((from_bitField0_ & 0x00000200) != 0)) {
-        recipients_.makeImmutable();
-        result.recipients_ = recipients_;
-      }
-      if (((from_bitField0_ & 0x00000400) != 0)) {
-        result.organization_ = organization_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.type.PostalAddress) {
-        return mergeFrom((com.google.type.PostalAddress) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.type.PostalAddress other) {
-      if (other == com.google.type.PostalAddress.getDefaultInstance()) return this;
-      if (other.getRevision() != 0) {
-        setRevision(other.getRevision());
-      }
-      if (!other.getRegionCode().isEmpty()) {
-        regionCode_ = other.regionCode_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      if (!other.getLanguageCode().isEmpty()) {
-        languageCode_ = other.languageCode_;
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
-      if (!other.getPostalCode().isEmpty()) {
-        postalCode_ = other.postalCode_;
-        bitField0_ |= 0x00000008;
-        onChanged();
-      }
-      if (!other.getSortingCode().isEmpty()) {
-        sortingCode_ = other.sortingCode_;
-        bitField0_ |= 0x00000010;
-        onChanged();
-      }
-      if (!other.getAdministrativeArea().isEmpty()) {
-        administrativeArea_ = other.administrativeArea_;
-        bitField0_ |= 0x00000020;
-        onChanged();
-      }
-      if (!other.getLocality().isEmpty()) {
-        locality_ = other.locality_;
-        bitField0_ |= 0x00000040;
-        onChanged();
-      }
-      if (!other.getSublocality().isEmpty()) {
-        sublocality_ = other.sublocality_;
-        bitField0_ |= 0x00000080;
-        onChanged();
-      }
-      if (!other.addressLines_.isEmpty()) {
-        if (addressLines_.isEmpty()) {
-          addressLines_ = other.addressLines_;
-          bitField0_ |= 0x00000100;
-        } else {
-          ensureAddressLinesIsMutable();
-          addressLines_.addAll(other.addressLines_);
-        }
-        onChanged();
-      }
-      if (!other.recipients_.isEmpty()) {
-        if (recipients_.isEmpty()) {
-          recipients_ = other.recipients_;
-          bitField0_ |= 0x00000200;
-        } else {
-          ensureRecipientsIsMutable();
-          recipients_.addAll(other.recipients_);
-        }
-        onChanged();
-      }
-      if (!other.getOrganization().isEmpty()) {
-        organization_ = other.organization_;
-        bitField0_ |= 0x00000400;
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 8:
-              {
-                revision_ = input.readInt32();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 8
-            case 18:
-              {
-                regionCode_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 26:
-              {
-                languageCode_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 26
-            case 34:
-              {
-                postalCode_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 34
-            case 42:
-              {
-                sortingCode_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 42
-            case 50:
-              {
-                administrativeArea_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000020;
-                break;
-              } // case 50
-            case 58:
-              {
-                locality_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000040;
-                break;
-              } // case 58
-            case 66:
-              {
-                sublocality_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000080;
-                break;
-              } // case 66
-            case 74:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureAddressLinesIsMutable();
-                addressLines_.add(s);
-                break;
-              } // case 74
-            case 82:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureRecipientsIsMutable();
-                recipients_.add(s);
-                break;
-              } // case 82
-            case 90:
-              {
-                organization_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000400;
-                break;
-              } // case 90
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private int revision_;
     /**
      *
      *
@@ -1435,7 +1529,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getRevision() {
-      return revision_;
+      return instance.getRevision();
     }
     /**
      *
@@ -1453,10 +1547,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setRevision(int value) {
-
-      revision_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setRevision(value);
       return this;
     }
     /**
@@ -1474,13 +1566,11 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearRevision() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      revision_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearRevision();
       return this;
     }
 
-    private java.lang.Object regionCode_ = "";
     /**
      *
      *
@@ -1496,16 +1586,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The regionCode.
      */
+    @java.lang.Override
     public java.lang.String getRegionCode() {
-      java.lang.Object ref = regionCode_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        regionCode_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getRegionCode();
     }
     /**
      *
@@ -1522,16 +1605,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for regionCode.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getRegionCodeBytes() {
-      java.lang.Object ref = regionCode_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        regionCode_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getRegionCodeBytes();
     }
     /**
      *
@@ -1550,12 +1626,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setRegionCode(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      regionCode_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setRegionCode(value);
       return this;
     }
     /**
@@ -1574,9 +1646,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearRegionCode() {
-      regionCode_ = getDefaultInstance().getRegionCode();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearRegionCode();
       return this;
     }
     /**
@@ -1596,17 +1667,11 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setRegionCodeBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      regionCode_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setRegionCodeBytes(value);
       return this;
     }
 
-    private java.lang.Object languageCode_ = "";
     /**
      *
      *
@@ -1629,16 +1694,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The languageCode.
      */
+    @java.lang.Override
     public java.lang.String getLanguageCode() {
-      java.lang.Object ref = languageCode_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        languageCode_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getLanguageCode();
     }
     /**
      *
@@ -1662,16 +1720,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for languageCode.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getLanguageCodeBytes() {
-      java.lang.Object ref = languageCode_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        languageCode_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getLanguageCodeBytes();
     }
     /**
      *
@@ -1697,12 +1748,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setLanguageCode(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      languageCode_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setLanguageCode(value);
       return this;
     }
     /**
@@ -1728,9 +1775,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearLanguageCode() {
-      languageCode_ = getDefaultInstance().getLanguageCode();
-      bitField0_ = (bitField0_ & ~0x00000004);
-      onChanged();
+      copyOnWrite();
+      instance.clearLanguageCode();
       return this;
     }
     /**
@@ -1757,17 +1803,11 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setLanguageCodeBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      languageCode_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setLanguageCodeBytes(value);
       return this;
     }
 
-    private java.lang.Object postalCode_ = "";
     /**
      *
      *
@@ -1782,16 +1822,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The postalCode.
      */
+    @java.lang.Override
     public java.lang.String getPostalCode() {
-      java.lang.Object ref = postalCode_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        postalCode_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getPostalCode();
     }
     /**
      *
@@ -1807,16 +1840,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for postalCode.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getPostalCodeBytes() {
-      java.lang.Object ref = postalCode_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        postalCode_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getPostalCodeBytes();
     }
     /**
      *
@@ -1834,12 +1860,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setPostalCode(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      postalCode_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setPostalCode(value);
       return this;
     }
     /**
@@ -1857,9 +1879,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearPostalCode() {
-      postalCode_ = getDefaultInstance().getPostalCode();
-      bitField0_ = (bitField0_ & ~0x00000008);
-      onChanged();
+      copyOnWrite();
+      instance.clearPostalCode();
       return this;
     }
     /**
@@ -1878,17 +1899,11 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setPostalCodeBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      postalCode_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setPostalCodeBytes(value);
       return this;
     }
 
-    private java.lang.Object sortingCode_ = "";
     /**
      *
      *
@@ -1904,16 +1919,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The sortingCode.
      */
+    @java.lang.Override
     public java.lang.String getSortingCode() {
-      java.lang.Object ref = sortingCode_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        sortingCode_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getSortingCode();
     }
     /**
      *
@@ -1930,16 +1938,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for sortingCode.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getSortingCodeBytes() {
-      java.lang.Object ref = sortingCode_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        sortingCode_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getSortingCodeBytes();
     }
     /**
      *
@@ -1958,12 +1959,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setSortingCode(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      sortingCode_ = value;
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setSortingCode(value);
       return this;
     }
     /**
@@ -1982,9 +1979,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearSortingCode() {
-      sortingCode_ = getDefaultInstance().getSortingCode();
-      bitField0_ = (bitField0_ & ~0x00000010);
-      onChanged();
+      copyOnWrite();
+      instance.clearSortingCode();
       return this;
     }
     /**
@@ -2004,17 +2000,11 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setSortingCodeBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      sortingCode_ = value;
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setSortingCodeBytes(value);
       return this;
     }
 
-    private java.lang.Object administrativeArea_ = "";
     /**
      *
      *
@@ -2032,16 +2022,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The administrativeArea.
      */
+    @java.lang.Override
     public java.lang.String getAdministrativeArea() {
-      java.lang.Object ref = administrativeArea_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        administrativeArea_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getAdministrativeArea();
     }
     /**
      *
@@ -2060,16 +2043,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for administrativeArea.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getAdministrativeAreaBytes() {
-      java.lang.Object ref = administrativeArea_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        administrativeArea_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getAdministrativeAreaBytes();
     }
     /**
      *
@@ -2090,12 +2066,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAdministrativeArea(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      administrativeArea_ = value;
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setAdministrativeArea(value);
       return this;
     }
     /**
@@ -2116,9 +2088,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAdministrativeArea() {
-      administrativeArea_ = getDefaultInstance().getAdministrativeArea();
-      bitField0_ = (bitField0_ & ~0x00000020);
-      onChanged();
+      copyOnWrite();
+      instance.clearAdministrativeArea();
       return this;
     }
     /**
@@ -2140,17 +2111,11 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAdministrativeAreaBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      administrativeArea_ = value;
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setAdministrativeAreaBytes(value);
       return this;
     }
 
-    private java.lang.Object locality_ = "";
     /**
      *
      *
@@ -2165,16 +2130,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The locality.
      */
+    @java.lang.Override
     public java.lang.String getLocality() {
-      java.lang.Object ref = locality_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        locality_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getLocality();
     }
     /**
      *
@@ -2190,16 +2148,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for locality.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getLocalityBytes() {
-      java.lang.Object ref = locality_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        locality_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getLocalityBytes();
     }
     /**
      *
@@ -2217,12 +2168,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setLocality(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      locality_ = value;
-      bitField0_ |= 0x00000040;
-      onChanged();
+      copyOnWrite();
+      instance.setLocality(value);
       return this;
     }
     /**
@@ -2240,9 +2187,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearLocality() {
-      locality_ = getDefaultInstance().getLocality();
-      bitField0_ = (bitField0_ & ~0x00000040);
-      onChanged();
+      copyOnWrite();
+      instance.clearLocality();
       return this;
     }
     /**
@@ -2261,17 +2207,11 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setLocalityBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      locality_ = value;
-      bitField0_ |= 0x00000040;
-      onChanged();
+      copyOnWrite();
+      instance.setLocalityBytes(value);
       return this;
     }
 
-    private java.lang.Object sublocality_ = "";
     /**
      *
      *
@@ -2284,16 +2224,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The sublocality.
      */
+    @java.lang.Override
     public java.lang.String getSublocality() {
-      java.lang.Object ref = sublocality_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        sublocality_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getSublocality();
     }
     /**
      *
@@ -2307,16 +2240,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for sublocality.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getSublocalityBytes() {
-      java.lang.Object ref = sublocality_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        sublocality_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getSublocalityBytes();
     }
     /**
      *
@@ -2332,12 +2258,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setSublocality(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      sublocality_ = value;
-      bitField0_ |= 0x00000080;
-      onChanged();
+      copyOnWrite();
+      instance.setSublocality(value);
       return this;
     }
     /**
@@ -2353,9 +2275,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearSublocality() {
-      sublocality_ = getDefaultInstance().getSublocality();
-      bitField0_ = (bitField0_ & ~0x00000080);
-      onChanged();
+      copyOnWrite();
+      instance.clearSublocality();
       return this;
     }
     /**
@@ -2372,25 +2293,11 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setSublocalityBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      sublocality_ = value;
-      bitField0_ |= 0x00000080;
-      onChanged();
+      copyOnWrite();
+      instance.setSublocalityBytes(value);
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList addressLines_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
-
-    private void ensureAddressLinesIsMutable() {
-      if (!addressLines_.isModifiable()) {
-        addressLines_ = new com.google.protobuf.LazyStringArrayList(addressLines_);
-      }
-      bitField0_ |= 0x00000100;
-    }
     /**
      *
      *
@@ -2423,9 +2330,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return A list containing the addressLines.
      */
-    public com.google.protobuf.ProtocolStringList getAddressLinesList() {
-      addressLines_.makeImmutable();
-      return addressLines_;
+    @java.lang.Override
+    public java.util.List<java.lang.String> getAddressLinesList() {
+      return java.util.Collections.unmodifiableList(instance.getAddressLinesList());
     }
     /**
      *
@@ -2459,8 +2366,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The count of addressLines.
      */
+    @java.lang.Override
     public int getAddressLinesCount() {
-      return addressLines_.size();
+      return instance.getAddressLinesCount();
     }
     /**
      *
@@ -2495,8 +2403,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the element to return.
      * @return The addressLines at the given index.
      */
+    @java.lang.Override
     public java.lang.String getAddressLines(int index) {
-      return addressLines_.get(index);
+      return instance.getAddressLines(index);
     }
     /**
      *
@@ -2531,8 +2440,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the value to return.
      * @return The bytes of the addressLines at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getAddressLinesBytes(int index) {
-      return addressLines_.getByteString(index);
+      return instance.getAddressLinesBytes(index);
     }
     /**
      *
@@ -2569,13 +2479,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAddressLines(int index, java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureAddressLinesIsMutable();
-      addressLines_.set(index, value);
-      bitField0_ |= 0x00000100;
-      onChanged();
+      copyOnWrite();
+      instance.setAddressLines(index, value);
       return this;
     }
     /**
@@ -2612,13 +2517,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAddressLines(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureAddressLinesIsMutable();
-      addressLines_.add(value);
-      bitField0_ |= 0x00000100;
-      onChanged();
+      copyOnWrite();
+      instance.addAddressLines(value);
       return this;
     }
     /**
@@ -2655,10 +2555,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAllAddressLines(java.lang.Iterable<java.lang.String> values) {
-      ensureAddressLinesIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, addressLines_);
-      bitField0_ |= 0x00000100;
-      onChanged();
+      copyOnWrite();
+      instance.addAllAddressLines(values);
       return this;
     }
     /**
@@ -2694,10 +2592,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAddressLines() {
-      addressLines_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000100);
-      ;
-      onChanged();
+      copyOnWrite();
+      instance.clearAddressLines();
       return this;
     }
     /**
@@ -2734,26 +2630,11 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAddressLinesBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      ensureAddressLinesIsMutable();
-      addressLines_.add(value);
-      bitField0_ |= 0x00000100;
-      onChanged();
+      copyOnWrite();
+      instance.addAddressLinesBytes(value);
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList recipients_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
-
-    private void ensureRecipientsIsMutable() {
-      if (!recipients_.isModifiable()) {
-        recipients_ = new com.google.protobuf.LazyStringArrayList(recipients_);
-      }
-      bitField0_ |= 0x00000200;
-    }
     /**
      *
      *
@@ -2767,9 +2648,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return A list containing the recipients.
      */
-    public com.google.protobuf.ProtocolStringList getRecipientsList() {
-      recipients_.makeImmutable();
-      return recipients_;
+    @java.lang.Override
+    public java.util.List<java.lang.String> getRecipientsList() {
+      return java.util.Collections.unmodifiableList(instance.getRecipientsList());
     }
     /**
      *
@@ -2784,8 +2665,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The count of recipients.
      */
+    @java.lang.Override
     public int getRecipientsCount() {
-      return recipients_.size();
+      return instance.getRecipientsCount();
     }
     /**
      *
@@ -2801,8 +2683,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the element to return.
      * @return The recipients at the given index.
      */
+    @java.lang.Override
     public java.lang.String getRecipients(int index) {
-      return recipients_.get(index);
+      return instance.getRecipients(index);
     }
     /**
      *
@@ -2818,8 +2701,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the value to return.
      * @return The bytes of the recipients at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getRecipientsBytes(int index) {
-      return recipients_.getByteString(index);
+      return instance.getRecipientsBytes(index);
     }
     /**
      *
@@ -2837,13 +2721,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setRecipients(int index, java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureRecipientsIsMutable();
-      recipients_.set(index, value);
-      bitField0_ |= 0x00000200;
-      onChanged();
+      copyOnWrite();
+      instance.setRecipients(index, value);
       return this;
     }
     /**
@@ -2861,13 +2740,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addRecipients(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureRecipientsIsMutable();
-      recipients_.add(value);
-      bitField0_ |= 0x00000200;
-      onChanged();
+      copyOnWrite();
+      instance.addRecipients(value);
       return this;
     }
     /**
@@ -2885,10 +2759,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAllRecipients(java.lang.Iterable<java.lang.String> values) {
-      ensureRecipientsIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, recipients_);
-      bitField0_ |= 0x00000200;
-      onChanged();
+      copyOnWrite();
+      instance.addAllRecipients(values);
       return this;
     }
     /**
@@ -2905,10 +2777,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearRecipients() {
-      recipients_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000200);
-      ;
-      onChanged();
+      copyOnWrite();
+      instance.clearRecipients();
       return this;
     }
     /**
@@ -2926,18 +2796,11 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addRecipientsBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      ensureRecipientsIsMutable();
-      recipients_.add(value);
-      bitField0_ |= 0x00000200;
-      onChanged();
+      copyOnWrite();
+      instance.addRecipientsBytes(value);
       return this;
     }
 
-    private java.lang.Object organization_ = "";
     /**
      *
      *
@@ -2949,16 +2812,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The organization.
      */
+    @java.lang.Override
     public java.lang.String getOrganization() {
-      java.lang.Object ref = organization_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        organization_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getOrganization();
     }
     /**
      *
@@ -2971,16 +2827,9 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for organization.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getOrganizationBytes() {
-      java.lang.Object ref = organization_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        organization_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getOrganizationBytes();
     }
     /**
      *
@@ -2995,12 +2844,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setOrganization(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      organization_ = value;
-      bitField0_ |= 0x00000400;
-      onChanged();
+      copyOnWrite();
+      instance.setOrganization(value);
       return this;
     }
     /**
@@ -3015,9 +2860,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearOrganization() {
-      organization_ = getDefaultInstance().getOrganization();
-      bitField0_ = (bitField0_ & ~0x00000400);
-      onChanged();
+      copyOnWrite();
+      instance.clearOrganization();
       return this;
     }
     /**
@@ -3033,74 +2877,102 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setOrganizationBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      organization_ = value;
-      bitField0_ |= 0x00000400;
-      onChanged();
+      copyOnWrite();
+      instance.setOrganizationBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.type.PostalAddress)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.type.PostalAddress();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "revision_",
+                "regionCode_",
+                "languageCode_",
+                "postalCode_",
+                "sortingCode_",
+                "administrativeArea_",
+                "locality_",
+                "sublocality_",
+                "addressLines_",
+                "recipients_",
+                "organization_",
+              };
+          java.lang.String info =
+              "\u0000\u000b\u0000\u0000\u0001\u000b\u000b\u0000\u0002\u0000\u0001\u0004\u0002\u0208"
+                  + "\u0003\u0208\u0004\u0208\u0005\u0208\u0006\u0208\u0007\u0208\b\u0208\t\u021a\n\u021a"
+                  + "\u000b\u0208";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.type.PostalAddress> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.type.PostalAddress.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.type.PostalAddress>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.type.PostalAddress)
   private static final com.google.type.PostalAddress DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.type.PostalAddress();
+    PostalAddress defaultInstance = new PostalAddress();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        PostalAddress.class, defaultInstance);
   }
 
   public static com.google.type.PostalAddress getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<PostalAddress> PARSER =
-      new com.google.protobuf.AbstractParser<PostalAddress>() {
-        @java.lang.Override
-        public PostalAddress parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<PostalAddress> PARSER;
 
   public static com.google.protobuf.Parser<PostalAddress> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<PostalAddress> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.type.PostalAddress getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

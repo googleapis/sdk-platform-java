@@ -29,46 +29,19 @@ package com.google.longrunning;
  *
  * Protobuf type {@code google.longrunning.WaitOperationRequest}
  */
-public final class WaitOperationRequest extends com.google.protobuf.GeneratedMessageV3
+public final class WaitOperationRequest
+    extends com.google.protobuf.GeneratedMessageLite<
+        WaitOperationRequest, WaitOperationRequest.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.longrunning.WaitOperationRequest)
     WaitOperationRequestOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use WaitOperationRequest.newBuilder() to construct.
-  private WaitOperationRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private WaitOperationRequest() {
     name_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new WaitOperationRequest();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.longrunning.OperationsProto
-        .internal_static_google_longrunning_WaitOperationRequest_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.longrunning.OperationsProto
-        .internal_static_google_longrunning_WaitOperationRequest_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.longrunning.WaitOperationRequest.class,
-            com.google.longrunning.WaitOperationRequest.Builder.class);
-  }
-
   private int bitField0_;
   public static final int NAME_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object name_ = "";
+  private java.lang.String name_;
   /**
    *
    *
@@ -82,15 +55,7 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
    */
   @java.lang.Override
   public java.lang.String getName() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      name_ = s;
-      return s;
-    }
+    return name_;
   }
   /**
    *
@@ -105,15 +70,51 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      name_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(name_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name of the operation resource to wait on.
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The name to set.
+   */
+  private void setName(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    name_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name of the operation resource to wait on.
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   */
+  private void clearName() {
+
+    name_ = getDefaultInstance().getName();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name of the operation resource to wait on.
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The bytes for name to set.
+   */
+  private void setNameBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    name_ = value.toStringUtf8();
   }
 
   public static final int TIMEOUT_FIELD_NUMBER = 2;
@@ -128,8 +129,6 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
    * </pre>
    *
    * <code>.google.protobuf.Duration timeout = 2;</code>
-   *
-   * @return Whether the timeout field is set.
    */
   @java.lang.Override
   public boolean hasTimeout() {
@@ -145,8 +144,6 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
    * </pre>
    *
    * <code>.google.protobuf.Duration timeout = 2;</code>
-   *
-   * @return The timeout.
    */
   @java.lang.Override
   public com.google.protobuf.Duration getTimeout() {
@@ -163,184 +160,130 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
    *
    * <code>.google.protobuf.Duration timeout = 2;</code>
    */
-  @java.lang.Override
-  public com.google.protobuf.DurationOrBuilder getTimeoutOrBuilder() {
-    return timeout_ == null ? com.google.protobuf.Duration.getDefaultInstance() : timeout_;
+  private void setTimeout(com.google.protobuf.Duration value) {
+    value.getClass();
+    timeout_ = value;
+    bitField0_ |= 0x00000001;
   }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * The maximum duration to wait before timing out. If left blank, the wait
+   * will be at most the time permitted by the underlying HTTP/RPC protocol.
+   * If RPC context deadline is also specified, the shorter one will be used.
+   * </pre>
+   *
+   * <code>.google.protobuf.Duration timeout = 2;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeTimeout(com.google.protobuf.Duration value) {
+    value.getClass();
+    if (timeout_ != null && timeout_ != com.google.protobuf.Duration.getDefaultInstance()) {
+      timeout_ = com.google.protobuf.Duration.newBuilder(timeout_).mergeFrom(value).buildPartial();
+    } else {
+      timeout_ = value;
+    }
+    bitField0_ |= 0x00000001;
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(2, getTimeout());
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, getTimeout());
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.longrunning.WaitOperationRequest)) {
-      return super.equals(obj);
-    }
-    com.google.longrunning.WaitOperationRequest other =
-        (com.google.longrunning.WaitOperationRequest) obj;
-
-    if (!getName().equals(other.getName())) return false;
-    if (hasTimeout() != other.hasTimeout()) return false;
-    if (hasTimeout()) {
-      if (!getTimeout().equals(other.getTimeout())) return false;
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getName().hashCode();
-    if (hasTimeout()) {
-      hash = (37 * hash) + TIMEOUT_FIELD_NUMBER;
-      hash = (53 * hash) + getTimeout().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * The maximum duration to wait before timing out. If left blank, the wait
+   * will be at most the time permitted by the underlying HTTP/RPC protocol.
+   * If RPC context deadline is also specified, the shorter one will be used.
+   * </pre>
+   *
+   * <code>.google.protobuf.Duration timeout = 2;</code>
+   */
+  private void clearTimeout() {
+    timeout_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static com.google.longrunning.WaitOperationRequest parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.longrunning.WaitOperationRequest parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.longrunning.WaitOperationRequest parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.longrunning.WaitOperationRequest parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.longrunning.WaitOperationRequest parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.longrunning.WaitOperationRequest parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.longrunning.WaitOperationRequest parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.longrunning.WaitOperationRequest parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.longrunning.WaitOperationRequest parseDelimitedFrom(
       java.io.InputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.longrunning.WaitOperationRequest parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.longrunning.WaitOperationRequest parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.longrunning.WaitOperationRequest parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.longrunning.WaitOperationRequest prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -351,209 +294,17 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
    *
    * Protobuf type {@code google.longrunning.WaitOperationRequest}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.longrunning.WaitOperationRequest, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.longrunning.WaitOperationRequest)
       com.google.longrunning.WaitOperationRequestOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.longrunning.OperationsProto
-          .internal_static_google_longrunning_WaitOperationRequest_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.longrunning.OperationsProto
-          .internal_static_google_longrunning_WaitOperationRequest_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.longrunning.WaitOperationRequest.class,
-              com.google.longrunning.WaitOperationRequest.Builder.class);
-    }
-
     // Construct using com.google.longrunning.WaitOperationRequest.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getTimeoutFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      name_ = "";
-      timeout_ = null;
-      if (timeoutBuilder_ != null) {
-        timeoutBuilder_.dispose();
-        timeoutBuilder_ = null;
-      }
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.longrunning.OperationsProto
-          .internal_static_google_longrunning_WaitOperationRequest_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.longrunning.WaitOperationRequest getDefaultInstanceForType() {
-      return com.google.longrunning.WaitOperationRequest.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.longrunning.WaitOperationRequest build() {
-      com.google.longrunning.WaitOperationRequest result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.longrunning.WaitOperationRequest buildPartial() {
-      com.google.longrunning.WaitOperationRequest result =
-          new com.google.longrunning.WaitOperationRequest(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.longrunning.WaitOperationRequest result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.name_ = name_;
-      }
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.timeout_ = timeoutBuilder_ == null ? timeout_ : timeoutBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.longrunning.WaitOperationRequest) {
-        return mergeFrom((com.google.longrunning.WaitOperationRequest) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.longrunning.WaitOperationRequest other) {
-      if (other == com.google.longrunning.WaitOperationRequest.getDefaultInstance()) return this;
-      if (!other.getName().isEmpty()) {
-        name_ = other.name_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (other.hasTimeout()) {
-        mergeTimeout(other.getTimeout());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                name_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                input.readMessage(getTimeoutFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object name_ = "";
     /**
      *
      *
@@ -565,16 +316,9 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
      *
      * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        name_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getName();
     }
     /**
      *
@@ -587,16 +331,9 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
      *
      * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getNameBytes() {
-      java.lang.Object ref = name_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        name_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getNameBytes();
     }
     /**
      *
@@ -611,12 +348,8 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
      * @return This builder for chaining.
      */
     public Builder setName(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setName(value);
       return this;
     }
     /**
@@ -631,9 +364,8 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
      * @return This builder for chaining.
      */
     public Builder clearName() {
-      name_ = getDefaultInstance().getName();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearName();
       return this;
     }
     /**
@@ -649,22 +381,11 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
      * @return This builder for chaining.
      */
     public Builder setNameBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setNameBytes(value);
       return this;
     }
 
-    private com.google.protobuf.Duration timeout_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Duration,
-            com.google.protobuf.Duration.Builder,
-            com.google.protobuf.DurationOrBuilder>
-        timeoutBuilder_;
     /**
      *
      *
@@ -675,11 +396,10 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
      * </pre>
      *
      * <code>.google.protobuf.Duration timeout = 2;</code>
-     *
-     * @return Whether the timeout field is set.
      */
+    @java.lang.Override
     public boolean hasTimeout() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return instance.hasTimeout();
     }
     /**
      *
@@ -691,15 +411,10 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
      * </pre>
      *
      * <code>.google.protobuf.Duration timeout = 2;</code>
-     *
-     * @return The timeout.
      */
+    @java.lang.Override
     public com.google.protobuf.Duration getTimeout() {
-      if (timeoutBuilder_ == null) {
-        return timeout_ == null ? com.google.protobuf.Duration.getDefaultInstance() : timeout_;
-      } else {
-        return timeoutBuilder_.getMessage();
-      }
+      return instance.getTimeout();
     }
     /**
      *
@@ -713,16 +428,8 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
      * <code>.google.protobuf.Duration timeout = 2;</code>
      */
     public Builder setTimeout(com.google.protobuf.Duration value) {
-      if (timeoutBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        timeout_ = value;
-      } else {
-        timeoutBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setTimeout(value);
       return this;
     }
     /**
@@ -737,13 +444,8 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
      * <code>.google.protobuf.Duration timeout = 2;</code>
      */
     public Builder setTimeout(com.google.protobuf.Duration.Builder builderForValue) {
-      if (timeoutBuilder_ == null) {
-        timeout_ = builderForValue.build();
-      } else {
-        timeoutBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setTimeout(builderForValue.build());
       return this;
     }
     /**
@@ -758,21 +460,8 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
      * <code>.google.protobuf.Duration timeout = 2;</code>
      */
     public Builder mergeTimeout(com.google.protobuf.Duration value) {
-      if (timeoutBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)
-            && timeout_ != null
-            && timeout_ != com.google.protobuf.Duration.getDefaultInstance()) {
-          getTimeoutBuilder().mergeFrom(value);
-        } else {
-          timeout_ = value;
-        }
-      } else {
-        timeoutBuilder_.mergeFrom(value);
-      }
-      if (timeout_ != null) {
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeTimeout(value);
       return this;
     }
     /**
@@ -787,135 +476,92 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
      * <code>.google.protobuf.Duration timeout = 2;</code>
      */
     public Builder clearTimeout() {
-      bitField0_ = (bitField0_ & ~0x00000002);
-      timeout_ = null;
-      if (timeoutBuilder_ != null) {
-        timeoutBuilder_.dispose();
-        timeoutBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearTimeout();
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The maximum duration to wait before timing out. If left blank, the wait
-     * will be at most the time permitted by the underlying HTTP/RPC protocol.
-     * If RPC context deadline is also specified, the shorter one will be used.
-     * </pre>
-     *
-     * <code>.google.protobuf.Duration timeout = 2;</code>
-     */
-    public com.google.protobuf.Duration.Builder getTimeoutBuilder() {
-      bitField0_ |= 0x00000002;
-      onChanged();
-      return getTimeoutFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The maximum duration to wait before timing out. If left blank, the wait
-     * will be at most the time permitted by the underlying HTTP/RPC protocol.
-     * If RPC context deadline is also specified, the shorter one will be used.
-     * </pre>
-     *
-     * <code>.google.protobuf.Duration timeout = 2;</code>
-     */
-    public com.google.protobuf.DurationOrBuilder getTimeoutOrBuilder() {
-      if (timeoutBuilder_ != null) {
-        return timeoutBuilder_.getMessageOrBuilder();
-      } else {
-        return timeout_ == null ? com.google.protobuf.Duration.getDefaultInstance() : timeout_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The maximum duration to wait before timing out. If left blank, the wait
-     * will be at most the time permitted by the underlying HTTP/RPC protocol.
-     * If RPC context deadline is also specified, the shorter one will be used.
-     * </pre>
-     *
-     * <code>.google.protobuf.Duration timeout = 2;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Duration,
-            com.google.protobuf.Duration.Builder,
-            com.google.protobuf.DurationOrBuilder>
-        getTimeoutFieldBuilder() {
-      if (timeoutBuilder_ == null) {
-        timeoutBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.protobuf.Duration,
-                com.google.protobuf.Duration.Builder,
-                com.google.protobuf.DurationOrBuilder>(
-                getTimeout(), getParentForChildren(), isClean());
-        timeout_ = null;
-      }
-      return timeoutBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.longrunning.WaitOperationRequest)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.longrunning.WaitOperationRequest();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_", "name_", "timeout_",
+              };
+          java.lang.String info =
+              "\u0000\u0002\u0000\u0001\u0001\u0002\u0002\u0000\u0000\u0000\u0001\u0208\u0002\u1009"
+                  + "\u0000";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.longrunning.WaitOperationRequest> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.longrunning.WaitOperationRequest.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.longrunning.WaitOperationRequest>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.longrunning.WaitOperationRequest)
   private static final com.google.longrunning.WaitOperationRequest DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.longrunning.WaitOperationRequest();
+    WaitOperationRequest defaultInstance = new WaitOperationRequest();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        WaitOperationRequest.class, defaultInstance);
   }
 
   public static com.google.longrunning.WaitOperationRequest getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<WaitOperationRequest> PARSER =
-      new com.google.protobuf.AbstractParser<WaitOperationRequest>() {
-        @java.lang.Override
-        public WaitOperationRequest parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<WaitOperationRequest> PARSER;
 
   public static com.google.protobuf.Parser<WaitOperationRequest> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<WaitOperationRequest> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.longrunning.WaitOperationRequest getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

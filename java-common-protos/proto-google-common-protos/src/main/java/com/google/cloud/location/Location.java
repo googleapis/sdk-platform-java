@@ -28,60 +28,20 @@ package com.google.cloud.location;
  *
  * Protobuf type {@code google.cloud.location.Location}
  */
-public final class Location extends com.google.protobuf.GeneratedMessageV3
+public final class Location
+    extends com.google.protobuf.GeneratedMessageLite<Location, Location.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.cloud.location.Location)
     LocationOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use Location.newBuilder() to construct.
-  private Location(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private Location() {
     name_ = "";
     locationId_ = "";
     displayName_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new Location();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.cloud.location.LocationsProto
-        .internal_static_google_cloud_location_Location_descriptor;
-  }
-
-  @SuppressWarnings({"rawtypes"})
-  @java.lang.Override
-  protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-      int number) {
-    switch (number) {
-      case 2:
-        return internalGetLabels();
-      default:
-        throw new RuntimeException("Invalid map field number: " + number);
-    }
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.cloud.location.LocationsProto
-        .internal_static_google_cloud_location_Location_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.cloud.location.Location.class,
-            com.google.cloud.location.Location.Builder.class);
-  }
-
   private int bitField0_;
   public static final int NAME_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object name_ = "";
+  private java.lang.String name_;
   /**
    *
    *
@@ -96,15 +56,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getName() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      name_ = s;
-      return s;
-    }
+    return name_;
   }
   /**
    *
@@ -120,21 +72,58 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      name_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(name_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Resource name for the location, which may vary between implementations.
+   * For example: `"projects/example-project/locations/us-east1"`
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The name to set.
+   */
+  private void setName(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    name_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Resource name for the location, which may vary between implementations.
+   * For example: `"projects/example-project/locations/us-east1"`
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   */
+  private void clearName() {
+
+    name_ = getDefaultInstance().getName();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Resource name for the location, which may vary between implementations.
+   * For example: `"projects/example-project/locations/us-east1"`
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The bytes for name to set.
+   */
+  private void setNameBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    name_ = value.toStringUtf8();
   }
 
   public static final int LOCATION_ID_FIELD_NUMBER = 4;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object locationId_ = "";
+  private java.lang.String locationId_;
   /**
    *
    *
@@ -148,15 +137,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getLocationId() {
-    java.lang.Object ref = locationId_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      locationId_ = s;
-      return s;
-    }
+    return locationId_;
   }
   /**
    *
@@ -171,21 +152,55 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getLocationIdBytes() {
-    java.lang.Object ref = locationId_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      locationId_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(locationId_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The canonical id for this location. For example: `"us-east1"`.
+   * </pre>
+   *
+   * <code>string location_id = 4;</code>
+   *
+   * @param value The locationId to set.
+   */
+  private void setLocationId(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    locationId_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The canonical id for this location. For example: `"us-east1"`.
+   * </pre>
+   *
+   * <code>string location_id = 4;</code>
+   */
+  private void clearLocationId() {
+
+    locationId_ = getDefaultInstance().getLocationId();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The canonical id for this location. For example: `"us-east1"`.
+   * </pre>
+   *
+   * <code>string location_id = 4;</code>
+   *
+   * @param value The bytes for locationId to set.
+   */
+  private void setLocationIdBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    locationId_ = value.toStringUtf8();
   }
 
   public static final int DISPLAY_NAME_FIELD_NUMBER = 5;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object displayName_ = "";
+  private java.lang.String displayName_;
   /**
    *
    *
@@ -200,15 +215,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getDisplayName() {
-    java.lang.Object ref = displayName_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      displayName_ = s;
-      return s;
-    }
+    return displayName_;
   }
   /**
    *
@@ -224,42 +231,85 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getDisplayNameBytes() {
-    java.lang.Object ref = displayName_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      displayName_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(displayName_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The friendly name for this location, typically a nearby city name.
+   * For example, "Tokyo".
+   * </pre>
+   *
+   * <code>string display_name = 5;</code>
+   *
+   * @param value The displayName to set.
+   */
+  private void setDisplayName(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    displayName_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The friendly name for this location, typically a nearby city name.
+   * For example, "Tokyo".
+   * </pre>
+   *
+   * <code>string display_name = 5;</code>
+   */
+  private void clearDisplayName() {
+
+    displayName_ = getDefaultInstance().getDisplayName();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The friendly name for this location, typically a nearby city name.
+   * For example, "Tokyo".
+   * </pre>
+   *
+   * <code>string display_name = 5;</code>
+   *
+   * @param value The bytes for displayName to set.
+   */
+  private void setDisplayNameBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    displayName_ = value.toStringUtf8();
   }
 
   public static final int LABELS_FIELD_NUMBER = 2;
 
   private static final class LabelsDefaultEntryHolder {
-    static final com.google.protobuf.MapEntry<java.lang.String, java.lang.String> defaultEntry =
-        com.google.protobuf.MapEntry.<java.lang.String, java.lang.String>newDefaultInstance(
-            com.google.cloud.location.LocationsProto
-                .internal_static_google_cloud_location_Location_LabelsEntry_descriptor,
+    static final com.google.protobuf.MapEntryLite<java.lang.String, java.lang.String> defaultEntry =
+        com.google.protobuf.MapEntryLite.<java.lang.String, java.lang.String>newDefaultInstance(
             com.google.protobuf.WireFormat.FieldType.STRING,
             "",
             com.google.protobuf.WireFormat.FieldType.STRING,
             "");
   }
 
-  @SuppressWarnings("serial")
-  private com.google.protobuf.MapField<java.lang.String, java.lang.String> labels_;
+  private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String> labels_ =
+      com.google.protobuf.MapFieldLite.emptyMapField();
 
-  private com.google.protobuf.MapField<java.lang.String, java.lang.String> internalGetLabels() {
-    if (labels_ == null) {
-      return com.google.protobuf.MapField.emptyMapField(LabelsDefaultEntryHolder.defaultEntry);
+  private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String> internalGetLabels() {
+    return labels_;
+  }
+
+  private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
+      internalGetMutableLabels() {
+    if (!labels_.isMutable()) {
+      labels_ = labels_.mutableCopy();
     }
     return labels_;
   }
 
+  @java.lang.Override
   public int getLabelsCount() {
-    return internalGetLabels().getMap().size();
+    return internalGetLabels().size();
   }
   /**
    *
@@ -274,10 +324,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public boolean containsLabels(java.lang.String key) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
-    return internalGetLabels().getMap().containsKey(key);
+    java.lang.Class<?> keyClass = key.getClass();
+    return internalGetLabels().containsKey(key);
   }
   /** Use {@link #getLabelsMap()} instead. */
   @java.lang.Override
@@ -298,7 +346,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.util.Map<java.lang.String, java.lang.String> getLabelsMap() {
-    return internalGetLabels().getMap();
+    return java.util.Collections.unmodifiableMap(internalGetLabels());
   }
   /**
    *
@@ -316,10 +364,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
       java.lang.String key,
       /* nullable */
       java.lang.String defaultValue) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
-    java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
+    java.lang.Class<?> keyClass = key.getClass();
+    java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels();
     return map.containsKey(key) ? map.get(key) : defaultValue;
   }
   /**
@@ -335,14 +381,26 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getLabelsOrThrow(java.lang.String key) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
-    java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
+    java.lang.Class<?> keyClass = key.getClass();
+    java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels();
     if (!map.containsKey(key)) {
       throw new java.lang.IllegalArgumentException();
     }
     return map.get(key);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Cross-service attributes for the location. For example
+   *
+   *     {"cloud.googleapis.com/region": "us-east1"}
+   * </pre>
+   *
+   * <code>map&lt;string, string&gt; labels = 2;</code>
+   */
+  private java.util.Map<java.lang.String, java.lang.String> getMutableLabelsMap() {
+    return internalGetMutableLabels();
   }
 
   public static final int METADATA_FIELD_NUMBER = 3;
@@ -356,8 +414,6 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.protobuf.Any metadata = 3;</code>
-   *
-   * @return Whether the metadata field is set.
    */
   @java.lang.Override
   public boolean hasMetadata() {
@@ -372,8 +428,6 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.protobuf.Any metadata = 3;</code>
-   *
-   * @return The metadata.
    */
   @java.lang.Override
   public com.google.protobuf.Any getMetadata() {
@@ -389,217 +443,127 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.protobuf.Any metadata = 3;</code>
    */
-  @java.lang.Override
-  public com.google.protobuf.AnyOrBuilder getMetadataOrBuilder() {
-    return metadata_ == null ? com.google.protobuf.Any.getDefaultInstance() : metadata_;
+  private void setMetadata(com.google.protobuf.Any value) {
+    value.getClass();
+    metadata_ = value;
+    bitField0_ |= 0x00000001;
   }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Service-specific metadata. For example the available capacity at the given
+   * location.
+   * </pre>
+   *
+   * <code>.google.protobuf.Any metadata = 3;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeMetadata(com.google.protobuf.Any value) {
+    value.getClass();
+    if (metadata_ != null && metadata_ != com.google.protobuf.Any.getDefaultInstance()) {
+      metadata_ = com.google.protobuf.Any.newBuilder(metadata_).mergeFrom(value).buildPartial();
+    } else {
+      metadata_ = value;
+    }
+    bitField0_ |= 0x00000001;
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
-    }
-    com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
-        output, internalGetLabels(), LabelsDefaultEntryHolder.defaultEntry, 2);
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(3, getMetadata());
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(locationId_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, locationId_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(displayName_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, displayName_);
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
-    }
-    for (java.util.Map.Entry<java.lang.String, java.lang.String> entry :
-        internalGetLabels().getMap().entrySet()) {
-      com.google.protobuf.MapEntry<java.lang.String, java.lang.String> labels__ =
-          LabelsDefaultEntryHolder.defaultEntry
-              .newBuilderForType()
-              .setKey(entry.getKey())
-              .setValue(entry.getValue())
-              .build();
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, labels__);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, getMetadata());
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(locationId_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, locationId_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(displayName_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, displayName_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.cloud.location.Location)) {
-      return super.equals(obj);
-    }
-    com.google.cloud.location.Location other = (com.google.cloud.location.Location) obj;
-
-    if (!getName().equals(other.getName())) return false;
-    if (!getLocationId().equals(other.getLocationId())) return false;
-    if (!getDisplayName().equals(other.getDisplayName())) return false;
-    if (!internalGetLabels().equals(other.internalGetLabels())) return false;
-    if (hasMetadata() != other.hasMetadata()) return false;
-    if (hasMetadata()) {
-      if (!getMetadata().equals(other.getMetadata())) return false;
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getName().hashCode();
-    hash = (37 * hash) + LOCATION_ID_FIELD_NUMBER;
-    hash = (53 * hash) + getLocationId().hashCode();
-    hash = (37 * hash) + DISPLAY_NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getDisplayName().hashCode();
-    if (!internalGetLabels().getMap().isEmpty()) {
-      hash = (37 * hash) + LABELS_FIELD_NUMBER;
-      hash = (53 * hash) + internalGetLabels().hashCode();
-    }
-    if (hasMetadata()) {
-      hash = (37 * hash) + METADATA_FIELD_NUMBER;
-      hash = (53 * hash) + getMetadata().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Service-specific metadata. For example the available capacity at the given
+   * location.
+   * </pre>
+   *
+   * <code>.google.protobuf.Any metadata = 3;</code>
+   */
+  private void clearMetadata() {
+    metadata_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static com.google.cloud.location.Location parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.location.Location parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.location.Location parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.location.Location parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.location.Location parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.location.Location parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.location.Location parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.location.Location parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.cloud.location.Location parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.location.Location parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.cloud.location.Location parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.location.Location parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.cloud.location.Location prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -609,279 +573,17 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.cloud.location.Location}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.cloud.location.Location, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.cloud.location.Location)
       com.google.cloud.location.LocationOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.cloud.location.LocationsProto
-          .internal_static_google_cloud_location_Location_descriptor;
-    }
-
-    @SuppressWarnings({"rawtypes"})
-    protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-        int number) {
-      switch (number) {
-        case 2:
-          return internalGetLabels();
-        default:
-          throw new RuntimeException("Invalid map field number: " + number);
-      }
-    }
-
-    @SuppressWarnings({"rawtypes"})
-    protected com.google.protobuf.MapFieldReflectionAccessor internalGetMutableMapFieldReflection(
-        int number) {
-      switch (number) {
-        case 2:
-          return internalGetMutableLabels();
-        default:
-          throw new RuntimeException("Invalid map field number: " + number);
-      }
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.cloud.location.LocationsProto
-          .internal_static_google_cloud_location_Location_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.cloud.location.Location.class,
-              com.google.cloud.location.Location.Builder.class);
-    }
-
     // Construct using com.google.cloud.location.Location.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getMetadataFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      name_ = "";
-      locationId_ = "";
-      displayName_ = "";
-      internalGetMutableLabels().clear();
-      metadata_ = null;
-      if (metadataBuilder_ != null) {
-        metadataBuilder_.dispose();
-        metadataBuilder_ = null;
-      }
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.cloud.location.LocationsProto
-          .internal_static_google_cloud_location_Location_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.cloud.location.Location getDefaultInstanceForType() {
-      return com.google.cloud.location.Location.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.cloud.location.Location build() {
-      com.google.cloud.location.Location result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.cloud.location.Location buildPartial() {
-      com.google.cloud.location.Location result = new com.google.cloud.location.Location(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.cloud.location.Location result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.name_ = name_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.locationId_ = locationId_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.displayName_ = displayName_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.labels_ = internalGetLabels();
-        result.labels_.makeImmutable();
-      }
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.metadata_ = metadataBuilder_ == null ? metadata_ : metadataBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.cloud.location.Location) {
-        return mergeFrom((com.google.cloud.location.Location) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.cloud.location.Location other) {
-      if (other == com.google.cloud.location.Location.getDefaultInstance()) return this;
-      if (!other.getName().isEmpty()) {
-        name_ = other.name_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getLocationId().isEmpty()) {
-        locationId_ = other.locationId_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      if (!other.getDisplayName().isEmpty()) {
-        displayName_ = other.displayName_;
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
-      internalGetMutableLabels().mergeFrom(other.internalGetLabels());
-      bitField0_ |= 0x00000008;
-      if (other.hasMetadata()) {
-        mergeMetadata(other.getMetadata());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                name_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                com.google.protobuf.MapEntry<java.lang.String, java.lang.String> labels__ =
-                    input.readMessage(
-                        LabelsDefaultEntryHolder.defaultEntry.getParserForType(),
-                        extensionRegistry);
-                internalGetMutableLabels()
-                    .getMutableMap()
-                    .put(labels__.getKey(), labels__.getValue());
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 18
-            case 26:
-              {
-                input.readMessage(getMetadataFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 26
-            case 34:
-              {
-                locationId_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 34
-            case 42:
-              {
-                displayName_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 42
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object name_ = "";
     /**
      *
      *
@@ -894,16 +596,9 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        name_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getName();
     }
     /**
      *
@@ -917,16 +612,9 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getNameBytes() {
-      java.lang.Object ref = name_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        name_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getNameBytes();
     }
     /**
      *
@@ -942,12 +630,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setName(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setName(value);
       return this;
     }
     /**
@@ -963,9 +647,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearName() {
-      name_ = getDefaultInstance().getName();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearName();
       return this;
     }
     /**
@@ -982,17 +665,11 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setNameBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setNameBytes(value);
       return this;
     }
 
-    private java.lang.Object locationId_ = "";
     /**
      *
      *
@@ -1004,16 +681,9 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The locationId.
      */
+    @java.lang.Override
     public java.lang.String getLocationId() {
-      java.lang.Object ref = locationId_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        locationId_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getLocationId();
     }
     /**
      *
@@ -1026,16 +696,9 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for locationId.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getLocationIdBytes() {
-      java.lang.Object ref = locationId_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        locationId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getLocationIdBytes();
     }
     /**
      *
@@ -1050,12 +713,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setLocationId(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      locationId_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setLocationId(value);
       return this;
     }
     /**
@@ -1070,9 +729,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearLocationId() {
-      locationId_ = getDefaultInstance().getLocationId();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearLocationId();
       return this;
     }
     /**
@@ -1088,17 +746,11 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setLocationIdBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      locationId_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setLocationIdBytes(value);
       return this;
     }
 
-    private java.lang.Object displayName_ = "";
     /**
      *
      *
@@ -1111,16 +763,9 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The displayName.
      */
+    @java.lang.Override
     public java.lang.String getDisplayName() {
-      java.lang.Object ref = displayName_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        displayName_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getDisplayName();
     }
     /**
      *
@@ -1134,16 +779,9 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for displayName.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getDisplayNameBytes() {
-      java.lang.Object ref = displayName_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        displayName_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getDisplayNameBytes();
     }
     /**
      *
@@ -1159,12 +797,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDisplayName(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      displayName_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setDisplayName(value);
       return this;
     }
     /**
@@ -1180,9 +814,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDisplayName() {
-      displayName_ = getDefaultInstance().getDisplayName();
-      bitField0_ = (bitField0_ & ~0x00000004);
-      onChanged();
+      copyOnWrite();
+      instance.clearDisplayName();
       return this;
     }
     /**
@@ -1199,40 +832,14 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDisplayNameBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      displayName_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setDisplayNameBytes(value);
       return this;
     }
 
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String> labels_;
-
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String> internalGetLabels() {
-      if (labels_ == null) {
-        return com.google.protobuf.MapField.emptyMapField(LabelsDefaultEntryHolder.defaultEntry);
-      }
-      return labels_;
-    }
-
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-        internalGetMutableLabels() {
-      if (labels_ == null) {
-        labels_ = com.google.protobuf.MapField.newMapField(LabelsDefaultEntryHolder.defaultEntry);
-      }
-      if (!labels_.isMutable()) {
-        labels_ = labels_.copy();
-      }
-      bitField0_ |= 0x00000008;
-      onChanged();
-      return labels_;
-    }
-
+    @java.lang.Override
     public int getLabelsCount() {
-      return internalGetLabels().getMap().size();
+      return instance.getLabelsMap().size();
     }
     /**
      *
@@ -1247,10 +854,31 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean containsLabels(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      return internalGetLabels().getMap().containsKey(key);
+      java.lang.Class<?> keyClass = key.getClass();
+      return instance.getLabelsMap().containsKey(key);
+    }
+
+    public Builder clearLabels() {
+      copyOnWrite();
+      instance.getMutableLabelsMap().clear();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Cross-service attributes for the location. For example
+     *
+     *     {"cloud.googleapis.com/region": "us-east1"}
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; labels = 2;</code>
+     */
+    public Builder removeLabels(java.lang.String key) {
+      java.lang.Class<?> keyClass = key.getClass();
+      copyOnWrite();
+      instance.getMutableLabelsMap().remove(key);
+      return this;
     }
     /** Use {@link #getLabelsMap()} instead. */
     @java.lang.Override
@@ -1271,7 +899,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.util.Map<java.lang.String, java.lang.String> getLabelsMap() {
-      return internalGetLabels().getMap();
+      return java.util.Collections.unmodifiableMap(instance.getLabelsMap());
     }
     /**
      *
@@ -1289,10 +917,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
         java.lang.String key,
         /* nullable */
         java.lang.String defaultValue) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = instance.getLabelsMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
     /**
@@ -1308,44 +934,12 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getLabelsOrThrow(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = instance.getLabelsMap();
       if (!map.containsKey(key)) {
         throw new java.lang.IllegalArgumentException();
       }
       return map.get(key);
-    }
-
-    public Builder clearLabels() {
-      bitField0_ = (bitField0_ & ~0x00000008);
-      internalGetMutableLabels().getMutableMap().clear();
-      return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Cross-service attributes for the location. For example
-     *
-     *     {"cloud.googleapis.com/region": "us-east1"}
-     * </pre>
-     *
-     * <code>map&lt;string, string&gt; labels = 2;</code>
-     */
-    public Builder removeLabels(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      internalGetMutableLabels().getMutableMap().remove(key);
-      return this;
-    }
-    /** Use alternate mutation accessors instead. */
-    @java.lang.Deprecated
-    public java.util.Map<java.lang.String, java.lang.String> getMutableLabels() {
-      bitField0_ |= 0x00000008;
-      return internalGetMutableLabels().getMutableMap();
     }
     /**
      *
@@ -1359,14 +953,10 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * <code>map&lt;string, string&gt; labels = 2;</code>
      */
     public Builder putLabels(java.lang.String key, java.lang.String value) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      if (value == null) {
-        throw new NullPointerException("map value");
-      }
-      internalGetMutableLabels().getMutableMap().put(key, value);
-      bitField0_ |= 0x00000008;
+      java.lang.Class<?> keyClass = key.getClass();
+      java.lang.Class<?> valueClass = value.getClass();
+      copyOnWrite();
+      instance.getMutableLabelsMap().put(key, value);
       return this;
     }
     /**
@@ -1381,17 +971,11 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * <code>map&lt;string, string&gt; labels = 2;</code>
      */
     public Builder putAllLabels(java.util.Map<java.lang.String, java.lang.String> values) {
-      internalGetMutableLabels().getMutableMap().putAll(values);
-      bitField0_ |= 0x00000008;
+      copyOnWrite();
+      instance.getMutableLabelsMap().putAll(values);
       return this;
     }
 
-    private com.google.protobuf.Any metadata_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Any,
-            com.google.protobuf.Any.Builder,
-            com.google.protobuf.AnyOrBuilder>
-        metadataBuilder_;
     /**
      *
      *
@@ -1401,11 +985,10 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.protobuf.Any metadata = 3;</code>
-     *
-     * @return Whether the metadata field is set.
      */
+    @java.lang.Override
     public boolean hasMetadata() {
-      return ((bitField0_ & 0x00000010) != 0);
+      return instance.hasMetadata();
     }
     /**
      *
@@ -1416,15 +999,10 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.protobuf.Any metadata = 3;</code>
-     *
-     * @return The metadata.
      */
+    @java.lang.Override
     public com.google.protobuf.Any getMetadata() {
-      if (metadataBuilder_ == null) {
-        return metadata_ == null ? com.google.protobuf.Any.getDefaultInstance() : metadata_;
-      } else {
-        return metadataBuilder_.getMessage();
-      }
+      return instance.getMetadata();
     }
     /**
      *
@@ -1437,16 +1015,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Any metadata = 3;</code>
      */
     public Builder setMetadata(com.google.protobuf.Any value) {
-      if (metadataBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        metadata_ = value;
-      } else {
-        metadataBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setMetadata(value);
       return this;
     }
     /**
@@ -1460,13 +1030,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Any metadata = 3;</code>
      */
     public Builder setMetadata(com.google.protobuf.Any.Builder builderForValue) {
-      if (metadataBuilder_ == null) {
-        metadata_ = builderForValue.build();
-      } else {
-        metadataBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setMetadata(builderForValue.build());
       return this;
     }
     /**
@@ -1480,21 +1045,8 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Any metadata = 3;</code>
      */
     public Builder mergeMetadata(com.google.protobuf.Any value) {
-      if (metadataBuilder_ == null) {
-        if (((bitField0_ & 0x00000010) != 0)
-            && metadata_ != null
-            && metadata_ != com.google.protobuf.Any.getDefaultInstance()) {
-          getMetadataBuilder().mergeFrom(value);
-        } else {
-          metadata_ = value;
-        }
-      } else {
-        metadataBuilder_.mergeFrom(value);
-      }
-      if (metadata_ != null) {
-        bitField0_ |= 0x00000010;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeMetadata(value);
       return this;
     }
     /**
@@ -1508,131 +1060,98 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Any metadata = 3;</code>
      */
     public Builder clearMetadata() {
-      bitField0_ = (bitField0_ & ~0x00000010);
-      metadata_ = null;
-      if (metadataBuilder_ != null) {
-        metadataBuilder_.dispose();
-        metadataBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearMetadata();
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Service-specific metadata. For example the available capacity at the given
-     * location.
-     * </pre>
-     *
-     * <code>.google.protobuf.Any metadata = 3;</code>
-     */
-    public com.google.protobuf.Any.Builder getMetadataBuilder() {
-      bitField0_ |= 0x00000010;
-      onChanged();
-      return getMetadataFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Service-specific metadata. For example the available capacity at the given
-     * location.
-     * </pre>
-     *
-     * <code>.google.protobuf.Any metadata = 3;</code>
-     */
-    public com.google.protobuf.AnyOrBuilder getMetadataOrBuilder() {
-      if (metadataBuilder_ != null) {
-        return metadataBuilder_.getMessageOrBuilder();
-      } else {
-        return metadata_ == null ? com.google.protobuf.Any.getDefaultInstance() : metadata_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Service-specific metadata. For example the available capacity at the given
-     * location.
-     * </pre>
-     *
-     * <code>.google.protobuf.Any metadata = 3;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Any,
-            com.google.protobuf.Any.Builder,
-            com.google.protobuf.AnyOrBuilder>
-        getMetadataFieldBuilder() {
-      if (metadataBuilder_ == null) {
-        metadataBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.protobuf.Any,
-                com.google.protobuf.Any.Builder,
-                com.google.protobuf.AnyOrBuilder>(getMetadata(), getParentForChildren(), isClean());
-        metadata_ = null;
-      }
-      return metadataBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.cloud.location.Location)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.cloud.location.Location();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_",
+                "name_",
+                "labels_",
+                LabelsDefaultEntryHolder.defaultEntry,
+                "metadata_",
+                "locationId_",
+                "displayName_",
+              };
+          java.lang.String info =
+              "\u0000\u0005\u0000\u0001\u0001\u0005\u0005\u0001\u0000\u0000\u0001\u0208\u00022\u0003"
+                  + "\u1009\u0000\u0004\u0208\u0005\u0208";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.cloud.location.Location> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.cloud.location.Location.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.cloud.location.Location>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.cloud.location.Location)
   private static final com.google.cloud.location.Location DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.cloud.location.Location();
+    Location defaultInstance = new Location();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        Location.class, defaultInstance);
   }
 
   public static com.google.cloud.location.Location getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Location> PARSER =
-      new com.google.protobuf.AbstractParser<Location>() {
-        @java.lang.Override
-        public Location parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<Location> PARSER;
 
   public static com.google.protobuf.Parser<Location> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<Location> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.cloud.location.Location getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

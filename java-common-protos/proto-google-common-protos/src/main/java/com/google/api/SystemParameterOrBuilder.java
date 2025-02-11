@@ -22,7 +22,7 @@ package com.google.api;
 public interface SystemParameterOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.SystemParameter)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

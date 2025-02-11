@@ -22,7 +22,7 @@ package com.google.type;
 public interface DateTimeOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.type.DateTime)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -149,18 +149,6 @@ public interface DateTimeOrBuilder
    * @return The utcOffset.
    */
   com.google.protobuf.Duration getUtcOffset();
-  /**
-   *
-   *
-   * <pre>
-   * UTC offset. Must be whole seconds, between -18 hours and +18 hours.
-   * For example, a UTC offset of -4:00 would be represented as
-   * { seconds: -14400 }.
-   * </pre>
-   *
-   * <code>.google.protobuf.Duration utc_offset = 8;</code>
-   */
-  com.google.protobuf.DurationOrBuilder getUtcOffsetOrBuilder();
 
   /**
    *
@@ -186,16 +174,6 @@ public interface DateTimeOrBuilder
    * @return The timeZone.
    */
   com.google.type.TimeZone getTimeZone();
-  /**
-   *
-   *
-   * <pre>
-   * Time zone.
-   * </pre>
-   *
-   * <code>.google.type.TimeZone time_zone = 9;</code>
-   */
-  com.google.type.TimeZoneOrBuilder getTimeZoneOrBuilder();
 
-  com.google.type.DateTime.TimeOffsetCase getTimeOffsetCase();
+  public com.google.type.DateTime.TimeOffsetCase getTimeOffsetCase();
 }

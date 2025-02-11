@@ -22,7 +22,7 @@ package com.google.api;
 public interface AuthProviderOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.AuthProvider)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -302,58 +302,4 @@ public interface AuthProviderOrBuilder
    * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
    */
   int getJwtLocationsCount();
-  /**
-   *
-   *
-   * <pre>
-   * Defines the locations to extract the JWT.  For now it is only used by the
-   * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
-   * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
-   *
-   * JWT locations can be one of HTTP headers, URL query parameters or
-   * cookies. The rule is that the first match wins.
-   *
-   * If not specified,  default to use following 3 locations:
-   *    1) Authorization: Bearer
-   *    2) x-goog-iap-jwt-assertion
-   *    3) access_token query parameter
-   *
-   * Default locations can be specified as followings:
-   *    jwt_locations:
-   *    - header: Authorization
-   *      value_prefix: "Bearer "
-   *    - header: x-goog-iap-jwt-assertion
-   *    - query: access_token
-   * </pre>
-   *
-   * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
-   */
-  java.util.List<? extends com.google.api.JwtLocationOrBuilder> getJwtLocationsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Defines the locations to extract the JWT.  For now it is only used by the
-   * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
-   * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
-   *
-   * JWT locations can be one of HTTP headers, URL query parameters or
-   * cookies. The rule is that the first match wins.
-   *
-   * If not specified,  default to use following 3 locations:
-   *    1) Authorization: Bearer
-   *    2) x-goog-iap-jwt-assertion
-   *    3) access_token query parameter
-   *
-   * Default locations can be specified as followings:
-   *    jwt_locations:
-   *    - header: Authorization
-   *      value_prefix: "Bearer "
-   *    - header: x-goog-iap-jwt-assertion
-   *    - query: access_token
-   * </pre>
-   *
-   * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
-   */
-  com.google.api.JwtLocationOrBuilder getJwtLocationsOrBuilder(int index);
 }

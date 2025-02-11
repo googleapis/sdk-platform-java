@@ -22,7 +22,7 @@ package com.google.api;
 public interface ContextRuleOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.ContextRule)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -105,8 +105,8 @@ public interface ContextRuleOrBuilder
    *
    * <code>repeated string requested = 2;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the requested at the given index.
+   * @param index The index of the element to return.
+   * @return The requested at the given index.
    */
   com.google.protobuf.ByteString getRequestedBytes(int index);
 
@@ -160,8 +160,8 @@ public interface ContextRuleOrBuilder
    *
    * <code>repeated string provided = 3;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the provided at the given index.
+   * @param index The index of the element to return.
+   * @return The provided at the given index.
    */
   com.google.protobuf.ByteString getProvidedBytes(int index);
 
@@ -215,8 +215,8 @@ public interface ContextRuleOrBuilder
    *
    * <code>repeated string allowed_request_extensions = 4;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the allowedRequestExtensions at the given index.
+   * @param index The index of the element to return.
+   * @return The allowedRequestExtensions at the given index.
    */
   com.google.protobuf.ByteString getAllowedRequestExtensionsBytes(int index);
 
@@ -270,8 +270,8 @@ public interface ContextRuleOrBuilder
    *
    * <code>repeated string allowed_response_extensions = 5;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the allowedResponseExtensions at the given index.
+   * @param index The index of the element to return.
+   * @return The allowedResponseExtensions at the given index.
    */
   com.google.protobuf.ByteString getAllowedResponseExtensionsBytes(int index);
 }

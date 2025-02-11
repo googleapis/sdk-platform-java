@@ -37,7 +37,7 @@ package com.google.api;
  *
  * Protobuf enum {@code google.api.ErrorReason}
  */
-public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
+public enum ErrorReason implements com.google.protobuf.Internal.EnumLite {
   /**
    *
    *
@@ -1678,6 +1678,7 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    */
   public static final int OVERLOADED_CREDENTIALS_VALUE = 34;
 
+  @java.lang.Override
   public final int getNumber() {
     if (this == UNRECOGNIZED) {
       throw new java.lang.IllegalArgumentException(
@@ -1687,8 +1688,8 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
   }
 
   /**
-   * @param value The numeric wire value of the corresponding enum entry.
-   * @return The enum associated with the given numeric wire value.
+   * @param value The number of the enum to look for.
+   * @return The enum associated with the given number.
    * @deprecated Use {@link #forNumber(int)} instead.
    */
   @java.lang.Deprecated
@@ -1696,10 +1697,6 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
     return forNumber(value);
   }
 
-  /**
-   * @param value The numeric wire value of the corresponding enum entry.
-   * @return The enum associated with the given numeric wire value.
-   */
   public static ErrorReason forNumber(int value) {
     switch (value) {
       case 0:
@@ -1779,38 +1776,25 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
 
   private static final com.google.protobuf.Internal.EnumLiteMap<ErrorReason> internalValueMap =
       new com.google.protobuf.Internal.EnumLiteMap<ErrorReason>() {
+        @java.lang.Override
         public ErrorReason findValueByNumber(int number) {
           return ErrorReason.forNumber(number);
         }
       };
 
-  public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-    if (this == UNRECOGNIZED) {
-      throw new java.lang.IllegalStateException(
-          "Can't get the descriptor of an unrecognized enum value.");
+  public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+    return ErrorReasonVerifier.INSTANCE;
+  }
+
+  private static final class ErrorReasonVerifier
+      implements com.google.protobuf.Internal.EnumVerifier {
+    static final com.google.protobuf.Internal.EnumVerifier INSTANCE = new ErrorReasonVerifier();
+
+    @java.lang.Override
+    public boolean isInRange(int number) {
+      return ErrorReason.forNumber(number) != null;
     }
-    return getDescriptor().getValues().get(ordinal());
-  }
-
-  public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-    return getDescriptor();
-  }
-
-  public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-    return com.google.api.ErrorReasonProto.getDescriptor().getEnumTypes().get(0);
-  }
-
-  private static final ErrorReason[] VALUES = values();
-
-  public static ErrorReason valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-    if (desc.getType() != getDescriptor()) {
-      throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-    }
-    if (desc.getIndex() == -1) {
-      return UNRECOGNIZED;
-    }
-    return VALUES[desc.getIndex()];
-  }
+  };
 
   private final int value;
 

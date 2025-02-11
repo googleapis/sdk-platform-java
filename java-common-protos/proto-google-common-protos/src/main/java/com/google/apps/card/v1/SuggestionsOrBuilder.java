@@ -22,7 +22,7 @@ package com.google.apps.card.v1;
 public interface SuggestionsOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.apps.card.v1.Suggestions)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -57,27 +57,4 @@ public interface SuggestionsOrBuilder
    * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
    */
   int getItemsCount();
-  /**
-   *
-   *
-   * <pre>
-   * A list of suggestions used for autocomplete recommendations in text input
-   * fields.
-   * </pre>
-   *
-   * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
-   */
-  java.util.List<? extends com.google.apps.card.v1.Suggestions.SuggestionItemOrBuilder>
-      getItemsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * A list of suggestions used for autocomplete recommendations in text input
-   * fields.
-   * </pre>
-   *
-   * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
-   */
-  com.google.apps.card.v1.Suggestions.SuggestionItemOrBuilder getItemsOrBuilder(int index);
 }

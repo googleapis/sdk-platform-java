@@ -22,7 +22,7 @@ package com.google.api;
 public interface LoggingOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.Logging)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -63,33 +63,6 @@ public interface LoggingOrBuilder
    * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
    */
   int getProducerDestinationsCount();
-  /**
-   *
-   *
-   * <pre>
-   * Logging configurations for sending logs to the producer project.
-   * There can be multiple producer destinations, each one must have a
-   * different monitored resource type. A log can be used in at most
-   * one producer destination.
-   * </pre>
-   *
-   * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
-   */
-  java.util.List<? extends com.google.api.Logging.LoggingDestinationOrBuilder>
-      getProducerDestinationsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Logging configurations for sending logs to the producer project.
-   * There can be multiple producer destinations, each one must have a
-   * different monitored resource type. A log can be used in at most
-   * one producer destination.
-   * </pre>
-   *
-   * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
-   */
-  com.google.api.Logging.LoggingDestinationOrBuilder getProducerDestinationsOrBuilder(int index);
 
   /**
    *
@@ -130,31 +103,4 @@ public interface LoggingOrBuilder
    * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
    */
   int getConsumerDestinationsCount();
-  /**
-   *
-   *
-   * <pre>
-   * Logging configurations for sending logs to the consumer project.
-   * There can be multiple consumer destinations, each one must have a
-   * different monitored resource type. A log can be used in at most
-   * one consumer destination.
-   * </pre>
-   *
-   * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
-   */
-  java.util.List<? extends com.google.api.Logging.LoggingDestinationOrBuilder>
-      getConsumerDestinationsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Logging configurations for sending logs to the consumer project.
-   * There can be multiple consumer destinations, each one must have a
-   * different monitored resource type. A log can be used in at most
-   * one consumer destination.
-   * </pre>
-   *
-   * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
-   */
-  com.google.api.Logging.LoggingDestinationOrBuilder getConsumerDestinationsOrBuilder(int index);
 }

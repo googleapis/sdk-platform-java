@@ -30,16 +30,11 @@ package com.google.logging.type;
  *
  * Protobuf type {@code google.logging.type.HttpRequest}
  */
-public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
+public final class HttpRequest
+    extends com.google.protobuf.GeneratedMessageLite<HttpRequest, HttpRequest.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.logging.type.HttpRequest)
     HttpRequestOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use HttpRequest.newBuilder() to construct.
-  private HttpRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private HttpRequest() {
     requestMethod_ = "";
     requestUrl_ = "";
@@ -50,32 +45,9 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     protocol_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new HttpRequest();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.logging.type.HttpRequestProto
-        .internal_static_google_logging_type_HttpRequest_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.logging.type.HttpRequestProto
-        .internal_static_google_logging_type_HttpRequest_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.logging.type.HttpRequest.class,
-            com.google.logging.type.HttpRequest.Builder.class);
-  }
-
   private int bitField0_;
   public static final int REQUEST_METHOD_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object requestMethod_ = "";
+  private java.lang.String requestMethod_;
   /**
    *
    *
@@ -89,15 +61,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getRequestMethod() {
-    java.lang.Object ref = requestMethod_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      requestMethod_ = s;
-      return s;
-    }
+    return requestMethod_;
   }
   /**
    *
@@ -112,21 +76,55 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getRequestMethodBytes() {
-    java.lang.Object ref = requestMethod_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      requestMethod_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(requestMethod_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The request method. Examples: `"GET"`, `"HEAD"`, `"PUT"`, `"POST"`.
+   * </pre>
+   *
+   * <code>string request_method = 1;</code>
+   *
+   * @param value The requestMethod to set.
+   */
+  private void setRequestMethod(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    requestMethod_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The request method. Examples: `"GET"`, `"HEAD"`, `"PUT"`, `"POST"`.
+   * </pre>
+   *
+   * <code>string request_method = 1;</code>
+   */
+  private void clearRequestMethod() {
+
+    requestMethod_ = getDefaultInstance().getRequestMethod();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The request method. Examples: `"GET"`, `"HEAD"`, `"PUT"`, `"POST"`.
+   * </pre>
+   *
+   * <code>string request_method = 1;</code>
+   *
+   * @param value The bytes for requestMethod to set.
+   */
+  private void setRequestMethodBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    requestMethod_ = value.toStringUtf8();
   }
 
   public static final int REQUEST_URL_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object requestUrl_ = "";
+  private java.lang.String requestUrl_;
   /**
    *
    *
@@ -142,15 +140,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getRequestUrl() {
-    java.lang.Object ref = requestUrl_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      requestUrl_ = s;
-      return s;
-    }
+    return requestUrl_;
   }
   /**
    *
@@ -167,19 +157,61 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getRequestUrlBytes() {
-    java.lang.Object ref = requestUrl_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      requestUrl_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(requestUrl_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The scheme (http, https), the host name, the path and the query
+   * portion of the URL that was requested.
+   * Example: `"http://example.com/some/info?color=red"`.
+   * </pre>
+   *
+   * <code>string request_url = 2;</code>
+   *
+   * @param value The requestUrl to set.
+   */
+  private void setRequestUrl(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    requestUrl_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The scheme (http, https), the host name, the path and the query
+   * portion of the URL that was requested.
+   * Example: `"http://example.com/some/info?color=red"`.
+   * </pre>
+   *
+   * <code>string request_url = 2;</code>
+   */
+  private void clearRequestUrl() {
+
+    requestUrl_ = getDefaultInstance().getRequestUrl();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The scheme (http, https), the host name, the path and the query
+   * portion of the URL that was requested.
+   * Example: `"http://example.com/some/info?color=red"`.
+   * </pre>
+   *
+   * <code>string request_url = 2;</code>
+   *
+   * @param value The bytes for requestUrl to set.
+   */
+  private void setRequestUrlBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    requestUrl_ = value.toStringUtf8();
   }
 
   public static final int REQUEST_SIZE_FIELD_NUMBER = 3;
-  private long requestSize_ = 0L;
+  private long requestSize_;
   /**
    *
    *
@@ -196,9 +228,39 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
   public long getRequestSize() {
     return requestSize_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The size of the HTTP request message in bytes, including the request
+   * headers and the request body.
+   * </pre>
+   *
+   * <code>int64 request_size = 3;</code>
+   *
+   * @param value The requestSize to set.
+   */
+  private void setRequestSize(long value) {
+
+    requestSize_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The size of the HTTP request message in bytes, including the request
+   * headers and the request body.
+   * </pre>
+   *
+   * <code>int64 request_size = 3;</code>
+   */
+  private void clearRequestSize() {
+
+    requestSize_ = 0L;
+  }
 
   public static final int STATUS_FIELD_NUMBER = 4;
-  private int status_ = 0;
+  private int status_;
   /**
    *
    *
@@ -215,9 +277,39 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
   public int getStatus() {
     return status_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The response code indicating the status of response.
+   * Examples: 200, 404.
+   * </pre>
+   *
+   * <code>int32 status = 4;</code>
+   *
+   * @param value The status to set.
+   */
+  private void setStatus(int value) {
+
+    status_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The response code indicating the status of response.
+   * Examples: 200, 404.
+   * </pre>
+   *
+   * <code>int32 status = 4;</code>
+   */
+  private void clearStatus() {
+
+    status_ = 0;
+  }
 
   public static final int RESPONSE_SIZE_FIELD_NUMBER = 5;
-  private long responseSize_ = 0L;
+  private long responseSize_;
   /**
    *
    *
@@ -234,11 +326,39 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
   public long getResponseSize() {
     return responseSize_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The size of the HTTP response message sent back to the client, in bytes,
+   * including the response headers and the response body.
+   * </pre>
+   *
+   * <code>int64 response_size = 5;</code>
+   *
+   * @param value The responseSize to set.
+   */
+  private void setResponseSize(long value) {
+
+    responseSize_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The size of the HTTP response message sent back to the client, in bytes,
+   * including the response headers and the response body.
+   * </pre>
+   *
+   * <code>int64 response_size = 5;</code>
+   */
+  private void clearResponseSize() {
+
+    responseSize_ = 0L;
+  }
 
   public static final int USER_AGENT_FIELD_NUMBER = 6;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object userAgent_ = "";
+  private java.lang.String userAgent_;
   /**
    *
    *
@@ -254,15 +374,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getUserAgent() {
-    java.lang.Object ref = userAgent_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      userAgent_ = s;
-      return s;
-    }
+    return userAgent_;
   }
   /**
    *
@@ -279,21 +391,61 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getUserAgentBytes() {
-    java.lang.Object ref = userAgent_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      userAgent_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(userAgent_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The user agent sent by the client. Example:
+   * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET
+   * CLR 1.0.3705)"`.
+   * </pre>
+   *
+   * <code>string user_agent = 6;</code>
+   *
+   * @param value The userAgent to set.
+   */
+  private void setUserAgent(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    userAgent_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The user agent sent by the client. Example:
+   * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET
+   * CLR 1.0.3705)"`.
+   * </pre>
+   *
+   * <code>string user_agent = 6;</code>
+   */
+  private void clearUserAgent() {
+
+    userAgent_ = getDefaultInstance().getUserAgent();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The user agent sent by the client. Example:
+   * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET
+   * CLR 1.0.3705)"`.
+   * </pre>
+   *
+   * <code>string user_agent = 6;</code>
+   *
+   * @param value The bytes for userAgent to set.
+   */
+  private void setUserAgentBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    userAgent_ = value.toStringUtf8();
   }
 
   public static final int REMOTE_IP_FIELD_NUMBER = 7;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object remoteIp_ = "";
+  private java.lang.String remoteIp_;
   /**
    *
    *
@@ -309,15 +461,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getRemoteIp() {
-    java.lang.Object ref = remoteIp_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      remoteIp_ = s;
-      return s;
-    }
+    return remoteIp_;
   }
   /**
    *
@@ -334,21 +478,61 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getRemoteIpBytes() {
-    java.lang.Object ref = remoteIp_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      remoteIp_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(remoteIp_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The IP address (IPv4 or IPv6) of the client that issued the HTTP
+   * request. This field can include port information. Examples:
+   * `"192.168.1.1"`, `"10.0.0.1:80"`, `"FE80::0202:B3FF:FE1E:8329"`.
+   * </pre>
+   *
+   * <code>string remote_ip = 7;</code>
+   *
+   * @param value The remoteIp to set.
+   */
+  private void setRemoteIp(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    remoteIp_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The IP address (IPv4 or IPv6) of the client that issued the HTTP
+   * request. This field can include port information. Examples:
+   * `"192.168.1.1"`, `"10.0.0.1:80"`, `"FE80::0202:B3FF:FE1E:8329"`.
+   * </pre>
+   *
+   * <code>string remote_ip = 7;</code>
+   */
+  private void clearRemoteIp() {
+
+    remoteIp_ = getDefaultInstance().getRemoteIp();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The IP address (IPv4 or IPv6) of the client that issued the HTTP
+   * request. This field can include port information. Examples:
+   * `"192.168.1.1"`, `"10.0.0.1:80"`, `"FE80::0202:B3FF:FE1E:8329"`.
+   * </pre>
+   *
+   * <code>string remote_ip = 7;</code>
+   *
+   * @param value The bytes for remoteIp to set.
+   */
+  private void setRemoteIpBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    remoteIp_ = value.toStringUtf8();
   }
 
   public static final int SERVER_IP_FIELD_NUMBER = 13;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object serverIp_ = "";
+  private java.lang.String serverIp_;
   /**
    *
    *
@@ -364,15 +548,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getServerIp() {
-    java.lang.Object ref = serverIp_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      serverIp_ = s;
-      return s;
-    }
+    return serverIp_;
   }
   /**
    *
@@ -389,21 +565,61 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getServerIpBytes() {
-    java.lang.Object ref = serverIp_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      serverIp_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(serverIp_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The IP address (IPv4 or IPv6) of the origin server that the request was
+   * sent to. This field can include port information. Examples:
+   * `"192.168.1.1"`, `"10.0.0.1:80"`, `"FE80::0202:B3FF:FE1E:8329"`.
+   * </pre>
+   *
+   * <code>string server_ip = 13;</code>
+   *
+   * @param value The serverIp to set.
+   */
+  private void setServerIp(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    serverIp_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The IP address (IPv4 or IPv6) of the origin server that the request was
+   * sent to. This field can include port information. Examples:
+   * `"192.168.1.1"`, `"10.0.0.1:80"`, `"FE80::0202:B3FF:FE1E:8329"`.
+   * </pre>
+   *
+   * <code>string server_ip = 13;</code>
+   */
+  private void clearServerIp() {
+
+    serverIp_ = getDefaultInstance().getServerIp();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The IP address (IPv4 or IPv6) of the origin server that the request was
+   * sent to. This field can include port information. Examples:
+   * `"192.168.1.1"`, `"10.0.0.1:80"`, `"FE80::0202:B3FF:FE1E:8329"`.
+   * </pre>
+   *
+   * <code>string server_ip = 13;</code>
+   *
+   * @param value The bytes for serverIp to set.
+   */
+  private void setServerIpBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    serverIp_ = value.toStringUtf8();
   }
 
   public static final int REFERER_FIELD_NUMBER = 8;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object referer_ = "";
+  private java.lang.String referer_;
   /**
    *
    *
@@ -419,15 +635,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getReferer() {
-    java.lang.Object ref = referer_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      referer_ = s;
-      return s;
-    }
+    return referer_;
   }
   /**
    *
@@ -444,15 +652,57 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getRefererBytes() {
-    java.lang.Object ref = referer_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      referer_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(referer_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The referer URL of the request, as defined in
+   * [HTTP/1.1 Header Field
+   * Definitions](https://datatracker.ietf.org/doc/html/rfc2616#section-14.36).
+   * </pre>
+   *
+   * <code>string referer = 8;</code>
+   *
+   * @param value The referer to set.
+   */
+  private void setReferer(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    referer_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The referer URL of the request, as defined in
+   * [HTTP/1.1 Header Field
+   * Definitions](https://datatracker.ietf.org/doc/html/rfc2616#section-14.36).
+   * </pre>
+   *
+   * <code>string referer = 8;</code>
+   */
+  private void clearReferer() {
+
+    referer_ = getDefaultInstance().getReferer();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The referer URL of the request, as defined in
+   * [HTTP/1.1 Header Field
+   * Definitions](https://datatracker.ietf.org/doc/html/rfc2616#section-14.36).
+   * </pre>
+   *
+   * <code>string referer = 8;</code>
+   *
+   * @param value The bytes for referer to set.
+   */
+  private void setRefererBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    referer_ = value.toStringUtf8();
   }
 
   public static final int LATENCY_FIELD_NUMBER = 14;
@@ -466,8 +716,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.protobuf.Duration latency = 14;</code>
-   *
-   * @return Whether the latency field is set.
    */
   @java.lang.Override
   public boolean hasLatency() {
@@ -482,8 +730,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.protobuf.Duration latency = 14;</code>
-   *
-   * @return The latency.
    */
   @java.lang.Override
   public com.google.protobuf.Duration getLatency() {
@@ -499,13 +745,48 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.protobuf.Duration latency = 14;</code>
    */
-  @java.lang.Override
-  public com.google.protobuf.DurationOrBuilder getLatencyOrBuilder() {
-    return latency_ == null ? com.google.protobuf.Duration.getDefaultInstance() : latency_;
+  private void setLatency(com.google.protobuf.Duration value) {
+    value.getClass();
+    latency_ = value;
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The request processing latency on the server, from the time the request was
+   * received until the response was sent.
+   * </pre>
+   *
+   * <code>.google.protobuf.Duration latency = 14;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeLatency(com.google.protobuf.Duration value) {
+    value.getClass();
+    if (latency_ != null && latency_ != com.google.protobuf.Duration.getDefaultInstance()) {
+      latency_ = com.google.protobuf.Duration.newBuilder(latency_).mergeFrom(value).buildPartial();
+    } else {
+      latency_ = value;
+    }
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The request processing latency on the server, from the time the request was
+   * received until the response was sent.
+   * </pre>
+   *
+   * <code>.google.protobuf.Duration latency = 14;</code>
+   */
+  private void clearLatency() {
+    latency_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static final int CACHE_LOOKUP_FIELD_NUMBER = 11;
-  private boolean cacheLookup_ = false;
+  private boolean cacheLookup_;
   /**
    *
    *
@@ -521,9 +802,37 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean getCacheLookup() {
     return cacheLookup_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Whether or not a cache lookup was attempted.
+   * </pre>
+   *
+   * <code>bool cache_lookup = 11;</code>
+   *
+   * @param value The cacheLookup to set.
+   */
+  private void setCacheLookup(boolean value) {
+
+    cacheLookup_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Whether or not a cache lookup was attempted.
+   * </pre>
+   *
+   * <code>bool cache_lookup = 11;</code>
+   */
+  private void clearCacheLookup() {
+
+    cacheLookup_ = false;
+  }
 
   public static final int CACHE_HIT_FIELD_NUMBER = 9;
-  private boolean cacheHit_ = false;
+  private boolean cacheHit_;
   /**
    *
    *
@@ -540,9 +849,39 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean getCacheHit() {
     return cacheHit_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Whether or not an entity was served from cache
+   * (with or without validation).
+   * </pre>
+   *
+   * <code>bool cache_hit = 9;</code>
+   *
+   * @param value The cacheHit to set.
+   */
+  private void setCacheHit(boolean value) {
+
+    cacheHit_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Whether or not an entity was served from cache
+   * (with or without validation).
+   * </pre>
+   *
+   * <code>bool cache_hit = 9;</code>
+   */
+  private void clearCacheHit() {
+
+    cacheHit_ = false;
+  }
 
   public static final int CACHE_VALIDATED_WITH_ORIGIN_SERVER_FIELD_NUMBER = 10;
-  private boolean cacheValidatedWithOriginServer_ = false;
+  private boolean cacheValidatedWithOriginServer_;
   /**
    *
    *
@@ -560,9 +899,41 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean getCacheValidatedWithOriginServer() {
     return cacheValidatedWithOriginServer_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Whether or not the response was validated with the origin server before
+   * being served from cache. This field is only meaningful if `cache_hit` is
+   * True.
+   * </pre>
+   *
+   * <code>bool cache_validated_with_origin_server = 10;</code>
+   *
+   * @param value The cacheValidatedWithOriginServer to set.
+   */
+  private void setCacheValidatedWithOriginServer(boolean value) {
+
+    cacheValidatedWithOriginServer_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Whether or not the response was validated with the origin server before
+   * being served from cache. This field is only meaningful if `cache_hit` is
+   * True.
+   * </pre>
+   *
+   * <code>bool cache_validated_with_origin_server = 10;</code>
+   */
+  private void clearCacheValidatedWithOriginServer() {
+
+    cacheValidatedWithOriginServer_ = false;
+  }
 
   public static final int CACHE_FILL_BYTES_FIELD_NUMBER = 12;
-  private long cacheFillBytes_ = 0L;
+  private long cacheFillBytes_;
   /**
    *
    *
@@ -579,11 +950,39 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
   public long getCacheFillBytes() {
     return cacheFillBytes_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The number of HTTP response bytes inserted into cache. Set only when a
+   * cache fill was attempted.
+   * </pre>
+   *
+   * <code>int64 cache_fill_bytes = 12;</code>
+   *
+   * @param value The cacheFillBytes to set.
+   */
+  private void setCacheFillBytes(long value) {
+
+    cacheFillBytes_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The number of HTTP response bytes inserted into cache. Set only when a
+   * cache fill was attempted.
+   * </pre>
+   *
+   * <code>int64 cache_fill_bytes = 12;</code>
+   */
+  private void clearCacheFillBytes() {
+
+    cacheFillBytes_ = 0L;
+  }
 
   public static final int PROTOCOL_FIELD_NUMBER = 15;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object protocol_ = "";
+  private java.lang.String protocol_;
   /**
    *
    *
@@ -597,15 +996,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getProtocol() {
-    java.lang.Object ref = protocol_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      protocol_ = s;
-      return s;
-    }
+    return protocol_;
   }
   /**
    *
@@ -620,309 +1011,134 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getProtocolBytes() {
-    java.lang.Object ref = protocol_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      protocol_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(protocol_);
   }
+  /**
+   *
+   *
+   * <pre>
+   * Protocol used for the request. Examples: "HTTP/1.1", "HTTP/2", "websocket"
+   * </pre>
+   *
+   * <code>string protocol = 15;</code>
+   *
+   * @param value The protocol to set.
+   */
+  private void setProtocol(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    protocol_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Protocol used for the request. Examples: "HTTP/1.1", "HTTP/2", "websocket"
+   * </pre>
+   *
+   * <code>string protocol = 15;</code>
+   */
+  private void clearProtocol() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(requestMethod_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, requestMethod_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(requestUrl_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, requestUrl_);
-    }
-    if (requestSize_ != 0L) {
-      output.writeInt64(3, requestSize_);
-    }
-    if (status_ != 0) {
-      output.writeInt32(4, status_);
-    }
-    if (responseSize_ != 0L) {
-      output.writeInt64(5, responseSize_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(userAgent_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, userAgent_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(remoteIp_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 7, remoteIp_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(referer_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 8, referer_);
-    }
-    if (cacheHit_ != false) {
-      output.writeBool(9, cacheHit_);
-    }
-    if (cacheValidatedWithOriginServer_ != false) {
-      output.writeBool(10, cacheValidatedWithOriginServer_);
-    }
-    if (cacheLookup_ != false) {
-      output.writeBool(11, cacheLookup_);
-    }
-    if (cacheFillBytes_ != 0L) {
-      output.writeInt64(12, cacheFillBytes_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(serverIp_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 13, serverIp_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(14, getLatency());
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(protocol_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 15, protocol_);
-    }
-    getUnknownFields().writeTo(output);
+    protocol_ = getDefaultInstance().getProtocol();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(requestMethod_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, requestMethod_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(requestUrl_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, requestUrl_);
-    }
-    if (requestSize_ != 0L) {
-      size += com.google.protobuf.CodedOutputStream.computeInt64Size(3, requestSize_);
-    }
-    if (status_ != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeInt32Size(4, status_);
-    }
-    if (responseSize_ != 0L) {
-      size += com.google.protobuf.CodedOutputStream.computeInt64Size(5, responseSize_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(userAgent_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, userAgent_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(remoteIp_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, remoteIp_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(referer_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, referer_);
-    }
-    if (cacheHit_ != false) {
-      size += com.google.protobuf.CodedOutputStream.computeBoolSize(9, cacheHit_);
-    }
-    if (cacheValidatedWithOriginServer_ != false) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeBoolSize(
-              10, cacheValidatedWithOriginServer_);
-    }
-    if (cacheLookup_ != false) {
-      size += com.google.protobuf.CodedOutputStream.computeBoolSize(11, cacheLookup_);
-    }
-    if (cacheFillBytes_ != 0L) {
-      size += com.google.protobuf.CodedOutputStream.computeInt64Size(12, cacheFillBytes_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(serverIp_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(13, serverIp_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(14, getLatency());
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(protocol_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(15, protocol_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.logging.type.HttpRequest)) {
-      return super.equals(obj);
-    }
-    com.google.logging.type.HttpRequest other = (com.google.logging.type.HttpRequest) obj;
-
-    if (!getRequestMethod().equals(other.getRequestMethod())) return false;
-    if (!getRequestUrl().equals(other.getRequestUrl())) return false;
-    if (getRequestSize() != other.getRequestSize()) return false;
-    if (getStatus() != other.getStatus()) return false;
-    if (getResponseSize() != other.getResponseSize()) return false;
-    if (!getUserAgent().equals(other.getUserAgent())) return false;
-    if (!getRemoteIp().equals(other.getRemoteIp())) return false;
-    if (!getServerIp().equals(other.getServerIp())) return false;
-    if (!getReferer().equals(other.getReferer())) return false;
-    if (hasLatency() != other.hasLatency()) return false;
-    if (hasLatency()) {
-      if (!getLatency().equals(other.getLatency())) return false;
-    }
-    if (getCacheLookup() != other.getCacheLookup()) return false;
-    if (getCacheHit() != other.getCacheHit()) return false;
-    if (getCacheValidatedWithOriginServer() != other.getCacheValidatedWithOriginServer())
-      return false;
-    if (getCacheFillBytes() != other.getCacheFillBytes()) return false;
-    if (!getProtocol().equals(other.getProtocol())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + REQUEST_METHOD_FIELD_NUMBER;
-    hash = (53 * hash) + getRequestMethod().hashCode();
-    hash = (37 * hash) + REQUEST_URL_FIELD_NUMBER;
-    hash = (53 * hash) + getRequestUrl().hashCode();
-    hash = (37 * hash) + REQUEST_SIZE_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(getRequestSize());
-    hash = (37 * hash) + STATUS_FIELD_NUMBER;
-    hash = (53 * hash) + getStatus();
-    hash = (37 * hash) + RESPONSE_SIZE_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(getResponseSize());
-    hash = (37 * hash) + USER_AGENT_FIELD_NUMBER;
-    hash = (53 * hash) + getUserAgent().hashCode();
-    hash = (37 * hash) + REMOTE_IP_FIELD_NUMBER;
-    hash = (53 * hash) + getRemoteIp().hashCode();
-    hash = (37 * hash) + SERVER_IP_FIELD_NUMBER;
-    hash = (53 * hash) + getServerIp().hashCode();
-    hash = (37 * hash) + REFERER_FIELD_NUMBER;
-    hash = (53 * hash) + getReferer().hashCode();
-    if (hasLatency()) {
-      hash = (37 * hash) + LATENCY_FIELD_NUMBER;
-      hash = (53 * hash) + getLatency().hashCode();
-    }
-    hash = (37 * hash) + CACHE_LOOKUP_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getCacheLookup());
-    hash = (37 * hash) + CACHE_HIT_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getCacheHit());
-    hash = (37 * hash) + CACHE_VALIDATED_WITH_ORIGIN_SERVER_FIELD_NUMBER;
-    hash =
-        (53 * hash) + com.google.protobuf.Internal.hashBoolean(getCacheValidatedWithOriginServer());
-    hash = (37 * hash) + CACHE_FILL_BYTES_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(getCacheFillBytes());
-    hash = (37 * hash) + PROTOCOL_FIELD_NUMBER;
-    hash = (53 * hash) + getProtocol().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Protocol used for the request. Examples: "HTTP/1.1", "HTTP/2", "websocket"
+   * </pre>
+   *
+   * <code>string protocol = 15;</code>
+   *
+   * @param value The bytes for protocol to set.
+   */
+  private void setProtocolBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    protocol_ = value.toStringUtf8();
   }
 
   public static com.google.logging.type.HttpRequest parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.logging.type.HttpRequest parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.logging.type.HttpRequest parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.logging.type.HttpRequest parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.logging.type.HttpRequest parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.logging.type.HttpRequest parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.logging.type.HttpRequest parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.logging.type.HttpRequest parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.logging.type.HttpRequest parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.logging.type.HttpRequest parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.logging.type.HttpRequest parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.logging.type.HttpRequest parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.logging.type.HttpRequest prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -934,389 +1150,17 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.logging.type.HttpRequest}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.logging.type.HttpRequest, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.logging.type.HttpRequest)
       com.google.logging.type.HttpRequestOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.logging.type.HttpRequestProto
-          .internal_static_google_logging_type_HttpRequest_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.logging.type.HttpRequestProto
-          .internal_static_google_logging_type_HttpRequest_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.logging.type.HttpRequest.class,
-              com.google.logging.type.HttpRequest.Builder.class);
-    }
-
     // Construct using com.google.logging.type.HttpRequest.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getLatencyFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      requestMethod_ = "";
-      requestUrl_ = "";
-      requestSize_ = 0L;
-      status_ = 0;
-      responseSize_ = 0L;
-      userAgent_ = "";
-      remoteIp_ = "";
-      serverIp_ = "";
-      referer_ = "";
-      latency_ = null;
-      if (latencyBuilder_ != null) {
-        latencyBuilder_.dispose();
-        latencyBuilder_ = null;
-      }
-      cacheLookup_ = false;
-      cacheHit_ = false;
-      cacheValidatedWithOriginServer_ = false;
-      cacheFillBytes_ = 0L;
-      protocol_ = "";
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.logging.type.HttpRequestProto
-          .internal_static_google_logging_type_HttpRequest_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.logging.type.HttpRequest getDefaultInstanceForType() {
-      return com.google.logging.type.HttpRequest.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.logging.type.HttpRequest build() {
-      com.google.logging.type.HttpRequest result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.logging.type.HttpRequest buildPartial() {
-      com.google.logging.type.HttpRequest result = new com.google.logging.type.HttpRequest(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.logging.type.HttpRequest result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.requestMethod_ = requestMethod_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.requestUrl_ = requestUrl_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.requestSize_ = requestSize_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.status_ = status_;
-      }
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.responseSize_ = responseSize_;
-      }
-      if (((from_bitField0_ & 0x00000020) != 0)) {
-        result.userAgent_ = userAgent_;
-      }
-      if (((from_bitField0_ & 0x00000040) != 0)) {
-        result.remoteIp_ = remoteIp_;
-      }
-      if (((from_bitField0_ & 0x00000080) != 0)) {
-        result.serverIp_ = serverIp_;
-      }
-      if (((from_bitField0_ & 0x00000100) != 0)) {
-        result.referer_ = referer_;
-      }
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000200) != 0)) {
-        result.latency_ = latencyBuilder_ == null ? latency_ : latencyBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      if (((from_bitField0_ & 0x00000400) != 0)) {
-        result.cacheLookup_ = cacheLookup_;
-      }
-      if (((from_bitField0_ & 0x00000800) != 0)) {
-        result.cacheHit_ = cacheHit_;
-      }
-      if (((from_bitField0_ & 0x00001000) != 0)) {
-        result.cacheValidatedWithOriginServer_ = cacheValidatedWithOriginServer_;
-      }
-      if (((from_bitField0_ & 0x00002000) != 0)) {
-        result.cacheFillBytes_ = cacheFillBytes_;
-      }
-      if (((from_bitField0_ & 0x00004000) != 0)) {
-        result.protocol_ = protocol_;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.logging.type.HttpRequest) {
-        return mergeFrom((com.google.logging.type.HttpRequest) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.logging.type.HttpRequest other) {
-      if (other == com.google.logging.type.HttpRequest.getDefaultInstance()) return this;
-      if (!other.getRequestMethod().isEmpty()) {
-        requestMethod_ = other.requestMethod_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getRequestUrl().isEmpty()) {
-        requestUrl_ = other.requestUrl_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      if (other.getRequestSize() != 0L) {
-        setRequestSize(other.getRequestSize());
-      }
-      if (other.getStatus() != 0) {
-        setStatus(other.getStatus());
-      }
-      if (other.getResponseSize() != 0L) {
-        setResponseSize(other.getResponseSize());
-      }
-      if (!other.getUserAgent().isEmpty()) {
-        userAgent_ = other.userAgent_;
-        bitField0_ |= 0x00000020;
-        onChanged();
-      }
-      if (!other.getRemoteIp().isEmpty()) {
-        remoteIp_ = other.remoteIp_;
-        bitField0_ |= 0x00000040;
-        onChanged();
-      }
-      if (!other.getServerIp().isEmpty()) {
-        serverIp_ = other.serverIp_;
-        bitField0_ |= 0x00000080;
-        onChanged();
-      }
-      if (!other.getReferer().isEmpty()) {
-        referer_ = other.referer_;
-        bitField0_ |= 0x00000100;
-        onChanged();
-      }
-      if (other.hasLatency()) {
-        mergeLatency(other.getLatency());
-      }
-      if (other.getCacheLookup() != false) {
-        setCacheLookup(other.getCacheLookup());
-      }
-      if (other.getCacheHit() != false) {
-        setCacheHit(other.getCacheHit());
-      }
-      if (other.getCacheValidatedWithOriginServer() != false) {
-        setCacheValidatedWithOriginServer(other.getCacheValidatedWithOriginServer());
-      }
-      if (other.getCacheFillBytes() != 0L) {
-        setCacheFillBytes(other.getCacheFillBytes());
-      }
-      if (!other.getProtocol().isEmpty()) {
-        protocol_ = other.protocol_;
-        bitField0_ |= 0x00004000;
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                requestMethod_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                requestUrl_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 24:
-              {
-                requestSize_ = input.readInt64();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 24
-            case 32:
-              {
-                status_ = input.readInt32();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 32
-            case 40:
-              {
-                responseSize_ = input.readInt64();
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 40
-            case 50:
-              {
-                userAgent_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000020;
-                break;
-              } // case 50
-            case 58:
-              {
-                remoteIp_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000040;
-                break;
-              } // case 58
-            case 66:
-              {
-                referer_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000100;
-                break;
-              } // case 66
-            case 72:
-              {
-                cacheHit_ = input.readBool();
-                bitField0_ |= 0x00000800;
-                break;
-              } // case 72
-            case 80:
-              {
-                cacheValidatedWithOriginServer_ = input.readBool();
-                bitField0_ |= 0x00001000;
-                break;
-              } // case 80
-            case 88:
-              {
-                cacheLookup_ = input.readBool();
-                bitField0_ |= 0x00000400;
-                break;
-              } // case 88
-            case 96:
-              {
-                cacheFillBytes_ = input.readInt64();
-                bitField0_ |= 0x00002000;
-                break;
-              } // case 96
-            case 106:
-              {
-                serverIp_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000080;
-                break;
-              } // case 106
-            case 114:
-              {
-                input.readMessage(getLatencyFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000200;
-                break;
-              } // case 114
-            case 122:
-              {
-                protocol_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00004000;
-                break;
-              } // case 122
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object requestMethod_ = "";
     /**
      *
      *
@@ -1328,16 +1172,9 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The requestMethod.
      */
+    @java.lang.Override
     public java.lang.String getRequestMethod() {
-      java.lang.Object ref = requestMethod_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        requestMethod_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getRequestMethod();
     }
     /**
      *
@@ -1350,16 +1187,9 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for requestMethod.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getRequestMethodBytes() {
-      java.lang.Object ref = requestMethod_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        requestMethod_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getRequestMethodBytes();
     }
     /**
      *
@@ -1374,12 +1204,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setRequestMethod(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      requestMethod_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setRequestMethod(value);
       return this;
     }
     /**
@@ -1394,9 +1220,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearRequestMethod() {
-      requestMethod_ = getDefaultInstance().getRequestMethod();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearRequestMethod();
       return this;
     }
     /**
@@ -1412,17 +1237,11 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setRequestMethodBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      requestMethod_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setRequestMethodBytes(value);
       return this;
     }
 
-    private java.lang.Object requestUrl_ = "";
     /**
      *
      *
@@ -1436,16 +1255,9 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The requestUrl.
      */
+    @java.lang.Override
     public java.lang.String getRequestUrl() {
-      java.lang.Object ref = requestUrl_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        requestUrl_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getRequestUrl();
     }
     /**
      *
@@ -1460,16 +1272,9 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for requestUrl.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getRequestUrlBytes() {
-      java.lang.Object ref = requestUrl_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        requestUrl_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getRequestUrlBytes();
     }
     /**
      *
@@ -1486,12 +1291,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setRequestUrl(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      requestUrl_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setRequestUrl(value);
       return this;
     }
     /**
@@ -1508,9 +1309,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearRequestUrl() {
-      requestUrl_ = getDefaultInstance().getRequestUrl();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearRequestUrl();
       return this;
     }
     /**
@@ -1528,17 +1328,11 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setRequestUrlBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      requestUrl_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setRequestUrlBytes(value);
       return this;
     }
 
-    private long requestSize_;
     /**
      *
      *
@@ -1553,7 +1347,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public long getRequestSize() {
-      return requestSize_;
+      return instance.getRequestSize();
     }
     /**
      *
@@ -1569,10 +1363,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setRequestSize(long value) {
-
-      requestSize_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setRequestSize(value);
       return this;
     }
     /**
@@ -1588,13 +1380,11 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearRequestSize() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      requestSize_ = 0L;
-      onChanged();
+      copyOnWrite();
+      instance.clearRequestSize();
       return this;
     }
 
-    private int status_;
     /**
      *
      *
@@ -1609,7 +1399,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getStatus() {
-      return status_;
+      return instance.getStatus();
     }
     /**
      *
@@ -1625,10 +1415,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setStatus(int value) {
-
-      status_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setStatus(value);
       return this;
     }
     /**
@@ -1644,13 +1432,11 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearStatus() {
-      bitField0_ = (bitField0_ & ~0x00000008);
-      status_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearStatus();
       return this;
     }
 
-    private long responseSize_;
     /**
      *
      *
@@ -1665,7 +1451,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public long getResponseSize() {
-      return responseSize_;
+      return instance.getResponseSize();
     }
     /**
      *
@@ -1681,10 +1467,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setResponseSize(long value) {
-
-      responseSize_ = value;
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setResponseSize(value);
       return this;
     }
     /**
@@ -1700,13 +1484,11 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearResponseSize() {
-      bitField0_ = (bitField0_ & ~0x00000010);
-      responseSize_ = 0L;
-      onChanged();
+      copyOnWrite();
+      instance.clearResponseSize();
       return this;
     }
 
-    private java.lang.Object userAgent_ = "";
     /**
      *
      *
@@ -1720,16 +1502,9 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The userAgent.
      */
+    @java.lang.Override
     public java.lang.String getUserAgent() {
-      java.lang.Object ref = userAgent_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        userAgent_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getUserAgent();
     }
     /**
      *
@@ -1744,16 +1519,9 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for userAgent.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getUserAgentBytes() {
-      java.lang.Object ref = userAgent_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        userAgent_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getUserAgentBytes();
     }
     /**
      *
@@ -1770,12 +1538,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setUserAgent(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      userAgent_ = value;
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setUserAgent(value);
       return this;
     }
     /**
@@ -1792,9 +1556,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearUserAgent() {
-      userAgent_ = getDefaultInstance().getUserAgent();
-      bitField0_ = (bitField0_ & ~0x00000020);
-      onChanged();
+      copyOnWrite();
+      instance.clearUserAgent();
       return this;
     }
     /**
@@ -1812,17 +1575,11 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setUserAgentBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      userAgent_ = value;
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setUserAgentBytes(value);
       return this;
     }
 
-    private java.lang.Object remoteIp_ = "";
     /**
      *
      *
@@ -1836,16 +1593,9 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The remoteIp.
      */
+    @java.lang.Override
     public java.lang.String getRemoteIp() {
-      java.lang.Object ref = remoteIp_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        remoteIp_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getRemoteIp();
     }
     /**
      *
@@ -1860,16 +1610,9 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for remoteIp.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getRemoteIpBytes() {
-      java.lang.Object ref = remoteIp_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        remoteIp_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getRemoteIpBytes();
     }
     /**
      *
@@ -1886,12 +1629,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setRemoteIp(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      remoteIp_ = value;
-      bitField0_ |= 0x00000040;
-      onChanged();
+      copyOnWrite();
+      instance.setRemoteIp(value);
       return this;
     }
     /**
@@ -1908,9 +1647,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearRemoteIp() {
-      remoteIp_ = getDefaultInstance().getRemoteIp();
-      bitField0_ = (bitField0_ & ~0x00000040);
-      onChanged();
+      copyOnWrite();
+      instance.clearRemoteIp();
       return this;
     }
     /**
@@ -1928,17 +1666,11 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setRemoteIpBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      remoteIp_ = value;
-      bitField0_ |= 0x00000040;
-      onChanged();
+      copyOnWrite();
+      instance.setRemoteIpBytes(value);
       return this;
     }
 
-    private java.lang.Object serverIp_ = "";
     /**
      *
      *
@@ -1952,16 +1684,9 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The serverIp.
      */
+    @java.lang.Override
     public java.lang.String getServerIp() {
-      java.lang.Object ref = serverIp_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        serverIp_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getServerIp();
     }
     /**
      *
@@ -1976,16 +1701,9 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for serverIp.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getServerIpBytes() {
-      java.lang.Object ref = serverIp_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        serverIp_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getServerIpBytes();
     }
     /**
      *
@@ -2002,12 +1720,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setServerIp(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      serverIp_ = value;
-      bitField0_ |= 0x00000080;
-      onChanged();
+      copyOnWrite();
+      instance.setServerIp(value);
       return this;
     }
     /**
@@ -2024,9 +1738,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearServerIp() {
-      serverIp_ = getDefaultInstance().getServerIp();
-      bitField0_ = (bitField0_ & ~0x00000080);
-      onChanged();
+      copyOnWrite();
+      instance.clearServerIp();
       return this;
     }
     /**
@@ -2044,17 +1757,11 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setServerIpBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      serverIp_ = value;
-      bitField0_ |= 0x00000080;
-      onChanged();
+      copyOnWrite();
+      instance.setServerIpBytes(value);
       return this;
     }
 
-    private java.lang.Object referer_ = "";
     /**
      *
      *
@@ -2068,16 +1775,9 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The referer.
      */
+    @java.lang.Override
     public java.lang.String getReferer() {
-      java.lang.Object ref = referer_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        referer_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getReferer();
     }
     /**
      *
@@ -2092,16 +1792,9 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for referer.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getRefererBytes() {
-      java.lang.Object ref = referer_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        referer_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getRefererBytes();
     }
     /**
      *
@@ -2118,12 +1811,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setReferer(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      referer_ = value;
-      bitField0_ |= 0x00000100;
-      onChanged();
+      copyOnWrite();
+      instance.setReferer(value);
       return this;
     }
     /**
@@ -2140,9 +1829,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearReferer() {
-      referer_ = getDefaultInstance().getReferer();
-      bitField0_ = (bitField0_ & ~0x00000100);
-      onChanged();
+      copyOnWrite();
+      instance.clearReferer();
       return this;
     }
     /**
@@ -2160,22 +1848,11 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setRefererBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      referer_ = value;
-      bitField0_ |= 0x00000100;
-      onChanged();
+      copyOnWrite();
+      instance.setRefererBytes(value);
       return this;
     }
 
-    private com.google.protobuf.Duration latency_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Duration,
-            com.google.protobuf.Duration.Builder,
-            com.google.protobuf.DurationOrBuilder>
-        latencyBuilder_;
     /**
      *
      *
@@ -2185,11 +1862,10 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.protobuf.Duration latency = 14;</code>
-     *
-     * @return Whether the latency field is set.
      */
+    @java.lang.Override
     public boolean hasLatency() {
-      return ((bitField0_ & 0x00000200) != 0);
+      return instance.hasLatency();
     }
     /**
      *
@@ -2200,15 +1876,10 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.protobuf.Duration latency = 14;</code>
-     *
-     * @return The latency.
      */
+    @java.lang.Override
     public com.google.protobuf.Duration getLatency() {
-      if (latencyBuilder_ == null) {
-        return latency_ == null ? com.google.protobuf.Duration.getDefaultInstance() : latency_;
-      } else {
-        return latencyBuilder_.getMessage();
-      }
+      return instance.getLatency();
     }
     /**
      *
@@ -2221,16 +1892,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Duration latency = 14;</code>
      */
     public Builder setLatency(com.google.protobuf.Duration value) {
-      if (latencyBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        latency_ = value;
-      } else {
-        latencyBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000200;
-      onChanged();
+      copyOnWrite();
+      instance.setLatency(value);
       return this;
     }
     /**
@@ -2244,13 +1907,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Duration latency = 14;</code>
      */
     public Builder setLatency(com.google.protobuf.Duration.Builder builderForValue) {
-      if (latencyBuilder_ == null) {
-        latency_ = builderForValue.build();
-      } else {
-        latencyBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000200;
-      onChanged();
+      copyOnWrite();
+      instance.setLatency(builderForValue.build());
       return this;
     }
     /**
@@ -2264,21 +1922,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Duration latency = 14;</code>
      */
     public Builder mergeLatency(com.google.protobuf.Duration value) {
-      if (latencyBuilder_ == null) {
-        if (((bitField0_ & 0x00000200) != 0)
-            && latency_ != null
-            && latency_ != com.google.protobuf.Duration.getDefaultInstance()) {
-          getLatencyBuilder().mergeFrom(value);
-        } else {
-          latency_ = value;
-        }
-      } else {
-        latencyBuilder_.mergeFrom(value);
-      }
-      if (latency_ != null) {
-        bitField0_ |= 0x00000200;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeLatency(value);
       return this;
     }
     /**
@@ -2292,75 +1937,11 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Duration latency = 14;</code>
      */
     public Builder clearLatency() {
-      bitField0_ = (bitField0_ & ~0x00000200);
-      latency_ = null;
-      if (latencyBuilder_ != null) {
-        latencyBuilder_.dispose();
-        latencyBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearLatency();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * The request processing latency on the server, from the time the request was
-     * received until the response was sent.
-     * </pre>
-     *
-     * <code>.google.protobuf.Duration latency = 14;</code>
-     */
-    public com.google.protobuf.Duration.Builder getLatencyBuilder() {
-      bitField0_ |= 0x00000200;
-      onChanged();
-      return getLatencyFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The request processing latency on the server, from the time the request was
-     * received until the response was sent.
-     * </pre>
-     *
-     * <code>.google.protobuf.Duration latency = 14;</code>
-     */
-    public com.google.protobuf.DurationOrBuilder getLatencyOrBuilder() {
-      if (latencyBuilder_ != null) {
-        return latencyBuilder_.getMessageOrBuilder();
-      } else {
-        return latency_ == null ? com.google.protobuf.Duration.getDefaultInstance() : latency_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The request processing latency on the server, from the time the request was
-     * received until the response was sent.
-     * </pre>
-     *
-     * <code>.google.protobuf.Duration latency = 14;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Duration,
-            com.google.protobuf.Duration.Builder,
-            com.google.protobuf.DurationOrBuilder>
-        getLatencyFieldBuilder() {
-      if (latencyBuilder_ == null) {
-        latencyBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.protobuf.Duration,
-                com.google.protobuf.Duration.Builder,
-                com.google.protobuf.DurationOrBuilder>(
-                getLatency(), getParentForChildren(), isClean());
-        latency_ = null;
-      }
-      return latencyBuilder_;
-    }
 
-    private boolean cacheLookup_;
     /**
      *
      *
@@ -2374,7 +1955,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean getCacheLookup() {
-      return cacheLookup_;
+      return instance.getCacheLookup();
     }
     /**
      *
@@ -2389,10 +1970,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setCacheLookup(boolean value) {
-
-      cacheLookup_ = value;
-      bitField0_ |= 0x00000400;
-      onChanged();
+      copyOnWrite();
+      instance.setCacheLookup(value);
       return this;
     }
     /**
@@ -2407,13 +1986,11 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearCacheLookup() {
-      bitField0_ = (bitField0_ & ~0x00000400);
-      cacheLookup_ = false;
-      onChanged();
+      copyOnWrite();
+      instance.clearCacheLookup();
       return this;
     }
 
-    private boolean cacheHit_;
     /**
      *
      *
@@ -2428,7 +2005,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean getCacheHit() {
-      return cacheHit_;
+      return instance.getCacheHit();
     }
     /**
      *
@@ -2444,10 +2021,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setCacheHit(boolean value) {
-
-      cacheHit_ = value;
-      bitField0_ |= 0x00000800;
-      onChanged();
+      copyOnWrite();
+      instance.setCacheHit(value);
       return this;
     }
     /**
@@ -2463,13 +2038,11 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearCacheHit() {
-      bitField0_ = (bitField0_ & ~0x00000800);
-      cacheHit_ = false;
-      onChanged();
+      copyOnWrite();
+      instance.clearCacheHit();
       return this;
     }
 
-    private boolean cacheValidatedWithOriginServer_;
     /**
      *
      *
@@ -2485,7 +2058,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean getCacheValidatedWithOriginServer() {
-      return cacheValidatedWithOriginServer_;
+      return instance.getCacheValidatedWithOriginServer();
     }
     /**
      *
@@ -2502,10 +2075,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setCacheValidatedWithOriginServer(boolean value) {
-
-      cacheValidatedWithOriginServer_ = value;
-      bitField0_ |= 0x00001000;
-      onChanged();
+      copyOnWrite();
+      instance.setCacheValidatedWithOriginServer(value);
       return this;
     }
     /**
@@ -2522,13 +2093,11 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearCacheValidatedWithOriginServer() {
-      bitField0_ = (bitField0_ & ~0x00001000);
-      cacheValidatedWithOriginServer_ = false;
-      onChanged();
+      copyOnWrite();
+      instance.clearCacheValidatedWithOriginServer();
       return this;
     }
 
-    private long cacheFillBytes_;
     /**
      *
      *
@@ -2543,7 +2112,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public long getCacheFillBytes() {
-      return cacheFillBytes_;
+      return instance.getCacheFillBytes();
     }
     /**
      *
@@ -2559,10 +2128,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setCacheFillBytes(long value) {
-
-      cacheFillBytes_ = value;
-      bitField0_ |= 0x00002000;
-      onChanged();
+      copyOnWrite();
+      instance.setCacheFillBytes(value);
       return this;
     }
     /**
@@ -2578,13 +2145,11 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearCacheFillBytes() {
-      bitField0_ = (bitField0_ & ~0x00002000);
-      cacheFillBytes_ = 0L;
-      onChanged();
+      copyOnWrite();
+      instance.clearCacheFillBytes();
       return this;
     }
 
-    private java.lang.Object protocol_ = "";
     /**
      *
      *
@@ -2596,16 +2161,9 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The protocol.
      */
+    @java.lang.Override
     public java.lang.String getProtocol() {
-      java.lang.Object ref = protocol_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        protocol_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getProtocol();
     }
     /**
      *
@@ -2618,16 +2176,9 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for protocol.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getProtocolBytes() {
-      java.lang.Object ref = protocol_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        protocol_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getProtocolBytes();
     }
     /**
      *
@@ -2642,12 +2193,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setProtocol(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      protocol_ = value;
-      bitField0_ |= 0x00004000;
-      onChanged();
+      copyOnWrite();
+      instance.setProtocol(value);
       return this;
     }
     /**
@@ -2662,9 +2209,8 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearProtocol() {
-      protocol_ = getDefaultInstance().getProtocol();
-      bitField0_ = (bitField0_ & ~0x00004000);
-      onChanged();
+      copyOnWrite();
+      instance.clearProtocol();
       return this;
     }
     /**
@@ -2680,74 +2226,108 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setProtocolBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      protocol_ = value;
-      bitField0_ |= 0x00004000;
-      onChanged();
+      copyOnWrite();
+      instance.setProtocolBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.logging.type.HttpRequest)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.logging.type.HttpRequest();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_",
+                "requestMethod_",
+                "requestUrl_",
+                "requestSize_",
+                "status_",
+                "responseSize_",
+                "userAgent_",
+                "remoteIp_",
+                "referer_",
+                "cacheHit_",
+                "cacheValidatedWithOriginServer_",
+                "cacheLookup_",
+                "cacheFillBytes_",
+                "serverIp_",
+                "latency_",
+                "protocol_",
+              };
+          java.lang.String info =
+              "\u0000\u000f\u0000\u0001\u0001\u000f\u000f\u0000\u0000\u0000\u0001\u0208\u0002\u0208"
+                  + "\u0003\u0002\u0004\u0004\u0005\u0002\u0006\u0208\u0007\u0208\b\u0208\t\u0007\n\u0007"
+                  + "\u000b\u0007\f\u0002\r\u0208\u000e\u1009\u0000\u000f\u0208";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.logging.type.HttpRequest> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.logging.type.HttpRequest.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.logging.type.HttpRequest>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.logging.type.HttpRequest)
   private static final com.google.logging.type.HttpRequest DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.logging.type.HttpRequest();
+    HttpRequest defaultInstance = new HttpRequest();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        HttpRequest.class, defaultInstance);
   }
 
   public static com.google.logging.type.HttpRequest getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<HttpRequest> PARSER =
-      new com.google.protobuf.AbstractParser<HttpRequest>() {
-        @java.lang.Override
-        public HttpRequest parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<HttpRequest> PARSER;
 
   public static com.google.protobuf.Parser<HttpRequest> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<HttpRequest> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.logging.type.HttpRequest getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

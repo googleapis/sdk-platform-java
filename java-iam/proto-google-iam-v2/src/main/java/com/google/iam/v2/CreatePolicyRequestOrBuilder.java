@@ -22,7 +22,7 @@ package com.google.iam.v2;
 public interface CreatePolicyRequestOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.iam.v2.CreatePolicyRequest)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -93,16 +93,6 @@ public interface CreatePolicyRequestOrBuilder
    * @return The policy.
    */
   com.google.iam.v2.Policy getPolicy();
-  /**
-   *
-   *
-   * <pre>
-   * Required. The policy to create.
-   * </pre>
-   *
-   * <code>.google.iam.v2.Policy policy = 2 [(.google.api.field_behavior) = REQUIRED];</code>
-   */
-  com.google.iam.v2.PolicyOrBuilder getPolicyOrBuilder();
 
   /**
    *

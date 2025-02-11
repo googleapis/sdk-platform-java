@@ -22,7 +22,7 @@ package com.google.iam.v1;
 public interface BindingOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.iam.v1.Binding)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -261,8 +261,8 @@ public interface BindingOrBuilder
    *
    * <code>repeated string members = 2;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the members at the given index.
+   * @param index The index of the element to return.
+   * @return The members at the given index.
    */
   com.google.protobuf.ByteString getMembersBytes(int index);
 
@@ -312,25 +312,4 @@ public interface BindingOrBuilder
    * @return The condition.
    */
   com.google.type.Expr getCondition();
-  /**
-   *
-   *
-   * <pre>
-   * The condition that is associated with this binding.
-   *
-   * If the condition evaluates to `true`, then this binding applies to the
-   * current request.
-   *
-   * If the condition evaluates to `false`, then this binding does not apply to
-   * the current request. However, a different role binding might grant the same
-   * role to one or more of the principals in this binding.
-   *
-   * To learn which resources support conditions in their IAM policies, see the
-   * [IAM
-   * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
-   * </pre>
-   *
-   * <code>.google.type.Expr condition = 3;</code>
-   */
-  com.google.type.ExprOrBuilder getConditionOrBuilder();
 }

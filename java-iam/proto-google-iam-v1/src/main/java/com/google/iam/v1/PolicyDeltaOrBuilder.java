@@ -22,7 +22,7 @@ package com.google.iam.v1;
 public interface PolicyDeltaOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.iam.v1.PolicyDelta)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -54,26 +54,6 @@ public interface PolicyDeltaOrBuilder
    * <code>repeated .google.iam.v1.BindingDelta binding_deltas = 1;</code>
    */
   int getBindingDeltasCount();
-  /**
-   *
-   *
-   * <pre>
-   * The delta for Bindings between two policies.
-   * </pre>
-   *
-   * <code>repeated .google.iam.v1.BindingDelta binding_deltas = 1;</code>
-   */
-  java.util.List<? extends com.google.iam.v1.BindingDeltaOrBuilder> getBindingDeltasOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * The delta for Bindings between two policies.
-   * </pre>
-   *
-   * <code>repeated .google.iam.v1.BindingDelta binding_deltas = 1;</code>
-   */
-  com.google.iam.v1.BindingDeltaOrBuilder getBindingDeltasOrBuilder(int index);
 
   /**
    *
@@ -105,25 +85,4 @@ public interface PolicyDeltaOrBuilder
    * <code>repeated .google.iam.v1.AuditConfigDelta audit_config_deltas = 2;</code>
    */
   int getAuditConfigDeltasCount();
-  /**
-   *
-   *
-   * <pre>
-   * The delta for AuditConfigs between two policies.
-   * </pre>
-   *
-   * <code>repeated .google.iam.v1.AuditConfigDelta audit_config_deltas = 2;</code>
-   */
-  java.util.List<? extends com.google.iam.v1.AuditConfigDeltaOrBuilder>
-      getAuditConfigDeltasOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * The delta for AuditConfigs between two policies.
-   * </pre>
-   *
-   * <code>repeated .google.iam.v1.AuditConfigDelta audit_config_deltas = 2;</code>
-   */
-  com.google.iam.v1.AuditConfigDeltaOrBuilder getAuditConfigDeltasOrBuilder(int index);
 }

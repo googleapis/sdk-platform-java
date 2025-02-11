@@ -22,7 +22,7 @@ package com.google.apps.card.v1;
 public interface BorderStyleOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.apps.card.v1.BorderStyle)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -73,16 +73,6 @@ public interface BorderStyleOrBuilder
    * @return The strokeColor.
    */
   com.google.type.Color getStrokeColor();
-  /**
-   *
-   *
-   * <pre>
-   * The colors to use when the type is `BORDER_TYPE_STROKE`.
-   * </pre>
-   *
-   * <code>.google.type.Color stroke_color = 2;</code>
-   */
-  com.google.type.ColorOrBuilder getStrokeColorOrBuilder();
 
   /**
    *

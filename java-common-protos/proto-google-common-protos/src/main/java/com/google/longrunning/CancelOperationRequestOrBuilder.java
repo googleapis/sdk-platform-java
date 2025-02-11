@@ -22,7 +22,7 @@ package com.google.longrunning;
 public interface CancelOperationRequestOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.longrunning.CancelOperationRequest)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

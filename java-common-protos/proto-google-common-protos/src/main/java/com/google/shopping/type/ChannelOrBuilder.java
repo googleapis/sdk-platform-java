@@ -22,4 +22,4 @@ package com.google.shopping.type;
 public interface ChannelOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.shopping.type.Channel)
-    com.google.protobuf.MessageOrBuilder {}
+    com.google.protobuf.MessageLiteOrBuilder {}

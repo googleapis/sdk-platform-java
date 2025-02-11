@@ -29,46 +29,18 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.SelectiveGapicGeneration}
  */
-public final class SelectiveGapicGeneration extends com.google.protobuf.GeneratedMessageV3
+public final class SelectiveGapicGeneration
+    extends com.google.protobuf.GeneratedMessageLite<
+        SelectiveGapicGeneration, SelectiveGapicGeneration.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.SelectiveGapicGeneration)
     SelectiveGapicGenerationOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use SelectiveGapicGeneration.newBuilder() to construct.
-  private SelectiveGapicGeneration(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private SelectiveGapicGeneration() {
-    methods_ = com.google.protobuf.LazyStringArrayList.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new SelectiveGapicGeneration();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.ClientProto
-        .internal_static_google_api_SelectiveGapicGeneration_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.ClientProto
-        .internal_static_google_api_SelectiveGapicGeneration_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.SelectiveGapicGeneration.class,
-            com.google.api.SelectiveGapicGeneration.Builder.class);
+    methods_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
   }
 
   public static final int METHODS_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList methods_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.Internal.ProtobufList<java.lang.String> methods_;
   /**
    *
    *
@@ -81,7 +53,8 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
    *
    * @return A list containing the methods.
    */
-  public com.google.protobuf.ProtocolStringList getMethodsList() {
+  @java.lang.Override
+  public java.util.List<java.lang.String> getMethodsList() {
     return methods_;
   }
   /**
@@ -96,6 +69,7 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
    *
    * @return The count of methods.
    */
+  @java.lang.Override
   public int getMethodsCount() {
     return methods_.size();
   }
@@ -112,6 +86,7 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
    * @param index The index of the element to return.
    * @return The methods at the given index.
    */
+  @java.lang.Override
   public java.lang.String getMethods(int index) {
     return methods_.get(index);
   }
@@ -128,12 +103,101 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
    * @param index The index of the value to return.
    * @return The bytes of the methods at the given index.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getMethodsBytes(int index) {
-    return methods_.getByteString(index);
+    return com.google.protobuf.ByteString.copyFromUtf8(methods_.get(index));
+  }
+
+  private void ensureMethodsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = methods_;
+    if (!tmp.isModifiable()) {
+      methods_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * An allowlist of the fully qualified names of RPCs that should be included
+   * on public client surfaces.
+   * </pre>
+   *
+   * <code>repeated string methods = 1;</code>
+   *
+   * @param index The index to set the value at.
+   * @param value The methods to set.
+   */
+  private void setMethods(int index, java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureMethodsIsMutable();
+    methods_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * An allowlist of the fully qualified names of RPCs that should be included
+   * on public client surfaces.
+   * </pre>
+   *
+   * <code>repeated string methods = 1;</code>
+   *
+   * @param value The methods to add.
+   */
+  private void addMethods(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureMethodsIsMutable();
+    methods_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * An allowlist of the fully qualified names of RPCs that should be included
+   * on public client surfaces.
+   * </pre>
+   *
+   * <code>repeated string methods = 1;</code>
+   *
+   * @param values The methods to add.
+   */
+  private void addAllMethods(java.lang.Iterable<java.lang.String> values) {
+    ensureMethodsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, methods_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * An allowlist of the fully qualified names of RPCs that should be included
+   * on public client surfaces.
+   * </pre>
+   *
+   * <code>repeated string methods = 1;</code>
+   */
+  private void clearMethods() {
+    methods_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * An allowlist of the fully qualified names of RPCs that should be included
+   * on public client surfaces.
+   * </pre>
+   *
+   * <code>repeated string methods = 1;</code>
+   *
+   * @param value The bytes of the methods to add.
+   */
+  private void addMethodsBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    ensureMethodsIsMutable();
+    methods_.add(value.toStringUtf8());
   }
 
   public static final int GENERATE_OMITTED_AS_INTERNAL_FIELD_NUMBER = 2;
-  private boolean generateOmittedAsInternal_ = false;
+  private boolean generateOmittedAsInternal_;
   /**
    *
    *
@@ -154,181 +218,127 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
   public boolean getGenerateOmittedAsInternal() {
     return generateOmittedAsInternal_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Setting this to true indicates to the client generators that methods
+   * that would be excluded from the generation should instead be generated
+   * in a way that indicates these methods should not be consumed by
+   * end users. How this is expressed is up to individual language
+   * implementations to decide. Some examples may be: added annotations,
+   * obfuscated identifiers, or other language idiomatic patterns.
+   * </pre>
+   *
+   * <code>bool generate_omitted_as_internal = 2;</code>
+   *
+   * @param value The generateOmittedAsInternal to set.
+   */
+  private void setGenerateOmittedAsInternal(boolean value) {
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    generateOmittedAsInternal_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Setting this to true indicates to the client generators that methods
+   * that would be excluded from the generation should instead be generated
+   * in a way that indicates these methods should not be consumed by
+   * end users. How this is expressed is up to individual language
+   * implementations to decide. Some examples may be: added annotations,
+   * obfuscated identifiers, or other language idiomatic patterns.
+   * </pre>
+   *
+   * <code>bool generate_omitted_as_internal = 2;</code>
+   */
+  private void clearGenerateOmittedAsInternal() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    for (int i = 0; i < methods_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, methods_.getRaw(i));
-    }
-    if (generateOmittedAsInternal_ != false) {
-      output.writeBool(2, generateOmittedAsInternal_);
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    {
-      int dataSize = 0;
-      for (int i = 0; i < methods_.size(); i++) {
-        dataSize += computeStringSizeNoTag(methods_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getMethodsList().size();
-    }
-    if (generateOmittedAsInternal_ != false) {
-      size += com.google.protobuf.CodedOutputStream.computeBoolSize(2, generateOmittedAsInternal_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.SelectiveGapicGeneration)) {
-      return super.equals(obj);
-    }
-    com.google.api.SelectiveGapicGeneration other = (com.google.api.SelectiveGapicGeneration) obj;
-
-    if (!getMethodsList().equals(other.getMethodsList())) return false;
-    if (getGenerateOmittedAsInternal() != other.getGenerateOmittedAsInternal()) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (getMethodsCount() > 0) {
-      hash = (37 * hash) + METHODS_FIELD_NUMBER;
-      hash = (53 * hash) + getMethodsList().hashCode();
-    }
-    hash = (37 * hash) + GENERATE_OMITTED_AS_INTERNAL_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getGenerateOmittedAsInternal());
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+    generateOmittedAsInternal_ = false;
   }
 
   public static com.google.api.SelectiveGapicGeneration parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.SelectiveGapicGeneration parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.SelectiveGapicGeneration parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.SelectiveGapicGeneration parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.SelectiveGapicGeneration parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.SelectiveGapicGeneration parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.SelectiveGapicGeneration parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.SelectiveGapicGeneration parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.SelectiveGapicGeneration parseDelimitedFrom(
       java.io.InputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.SelectiveGapicGeneration parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.SelectiveGapicGeneration parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.SelectiveGapicGeneration parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.SelectiveGapicGeneration prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -339,208 +349,17 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
    *
    * Protobuf type {@code google.api.SelectiveGapicGeneration}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.api.SelectiveGapicGeneration, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.SelectiveGapicGeneration)
       com.google.api.SelectiveGapicGenerationOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.ClientProto
-          .internal_static_google_api_SelectiveGapicGeneration_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.ClientProto
-          .internal_static_google_api_SelectiveGapicGeneration_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.SelectiveGapicGeneration.class,
-              com.google.api.SelectiveGapicGeneration.Builder.class);
-    }
-
     // Construct using com.google.api.SelectiveGapicGeneration.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      methods_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      generateOmittedAsInternal_ = false;
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.ClientProto
-          .internal_static_google_api_SelectiveGapicGeneration_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.SelectiveGapicGeneration getDefaultInstanceForType() {
-      return com.google.api.SelectiveGapicGeneration.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.SelectiveGapicGeneration build() {
-      com.google.api.SelectiveGapicGeneration result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.SelectiveGapicGeneration buildPartial() {
-      com.google.api.SelectiveGapicGeneration result =
-          new com.google.api.SelectiveGapicGeneration(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.api.SelectiveGapicGeneration result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        methods_.makeImmutable();
-        result.methods_ = methods_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.generateOmittedAsInternal_ = generateOmittedAsInternal_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.SelectiveGapicGeneration) {
-        return mergeFrom((com.google.api.SelectiveGapicGeneration) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.SelectiveGapicGeneration other) {
-      if (other == com.google.api.SelectiveGapicGeneration.getDefaultInstance()) return this;
-      if (!other.methods_.isEmpty()) {
-        if (methods_.isEmpty()) {
-          methods_ = other.methods_;
-          bitField0_ |= 0x00000001;
-        } else {
-          ensureMethodsIsMutable();
-          methods_.addAll(other.methods_);
-        }
-        onChanged();
-      }
-      if (other.getGenerateOmittedAsInternal() != false) {
-        setGenerateOmittedAsInternal(other.getGenerateOmittedAsInternal());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureMethodsIsMutable();
-                methods_.add(s);
-                break;
-              } // case 10
-            case 16:
-              {
-                generateOmittedAsInternal_ = input.readBool();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 16
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private com.google.protobuf.LazyStringArrayList methods_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
-
-    private void ensureMethodsIsMutable() {
-      if (!methods_.isModifiable()) {
-        methods_ = new com.google.protobuf.LazyStringArrayList(methods_);
-      }
-      bitField0_ |= 0x00000001;
-    }
     /**
      *
      *
@@ -553,9 +372,9 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
      *
      * @return A list containing the methods.
      */
-    public com.google.protobuf.ProtocolStringList getMethodsList() {
-      methods_.makeImmutable();
-      return methods_;
+    @java.lang.Override
+    public java.util.List<java.lang.String> getMethodsList() {
+      return java.util.Collections.unmodifiableList(instance.getMethodsList());
     }
     /**
      *
@@ -569,8 +388,9 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
      *
      * @return The count of methods.
      */
+    @java.lang.Override
     public int getMethodsCount() {
-      return methods_.size();
+      return instance.getMethodsCount();
     }
     /**
      *
@@ -585,8 +405,9 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
      * @param index The index of the element to return.
      * @return The methods at the given index.
      */
+    @java.lang.Override
     public java.lang.String getMethods(int index) {
-      return methods_.get(index);
+      return instance.getMethods(index);
     }
     /**
      *
@@ -601,8 +422,9 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
      * @param index The index of the value to return.
      * @return The bytes of the methods at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getMethodsBytes(int index) {
-      return methods_.getByteString(index);
+      return instance.getMethodsBytes(index);
     }
     /**
      *
@@ -619,13 +441,8 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
      * @return This builder for chaining.
      */
     public Builder setMethods(int index, java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureMethodsIsMutable();
-      methods_.set(index, value);
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setMethods(index, value);
       return this;
     }
     /**
@@ -642,13 +459,8 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
      * @return This builder for chaining.
      */
     public Builder addMethods(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureMethodsIsMutable();
-      methods_.add(value);
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.addMethods(value);
       return this;
     }
     /**
@@ -665,10 +477,8 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
      * @return This builder for chaining.
      */
     public Builder addAllMethods(java.lang.Iterable<java.lang.String> values) {
-      ensureMethodsIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, methods_);
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.addAllMethods(values);
       return this;
     }
     /**
@@ -684,10 +494,8 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
      * @return This builder for chaining.
      */
     public Builder clearMethods() {
-      methods_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      ;
-      onChanged();
+      copyOnWrite();
+      instance.clearMethods();
       return this;
     }
     /**
@@ -704,18 +512,11 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
      * @return This builder for chaining.
      */
     public Builder addMethodsBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      ensureMethodsIsMutable();
-      methods_.add(value);
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.addMethodsBytes(value);
       return this;
     }
 
-    private boolean generateOmittedAsInternal_;
     /**
      *
      *
@@ -734,7 +535,7 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
      */
     @java.lang.Override
     public boolean getGenerateOmittedAsInternal() {
-      return generateOmittedAsInternal_;
+      return instance.getGenerateOmittedAsInternal();
     }
     /**
      *
@@ -754,10 +555,8 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
      * @return This builder for chaining.
      */
     public Builder setGenerateOmittedAsInternal(boolean value) {
-
-      generateOmittedAsInternal_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setGenerateOmittedAsInternal(value);
       return this;
     }
     /**
@@ -777,70 +576,92 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
      * @return This builder for chaining.
      */
     public Builder clearGenerateOmittedAsInternal() {
-      bitField0_ = (bitField0_ & ~0x00000002);
-      generateOmittedAsInternal_ = false;
-      onChanged();
+      copyOnWrite();
+      instance.clearGenerateOmittedAsInternal();
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.api.SelectiveGapicGeneration)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.SelectiveGapicGeneration();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "methods_", "generateOmittedAsInternal_",
+              };
+          java.lang.String info =
+              "\u0000\u0002\u0000\u0000\u0001\u0002\u0002\u0000\u0001\u0000\u0001\u021a\u0002\u0007"
+                  + "";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.SelectiveGapicGeneration> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.SelectiveGapicGeneration.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.api.SelectiveGapicGeneration>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.SelectiveGapicGeneration)
   private static final com.google.api.SelectiveGapicGeneration DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.SelectiveGapicGeneration();
+    SelectiveGapicGeneration defaultInstance = new SelectiveGapicGeneration();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        SelectiveGapicGeneration.class, defaultInstance);
   }
 
   public static com.google.api.SelectiveGapicGeneration getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<SelectiveGapicGeneration> PARSER =
-      new com.google.protobuf.AbstractParser<SelectiveGapicGeneration>() {
-        @java.lang.Override
-        public SelectiveGapicGeneration parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<SelectiveGapicGeneration> PARSER;
 
   public static com.google.protobuf.Parser<SelectiveGapicGeneration> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<SelectiveGapicGeneration> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.SelectiveGapicGeneration getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

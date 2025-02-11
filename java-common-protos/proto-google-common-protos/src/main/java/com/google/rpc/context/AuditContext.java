@@ -28,45 +28,19 @@ package com.google.rpc.context;
  *
  * Protobuf type {@code google.rpc.context.AuditContext}
  */
-public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
+public final class AuditContext
+    extends com.google.protobuf.GeneratedMessageLite<AuditContext, AuditContext.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.rpc.context.AuditContext)
     AuditContextOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use AuditContext.newBuilder() to construct.
-  private AuditContext(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private AuditContext() {
     auditLog_ = com.google.protobuf.ByteString.EMPTY;
     targetResource_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new AuditContext();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.rpc.context.AuditContextProto
-        .internal_static_google_rpc_context_AuditContext_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.rpc.context.AuditContextProto
-        .internal_static_google_rpc_context_AuditContext_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.rpc.context.AuditContext.class,
-            com.google.rpc.context.AuditContext.Builder.class);
-  }
-
   private int bitField0_;
   public static final int AUDIT_LOG_FIELD_NUMBER = 1;
-  private com.google.protobuf.ByteString auditLog_ = com.google.protobuf.ByteString.EMPTY;
+  private com.google.protobuf.ByteString auditLog_;
   /**
    *
    *
@@ -82,6 +56,35 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.ByteString getAuditLog() {
     return auditLog_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Serialized audit log.
+   * </pre>
+   *
+   * <code>bytes audit_log = 1;</code>
+   *
+   * @param value The auditLog to set.
+   */
+  private void setAuditLog(com.google.protobuf.ByteString value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    auditLog_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Serialized audit log.
+   * </pre>
+   *
+   * <code>bytes audit_log = 1;</code>
+   */
+  private void clearAuditLog() {
+
+    auditLog_ = getDefaultInstance().getAuditLog();
+  }
 
   public static final int SCRUBBED_REQUEST_FIELD_NUMBER = 2;
   private com.google.protobuf.Struct scrubbedRequest_;
@@ -96,8 +99,6 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.protobuf.Struct scrubbed_request = 2;</code>
-   *
-   * @return Whether the scrubbedRequest field is set.
    */
   @java.lang.Override
   public boolean hasScrubbedRequest() {
@@ -114,8 +115,6 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.protobuf.Struct scrubbed_request = 2;</code>
-   *
-   * @return The scrubbedRequest.
    */
   @java.lang.Override
   public com.google.protobuf.Struct getScrubbedRequest() {
@@ -135,11 +134,50 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.protobuf.Struct scrubbed_request = 2;</code>
    */
-  @java.lang.Override
-  public com.google.protobuf.StructOrBuilder getScrubbedRequestOrBuilder() {
-    return scrubbedRequest_ == null
-        ? com.google.protobuf.Struct.getDefaultInstance()
-        : scrubbedRequest_;
+  private void setScrubbedRequest(com.google.protobuf.Struct value) {
+    value.getClass();
+    scrubbedRequest_ = value;
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * An API request message that is scrubbed based on the method annotation.
+   * This field should only be filled if audit_log field is present.
+   * Service Control will use this to assemble a complete log for Cloud Audit
+   * Logs and Google internal audit logs.
+   * </pre>
+   *
+   * <code>.google.protobuf.Struct scrubbed_request = 2;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeScrubbedRequest(com.google.protobuf.Struct value) {
+    value.getClass();
+    if (scrubbedRequest_ != null
+        && scrubbedRequest_ != com.google.protobuf.Struct.getDefaultInstance()) {
+      scrubbedRequest_ =
+          com.google.protobuf.Struct.newBuilder(scrubbedRequest_).mergeFrom(value).buildPartial();
+    } else {
+      scrubbedRequest_ = value;
+    }
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * An API request message that is scrubbed based on the method annotation.
+   * This field should only be filled if audit_log field is present.
+   * Service Control will use this to assemble a complete log for Cloud Audit
+   * Logs and Google internal audit logs.
+   * </pre>
+   *
+   * <code>.google.protobuf.Struct scrubbed_request = 2;</code>
+   */
+  private void clearScrubbedRequest() {
+    scrubbedRequest_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static final int SCRUBBED_RESPONSE_FIELD_NUMBER = 3;
@@ -155,8 +193,6 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.protobuf.Struct scrubbed_response = 3;</code>
-   *
-   * @return Whether the scrubbedResponse field is set.
    */
   @java.lang.Override
   public boolean hasScrubbedResponse() {
@@ -173,8 +209,6 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.protobuf.Struct scrubbed_response = 3;</code>
-   *
-   * @return The scrubbedResponse.
    */
   @java.lang.Override
   public com.google.protobuf.Struct getScrubbedResponse() {
@@ -194,15 +228,54 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.protobuf.Struct scrubbed_response = 3;</code>
    */
-  @java.lang.Override
-  public com.google.protobuf.StructOrBuilder getScrubbedResponseOrBuilder() {
-    return scrubbedResponse_ == null
-        ? com.google.protobuf.Struct.getDefaultInstance()
-        : scrubbedResponse_;
+  private void setScrubbedResponse(com.google.protobuf.Struct value) {
+    value.getClass();
+    scrubbedResponse_ = value;
+    bitField0_ |= 0x00000002;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * An API response message that is scrubbed based on the method annotation.
+   * This field should only be filled if audit_log field is present.
+   * Service Control will use this to assemble a complete log for Cloud Audit
+   * Logs and Google internal audit logs.
+   * </pre>
+   *
+   * <code>.google.protobuf.Struct scrubbed_response = 3;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeScrubbedResponse(com.google.protobuf.Struct value) {
+    value.getClass();
+    if (scrubbedResponse_ != null
+        && scrubbedResponse_ != com.google.protobuf.Struct.getDefaultInstance()) {
+      scrubbedResponse_ =
+          com.google.protobuf.Struct.newBuilder(scrubbedResponse_).mergeFrom(value).buildPartial();
+    } else {
+      scrubbedResponse_ = value;
+    }
+    bitField0_ |= 0x00000002;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * An API response message that is scrubbed based on the method annotation.
+   * This field should only be filled if audit_log field is present.
+   * Service Control will use this to assemble a complete log for Cloud Audit
+   * Logs and Google internal audit logs.
+   * </pre>
+   *
+   * <code>.google.protobuf.Struct scrubbed_response = 3;</code>
+   */
+  private void clearScrubbedResponse() {
+    scrubbedResponse_ = null;
+    bitField0_ = (bitField0_ & ~0x00000002);
   }
 
   public static final int SCRUBBED_RESPONSE_ITEM_COUNT_FIELD_NUMBER = 4;
-  private int scrubbedResponseItemCount_ = 0;
+  private int scrubbedResponseItemCount_;
   /**
    *
    *
@@ -218,11 +291,37 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
   public int getScrubbedResponseItemCount() {
     return scrubbedResponseItemCount_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Number of scrubbed response items.
+   * </pre>
+   *
+   * <code>int32 scrubbed_response_item_count = 4;</code>
+   *
+   * @param value The scrubbedResponseItemCount to set.
+   */
+  private void setScrubbedResponseItemCount(int value) {
+
+    scrubbedResponseItemCount_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Number of scrubbed response items.
+   * </pre>
+   *
+   * <code>int32 scrubbed_response_item_count = 4;</code>
+   */
+  private void clearScrubbedResponseItemCount() {
+
+    scrubbedResponseItemCount_ = 0;
+  }
 
   public static final int TARGET_RESOURCE_FIELD_NUMBER = 5;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object targetResource_ = "";
+  private java.lang.String targetResource_;
   /**
    *
    *
@@ -236,15 +335,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getTargetResource() {
-    java.lang.Object ref = targetResource_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      targetResource_ = s;
-      return s;
-    }
+    return targetResource_;
   }
   /**
    *
@@ -259,220 +350,134 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getTargetResourceBytes() {
-    java.lang.Object ref = targetResource_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      targetResource_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(targetResource_);
   }
+  /**
+   *
+   *
+   * <pre>
+   * Audit resource name which is scrubbed.
+   * </pre>
+   *
+   * <code>string target_resource = 5;</code>
+   *
+   * @param value The targetResource to set.
+   */
+  private void setTargetResource(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    targetResource_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Audit resource name which is scrubbed.
+   * </pre>
+   *
+   * <code>string target_resource = 5;</code>
+   */
+  private void clearTargetResource() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!auditLog_.isEmpty()) {
-      output.writeBytes(1, auditLog_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(2, getScrubbedRequest());
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      output.writeMessage(3, getScrubbedResponse());
-    }
-    if (scrubbedResponseItemCount_ != 0) {
-      output.writeInt32(4, scrubbedResponseItemCount_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(targetResource_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, targetResource_);
-    }
-    getUnknownFields().writeTo(output);
+    targetResource_ = getDefaultInstance().getTargetResource();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!auditLog_.isEmpty()) {
-      size += com.google.protobuf.CodedOutputStream.computeBytesSize(1, auditLog_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, getScrubbedRequest());
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, getScrubbedResponse());
-    }
-    if (scrubbedResponseItemCount_ != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeInt32Size(4, scrubbedResponseItemCount_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(targetResource_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, targetResource_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.rpc.context.AuditContext)) {
-      return super.equals(obj);
-    }
-    com.google.rpc.context.AuditContext other = (com.google.rpc.context.AuditContext) obj;
-
-    if (!getAuditLog().equals(other.getAuditLog())) return false;
-    if (hasScrubbedRequest() != other.hasScrubbedRequest()) return false;
-    if (hasScrubbedRequest()) {
-      if (!getScrubbedRequest().equals(other.getScrubbedRequest())) return false;
-    }
-    if (hasScrubbedResponse() != other.hasScrubbedResponse()) return false;
-    if (hasScrubbedResponse()) {
-      if (!getScrubbedResponse().equals(other.getScrubbedResponse())) return false;
-    }
-    if (getScrubbedResponseItemCount() != other.getScrubbedResponseItemCount()) return false;
-    if (!getTargetResource().equals(other.getTargetResource())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + AUDIT_LOG_FIELD_NUMBER;
-    hash = (53 * hash) + getAuditLog().hashCode();
-    if (hasScrubbedRequest()) {
-      hash = (37 * hash) + SCRUBBED_REQUEST_FIELD_NUMBER;
-      hash = (53 * hash) + getScrubbedRequest().hashCode();
-    }
-    if (hasScrubbedResponse()) {
-      hash = (37 * hash) + SCRUBBED_RESPONSE_FIELD_NUMBER;
-      hash = (53 * hash) + getScrubbedResponse().hashCode();
-    }
-    hash = (37 * hash) + SCRUBBED_RESPONSE_ITEM_COUNT_FIELD_NUMBER;
-    hash = (53 * hash) + getScrubbedResponseItemCount();
-    hash = (37 * hash) + TARGET_RESOURCE_FIELD_NUMBER;
-    hash = (53 * hash) + getTargetResource().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Audit resource name which is scrubbed.
+   * </pre>
+   *
+   * <code>string target_resource = 5;</code>
+   *
+   * @param value The bytes for targetResource to set.
+   */
+  private void setTargetResourceBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    targetResource_ = value.toStringUtf8();
   }
 
   public static com.google.rpc.context.AuditContext parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.rpc.context.AuditContext parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.rpc.context.AuditContext parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.rpc.context.AuditContext parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.rpc.context.AuditContext parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.rpc.context.AuditContext parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.rpc.context.AuditContext parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.rpc.context.AuditContext parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.rpc.context.AuditContext parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.rpc.context.AuditContext parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.rpc.context.AuditContext parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.rpc.context.AuditContext parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.rpc.context.AuditContext prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -482,256 +487,17 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.rpc.context.AuditContext}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.rpc.context.AuditContext, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.rpc.context.AuditContext)
       com.google.rpc.context.AuditContextOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.rpc.context.AuditContextProto
-          .internal_static_google_rpc_context_AuditContext_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.rpc.context.AuditContextProto
-          .internal_static_google_rpc_context_AuditContext_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.rpc.context.AuditContext.class,
-              com.google.rpc.context.AuditContext.Builder.class);
-    }
-
     // Construct using com.google.rpc.context.AuditContext.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getScrubbedRequestFieldBuilder();
-        getScrubbedResponseFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      auditLog_ = com.google.protobuf.ByteString.EMPTY;
-      scrubbedRequest_ = null;
-      if (scrubbedRequestBuilder_ != null) {
-        scrubbedRequestBuilder_.dispose();
-        scrubbedRequestBuilder_ = null;
-      }
-      scrubbedResponse_ = null;
-      if (scrubbedResponseBuilder_ != null) {
-        scrubbedResponseBuilder_.dispose();
-        scrubbedResponseBuilder_ = null;
-      }
-      scrubbedResponseItemCount_ = 0;
-      targetResource_ = "";
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.rpc.context.AuditContextProto
-          .internal_static_google_rpc_context_AuditContext_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.rpc.context.AuditContext getDefaultInstanceForType() {
-      return com.google.rpc.context.AuditContext.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.rpc.context.AuditContext build() {
-      com.google.rpc.context.AuditContext result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.rpc.context.AuditContext buildPartial() {
-      com.google.rpc.context.AuditContext result = new com.google.rpc.context.AuditContext(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.rpc.context.AuditContext result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.auditLog_ = auditLog_;
-      }
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.scrubbedRequest_ =
-            scrubbedRequestBuilder_ == null ? scrubbedRequest_ : scrubbedRequestBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.scrubbedResponse_ =
-            scrubbedResponseBuilder_ == null ? scrubbedResponse_ : scrubbedResponseBuilder_.build();
-        to_bitField0_ |= 0x00000002;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.scrubbedResponseItemCount_ = scrubbedResponseItemCount_;
-      }
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.targetResource_ = targetResource_;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.rpc.context.AuditContext) {
-        return mergeFrom((com.google.rpc.context.AuditContext) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.rpc.context.AuditContext other) {
-      if (other == com.google.rpc.context.AuditContext.getDefaultInstance()) return this;
-      if (other.getAuditLog() != com.google.protobuf.ByteString.EMPTY) {
-        setAuditLog(other.getAuditLog());
-      }
-      if (other.hasScrubbedRequest()) {
-        mergeScrubbedRequest(other.getScrubbedRequest());
-      }
-      if (other.hasScrubbedResponse()) {
-        mergeScrubbedResponse(other.getScrubbedResponse());
-      }
-      if (other.getScrubbedResponseItemCount() != 0) {
-        setScrubbedResponseItemCount(other.getScrubbedResponseItemCount());
-      }
-      if (!other.getTargetResource().isEmpty()) {
-        targetResource_ = other.targetResource_;
-        bitField0_ |= 0x00000010;
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                auditLog_ = input.readBytes();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                input.readMessage(getScrubbedRequestFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 26:
-              {
-                input.readMessage(
-                    getScrubbedResponseFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 26
-            case 32:
-              {
-                scrubbedResponseItemCount_ = input.readInt32();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 32
-            case 42:
-              {
-                targetResource_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 42
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private com.google.protobuf.ByteString auditLog_ = com.google.protobuf.ByteString.EMPTY;
     /**
      *
      *
@@ -745,7 +511,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getAuditLog() {
-      return auditLog_;
+      return instance.getAuditLog();
     }
     /**
      *
@@ -760,12 +526,8 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAuditLog(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      auditLog_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setAuditLog(value);
       return this;
     }
     /**
@@ -780,18 +542,11 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAuditLog() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      auditLog_ = getDefaultInstance().getAuditLog();
-      onChanged();
+      copyOnWrite();
+      instance.clearAuditLog();
       return this;
     }
 
-    private com.google.protobuf.Struct scrubbedRequest_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Struct,
-            com.google.protobuf.Struct.Builder,
-            com.google.protobuf.StructOrBuilder>
-        scrubbedRequestBuilder_;
     /**
      *
      *
@@ -803,11 +558,10 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.protobuf.Struct scrubbed_request = 2;</code>
-     *
-     * @return Whether the scrubbedRequest field is set.
      */
+    @java.lang.Override
     public boolean hasScrubbedRequest() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return instance.hasScrubbedRequest();
     }
     /**
      *
@@ -820,17 +574,10 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.protobuf.Struct scrubbed_request = 2;</code>
-     *
-     * @return The scrubbedRequest.
      */
+    @java.lang.Override
     public com.google.protobuf.Struct getScrubbedRequest() {
-      if (scrubbedRequestBuilder_ == null) {
-        return scrubbedRequest_ == null
-            ? com.google.protobuf.Struct.getDefaultInstance()
-            : scrubbedRequest_;
-      } else {
-        return scrubbedRequestBuilder_.getMessage();
-      }
+      return instance.getScrubbedRequest();
     }
     /**
      *
@@ -845,16 +592,8 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Struct scrubbed_request = 2;</code>
      */
     public Builder setScrubbedRequest(com.google.protobuf.Struct value) {
-      if (scrubbedRequestBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        scrubbedRequest_ = value;
-      } else {
-        scrubbedRequestBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setScrubbedRequest(value);
       return this;
     }
     /**
@@ -870,13 +609,8 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Struct scrubbed_request = 2;</code>
      */
     public Builder setScrubbedRequest(com.google.protobuf.Struct.Builder builderForValue) {
-      if (scrubbedRequestBuilder_ == null) {
-        scrubbedRequest_ = builderForValue.build();
-      } else {
-        scrubbedRequestBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setScrubbedRequest(builderForValue.build());
       return this;
     }
     /**
@@ -892,21 +626,8 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Struct scrubbed_request = 2;</code>
      */
     public Builder mergeScrubbedRequest(com.google.protobuf.Struct value) {
-      if (scrubbedRequestBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)
-            && scrubbedRequest_ != null
-            && scrubbedRequest_ != com.google.protobuf.Struct.getDefaultInstance()) {
-          getScrubbedRequestBuilder().mergeFrom(value);
-        } else {
-          scrubbedRequest_ = value;
-        }
-      } else {
-        scrubbedRequestBuilder_.mergeFrom(value);
-      }
-      if (scrubbedRequest_ != null) {
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeScrubbedRequest(value);
       return this;
     }
     /**
@@ -922,88 +643,11 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Struct scrubbed_request = 2;</code>
      */
     public Builder clearScrubbedRequest() {
-      bitField0_ = (bitField0_ & ~0x00000002);
-      scrubbedRequest_ = null;
-      if (scrubbedRequestBuilder_ != null) {
-        scrubbedRequestBuilder_.dispose();
-        scrubbedRequestBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearScrubbedRequest();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * An API request message that is scrubbed based on the method annotation.
-     * This field should only be filled if audit_log field is present.
-     * Service Control will use this to assemble a complete log for Cloud Audit
-     * Logs and Google internal audit logs.
-     * </pre>
-     *
-     * <code>.google.protobuf.Struct scrubbed_request = 2;</code>
-     */
-    public com.google.protobuf.Struct.Builder getScrubbedRequestBuilder() {
-      bitField0_ |= 0x00000002;
-      onChanged();
-      return getScrubbedRequestFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * An API request message that is scrubbed based on the method annotation.
-     * This field should only be filled if audit_log field is present.
-     * Service Control will use this to assemble a complete log for Cloud Audit
-     * Logs and Google internal audit logs.
-     * </pre>
-     *
-     * <code>.google.protobuf.Struct scrubbed_request = 2;</code>
-     */
-    public com.google.protobuf.StructOrBuilder getScrubbedRequestOrBuilder() {
-      if (scrubbedRequestBuilder_ != null) {
-        return scrubbedRequestBuilder_.getMessageOrBuilder();
-      } else {
-        return scrubbedRequest_ == null
-            ? com.google.protobuf.Struct.getDefaultInstance()
-            : scrubbedRequest_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * An API request message that is scrubbed based on the method annotation.
-     * This field should only be filled if audit_log field is present.
-     * Service Control will use this to assemble a complete log for Cloud Audit
-     * Logs and Google internal audit logs.
-     * </pre>
-     *
-     * <code>.google.protobuf.Struct scrubbed_request = 2;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Struct,
-            com.google.protobuf.Struct.Builder,
-            com.google.protobuf.StructOrBuilder>
-        getScrubbedRequestFieldBuilder() {
-      if (scrubbedRequestBuilder_ == null) {
-        scrubbedRequestBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.protobuf.Struct,
-                com.google.protobuf.Struct.Builder,
-                com.google.protobuf.StructOrBuilder>(
-                getScrubbedRequest(), getParentForChildren(), isClean());
-        scrubbedRequest_ = null;
-      }
-      return scrubbedRequestBuilder_;
-    }
 
-    private com.google.protobuf.Struct scrubbedResponse_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Struct,
-            com.google.protobuf.Struct.Builder,
-            com.google.protobuf.StructOrBuilder>
-        scrubbedResponseBuilder_;
     /**
      *
      *
@@ -1015,11 +659,10 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.protobuf.Struct scrubbed_response = 3;</code>
-     *
-     * @return Whether the scrubbedResponse field is set.
      */
+    @java.lang.Override
     public boolean hasScrubbedResponse() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return instance.hasScrubbedResponse();
     }
     /**
      *
@@ -1032,17 +675,10 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.protobuf.Struct scrubbed_response = 3;</code>
-     *
-     * @return The scrubbedResponse.
      */
+    @java.lang.Override
     public com.google.protobuf.Struct getScrubbedResponse() {
-      if (scrubbedResponseBuilder_ == null) {
-        return scrubbedResponse_ == null
-            ? com.google.protobuf.Struct.getDefaultInstance()
-            : scrubbedResponse_;
-      } else {
-        return scrubbedResponseBuilder_.getMessage();
-      }
+      return instance.getScrubbedResponse();
     }
     /**
      *
@@ -1057,16 +693,8 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Struct scrubbed_response = 3;</code>
      */
     public Builder setScrubbedResponse(com.google.protobuf.Struct value) {
-      if (scrubbedResponseBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        scrubbedResponse_ = value;
-      } else {
-        scrubbedResponseBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setScrubbedResponse(value);
       return this;
     }
     /**
@@ -1082,13 +710,8 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Struct scrubbed_response = 3;</code>
      */
     public Builder setScrubbedResponse(com.google.protobuf.Struct.Builder builderForValue) {
-      if (scrubbedResponseBuilder_ == null) {
-        scrubbedResponse_ = builderForValue.build();
-      } else {
-        scrubbedResponseBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setScrubbedResponse(builderForValue.build());
       return this;
     }
     /**
@@ -1104,21 +727,8 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Struct scrubbed_response = 3;</code>
      */
     public Builder mergeScrubbedResponse(com.google.protobuf.Struct value) {
-      if (scrubbedResponseBuilder_ == null) {
-        if (((bitField0_ & 0x00000004) != 0)
-            && scrubbedResponse_ != null
-            && scrubbedResponse_ != com.google.protobuf.Struct.getDefaultInstance()) {
-          getScrubbedResponseBuilder().mergeFrom(value);
-        } else {
-          scrubbedResponse_ = value;
-        }
-      } else {
-        scrubbedResponseBuilder_.mergeFrom(value);
-      }
-      if (scrubbedResponse_ != null) {
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeScrubbedResponse(value);
       return this;
     }
     /**
@@ -1134,83 +744,11 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Struct scrubbed_response = 3;</code>
      */
     public Builder clearScrubbedResponse() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      scrubbedResponse_ = null;
-      if (scrubbedResponseBuilder_ != null) {
-        scrubbedResponseBuilder_.dispose();
-        scrubbedResponseBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearScrubbedResponse();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * An API response message that is scrubbed based on the method annotation.
-     * This field should only be filled if audit_log field is present.
-     * Service Control will use this to assemble a complete log for Cloud Audit
-     * Logs and Google internal audit logs.
-     * </pre>
-     *
-     * <code>.google.protobuf.Struct scrubbed_response = 3;</code>
-     */
-    public com.google.protobuf.Struct.Builder getScrubbedResponseBuilder() {
-      bitField0_ |= 0x00000004;
-      onChanged();
-      return getScrubbedResponseFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * An API response message that is scrubbed based on the method annotation.
-     * This field should only be filled if audit_log field is present.
-     * Service Control will use this to assemble a complete log for Cloud Audit
-     * Logs and Google internal audit logs.
-     * </pre>
-     *
-     * <code>.google.protobuf.Struct scrubbed_response = 3;</code>
-     */
-    public com.google.protobuf.StructOrBuilder getScrubbedResponseOrBuilder() {
-      if (scrubbedResponseBuilder_ != null) {
-        return scrubbedResponseBuilder_.getMessageOrBuilder();
-      } else {
-        return scrubbedResponse_ == null
-            ? com.google.protobuf.Struct.getDefaultInstance()
-            : scrubbedResponse_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * An API response message that is scrubbed based on the method annotation.
-     * This field should only be filled if audit_log field is present.
-     * Service Control will use this to assemble a complete log for Cloud Audit
-     * Logs and Google internal audit logs.
-     * </pre>
-     *
-     * <code>.google.protobuf.Struct scrubbed_response = 3;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Struct,
-            com.google.protobuf.Struct.Builder,
-            com.google.protobuf.StructOrBuilder>
-        getScrubbedResponseFieldBuilder() {
-      if (scrubbedResponseBuilder_ == null) {
-        scrubbedResponseBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.protobuf.Struct,
-                com.google.protobuf.Struct.Builder,
-                com.google.protobuf.StructOrBuilder>(
-                getScrubbedResponse(), getParentForChildren(), isClean());
-        scrubbedResponse_ = null;
-      }
-      return scrubbedResponseBuilder_;
-    }
 
-    private int scrubbedResponseItemCount_;
     /**
      *
      *
@@ -1224,7 +762,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getScrubbedResponseItemCount() {
-      return scrubbedResponseItemCount_;
+      return instance.getScrubbedResponseItemCount();
     }
     /**
      *
@@ -1239,10 +777,8 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setScrubbedResponseItemCount(int value) {
-
-      scrubbedResponseItemCount_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setScrubbedResponseItemCount(value);
       return this;
     }
     /**
@@ -1257,13 +793,11 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearScrubbedResponseItemCount() {
-      bitField0_ = (bitField0_ & ~0x00000008);
-      scrubbedResponseItemCount_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearScrubbedResponseItemCount();
       return this;
     }
 
-    private java.lang.Object targetResource_ = "";
     /**
      *
      *
@@ -1275,16 +809,9 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The targetResource.
      */
+    @java.lang.Override
     public java.lang.String getTargetResource() {
-      java.lang.Object ref = targetResource_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        targetResource_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getTargetResource();
     }
     /**
      *
@@ -1297,16 +824,9 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for targetResource.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getTargetResourceBytes() {
-      java.lang.Object ref = targetResource_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        targetResource_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getTargetResourceBytes();
     }
     /**
      *
@@ -1321,12 +841,8 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setTargetResource(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      targetResource_ = value;
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setTargetResource(value);
       return this;
     }
     /**
@@ -1341,9 +857,8 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearTargetResource() {
-      targetResource_ = getDefaultInstance().getTargetResource();
-      bitField0_ = (bitField0_ & ~0x00000010);
-      onChanged();
+      copyOnWrite();
+      instance.clearTargetResource();
       return this;
     }
     /**
@@ -1359,74 +874,97 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setTargetResourceBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      targetResource_ = value;
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setTargetResourceBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.rpc.context.AuditContext)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.rpc.context.AuditContext();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_",
+                "auditLog_",
+                "scrubbedRequest_",
+                "scrubbedResponse_",
+                "scrubbedResponseItemCount_",
+                "targetResource_",
+              };
+          java.lang.String info =
+              "\u0000\u0005\u0000\u0001\u0001\u0005\u0005\u0000\u0000\u0000\u0001\n\u0002\u1009"
+                  + "\u0000\u0003\u1009\u0001\u0004\u0004\u0005\u0208";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.rpc.context.AuditContext> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.rpc.context.AuditContext.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.rpc.context.AuditContext>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.rpc.context.AuditContext)
   private static final com.google.rpc.context.AuditContext DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.rpc.context.AuditContext();
+    AuditContext defaultInstance = new AuditContext();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        AuditContext.class, defaultInstance);
   }
 
   public static com.google.rpc.context.AuditContext getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<AuditContext> PARSER =
-      new com.google.protobuf.AbstractParser<AuditContext>() {
-        @java.lang.Override
-        public AuditContext parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<AuditContext> PARSER;
 
   public static com.google.protobuf.Parser<AuditContext> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<AuditContext> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.rpc.context.AuditContext getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

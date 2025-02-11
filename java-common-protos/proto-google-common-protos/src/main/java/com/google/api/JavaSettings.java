@@ -28,55 +28,18 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.JavaSettings}
  */
-public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
+public final class JavaSettings
+    extends com.google.protobuf.GeneratedMessageLite<JavaSettings, JavaSettings.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.JavaSettings)
     JavaSettingsOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use JavaSettings.newBuilder() to construct.
-  private JavaSettings(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private JavaSettings() {
     libraryPackage_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new JavaSettings();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.ClientProto.internal_static_google_api_JavaSettings_descriptor;
-  }
-
-  @SuppressWarnings({"rawtypes"})
-  @java.lang.Override
-  protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-      int number) {
-    switch (number) {
-      case 2:
-        return internalGetServiceClassNames();
-      default:
-        throw new RuntimeException("Invalid map field number: " + number);
-    }
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.ClientProto.internal_static_google_api_JavaSettings_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.JavaSettings.class, com.google.api.JavaSettings.Builder.class);
-  }
-
   private int bitField0_;
   public static final int LIBRARY_PACKAGE_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object libraryPackage_ = "";
+  private java.lang.String libraryPackage_;
   /**
    *
    *
@@ -100,15 +63,7 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getLibraryPackage() {
-    java.lang.Object ref = libraryPackage_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      libraryPackage_ = s;
-      return s;
-    }
+    return libraryPackage_;
   }
   /**
    *
@@ -133,44 +88,113 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getLibraryPackageBytes() {
-    java.lang.Object ref = libraryPackage_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      libraryPackage_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(libraryPackage_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The package name to use in Java. Clobbers the java_package option
+   * set in the protobuf. This should be used **only** by APIs
+   * who have already set the language_settings.java.package_name" field
+   * in gapic.yaml. API teams should use the protobuf java_package option
+   * where possible.
+   *
+   * Example of a YAML configuration::
+   *
+   *  publishing:
+   *    java_settings:
+   *      library_package: com.google.cloud.pubsub.v1
+   * </pre>
+   *
+   * <code>string library_package = 1;</code>
+   *
+   * @param value The libraryPackage to set.
+   */
+  private void setLibraryPackage(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    libraryPackage_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The package name to use in Java. Clobbers the java_package option
+   * set in the protobuf. This should be used **only** by APIs
+   * who have already set the language_settings.java.package_name" field
+   * in gapic.yaml. API teams should use the protobuf java_package option
+   * where possible.
+   *
+   * Example of a YAML configuration::
+   *
+   *  publishing:
+   *    java_settings:
+   *      library_package: com.google.cloud.pubsub.v1
+   * </pre>
+   *
+   * <code>string library_package = 1;</code>
+   */
+  private void clearLibraryPackage() {
+
+    libraryPackage_ = getDefaultInstance().getLibraryPackage();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The package name to use in Java. Clobbers the java_package option
+   * set in the protobuf. This should be used **only** by APIs
+   * who have already set the language_settings.java.package_name" field
+   * in gapic.yaml. API teams should use the protobuf java_package option
+   * where possible.
+   *
+   * Example of a YAML configuration::
+   *
+   *  publishing:
+   *    java_settings:
+   *      library_package: com.google.cloud.pubsub.v1
+   * </pre>
+   *
+   * <code>string library_package = 1;</code>
+   *
+   * @param value The bytes for libraryPackage to set.
+   */
+  private void setLibraryPackageBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    libraryPackage_ = value.toStringUtf8();
   }
 
   public static final int SERVICE_CLASS_NAMES_FIELD_NUMBER = 2;
 
   private static final class ServiceClassNamesDefaultEntryHolder {
-    static final com.google.protobuf.MapEntry<java.lang.String, java.lang.String> defaultEntry =
-        com.google.protobuf.MapEntry.<java.lang.String, java.lang.String>newDefaultInstance(
-            com.google.api.ClientProto
-                .internal_static_google_api_JavaSettings_ServiceClassNamesEntry_descriptor,
+    static final com.google.protobuf.MapEntryLite<java.lang.String, java.lang.String> defaultEntry =
+        com.google.protobuf.MapEntryLite.<java.lang.String, java.lang.String>newDefaultInstance(
             com.google.protobuf.WireFormat.FieldType.STRING,
             "",
             com.google.protobuf.WireFormat.FieldType.STRING,
             "");
   }
 
-  @SuppressWarnings("serial")
-  private com.google.protobuf.MapField<java.lang.String, java.lang.String> serviceClassNames_;
+  private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String> serviceClassNames_ =
+      com.google.protobuf.MapFieldLite.emptyMapField();
 
-  private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+  private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
       internalGetServiceClassNames() {
-    if (serviceClassNames_ == null) {
-      return com.google.protobuf.MapField.emptyMapField(
-          ServiceClassNamesDefaultEntryHolder.defaultEntry);
+    return serviceClassNames_;
+  }
+
+  private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
+      internalGetMutableServiceClassNames() {
+    if (!serviceClassNames_.isMutable()) {
+      serviceClassNames_ = serviceClassNames_.mutableCopy();
     }
     return serviceClassNames_;
   }
 
+  @java.lang.Override
   public int getServiceClassNamesCount() {
-    return internalGetServiceClassNames().getMap().size();
+    return internalGetServiceClassNames().size();
   }
   /**
    *
@@ -196,10 +220,8 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public boolean containsServiceClassNames(java.lang.String key) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
-    return internalGetServiceClassNames().getMap().containsKey(key);
+    java.lang.Class<?> keyClass = key.getClass();
+    return internalGetServiceClassNames().containsKey(key);
   }
   /** Use {@link #getServiceClassNamesMap()} instead. */
   @java.lang.Override
@@ -231,7 +253,7 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.util.Map<java.lang.String, java.lang.String> getServiceClassNamesMap() {
-    return internalGetServiceClassNames().getMap();
+    return java.util.Collections.unmodifiableMap(internalGetServiceClassNames());
   }
   /**
    *
@@ -260,10 +282,8 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
       java.lang.String key,
       /* nullable */
       java.lang.String defaultValue) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
-    java.util.Map<java.lang.String, java.lang.String> map = internalGetServiceClassNames().getMap();
+    java.lang.Class<?> keyClass = key.getClass();
+    java.util.Map<java.lang.String, java.lang.String> map = internalGetServiceClassNames();
     return map.containsKey(key) ? map.get(key) : defaultValue;
   }
   /**
@@ -290,14 +310,37 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getServiceClassNamesOrThrow(java.lang.String key) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
-    java.util.Map<java.lang.String, java.lang.String> map = internalGetServiceClassNames().getMap();
+    java.lang.Class<?> keyClass = key.getClass();
+    java.util.Map<java.lang.String, java.lang.String> map = internalGetServiceClassNames();
     if (!map.containsKey(key)) {
       throw new java.lang.IllegalArgumentException();
     }
     return map.get(key);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Configure the Java class name to use instead of the service's for its
+   * corresponding generated GAPIC client. Keys are fully-qualified
+   * service names as they appear in the protobuf (including the full
+   * the language_settings.java.interface_names" field in gapic.yaml. API
+   * teams should otherwise use the service name as it appears in the
+   * protobuf.
+   *
+   * Example of a YAML configuration::
+   *
+   *  publishing:
+   *    java_settings:
+   *      service_class_names:
+   *        - google.pubsub.v1.Publisher: TopicAdmin
+   *        - google.pubsub.v1.Subscriber: SubscriptionAdmin
+   * </pre>
+   *
+   * <code>map&lt;string, string&gt; service_class_names = 2;</code>
+   */
+  private java.util.Map<java.lang.String, java.lang.String> getMutableServiceClassNamesMap() {
+    return internalGetMutableServiceClassNames();
   }
 
   public static final int COMMON_FIELD_NUMBER = 3;
@@ -310,8 +353,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.CommonLanguageSettings common = 3;</code>
-   *
-   * @return Whether the common field is set.
    */
   @java.lang.Override
   public boolean hasCommon() {
@@ -325,8 +366,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.CommonLanguageSettings common = 3;</code>
-   *
-   * @return The common.
    */
   @java.lang.Override
   public com.google.api.CommonLanguageSettings getCommon() {
@@ -341,202 +380,126 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.CommonLanguageSettings common = 3;</code>
    */
-  @java.lang.Override
-  public com.google.api.CommonLanguageSettingsOrBuilder getCommonOrBuilder() {
-    return common_ == null ? com.google.api.CommonLanguageSettings.getDefaultInstance() : common_;
+  private void setCommon(com.google.api.CommonLanguageSettings value) {
+    value.getClass();
+    common_ = value;
+    bitField0_ |= 0x00000001;
   }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Some settings.
+   * </pre>
+   *
+   * <code>.google.api.CommonLanguageSettings common = 3;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeCommon(com.google.api.CommonLanguageSettings value) {
+    value.getClass();
+    if (common_ != null && common_ != com.google.api.CommonLanguageSettings.getDefaultInstance()) {
+      common_ =
+          com.google.api.CommonLanguageSettings.newBuilder(common_).mergeFrom(value).buildPartial();
+    } else {
+      common_ = value;
+    }
+    bitField0_ |= 0x00000001;
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(libraryPackage_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, libraryPackage_);
-    }
-    com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
-        output,
-        internalGetServiceClassNames(),
-        ServiceClassNamesDefaultEntryHolder.defaultEntry,
-        2);
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(3, getCommon());
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(libraryPackage_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, libraryPackage_);
-    }
-    for (java.util.Map.Entry<java.lang.String, java.lang.String> entry :
-        internalGetServiceClassNames().getMap().entrySet()) {
-      com.google.protobuf.MapEntry<java.lang.String, java.lang.String> serviceClassNames__ =
-          ServiceClassNamesDefaultEntryHolder.defaultEntry
-              .newBuilderForType()
-              .setKey(entry.getKey())
-              .setValue(entry.getValue())
-              .build();
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, serviceClassNames__);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, getCommon());
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.JavaSettings)) {
-      return super.equals(obj);
-    }
-    com.google.api.JavaSettings other = (com.google.api.JavaSettings) obj;
-
-    if (!getLibraryPackage().equals(other.getLibraryPackage())) return false;
-    if (!internalGetServiceClassNames().equals(other.internalGetServiceClassNames())) return false;
-    if (hasCommon() != other.hasCommon()) return false;
-    if (hasCommon()) {
-      if (!getCommon().equals(other.getCommon())) return false;
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + LIBRARY_PACKAGE_FIELD_NUMBER;
-    hash = (53 * hash) + getLibraryPackage().hashCode();
-    if (!internalGetServiceClassNames().getMap().isEmpty()) {
-      hash = (37 * hash) + SERVICE_CLASS_NAMES_FIELD_NUMBER;
-      hash = (53 * hash) + internalGetServiceClassNames().hashCode();
-    }
-    if (hasCommon()) {
-      hash = (37 * hash) + COMMON_FIELD_NUMBER;
-      hash = (53 * hash) + getCommon().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Some settings.
+   * </pre>
+   *
+   * <code>.google.api.CommonLanguageSettings common = 3;</code>
+   */
+  private void clearCommon() {
+    common_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static com.google.api.JavaSettings parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.JavaSettings parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.JavaSettings parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.JavaSettings parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.JavaSettings parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.JavaSettings parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.JavaSettings parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.JavaSettings parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.JavaSettings parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.JavaSettings parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.JavaSettings parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.JavaSettings parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.JavaSettings prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -546,246 +509,16 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.api.JavaSettings}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<com.google.api.JavaSettings, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.JavaSettings)
       com.google.api.JavaSettingsOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.ClientProto.internal_static_google_api_JavaSettings_descriptor;
-    }
-
-    @SuppressWarnings({"rawtypes"})
-    protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-        int number) {
-      switch (number) {
-        case 2:
-          return internalGetServiceClassNames();
-        default:
-          throw new RuntimeException("Invalid map field number: " + number);
-      }
-    }
-
-    @SuppressWarnings({"rawtypes"})
-    protected com.google.protobuf.MapFieldReflectionAccessor internalGetMutableMapFieldReflection(
-        int number) {
-      switch (number) {
-        case 2:
-          return internalGetMutableServiceClassNames();
-        default:
-          throw new RuntimeException("Invalid map field number: " + number);
-      }
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.ClientProto.internal_static_google_api_JavaSettings_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.JavaSettings.class, com.google.api.JavaSettings.Builder.class);
-    }
-
     // Construct using com.google.api.JavaSettings.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getCommonFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      libraryPackage_ = "";
-      internalGetMutableServiceClassNames().clear();
-      common_ = null;
-      if (commonBuilder_ != null) {
-        commonBuilder_.dispose();
-        commonBuilder_ = null;
-      }
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.ClientProto.internal_static_google_api_JavaSettings_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.JavaSettings getDefaultInstanceForType() {
-      return com.google.api.JavaSettings.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.JavaSettings build() {
-      com.google.api.JavaSettings result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.JavaSettings buildPartial() {
-      com.google.api.JavaSettings result = new com.google.api.JavaSettings(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.api.JavaSettings result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.libraryPackage_ = libraryPackage_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.serviceClassNames_ = internalGetServiceClassNames();
-        result.serviceClassNames_.makeImmutable();
-      }
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.common_ = commonBuilder_ == null ? common_ : commonBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.JavaSettings) {
-        return mergeFrom((com.google.api.JavaSettings) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.JavaSettings other) {
-      if (other == com.google.api.JavaSettings.getDefaultInstance()) return this;
-      if (!other.getLibraryPackage().isEmpty()) {
-        libraryPackage_ = other.libraryPackage_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      internalGetMutableServiceClassNames().mergeFrom(other.internalGetServiceClassNames());
-      bitField0_ |= 0x00000002;
-      if (other.hasCommon()) {
-        mergeCommon(other.getCommon());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                libraryPackage_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
-                    serviceClassNames__ =
-                        input.readMessage(
-                            ServiceClassNamesDefaultEntryHolder.defaultEntry.getParserForType(),
-                            extensionRegistry);
-                internalGetMutableServiceClassNames()
-                    .getMutableMap()
-                    .put(serviceClassNames__.getKey(), serviceClassNames__.getValue());
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 26:
-              {
-                input.readMessage(getCommonFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 26
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object libraryPackage_ = "";
     /**
      *
      *
@@ -807,16 +540,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The libraryPackage.
      */
+    @java.lang.Override
     public java.lang.String getLibraryPackage() {
-      java.lang.Object ref = libraryPackage_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        libraryPackage_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getLibraryPackage();
     }
     /**
      *
@@ -839,16 +565,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for libraryPackage.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getLibraryPackageBytes() {
-      java.lang.Object ref = libraryPackage_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        libraryPackage_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getLibraryPackageBytes();
     }
     /**
      *
@@ -873,12 +592,8 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setLibraryPackage(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      libraryPackage_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setLibraryPackage(value);
       return this;
     }
     /**
@@ -903,9 +618,8 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearLibraryPackage() {
-      libraryPackage_ = getDefaultInstance().getLibraryPackage();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearLibraryPackage();
       return this;
     }
     /**
@@ -931,44 +645,14 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setLibraryPackageBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      libraryPackage_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setLibraryPackageBytes(value);
       return this;
     }
 
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String> serviceClassNames_;
-
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-        internalGetServiceClassNames() {
-      if (serviceClassNames_ == null) {
-        return com.google.protobuf.MapField.emptyMapField(
-            ServiceClassNamesDefaultEntryHolder.defaultEntry);
-      }
-      return serviceClassNames_;
-    }
-
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-        internalGetMutableServiceClassNames() {
-      if (serviceClassNames_ == null) {
-        serviceClassNames_ =
-            com.google.protobuf.MapField.newMapField(
-                ServiceClassNamesDefaultEntryHolder.defaultEntry);
-      }
-      if (!serviceClassNames_.isMutable()) {
-        serviceClassNames_ = serviceClassNames_.copy();
-      }
-      bitField0_ |= 0x00000002;
-      onChanged();
-      return serviceClassNames_;
-    }
-
+    @java.lang.Override
     public int getServiceClassNamesCount() {
-      return internalGetServiceClassNames().getMap().size();
+      return instance.getServiceClassNamesMap().size();
     }
     /**
      *
@@ -994,10 +678,42 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean containsServiceClassNames(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      return internalGetServiceClassNames().getMap().containsKey(key);
+      java.lang.Class<?> keyClass = key.getClass();
+      return instance.getServiceClassNamesMap().containsKey(key);
+    }
+
+    public Builder clearServiceClassNames() {
+      copyOnWrite();
+      instance.getMutableServiceClassNamesMap().clear();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Configure the Java class name to use instead of the service's for its
+     * corresponding generated GAPIC client. Keys are fully-qualified
+     * service names as they appear in the protobuf (including the full
+     * the language_settings.java.interface_names" field in gapic.yaml. API
+     * teams should otherwise use the service name as it appears in the
+     * protobuf.
+     *
+     * Example of a YAML configuration::
+     *
+     *  publishing:
+     *    java_settings:
+     *      service_class_names:
+     *        - google.pubsub.v1.Publisher: TopicAdmin
+     *        - google.pubsub.v1.Subscriber: SubscriptionAdmin
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; service_class_names = 2;</code>
+     */
+    public Builder removeServiceClassNames(java.lang.String key) {
+      java.lang.Class<?> keyClass = key.getClass();
+      copyOnWrite();
+      instance.getMutableServiceClassNamesMap().remove(key);
+      return this;
     }
     /** Use {@link #getServiceClassNamesMap()} instead. */
     @java.lang.Override
@@ -1029,7 +745,7 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.util.Map<java.lang.String, java.lang.String> getServiceClassNamesMap() {
-      return internalGetServiceClassNames().getMap();
+      return java.util.Collections.unmodifiableMap(instance.getServiceClassNamesMap());
     }
     /**
      *
@@ -1058,11 +774,8 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
         java.lang.String key,
         /* nullable */
         java.lang.String defaultValue) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map =
-          internalGetServiceClassNames().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = instance.getServiceClassNamesMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
     /**
@@ -1089,56 +802,12 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getServiceClassNamesOrThrow(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map =
-          internalGetServiceClassNames().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = instance.getServiceClassNamesMap();
       if (!map.containsKey(key)) {
         throw new java.lang.IllegalArgumentException();
       }
       return map.get(key);
-    }
-
-    public Builder clearServiceClassNames() {
-      bitField0_ = (bitField0_ & ~0x00000002);
-      internalGetMutableServiceClassNames().getMutableMap().clear();
-      return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Configure the Java class name to use instead of the service's for its
-     * corresponding generated GAPIC client. Keys are fully-qualified
-     * service names as they appear in the protobuf (including the full
-     * the language_settings.java.interface_names" field in gapic.yaml. API
-     * teams should otherwise use the service name as it appears in the
-     * protobuf.
-     *
-     * Example of a YAML configuration::
-     *
-     *  publishing:
-     *    java_settings:
-     *      service_class_names:
-     *        - google.pubsub.v1.Publisher: TopicAdmin
-     *        - google.pubsub.v1.Subscriber: SubscriptionAdmin
-     * </pre>
-     *
-     * <code>map&lt;string, string&gt; service_class_names = 2;</code>
-     */
-    public Builder removeServiceClassNames(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      internalGetMutableServiceClassNames().getMutableMap().remove(key);
-      return this;
-    }
-    /** Use alternate mutation accessors instead. */
-    @java.lang.Deprecated
-    public java.util.Map<java.lang.String, java.lang.String> getMutableServiceClassNames() {
-      bitField0_ |= 0x00000002;
-      return internalGetMutableServiceClassNames().getMutableMap();
     }
     /**
      *
@@ -1163,14 +832,10 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>map&lt;string, string&gt; service_class_names = 2;</code>
      */
     public Builder putServiceClassNames(java.lang.String key, java.lang.String value) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      if (value == null) {
-        throw new NullPointerException("map value");
-      }
-      internalGetMutableServiceClassNames().getMutableMap().put(key, value);
-      bitField0_ |= 0x00000002;
+      java.lang.Class<?> keyClass = key.getClass();
+      java.lang.Class<?> valueClass = value.getClass();
+      copyOnWrite();
+      instance.getMutableServiceClassNamesMap().put(key, value);
       return this;
     }
     /**
@@ -1197,17 +862,11 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder putAllServiceClassNames(
         java.util.Map<java.lang.String, java.lang.String> values) {
-      internalGetMutableServiceClassNames().getMutableMap().putAll(values);
-      bitField0_ |= 0x00000002;
+      copyOnWrite();
+      instance.getMutableServiceClassNamesMap().putAll(values);
       return this;
     }
 
-    private com.google.api.CommonLanguageSettings common_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.CommonLanguageSettings,
-            com.google.api.CommonLanguageSettings.Builder,
-            com.google.api.CommonLanguageSettingsOrBuilder>
-        commonBuilder_;
     /**
      *
      *
@@ -1216,11 +875,10 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.CommonLanguageSettings common = 3;</code>
-     *
-     * @return Whether the common field is set.
      */
+    @java.lang.Override
     public boolean hasCommon() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return instance.hasCommon();
     }
     /**
      *
@@ -1230,17 +888,10 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.CommonLanguageSettings common = 3;</code>
-     *
-     * @return The common.
      */
+    @java.lang.Override
     public com.google.api.CommonLanguageSettings getCommon() {
-      if (commonBuilder_ == null) {
-        return common_ == null
-            ? com.google.api.CommonLanguageSettings.getDefaultInstance()
-            : common_;
-      } else {
-        return commonBuilder_.getMessage();
-      }
+      return instance.getCommon();
     }
     /**
      *
@@ -1252,16 +903,8 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.CommonLanguageSettings common = 3;</code>
      */
     public Builder setCommon(com.google.api.CommonLanguageSettings value) {
-      if (commonBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        common_ = value;
-      } else {
-        commonBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setCommon(value);
       return this;
     }
     /**
@@ -1274,13 +917,8 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.CommonLanguageSettings common = 3;</code>
      */
     public Builder setCommon(com.google.api.CommonLanguageSettings.Builder builderForValue) {
-      if (commonBuilder_ == null) {
-        common_ = builderForValue.build();
-      } else {
-        commonBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setCommon(builderForValue.build());
       return this;
     }
     /**
@@ -1293,21 +931,8 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.CommonLanguageSettings common = 3;</code>
      */
     public Builder mergeCommon(com.google.api.CommonLanguageSettings value) {
-      if (commonBuilder_ == null) {
-        if (((bitField0_ & 0x00000004) != 0)
-            && common_ != null
-            && common_ != com.google.api.CommonLanguageSettings.getDefaultInstance()) {
-          getCommonBuilder().mergeFrom(value);
-        } else {
-          common_ = value;
-        }
-      } else {
-        commonBuilder_.mergeFrom(value);
-      }
-      if (common_ != null) {
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeCommon(value);
       return this;
     }
     /**
@@ -1320,131 +945,95 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.CommonLanguageSettings common = 3;</code>
      */
     public Builder clearCommon() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      common_ = null;
-      if (commonBuilder_ != null) {
-        commonBuilder_.dispose();
-        commonBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearCommon();
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Some settings.
-     * </pre>
-     *
-     * <code>.google.api.CommonLanguageSettings common = 3;</code>
-     */
-    public com.google.api.CommonLanguageSettings.Builder getCommonBuilder() {
-      bitField0_ |= 0x00000004;
-      onChanged();
-      return getCommonFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Some settings.
-     * </pre>
-     *
-     * <code>.google.api.CommonLanguageSettings common = 3;</code>
-     */
-    public com.google.api.CommonLanguageSettingsOrBuilder getCommonOrBuilder() {
-      if (commonBuilder_ != null) {
-        return commonBuilder_.getMessageOrBuilder();
-      } else {
-        return common_ == null
-            ? com.google.api.CommonLanguageSettings.getDefaultInstance()
-            : common_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Some settings.
-     * </pre>
-     *
-     * <code>.google.api.CommonLanguageSettings common = 3;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.CommonLanguageSettings,
-            com.google.api.CommonLanguageSettings.Builder,
-            com.google.api.CommonLanguageSettingsOrBuilder>
-        getCommonFieldBuilder() {
-      if (commonBuilder_ == null) {
-        commonBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.api.CommonLanguageSettings,
-                com.google.api.CommonLanguageSettings.Builder,
-                com.google.api.CommonLanguageSettingsOrBuilder>(
-                getCommon(), getParentForChildren(), isClean());
-        common_ = null;
-      }
-      return commonBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.api.JavaSettings)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.JavaSettings();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_",
+                "libraryPackage_",
+                "serviceClassNames_",
+                ServiceClassNamesDefaultEntryHolder.defaultEntry,
+                "common_",
+              };
+          java.lang.String info =
+              "\u0000\u0003\u0000\u0001\u0001\u0003\u0003\u0001\u0000\u0000\u0001\u0208\u00022\u0003"
+                  + "\u1009\u0000";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.JavaSettings> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.JavaSettings.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.api.JavaSettings>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.JavaSettings)
   private static final com.google.api.JavaSettings DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.JavaSettings();
+    JavaSettings defaultInstance = new JavaSettings();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        JavaSettings.class, defaultInstance);
   }
 
   public static com.google.api.JavaSettings getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<JavaSettings> PARSER =
-      new com.google.protobuf.AbstractParser<JavaSettings>() {
-        @java.lang.Override
-        public JavaSettings parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<JavaSettings> PARSER;
 
   public static com.google.protobuf.Parser<JavaSettings> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<JavaSettings> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.JavaSettings getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

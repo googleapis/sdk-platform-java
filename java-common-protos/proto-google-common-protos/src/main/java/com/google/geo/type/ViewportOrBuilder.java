@@ -22,7 +22,7 @@ package com.google.geo.type;
 public interface ViewportOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.geo.type.Viewport)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -48,16 +48,6 @@ public interface ViewportOrBuilder
    * @return The low.
    */
   com.google.type.LatLng getLow();
-  /**
-   *
-   *
-   * <pre>
-   * Required. The low point of the viewport.
-   * </pre>
-   *
-   * <code>.google.type.LatLng low = 1;</code>
-   */
-  com.google.type.LatLngOrBuilder getLowOrBuilder();
 
   /**
    *
@@ -83,14 +73,4 @@ public interface ViewportOrBuilder
    * @return The high.
    */
   com.google.type.LatLng getHigh();
-  /**
-   *
-   *
-   * <pre>
-   * Required. The high point of the viewport.
-   * </pre>
-   *
-   * <code>.google.type.LatLng high = 2;</code>
-   */
-  com.google.type.LatLngOrBuilder getHighOrBuilder();
 }

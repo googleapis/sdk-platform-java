@@ -28,42 +28,17 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.SourceInfo}
  */
-public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
+public final class SourceInfo
+    extends com.google.protobuf.GeneratedMessageLite<SourceInfo, SourceInfo.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.SourceInfo)
     SourceInfoOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use SourceInfo.newBuilder() to construct.
-  private SourceInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private SourceInfo() {
-    sourceFiles_ = java.util.Collections.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new SourceInfo();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.SourceInfoProto.internal_static_google_api_SourceInfo_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.SourceInfoProto.internal_static_google_api_SourceInfo_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.SourceInfo.class, com.google.api.SourceInfo.Builder.class);
+    sourceFiles_ = emptyProtobufList();
   }
 
   public static final int SOURCE_FILES_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.protobuf.Any> sourceFiles_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.protobuf.Any> sourceFiles_;
   /**
    *
    *
@@ -86,7 +61,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Any source_files = 1;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.protobuf.AnyOrBuilder> getSourceFilesOrBuilderList() {
     return sourceFiles_;
   }
@@ -125,170 +99,179 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Any source_files = 1;</code>
    */
-  @java.lang.Override
   public com.google.protobuf.AnyOrBuilder getSourceFilesOrBuilder(int index) {
     return sourceFiles_.get(index);
   }
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  private void ensureSourceFilesIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.protobuf.Any> tmp = sourceFiles_;
+    if (!tmp.isModifiable()) {
+      sourceFiles_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
   }
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    for (int i = 0; i < sourceFiles_.size(); i++) {
-      output.writeMessage(1, sourceFiles_.get(i));
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * All files used during config generation.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any source_files = 1;</code>
+   */
+  private void setSourceFiles(int index, com.google.protobuf.Any value) {
+    value.getClass();
+    ensureSourceFilesIsMutable();
+    sourceFiles_.set(index, value);
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    for (int i = 0; i < sourceFiles_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, sourceFiles_.get(i));
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
+  /**
+   *
+   *
+   * <pre>
+   * All files used during config generation.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any source_files = 1;</code>
+   */
+  private void addSourceFiles(com.google.protobuf.Any value) {
+    value.getClass();
+    ensureSourceFilesIsMutable();
+    sourceFiles_.add(value);
   }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.SourceInfo)) {
-      return super.equals(obj);
-    }
-    com.google.api.SourceInfo other = (com.google.api.SourceInfo) obj;
-
-    if (!getSourceFilesList().equals(other.getSourceFilesList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * All files used during config generation.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any source_files = 1;</code>
+   */
+  private void addSourceFiles(int index, com.google.protobuf.Any value) {
+    value.getClass();
+    ensureSourceFilesIsMutable();
+    sourceFiles_.add(index, value);
   }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (getSourceFilesCount() > 0) {
-      hash = (37 * hash) + SOURCE_FILES_FIELD_NUMBER;
-      hash = (53 * hash) + getSourceFilesList().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * All files used during config generation.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any source_files = 1;</code>
+   */
+  private void addAllSourceFiles(java.lang.Iterable<? extends com.google.protobuf.Any> values) {
+    ensureSourceFilesIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, sourceFiles_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * All files used during config generation.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any source_files = 1;</code>
+   */
+  private void clearSourceFiles() {
+    sourceFiles_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * All files used during config generation.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any source_files = 1;</code>
+   */
+  private void removeSourceFiles(int index) {
+    ensureSourceFilesIsMutable();
+    sourceFiles_.remove(index);
   }
 
   public static com.google.api.SourceInfo parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.SourceInfo parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.SourceInfo parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.SourceInfo parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.SourceInfo parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.SourceInfo parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.SourceInfo parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.SourceInfo parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.SourceInfo parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.SourceInfo parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.SourceInfo parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.SourceInfo parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.SourceInfo prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -298,233 +281,15 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.api.SourceInfo}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<com.google.api.SourceInfo, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.SourceInfo)
       com.google.api.SourceInfoOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.SourceInfoProto.internal_static_google_api_SourceInfo_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.SourceInfoProto.internal_static_google_api_SourceInfo_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.SourceInfo.class, com.google.api.SourceInfo.Builder.class);
-    }
-
     // Construct using com.google.api.SourceInfo.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      if (sourceFilesBuilder_ == null) {
-        sourceFiles_ = java.util.Collections.emptyList();
-      } else {
-        sourceFiles_ = null;
-        sourceFilesBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000001);
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.SourceInfoProto.internal_static_google_api_SourceInfo_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.SourceInfo getDefaultInstanceForType() {
-      return com.google.api.SourceInfo.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.SourceInfo build() {
-      com.google.api.SourceInfo result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.SourceInfo buildPartial() {
-      com.google.api.SourceInfo result = new com.google.api.SourceInfo(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.api.SourceInfo result) {
-      if (sourceFilesBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
-          sourceFiles_ = java.util.Collections.unmodifiableList(sourceFiles_);
-          bitField0_ = (bitField0_ & ~0x00000001);
-        }
-        result.sourceFiles_ = sourceFiles_;
-      } else {
-        result.sourceFiles_ = sourceFilesBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.api.SourceInfo result) {
-      int from_bitField0_ = bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.SourceInfo) {
-        return mergeFrom((com.google.api.SourceInfo) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.SourceInfo other) {
-      if (other == com.google.api.SourceInfo.getDefaultInstance()) return this;
-      if (sourceFilesBuilder_ == null) {
-        if (!other.sourceFiles_.isEmpty()) {
-          if (sourceFiles_.isEmpty()) {
-            sourceFiles_ = other.sourceFiles_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensureSourceFilesIsMutable();
-            sourceFiles_.addAll(other.sourceFiles_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.sourceFiles_.isEmpty()) {
-          if (sourceFilesBuilder_.isEmpty()) {
-            sourceFilesBuilder_.dispose();
-            sourceFilesBuilder_ = null;
-            sourceFiles_ = other.sourceFiles_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-            sourceFilesBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getSourceFilesFieldBuilder()
-                    : null;
-          } else {
-            sourceFilesBuilder_.addAllMessages(other.sourceFiles_);
-          }
-        }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                com.google.protobuf.Any m =
-                    input.readMessage(com.google.protobuf.Any.parser(), extensionRegistry);
-                if (sourceFilesBuilder_ == null) {
-                  ensureSourceFilesIsMutable();
-                  sourceFiles_.add(m);
-                } else {
-                  sourceFilesBuilder_.addMessage(m);
-                }
-                break;
-              } // case 10
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.util.List<com.google.protobuf.Any> sourceFiles_ =
-        java.util.Collections.emptyList();
-
-    private void ensureSourceFilesIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
-        sourceFiles_ = new java.util.ArrayList<com.google.protobuf.Any>(sourceFiles_);
-        bitField0_ |= 0x00000001;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.protobuf.Any,
-            com.google.protobuf.Any.Builder,
-            com.google.protobuf.AnyOrBuilder>
-        sourceFilesBuilder_;
 
     /**
      *
@@ -535,12 +300,9 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.protobuf.Any source_files = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.protobuf.Any> getSourceFilesList() {
-      if (sourceFilesBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(sourceFiles_);
-      } else {
-        return sourceFilesBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getSourceFilesList());
     }
     /**
      *
@@ -551,12 +313,9 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.protobuf.Any source_files = 1;</code>
      */
+    @java.lang.Override
     public int getSourceFilesCount() {
-      if (sourceFilesBuilder_ == null) {
-        return sourceFiles_.size();
-      } else {
-        return sourceFilesBuilder_.getCount();
-      }
+      return instance.getSourceFilesCount();
     }
     /**
      *
@@ -567,12 +326,10 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.protobuf.Any source_files = 1;</code>
      */
+
+    @java.lang.Override
     public com.google.protobuf.Any getSourceFiles(int index) {
-      if (sourceFilesBuilder_ == null) {
-        return sourceFiles_.get(index);
-      } else {
-        return sourceFilesBuilder_.getMessage(index);
-      }
+      return instance.getSourceFiles(index);
     }
     /**
      *
@@ -584,16 +341,8 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Any source_files = 1;</code>
      */
     public Builder setSourceFiles(int index, com.google.protobuf.Any value) {
-      if (sourceFilesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureSourceFilesIsMutable();
-        sourceFiles_.set(index, value);
-        onChanged();
-      } else {
-        sourceFilesBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setSourceFiles(index, value);
       return this;
     }
     /**
@@ -606,13 +355,8 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Any source_files = 1;</code>
      */
     public Builder setSourceFiles(int index, com.google.protobuf.Any.Builder builderForValue) {
-      if (sourceFilesBuilder_ == null) {
-        ensureSourceFilesIsMutable();
-        sourceFiles_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        sourceFilesBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setSourceFiles(index, builderForValue.build());
       return this;
     }
     /**
@@ -625,16 +369,8 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Any source_files = 1;</code>
      */
     public Builder addSourceFiles(com.google.protobuf.Any value) {
-      if (sourceFilesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureSourceFilesIsMutable();
-        sourceFiles_.add(value);
-        onChanged();
-      } else {
-        sourceFilesBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addSourceFiles(value);
       return this;
     }
     /**
@@ -647,16 +383,8 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Any source_files = 1;</code>
      */
     public Builder addSourceFiles(int index, com.google.protobuf.Any value) {
-      if (sourceFilesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureSourceFilesIsMutable();
-        sourceFiles_.add(index, value);
-        onChanged();
-      } else {
-        sourceFilesBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addSourceFiles(index, value);
       return this;
     }
     /**
@@ -669,13 +397,8 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Any source_files = 1;</code>
      */
     public Builder addSourceFiles(com.google.protobuf.Any.Builder builderForValue) {
-      if (sourceFilesBuilder_ == null) {
-        ensureSourceFilesIsMutable();
-        sourceFiles_.add(builderForValue.build());
-        onChanged();
-      } else {
-        sourceFilesBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addSourceFiles(builderForValue.build());
       return this;
     }
     /**
@@ -688,13 +411,8 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Any source_files = 1;</code>
      */
     public Builder addSourceFiles(int index, com.google.protobuf.Any.Builder builderForValue) {
-      if (sourceFilesBuilder_ == null) {
-        ensureSourceFilesIsMutable();
-        sourceFiles_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        sourceFilesBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addSourceFiles(index, builderForValue.build());
       return this;
     }
     /**
@@ -707,13 +425,8 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Any source_files = 1;</code>
      */
     public Builder addAllSourceFiles(java.lang.Iterable<? extends com.google.protobuf.Any> values) {
-      if (sourceFilesBuilder_ == null) {
-        ensureSourceFilesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, sourceFiles_);
-        onChanged();
-      } else {
-        sourceFilesBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllSourceFiles(values);
       return this;
     }
     /**
@@ -726,13 +439,8 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Any source_files = 1;</code>
      */
     public Builder clearSourceFiles() {
-      if (sourceFilesBuilder_ == null) {
-        sourceFiles_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-      } else {
-        sourceFilesBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearSourceFiles();
       return this;
     }
     /**
@@ -745,173 +453,90 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Any source_files = 1;</code>
      */
     public Builder removeSourceFiles(int index) {
-      if (sourceFilesBuilder_ == null) {
-        ensureSourceFilesIsMutable();
-        sourceFiles_.remove(index);
-        onChanged();
-      } else {
-        sourceFilesBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeSourceFiles(index);
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * All files used during config generation.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Any source_files = 1;</code>
-     */
-    public com.google.protobuf.Any.Builder getSourceFilesBuilder(int index) {
-      return getSourceFilesFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * All files used during config generation.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Any source_files = 1;</code>
-     */
-    public com.google.protobuf.AnyOrBuilder getSourceFilesOrBuilder(int index) {
-      if (sourceFilesBuilder_ == null) {
-        return sourceFiles_.get(index);
-      } else {
-        return sourceFilesBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * All files used during config generation.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Any source_files = 1;</code>
-     */
-    public java.util.List<? extends com.google.protobuf.AnyOrBuilder>
-        getSourceFilesOrBuilderList() {
-      if (sourceFilesBuilder_ != null) {
-        return sourceFilesBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(sourceFiles_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * All files used during config generation.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Any source_files = 1;</code>
-     */
-    public com.google.protobuf.Any.Builder addSourceFilesBuilder() {
-      return getSourceFilesFieldBuilder().addBuilder(com.google.protobuf.Any.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * All files used during config generation.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Any source_files = 1;</code>
-     */
-    public com.google.protobuf.Any.Builder addSourceFilesBuilder(int index) {
-      return getSourceFilesFieldBuilder()
-          .addBuilder(index, com.google.protobuf.Any.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * All files used during config generation.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Any source_files = 1;</code>
-     */
-    public java.util.List<com.google.protobuf.Any.Builder> getSourceFilesBuilderList() {
-      return getSourceFilesFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.protobuf.Any,
-            com.google.protobuf.Any.Builder,
-            com.google.protobuf.AnyOrBuilder>
-        getSourceFilesFieldBuilder() {
-      if (sourceFilesBuilder_ == null) {
-        sourceFilesBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.protobuf.Any,
-                com.google.protobuf.Any.Builder,
-                com.google.protobuf.AnyOrBuilder>(
-                sourceFiles_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
-        sourceFiles_ = null;
-      }
-      return sourceFilesBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.api.SourceInfo)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.SourceInfo();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "sourceFiles_", com.google.protobuf.Any.class,
+              };
+          java.lang.String info =
+              "\u0000\u0001\u0000\u0000\u0001\u0001\u0001\u0000\u0001\u0000\u0001\u001b";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.SourceInfo> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.SourceInfo.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.api.SourceInfo>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.SourceInfo)
   private static final com.google.api.SourceInfo DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.SourceInfo();
+    SourceInfo defaultInstance = new SourceInfo();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        SourceInfo.class, defaultInstance);
   }
 
   public static com.google.api.SourceInfo getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<SourceInfo> PARSER =
-      new com.google.protobuf.AbstractParser<SourceInfo>() {
-        @java.lang.Override
-        public SourceInfo parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<SourceInfo> PARSER;
 
   public static com.google.protobuf.Parser<SourceInfo> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<SourceInfo> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.SourceInfo getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

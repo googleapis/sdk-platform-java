@@ -22,7 +22,7 @@ package com.google.iam.v2beta;
 public interface PolicyOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.iam.v2beta.Policy)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -196,6 +196,7 @@ public interface PolicyOrBuilder
    *
    * <code>map&lt;string, string&gt; annotations = 5;</code>
    */
+
   /* nullable */
   java.lang.String getAnnotationsOrDefault(
       java.lang.String key,
@@ -274,17 +275,6 @@ public interface PolicyOrBuilder
    * @return The createTime.
    */
   com.google.protobuf.Timestamp getCreateTime();
-  /**
-   *
-   *
-   * <pre>
-   * Output only. The time when the `Policy` was created.
-   * </pre>
-   *
-   * <code>.google.protobuf.Timestamp create_time = 7 [(.google.api.field_behavior) = OUTPUT_ONLY];
-   * </code>
-   */
-  com.google.protobuf.TimestampOrBuilder getCreateTimeOrBuilder();
 
   /**
    *
@@ -312,17 +302,6 @@ public interface PolicyOrBuilder
    * @return The updateTime.
    */
   com.google.protobuf.Timestamp getUpdateTime();
-  /**
-   *
-   *
-   * <pre>
-   * Output only. The time when the `Policy` was last updated.
-   * </pre>
-   *
-   * <code>.google.protobuf.Timestamp update_time = 8 [(.google.api.field_behavior) = OUTPUT_ONLY];
-   * </code>
-   */
-  com.google.protobuf.TimestampOrBuilder getUpdateTimeOrBuilder();
 
   /**
    *
@@ -350,17 +329,6 @@ public interface PolicyOrBuilder
    * @return The deleteTime.
    */
   com.google.protobuf.Timestamp getDeleteTime();
-  /**
-   *
-   *
-   * <pre>
-   * Output only. The time when the `Policy` was deleted. Empty if the policy is not deleted.
-   * </pre>
-   *
-   * <code>.google.protobuf.Timestamp delete_time = 9 [(.google.api.field_behavior) = OUTPUT_ONLY];
-   * </code>
-   */
-  com.google.protobuf.TimestampOrBuilder getDeleteTimeOrBuilder();
 
   /**
    *
@@ -395,26 +363,4 @@ public interface PolicyOrBuilder
    * <code>repeated .google.iam.v2beta.PolicyRule rules = 10;</code>
    */
   int getRulesCount();
-  /**
-   *
-   *
-   * <pre>
-   * A list of rules that specify the behavior of the `Policy`. All of the rules
-   * should be of the `kind` specified in the `Policy`.
-   * </pre>
-   *
-   * <code>repeated .google.iam.v2beta.PolicyRule rules = 10;</code>
-   */
-  java.util.List<? extends com.google.iam.v2beta.PolicyRuleOrBuilder> getRulesOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * A list of rules that specify the behavior of the `Policy`. All of the rules
-   * should be of the `kind` specified in the `Policy`.
-   * </pre>
-   *
-   * <code>repeated .google.iam.v2beta.PolicyRule rules = 10;</code>
-   */
-  com.google.iam.v2beta.PolicyRuleOrBuilder getRulesOrBuilder(int index);
 }

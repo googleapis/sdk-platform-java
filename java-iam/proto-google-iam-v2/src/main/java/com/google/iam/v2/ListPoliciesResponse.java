@@ -28,46 +28,19 @@ package com.google.iam.v2;
  *
  * Protobuf type {@code google.iam.v2.ListPoliciesResponse}
  */
-public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMessageV3
+public final class ListPoliciesResponse
+    extends com.google.protobuf.GeneratedMessageLite<
+        ListPoliciesResponse, ListPoliciesResponse.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.iam.v2.ListPoliciesResponse)
     ListPoliciesResponseOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use ListPoliciesResponse.newBuilder() to construct.
-  private ListPoliciesResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private ListPoliciesResponse() {
-    policies_ = java.util.Collections.emptyList();
+    policies_ = emptyProtobufList();
     nextPageToken_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new ListPoliciesResponse();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.iam.v2.PolicyProto
-        .internal_static_google_iam_v2_ListPoliciesResponse_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.iam.v2.PolicyProto
-        .internal_static_google_iam_v2_ListPoliciesResponse_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.iam.v2.ListPoliciesResponse.class,
-            com.google.iam.v2.ListPoliciesResponse.Builder.class);
-  }
-
   public static final int POLICIES_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.iam.v2.Policy> policies_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.iam.v2.Policy> policies_;
   /**
    *
    *
@@ -90,7 +63,6 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
    *
    * <code>repeated .google.iam.v2.Policy policies = 1;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.iam.v2.PolicyOrBuilder> getPoliciesOrBuilderList() {
     return policies_;
   }
@@ -129,15 +101,100 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
    *
    * <code>repeated .google.iam.v2.Policy policies = 1;</code>
    */
-  @java.lang.Override
   public com.google.iam.v2.PolicyOrBuilder getPoliciesOrBuilder(int index) {
     return policies_.get(index);
   }
 
-  public static final int NEXT_PAGE_TOKEN_FIELD_NUMBER = 2;
+  private void ensurePoliciesIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.iam.v2.Policy> tmp = policies_;
+    if (!tmp.isModifiable()) {
+      policies_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
 
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object nextPageToken_ = "";
+  /**
+   *
+   *
+   * <pre>
+   * Metadata for the policies that are attached to the resource.
+   * </pre>
+   *
+   * <code>repeated .google.iam.v2.Policy policies = 1;</code>
+   */
+  private void setPolicies(int index, com.google.iam.v2.Policy value) {
+    value.getClass();
+    ensurePoliciesIsMutable();
+    policies_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Metadata for the policies that are attached to the resource.
+   * </pre>
+   *
+   * <code>repeated .google.iam.v2.Policy policies = 1;</code>
+   */
+  private void addPolicies(com.google.iam.v2.Policy value) {
+    value.getClass();
+    ensurePoliciesIsMutable();
+    policies_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Metadata for the policies that are attached to the resource.
+   * </pre>
+   *
+   * <code>repeated .google.iam.v2.Policy policies = 1;</code>
+   */
+  private void addPolicies(int index, com.google.iam.v2.Policy value) {
+    value.getClass();
+    ensurePoliciesIsMutable();
+    policies_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Metadata for the policies that are attached to the resource.
+   * </pre>
+   *
+   * <code>repeated .google.iam.v2.Policy policies = 1;</code>
+   */
+  private void addAllPolicies(java.lang.Iterable<? extends com.google.iam.v2.Policy> values) {
+    ensurePoliciesIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, policies_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Metadata for the policies that are attached to the resource.
+   * </pre>
+   *
+   * <code>repeated .google.iam.v2.Policy policies = 1;</code>
+   */
+  private void clearPolicies() {
+    policies_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Metadata for the policies that are attached to the resource.
+   * </pre>
+   *
+   * <code>repeated .google.iam.v2.Policy policies = 1;</code>
+   */
+  private void removePolicies(int index) {
+    ensurePoliciesIsMutable();
+    policies_.remove(index);
+  }
+
+  public static final int NEXT_PAGE_TOKEN_FIELD_NUMBER = 2;
+  private java.lang.String nextPageToken_;
   /**
    *
    *
@@ -152,15 +209,7 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
    */
   @java.lang.Override
   public java.lang.String getNextPageToken() {
-    java.lang.Object ref = nextPageToken_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      nextPageToken_ = s;
-      return s;
-    }
+    return nextPageToken_;
   }
   /**
    *
@@ -176,186 +225,138 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getNextPageTokenBytes() {
-    java.lang.Object ref = nextPageToken_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      nextPageToken_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(nextPageToken_);
   }
+  /**
+   *
+   *
+   * <pre>
+   * A page token that you can use in a [ListPoliciesRequest][google.iam.v2.ListPoliciesRequest] to retrieve the
+   * next page. If this field is omitted, there are no additional pages.
+   * </pre>
+   *
+   * <code>string next_page_token = 2;</code>
+   *
+   * @param value The nextPageToken to set.
+   */
+  private void setNextPageToken(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    nextPageToken_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * A page token that you can use in a [ListPoliciesRequest][google.iam.v2.ListPoliciesRequest] to retrieve the
+   * next page. If this field is omitted, there are no additional pages.
+   * </pre>
+   *
+   * <code>string next_page_token = 2;</code>
+   */
+  private void clearNextPageToken() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    for (int i = 0; i < policies_.size(); i++) {
-      output.writeMessage(1, policies_.get(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(nextPageToken_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, nextPageToken_);
-    }
-    getUnknownFields().writeTo(output);
+    nextPageToken_ = getDefaultInstance().getNextPageToken();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    for (int i = 0; i < policies_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, policies_.get(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(nextPageToken_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, nextPageToken_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.iam.v2.ListPoliciesResponse)) {
-      return super.equals(obj);
-    }
-    com.google.iam.v2.ListPoliciesResponse other = (com.google.iam.v2.ListPoliciesResponse) obj;
-
-    if (!getPoliciesList().equals(other.getPoliciesList())) return false;
-    if (!getNextPageToken().equals(other.getNextPageToken())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (getPoliciesCount() > 0) {
-      hash = (37 * hash) + POLICIES_FIELD_NUMBER;
-      hash = (53 * hash) + getPoliciesList().hashCode();
-    }
-    hash = (37 * hash) + NEXT_PAGE_TOKEN_FIELD_NUMBER;
-    hash = (53 * hash) + getNextPageToken().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * A page token that you can use in a [ListPoliciesRequest][google.iam.v2.ListPoliciesRequest] to retrieve the
+   * next page. If this field is omitted, there are no additional pages.
+   * </pre>
+   *
+   * <code>string next_page_token = 2;</code>
+   *
+   * @param value The bytes for nextPageToken to set.
+   */
+  private void setNextPageTokenBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    nextPageToken_ = value.toStringUtf8();
   }
 
   public static com.google.iam.v2.ListPoliciesResponse parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v2.ListPoliciesResponse parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v2.ListPoliciesResponse parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v2.ListPoliciesResponse parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v2.ListPoliciesResponse parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v2.ListPoliciesResponse parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v2.ListPoliciesResponse parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v2.ListPoliciesResponse parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.iam.v2.ListPoliciesResponse parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v2.ListPoliciesResponse parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.iam.v2.ListPoliciesResponse parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v2.ListPoliciesResponse parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.iam.v2.ListPoliciesResponse prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -365,252 +366,16 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
    *
    * Protobuf type {@code google.iam.v2.ListPoliciesResponse}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.iam.v2.ListPoliciesResponse, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.iam.v2.ListPoliciesResponse)
       com.google.iam.v2.ListPoliciesResponseOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.iam.v2.PolicyProto
-          .internal_static_google_iam_v2_ListPoliciesResponse_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.iam.v2.PolicyProto
-          .internal_static_google_iam_v2_ListPoliciesResponse_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.iam.v2.ListPoliciesResponse.class,
-              com.google.iam.v2.ListPoliciesResponse.Builder.class);
-    }
-
     // Construct using com.google.iam.v2.ListPoliciesResponse.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      if (policiesBuilder_ == null) {
-        policies_ = java.util.Collections.emptyList();
-      } else {
-        policies_ = null;
-        policiesBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000001);
-      nextPageToken_ = "";
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.iam.v2.PolicyProto
-          .internal_static_google_iam_v2_ListPoliciesResponse_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.iam.v2.ListPoliciesResponse getDefaultInstanceForType() {
-      return com.google.iam.v2.ListPoliciesResponse.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.iam.v2.ListPoliciesResponse build() {
-      com.google.iam.v2.ListPoliciesResponse result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.iam.v2.ListPoliciesResponse buildPartial() {
-      com.google.iam.v2.ListPoliciesResponse result =
-          new com.google.iam.v2.ListPoliciesResponse(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.iam.v2.ListPoliciesResponse result) {
-      if (policiesBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
-          policies_ = java.util.Collections.unmodifiableList(policies_);
-          bitField0_ = (bitField0_ & ~0x00000001);
-        }
-        result.policies_ = policies_;
-      } else {
-        result.policies_ = policiesBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.iam.v2.ListPoliciesResponse result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.nextPageToken_ = nextPageToken_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.iam.v2.ListPoliciesResponse) {
-        return mergeFrom((com.google.iam.v2.ListPoliciesResponse) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.iam.v2.ListPoliciesResponse other) {
-      if (other == com.google.iam.v2.ListPoliciesResponse.getDefaultInstance()) return this;
-      if (policiesBuilder_ == null) {
-        if (!other.policies_.isEmpty()) {
-          if (policies_.isEmpty()) {
-            policies_ = other.policies_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensurePoliciesIsMutable();
-            policies_.addAll(other.policies_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.policies_.isEmpty()) {
-          if (policiesBuilder_.isEmpty()) {
-            policiesBuilder_.dispose();
-            policiesBuilder_ = null;
-            policies_ = other.policies_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-            policiesBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getPoliciesFieldBuilder()
-                    : null;
-          } else {
-            policiesBuilder_.addAllMessages(other.policies_);
-          }
-        }
-      }
-      if (!other.getNextPageToken().isEmpty()) {
-        nextPageToken_ = other.nextPageToken_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                com.google.iam.v2.Policy m =
-                    input.readMessage(com.google.iam.v2.Policy.parser(), extensionRegistry);
-                if (policiesBuilder_ == null) {
-                  ensurePoliciesIsMutable();
-                  policies_.add(m);
-                } else {
-                  policiesBuilder_.addMessage(m);
-                }
-                break;
-              } // case 10
-            case 18:
-              {
-                nextPageToken_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.util.List<com.google.iam.v2.Policy> policies_ = java.util.Collections.emptyList();
-
-    private void ensurePoliciesIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
-        policies_ = new java.util.ArrayList<com.google.iam.v2.Policy>(policies_);
-        bitField0_ |= 0x00000001;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.iam.v2.Policy,
-            com.google.iam.v2.Policy.Builder,
-            com.google.iam.v2.PolicyOrBuilder>
-        policiesBuilder_;
 
     /**
      *
@@ -621,12 +386,9 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
      *
      * <code>repeated .google.iam.v2.Policy policies = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.iam.v2.Policy> getPoliciesList() {
-      if (policiesBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(policies_);
-      } else {
-        return policiesBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getPoliciesList());
     }
     /**
      *
@@ -637,12 +399,9 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
      *
      * <code>repeated .google.iam.v2.Policy policies = 1;</code>
      */
+    @java.lang.Override
     public int getPoliciesCount() {
-      if (policiesBuilder_ == null) {
-        return policies_.size();
-      } else {
-        return policiesBuilder_.getCount();
-      }
+      return instance.getPoliciesCount();
     }
     /**
      *
@@ -653,12 +412,10 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
      *
      * <code>repeated .google.iam.v2.Policy policies = 1;</code>
      */
+
+    @java.lang.Override
     public com.google.iam.v2.Policy getPolicies(int index) {
-      if (policiesBuilder_ == null) {
-        return policies_.get(index);
-      } else {
-        return policiesBuilder_.getMessage(index);
-      }
+      return instance.getPolicies(index);
     }
     /**
      *
@@ -670,16 +427,8 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
      * <code>repeated .google.iam.v2.Policy policies = 1;</code>
      */
     public Builder setPolicies(int index, com.google.iam.v2.Policy value) {
-      if (policiesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensurePoliciesIsMutable();
-        policies_.set(index, value);
-        onChanged();
-      } else {
-        policiesBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setPolicies(index, value);
       return this;
     }
     /**
@@ -692,13 +441,8 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
      * <code>repeated .google.iam.v2.Policy policies = 1;</code>
      */
     public Builder setPolicies(int index, com.google.iam.v2.Policy.Builder builderForValue) {
-      if (policiesBuilder_ == null) {
-        ensurePoliciesIsMutable();
-        policies_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        policiesBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setPolicies(index, builderForValue.build());
       return this;
     }
     /**
@@ -711,16 +455,8 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
      * <code>repeated .google.iam.v2.Policy policies = 1;</code>
      */
     public Builder addPolicies(com.google.iam.v2.Policy value) {
-      if (policiesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensurePoliciesIsMutable();
-        policies_.add(value);
-        onChanged();
-      } else {
-        policiesBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addPolicies(value);
       return this;
     }
     /**
@@ -733,16 +469,8 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
      * <code>repeated .google.iam.v2.Policy policies = 1;</code>
      */
     public Builder addPolicies(int index, com.google.iam.v2.Policy value) {
-      if (policiesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensurePoliciesIsMutable();
-        policies_.add(index, value);
-        onChanged();
-      } else {
-        policiesBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addPolicies(index, value);
       return this;
     }
     /**
@@ -755,13 +483,8 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
      * <code>repeated .google.iam.v2.Policy policies = 1;</code>
      */
     public Builder addPolicies(com.google.iam.v2.Policy.Builder builderForValue) {
-      if (policiesBuilder_ == null) {
-        ensurePoliciesIsMutable();
-        policies_.add(builderForValue.build());
-        onChanged();
-      } else {
-        policiesBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addPolicies(builderForValue.build());
       return this;
     }
     /**
@@ -774,13 +497,8 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
      * <code>repeated .google.iam.v2.Policy policies = 1;</code>
      */
     public Builder addPolicies(int index, com.google.iam.v2.Policy.Builder builderForValue) {
-      if (policiesBuilder_ == null) {
-        ensurePoliciesIsMutable();
-        policies_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        policiesBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addPolicies(index, builderForValue.build());
       return this;
     }
     /**
@@ -793,13 +511,8 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
      * <code>repeated .google.iam.v2.Policy policies = 1;</code>
      */
     public Builder addAllPolicies(java.lang.Iterable<? extends com.google.iam.v2.Policy> values) {
-      if (policiesBuilder_ == null) {
-        ensurePoliciesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, policies_);
-        onChanged();
-      } else {
-        policiesBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllPolicies(values);
       return this;
     }
     /**
@@ -812,13 +525,8 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
      * <code>repeated .google.iam.v2.Policy policies = 1;</code>
      */
     public Builder clearPolicies() {
-      if (policiesBuilder_ == null) {
-        policies_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-      } else {
-        policiesBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearPolicies();
       return this;
     }
     /**
@@ -831,115 +539,11 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
      * <code>repeated .google.iam.v2.Policy policies = 1;</code>
      */
     public Builder removePolicies(int index) {
-      if (policiesBuilder_ == null) {
-        ensurePoliciesIsMutable();
-        policies_.remove(index);
-        onChanged();
-      } else {
-        policiesBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removePolicies(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Metadata for the policies that are attached to the resource.
-     * </pre>
-     *
-     * <code>repeated .google.iam.v2.Policy policies = 1;</code>
-     */
-    public com.google.iam.v2.Policy.Builder getPoliciesBuilder(int index) {
-      return getPoliciesFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Metadata for the policies that are attached to the resource.
-     * </pre>
-     *
-     * <code>repeated .google.iam.v2.Policy policies = 1;</code>
-     */
-    public com.google.iam.v2.PolicyOrBuilder getPoliciesOrBuilder(int index) {
-      if (policiesBuilder_ == null) {
-        return policies_.get(index);
-      } else {
-        return policiesBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Metadata for the policies that are attached to the resource.
-     * </pre>
-     *
-     * <code>repeated .google.iam.v2.Policy policies = 1;</code>
-     */
-    public java.util.List<? extends com.google.iam.v2.PolicyOrBuilder> getPoliciesOrBuilderList() {
-      if (policiesBuilder_ != null) {
-        return policiesBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(policies_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Metadata for the policies that are attached to the resource.
-     * </pre>
-     *
-     * <code>repeated .google.iam.v2.Policy policies = 1;</code>
-     */
-    public com.google.iam.v2.Policy.Builder addPoliciesBuilder() {
-      return getPoliciesFieldBuilder().addBuilder(com.google.iam.v2.Policy.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Metadata for the policies that are attached to the resource.
-     * </pre>
-     *
-     * <code>repeated .google.iam.v2.Policy policies = 1;</code>
-     */
-    public com.google.iam.v2.Policy.Builder addPoliciesBuilder(int index) {
-      return getPoliciesFieldBuilder()
-          .addBuilder(index, com.google.iam.v2.Policy.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Metadata for the policies that are attached to the resource.
-     * </pre>
-     *
-     * <code>repeated .google.iam.v2.Policy policies = 1;</code>
-     */
-    public java.util.List<com.google.iam.v2.Policy.Builder> getPoliciesBuilderList() {
-      return getPoliciesFieldBuilder().getBuilderList();
-    }
 
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.iam.v2.Policy,
-            com.google.iam.v2.Policy.Builder,
-            com.google.iam.v2.PolicyOrBuilder>
-        getPoliciesFieldBuilder() {
-      if (policiesBuilder_ == null) {
-        policiesBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.iam.v2.Policy,
-                com.google.iam.v2.Policy.Builder,
-                com.google.iam.v2.PolicyOrBuilder>(
-                policies_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
-        policies_ = null;
-      }
-      return policiesBuilder_;
-    }
-
-    private java.lang.Object nextPageToken_ = "";
     /**
      *
      *
@@ -952,16 +556,9 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
      *
      * @return The nextPageToken.
      */
+    @java.lang.Override
     public java.lang.String getNextPageToken() {
-      java.lang.Object ref = nextPageToken_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        nextPageToken_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getNextPageToken();
     }
     /**
      *
@@ -975,16 +572,9 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
      *
      * @return The bytes for nextPageToken.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getNextPageTokenBytes() {
-      java.lang.Object ref = nextPageToken_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        nextPageToken_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getNextPageTokenBytes();
     }
     /**
      *
@@ -1000,12 +590,8 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
      * @return This builder for chaining.
      */
     public Builder setNextPageToken(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      nextPageToken_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setNextPageToken(value);
       return this;
     }
     /**
@@ -1021,9 +607,8 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
      * @return This builder for chaining.
      */
     public Builder clearNextPageToken() {
-      nextPageToken_ = getDefaultInstance().getNextPageToken();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearNextPageToken();
       return this;
     }
     /**
@@ -1040,74 +625,92 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
      * @return This builder for chaining.
      */
     public Builder setNextPageTokenBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      nextPageToken_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setNextPageTokenBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.iam.v2.ListPoliciesResponse)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.iam.v2.ListPoliciesResponse();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "policies_", com.google.iam.v2.Policy.class, "nextPageToken_",
+              };
+          java.lang.String info =
+              "\u0000\u0002\u0000\u0000\u0001\u0002\u0002\u0000\u0001\u0000\u0001\u001b\u0002\u0208"
+                  + "";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.iam.v2.ListPoliciesResponse> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.iam.v2.ListPoliciesResponse.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.iam.v2.ListPoliciesResponse>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.iam.v2.ListPoliciesResponse)
   private static final com.google.iam.v2.ListPoliciesResponse DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.iam.v2.ListPoliciesResponse();
+    ListPoliciesResponse defaultInstance = new ListPoliciesResponse();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        ListPoliciesResponse.class, defaultInstance);
   }
 
   public static com.google.iam.v2.ListPoliciesResponse getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<ListPoliciesResponse> PARSER =
-      new com.google.protobuf.AbstractParser<ListPoliciesResponse>() {
-        @java.lang.Override
-        public ListPoliciesResponse parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<ListPoliciesResponse> PARSER;
 
   public static com.google.protobuf.Parser<ListPoliciesResponse> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<ListPoliciesResponse> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.iam.v2.ListPoliciesResponse getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

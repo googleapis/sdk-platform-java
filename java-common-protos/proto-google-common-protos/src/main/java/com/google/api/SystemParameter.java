@@ -30,46 +30,19 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.SystemParameter}
  */
-public final class SystemParameter extends com.google.protobuf.GeneratedMessageV3
+public final class SystemParameter
+    extends com.google.protobuf.GeneratedMessageLite<SystemParameter, SystemParameter.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.SystemParameter)
     SystemParameterOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use SystemParameter.newBuilder() to construct.
-  private SystemParameter(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private SystemParameter() {
     name_ = "";
     httpHeader_ = "";
     urlQueryParameter_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new SystemParameter();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.SystemParameterProto
-        .internal_static_google_api_SystemParameter_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.SystemParameterProto
-        .internal_static_google_api_SystemParameter_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.SystemParameter.class, com.google.api.SystemParameter.Builder.class);
-  }
-
   public static final int NAME_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object name_ = "";
+  private java.lang.String name_;
   /**
    *
    *
@@ -83,15 +56,7 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
    */
   @java.lang.Override
   public java.lang.String getName() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      name_ = s;
-      return s;
-    }
+    return name_;
   }
   /**
    *
@@ -106,21 +71,55 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      name_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(name_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Define the name of the parameter, such as "api_key" . It is case sensitive.
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The name to set.
+   */
+  private void setName(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    name_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Define the name of the parameter, such as "api_key" . It is case sensitive.
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   */
+  private void clearName() {
+
+    name_ = getDefaultInstance().getName();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Define the name of the parameter, such as "api_key" . It is case sensitive.
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The bytes for name to set.
+   */
+  private void setNameBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    name_ = value.toStringUtf8();
   }
 
   public static final int HTTP_HEADER_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object httpHeader_ = "";
+  private java.lang.String httpHeader_;
   /**
    *
    *
@@ -135,15 +134,7 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
    */
   @java.lang.Override
   public java.lang.String getHttpHeader() {
-    java.lang.Object ref = httpHeader_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      httpHeader_ = s;
-      return s;
-    }
+    return httpHeader_;
   }
   /**
    *
@@ -159,21 +150,58 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getHttpHeaderBytes() {
-    java.lang.Object ref = httpHeader_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      httpHeader_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(httpHeader_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Define the HTTP header name to use for the parameter. It is case
+   * insensitive.
+   * </pre>
+   *
+   * <code>string http_header = 2;</code>
+   *
+   * @param value The httpHeader to set.
+   */
+  private void setHttpHeader(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    httpHeader_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Define the HTTP header name to use for the parameter. It is case
+   * insensitive.
+   * </pre>
+   *
+   * <code>string http_header = 2;</code>
+   */
+  private void clearHttpHeader() {
+
+    httpHeader_ = getDefaultInstance().getHttpHeader();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Define the HTTP header name to use for the parameter. It is case
+   * insensitive.
+   * </pre>
+   *
+   * <code>string http_header = 2;</code>
+   *
+   * @param value The bytes for httpHeader to set.
+   */
+  private void setHttpHeaderBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    httpHeader_ = value.toStringUtf8();
   }
 
   public static final int URL_QUERY_PARAMETER_FIELD_NUMBER = 3;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object urlQueryParameter_ = "";
+  private java.lang.String urlQueryParameter_;
   /**
    *
    *
@@ -188,15 +216,7 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
    */
   @java.lang.Override
   public java.lang.String getUrlQueryParameter() {
-    java.lang.Object ref = urlQueryParameter_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      urlQueryParameter_ = s;
-      return s;
-    }
+    return urlQueryParameter_;
   }
   /**
    *
@@ -212,192 +232,137 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getUrlQueryParameterBytes() {
-    java.lang.Object ref = urlQueryParameter_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      urlQueryParameter_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(urlQueryParameter_);
   }
+  /**
+   *
+   *
+   * <pre>
+   * Define the URL query parameter name to use for the parameter. It is case
+   * sensitive.
+   * </pre>
+   *
+   * <code>string url_query_parameter = 3;</code>
+   *
+   * @param value The urlQueryParameter to set.
+   */
+  private void setUrlQueryParameter(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    urlQueryParameter_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Define the URL query parameter name to use for the parameter. It is case
+   * sensitive.
+   * </pre>
+   *
+   * <code>string url_query_parameter = 3;</code>
+   */
+  private void clearUrlQueryParameter() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(httpHeader_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, httpHeader_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(urlQueryParameter_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, urlQueryParameter_);
-    }
-    getUnknownFields().writeTo(output);
+    urlQueryParameter_ = getDefaultInstance().getUrlQueryParameter();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(httpHeader_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, httpHeader_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(urlQueryParameter_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, urlQueryParameter_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.SystemParameter)) {
-      return super.equals(obj);
-    }
-    com.google.api.SystemParameter other = (com.google.api.SystemParameter) obj;
-
-    if (!getName().equals(other.getName())) return false;
-    if (!getHttpHeader().equals(other.getHttpHeader())) return false;
-    if (!getUrlQueryParameter().equals(other.getUrlQueryParameter())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getName().hashCode();
-    hash = (37 * hash) + HTTP_HEADER_FIELD_NUMBER;
-    hash = (53 * hash) + getHttpHeader().hashCode();
-    hash = (37 * hash) + URL_QUERY_PARAMETER_FIELD_NUMBER;
-    hash = (53 * hash) + getUrlQueryParameter().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Define the URL query parameter name to use for the parameter. It is case
+   * sensitive.
+   * </pre>
+   *
+   * <code>string url_query_parameter = 3;</code>
+   *
+   * @param value The bytes for urlQueryParameter to set.
+   */
+  private void setUrlQueryParameterBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    urlQueryParameter_ = value.toStringUtf8();
   }
 
   public static com.google.api.SystemParameter parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.SystemParameter parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.SystemParameter parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.SystemParameter parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.SystemParameter parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.SystemParameter parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.SystemParameter parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.SystemParameter parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.SystemParameter parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.SystemParameter parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.SystemParameter parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.SystemParameter parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.SystemParameter prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -409,208 +374,17 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
    *
    * Protobuf type {@code google.api.SystemParameter}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.api.SystemParameter, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.SystemParameter)
       com.google.api.SystemParameterOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.SystemParameterProto
-          .internal_static_google_api_SystemParameter_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.SystemParameterProto
-          .internal_static_google_api_SystemParameter_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.SystemParameter.class, com.google.api.SystemParameter.Builder.class);
-    }
-
     // Construct using com.google.api.SystemParameter.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      name_ = "";
-      httpHeader_ = "";
-      urlQueryParameter_ = "";
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.SystemParameterProto
-          .internal_static_google_api_SystemParameter_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.SystemParameter getDefaultInstanceForType() {
-      return com.google.api.SystemParameter.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.SystemParameter build() {
-      com.google.api.SystemParameter result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.SystemParameter buildPartial() {
-      com.google.api.SystemParameter result = new com.google.api.SystemParameter(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.api.SystemParameter result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.name_ = name_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.httpHeader_ = httpHeader_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.urlQueryParameter_ = urlQueryParameter_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.SystemParameter) {
-        return mergeFrom((com.google.api.SystemParameter) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.SystemParameter other) {
-      if (other == com.google.api.SystemParameter.getDefaultInstance()) return this;
-      if (!other.getName().isEmpty()) {
-        name_ = other.name_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getHttpHeader().isEmpty()) {
-        httpHeader_ = other.httpHeader_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      if (!other.getUrlQueryParameter().isEmpty()) {
-        urlQueryParameter_ = other.urlQueryParameter_;
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                name_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                httpHeader_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 26:
-              {
-                urlQueryParameter_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 26
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object name_ = "";
     /**
      *
      *
@@ -622,16 +396,9 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
      *
      * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        name_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getName();
     }
     /**
      *
@@ -644,16 +411,9 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
      *
      * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getNameBytes() {
-      java.lang.Object ref = name_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        name_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getNameBytes();
     }
     /**
      *
@@ -668,12 +428,8 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder setName(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setName(value);
       return this;
     }
     /**
@@ -688,9 +444,8 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder clearName() {
-      name_ = getDefaultInstance().getName();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearName();
       return this;
     }
     /**
@@ -706,17 +461,11 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder setNameBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setNameBytes(value);
       return this;
     }
 
-    private java.lang.Object httpHeader_ = "";
     /**
      *
      *
@@ -729,16 +478,9 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
      *
      * @return The httpHeader.
      */
+    @java.lang.Override
     public java.lang.String getHttpHeader() {
-      java.lang.Object ref = httpHeader_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        httpHeader_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getHttpHeader();
     }
     /**
      *
@@ -752,16 +494,9 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
      *
      * @return The bytes for httpHeader.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getHttpHeaderBytes() {
-      java.lang.Object ref = httpHeader_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        httpHeader_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getHttpHeaderBytes();
     }
     /**
      *
@@ -777,12 +512,8 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder setHttpHeader(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      httpHeader_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setHttpHeader(value);
       return this;
     }
     /**
@@ -798,9 +529,8 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder clearHttpHeader() {
-      httpHeader_ = getDefaultInstance().getHttpHeader();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearHttpHeader();
       return this;
     }
     /**
@@ -817,17 +547,11 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder setHttpHeaderBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      httpHeader_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setHttpHeaderBytes(value);
       return this;
     }
 
-    private java.lang.Object urlQueryParameter_ = "";
     /**
      *
      *
@@ -840,16 +564,9 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
      *
      * @return The urlQueryParameter.
      */
+    @java.lang.Override
     public java.lang.String getUrlQueryParameter() {
-      java.lang.Object ref = urlQueryParameter_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        urlQueryParameter_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getUrlQueryParameter();
     }
     /**
      *
@@ -863,16 +580,9 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
      *
      * @return The bytes for urlQueryParameter.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getUrlQueryParameterBytes() {
-      java.lang.Object ref = urlQueryParameter_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        urlQueryParameter_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getUrlQueryParameterBytes();
     }
     /**
      *
@@ -888,12 +598,8 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder setUrlQueryParameter(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      urlQueryParameter_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setUrlQueryParameter(value);
       return this;
     }
     /**
@@ -909,9 +615,8 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder clearUrlQueryParameter() {
-      urlQueryParameter_ = getDefaultInstance().getUrlQueryParameter();
-      bitField0_ = (bitField0_ & ~0x00000004);
-      onChanged();
+      copyOnWrite();
+      instance.clearUrlQueryParameter();
       return this;
     }
     /**
@@ -928,74 +633,92 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder setUrlQueryParameterBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      urlQueryParameter_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setUrlQueryParameterBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.api.SystemParameter)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.SystemParameter();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "name_", "httpHeader_", "urlQueryParameter_",
+              };
+          java.lang.String info =
+              "\u0000\u0003\u0000\u0000\u0001\u0003\u0003\u0000\u0000\u0000\u0001\u0208\u0002\u0208"
+                  + "\u0003\u0208";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.SystemParameter> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.SystemParameter.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.api.SystemParameter>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.SystemParameter)
   private static final com.google.api.SystemParameter DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.SystemParameter();
+    SystemParameter defaultInstance = new SystemParameter();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        SystemParameter.class, defaultInstance);
   }
 
   public static com.google.api.SystemParameter getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<SystemParameter> PARSER =
-      new com.google.protobuf.AbstractParser<SystemParameter>() {
-        @java.lang.Override
-        public SystemParameter parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<SystemParameter> PARSER;
 
   public static com.google.protobuf.Parser<SystemParameter> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<SystemParameter> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.SystemParameter getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

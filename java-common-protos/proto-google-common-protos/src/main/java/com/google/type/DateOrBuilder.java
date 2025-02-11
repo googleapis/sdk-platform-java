@@ -22,7 +22,7 @@ package com.google.type;
 public interface DateOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.type.Date)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

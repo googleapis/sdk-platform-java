@@ -22,7 +22,7 @@ package com.google.iam.v1;
 public interface BindingDeltaOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.iam.v1.BindingDelta)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -133,14 +133,4 @@ public interface BindingDeltaOrBuilder
    * @return The condition.
    */
   com.google.type.Expr getCondition();
-  /**
-   *
-   *
-   * <pre>
-   * The condition that is associated with this binding.
-   * </pre>
-   *
-   * <code>.google.type.Expr condition = 4;</code>
-   */
-  com.google.type.ExprOrBuilder getConditionOrBuilder();
 }

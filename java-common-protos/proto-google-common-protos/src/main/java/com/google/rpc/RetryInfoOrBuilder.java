@@ -22,7 +22,7 @@ package com.google.rpc;
 public interface RetryInfoOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.rpc.RetryInfo)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -48,14 +48,4 @@ public interface RetryInfoOrBuilder
    * @return The retryDelay.
    */
   com.google.protobuf.Duration getRetryDelay();
-  /**
-   *
-   *
-   * <pre>
-   * Clients should wait at least this long between retrying the same request.
-   * </pre>
-   *
-   * <code>.google.protobuf.Duration retry_delay = 1;</code>
-   */
-  com.google.protobuf.DurationOrBuilder getRetryDelayOrBuilder();
 }

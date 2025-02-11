@@ -22,7 +22,7 @@ package com.google.apps.card.v1;
 public interface ActionOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.apps.card.v1.Action)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -87,27 +87,6 @@ public interface ActionOrBuilder
    * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
    */
   int getParametersCount();
-  /**
-   *
-   *
-   * <pre>
-   * List of action parameters.
-   * </pre>
-   *
-   * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
-   */
-  java.util.List<? extends com.google.apps.card.v1.Action.ActionParameterOrBuilder>
-      getParametersOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * List of action parameters.
-   * </pre>
-   *
-   * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
-   */
-  com.google.apps.card.v1.Action.ActionParameterOrBuilder getParametersOrBuilder(int index);
 
   /**
    *

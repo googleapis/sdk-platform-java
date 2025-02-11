@@ -22,7 +22,7 @@ package com.google.iam.v1;
 public interface SetIamPolicyRequestOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.iam.v1.SetIamPolicyRequest)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -85,19 +85,6 @@ public interface SetIamPolicyRequestOrBuilder
    * @return The policy.
    */
   com.google.iam.v1.Policy getPolicy();
-  /**
-   *
-   *
-   * <pre>
-   * REQUIRED: The complete policy to be applied to the `resource`. The size of
-   * the policy is limited to a few 10s of KB. An empty policy is a
-   * valid policy but certain Cloud Platform services (such as Projects)
-   * might reject them.
-   * </pre>
-   *
-   * <code>.google.iam.v1.Policy policy = 2 [(.google.api.field_behavior) = REQUIRED];</code>
-   */
-  com.google.iam.v1.PolicyOrBuilder getPolicyOrBuilder();
 
   /**
    *
@@ -131,18 +118,4 @@ public interface SetIamPolicyRequestOrBuilder
    * @return The updateMask.
    */
   com.google.protobuf.FieldMask getUpdateMask();
-  /**
-   *
-   *
-   * <pre>
-   * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
-   * the fields in the mask will be modified. If no mask is provided, the
-   * following default mask is used:
-   *
-   * `paths: "bindings, etag"`
-   * </pre>
-   *
-   * <code>.google.protobuf.FieldMask update_mask = 3;</code>
-   */
-  com.google.protobuf.FieldMaskOrBuilder getUpdateMaskOrBuilder();
 }

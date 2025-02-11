@@ -28,52 +28,15 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.DotnetSettings}
  */
-public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
+public final class DotnetSettings
+    extends com.google.protobuf.GeneratedMessageLite<DotnetSettings, DotnetSettings.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.DotnetSettings)
     DotnetSettingsOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use DotnetSettings.newBuilder() to construct.
-  private DotnetSettings(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private DotnetSettings() {
-    ignoredResources_ = com.google.protobuf.LazyStringArrayList.emptyList();
-    forcedNamespaceAliases_ = com.google.protobuf.LazyStringArrayList.emptyList();
-    handwrittenSignatures_ = com.google.protobuf.LazyStringArrayList.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new DotnetSettings();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.ClientProto.internal_static_google_api_DotnetSettings_descriptor;
-  }
-
-  @SuppressWarnings({"rawtypes"})
-  @java.lang.Override
-  protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-      int number) {
-    switch (number) {
-      case 2:
-        return internalGetRenamedServices();
-      case 3:
-        return internalGetRenamedResources();
-      default:
-        throw new RuntimeException("Invalid map field number: " + number);
-    }
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.ClientProto.internal_static_google_api_DotnetSettings_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.DotnetSettings.class, com.google.api.DotnetSettings.Builder.class);
+    ignoredResources_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+    forcedNamespaceAliases_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+    handwrittenSignatures_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
   }
 
   private int bitField0_;
@@ -87,8 +50,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.CommonLanguageSettings common = 1;</code>
-   *
-   * @return Whether the common field is set.
    */
   @java.lang.Override
   public boolean hasCommon() {
@@ -102,8 +63,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.CommonLanguageSettings common = 1;</code>
-   *
-   * @return The common.
    */
   @java.lang.Override
   public com.google.api.CommonLanguageSettings getCommon() {
@@ -118,38 +77,75 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.CommonLanguageSettings common = 1;</code>
    */
-  @java.lang.Override
-  public com.google.api.CommonLanguageSettingsOrBuilder getCommonOrBuilder() {
-    return common_ == null ? com.google.api.CommonLanguageSettings.getDefaultInstance() : common_;
+  private void setCommon(com.google.api.CommonLanguageSettings value) {
+    value.getClass();
+    common_ = value;
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Some settings.
+   * </pre>
+   *
+   * <code>.google.api.CommonLanguageSettings common = 1;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeCommon(com.google.api.CommonLanguageSettings value) {
+    value.getClass();
+    if (common_ != null && common_ != com.google.api.CommonLanguageSettings.getDefaultInstance()) {
+      common_ =
+          com.google.api.CommonLanguageSettings.newBuilder(common_).mergeFrom(value).buildPartial();
+    } else {
+      common_ = value;
+    }
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Some settings.
+   * </pre>
+   *
+   * <code>.google.api.CommonLanguageSettings common = 1;</code>
+   */
+  private void clearCommon() {
+    common_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static final int RENAMED_SERVICES_FIELD_NUMBER = 2;
 
   private static final class RenamedServicesDefaultEntryHolder {
-    static final com.google.protobuf.MapEntry<java.lang.String, java.lang.String> defaultEntry =
-        com.google.protobuf.MapEntry.<java.lang.String, java.lang.String>newDefaultInstance(
-            com.google.api.ClientProto
-                .internal_static_google_api_DotnetSettings_RenamedServicesEntry_descriptor,
+    static final com.google.protobuf.MapEntryLite<java.lang.String, java.lang.String> defaultEntry =
+        com.google.protobuf.MapEntryLite.<java.lang.String, java.lang.String>newDefaultInstance(
             com.google.protobuf.WireFormat.FieldType.STRING,
             "",
             com.google.protobuf.WireFormat.FieldType.STRING,
             "");
   }
 
-  @SuppressWarnings("serial")
-  private com.google.protobuf.MapField<java.lang.String, java.lang.String> renamedServices_;
+  private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String> renamedServices_ =
+      com.google.protobuf.MapFieldLite.emptyMapField();
 
-  private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+  private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
       internalGetRenamedServices() {
-    if (renamedServices_ == null) {
-      return com.google.protobuf.MapField.emptyMapField(
-          RenamedServicesDefaultEntryHolder.defaultEntry);
+    return renamedServices_;
+  }
+
+  private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
+      internalGetMutableRenamedServices() {
+    if (!renamedServices_.isMutable()) {
+      renamedServices_ = renamedServices_.mutableCopy();
     }
     return renamedServices_;
   }
 
+  @java.lang.Override
   public int getRenamedServicesCount() {
-    return internalGetRenamedServices().getMap().size();
+    return internalGetRenamedServices().size();
   }
   /**
    *
@@ -166,10 +162,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public boolean containsRenamedServices(java.lang.String key) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
-    return internalGetRenamedServices().getMap().containsKey(key);
+    java.lang.Class<?> keyClass = key.getClass();
+    return internalGetRenamedServices().containsKey(key);
   }
   /** Use {@link #getRenamedServicesMap()} instead. */
   @java.lang.Override
@@ -192,7 +186,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.util.Map<java.lang.String, java.lang.String> getRenamedServicesMap() {
-    return internalGetRenamedServices().getMap();
+    return java.util.Collections.unmodifiableMap(internalGetRenamedServices());
   }
   /**
    *
@@ -212,10 +206,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       java.lang.String key,
       /* nullable */
       java.lang.String defaultValue) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
-    java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedServices().getMap();
+    java.lang.Class<?> keyClass = key.getClass();
+    java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedServices();
     return map.containsKey(key) ? map.get(key) : defaultValue;
   }
   /**
@@ -233,43 +225,60 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getRenamedServicesOrThrow(java.lang.String key) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
-    java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedServices().getMap();
+    java.lang.Class<?> keyClass = key.getClass();
+    java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedServices();
     if (!map.containsKey(key)) {
       throw new java.lang.IllegalArgumentException();
     }
     return map.get(key);
   }
+  /**
+   *
+   *
+   * <pre>
+   * Map from original service names to renamed versions.
+   * This is used when the default generated types
+   * would cause a naming conflict. (Neither name is
+   * fully-qualified.)
+   * Example: Subscriber to SubscriberServiceApi.
+   * </pre>
+   *
+   * <code>map&lt;string, string&gt; renamed_services = 2;</code>
+   */
+  private java.util.Map<java.lang.String, java.lang.String> getMutableRenamedServicesMap() {
+    return internalGetMutableRenamedServices();
+  }
 
   public static final int RENAMED_RESOURCES_FIELD_NUMBER = 3;
 
   private static final class RenamedResourcesDefaultEntryHolder {
-    static final com.google.protobuf.MapEntry<java.lang.String, java.lang.String> defaultEntry =
-        com.google.protobuf.MapEntry.<java.lang.String, java.lang.String>newDefaultInstance(
-            com.google.api.ClientProto
-                .internal_static_google_api_DotnetSettings_RenamedResourcesEntry_descriptor,
+    static final com.google.protobuf.MapEntryLite<java.lang.String, java.lang.String> defaultEntry =
+        com.google.protobuf.MapEntryLite.<java.lang.String, java.lang.String>newDefaultInstance(
             com.google.protobuf.WireFormat.FieldType.STRING,
             "",
             com.google.protobuf.WireFormat.FieldType.STRING,
             "");
   }
 
-  @SuppressWarnings("serial")
-  private com.google.protobuf.MapField<java.lang.String, java.lang.String> renamedResources_;
+  private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String> renamedResources_ =
+      com.google.protobuf.MapFieldLite.emptyMapField();
 
-  private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+  private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
       internalGetRenamedResources() {
-    if (renamedResources_ == null) {
-      return com.google.protobuf.MapField.emptyMapField(
-          RenamedResourcesDefaultEntryHolder.defaultEntry);
+    return renamedResources_;
+  }
+
+  private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
+      internalGetMutableRenamedResources() {
+    if (!renamedResources_.isMutable()) {
+      renamedResources_ = renamedResources_.mutableCopy();
     }
     return renamedResources_;
   }
 
+  @java.lang.Override
   public int getRenamedResourcesCount() {
-    return internalGetRenamedResources().getMap().size();
+    return internalGetRenamedResources().size();
   }
   /**
    *
@@ -286,10 +295,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public boolean containsRenamedResources(java.lang.String key) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
-    return internalGetRenamedResources().getMap().containsKey(key);
+    java.lang.Class<?> keyClass = key.getClass();
+    return internalGetRenamedResources().containsKey(key);
   }
   /** Use {@link #getRenamedResourcesMap()} instead. */
   @java.lang.Override
@@ -312,7 +319,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.util.Map<java.lang.String, java.lang.String> getRenamedResourcesMap() {
-    return internalGetRenamedResources().getMap();
+    return java.util.Collections.unmodifiableMap(internalGetRenamedResources());
   }
   /**
    *
@@ -332,10 +339,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       java.lang.String key,
       /* nullable */
       java.lang.String defaultValue) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
-    java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedResources().getMap();
+    java.lang.Class<?> keyClass = key.getClass();
+    java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedResources();
     return map.containsKey(key) ? map.get(key) : defaultValue;
   }
   /**
@@ -353,21 +358,32 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getRenamedResourcesOrThrow(java.lang.String key) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
-    java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedResources().getMap();
+    java.lang.Class<?> keyClass = key.getClass();
+    java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedResources();
     if (!map.containsKey(key)) {
       throw new java.lang.IllegalArgumentException();
     }
     return map.get(key);
   }
+  /**
+   *
+   *
+   * <pre>
+   * Map from full resource types to the effective short name
+   * for the resource. This is used when otherwise resource
+   * named from different services would cause naming collisions.
+   * Example entry:
+   * "datalabeling.googleapis.com/Dataset": "DataLabelingDataset"
+   * </pre>
+   *
+   * <code>map&lt;string, string&gt; renamed_resources = 3;</code>
+   */
+  private java.util.Map<java.lang.String, java.lang.String> getMutableRenamedResourcesMap() {
+    return internalGetMutableRenamedResources();
+  }
 
   public static final int IGNORED_RESOURCES_FIELD_NUMBER = 4;
-
-  @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList ignoredResources_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.Internal.ProtobufList<java.lang.String> ignoredResources_;
   /**
    *
    *
@@ -383,7 +399,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    *
    * @return A list containing the ignoredResources.
    */
-  public com.google.protobuf.ProtocolStringList getIgnoredResourcesList() {
+  @java.lang.Override
+  public java.util.List<java.lang.String> getIgnoredResourcesList() {
     return ignoredResources_;
   }
   /**
@@ -401,6 +418,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The count of ignoredResources.
    */
+  @java.lang.Override
   public int getIgnoredResourcesCount() {
     return ignoredResources_.size();
   }
@@ -420,6 +438,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the element to return.
    * @return The ignoredResources at the given index.
    */
+  @java.lang.Override
   public java.lang.String getIgnoredResources(int index) {
     return ignoredResources_.get(index);
   }
@@ -439,15 +458,116 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the value to return.
    * @return The bytes of the ignoredResources at the given index.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getIgnoredResourcesBytes(int index) {
-    return ignoredResources_.getByteString(index);
+    return com.google.protobuf.ByteString.copyFromUtf8(ignoredResources_.get(index));
+  }
+
+  private void ensureIgnoredResourcesIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = ignoredResources_;
+    if (!tmp.isModifiable()) {
+      ignoredResources_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of full resource types to ignore during generation.
+   * This is typically used for API-specific Location resources,
+   * which should be handled by the generator as if they were actually
+   * the common Location resources.
+   * Example entry: "documentai.googleapis.com/Location"
+   * </pre>
+   *
+   * <code>repeated string ignored_resources = 4;</code>
+   *
+   * @param index The index to set the value at.
+   * @param value The ignoredResources to set.
+   */
+  private void setIgnoredResources(int index, java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureIgnoredResourcesIsMutable();
+    ignoredResources_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of full resource types to ignore during generation.
+   * This is typically used for API-specific Location resources,
+   * which should be handled by the generator as if they were actually
+   * the common Location resources.
+   * Example entry: "documentai.googleapis.com/Location"
+   * </pre>
+   *
+   * <code>repeated string ignored_resources = 4;</code>
+   *
+   * @param value The ignoredResources to add.
+   */
+  private void addIgnoredResources(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureIgnoredResourcesIsMutable();
+    ignoredResources_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of full resource types to ignore during generation.
+   * This is typically used for API-specific Location resources,
+   * which should be handled by the generator as if they were actually
+   * the common Location resources.
+   * Example entry: "documentai.googleapis.com/Location"
+   * </pre>
+   *
+   * <code>repeated string ignored_resources = 4;</code>
+   *
+   * @param values The ignoredResources to add.
+   */
+  private void addAllIgnoredResources(java.lang.Iterable<java.lang.String> values) {
+    ensureIgnoredResourcesIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, ignoredResources_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of full resource types to ignore during generation.
+   * This is typically used for API-specific Location resources,
+   * which should be handled by the generator as if they were actually
+   * the common Location resources.
+   * Example entry: "documentai.googleapis.com/Location"
+   * </pre>
+   *
+   * <code>repeated string ignored_resources = 4;</code>
+   */
+  private void clearIgnoredResources() {
+    ignoredResources_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of full resource types to ignore during generation.
+   * This is typically used for API-specific Location resources,
+   * which should be handled by the generator as if they were actually
+   * the common Location resources.
+   * Example entry: "documentai.googleapis.com/Location"
+   * </pre>
+   *
+   * <code>repeated string ignored_resources = 4;</code>
+   *
+   * @param value The bytes of the ignoredResources to add.
+   */
+  private void addIgnoredResourcesBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    ensureIgnoredResourcesIsMutable();
+    ignoredResources_.add(value.toStringUtf8());
   }
 
   public static final int FORCED_NAMESPACE_ALIASES_FIELD_NUMBER = 5;
-
-  @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList forcedNamespaceAliases_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.Internal.ProtobufList<java.lang.String> forcedNamespaceAliases_;
   /**
    *
    *
@@ -460,7 +580,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    *
    * @return A list containing the forcedNamespaceAliases.
    */
-  public com.google.protobuf.ProtocolStringList getForcedNamespaceAliasesList() {
+  @java.lang.Override
+  public java.util.List<java.lang.String> getForcedNamespaceAliasesList() {
     return forcedNamespaceAliases_;
   }
   /**
@@ -475,6 +596,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The count of forcedNamespaceAliases.
    */
+  @java.lang.Override
   public int getForcedNamespaceAliasesCount() {
     return forcedNamespaceAliases_.size();
   }
@@ -491,6 +613,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the element to return.
    * @return The forcedNamespaceAliases at the given index.
    */
+  @java.lang.Override
   public java.lang.String getForcedNamespaceAliases(int index) {
     return forcedNamespaceAliases_.get(index);
   }
@@ -507,15 +630,101 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the value to return.
    * @return The bytes of the forcedNamespaceAliases at the given index.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getForcedNamespaceAliasesBytes(int index) {
-    return forcedNamespaceAliases_.getByteString(index);
+    return com.google.protobuf.ByteString.copyFromUtf8(forcedNamespaceAliases_.get(index));
+  }
+
+  private void ensureForcedNamespaceAliasesIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = forcedNamespaceAliases_;
+    if (!tmp.isModifiable()) {
+      forcedNamespaceAliases_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Namespaces which must be aliased in snippets due to
+   * a known (but non-generator-predictable) naming collision
+   * </pre>
+   *
+   * <code>repeated string forced_namespace_aliases = 5;</code>
+   *
+   * @param index The index to set the value at.
+   * @param value The forcedNamespaceAliases to set.
+   */
+  private void setForcedNamespaceAliases(int index, java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureForcedNamespaceAliasesIsMutable();
+    forcedNamespaceAliases_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Namespaces which must be aliased in snippets due to
+   * a known (but non-generator-predictable) naming collision
+   * </pre>
+   *
+   * <code>repeated string forced_namespace_aliases = 5;</code>
+   *
+   * @param value The forcedNamespaceAliases to add.
+   */
+  private void addForcedNamespaceAliases(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureForcedNamespaceAliasesIsMutable();
+    forcedNamespaceAliases_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Namespaces which must be aliased in snippets due to
+   * a known (but non-generator-predictable) naming collision
+   * </pre>
+   *
+   * <code>repeated string forced_namespace_aliases = 5;</code>
+   *
+   * @param values The forcedNamespaceAliases to add.
+   */
+  private void addAllForcedNamespaceAliases(java.lang.Iterable<java.lang.String> values) {
+    ensureForcedNamespaceAliasesIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, forcedNamespaceAliases_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Namespaces which must be aliased in snippets due to
+   * a known (but non-generator-predictable) naming collision
+   * </pre>
+   *
+   * <code>repeated string forced_namespace_aliases = 5;</code>
+   */
+  private void clearForcedNamespaceAliases() {
+    forcedNamespaceAliases_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Namespaces which must be aliased in snippets due to
+   * a known (but non-generator-predictable) naming collision
+   * </pre>
+   *
+   * <code>repeated string forced_namespace_aliases = 5;</code>
+   *
+   * @param value The bytes of the forcedNamespaceAliases to add.
+   */
+  private void addForcedNamespaceAliasesBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    ensureForcedNamespaceAliasesIsMutable();
+    forcedNamespaceAliases_.add(value.toStringUtf8());
   }
 
   public static final int HANDWRITTEN_SIGNATURES_FIELD_NUMBER = 6;
-
-  @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList handwrittenSignatures_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.Internal.ProtobufList<java.lang.String> handwrittenSignatures_;
   /**
    *
    *
@@ -529,7 +738,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    *
    * @return A list containing the handwrittenSignatures.
    */
-  public com.google.protobuf.ProtocolStringList getHandwrittenSignaturesList() {
+  @java.lang.Override
+  public java.util.List<java.lang.String> getHandwrittenSignaturesList() {
     return handwrittenSignatures_;
   }
   /**
@@ -545,6 +755,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The count of handwrittenSignatures.
    */
+  @java.lang.Override
   public int getHandwrittenSignaturesCount() {
     return handwrittenSignatures_.size();
   }
@@ -562,6 +773,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the element to return.
    * @return The handwrittenSignatures at the given index.
    */
+  @java.lang.Override
   public java.lang.String getHandwrittenSignatures(int index) {
     return handwrittenSignatures_.get(index);
   }
@@ -579,257 +791,185 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the value to return.
    * @return The bytes of the handwrittenSignatures at the given index.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getHandwrittenSignaturesBytes(int index) {
-    return handwrittenSignatures_.getByteString(index);
+    return com.google.protobuf.ByteString.copyFromUtf8(handwrittenSignatures_.get(index));
   }
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  private void ensureHandwrittenSignaturesIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = handwrittenSignatures_;
+    if (!tmp.isModifiable()) {
+      handwrittenSignatures_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(1, getCommon());
-    }
-    com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
-        output, internalGetRenamedServices(), RenamedServicesDefaultEntryHolder.defaultEntry, 2);
-    com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
-        output, internalGetRenamedResources(), RenamedResourcesDefaultEntryHolder.defaultEntry, 3);
-    for (int i = 0; i < ignoredResources_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, ignoredResources_.getRaw(i));
-    }
-    for (int i = 0; i < forcedNamespaceAliases_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(
-          output, 5, forcedNamespaceAliases_.getRaw(i));
-    }
-    for (int i = 0; i < handwrittenSignatures_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(
-          output, 6, handwrittenSignatures_.getRaw(i));
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * Method signatures (in the form "service.method(signature)")
+   * which are provided separately, so shouldn't be generated.
+   * Snippets *calling* these methods are still generated, however.
+   * </pre>
+   *
+   * <code>repeated string handwritten_signatures = 6;</code>
+   *
+   * @param index The index to set the value at.
+   * @param value The handwrittenSignatures to set.
+   */
+  private void setHandwrittenSignatures(int index, java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureHandwrittenSignaturesIsMutable();
+    handwrittenSignatures_.set(index, value);
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getCommon());
-    }
-    for (java.util.Map.Entry<java.lang.String, java.lang.String> entry :
-        internalGetRenamedServices().getMap().entrySet()) {
-      com.google.protobuf.MapEntry<java.lang.String, java.lang.String> renamedServices__ =
-          RenamedServicesDefaultEntryHolder.defaultEntry
-              .newBuilderForType()
-              .setKey(entry.getKey())
-              .setValue(entry.getValue())
-              .build();
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, renamedServices__);
-    }
-    for (java.util.Map.Entry<java.lang.String, java.lang.String> entry :
-        internalGetRenamedResources().getMap().entrySet()) {
-      com.google.protobuf.MapEntry<java.lang.String, java.lang.String> renamedResources__ =
-          RenamedResourcesDefaultEntryHolder.defaultEntry
-              .newBuilderForType()
-              .setKey(entry.getKey())
-              .setValue(entry.getValue())
-              .build();
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, renamedResources__);
-    }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < ignoredResources_.size(); i++) {
-        dataSize += computeStringSizeNoTag(ignoredResources_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getIgnoredResourcesList().size();
-    }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < forcedNamespaceAliases_.size(); i++) {
-        dataSize += computeStringSizeNoTag(forcedNamespaceAliases_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getForcedNamespaceAliasesList().size();
-    }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < handwrittenSignatures_.size(); i++) {
-        dataSize += computeStringSizeNoTag(handwrittenSignatures_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getHandwrittenSignaturesList().size();
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
+  /**
+   *
+   *
+   * <pre>
+   * Method signatures (in the form "service.method(signature)")
+   * which are provided separately, so shouldn't be generated.
+   * Snippets *calling* these methods are still generated, however.
+   * </pre>
+   *
+   * <code>repeated string handwritten_signatures = 6;</code>
+   *
+   * @param value The handwrittenSignatures to add.
+   */
+  private void addHandwrittenSignatures(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureHandwrittenSignaturesIsMutable();
+    handwrittenSignatures_.add(value);
   }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.DotnetSettings)) {
-      return super.equals(obj);
-    }
-    com.google.api.DotnetSettings other = (com.google.api.DotnetSettings) obj;
-
-    if (hasCommon() != other.hasCommon()) return false;
-    if (hasCommon()) {
-      if (!getCommon().equals(other.getCommon())) return false;
-    }
-    if (!internalGetRenamedServices().equals(other.internalGetRenamedServices())) return false;
-    if (!internalGetRenamedResources().equals(other.internalGetRenamedResources())) return false;
-    if (!getIgnoredResourcesList().equals(other.getIgnoredResourcesList())) return false;
-    if (!getForcedNamespaceAliasesList().equals(other.getForcedNamespaceAliasesList()))
-      return false;
-    if (!getHandwrittenSignaturesList().equals(other.getHandwrittenSignaturesList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Method signatures (in the form "service.method(signature)")
+   * which are provided separately, so shouldn't be generated.
+   * Snippets *calling* these methods are still generated, however.
+   * </pre>
+   *
+   * <code>repeated string handwritten_signatures = 6;</code>
+   *
+   * @param values The handwrittenSignatures to add.
+   */
+  private void addAllHandwrittenSignatures(java.lang.Iterable<java.lang.String> values) {
+    ensureHandwrittenSignaturesIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, handwrittenSignatures_);
   }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (hasCommon()) {
-      hash = (37 * hash) + COMMON_FIELD_NUMBER;
-      hash = (53 * hash) + getCommon().hashCode();
-    }
-    if (!internalGetRenamedServices().getMap().isEmpty()) {
-      hash = (37 * hash) + RENAMED_SERVICES_FIELD_NUMBER;
-      hash = (53 * hash) + internalGetRenamedServices().hashCode();
-    }
-    if (!internalGetRenamedResources().getMap().isEmpty()) {
-      hash = (37 * hash) + RENAMED_RESOURCES_FIELD_NUMBER;
-      hash = (53 * hash) + internalGetRenamedResources().hashCode();
-    }
-    if (getIgnoredResourcesCount() > 0) {
-      hash = (37 * hash) + IGNORED_RESOURCES_FIELD_NUMBER;
-      hash = (53 * hash) + getIgnoredResourcesList().hashCode();
-    }
-    if (getForcedNamespaceAliasesCount() > 0) {
-      hash = (37 * hash) + FORCED_NAMESPACE_ALIASES_FIELD_NUMBER;
-      hash = (53 * hash) + getForcedNamespaceAliasesList().hashCode();
-    }
-    if (getHandwrittenSignaturesCount() > 0) {
-      hash = (37 * hash) + HANDWRITTEN_SIGNATURES_FIELD_NUMBER;
-      hash = (53 * hash) + getHandwrittenSignaturesList().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Method signatures (in the form "service.method(signature)")
+   * which are provided separately, so shouldn't be generated.
+   * Snippets *calling* these methods are still generated, however.
+   * </pre>
+   *
+   * <code>repeated string handwritten_signatures = 6;</code>
+   */
+  private void clearHandwrittenSignatures() {
+    handwrittenSignatures_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Method signatures (in the form "service.method(signature)")
+   * which are provided separately, so shouldn't be generated.
+   * Snippets *calling* these methods are still generated, however.
+   * </pre>
+   *
+   * <code>repeated string handwritten_signatures = 6;</code>
+   *
+   * @param value The bytes of the handwrittenSignatures to add.
+   */
+  private void addHandwrittenSignaturesBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    ensureHandwrittenSignaturesIsMutable();
+    handwrittenSignatures_.add(value.toStringUtf8());
   }
 
   public static com.google.api.DotnetSettings parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.DotnetSettings parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.DotnetSettings parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.DotnetSettings parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.DotnetSettings parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.DotnetSettings parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.DotnetSettings parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.DotnetSettings parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.DotnetSettings parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.DotnetSettings parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.DotnetSettings parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.DotnetSettings parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.DotnetSettings prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -839,325 +979,17 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.api.DotnetSettings}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.api.DotnetSettings, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.DotnetSettings)
       com.google.api.DotnetSettingsOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.ClientProto.internal_static_google_api_DotnetSettings_descriptor;
-    }
-
-    @SuppressWarnings({"rawtypes"})
-    protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-        int number) {
-      switch (number) {
-        case 2:
-          return internalGetRenamedServices();
-        case 3:
-          return internalGetRenamedResources();
-        default:
-          throw new RuntimeException("Invalid map field number: " + number);
-      }
-    }
-
-    @SuppressWarnings({"rawtypes"})
-    protected com.google.protobuf.MapFieldReflectionAccessor internalGetMutableMapFieldReflection(
-        int number) {
-      switch (number) {
-        case 2:
-          return internalGetMutableRenamedServices();
-        case 3:
-          return internalGetMutableRenamedResources();
-        default:
-          throw new RuntimeException("Invalid map field number: " + number);
-      }
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.ClientProto.internal_static_google_api_DotnetSettings_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.DotnetSettings.class, com.google.api.DotnetSettings.Builder.class);
-    }
-
     // Construct using com.google.api.DotnetSettings.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getCommonFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      common_ = null;
-      if (commonBuilder_ != null) {
-        commonBuilder_.dispose();
-        commonBuilder_ = null;
-      }
-      internalGetMutableRenamedServices().clear();
-      internalGetMutableRenamedResources().clear();
-      ignoredResources_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      forcedNamespaceAliases_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      handwrittenSignatures_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.ClientProto.internal_static_google_api_DotnetSettings_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.DotnetSettings getDefaultInstanceForType() {
-      return com.google.api.DotnetSettings.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.DotnetSettings build() {
-      com.google.api.DotnetSettings result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.DotnetSettings buildPartial() {
-      com.google.api.DotnetSettings result = new com.google.api.DotnetSettings(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.api.DotnetSettings result) {
-      int from_bitField0_ = bitField0_;
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.common_ = commonBuilder_ == null ? common_ : commonBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.renamedServices_ = internalGetRenamedServices();
-        result.renamedServices_.makeImmutable();
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.renamedResources_ = internalGetRenamedResources();
-        result.renamedResources_.makeImmutable();
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        ignoredResources_.makeImmutable();
-        result.ignoredResources_ = ignoredResources_;
-      }
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        forcedNamespaceAliases_.makeImmutable();
-        result.forcedNamespaceAliases_ = forcedNamespaceAliases_;
-      }
-      if (((from_bitField0_ & 0x00000020) != 0)) {
-        handwrittenSignatures_.makeImmutable();
-        result.handwrittenSignatures_ = handwrittenSignatures_;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.DotnetSettings) {
-        return mergeFrom((com.google.api.DotnetSettings) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.DotnetSettings other) {
-      if (other == com.google.api.DotnetSettings.getDefaultInstance()) return this;
-      if (other.hasCommon()) {
-        mergeCommon(other.getCommon());
-      }
-      internalGetMutableRenamedServices().mergeFrom(other.internalGetRenamedServices());
-      bitField0_ |= 0x00000002;
-      internalGetMutableRenamedResources().mergeFrom(other.internalGetRenamedResources());
-      bitField0_ |= 0x00000004;
-      if (!other.ignoredResources_.isEmpty()) {
-        if (ignoredResources_.isEmpty()) {
-          ignoredResources_ = other.ignoredResources_;
-          bitField0_ |= 0x00000008;
-        } else {
-          ensureIgnoredResourcesIsMutable();
-          ignoredResources_.addAll(other.ignoredResources_);
-        }
-        onChanged();
-      }
-      if (!other.forcedNamespaceAliases_.isEmpty()) {
-        if (forcedNamespaceAliases_.isEmpty()) {
-          forcedNamespaceAliases_ = other.forcedNamespaceAliases_;
-          bitField0_ |= 0x00000010;
-        } else {
-          ensureForcedNamespaceAliasesIsMutable();
-          forcedNamespaceAliases_.addAll(other.forcedNamespaceAliases_);
-        }
-        onChanged();
-      }
-      if (!other.handwrittenSignatures_.isEmpty()) {
-        if (handwrittenSignatures_.isEmpty()) {
-          handwrittenSignatures_ = other.handwrittenSignatures_;
-          bitField0_ |= 0x00000020;
-        } else {
-          ensureHandwrittenSignaturesIsMutable();
-          handwrittenSignatures_.addAll(other.handwrittenSignatures_);
-        }
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                input.readMessage(getCommonFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                com.google.protobuf.MapEntry<java.lang.String, java.lang.String> renamedServices__ =
-                    input.readMessage(
-                        RenamedServicesDefaultEntryHolder.defaultEntry.getParserForType(),
-                        extensionRegistry);
-                internalGetMutableRenamedServices()
-                    .getMutableMap()
-                    .put(renamedServices__.getKey(), renamedServices__.getValue());
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 26:
-              {
-                com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
-                    renamedResources__ =
-                        input.readMessage(
-                            RenamedResourcesDefaultEntryHolder.defaultEntry.getParserForType(),
-                            extensionRegistry);
-                internalGetMutableRenamedResources()
-                    .getMutableMap()
-                    .put(renamedResources__.getKey(), renamedResources__.getValue());
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 26
-            case 34:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureIgnoredResourcesIsMutable();
-                ignoredResources_.add(s);
-                break;
-              } // case 34
-            case 42:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureForcedNamespaceAliasesIsMutable();
-                forcedNamespaceAliases_.add(s);
-                break;
-              } // case 42
-            case 50:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureHandwrittenSignaturesIsMutable();
-                handwrittenSignatures_.add(s);
-                break;
-              } // case 50
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private com.google.api.CommonLanguageSettings common_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.CommonLanguageSettings,
-            com.google.api.CommonLanguageSettings.Builder,
-            com.google.api.CommonLanguageSettingsOrBuilder>
-        commonBuilder_;
     /**
      *
      *
@@ -1166,11 +998,10 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.CommonLanguageSettings common = 1;</code>
-     *
-     * @return Whether the common field is set.
      */
+    @java.lang.Override
     public boolean hasCommon() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return instance.hasCommon();
     }
     /**
      *
@@ -1180,17 +1011,10 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.CommonLanguageSettings common = 1;</code>
-     *
-     * @return The common.
      */
+    @java.lang.Override
     public com.google.api.CommonLanguageSettings getCommon() {
-      if (commonBuilder_ == null) {
-        return common_ == null
-            ? com.google.api.CommonLanguageSettings.getDefaultInstance()
-            : common_;
-      } else {
-        return commonBuilder_.getMessage();
-      }
+      return instance.getCommon();
     }
     /**
      *
@@ -1202,16 +1026,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.CommonLanguageSettings common = 1;</code>
      */
     public Builder setCommon(com.google.api.CommonLanguageSettings value) {
-      if (commonBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        common_ = value;
-      } else {
-        commonBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setCommon(value);
       return this;
     }
     /**
@@ -1224,13 +1040,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.CommonLanguageSettings common = 1;</code>
      */
     public Builder setCommon(com.google.api.CommonLanguageSettings.Builder builderForValue) {
-      if (commonBuilder_ == null) {
-        common_ = builderForValue.build();
-      } else {
-        commonBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setCommon(builderForValue.build());
       return this;
     }
     /**
@@ -1243,21 +1054,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.CommonLanguageSettings common = 1;</code>
      */
     public Builder mergeCommon(com.google.api.CommonLanguageSettings value) {
-      if (commonBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)
-            && common_ != null
-            && common_ != com.google.api.CommonLanguageSettings.getDefaultInstance()) {
-          getCommonBuilder().mergeFrom(value);
-        } else {
-          common_ = value;
-        }
-      } else {
-        commonBuilder_.mergeFrom(value);
-      }
-      if (common_ != null) {
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeCommon(value);
       return this;
     }
     /**
@@ -1270,101 +1068,14 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.CommonLanguageSettings common = 1;</code>
      */
     public Builder clearCommon() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      common_ = null;
-      if (commonBuilder_ != null) {
-        commonBuilder_.dispose();
-        commonBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearCommon();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Some settings.
-     * </pre>
-     *
-     * <code>.google.api.CommonLanguageSettings common = 1;</code>
-     */
-    public com.google.api.CommonLanguageSettings.Builder getCommonBuilder() {
-      bitField0_ |= 0x00000001;
-      onChanged();
-      return getCommonFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Some settings.
-     * </pre>
-     *
-     * <code>.google.api.CommonLanguageSettings common = 1;</code>
-     */
-    public com.google.api.CommonLanguageSettingsOrBuilder getCommonOrBuilder() {
-      if (commonBuilder_ != null) {
-        return commonBuilder_.getMessageOrBuilder();
-      } else {
-        return common_ == null
-            ? com.google.api.CommonLanguageSettings.getDefaultInstance()
-            : common_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Some settings.
-     * </pre>
-     *
-     * <code>.google.api.CommonLanguageSettings common = 1;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.CommonLanguageSettings,
-            com.google.api.CommonLanguageSettings.Builder,
-            com.google.api.CommonLanguageSettingsOrBuilder>
-        getCommonFieldBuilder() {
-      if (commonBuilder_ == null) {
-        commonBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.api.CommonLanguageSettings,
-                com.google.api.CommonLanguageSettings.Builder,
-                com.google.api.CommonLanguageSettingsOrBuilder>(
-                getCommon(), getParentForChildren(), isClean());
-        common_ = null;
-      }
-      return commonBuilder_;
-    }
 
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String> renamedServices_;
-
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-        internalGetRenamedServices() {
-      if (renamedServices_ == null) {
-        return com.google.protobuf.MapField.emptyMapField(
-            RenamedServicesDefaultEntryHolder.defaultEntry);
-      }
-      return renamedServices_;
-    }
-
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-        internalGetMutableRenamedServices() {
-      if (renamedServices_ == null) {
-        renamedServices_ =
-            com.google.protobuf.MapField.newMapField(
-                RenamedServicesDefaultEntryHolder.defaultEntry);
-      }
-      if (!renamedServices_.isMutable()) {
-        renamedServices_ = renamedServices_.copy();
-      }
-      bitField0_ |= 0x00000002;
-      onChanged();
-      return renamedServices_;
-    }
-
+    @java.lang.Override
     public int getRenamedServicesCount() {
-      return internalGetRenamedServices().getMap().size();
+      return instance.getRenamedServicesMap().size();
     }
     /**
      *
@@ -1381,10 +1092,33 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean containsRenamedServices(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      return internalGetRenamedServices().getMap().containsKey(key);
+      java.lang.Class<?> keyClass = key.getClass();
+      return instance.getRenamedServicesMap().containsKey(key);
+    }
+
+    public Builder clearRenamedServices() {
+      copyOnWrite();
+      instance.getMutableRenamedServicesMap().clear();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Map from original service names to renamed versions.
+     * This is used when the default generated types
+     * would cause a naming conflict. (Neither name is
+     * fully-qualified.)
+     * Example: Subscriber to SubscriberServiceApi.
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; renamed_services = 2;</code>
+     */
+    public Builder removeRenamedServices(java.lang.String key) {
+      java.lang.Class<?> keyClass = key.getClass();
+      copyOnWrite();
+      instance.getMutableRenamedServicesMap().remove(key);
+      return this;
     }
     /** Use {@link #getRenamedServicesMap()} instead. */
     @java.lang.Override
@@ -1407,7 +1141,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.util.Map<java.lang.String, java.lang.String> getRenamedServicesMap() {
-      return internalGetRenamedServices().getMap();
+      return java.util.Collections.unmodifiableMap(instance.getRenamedServicesMap());
     }
     /**
      *
@@ -1427,10 +1161,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
         java.lang.String key,
         /* nullable */
         java.lang.String defaultValue) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedServices().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = instance.getRenamedServicesMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
     /**
@@ -1448,46 +1180,12 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getRenamedServicesOrThrow(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedServices().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = instance.getRenamedServicesMap();
       if (!map.containsKey(key)) {
         throw new java.lang.IllegalArgumentException();
       }
       return map.get(key);
-    }
-
-    public Builder clearRenamedServices() {
-      bitField0_ = (bitField0_ & ~0x00000002);
-      internalGetMutableRenamedServices().getMutableMap().clear();
-      return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Map from original service names to renamed versions.
-     * This is used when the default generated types
-     * would cause a naming conflict. (Neither name is
-     * fully-qualified.)
-     * Example: Subscriber to SubscriberServiceApi.
-     * </pre>
-     *
-     * <code>map&lt;string, string&gt; renamed_services = 2;</code>
-     */
-    public Builder removeRenamedServices(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      internalGetMutableRenamedServices().getMutableMap().remove(key);
-      return this;
-    }
-    /** Use alternate mutation accessors instead. */
-    @java.lang.Deprecated
-    public java.util.Map<java.lang.String, java.lang.String> getMutableRenamedServices() {
-      bitField0_ |= 0x00000002;
-      return internalGetMutableRenamedServices().getMutableMap();
     }
     /**
      *
@@ -1503,14 +1201,10 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>map&lt;string, string&gt; renamed_services = 2;</code>
      */
     public Builder putRenamedServices(java.lang.String key, java.lang.String value) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      if (value == null) {
-        throw new NullPointerException("map value");
-      }
-      internalGetMutableRenamedServices().getMutableMap().put(key, value);
-      bitField0_ |= 0x00000002;
+      java.lang.Class<?> keyClass = key.getClass();
+      java.lang.Class<?> valueClass = value.getClass();
+      copyOnWrite();
+      instance.getMutableRenamedServicesMap().put(key, value);
       return this;
     }
     /**
@@ -1527,39 +1221,14 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>map&lt;string, string&gt; renamed_services = 2;</code>
      */
     public Builder putAllRenamedServices(java.util.Map<java.lang.String, java.lang.String> values) {
-      internalGetMutableRenamedServices().getMutableMap().putAll(values);
-      bitField0_ |= 0x00000002;
+      copyOnWrite();
+      instance.getMutableRenamedServicesMap().putAll(values);
       return this;
     }
 
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String> renamedResources_;
-
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-        internalGetRenamedResources() {
-      if (renamedResources_ == null) {
-        return com.google.protobuf.MapField.emptyMapField(
-            RenamedResourcesDefaultEntryHolder.defaultEntry);
-      }
-      return renamedResources_;
-    }
-
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-        internalGetMutableRenamedResources() {
-      if (renamedResources_ == null) {
-        renamedResources_ =
-            com.google.protobuf.MapField.newMapField(
-                RenamedResourcesDefaultEntryHolder.defaultEntry);
-      }
-      if (!renamedResources_.isMutable()) {
-        renamedResources_ = renamedResources_.copy();
-      }
-      bitField0_ |= 0x00000004;
-      onChanged();
-      return renamedResources_;
-    }
-
+    @java.lang.Override
     public int getRenamedResourcesCount() {
-      return internalGetRenamedResources().getMap().size();
+      return instance.getRenamedResourcesMap().size();
     }
     /**
      *
@@ -1576,10 +1245,33 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean containsRenamedResources(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      return internalGetRenamedResources().getMap().containsKey(key);
+      java.lang.Class<?> keyClass = key.getClass();
+      return instance.getRenamedResourcesMap().containsKey(key);
+    }
+
+    public Builder clearRenamedResources() {
+      copyOnWrite();
+      instance.getMutableRenamedResourcesMap().clear();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Map from full resource types to the effective short name
+     * for the resource. This is used when otherwise resource
+     * named from different services would cause naming collisions.
+     * Example entry:
+     * "datalabeling.googleapis.com/Dataset": "DataLabelingDataset"
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; renamed_resources = 3;</code>
+     */
+    public Builder removeRenamedResources(java.lang.String key) {
+      java.lang.Class<?> keyClass = key.getClass();
+      copyOnWrite();
+      instance.getMutableRenamedResourcesMap().remove(key);
+      return this;
     }
     /** Use {@link #getRenamedResourcesMap()} instead. */
     @java.lang.Override
@@ -1602,7 +1294,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.util.Map<java.lang.String, java.lang.String> getRenamedResourcesMap() {
-      return internalGetRenamedResources().getMap();
+      return java.util.Collections.unmodifiableMap(instance.getRenamedResourcesMap());
     }
     /**
      *
@@ -1622,11 +1314,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
         java.lang.String key,
         /* nullable */
         java.lang.String defaultValue) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map =
-          internalGetRenamedResources().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = instance.getRenamedResourcesMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
     /**
@@ -1644,47 +1333,12 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getRenamedResourcesOrThrow(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map =
-          internalGetRenamedResources().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = instance.getRenamedResourcesMap();
       if (!map.containsKey(key)) {
         throw new java.lang.IllegalArgumentException();
       }
       return map.get(key);
-    }
-
-    public Builder clearRenamedResources() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      internalGetMutableRenamedResources().getMutableMap().clear();
-      return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Map from full resource types to the effective short name
-     * for the resource. This is used when otherwise resource
-     * named from different services would cause naming collisions.
-     * Example entry:
-     * "datalabeling.googleapis.com/Dataset": "DataLabelingDataset"
-     * </pre>
-     *
-     * <code>map&lt;string, string&gt; renamed_resources = 3;</code>
-     */
-    public Builder removeRenamedResources(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      internalGetMutableRenamedResources().getMutableMap().remove(key);
-      return this;
-    }
-    /** Use alternate mutation accessors instead. */
-    @java.lang.Deprecated
-    public java.util.Map<java.lang.String, java.lang.String> getMutableRenamedResources() {
-      bitField0_ |= 0x00000004;
-      return internalGetMutableRenamedResources().getMutableMap();
     }
     /**
      *
@@ -1700,14 +1354,10 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>map&lt;string, string&gt; renamed_resources = 3;</code>
      */
     public Builder putRenamedResources(java.lang.String key, java.lang.String value) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      if (value == null) {
-        throw new NullPointerException("map value");
-      }
-      internalGetMutableRenamedResources().getMutableMap().put(key, value);
-      bitField0_ |= 0x00000004;
+      java.lang.Class<?> keyClass = key.getClass();
+      java.lang.Class<?> valueClass = value.getClass();
+      copyOnWrite();
+      instance.getMutableRenamedResourcesMap().put(key, value);
       return this;
     }
     /**
@@ -1725,20 +1375,11 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder putAllRenamedResources(
         java.util.Map<java.lang.String, java.lang.String> values) {
-      internalGetMutableRenamedResources().getMutableMap().putAll(values);
-      bitField0_ |= 0x00000004;
+      copyOnWrite();
+      instance.getMutableRenamedResourcesMap().putAll(values);
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList ignoredResources_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
-
-    private void ensureIgnoredResourcesIsMutable() {
-      if (!ignoredResources_.isModifiable()) {
-        ignoredResources_ = new com.google.protobuf.LazyStringArrayList(ignoredResources_);
-      }
-      bitField0_ |= 0x00000008;
-    }
     /**
      *
      *
@@ -1754,9 +1395,9 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      *
      * @return A list containing the ignoredResources.
      */
-    public com.google.protobuf.ProtocolStringList getIgnoredResourcesList() {
-      ignoredResources_.makeImmutable();
-      return ignoredResources_;
+    @java.lang.Override
+    public java.util.List<java.lang.String> getIgnoredResourcesList() {
+      return java.util.Collections.unmodifiableList(instance.getIgnoredResourcesList());
     }
     /**
      *
@@ -1773,8 +1414,9 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The count of ignoredResources.
      */
+    @java.lang.Override
     public int getIgnoredResourcesCount() {
-      return ignoredResources_.size();
+      return instance.getIgnoredResourcesCount();
     }
     /**
      *
@@ -1792,8 +1434,9 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the element to return.
      * @return The ignoredResources at the given index.
      */
+    @java.lang.Override
     public java.lang.String getIgnoredResources(int index) {
-      return ignoredResources_.get(index);
+      return instance.getIgnoredResources(index);
     }
     /**
      *
@@ -1811,8 +1454,9 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the value to return.
      * @return The bytes of the ignoredResources at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getIgnoredResourcesBytes(int index) {
-      return ignoredResources_.getByteString(index);
+      return instance.getIgnoredResourcesBytes(index);
     }
     /**
      *
@@ -1832,13 +1476,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setIgnoredResources(int index, java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureIgnoredResourcesIsMutable();
-      ignoredResources_.set(index, value);
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setIgnoredResources(index, value);
       return this;
     }
     /**
@@ -1858,13 +1497,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addIgnoredResources(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureIgnoredResourcesIsMutable();
-      ignoredResources_.add(value);
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.addIgnoredResources(value);
       return this;
     }
     /**
@@ -1884,10 +1518,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAllIgnoredResources(java.lang.Iterable<java.lang.String> values) {
-      ensureIgnoredResourcesIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, ignoredResources_);
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.addAllIgnoredResources(values);
       return this;
     }
     /**
@@ -1906,10 +1538,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearIgnoredResources() {
-      ignoredResources_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000008);
-      ;
-      onChanged();
+      copyOnWrite();
+      instance.clearIgnoredResources();
       return this;
     }
     /**
@@ -1929,27 +1559,11 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addIgnoredResourcesBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      ensureIgnoredResourcesIsMutable();
-      ignoredResources_.add(value);
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.addIgnoredResourcesBytes(value);
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList forcedNamespaceAliases_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
-
-    private void ensureForcedNamespaceAliasesIsMutable() {
-      if (!forcedNamespaceAliases_.isModifiable()) {
-        forcedNamespaceAliases_ =
-            new com.google.protobuf.LazyStringArrayList(forcedNamespaceAliases_);
-      }
-      bitField0_ |= 0x00000010;
-    }
     /**
      *
      *
@@ -1962,9 +1576,9 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      *
      * @return A list containing the forcedNamespaceAliases.
      */
-    public com.google.protobuf.ProtocolStringList getForcedNamespaceAliasesList() {
-      forcedNamespaceAliases_.makeImmutable();
-      return forcedNamespaceAliases_;
+    @java.lang.Override
+    public java.util.List<java.lang.String> getForcedNamespaceAliasesList() {
+      return java.util.Collections.unmodifiableList(instance.getForcedNamespaceAliasesList());
     }
     /**
      *
@@ -1978,8 +1592,9 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The count of forcedNamespaceAliases.
      */
+    @java.lang.Override
     public int getForcedNamespaceAliasesCount() {
-      return forcedNamespaceAliases_.size();
+      return instance.getForcedNamespaceAliasesCount();
     }
     /**
      *
@@ -1994,8 +1609,9 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the element to return.
      * @return The forcedNamespaceAliases at the given index.
      */
+    @java.lang.Override
     public java.lang.String getForcedNamespaceAliases(int index) {
-      return forcedNamespaceAliases_.get(index);
+      return instance.getForcedNamespaceAliases(index);
     }
     /**
      *
@@ -2010,8 +1626,9 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the value to return.
      * @return The bytes of the forcedNamespaceAliases at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getForcedNamespaceAliasesBytes(int index) {
-      return forcedNamespaceAliases_.getByteString(index);
+      return instance.getForcedNamespaceAliasesBytes(index);
     }
     /**
      *
@@ -2028,13 +1645,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setForcedNamespaceAliases(int index, java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureForcedNamespaceAliasesIsMutable();
-      forcedNamespaceAliases_.set(index, value);
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setForcedNamespaceAliases(index, value);
       return this;
     }
     /**
@@ -2051,13 +1663,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addForcedNamespaceAliases(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureForcedNamespaceAliasesIsMutable();
-      forcedNamespaceAliases_.add(value);
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.addForcedNamespaceAliases(value);
       return this;
     }
     /**
@@ -2074,10 +1681,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAllForcedNamespaceAliases(java.lang.Iterable<java.lang.String> values) {
-      ensureForcedNamespaceAliasesIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, forcedNamespaceAliases_);
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.addAllForcedNamespaceAliases(values);
       return this;
     }
     /**
@@ -2093,10 +1698,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearForcedNamespaceAliases() {
-      forcedNamespaceAliases_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000010);
-      ;
-      onChanged();
+      copyOnWrite();
+      instance.clearForcedNamespaceAliases();
       return this;
     }
     /**
@@ -2113,27 +1716,11 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addForcedNamespaceAliasesBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      ensureForcedNamespaceAliasesIsMutable();
-      forcedNamespaceAliases_.add(value);
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.addForcedNamespaceAliasesBytes(value);
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList handwrittenSignatures_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
-
-    private void ensureHandwrittenSignaturesIsMutable() {
-      if (!handwrittenSignatures_.isModifiable()) {
-        handwrittenSignatures_ =
-            new com.google.protobuf.LazyStringArrayList(handwrittenSignatures_);
-      }
-      bitField0_ |= 0x00000020;
-    }
     /**
      *
      *
@@ -2147,9 +1734,9 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      *
      * @return A list containing the handwrittenSignatures.
      */
-    public com.google.protobuf.ProtocolStringList getHandwrittenSignaturesList() {
-      handwrittenSignatures_.makeImmutable();
-      return handwrittenSignatures_;
+    @java.lang.Override
+    public java.util.List<java.lang.String> getHandwrittenSignaturesList() {
+      return java.util.Collections.unmodifiableList(instance.getHandwrittenSignaturesList());
     }
     /**
      *
@@ -2164,8 +1751,9 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The count of handwrittenSignatures.
      */
+    @java.lang.Override
     public int getHandwrittenSignaturesCount() {
-      return handwrittenSignatures_.size();
+      return instance.getHandwrittenSignaturesCount();
     }
     /**
      *
@@ -2181,8 +1769,9 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the element to return.
      * @return The handwrittenSignatures at the given index.
      */
+    @java.lang.Override
     public java.lang.String getHandwrittenSignatures(int index) {
-      return handwrittenSignatures_.get(index);
+      return instance.getHandwrittenSignatures(index);
     }
     /**
      *
@@ -2198,8 +1787,9 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the value to return.
      * @return The bytes of the handwrittenSignatures at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getHandwrittenSignaturesBytes(int index) {
-      return handwrittenSignatures_.getByteString(index);
+      return instance.getHandwrittenSignaturesBytes(index);
     }
     /**
      *
@@ -2217,13 +1807,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setHandwrittenSignatures(int index, java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureHandwrittenSignaturesIsMutable();
-      handwrittenSignatures_.set(index, value);
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setHandwrittenSignatures(index, value);
       return this;
     }
     /**
@@ -2241,13 +1826,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addHandwrittenSignatures(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureHandwrittenSignaturesIsMutable();
-      handwrittenSignatures_.add(value);
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.addHandwrittenSignatures(value);
       return this;
     }
     /**
@@ -2265,10 +1845,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAllHandwrittenSignatures(java.lang.Iterable<java.lang.String> values) {
-      ensureHandwrittenSignaturesIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, handwrittenSignatures_);
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.addAllHandwrittenSignatures(values);
       return this;
     }
     /**
@@ -2285,10 +1863,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearHandwrittenSignatures() {
-      handwrittenSignatures_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000020);
-      ;
-      onChanged();
+      copyOnWrite();
+      instance.clearHandwrittenSignatures();
       return this;
     }
     /**
@@ -2306,75 +1882,99 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addHandwrittenSignaturesBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      ensureHandwrittenSignaturesIsMutable();
-      handwrittenSignatures_.add(value);
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.addHandwrittenSignaturesBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.api.DotnetSettings)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.DotnetSettings();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_",
+                "common_",
+                "renamedServices_",
+                RenamedServicesDefaultEntryHolder.defaultEntry,
+                "renamedResources_",
+                RenamedResourcesDefaultEntryHolder.defaultEntry,
+                "ignoredResources_",
+                "forcedNamespaceAliases_",
+                "handwrittenSignatures_",
+              };
+          java.lang.String info =
+              "\u0000\u0006\u0000\u0001\u0001\u0006\u0006\u0002\u0003\u0000\u0001\u1009\u0000\u0002"
+                  + "2\u00032\u0004\u021a\u0005\u021a\u0006\u021a";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.DotnetSettings> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.DotnetSettings.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.api.DotnetSettings>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.DotnetSettings)
   private static final com.google.api.DotnetSettings DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.DotnetSettings();
+    DotnetSettings defaultInstance = new DotnetSettings();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        DotnetSettings.class, defaultInstance);
   }
 
   public static com.google.api.DotnetSettings getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<DotnetSettings> PARSER =
-      new com.google.protobuf.AbstractParser<DotnetSettings>() {
-        @java.lang.Override
-        public DotnetSettings parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<DotnetSettings> PARSER;
 
   public static com.google.protobuf.Parser<DotnetSettings> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<DotnetSettings> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.DotnetSettings getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

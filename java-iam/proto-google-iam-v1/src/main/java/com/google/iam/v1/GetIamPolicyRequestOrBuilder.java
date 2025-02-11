@@ -22,7 +22,7 @@ package com.google.iam.v1;
 public interface GetIamPolicyRequestOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.iam.v1.GetIamPolicyRequest)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -81,15 +81,4 @@ public interface GetIamPolicyRequestOrBuilder
    * @return The options.
    */
   com.google.iam.v1.GetPolicyOptions getOptions();
-  /**
-   *
-   *
-   * <pre>
-   * OPTIONAL: A `GetPolicyOptions` object for specifying options to
-   * `GetIamPolicy`.
-   * </pre>
-   *
-   * <code>.google.iam.v1.GetPolicyOptions options = 2;</code>
-   */
-  com.google.iam.v1.GetPolicyOptionsOrBuilder getOptionsOrBuilder();
 }

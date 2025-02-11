@@ -40,41 +40,12 @@ package com.google.apps.card.v1;
  *
  * Protobuf type {@code google.apps.card.v1.ImageCropStyle}
  */
-public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
+public final class ImageCropStyle
+    extends com.google.protobuf.GeneratedMessageLite<ImageCropStyle, ImageCropStyle.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.ImageCropStyle)
     ImageCropStyleOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use ImageCropStyle.newBuilder() to construct.
-  private ImageCropStyle(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
-  private ImageCropStyle() {
-    type_ = 0;
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new ImageCropStyle();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_ImageCropStyle_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_ImageCropStyle_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.apps.card.v1.ImageCropStyle.class,
-            com.google.apps.card.v1.ImageCropStyle.Builder.class);
-  }
-
+  private ImageCropStyle() {}
   /**
    *
    *
@@ -87,7 +58,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf enum {@code google.apps.card.v1.ImageCropStyle.ImageCropType}
    */
-  public enum ImageCropType implements com.google.protobuf.ProtocolMessageEnum {
+  public enum ImageCropType implements com.google.protobuf.Internal.EnumLite {
     /**
      *
      *
@@ -194,6 +165,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
      */
     public static final int RECTANGLE_4_3_VALUE = 4;
 
+    @java.lang.Override
     public final int getNumber() {
       if (this == UNRECOGNIZED) {
         throw new java.lang.IllegalArgumentException(
@@ -203,8 +175,8 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
     }
 
     /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
+     * @param value The number of the enum to look for.
+     * @return The enum associated with the given number.
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
@@ -212,10 +184,6 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
       return forNumber(value);
     }
 
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
     public static ImageCropType forNumber(int value) {
       switch (value) {
         case 0:
@@ -239,38 +207,25 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
 
     private static final com.google.protobuf.Internal.EnumLiteMap<ImageCropType> internalValueMap =
         new com.google.protobuf.Internal.EnumLiteMap<ImageCropType>() {
+          @java.lang.Override
           public ImageCropType findValueByNumber(int number) {
             return ImageCropType.forNumber(number);
           }
         };
 
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalStateException(
-            "Can't get the descriptor of an unrecognized enum value.");
+    public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+      return ImageCropTypeVerifier.INSTANCE;
+    }
+
+    private static final class ImageCropTypeVerifier
+        implements com.google.protobuf.Internal.EnumVerifier {
+      static final com.google.protobuf.Internal.EnumVerifier INSTANCE = new ImageCropTypeVerifier();
+
+      @java.lang.Override
+      public boolean isInRange(int number) {
+        return ImageCropType.forNumber(number) != null;
       }
-      return getDescriptor().getValues().get(ordinal());
-    }
-
-    public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-      return getDescriptor();
-    }
-
-    public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-      return com.google.apps.card.v1.ImageCropStyle.getDescriptor().getEnumTypes().get(0);
-    }
-
-    private static final ImageCropType[] VALUES = values();
-
-    public static ImageCropType valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
+    };
 
     private final int value;
 
@@ -282,7 +237,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int TYPE_FIELD_NUMBER = 1;
-  private int type_ = 0;
+  private int type_;
   /**
    *
    *
@@ -317,9 +272,50 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
         ? com.google.apps.card.v1.ImageCropStyle.ImageCropType.UNRECOGNIZED
         : result;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The crop type.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.ImageCropStyle.ImageCropType type = 1;</code>
+   *
+   * @param value The enum numeric value on the wire for type to set.
+   */
+  private void setTypeValue(int value) {
+    type_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The crop type.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.ImageCropStyle.ImageCropType type = 1;</code>
+   *
+   * @param value The type to set.
+   */
+  private void setType(com.google.apps.card.v1.ImageCropStyle.ImageCropType value) {
+    type_ = value.getNumber();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The crop type.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.ImageCropStyle.ImageCropType type = 1;</code>
+   */
+  private void clearType() {
+
+    type_ = 0;
+  }
 
   public static final int ASPECT_RATIO_FIELD_NUMBER = 2;
-  private double aspectRatio_ = 0D;
+  private double aspectRatio_;
   /**
    *
    *
@@ -344,182 +340,135 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
   public double getAspectRatio() {
     return aspectRatio_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The aspect ratio to use if the crop type is `RECTANGLE_CUSTOM`.
+   *
+   * For example, here's how to apply a 16:9 aspect ratio:
+   *
+   * ```
+   * cropStyle {
+   *  "type": "RECTANGLE_CUSTOM",
+   *  "aspectRatio": 16/9
+   * }
+   * ```
+   * </pre>
+   *
+   * <code>double aspect_ratio = 2;</code>
+   *
+   * @param value The aspectRatio to set.
+   */
+  private void setAspectRatio(double value) {
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    aspectRatio_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The aspect ratio to use if the crop type is `RECTANGLE_CUSTOM`.
+   *
+   * For example, here's how to apply a 16:9 aspect ratio:
+   *
+   * ```
+   * cropStyle {
+   *  "type": "RECTANGLE_CUSTOM",
+   *  "aspectRatio": 16/9
+   * }
+   * ```
+   * </pre>
+   *
+   * <code>double aspect_ratio = 2;</code>
+   */
+  private void clearAspectRatio() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (type_
-        != com.google.apps.card.v1.ImageCropStyle.ImageCropType.IMAGE_CROP_TYPE_UNSPECIFIED
-            .getNumber()) {
-      output.writeEnum(1, type_);
-    }
-    if (java.lang.Double.doubleToRawLongBits(aspectRatio_) != 0) {
-      output.writeDouble(2, aspectRatio_);
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (type_
-        != com.google.apps.card.v1.ImageCropStyle.ImageCropType.IMAGE_CROP_TYPE_UNSPECIFIED
-            .getNumber()) {
-      size += com.google.protobuf.CodedOutputStream.computeEnumSize(1, type_);
-    }
-    if (java.lang.Double.doubleToRawLongBits(aspectRatio_) != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeDoubleSize(2, aspectRatio_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.apps.card.v1.ImageCropStyle)) {
-      return super.equals(obj);
-    }
-    com.google.apps.card.v1.ImageCropStyle other = (com.google.apps.card.v1.ImageCropStyle) obj;
-
-    if (type_ != other.type_) return false;
-    if (java.lang.Double.doubleToLongBits(getAspectRatio())
-        != java.lang.Double.doubleToLongBits(other.getAspectRatio())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + TYPE_FIELD_NUMBER;
-    hash = (53 * hash) + type_;
-    hash = (37 * hash) + ASPECT_RATIO_FIELD_NUMBER;
-    hash =
-        (53 * hash)
-            + com.google.protobuf.Internal.hashLong(
-                java.lang.Double.doubleToLongBits(getAspectRatio()));
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+    aspectRatio_ = 0D;
   }
 
   public static com.google.apps.card.v1.ImageCropStyle parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.ImageCropStyle parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.ImageCropStyle parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.ImageCropStyle parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.ImageCropStyle parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.ImageCropStyle parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.ImageCropStyle parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.ImageCropStyle parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.ImageCropStyle parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.ImageCropStyle parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.ImageCropStyle parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.ImageCropStyle parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.apps.card.v1.ImageCropStyle prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -541,191 +490,17 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.apps.card.v1.ImageCropStyle}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.apps.card.v1.ImageCropStyle, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.apps.card.v1.ImageCropStyle)
       com.google.apps.card.v1.ImageCropStyleOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_ImageCropStyle_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_ImageCropStyle_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.apps.card.v1.ImageCropStyle.class,
-              com.google.apps.card.v1.ImageCropStyle.Builder.class);
-    }
-
     // Construct using com.google.apps.card.v1.ImageCropStyle.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      type_ = 0;
-      aspectRatio_ = 0D;
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_ImageCropStyle_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.ImageCropStyle getDefaultInstanceForType() {
-      return com.google.apps.card.v1.ImageCropStyle.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.ImageCropStyle build() {
-      com.google.apps.card.v1.ImageCropStyle result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.ImageCropStyle buildPartial() {
-      com.google.apps.card.v1.ImageCropStyle result =
-          new com.google.apps.card.v1.ImageCropStyle(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.apps.card.v1.ImageCropStyle result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.type_ = type_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.aspectRatio_ = aspectRatio_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.apps.card.v1.ImageCropStyle) {
-        return mergeFrom((com.google.apps.card.v1.ImageCropStyle) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.apps.card.v1.ImageCropStyle other) {
-      if (other == com.google.apps.card.v1.ImageCropStyle.getDefaultInstance()) return this;
-      if (other.type_ != 0) {
-        setTypeValue(other.getTypeValue());
-      }
-      if (other.getAspectRatio() != 0D) {
-        setAspectRatio(other.getAspectRatio());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 8:
-              {
-                type_ = input.readEnum();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 8
-            case 17:
-              {
-                aspectRatio_ = input.readDouble();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 17
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private int type_ = 0;
     /**
      *
      *
@@ -739,7 +514,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getTypeValue() {
-      return type_;
+      return instance.getTypeValue();
     }
     /**
      *
@@ -750,13 +525,12 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.apps.card.v1.ImageCropStyle.ImageCropType type = 1;</code>
      *
-     * @param value The enum numeric value on the wire for type to set.
+     * @param value The type to set.
      * @return This builder for chaining.
      */
     public Builder setTypeValue(int value) {
-      type_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setTypeValue(value);
       return this;
     }
     /**
@@ -772,11 +546,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.apps.card.v1.ImageCropStyle.ImageCropType getType() {
-      com.google.apps.card.v1.ImageCropStyle.ImageCropType result =
-          com.google.apps.card.v1.ImageCropStyle.ImageCropType.forNumber(type_);
-      return result == null
-          ? com.google.apps.card.v1.ImageCropStyle.ImageCropType.UNRECOGNIZED
-          : result;
+      return instance.getType();
     }
     /**
      *
@@ -787,16 +557,12 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.apps.card.v1.ImageCropStyle.ImageCropType type = 1;</code>
      *
-     * @param value The type to set.
+     * @param value The enum numeric value on the wire for type to set.
      * @return This builder for chaining.
      */
     public Builder setType(com.google.apps.card.v1.ImageCropStyle.ImageCropType value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      bitField0_ |= 0x00000001;
-      type_ = value.getNumber();
-      onChanged();
+      copyOnWrite();
+      instance.setType(value);
       return this;
     }
     /**
@@ -811,13 +577,11 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearType() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      type_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearType();
       return this;
     }
 
-    private double aspectRatio_;
     /**
      *
      *
@@ -840,7 +604,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public double getAspectRatio() {
-      return aspectRatio_;
+      return instance.getAspectRatio();
     }
     /**
      *
@@ -864,10 +628,8 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAspectRatio(double value) {
-
-      aspectRatio_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setAspectRatio(value);
       return this;
     }
     /**
@@ -891,70 +653,92 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAspectRatio() {
-      bitField0_ = (bitField0_ & ~0x00000002);
-      aspectRatio_ = 0D;
-      onChanged();
+      copyOnWrite();
+      instance.clearAspectRatio();
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.apps.card.v1.ImageCropStyle)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.apps.card.v1.ImageCropStyle();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "type_", "aspectRatio_",
+              };
+          java.lang.String info =
+              "\u0000\u0002\u0000\u0000\u0001\u0002\u0002\u0000\u0000\u0000\u0001\f\u0002\u0000"
+                  + "";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.apps.card.v1.ImageCropStyle> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.apps.card.v1.ImageCropStyle.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.apps.card.v1.ImageCropStyle>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.apps.card.v1.ImageCropStyle)
   private static final com.google.apps.card.v1.ImageCropStyle DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.apps.card.v1.ImageCropStyle();
+    ImageCropStyle defaultInstance = new ImageCropStyle();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        ImageCropStyle.class, defaultInstance);
   }
 
   public static com.google.apps.card.v1.ImageCropStyle getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<ImageCropStyle> PARSER =
-      new com.google.protobuf.AbstractParser<ImageCropStyle>() {
-        @java.lang.Override
-        public ImageCropStyle parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<ImageCropStyle> PARSER;
 
   public static com.google.protobuf.Parser<ImageCropStyle> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<ImageCropStyle> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.apps.card.v1.ImageCropStyle getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

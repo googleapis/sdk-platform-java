@@ -22,7 +22,7 @@ package com.google.longrunning;
 public interface ListOperationsResponseOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.longrunning.ListOperationsResponse)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -54,26 +54,6 @@ public interface ListOperationsResponseOrBuilder
    * <code>repeated .google.longrunning.Operation operations = 1;</code>
    */
   int getOperationsCount();
-  /**
-   *
-   *
-   * <pre>
-   * A list of operations that matches the specified filter in the request.
-   * </pre>
-   *
-   * <code>repeated .google.longrunning.Operation operations = 1;</code>
-   */
-  java.util.List<? extends com.google.longrunning.OperationOrBuilder> getOperationsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * A list of operations that matches the specified filter in the request.
-   * </pre>
-   *
-   * <code>repeated .google.longrunning.Operation operations = 1;</code>
-   */
-  com.google.longrunning.OperationOrBuilder getOperationsOrBuilder(int index);
 
   /**
    *

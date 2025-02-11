@@ -22,7 +22,7 @@ package com.google.api;
 public interface ControlOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.Control)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -83,24 +83,4 @@ public interface ControlOrBuilder
    * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
    */
   int getMethodPoliciesCount();
-  /**
-   *
-   *
-   * <pre>
-   * Defines policies applying to the API methods of the service.
-   * </pre>
-   *
-   * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
-   */
-  java.util.List<? extends com.google.api.MethodPolicyOrBuilder> getMethodPoliciesOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Defines policies applying to the API methods of the service.
-   * </pre>
-   *
-   * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
-   */
-  com.google.api.MethodPolicyOrBuilder getMethodPoliciesOrBuilder(int index);
 }

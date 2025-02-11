@@ -70,44 +70,19 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.HttpBody}
  */
-public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
+public final class HttpBody
+    extends com.google.protobuf.GeneratedMessageLite<HttpBody, HttpBody.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.HttpBody)
     HttpBodyOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use HttpBody.newBuilder() to construct.
-  private HttpBody(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private HttpBody() {
     contentType_ = "";
     data_ = com.google.protobuf.ByteString.EMPTY;
-    extensions_ = java.util.Collections.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new HttpBody();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.HttpBodyProto.internal_static_google_api_HttpBody_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.HttpBodyProto.internal_static_google_api_HttpBody_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.HttpBody.class, com.google.api.HttpBody.Builder.class);
+    extensions_ = emptyProtobufList();
   }
 
   public static final int CONTENT_TYPE_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object contentType_ = "";
+  private java.lang.String contentType_;
   /**
    *
    *
@@ -121,15 +96,7 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getContentType() {
-    java.lang.Object ref = contentType_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      contentType_ = s;
-      return s;
-    }
+    return contentType_;
   }
   /**
    *
@@ -144,19 +111,55 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getContentTypeBytes() {
-    java.lang.Object ref = contentType_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      contentType_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(contentType_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The HTTP Content-Type header value specifying the content type of the body.
+   * </pre>
+   *
+   * <code>string content_type = 1;</code>
+   *
+   * @param value The contentType to set.
+   */
+  private void setContentType(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    contentType_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The HTTP Content-Type header value specifying the content type of the body.
+   * </pre>
+   *
+   * <code>string content_type = 1;</code>
+   */
+  private void clearContentType() {
+
+    contentType_ = getDefaultInstance().getContentType();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The HTTP Content-Type header value specifying the content type of the body.
+   * </pre>
+   *
+   * <code>string content_type = 1;</code>
+   *
+   * @param value The bytes for contentType to set.
+   */
+  private void setContentTypeBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    contentType_ = value.toStringUtf8();
   }
 
   public static final int DATA_FIELD_NUMBER = 2;
-  private com.google.protobuf.ByteString data_ = com.google.protobuf.ByteString.EMPTY;
+  private com.google.protobuf.ByteString data_;
   /**
    *
    *
@@ -172,11 +175,38 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.ByteString getData() {
     return data_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The HTTP request/response body as raw binary.
+   * </pre>
+   *
+   * <code>bytes data = 2;</code>
+   *
+   * @param value The data to set.
+   */
+  private void setData(com.google.protobuf.ByteString value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    data_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The HTTP request/response body as raw binary.
+   * </pre>
+   *
+   * <code>bytes data = 2;</code>
+   */
+  private void clearData() {
+
+    data_ = getDefaultInstance().getData();
+  }
 
   public static final int EXTENSIONS_FIELD_NUMBER = 3;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.protobuf.Any> extensions_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.protobuf.Any> extensions_;
   /**
    *
    *
@@ -201,7 +231,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Any extensions = 3;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.protobuf.AnyOrBuilder> getExtensionsOrBuilderList() {
     return extensions_;
   }
@@ -243,188 +272,185 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Any extensions = 3;</code>
    */
-  @java.lang.Override
   public com.google.protobuf.AnyOrBuilder getExtensionsOrBuilder(int index) {
     return extensions_.get(index);
   }
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  private void ensureExtensionsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.protobuf.Any> tmp = extensions_;
+    if (!tmp.isModifiable()) {
+      extensions_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
   }
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(contentType_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, contentType_);
-    }
-    if (!data_.isEmpty()) {
-      output.writeBytes(2, data_);
-    }
-    for (int i = 0; i < extensions_.size(); i++) {
-      output.writeMessage(3, extensions_.get(i));
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * Application specific response metadata. Must be set in the first response
+   * for streaming APIs.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 3;</code>
+   */
+  private void setExtensions(int index, com.google.protobuf.Any value) {
+    value.getClass();
+    ensureExtensionsIsMutable();
+    extensions_.set(index, value);
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(contentType_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, contentType_);
-    }
-    if (!data_.isEmpty()) {
-      size += com.google.protobuf.CodedOutputStream.computeBytesSize(2, data_);
-    }
-    for (int i = 0; i < extensions_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, extensions_.get(i));
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
+  /**
+   *
+   *
+   * <pre>
+   * Application specific response metadata. Must be set in the first response
+   * for streaming APIs.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 3;</code>
+   */
+  private void addExtensions(com.google.protobuf.Any value) {
+    value.getClass();
+    ensureExtensionsIsMutable();
+    extensions_.add(value);
   }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.HttpBody)) {
-      return super.equals(obj);
-    }
-    com.google.api.HttpBody other = (com.google.api.HttpBody) obj;
-
-    if (!getContentType().equals(other.getContentType())) return false;
-    if (!getData().equals(other.getData())) return false;
-    if (!getExtensionsList().equals(other.getExtensionsList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Application specific response metadata. Must be set in the first response
+   * for streaming APIs.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 3;</code>
+   */
+  private void addExtensions(int index, com.google.protobuf.Any value) {
+    value.getClass();
+    ensureExtensionsIsMutable();
+    extensions_.add(index, value);
   }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + CONTENT_TYPE_FIELD_NUMBER;
-    hash = (53 * hash) + getContentType().hashCode();
-    hash = (37 * hash) + DATA_FIELD_NUMBER;
-    hash = (53 * hash) + getData().hashCode();
-    if (getExtensionsCount() > 0) {
-      hash = (37 * hash) + EXTENSIONS_FIELD_NUMBER;
-      hash = (53 * hash) + getExtensionsList().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Application specific response metadata. Must be set in the first response
+   * for streaming APIs.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 3;</code>
+   */
+  private void addAllExtensions(java.lang.Iterable<? extends com.google.protobuf.Any> values) {
+    ensureExtensionsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, extensions_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Application specific response metadata. Must be set in the first response
+   * for streaming APIs.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 3;</code>
+   */
+  private void clearExtensions() {
+    extensions_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Application specific response metadata. Must be set in the first response
+   * for streaming APIs.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 3;</code>
+   */
+  private void removeExtensions(int index) {
+    ensureExtensionsIsMutable();
+    extensions_.remove(index);
   }
 
   public static com.google.api.HttpBody parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.HttpBody parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.HttpBody parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.HttpBody parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.HttpBody parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.HttpBody parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.HttpBody parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.HttpBody parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.HttpBody parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.HttpBody parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.HttpBody parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.HttpBody parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.HttpBody prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -476,247 +502,16 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.api.HttpBody}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<com.google.api.HttpBody, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.HttpBody)
       com.google.api.HttpBodyOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.HttpBodyProto.internal_static_google_api_HttpBody_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.HttpBodyProto.internal_static_google_api_HttpBody_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.HttpBody.class, com.google.api.HttpBody.Builder.class);
-    }
-
     // Construct using com.google.api.HttpBody.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      contentType_ = "";
-      data_ = com.google.protobuf.ByteString.EMPTY;
-      if (extensionsBuilder_ == null) {
-        extensions_ = java.util.Collections.emptyList();
-      } else {
-        extensions_ = null;
-        extensionsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000004);
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.HttpBodyProto.internal_static_google_api_HttpBody_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.HttpBody getDefaultInstanceForType() {
-      return com.google.api.HttpBody.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.HttpBody build() {
-      com.google.api.HttpBody result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.HttpBody buildPartial() {
-      com.google.api.HttpBody result = new com.google.api.HttpBody(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.api.HttpBody result) {
-      if (extensionsBuilder_ == null) {
-        if (((bitField0_ & 0x00000004) != 0)) {
-          extensions_ = java.util.Collections.unmodifiableList(extensions_);
-          bitField0_ = (bitField0_ & ~0x00000004);
-        }
-        result.extensions_ = extensions_;
-      } else {
-        result.extensions_ = extensionsBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.api.HttpBody result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.contentType_ = contentType_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.data_ = data_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.HttpBody) {
-        return mergeFrom((com.google.api.HttpBody) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.HttpBody other) {
-      if (other == com.google.api.HttpBody.getDefaultInstance()) return this;
-      if (!other.getContentType().isEmpty()) {
-        contentType_ = other.contentType_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (other.getData() != com.google.protobuf.ByteString.EMPTY) {
-        setData(other.getData());
-      }
-      if (extensionsBuilder_ == null) {
-        if (!other.extensions_.isEmpty()) {
-          if (extensions_.isEmpty()) {
-            extensions_ = other.extensions_;
-            bitField0_ = (bitField0_ & ~0x00000004);
-          } else {
-            ensureExtensionsIsMutable();
-            extensions_.addAll(other.extensions_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.extensions_.isEmpty()) {
-          if (extensionsBuilder_.isEmpty()) {
-            extensionsBuilder_.dispose();
-            extensionsBuilder_ = null;
-            extensions_ = other.extensions_;
-            bitField0_ = (bitField0_ & ~0x00000004);
-            extensionsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getExtensionsFieldBuilder()
-                    : null;
-          } else {
-            extensionsBuilder_.addAllMessages(other.extensions_);
-          }
-        }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                contentType_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                data_ = input.readBytes();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 26:
-              {
-                com.google.protobuf.Any m =
-                    input.readMessage(com.google.protobuf.Any.parser(), extensionRegistry);
-                if (extensionsBuilder_ == null) {
-                  ensureExtensionsIsMutable();
-                  extensions_.add(m);
-                } else {
-                  extensionsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 26
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object contentType_ = "";
     /**
      *
      *
@@ -728,16 +523,9 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The contentType.
      */
+    @java.lang.Override
     public java.lang.String getContentType() {
-      java.lang.Object ref = contentType_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        contentType_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getContentType();
     }
     /**
      *
@@ -750,16 +538,9 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for contentType.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getContentTypeBytes() {
-      java.lang.Object ref = contentType_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        contentType_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getContentTypeBytes();
     }
     /**
      *
@@ -774,12 +555,8 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setContentType(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      contentType_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setContentType(value);
       return this;
     }
     /**
@@ -794,9 +571,8 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearContentType() {
-      contentType_ = getDefaultInstance().getContentType();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearContentType();
       return this;
     }
     /**
@@ -812,17 +588,11 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setContentTypeBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      contentType_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setContentTypeBytes(value);
       return this;
     }
 
-    private com.google.protobuf.ByteString data_ = com.google.protobuf.ByteString.EMPTY;
     /**
      *
      *
@@ -836,7 +606,7 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getData() {
-      return data_;
+      return instance.getData();
     }
     /**
      *
@@ -851,12 +621,8 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setData(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      data_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setData(value);
       return this;
     }
     /**
@@ -871,27 +637,11 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearData() {
-      bitField0_ = (bitField0_ & ~0x00000002);
-      data_ = getDefaultInstance().getData();
-      onChanged();
+      copyOnWrite();
+      instance.clearData();
       return this;
     }
 
-    private java.util.List<com.google.protobuf.Any> extensions_ = java.util.Collections.emptyList();
-
-    private void ensureExtensionsIsMutable() {
-      if (!((bitField0_ & 0x00000004) != 0)) {
-        extensions_ = new java.util.ArrayList<com.google.protobuf.Any>(extensions_);
-        bitField0_ |= 0x00000004;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.protobuf.Any,
-            com.google.protobuf.Any.Builder,
-            com.google.protobuf.AnyOrBuilder>
-        extensionsBuilder_;
-
     /**
      *
      *
@@ -902,12 +652,9 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.protobuf.Any extensions = 3;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.protobuf.Any> getExtensionsList() {
-      if (extensionsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(extensions_);
-      } else {
-        return extensionsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getExtensionsList());
     }
     /**
      *
@@ -919,12 +666,9 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.protobuf.Any extensions = 3;</code>
      */
+    @java.lang.Override
     public int getExtensionsCount() {
-      if (extensionsBuilder_ == null) {
-        return extensions_.size();
-      } else {
-        return extensionsBuilder_.getCount();
-      }
+      return instance.getExtensionsCount();
     }
     /**
      *
@@ -936,12 +680,10 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.protobuf.Any extensions = 3;</code>
      */
+
+    @java.lang.Override
     public com.google.protobuf.Any getExtensions(int index) {
-      if (extensionsBuilder_ == null) {
-        return extensions_.get(index);
-      } else {
-        return extensionsBuilder_.getMessage(index);
-      }
+      return instance.getExtensions(index);
     }
     /**
      *
@@ -954,16 +696,8 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Any extensions = 3;</code>
      */
     public Builder setExtensions(int index, com.google.protobuf.Any value) {
-      if (extensionsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureExtensionsIsMutable();
-        extensions_.set(index, value);
-        onChanged();
-      } else {
-        extensionsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setExtensions(index, value);
       return this;
     }
     /**
@@ -977,13 +711,8 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Any extensions = 3;</code>
      */
     public Builder setExtensions(int index, com.google.protobuf.Any.Builder builderForValue) {
-      if (extensionsBuilder_ == null) {
-        ensureExtensionsIsMutable();
-        extensions_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        extensionsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setExtensions(index, builderForValue.build());
       return this;
     }
     /**
@@ -997,16 +726,8 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Any extensions = 3;</code>
      */
     public Builder addExtensions(com.google.protobuf.Any value) {
-      if (extensionsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureExtensionsIsMutable();
-        extensions_.add(value);
-        onChanged();
-      } else {
-        extensionsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addExtensions(value);
       return this;
     }
     /**
@@ -1020,16 +741,8 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Any extensions = 3;</code>
      */
     public Builder addExtensions(int index, com.google.protobuf.Any value) {
-      if (extensionsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureExtensionsIsMutable();
-        extensions_.add(index, value);
-        onChanged();
-      } else {
-        extensionsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addExtensions(index, value);
       return this;
     }
     /**
@@ -1043,13 +756,8 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Any extensions = 3;</code>
      */
     public Builder addExtensions(com.google.protobuf.Any.Builder builderForValue) {
-      if (extensionsBuilder_ == null) {
-        ensureExtensionsIsMutable();
-        extensions_.add(builderForValue.build());
-        onChanged();
-      } else {
-        extensionsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addExtensions(builderForValue.build());
       return this;
     }
     /**
@@ -1063,13 +771,8 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Any extensions = 3;</code>
      */
     public Builder addExtensions(int index, com.google.protobuf.Any.Builder builderForValue) {
-      if (extensionsBuilder_ == null) {
-        ensureExtensionsIsMutable();
-        extensions_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        extensionsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addExtensions(index, builderForValue.build());
       return this;
     }
     /**
@@ -1083,13 +786,8 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Any extensions = 3;</code>
      */
     public Builder addAllExtensions(java.lang.Iterable<? extends com.google.protobuf.Any> values) {
-      if (extensionsBuilder_ == null) {
-        ensureExtensionsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, extensions_);
-        onChanged();
-      } else {
-        extensionsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllExtensions(values);
       return this;
     }
     /**
@@ -1103,13 +801,8 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Any extensions = 3;</code>
      */
     public Builder clearExtensions() {
-      if (extensionsBuilder_ == null) {
-        extensions_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000004);
-        onChanged();
-      } else {
-        extensionsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearExtensions();
       return this;
     }
     /**
@@ -1123,178 +816,90 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Any extensions = 3;</code>
      */
     public Builder removeExtensions(int index) {
-      if (extensionsBuilder_ == null) {
-        ensureExtensionsIsMutable();
-        extensions_.remove(index);
-        onChanged();
-      } else {
-        extensionsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeExtensions(index);
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Application specific response metadata. Must be set in the first response
-     * for streaming APIs.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Any extensions = 3;</code>
-     */
-    public com.google.protobuf.Any.Builder getExtensionsBuilder(int index) {
-      return getExtensionsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Application specific response metadata. Must be set in the first response
-     * for streaming APIs.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Any extensions = 3;</code>
-     */
-    public com.google.protobuf.AnyOrBuilder getExtensionsOrBuilder(int index) {
-      if (extensionsBuilder_ == null) {
-        return extensions_.get(index);
-      } else {
-        return extensionsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Application specific response metadata. Must be set in the first response
-     * for streaming APIs.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Any extensions = 3;</code>
-     */
-    public java.util.List<? extends com.google.protobuf.AnyOrBuilder> getExtensionsOrBuilderList() {
-      if (extensionsBuilder_ != null) {
-        return extensionsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(extensions_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Application specific response metadata. Must be set in the first response
-     * for streaming APIs.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Any extensions = 3;</code>
-     */
-    public com.google.protobuf.Any.Builder addExtensionsBuilder() {
-      return getExtensionsFieldBuilder().addBuilder(com.google.protobuf.Any.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Application specific response metadata. Must be set in the first response
-     * for streaming APIs.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Any extensions = 3;</code>
-     */
-    public com.google.protobuf.Any.Builder addExtensionsBuilder(int index) {
-      return getExtensionsFieldBuilder()
-          .addBuilder(index, com.google.protobuf.Any.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Application specific response metadata. Must be set in the first response
-     * for streaming APIs.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Any extensions = 3;</code>
-     */
-    public java.util.List<com.google.protobuf.Any.Builder> getExtensionsBuilderList() {
-      return getExtensionsFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.protobuf.Any,
-            com.google.protobuf.Any.Builder,
-            com.google.protobuf.AnyOrBuilder>
-        getExtensionsFieldBuilder() {
-      if (extensionsBuilder_ == null) {
-        extensionsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.protobuf.Any,
-                com.google.protobuf.Any.Builder,
-                com.google.protobuf.AnyOrBuilder>(
-                extensions_, ((bitField0_ & 0x00000004) != 0), getParentForChildren(), isClean());
-        extensions_ = null;
-      }
-      return extensionsBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.api.HttpBody)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.HttpBody();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "contentType_", "data_", "extensions_", com.google.protobuf.Any.class,
+              };
+          java.lang.String info =
+              "\u0000\u0003\u0000\u0000\u0001\u0003\u0003\u0000\u0001\u0000\u0001\u0208\u0002\n"
+                  + "\u0003\u001b";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.HttpBody> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.HttpBody.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser = new DefaultInstanceBasedParser<com.google.api.HttpBody>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.HttpBody)
   private static final com.google.api.HttpBody DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.HttpBody();
+    HttpBody defaultInstance = new HttpBody();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        HttpBody.class, defaultInstance);
   }
 
   public static com.google.api.HttpBody getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<HttpBody> PARSER =
-      new com.google.protobuf.AbstractParser<HttpBody>() {
-        @java.lang.Override
-        public HttpBody parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<HttpBody> PARSER;
 
   public static com.google.protobuf.Parser<HttpBody> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<HttpBody> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.HttpBody getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

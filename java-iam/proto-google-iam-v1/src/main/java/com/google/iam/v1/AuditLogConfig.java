@@ -46,40 +46,14 @@ package com.google.iam.v1;
  *
  * Protobuf type {@code google.iam.v1.AuditLogConfig}
  */
-public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
+public final class AuditLogConfig
+    extends com.google.protobuf.GeneratedMessageLite<AuditLogConfig, AuditLogConfig.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.iam.v1.AuditLogConfig)
     AuditLogConfigOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use AuditLogConfig.newBuilder() to construct.
-  private AuditLogConfig(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private AuditLogConfig() {
-    logType_ = 0;
-    exemptedMembers_ = com.google.protobuf.LazyStringArrayList.emptyList();
+    exemptedMembers_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
   }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new AuditLogConfig();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.iam.v1.PolicyProto.internal_static_google_iam_v1_AuditLogConfig_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.iam.v1.PolicyProto
-        .internal_static_google_iam_v1_AuditLogConfig_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.iam.v1.AuditLogConfig.class, com.google.iam.v1.AuditLogConfig.Builder.class);
-  }
-
   /**
    *
    *
@@ -90,7 +64,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf enum {@code google.iam.v1.AuditLogConfig.LogType}
    */
-  public enum LogType implements com.google.protobuf.ProtocolMessageEnum {
+  public enum LogType implements com.google.protobuf.Internal.EnumLite {
     /**
      *
      *
@@ -175,6 +149,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      */
     public static final int DATA_READ_VALUE = 3;
 
+    @java.lang.Override
     public final int getNumber() {
       if (this == UNRECOGNIZED) {
         throw new java.lang.IllegalArgumentException(
@@ -184,8 +159,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
     }
 
     /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
+     * @param value The number of the enum to look for.
+     * @return The enum associated with the given number.
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
@@ -193,10 +168,6 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
       return forNumber(value);
     }
 
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
     public static LogType forNumber(int value) {
       switch (value) {
         case 0:
@@ -218,38 +189,25 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
 
     private static final com.google.protobuf.Internal.EnumLiteMap<LogType> internalValueMap =
         new com.google.protobuf.Internal.EnumLiteMap<LogType>() {
+          @java.lang.Override
           public LogType findValueByNumber(int number) {
             return LogType.forNumber(number);
           }
         };
 
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalStateException(
-            "Can't get the descriptor of an unrecognized enum value.");
+    public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+      return LogTypeVerifier.INSTANCE;
+    }
+
+    private static final class LogTypeVerifier
+        implements com.google.protobuf.Internal.EnumVerifier {
+      static final com.google.protobuf.Internal.EnumVerifier INSTANCE = new LogTypeVerifier();
+
+      @java.lang.Override
+      public boolean isInRange(int number) {
+        return LogType.forNumber(number) != null;
       }
-      return getDescriptor().getValues().get(ordinal());
-    }
-
-    public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-      return getDescriptor();
-    }
-
-    public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-      return com.google.iam.v1.AuditLogConfig.getDescriptor().getEnumTypes().get(0);
-    }
-
-    private static final LogType[] VALUES = values();
-
-    public static LogType valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
+    };
 
     private final int value;
 
@@ -261,7 +219,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int LOG_TYPE_FIELD_NUMBER = 1;
-  private int logType_ = 0;
+  private int logType_;
   /**
    *
    *
@@ -294,12 +252,50 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
         com.google.iam.v1.AuditLogConfig.LogType.forNumber(logType_);
     return result == null ? com.google.iam.v1.AuditLogConfig.LogType.UNRECOGNIZED : result;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The log type that this config enables.
+   * </pre>
+   *
+   * <code>.google.iam.v1.AuditLogConfig.LogType log_type = 1;</code>
+   *
+   * @param value The enum numeric value on the wire for logType to set.
+   */
+  private void setLogTypeValue(int value) {
+    logType_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The log type that this config enables.
+   * </pre>
+   *
+   * <code>.google.iam.v1.AuditLogConfig.LogType log_type = 1;</code>
+   *
+   * @param value The logType to set.
+   */
+  private void setLogType(com.google.iam.v1.AuditLogConfig.LogType value) {
+    logType_ = value.getNumber();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The log type that this config enables.
+   * </pre>
+   *
+   * <code>.google.iam.v1.AuditLogConfig.LogType log_type = 1;</code>
+   */
+  private void clearLogType() {
+
+    logType_ = 0;
+  }
 
   public static final int EXEMPTED_MEMBERS_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList exemptedMembers_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.Internal.ProtobufList<java.lang.String> exemptedMembers_;
   /**
    *
    *
@@ -314,7 +310,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
    *
    * @return A list containing the exemptedMembers.
    */
-  public com.google.protobuf.ProtocolStringList getExemptedMembersList() {
+  @java.lang.Override
+  public java.util.List<java.lang.String> getExemptedMembersList() {
     return exemptedMembers_;
   }
   /**
@@ -331,6 +328,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The count of exemptedMembers.
    */
+  @java.lang.Override
   public int getExemptedMembersCount() {
     return exemptedMembers_.size();
   }
@@ -349,6 +347,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the element to return.
    * @return The exemptedMembers at the given index.
    */
+  @java.lang.Override
   public java.lang.String getExemptedMembers(int index) {
     return exemptedMembers_.get(index);
   }
@@ -367,183 +366,190 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the value to return.
    * @return The bytes of the exemptedMembers at the given index.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getExemptedMembersBytes(int index) {
-    return exemptedMembers_.getByteString(index);
+    return com.google.protobuf.ByteString.copyFromUtf8(exemptedMembers_.get(index));
   }
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  private void ensureExemptedMembersIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = exemptedMembers_;
+    if (!tmp.isModifiable()) {
+      exemptedMembers_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (logType_ != com.google.iam.v1.AuditLogConfig.LogType.LOG_TYPE_UNSPECIFIED.getNumber()) {
-      output.writeEnum(1, logType_);
-    }
-    for (int i = 0; i < exemptedMembers_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, exemptedMembers_.getRaw(i));
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the identities that do not cause logging for this type of
+   * permission.
+   * Follows the same format of
+   * [Binding.members][google.iam.v1.Binding.members].
+   * </pre>
+   *
+   * <code>repeated string exempted_members = 2;</code>
+   *
+   * @param index The index to set the value at.
+   * @param value The exemptedMembers to set.
+   */
+  private void setExemptedMembers(int index, java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureExemptedMembersIsMutable();
+    exemptedMembers_.set(index, value);
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (logType_ != com.google.iam.v1.AuditLogConfig.LogType.LOG_TYPE_UNSPECIFIED.getNumber()) {
-      size += com.google.protobuf.CodedOutputStream.computeEnumSize(1, logType_);
-    }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < exemptedMembers_.size(); i++) {
-        dataSize += computeStringSizeNoTag(exemptedMembers_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getExemptedMembersList().size();
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the identities that do not cause logging for this type of
+   * permission.
+   * Follows the same format of
+   * [Binding.members][google.iam.v1.Binding.members].
+   * </pre>
+   *
+   * <code>repeated string exempted_members = 2;</code>
+   *
+   * @param value The exemptedMembers to add.
+   */
+  private void addExemptedMembers(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureExemptedMembersIsMutable();
+    exemptedMembers_.add(value);
   }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.iam.v1.AuditLogConfig)) {
-      return super.equals(obj);
-    }
-    com.google.iam.v1.AuditLogConfig other = (com.google.iam.v1.AuditLogConfig) obj;
-
-    if (logType_ != other.logType_) return false;
-    if (!getExemptedMembersList().equals(other.getExemptedMembersList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the identities that do not cause logging for this type of
+   * permission.
+   * Follows the same format of
+   * [Binding.members][google.iam.v1.Binding.members].
+   * </pre>
+   *
+   * <code>repeated string exempted_members = 2;</code>
+   *
+   * @param values The exemptedMembers to add.
+   */
+  private void addAllExemptedMembers(java.lang.Iterable<java.lang.String> values) {
+    ensureExemptedMembersIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, exemptedMembers_);
   }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + LOG_TYPE_FIELD_NUMBER;
-    hash = (53 * hash) + logType_;
-    if (getExemptedMembersCount() > 0) {
-      hash = (37 * hash) + EXEMPTED_MEMBERS_FIELD_NUMBER;
-      hash = (53 * hash) + getExemptedMembersList().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the identities that do not cause logging for this type of
+   * permission.
+   * Follows the same format of
+   * [Binding.members][google.iam.v1.Binding.members].
+   * </pre>
+   *
+   * <code>repeated string exempted_members = 2;</code>
+   */
+  private void clearExemptedMembers() {
+    exemptedMembers_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the identities that do not cause logging for this type of
+   * permission.
+   * Follows the same format of
+   * [Binding.members][google.iam.v1.Binding.members].
+   * </pre>
+   *
+   * <code>repeated string exempted_members = 2;</code>
+   *
+   * @param value The bytes of the exemptedMembers to add.
+   */
+  private void addExemptedMembersBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    ensureExemptedMembersIsMutable();
+    exemptedMembers_.add(value.toStringUtf8());
   }
 
   public static com.google.iam.v1.AuditLogConfig parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v1.AuditLogConfig parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v1.AuditLogConfig parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v1.AuditLogConfig parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v1.AuditLogConfig parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v1.AuditLogConfig parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v1.AuditLogConfig parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v1.AuditLogConfig parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.iam.v1.AuditLogConfig parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v1.AuditLogConfig parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.iam.v1.AuditLogConfig parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v1.AuditLogConfig parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.iam.v1.AuditLogConfig prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -571,197 +577,17 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.iam.v1.AuditLogConfig}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.iam.v1.AuditLogConfig, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.iam.v1.AuditLogConfig)
       com.google.iam.v1.AuditLogConfigOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.iam.v1.PolicyProto.internal_static_google_iam_v1_AuditLogConfig_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.iam.v1.PolicyProto
-          .internal_static_google_iam_v1_AuditLogConfig_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.iam.v1.AuditLogConfig.class,
-              com.google.iam.v1.AuditLogConfig.Builder.class);
-    }
-
     // Construct using com.google.iam.v1.AuditLogConfig.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      logType_ = 0;
-      exemptedMembers_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.iam.v1.PolicyProto.internal_static_google_iam_v1_AuditLogConfig_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.iam.v1.AuditLogConfig getDefaultInstanceForType() {
-      return com.google.iam.v1.AuditLogConfig.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.iam.v1.AuditLogConfig build() {
-      com.google.iam.v1.AuditLogConfig result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.iam.v1.AuditLogConfig buildPartial() {
-      com.google.iam.v1.AuditLogConfig result = new com.google.iam.v1.AuditLogConfig(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.iam.v1.AuditLogConfig result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.logType_ = logType_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        exemptedMembers_.makeImmutable();
-        result.exemptedMembers_ = exemptedMembers_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.iam.v1.AuditLogConfig) {
-        return mergeFrom((com.google.iam.v1.AuditLogConfig) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.iam.v1.AuditLogConfig other) {
-      if (other == com.google.iam.v1.AuditLogConfig.getDefaultInstance()) return this;
-      if (other.logType_ != 0) {
-        setLogTypeValue(other.getLogTypeValue());
-      }
-      if (!other.exemptedMembers_.isEmpty()) {
-        if (exemptedMembers_.isEmpty()) {
-          exemptedMembers_ = other.exemptedMembers_;
-          bitField0_ |= 0x00000002;
-        } else {
-          ensureExemptedMembersIsMutable();
-          exemptedMembers_.addAll(other.exemptedMembers_);
-        }
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 8:
-              {
-                logType_ = input.readEnum();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 8
-            case 18:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureExemptedMembersIsMutable();
-                exemptedMembers_.add(s);
-                break;
-              } // case 18
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private int logType_ = 0;
     /**
      *
      *
@@ -775,7 +601,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getLogTypeValue() {
-      return logType_;
+      return instance.getLogTypeValue();
     }
     /**
      *
@@ -786,13 +612,12 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.iam.v1.AuditLogConfig.LogType log_type = 1;</code>
      *
-     * @param value The enum numeric value on the wire for logType to set.
+     * @param value The logType to set.
      * @return This builder for chaining.
      */
     public Builder setLogTypeValue(int value) {
-      logType_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setLogTypeValue(value);
       return this;
     }
     /**
@@ -808,9 +633,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.iam.v1.AuditLogConfig.LogType getLogType() {
-      com.google.iam.v1.AuditLogConfig.LogType result =
-          com.google.iam.v1.AuditLogConfig.LogType.forNumber(logType_);
-      return result == null ? com.google.iam.v1.AuditLogConfig.LogType.UNRECOGNIZED : result;
+      return instance.getLogType();
     }
     /**
      *
@@ -821,16 +644,12 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.iam.v1.AuditLogConfig.LogType log_type = 1;</code>
      *
-     * @param value The logType to set.
+     * @param value The enum numeric value on the wire for logType to set.
      * @return This builder for chaining.
      */
     public Builder setLogType(com.google.iam.v1.AuditLogConfig.LogType value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      bitField0_ |= 0x00000001;
-      logType_ = value.getNumber();
-      onChanged();
+      copyOnWrite();
+      instance.setLogType(value);
       return this;
     }
     /**
@@ -845,21 +664,11 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearLogType() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      logType_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearLogType();
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList exemptedMembers_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
-
-    private void ensureExemptedMembersIsMutable() {
-      if (!exemptedMembers_.isModifiable()) {
-        exemptedMembers_ = new com.google.protobuf.LazyStringArrayList(exemptedMembers_);
-      }
-      bitField0_ |= 0x00000002;
-    }
     /**
      *
      *
@@ -874,9 +683,9 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      *
      * @return A list containing the exemptedMembers.
      */
-    public com.google.protobuf.ProtocolStringList getExemptedMembersList() {
-      exemptedMembers_.makeImmutable();
-      return exemptedMembers_;
+    @java.lang.Override
+    public java.util.List<java.lang.String> getExemptedMembersList() {
+      return java.util.Collections.unmodifiableList(instance.getExemptedMembersList());
     }
     /**
      *
@@ -892,8 +701,9 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The count of exemptedMembers.
      */
+    @java.lang.Override
     public int getExemptedMembersCount() {
-      return exemptedMembers_.size();
+      return instance.getExemptedMembersCount();
     }
     /**
      *
@@ -910,8 +720,9 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the element to return.
      * @return The exemptedMembers at the given index.
      */
+    @java.lang.Override
     public java.lang.String getExemptedMembers(int index) {
-      return exemptedMembers_.get(index);
+      return instance.getExemptedMembers(index);
     }
     /**
      *
@@ -928,8 +739,9 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the value to return.
      * @return The bytes of the exemptedMembers at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getExemptedMembersBytes(int index) {
-      return exemptedMembers_.getByteString(index);
+      return instance.getExemptedMembersBytes(index);
     }
     /**
      *
@@ -948,13 +760,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setExemptedMembers(int index, java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureExemptedMembersIsMutable();
-      exemptedMembers_.set(index, value);
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setExemptedMembers(index, value);
       return this;
     }
     /**
@@ -973,13 +780,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addExemptedMembers(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureExemptedMembersIsMutable();
-      exemptedMembers_.add(value);
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.addExemptedMembers(value);
       return this;
     }
     /**
@@ -998,10 +800,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAllExemptedMembers(java.lang.Iterable<java.lang.String> values) {
-      ensureExemptedMembersIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, exemptedMembers_);
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.addAllExemptedMembers(values);
       return this;
     }
     /**
@@ -1019,10 +819,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearExemptedMembers() {
-      exemptedMembers_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      ;
-      onChanged();
+      copyOnWrite();
+      instance.clearExemptedMembers();
       return this;
     }
     /**
@@ -1041,75 +839,92 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addExemptedMembersBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      ensureExemptedMembersIsMutable();
-      exemptedMembers_.add(value);
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.addExemptedMembersBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.iam.v1.AuditLogConfig)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.iam.v1.AuditLogConfig();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "logType_", "exemptedMembers_",
+              };
+          java.lang.String info =
+              "\u0000\u0002\u0000\u0000\u0001\u0002\u0002\u0000\u0001\u0000\u0001\f\u0002\u021a"
+                  + "";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.iam.v1.AuditLogConfig> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.iam.v1.AuditLogConfig.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.iam.v1.AuditLogConfig>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.iam.v1.AuditLogConfig)
   private static final com.google.iam.v1.AuditLogConfig DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.iam.v1.AuditLogConfig();
+    AuditLogConfig defaultInstance = new AuditLogConfig();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        AuditLogConfig.class, defaultInstance);
   }
 
   public static com.google.iam.v1.AuditLogConfig getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<AuditLogConfig> PARSER =
-      new com.google.protobuf.AbstractParser<AuditLogConfig>() {
-        @java.lang.Override
-        public AuditLogConfig parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<AuditLogConfig> PARSER;
 
   public static com.google.protobuf.Parser<AuditLogConfig> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<AuditLogConfig> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.iam.v1.AuditLogConfig getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

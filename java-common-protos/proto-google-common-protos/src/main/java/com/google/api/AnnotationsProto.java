@@ -26,10 +26,6 @@ public final class AnnotationsProto {
     registry.add(com.google.api.AnnotationsProto.http);
   }
 
-  public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
-  }
-
   public static final int HTTP_FIELD_NUMBER = 72295728;
   /**
    *
@@ -40,39 +36,19 @@ public final class AnnotationsProto {
    *
    * <code>extend .google.protobuf.MethodOptions { ... }</code>
    */
-  public static final com.google.protobuf.GeneratedMessage.GeneratedExtension<
+  public static final com.google.protobuf.GeneratedMessageLite.GeneratedExtension<
           com.google.protobuf.DescriptorProtos.MethodOptions, com.google.api.HttpRule>
       http =
-          com.google.protobuf.GeneratedMessage.newFileScopedGeneratedExtension(
-              com.google.api.HttpRule.class, com.google.api.HttpRule.getDefaultInstance());
-
-  public static com.google.protobuf.Descriptors.FileDescriptor getDescriptor() {
-    return descriptor;
-  }
-
-  private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
+          com.google.protobuf.GeneratedMessageLite.newSingularGeneratedExtension(
+              com.google.protobuf.DescriptorProtos.MethodOptions.getDefaultInstance(),
+              com.google.api.HttpRule.getDefaultInstance(),
+              com.google.api.HttpRule.getDefaultInstance(),
+              null,
+              72295728,
+              com.google.protobuf.WireFormat.FieldType.MESSAGE,
+              com.google.api.HttpRule.class);
 
   static {
-    java.lang.String[] descriptorData = {
-      "\n\034google/api/annotations.proto\022\ngoogle.a"
-          + "pi\032\025google/api/http.proto\032 google/protob"
-          + "uf/descriptor.proto:E\n\004http\022\036.google.pro"
-          + "tobuf.MethodOptions\030\260\312\274\" \001(\0132\024.google.ap"
-          + "i.HttpRuleBn\n\016com.google.apiB\020Annotation"
-          + "sProtoP\001ZAgoogle.golang.org/genproto/goo"
-          + "gleapis/api/annotations;annotations\242\002\004GA"
-          + "PIb\006proto3"
-    };
-    descriptor =
-        com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
-            descriptorData,
-            new com.google.protobuf.Descriptors.FileDescriptor[] {
-              com.google.api.HttpProto.getDescriptor(),
-              com.google.protobuf.DescriptorProtos.getDescriptor(),
-            });
-    http.internalInit(descriptor.getExtensions().get(0));
-    com.google.api.HttpProto.getDescriptor();
-    com.google.protobuf.DescriptorProtos.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

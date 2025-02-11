@@ -22,7 +22,7 @@ package com.google.api;
 public interface HttpOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.Http)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -60,30 +60,6 @@ public interface HttpOrBuilder
    * <code>repeated .google.api.HttpRule rules = 1;</code>
    */
   int getRulesCount();
-  /**
-   *
-   *
-   * <pre>
-   * A list of HTTP configuration rules that apply to individual API methods.
-   *
-   * **NOTE:** All service configuration rules follow "last one wins" order.
-   * </pre>
-   *
-   * <code>repeated .google.api.HttpRule rules = 1;</code>
-   */
-  java.util.List<? extends com.google.api.HttpRuleOrBuilder> getRulesOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * A list of HTTP configuration rules that apply to individual API methods.
-   *
-   * **NOTE:** All service configuration rules follow "last one wins" order.
-   * </pre>
-   *
-   * <code>repeated .google.api.HttpRule rules = 1;</code>
-   */
-  com.google.api.HttpRuleOrBuilder getRulesOrBuilder(int index);
 
   /**
    *

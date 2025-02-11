@@ -60,53 +60,28 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.Service}
  */
-public final class Service extends com.google.protobuf.GeneratedMessageV3
+public final class Service
+    extends com.google.protobuf.GeneratedMessageLite<Service, Service.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.Service)
     ServiceOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use Service.newBuilder() to construct.
-  private Service(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private Service() {
     name_ = "";
     title_ = "";
     producerProjectId_ = "";
     id_ = "";
-    apis_ = java.util.Collections.emptyList();
-    types_ = java.util.Collections.emptyList();
-    enums_ = java.util.Collections.emptyList();
-    endpoints_ = java.util.Collections.emptyList();
-    logs_ = java.util.Collections.emptyList();
-    metrics_ = java.util.Collections.emptyList();
-    monitoredResources_ = java.util.Collections.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new Service();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.ServiceProto.internal_static_google_api_Service_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.ServiceProto.internal_static_google_api_Service_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.Service.class, com.google.api.Service.Builder.class);
+    apis_ = emptyProtobufList();
+    types_ = emptyProtobufList();
+    enums_ = emptyProtobufList();
+    endpoints_ = emptyProtobufList();
+    logs_ = emptyProtobufList();
+    metrics_ = emptyProtobufList();
+    monitoredResources_ = emptyProtobufList();
   }
 
   private int bitField0_;
   public static final int NAME_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object name_ = "";
+  private java.lang.String name_;
   /**
    *
    *
@@ -123,15 +98,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getName() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      name_ = s;
-      return s;
-    }
+    return name_;
   }
   /**
    *
@@ -149,21 +116,64 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      name_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(name_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The service name, which is a DNS-like logical identifier for the
+   * service, such as `calendar.googleapis.com`. The service name
+   * typically goes through DNS verification to make sure the owner
+   * of the service also owns the DNS name.
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The name to set.
+   */
+  private void setName(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    name_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The service name, which is a DNS-like logical identifier for the
+   * service, such as `calendar.googleapis.com`. The service name
+   * typically goes through DNS verification to make sure the owner
+   * of the service also owns the DNS name.
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   */
+  private void clearName() {
+
+    name_ = getDefaultInstance().getName();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The service name, which is a DNS-like logical identifier for the
+   * service, such as `calendar.googleapis.com`. The service name
+   * typically goes through DNS verification to make sure the owner
+   * of the service also owns the DNS name.
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The bytes for name to set.
+   */
+  private void setNameBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    name_ = value.toStringUtf8();
   }
 
   public static final int TITLE_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object title_ = "";
+  private java.lang.String title_;
   /**
    *
    *
@@ -178,15 +188,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getTitle() {
-    java.lang.Object ref = title_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      title_ = s;
-      return s;
-    }
+    return title_;
   }
   /**
    *
@@ -202,21 +204,58 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getTitleBytes() {
-    java.lang.Object ref = title_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      title_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(title_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The product title for this service, it is the name displayed in Google
+   * Cloud Console.
+   * </pre>
+   *
+   * <code>string title = 2;</code>
+   *
+   * @param value The title to set.
+   */
+  private void setTitle(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    title_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The product title for this service, it is the name displayed in Google
+   * Cloud Console.
+   * </pre>
+   *
+   * <code>string title = 2;</code>
+   */
+  private void clearTitle() {
+
+    title_ = getDefaultInstance().getTitle();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The product title for this service, it is the name displayed in Google
+   * Cloud Console.
+   * </pre>
+   *
+   * <code>string title = 2;</code>
+   *
+   * @param value The bytes for title to set.
+   */
+  private void setTitleBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    title_ = value.toStringUtf8();
   }
 
   public static final int PRODUCER_PROJECT_ID_FIELD_NUMBER = 22;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object producerProjectId_ = "";
+  private java.lang.String producerProjectId_;
   /**
    *
    *
@@ -230,15 +269,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getProducerProjectId() {
-    java.lang.Object ref = producerProjectId_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      producerProjectId_ = s;
-      return s;
-    }
+    return producerProjectId_;
   }
   /**
    *
@@ -253,21 +284,55 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getProducerProjectIdBytes() {
-    java.lang.Object ref = producerProjectId_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      producerProjectId_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(producerProjectId_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The Google project that owns this service.
+   * </pre>
+   *
+   * <code>string producer_project_id = 22;</code>
+   *
+   * @param value The producerProjectId to set.
+   */
+  private void setProducerProjectId(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    producerProjectId_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The Google project that owns this service.
+   * </pre>
+   *
+   * <code>string producer_project_id = 22;</code>
+   */
+  private void clearProducerProjectId() {
+
+    producerProjectId_ = getDefaultInstance().getProducerProjectId();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The Google project that owns this service.
+   * </pre>
+   *
+   * <code>string producer_project_id = 22;</code>
+   *
+   * @param value The bytes for producerProjectId to set.
+   */
+  private void setProducerProjectIdBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    producerProjectId_ = value.toStringUtf8();
   }
 
   public static final int ID_FIELD_NUMBER = 33;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object id_ = "";
+  private java.lang.String id_;
   /**
    *
    *
@@ -284,15 +349,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getId() {
-    java.lang.Object ref = id_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      id_ = s;
-      return s;
-    }
+    return id_;
   }
   /**
    *
@@ -310,21 +367,64 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getIdBytes() {
-    java.lang.Object ref = id_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      id_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(id_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A unique ID for a specific instance of this message, typically assigned
+   * by the client for tracking purpose. Must be no longer than 63 characters
+   * and only lower case letters, digits, '.', '_' and '-' are allowed. If
+   * empty, the server may choose to generate one instead.
+   * </pre>
+   *
+   * <code>string id = 33;</code>
+   *
+   * @param value The id to set.
+   */
+  private void setId(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    id_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A unique ID for a specific instance of this message, typically assigned
+   * by the client for tracking purpose. Must be no longer than 63 characters
+   * and only lower case letters, digits, '.', '_' and '-' are allowed. If
+   * empty, the server may choose to generate one instead.
+   * </pre>
+   *
+   * <code>string id = 33;</code>
+   */
+  private void clearId() {
+
+    id_ = getDefaultInstance().getId();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A unique ID for a specific instance of this message, typically assigned
+   * by the client for tracking purpose. Must be no longer than 63 characters
+   * and only lower case letters, digits, '.', '_' and '-' are allowed. If
+   * empty, the server may choose to generate one instead.
+   * </pre>
+   *
+   * <code>string id = 33;</code>
+   *
+   * @param value The bytes for id to set.
+   */
+  private void setIdBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    id_ = value.toStringUtf8();
   }
 
   public static final int APIS_FIELD_NUMBER = 3;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.protobuf.Api> apis_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.protobuf.Api> apis_;
   /**
    *
    *
@@ -355,7 +455,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Api apis = 3;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.protobuf.ApiOrBuilder> getApisOrBuilderList() {
     return apis_;
   }
@@ -406,15 +505,124 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Api apis = 3;</code>
    */
-  @java.lang.Override
   public com.google.protobuf.ApiOrBuilder getApisOrBuilder(int index) {
     return apis_.get(index);
   }
 
-  public static final int TYPES_FIELD_NUMBER = 4;
+  private void ensureApisIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.protobuf.Api> tmp = apis_;
+    if (!tmp.isModifiable()) {
+      apis_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
 
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.protobuf.Type> types_;
+  /**
+   *
+   *
+   * <pre>
+   * A list of API interfaces exported by this service. Only the `name` field
+   * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by
+   * the configuration author, as the remaining fields will be derived from the
+   * IDL during the normalization process. It is an error to specify an API
+   * interface here which cannot be resolved against the associated IDL files.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Api apis = 3;</code>
+   */
+  private void setApis(int index, com.google.protobuf.Api value) {
+    value.getClass();
+    ensureApisIsMutable();
+    apis_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of API interfaces exported by this service. Only the `name` field
+   * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by
+   * the configuration author, as the remaining fields will be derived from the
+   * IDL during the normalization process. It is an error to specify an API
+   * interface here which cannot be resolved against the associated IDL files.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Api apis = 3;</code>
+   */
+  private void addApis(com.google.protobuf.Api value) {
+    value.getClass();
+    ensureApisIsMutable();
+    apis_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of API interfaces exported by this service. Only the `name` field
+   * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by
+   * the configuration author, as the remaining fields will be derived from the
+   * IDL during the normalization process. It is an error to specify an API
+   * interface here which cannot be resolved against the associated IDL files.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Api apis = 3;</code>
+   */
+  private void addApis(int index, com.google.protobuf.Api value) {
+    value.getClass();
+    ensureApisIsMutable();
+    apis_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of API interfaces exported by this service. Only the `name` field
+   * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by
+   * the configuration author, as the remaining fields will be derived from the
+   * IDL during the normalization process. It is an error to specify an API
+   * interface here which cannot be resolved against the associated IDL files.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Api apis = 3;</code>
+   */
+  private void addAllApis(java.lang.Iterable<? extends com.google.protobuf.Api> values) {
+    ensureApisIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, apis_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of API interfaces exported by this service. Only the `name` field
+   * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by
+   * the configuration author, as the remaining fields will be derived from the
+   * IDL during the normalization process. It is an error to specify an API
+   * interface here which cannot be resolved against the associated IDL files.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Api apis = 3;</code>
+   */
+  private void clearApis() {
+    apis_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of API interfaces exported by this service. Only the `name` field
+   * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by
+   * the configuration author, as the remaining fields will be derived from the
+   * IDL during the normalization process. It is an error to specify an API
+   * interface here which cannot be resolved against the associated IDL files.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Api apis = 3;</code>
+   */
+  private void removeApis(int index) {
+    ensureApisIsMutable();
+    apis_.remove(index);
+  }
+
+  public static final int TYPES_FIELD_NUMBER = 4;
+  private com.google.protobuf.Internal.ProtobufList<com.google.protobuf.Type> types_;
   /**
    *
    *
@@ -451,7 +659,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Type types = 4;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.protobuf.TypeOrBuilder> getTypesOrBuilderList() {
     return types_;
   }
@@ -511,15 +718,142 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Type types = 4;</code>
    */
-  @java.lang.Override
   public com.google.protobuf.TypeOrBuilder getTypesOrBuilder(int index) {
     return types_.get(index);
   }
 
-  public static final int ENUMS_FIELD_NUMBER = 5;
+  private void ensureTypesIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.protobuf.Type> tmp = types_;
+    if (!tmp.isModifiable()) {
+      types_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
 
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.protobuf.Enum> enums_;
+  /**
+   *
+   *
+   * <pre>
+   * A list of all proto message types included in this API service.
+   * Types referenced directly or indirectly by the `apis` are automatically
+   * included.  Messages which are not referenced but shall be included, such as
+   * types used by the `google.protobuf.Any` type, should be listed here by
+   * name by the configuration author. Example:
+   *
+   *     types:
+   *     - name: google.protobuf.Int32
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Type types = 4;</code>
+   */
+  private void setTypes(int index, com.google.protobuf.Type value) {
+    value.getClass();
+    ensureTypesIsMutable();
+    types_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of all proto message types included in this API service.
+   * Types referenced directly or indirectly by the `apis` are automatically
+   * included.  Messages which are not referenced but shall be included, such as
+   * types used by the `google.protobuf.Any` type, should be listed here by
+   * name by the configuration author. Example:
+   *
+   *     types:
+   *     - name: google.protobuf.Int32
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Type types = 4;</code>
+   */
+  private void addTypes(com.google.protobuf.Type value) {
+    value.getClass();
+    ensureTypesIsMutable();
+    types_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of all proto message types included in this API service.
+   * Types referenced directly or indirectly by the `apis` are automatically
+   * included.  Messages which are not referenced but shall be included, such as
+   * types used by the `google.protobuf.Any` type, should be listed here by
+   * name by the configuration author. Example:
+   *
+   *     types:
+   *     - name: google.protobuf.Int32
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Type types = 4;</code>
+   */
+  private void addTypes(int index, com.google.protobuf.Type value) {
+    value.getClass();
+    ensureTypesIsMutable();
+    types_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of all proto message types included in this API service.
+   * Types referenced directly or indirectly by the `apis` are automatically
+   * included.  Messages which are not referenced but shall be included, such as
+   * types used by the `google.protobuf.Any` type, should be listed here by
+   * name by the configuration author. Example:
+   *
+   *     types:
+   *     - name: google.protobuf.Int32
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Type types = 4;</code>
+   */
+  private void addAllTypes(java.lang.Iterable<? extends com.google.protobuf.Type> values) {
+    ensureTypesIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, types_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of all proto message types included in this API service.
+   * Types referenced directly or indirectly by the `apis` are automatically
+   * included.  Messages which are not referenced but shall be included, such as
+   * types used by the `google.protobuf.Any` type, should be listed here by
+   * name by the configuration author. Example:
+   *
+   *     types:
+   *     - name: google.protobuf.Int32
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Type types = 4;</code>
+   */
+  private void clearTypes() {
+    types_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of all proto message types included in this API service.
+   * Types referenced directly or indirectly by the `apis` are automatically
+   * included.  Messages which are not referenced but shall be included, such as
+   * types used by the `google.protobuf.Any` type, should be listed here by
+   * name by the configuration author. Example:
+   *
+   *     types:
+   *     - name: google.protobuf.Int32
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Type types = 4;</code>
+   */
+  private void removeTypes(int index) {
+    ensureTypesIsMutable();
+    types_.remove(index);
+  }
+
+  public static final int ENUMS_FIELD_NUMBER = 5;
+  private com.google.protobuf.Internal.ProtobufList<com.google.protobuf.Enum> enums_;
   /**
    *
    *
@@ -554,7 +888,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Enum enums = 5;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.protobuf.EnumOrBuilder> getEnumsOrBuilderList() {
     return enums_;
   }
@@ -611,9 +944,132 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Enum enums = 5;</code>
    */
-  @java.lang.Override
   public com.google.protobuf.EnumOrBuilder getEnumsOrBuilder(int index) {
     return enums_.get(index);
+  }
+
+  private void ensureEnumsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.protobuf.Enum> tmp = enums_;
+    if (!tmp.isModifiable()) {
+      enums_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * A list of all enum types included in this API service.  Enums referenced
+   * directly or indirectly by the `apis` are automatically included.  Enums
+   * which are not referenced but shall be included should be listed here by
+   * name by the configuration author. Example:
+   *
+   *     enums:
+   *     - name: google.someapi.v1.SomeEnum
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Enum enums = 5;</code>
+   */
+  private void setEnums(int index, com.google.protobuf.Enum value) {
+    value.getClass();
+    ensureEnumsIsMutable();
+    enums_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of all enum types included in this API service.  Enums referenced
+   * directly or indirectly by the `apis` are automatically included.  Enums
+   * which are not referenced but shall be included should be listed here by
+   * name by the configuration author. Example:
+   *
+   *     enums:
+   *     - name: google.someapi.v1.SomeEnum
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Enum enums = 5;</code>
+   */
+  private void addEnums(com.google.protobuf.Enum value) {
+    value.getClass();
+    ensureEnumsIsMutable();
+    enums_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of all enum types included in this API service.  Enums referenced
+   * directly or indirectly by the `apis` are automatically included.  Enums
+   * which are not referenced but shall be included should be listed here by
+   * name by the configuration author. Example:
+   *
+   *     enums:
+   *     - name: google.someapi.v1.SomeEnum
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Enum enums = 5;</code>
+   */
+  private void addEnums(int index, com.google.protobuf.Enum value) {
+    value.getClass();
+    ensureEnumsIsMutable();
+    enums_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of all enum types included in this API service.  Enums referenced
+   * directly or indirectly by the `apis` are automatically included.  Enums
+   * which are not referenced but shall be included should be listed here by
+   * name by the configuration author. Example:
+   *
+   *     enums:
+   *     - name: google.someapi.v1.SomeEnum
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Enum enums = 5;</code>
+   */
+  private void addAllEnums(java.lang.Iterable<? extends com.google.protobuf.Enum> values) {
+    ensureEnumsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, enums_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of all enum types included in this API service.  Enums referenced
+   * directly or indirectly by the `apis` are automatically included.  Enums
+   * which are not referenced but shall be included should be listed here by
+   * name by the configuration author. Example:
+   *
+   *     enums:
+   *     - name: google.someapi.v1.SomeEnum
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Enum enums = 5;</code>
+   */
+  private void clearEnums() {
+    enums_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A list of all enum types included in this API service.  Enums referenced
+   * directly or indirectly by the `apis` are automatically included.  Enums
+   * which are not referenced but shall be included should be listed here by
+   * name by the configuration author. Example:
+   *
+   *     enums:
+   *     - name: google.someapi.v1.SomeEnum
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Enum enums = 5;</code>
+   */
+  private void removeEnums(int index) {
+    ensureEnumsIsMutable();
+    enums_.remove(index);
   }
 
   public static final int DOCUMENTATION_FIELD_NUMBER = 6;
@@ -626,8 +1082,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Documentation documentation = 6;</code>
-   *
-   * @return Whether the documentation field is set.
    */
   @java.lang.Override
   public boolean hasDocumentation() {
@@ -641,8 +1095,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Documentation documentation = 6;</code>
-   *
-   * @return The documentation.
    */
   @java.lang.Override
   public com.google.api.Documentation getDocumentation() {
@@ -659,11 +1111,44 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.Documentation documentation = 6;</code>
    */
-  @java.lang.Override
-  public com.google.api.DocumentationOrBuilder getDocumentationOrBuilder() {
-    return documentation_ == null
-        ? com.google.api.Documentation.getDefaultInstance()
-        : documentation_;
+  private void setDocumentation(com.google.api.Documentation value) {
+    value.getClass();
+    documentation_ = value;
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Additional API documentation.
+   * </pre>
+   *
+   * <code>.google.api.Documentation documentation = 6;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeDocumentation(com.google.api.Documentation value) {
+    value.getClass();
+    if (documentation_ != null
+        && documentation_ != com.google.api.Documentation.getDefaultInstance()) {
+      documentation_ =
+          com.google.api.Documentation.newBuilder(documentation_).mergeFrom(value).buildPartial();
+    } else {
+      documentation_ = value;
+    }
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Additional API documentation.
+   * </pre>
+   *
+   * <code>.google.api.Documentation documentation = 6;</code>
+   */
+  private void clearDocumentation() {
+    documentation_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static final int BACKEND_FIELD_NUMBER = 8;
@@ -676,8 +1161,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Backend backend = 8;</code>
-   *
-   * @return Whether the backend field is set.
    */
   @java.lang.Override
   public boolean hasBackend() {
@@ -691,8 +1174,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Backend backend = 8;</code>
-   *
-   * @return The backend.
    */
   @java.lang.Override
   public com.google.api.Backend getBackend() {
@@ -707,9 +1188,42 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.Backend backend = 8;</code>
    */
-  @java.lang.Override
-  public com.google.api.BackendOrBuilder getBackendOrBuilder() {
-    return backend_ == null ? com.google.api.Backend.getDefaultInstance() : backend_;
+  private void setBackend(com.google.api.Backend value) {
+    value.getClass();
+    backend_ = value;
+    bitField0_ |= 0x00000002;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * API backend configuration.
+   * </pre>
+   *
+   * <code>.google.api.Backend backend = 8;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeBackend(com.google.api.Backend value) {
+    value.getClass();
+    if (backend_ != null && backend_ != com.google.api.Backend.getDefaultInstance()) {
+      backend_ = com.google.api.Backend.newBuilder(backend_).mergeFrom(value).buildPartial();
+    } else {
+      backend_ = value;
+    }
+    bitField0_ |= 0x00000002;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * API backend configuration.
+   * </pre>
+   *
+   * <code>.google.api.Backend backend = 8;</code>
+   */
+  private void clearBackend() {
+    backend_ = null;
+    bitField0_ = (bitField0_ & ~0x00000002);
   }
 
   public static final int HTTP_FIELD_NUMBER = 9;
@@ -722,8 +1236,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Http http = 9;</code>
-   *
-   * @return Whether the http field is set.
    */
   @java.lang.Override
   public boolean hasHttp() {
@@ -737,8 +1249,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Http http = 9;</code>
-   *
-   * @return The http.
    */
   @java.lang.Override
   public com.google.api.Http getHttp() {
@@ -753,9 +1263,42 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.Http http = 9;</code>
    */
-  @java.lang.Override
-  public com.google.api.HttpOrBuilder getHttpOrBuilder() {
-    return http_ == null ? com.google.api.Http.getDefaultInstance() : http_;
+  private void setHttp(com.google.api.Http value) {
+    value.getClass();
+    http_ = value;
+    bitField0_ |= 0x00000004;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * HTTP configuration.
+   * </pre>
+   *
+   * <code>.google.api.Http http = 9;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeHttp(com.google.api.Http value) {
+    value.getClass();
+    if (http_ != null && http_ != com.google.api.Http.getDefaultInstance()) {
+      http_ = com.google.api.Http.newBuilder(http_).mergeFrom(value).buildPartial();
+    } else {
+      http_ = value;
+    }
+    bitField0_ |= 0x00000004;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * HTTP configuration.
+   * </pre>
+   *
+   * <code>.google.api.Http http = 9;</code>
+   */
+  private void clearHttp() {
+    http_ = null;
+    bitField0_ = (bitField0_ & ~0x00000004);
   }
 
   public static final int QUOTA_FIELD_NUMBER = 10;
@@ -768,8 +1311,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Quota quota = 10;</code>
-   *
-   * @return Whether the quota field is set.
    */
   @java.lang.Override
   public boolean hasQuota() {
@@ -783,8 +1324,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Quota quota = 10;</code>
-   *
-   * @return The quota.
    */
   @java.lang.Override
   public com.google.api.Quota getQuota() {
@@ -799,9 +1338,42 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.Quota quota = 10;</code>
    */
-  @java.lang.Override
-  public com.google.api.QuotaOrBuilder getQuotaOrBuilder() {
-    return quota_ == null ? com.google.api.Quota.getDefaultInstance() : quota_;
+  private void setQuota(com.google.api.Quota value) {
+    value.getClass();
+    quota_ = value;
+    bitField0_ |= 0x00000008;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Quota configuration.
+   * </pre>
+   *
+   * <code>.google.api.Quota quota = 10;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeQuota(com.google.api.Quota value) {
+    value.getClass();
+    if (quota_ != null && quota_ != com.google.api.Quota.getDefaultInstance()) {
+      quota_ = com.google.api.Quota.newBuilder(quota_).mergeFrom(value).buildPartial();
+    } else {
+      quota_ = value;
+    }
+    bitField0_ |= 0x00000008;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Quota configuration.
+   * </pre>
+   *
+   * <code>.google.api.Quota quota = 10;</code>
+   */
+  private void clearQuota() {
+    quota_ = null;
+    bitField0_ = (bitField0_ & ~0x00000008);
   }
 
   public static final int AUTHENTICATION_FIELD_NUMBER = 11;
@@ -814,8 +1386,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Authentication authentication = 11;</code>
-   *
-   * @return Whether the authentication field is set.
    */
   @java.lang.Override
   public boolean hasAuthentication() {
@@ -829,8 +1399,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Authentication authentication = 11;</code>
-   *
-   * @return The authentication.
    */
   @java.lang.Override
   public com.google.api.Authentication getAuthentication() {
@@ -847,11 +1415,44 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.Authentication authentication = 11;</code>
    */
-  @java.lang.Override
-  public com.google.api.AuthenticationOrBuilder getAuthenticationOrBuilder() {
-    return authentication_ == null
-        ? com.google.api.Authentication.getDefaultInstance()
-        : authentication_;
+  private void setAuthentication(com.google.api.Authentication value) {
+    value.getClass();
+    authentication_ = value;
+    bitField0_ |= 0x00000010;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Auth configuration.
+   * </pre>
+   *
+   * <code>.google.api.Authentication authentication = 11;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeAuthentication(com.google.api.Authentication value) {
+    value.getClass();
+    if (authentication_ != null
+        && authentication_ != com.google.api.Authentication.getDefaultInstance()) {
+      authentication_ =
+          com.google.api.Authentication.newBuilder(authentication_).mergeFrom(value).buildPartial();
+    } else {
+      authentication_ = value;
+    }
+    bitField0_ |= 0x00000010;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Auth configuration.
+   * </pre>
+   *
+   * <code>.google.api.Authentication authentication = 11;</code>
+   */
+  private void clearAuthentication() {
+    authentication_ = null;
+    bitField0_ = (bitField0_ & ~0x00000010);
   }
 
   public static final int CONTEXT_FIELD_NUMBER = 12;
@@ -864,8 +1465,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Context context = 12;</code>
-   *
-   * @return Whether the context field is set.
    */
   @java.lang.Override
   public boolean hasContext() {
@@ -879,8 +1478,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Context context = 12;</code>
-   *
-   * @return The context.
    */
   @java.lang.Override
   public com.google.api.Context getContext() {
@@ -895,9 +1492,42 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.Context context = 12;</code>
    */
-  @java.lang.Override
-  public com.google.api.ContextOrBuilder getContextOrBuilder() {
-    return context_ == null ? com.google.api.Context.getDefaultInstance() : context_;
+  private void setContext(com.google.api.Context value) {
+    value.getClass();
+    context_ = value;
+    bitField0_ |= 0x00000020;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Context configuration.
+   * </pre>
+   *
+   * <code>.google.api.Context context = 12;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeContext(com.google.api.Context value) {
+    value.getClass();
+    if (context_ != null && context_ != com.google.api.Context.getDefaultInstance()) {
+      context_ = com.google.api.Context.newBuilder(context_).mergeFrom(value).buildPartial();
+    } else {
+      context_ = value;
+    }
+    bitField0_ |= 0x00000020;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Context configuration.
+   * </pre>
+   *
+   * <code>.google.api.Context context = 12;</code>
+   */
+  private void clearContext() {
+    context_ = null;
+    bitField0_ = (bitField0_ & ~0x00000020);
   }
 
   public static final int USAGE_FIELD_NUMBER = 15;
@@ -910,8 +1540,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Usage usage = 15;</code>
-   *
-   * @return Whether the usage field is set.
    */
   @java.lang.Override
   public boolean hasUsage() {
@@ -925,8 +1553,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Usage usage = 15;</code>
-   *
-   * @return The usage.
    */
   @java.lang.Override
   public com.google.api.Usage getUsage() {
@@ -941,15 +1567,46 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.Usage usage = 15;</code>
    */
-  @java.lang.Override
-  public com.google.api.UsageOrBuilder getUsageOrBuilder() {
-    return usage_ == null ? com.google.api.Usage.getDefaultInstance() : usage_;
+  private void setUsage(com.google.api.Usage value) {
+    value.getClass();
+    usage_ = value;
+    bitField0_ |= 0x00000040;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Configuration controlling usage of this service.
+   * </pre>
+   *
+   * <code>.google.api.Usage usage = 15;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeUsage(com.google.api.Usage value) {
+    value.getClass();
+    if (usage_ != null && usage_ != com.google.api.Usage.getDefaultInstance()) {
+      usage_ = com.google.api.Usage.newBuilder(usage_).mergeFrom(value).buildPartial();
+    } else {
+      usage_ = value;
+    }
+    bitField0_ |= 0x00000040;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Configuration controlling usage of this service.
+   * </pre>
+   *
+   * <code>.google.api.Usage usage = 15;</code>
+   */
+  private void clearUsage() {
+    usage_ = null;
+    bitField0_ = (bitField0_ & ~0x00000040);
   }
 
   public static final int ENDPOINTS_FIELD_NUMBER = 18;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.api.Endpoint> endpoints_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.api.Endpoint> endpoints_;
   /**
    *
    *
@@ -976,7 +1633,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Endpoint endpoints = 18;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.api.EndpointOrBuilder> getEndpointsOrBuilderList() {
     return endpoints_;
   }
@@ -1021,9 +1677,108 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Endpoint endpoints = 18;</code>
    */
-  @java.lang.Override
   public com.google.api.EndpointOrBuilder getEndpointsOrBuilder(int index) {
     return endpoints_.get(index);
+  }
+
+  private void ensureEndpointsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.api.Endpoint> tmp = endpoints_;
+    if (!tmp.isModifiable()) {
+      endpoints_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * Configuration for network endpoints.  If this is empty, then an endpoint
+   * with the same name as the service is automatically generated to service all
+   * defined APIs.
+   * </pre>
+   *
+   * <code>repeated .google.api.Endpoint endpoints = 18;</code>
+   */
+  private void setEndpoints(int index, com.google.api.Endpoint value) {
+    value.getClass();
+    ensureEndpointsIsMutable();
+    endpoints_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Configuration for network endpoints.  If this is empty, then an endpoint
+   * with the same name as the service is automatically generated to service all
+   * defined APIs.
+   * </pre>
+   *
+   * <code>repeated .google.api.Endpoint endpoints = 18;</code>
+   */
+  private void addEndpoints(com.google.api.Endpoint value) {
+    value.getClass();
+    ensureEndpointsIsMutable();
+    endpoints_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Configuration for network endpoints.  If this is empty, then an endpoint
+   * with the same name as the service is automatically generated to service all
+   * defined APIs.
+   * </pre>
+   *
+   * <code>repeated .google.api.Endpoint endpoints = 18;</code>
+   */
+  private void addEndpoints(int index, com.google.api.Endpoint value) {
+    value.getClass();
+    ensureEndpointsIsMutable();
+    endpoints_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Configuration for network endpoints.  If this is empty, then an endpoint
+   * with the same name as the service is automatically generated to service all
+   * defined APIs.
+   * </pre>
+   *
+   * <code>repeated .google.api.Endpoint endpoints = 18;</code>
+   */
+  private void addAllEndpoints(java.lang.Iterable<? extends com.google.api.Endpoint> values) {
+    ensureEndpointsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, endpoints_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Configuration for network endpoints.  If this is empty, then an endpoint
+   * with the same name as the service is automatically generated to service all
+   * defined APIs.
+   * </pre>
+   *
+   * <code>repeated .google.api.Endpoint endpoints = 18;</code>
+   */
+  private void clearEndpoints() {
+    endpoints_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Configuration for network endpoints.  If this is empty, then an endpoint
+   * with the same name as the service is automatically generated to service all
+   * defined APIs.
+   * </pre>
+   *
+   * <code>repeated .google.api.Endpoint endpoints = 18;</code>
+   */
+  private void removeEndpoints(int index) {
+    ensureEndpointsIsMutable();
+    endpoints_.remove(index);
   }
 
   public static final int CONTROL_FIELD_NUMBER = 21;
@@ -1036,8 +1791,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Control control = 21;</code>
-   *
-   * @return Whether the control field is set.
    */
   @java.lang.Override
   public boolean hasControl() {
@@ -1051,8 +1804,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Control control = 21;</code>
-   *
-   * @return The control.
    */
   @java.lang.Override
   public com.google.api.Control getControl() {
@@ -1067,15 +1818,46 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.Control control = 21;</code>
    */
-  @java.lang.Override
-  public com.google.api.ControlOrBuilder getControlOrBuilder() {
-    return control_ == null ? com.google.api.Control.getDefaultInstance() : control_;
+  private void setControl(com.google.api.Control value) {
+    value.getClass();
+    control_ = value;
+    bitField0_ |= 0x00000080;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Configuration for the service control plane.
+   * </pre>
+   *
+   * <code>.google.api.Control control = 21;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeControl(com.google.api.Control value) {
+    value.getClass();
+    if (control_ != null && control_ != com.google.api.Control.getDefaultInstance()) {
+      control_ = com.google.api.Control.newBuilder(control_).mergeFrom(value).buildPartial();
+    } else {
+      control_ = value;
+    }
+    bitField0_ |= 0x00000080;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Configuration for the service control plane.
+   * </pre>
+   *
+   * <code>.google.api.Control control = 21;</code>
+   */
+  private void clearControl() {
+    control_ = null;
+    bitField0_ = (bitField0_ & ~0x00000080);
   }
 
   public static final int LOGS_FIELD_NUMBER = 23;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.api.LogDescriptor> logs_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.api.LogDescriptor> logs_;
   /**
    *
    *
@@ -1098,7 +1880,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.LogDescriptor logs = 23;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.api.LogDescriptorOrBuilder> getLogsOrBuilderList() {
     return logs_;
   }
@@ -1137,15 +1918,100 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.LogDescriptor logs = 23;</code>
    */
-  @java.lang.Override
   public com.google.api.LogDescriptorOrBuilder getLogsOrBuilder(int index) {
     return logs_.get(index);
   }
 
-  public static final int METRICS_FIELD_NUMBER = 24;
+  private void ensureLogsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.api.LogDescriptor> tmp = logs_;
+    if (!tmp.isModifiable()) {
+      logs_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
 
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.api.MetricDescriptor> metrics_;
+  /**
+   *
+   *
+   * <pre>
+   * Defines the logs used by this service.
+   * </pre>
+   *
+   * <code>repeated .google.api.LogDescriptor logs = 23;</code>
+   */
+  private void setLogs(int index, com.google.api.LogDescriptor value) {
+    value.getClass();
+    ensureLogsIsMutable();
+    logs_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines the logs used by this service.
+   * </pre>
+   *
+   * <code>repeated .google.api.LogDescriptor logs = 23;</code>
+   */
+  private void addLogs(com.google.api.LogDescriptor value) {
+    value.getClass();
+    ensureLogsIsMutable();
+    logs_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines the logs used by this service.
+   * </pre>
+   *
+   * <code>repeated .google.api.LogDescriptor logs = 23;</code>
+   */
+  private void addLogs(int index, com.google.api.LogDescriptor value) {
+    value.getClass();
+    ensureLogsIsMutable();
+    logs_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines the logs used by this service.
+   * </pre>
+   *
+   * <code>repeated .google.api.LogDescriptor logs = 23;</code>
+   */
+  private void addAllLogs(java.lang.Iterable<? extends com.google.api.LogDescriptor> values) {
+    ensureLogsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, logs_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines the logs used by this service.
+   * </pre>
+   *
+   * <code>repeated .google.api.LogDescriptor logs = 23;</code>
+   */
+  private void clearLogs() {
+    logs_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines the logs used by this service.
+   * </pre>
+   *
+   * <code>repeated .google.api.LogDescriptor logs = 23;</code>
+   */
+  private void removeLogs(int index) {
+    ensureLogsIsMutable();
+    logs_.remove(index);
+  }
+
+  public static final int METRICS_FIELD_NUMBER = 24;
+  private com.google.protobuf.Internal.ProtobufList<com.google.api.MetricDescriptor> metrics_;
   /**
    *
    *
@@ -1168,7 +2034,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.api.MetricDescriptorOrBuilder>
       getMetricsOrBuilderList() {
     return metrics_;
@@ -1208,15 +2073,101 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
    */
-  @java.lang.Override
   public com.google.api.MetricDescriptorOrBuilder getMetricsOrBuilder(int index) {
     return metrics_.get(index);
   }
 
-  public static final int MONITORED_RESOURCES_FIELD_NUMBER = 25;
+  private void ensureMetricsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.api.MetricDescriptor> tmp = metrics_;
+    if (!tmp.isModifiable()) {
+      metrics_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
 
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.api.MonitoredResourceDescriptor> monitoredResources_;
+  /**
+   *
+   *
+   * <pre>
+   * Defines the metrics used by this service.
+   * </pre>
+   *
+   * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
+   */
+  private void setMetrics(int index, com.google.api.MetricDescriptor value) {
+    value.getClass();
+    ensureMetricsIsMutable();
+    metrics_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines the metrics used by this service.
+   * </pre>
+   *
+   * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
+   */
+  private void addMetrics(com.google.api.MetricDescriptor value) {
+    value.getClass();
+    ensureMetricsIsMutable();
+    metrics_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines the metrics used by this service.
+   * </pre>
+   *
+   * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
+   */
+  private void addMetrics(int index, com.google.api.MetricDescriptor value) {
+    value.getClass();
+    ensureMetricsIsMutable();
+    metrics_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines the metrics used by this service.
+   * </pre>
+   *
+   * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
+   */
+  private void addAllMetrics(java.lang.Iterable<? extends com.google.api.MetricDescriptor> values) {
+    ensureMetricsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, metrics_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines the metrics used by this service.
+   * </pre>
+   *
+   * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
+   */
+  private void clearMetrics() {
+    metrics_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines the metrics used by this service.
+   * </pre>
+   *
+   * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
+   */
+  private void removeMetrics(int index) {
+    ensureMetricsIsMutable();
+    metrics_.remove(index);
+  }
+
+  public static final int MONITORED_RESOURCES_FIELD_NUMBER = 25;
+  private com.google.protobuf.Internal.ProtobufList<com.google.api.MonitoredResourceDescriptor>
+      monitoredResources_;
   /**
    *
    *
@@ -1243,7 +2194,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.api.MonitoredResourceDescriptorOrBuilder>
       getMonitoredResourcesOrBuilderList() {
     return monitoredResources_;
@@ -1289,10 +2239,111 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
    */
-  @java.lang.Override
   public com.google.api.MonitoredResourceDescriptorOrBuilder getMonitoredResourcesOrBuilder(
       int index) {
     return monitoredResources_.get(index);
+  }
+
+  private void ensureMonitoredResourcesIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.api.MonitoredResourceDescriptor> tmp =
+        monitoredResources_;
+    if (!tmp.isModifiable()) {
+      monitoredResources_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * Defines the monitored resources used by this service. This is required
+   * by the [Service.monitoring][google.api.Service.monitoring] and
+   * [Service.logging][google.api.Service.logging] configurations.
+   * </pre>
+   *
+   * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
+   */
+  private void setMonitoredResources(int index, com.google.api.MonitoredResourceDescriptor value) {
+    value.getClass();
+    ensureMonitoredResourcesIsMutable();
+    monitoredResources_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines the monitored resources used by this service. This is required
+   * by the [Service.monitoring][google.api.Service.monitoring] and
+   * [Service.logging][google.api.Service.logging] configurations.
+   * </pre>
+   *
+   * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
+   */
+  private void addMonitoredResources(com.google.api.MonitoredResourceDescriptor value) {
+    value.getClass();
+    ensureMonitoredResourcesIsMutable();
+    monitoredResources_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines the monitored resources used by this service. This is required
+   * by the [Service.monitoring][google.api.Service.monitoring] and
+   * [Service.logging][google.api.Service.logging] configurations.
+   * </pre>
+   *
+   * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
+   */
+  private void addMonitoredResources(int index, com.google.api.MonitoredResourceDescriptor value) {
+    value.getClass();
+    ensureMonitoredResourcesIsMutable();
+    monitoredResources_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines the monitored resources used by this service. This is required
+   * by the [Service.monitoring][google.api.Service.monitoring] and
+   * [Service.logging][google.api.Service.logging] configurations.
+   * </pre>
+   *
+   * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
+   */
+  private void addAllMonitoredResources(
+      java.lang.Iterable<? extends com.google.api.MonitoredResourceDescriptor> values) {
+    ensureMonitoredResourcesIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, monitoredResources_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines the monitored resources used by this service. This is required
+   * by the [Service.monitoring][google.api.Service.monitoring] and
+   * [Service.logging][google.api.Service.logging] configurations.
+   * </pre>
+   *
+   * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
+   */
+  private void clearMonitoredResources() {
+    monitoredResources_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines the monitored resources used by this service. This is required
+   * by the [Service.monitoring][google.api.Service.monitoring] and
+   * [Service.logging][google.api.Service.logging] configurations.
+   * </pre>
+   *
+   * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
+   */
+  private void removeMonitoredResources(int index) {
+    ensureMonitoredResourcesIsMutable();
+    monitoredResources_.remove(index);
   }
 
   public static final int BILLING_FIELD_NUMBER = 26;
@@ -1305,8 +2356,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Billing billing = 26;</code>
-   *
-   * @return Whether the billing field is set.
    */
   @java.lang.Override
   public boolean hasBilling() {
@@ -1320,8 +2369,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Billing billing = 26;</code>
-   *
-   * @return The billing.
    */
   @java.lang.Override
   public com.google.api.Billing getBilling() {
@@ -1336,9 +2383,42 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.Billing billing = 26;</code>
    */
-  @java.lang.Override
-  public com.google.api.BillingOrBuilder getBillingOrBuilder() {
-    return billing_ == null ? com.google.api.Billing.getDefaultInstance() : billing_;
+  private void setBilling(com.google.api.Billing value) {
+    value.getClass();
+    billing_ = value;
+    bitField0_ |= 0x00000100;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Billing configuration.
+   * </pre>
+   *
+   * <code>.google.api.Billing billing = 26;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeBilling(com.google.api.Billing value) {
+    value.getClass();
+    if (billing_ != null && billing_ != com.google.api.Billing.getDefaultInstance()) {
+      billing_ = com.google.api.Billing.newBuilder(billing_).mergeFrom(value).buildPartial();
+    } else {
+      billing_ = value;
+    }
+    bitField0_ |= 0x00000100;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Billing configuration.
+   * </pre>
+   *
+   * <code>.google.api.Billing billing = 26;</code>
+   */
+  private void clearBilling() {
+    billing_ = null;
+    bitField0_ = (bitField0_ & ~0x00000100);
   }
 
   public static final int LOGGING_FIELD_NUMBER = 27;
@@ -1351,8 +2431,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Logging logging = 27;</code>
-   *
-   * @return Whether the logging field is set.
    */
   @java.lang.Override
   public boolean hasLogging() {
@@ -1366,8 +2444,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Logging logging = 27;</code>
-   *
-   * @return The logging.
    */
   @java.lang.Override
   public com.google.api.Logging getLogging() {
@@ -1382,9 +2458,42 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.Logging logging = 27;</code>
    */
-  @java.lang.Override
-  public com.google.api.LoggingOrBuilder getLoggingOrBuilder() {
-    return logging_ == null ? com.google.api.Logging.getDefaultInstance() : logging_;
+  private void setLogging(com.google.api.Logging value) {
+    value.getClass();
+    logging_ = value;
+    bitField0_ |= 0x00000200;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Logging configuration.
+   * </pre>
+   *
+   * <code>.google.api.Logging logging = 27;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeLogging(com.google.api.Logging value) {
+    value.getClass();
+    if (logging_ != null && logging_ != com.google.api.Logging.getDefaultInstance()) {
+      logging_ = com.google.api.Logging.newBuilder(logging_).mergeFrom(value).buildPartial();
+    } else {
+      logging_ = value;
+    }
+    bitField0_ |= 0x00000200;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Logging configuration.
+   * </pre>
+   *
+   * <code>.google.api.Logging logging = 27;</code>
+   */
+  private void clearLogging() {
+    logging_ = null;
+    bitField0_ = (bitField0_ & ~0x00000200);
   }
 
   public static final int MONITORING_FIELD_NUMBER = 28;
@@ -1397,8 +2506,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Monitoring monitoring = 28;</code>
-   *
-   * @return Whether the monitoring field is set.
    */
   @java.lang.Override
   public boolean hasMonitoring() {
@@ -1412,8 +2519,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Monitoring monitoring = 28;</code>
-   *
-   * @return The monitoring.
    */
   @java.lang.Override
   public com.google.api.Monitoring getMonitoring() {
@@ -1428,9 +2533,43 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.Monitoring monitoring = 28;</code>
    */
-  @java.lang.Override
-  public com.google.api.MonitoringOrBuilder getMonitoringOrBuilder() {
-    return monitoring_ == null ? com.google.api.Monitoring.getDefaultInstance() : monitoring_;
+  private void setMonitoring(com.google.api.Monitoring value) {
+    value.getClass();
+    monitoring_ = value;
+    bitField0_ |= 0x00000400;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Monitoring configuration.
+   * </pre>
+   *
+   * <code>.google.api.Monitoring monitoring = 28;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeMonitoring(com.google.api.Monitoring value) {
+    value.getClass();
+    if (monitoring_ != null && monitoring_ != com.google.api.Monitoring.getDefaultInstance()) {
+      monitoring_ =
+          com.google.api.Monitoring.newBuilder(monitoring_).mergeFrom(value).buildPartial();
+    } else {
+      monitoring_ = value;
+    }
+    bitField0_ |= 0x00000400;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Monitoring configuration.
+   * </pre>
+   *
+   * <code>.google.api.Monitoring monitoring = 28;</code>
+   */
+  private void clearMonitoring() {
+    monitoring_ = null;
+    bitField0_ = (bitField0_ & ~0x00000400);
   }
 
   public static final int SYSTEM_PARAMETERS_FIELD_NUMBER = 29;
@@ -1443,8 +2582,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.SystemParameters system_parameters = 29;</code>
-   *
-   * @return Whether the systemParameters field is set.
    */
   @java.lang.Override
   public boolean hasSystemParameters() {
@@ -1458,8 +2595,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.SystemParameters system_parameters = 29;</code>
-   *
-   * @return The systemParameters.
    */
   @java.lang.Override
   public com.google.api.SystemParameters getSystemParameters() {
@@ -1476,11 +2611,46 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.SystemParameters system_parameters = 29;</code>
    */
-  @java.lang.Override
-  public com.google.api.SystemParametersOrBuilder getSystemParametersOrBuilder() {
-    return systemParameters_ == null
-        ? com.google.api.SystemParameters.getDefaultInstance()
-        : systemParameters_;
+  private void setSystemParameters(com.google.api.SystemParameters value) {
+    value.getClass();
+    systemParameters_ = value;
+    bitField0_ |= 0x00000800;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * System parameter configuration.
+   * </pre>
+   *
+   * <code>.google.api.SystemParameters system_parameters = 29;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeSystemParameters(com.google.api.SystemParameters value) {
+    value.getClass();
+    if (systemParameters_ != null
+        && systemParameters_ != com.google.api.SystemParameters.getDefaultInstance()) {
+      systemParameters_ =
+          com.google.api.SystemParameters.newBuilder(systemParameters_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      systemParameters_ = value;
+    }
+    bitField0_ |= 0x00000800;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * System parameter configuration.
+   * </pre>
+   *
+   * <code>.google.api.SystemParameters system_parameters = 29;</code>
+   */
+  private void clearSystemParameters() {
+    systemParameters_ = null;
+    bitField0_ = (bitField0_ & ~0x00000800);
   }
 
   public static final int SOURCE_INFO_FIELD_NUMBER = 37;
@@ -1493,8 +2663,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.SourceInfo source_info = 37;</code>
-   *
-   * @return Whether the sourceInfo field is set.
    */
   @java.lang.Override
   public boolean hasSourceInfo() {
@@ -1508,8 +2676,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.SourceInfo source_info = 37;</code>
-   *
-   * @return The sourceInfo.
    */
   @java.lang.Override
   public com.google.api.SourceInfo getSourceInfo() {
@@ -1524,9 +2690,43 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.SourceInfo source_info = 37;</code>
    */
-  @java.lang.Override
-  public com.google.api.SourceInfoOrBuilder getSourceInfoOrBuilder() {
-    return sourceInfo_ == null ? com.google.api.SourceInfo.getDefaultInstance() : sourceInfo_;
+  private void setSourceInfo(com.google.api.SourceInfo value) {
+    value.getClass();
+    sourceInfo_ = value;
+    bitField0_ |= 0x00001000;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Output only. The source information for this configuration if available.
+   * </pre>
+   *
+   * <code>.google.api.SourceInfo source_info = 37;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeSourceInfo(com.google.api.SourceInfo value) {
+    value.getClass();
+    if (sourceInfo_ != null && sourceInfo_ != com.google.api.SourceInfo.getDefaultInstance()) {
+      sourceInfo_ =
+          com.google.api.SourceInfo.newBuilder(sourceInfo_).mergeFrom(value).buildPartial();
+    } else {
+      sourceInfo_ = value;
+    }
+    bitField0_ |= 0x00001000;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Output only. The source information for this configuration if available.
+   * </pre>
+   *
+   * <code>.google.api.SourceInfo source_info = 37;</code>
+   */
+  private void clearSourceInfo() {
+    sourceInfo_ = null;
+    bitField0_ = (bitField0_ & ~0x00001000);
   }
 
   public static final int PUBLISHING_FIELD_NUMBER = 45;
@@ -1541,8 +2741,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Publishing publishing = 45;</code>
-   *
-   * @return Whether the publishing field is set.
    */
   @java.lang.Override
   public boolean hasPublishing() {
@@ -1558,8 +2756,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.Publishing publishing = 45;</code>
-   *
-   * @return The publishing.
    */
   @java.lang.Override
   public com.google.api.Publishing getPublishing() {
@@ -1576,9 +2772,47 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.Publishing publishing = 45;</code>
    */
-  @java.lang.Override
-  public com.google.api.PublishingOrBuilder getPublishingOrBuilder() {
-    return publishing_ == null ? com.google.api.Publishing.getDefaultInstance() : publishing_;
+  private void setPublishing(com.google.api.Publishing value) {
+    value.getClass();
+    publishing_ = value;
+    bitField0_ |= 0x00002000;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Settings for [Google Cloud Client
+   * libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+   * generated from APIs defined as protocol buffers.
+   * </pre>
+   *
+   * <code>.google.api.Publishing publishing = 45;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergePublishing(com.google.api.Publishing value) {
+    value.getClass();
+    if (publishing_ != null && publishing_ != com.google.api.Publishing.getDefaultInstance()) {
+      publishing_ =
+          com.google.api.Publishing.newBuilder(publishing_).mergeFrom(value).buildPartial();
+    } else {
+      publishing_ = value;
+    }
+    bitField0_ |= 0x00002000;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Settings for [Google Cloud Client
+   * libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+   * generated from APIs defined as protocol buffers.
+   * </pre>
+   *
+   * <code>.google.api.Publishing publishing = 45;</code>
+   */
+  private void clearPublishing() {
+    publishing_ = null;
+    bitField0_ = (bitField0_ & ~0x00002000);
   }
 
   public static final int CONFIG_VERSION_FIELD_NUMBER = 20;
@@ -1594,8 +2828,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.protobuf.UInt32Value config_version = 20;</code>
-   *
-   * @return Whether the configVersion field is set.
    */
   @java.lang.Override
   public boolean hasConfigVersion() {
@@ -1612,8 +2844,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.protobuf.UInt32Value config_version = 20;</code>
-   *
-   * @return The configVersion.
    */
   @java.lang.Override
   public com.google.protobuf.UInt32Value getConfigVersion() {
@@ -1633,485 +2863,135 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.protobuf.UInt32Value config_version = 20;</code>
    */
-  @java.lang.Override
-  public com.google.protobuf.UInt32ValueOrBuilder getConfigVersionOrBuilder() {
-    return configVersion_ == null
-        ? com.google.protobuf.UInt32Value.getDefaultInstance()
-        : configVersion_;
+  private void setConfigVersion(com.google.protobuf.UInt32Value value) {
+    value.getClass();
+    configVersion_ = value;
+    bitField0_ |= 0x00004000;
   }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Obsolete. Do not use.
+   *
+   * This field has no semantic meaning. The service config compiler always
+   * sets this field to `3`.
+   * </pre>
+   *
+   * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeConfigVersion(com.google.protobuf.UInt32Value value) {
+    value.getClass();
+    if (configVersion_ != null
+        && configVersion_ != com.google.protobuf.UInt32Value.getDefaultInstance()) {
+      configVersion_ =
+          com.google.protobuf.UInt32Value.newBuilder(configVersion_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      configVersion_ = value;
+    }
+    bitField0_ |= 0x00004000;
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(title_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, title_);
-    }
-    for (int i = 0; i < apis_.size(); i++) {
-      output.writeMessage(3, apis_.get(i));
-    }
-    for (int i = 0; i < types_.size(); i++) {
-      output.writeMessage(4, types_.get(i));
-    }
-    for (int i = 0; i < enums_.size(); i++) {
-      output.writeMessage(5, enums_.get(i));
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(6, getDocumentation());
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      output.writeMessage(8, getBackend());
-    }
-    if (((bitField0_ & 0x00000004) != 0)) {
-      output.writeMessage(9, getHttp());
-    }
-    if (((bitField0_ & 0x00000008) != 0)) {
-      output.writeMessage(10, getQuota());
-    }
-    if (((bitField0_ & 0x00000010) != 0)) {
-      output.writeMessage(11, getAuthentication());
-    }
-    if (((bitField0_ & 0x00000020) != 0)) {
-      output.writeMessage(12, getContext());
-    }
-    if (((bitField0_ & 0x00000040) != 0)) {
-      output.writeMessage(15, getUsage());
-    }
-    for (int i = 0; i < endpoints_.size(); i++) {
-      output.writeMessage(18, endpoints_.get(i));
-    }
-    if (((bitField0_ & 0x00004000) != 0)) {
-      output.writeMessage(20, getConfigVersion());
-    }
-    if (((bitField0_ & 0x00000080) != 0)) {
-      output.writeMessage(21, getControl());
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(producerProjectId_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 22, producerProjectId_);
-    }
-    for (int i = 0; i < logs_.size(); i++) {
-      output.writeMessage(23, logs_.get(i));
-    }
-    for (int i = 0; i < metrics_.size(); i++) {
-      output.writeMessage(24, metrics_.get(i));
-    }
-    for (int i = 0; i < monitoredResources_.size(); i++) {
-      output.writeMessage(25, monitoredResources_.get(i));
-    }
-    if (((bitField0_ & 0x00000100) != 0)) {
-      output.writeMessage(26, getBilling());
-    }
-    if (((bitField0_ & 0x00000200) != 0)) {
-      output.writeMessage(27, getLogging());
-    }
-    if (((bitField0_ & 0x00000400) != 0)) {
-      output.writeMessage(28, getMonitoring());
-    }
-    if (((bitField0_ & 0x00000800) != 0)) {
-      output.writeMessage(29, getSystemParameters());
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(id_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 33, id_);
-    }
-    if (((bitField0_ & 0x00001000) != 0)) {
-      output.writeMessage(37, getSourceInfo());
-    }
-    if (((bitField0_ & 0x00002000) != 0)) {
-      output.writeMessage(45, getPublishing());
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(title_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, title_);
-    }
-    for (int i = 0; i < apis_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, apis_.get(i));
-    }
-    for (int i = 0; i < types_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, types_.get(i));
-    }
-    for (int i = 0; i < enums_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(5, enums_.get(i));
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(6, getDocumentation());
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(8, getBackend());
-    }
-    if (((bitField0_ & 0x00000004) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(9, getHttp());
-    }
-    if (((bitField0_ & 0x00000008) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(10, getQuota());
-    }
-    if (((bitField0_ & 0x00000010) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(11, getAuthentication());
-    }
-    if (((bitField0_ & 0x00000020) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(12, getContext());
-    }
-    if (((bitField0_ & 0x00000040) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(15, getUsage());
-    }
-    for (int i = 0; i < endpoints_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(18, endpoints_.get(i));
-    }
-    if (((bitField0_ & 0x00004000) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(20, getConfigVersion());
-    }
-    if (((bitField0_ & 0x00000080) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(21, getControl());
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(producerProjectId_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(22, producerProjectId_);
-    }
-    for (int i = 0; i < logs_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(23, logs_.get(i));
-    }
-    for (int i = 0; i < metrics_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(24, metrics_.get(i));
-    }
-    for (int i = 0; i < monitoredResources_.size(); i++) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(25, monitoredResources_.get(i));
-    }
-    if (((bitField0_ & 0x00000100) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(26, getBilling());
-    }
-    if (((bitField0_ & 0x00000200) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(27, getLogging());
-    }
-    if (((bitField0_ & 0x00000400) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(28, getMonitoring());
-    }
-    if (((bitField0_ & 0x00000800) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(29, getSystemParameters());
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(id_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(33, id_);
-    }
-    if (((bitField0_ & 0x00001000) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(37, getSourceInfo());
-    }
-    if (((bitField0_ & 0x00002000) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(45, getPublishing());
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.Service)) {
-      return super.equals(obj);
-    }
-    com.google.api.Service other = (com.google.api.Service) obj;
-
-    if (!getName().equals(other.getName())) return false;
-    if (!getTitle().equals(other.getTitle())) return false;
-    if (!getProducerProjectId().equals(other.getProducerProjectId())) return false;
-    if (!getId().equals(other.getId())) return false;
-    if (!getApisList().equals(other.getApisList())) return false;
-    if (!getTypesList().equals(other.getTypesList())) return false;
-    if (!getEnumsList().equals(other.getEnumsList())) return false;
-    if (hasDocumentation() != other.hasDocumentation()) return false;
-    if (hasDocumentation()) {
-      if (!getDocumentation().equals(other.getDocumentation())) return false;
-    }
-    if (hasBackend() != other.hasBackend()) return false;
-    if (hasBackend()) {
-      if (!getBackend().equals(other.getBackend())) return false;
-    }
-    if (hasHttp() != other.hasHttp()) return false;
-    if (hasHttp()) {
-      if (!getHttp().equals(other.getHttp())) return false;
-    }
-    if (hasQuota() != other.hasQuota()) return false;
-    if (hasQuota()) {
-      if (!getQuota().equals(other.getQuota())) return false;
-    }
-    if (hasAuthentication() != other.hasAuthentication()) return false;
-    if (hasAuthentication()) {
-      if (!getAuthentication().equals(other.getAuthentication())) return false;
-    }
-    if (hasContext() != other.hasContext()) return false;
-    if (hasContext()) {
-      if (!getContext().equals(other.getContext())) return false;
-    }
-    if (hasUsage() != other.hasUsage()) return false;
-    if (hasUsage()) {
-      if (!getUsage().equals(other.getUsage())) return false;
-    }
-    if (!getEndpointsList().equals(other.getEndpointsList())) return false;
-    if (hasControl() != other.hasControl()) return false;
-    if (hasControl()) {
-      if (!getControl().equals(other.getControl())) return false;
-    }
-    if (!getLogsList().equals(other.getLogsList())) return false;
-    if (!getMetricsList().equals(other.getMetricsList())) return false;
-    if (!getMonitoredResourcesList().equals(other.getMonitoredResourcesList())) return false;
-    if (hasBilling() != other.hasBilling()) return false;
-    if (hasBilling()) {
-      if (!getBilling().equals(other.getBilling())) return false;
-    }
-    if (hasLogging() != other.hasLogging()) return false;
-    if (hasLogging()) {
-      if (!getLogging().equals(other.getLogging())) return false;
-    }
-    if (hasMonitoring() != other.hasMonitoring()) return false;
-    if (hasMonitoring()) {
-      if (!getMonitoring().equals(other.getMonitoring())) return false;
-    }
-    if (hasSystemParameters() != other.hasSystemParameters()) return false;
-    if (hasSystemParameters()) {
-      if (!getSystemParameters().equals(other.getSystemParameters())) return false;
-    }
-    if (hasSourceInfo() != other.hasSourceInfo()) return false;
-    if (hasSourceInfo()) {
-      if (!getSourceInfo().equals(other.getSourceInfo())) return false;
-    }
-    if (hasPublishing() != other.hasPublishing()) return false;
-    if (hasPublishing()) {
-      if (!getPublishing().equals(other.getPublishing())) return false;
-    }
-    if (hasConfigVersion() != other.hasConfigVersion()) return false;
-    if (hasConfigVersion()) {
-      if (!getConfigVersion().equals(other.getConfigVersion())) return false;
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getName().hashCode();
-    hash = (37 * hash) + TITLE_FIELD_NUMBER;
-    hash = (53 * hash) + getTitle().hashCode();
-    hash = (37 * hash) + PRODUCER_PROJECT_ID_FIELD_NUMBER;
-    hash = (53 * hash) + getProducerProjectId().hashCode();
-    hash = (37 * hash) + ID_FIELD_NUMBER;
-    hash = (53 * hash) + getId().hashCode();
-    if (getApisCount() > 0) {
-      hash = (37 * hash) + APIS_FIELD_NUMBER;
-      hash = (53 * hash) + getApisList().hashCode();
-    }
-    if (getTypesCount() > 0) {
-      hash = (37 * hash) + TYPES_FIELD_NUMBER;
-      hash = (53 * hash) + getTypesList().hashCode();
-    }
-    if (getEnumsCount() > 0) {
-      hash = (37 * hash) + ENUMS_FIELD_NUMBER;
-      hash = (53 * hash) + getEnumsList().hashCode();
-    }
-    if (hasDocumentation()) {
-      hash = (37 * hash) + DOCUMENTATION_FIELD_NUMBER;
-      hash = (53 * hash) + getDocumentation().hashCode();
-    }
-    if (hasBackend()) {
-      hash = (37 * hash) + BACKEND_FIELD_NUMBER;
-      hash = (53 * hash) + getBackend().hashCode();
-    }
-    if (hasHttp()) {
-      hash = (37 * hash) + HTTP_FIELD_NUMBER;
-      hash = (53 * hash) + getHttp().hashCode();
-    }
-    if (hasQuota()) {
-      hash = (37 * hash) + QUOTA_FIELD_NUMBER;
-      hash = (53 * hash) + getQuota().hashCode();
-    }
-    if (hasAuthentication()) {
-      hash = (37 * hash) + AUTHENTICATION_FIELD_NUMBER;
-      hash = (53 * hash) + getAuthentication().hashCode();
-    }
-    if (hasContext()) {
-      hash = (37 * hash) + CONTEXT_FIELD_NUMBER;
-      hash = (53 * hash) + getContext().hashCode();
-    }
-    if (hasUsage()) {
-      hash = (37 * hash) + USAGE_FIELD_NUMBER;
-      hash = (53 * hash) + getUsage().hashCode();
-    }
-    if (getEndpointsCount() > 0) {
-      hash = (37 * hash) + ENDPOINTS_FIELD_NUMBER;
-      hash = (53 * hash) + getEndpointsList().hashCode();
-    }
-    if (hasControl()) {
-      hash = (37 * hash) + CONTROL_FIELD_NUMBER;
-      hash = (53 * hash) + getControl().hashCode();
-    }
-    if (getLogsCount() > 0) {
-      hash = (37 * hash) + LOGS_FIELD_NUMBER;
-      hash = (53 * hash) + getLogsList().hashCode();
-    }
-    if (getMetricsCount() > 0) {
-      hash = (37 * hash) + METRICS_FIELD_NUMBER;
-      hash = (53 * hash) + getMetricsList().hashCode();
-    }
-    if (getMonitoredResourcesCount() > 0) {
-      hash = (37 * hash) + MONITORED_RESOURCES_FIELD_NUMBER;
-      hash = (53 * hash) + getMonitoredResourcesList().hashCode();
-    }
-    if (hasBilling()) {
-      hash = (37 * hash) + BILLING_FIELD_NUMBER;
-      hash = (53 * hash) + getBilling().hashCode();
-    }
-    if (hasLogging()) {
-      hash = (37 * hash) + LOGGING_FIELD_NUMBER;
-      hash = (53 * hash) + getLogging().hashCode();
-    }
-    if (hasMonitoring()) {
-      hash = (37 * hash) + MONITORING_FIELD_NUMBER;
-      hash = (53 * hash) + getMonitoring().hashCode();
-    }
-    if (hasSystemParameters()) {
-      hash = (37 * hash) + SYSTEM_PARAMETERS_FIELD_NUMBER;
-      hash = (53 * hash) + getSystemParameters().hashCode();
-    }
-    if (hasSourceInfo()) {
-      hash = (37 * hash) + SOURCE_INFO_FIELD_NUMBER;
-      hash = (53 * hash) + getSourceInfo().hashCode();
-    }
-    if (hasPublishing()) {
-      hash = (37 * hash) + PUBLISHING_FIELD_NUMBER;
-      hash = (53 * hash) + getPublishing().hashCode();
-    }
-    if (hasConfigVersion()) {
-      hash = (37 * hash) + CONFIG_VERSION_FIELD_NUMBER;
-      hash = (53 * hash) + getConfigVersion().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Obsolete. Do not use.
+   *
+   * This field has no semantic meaning. The service config compiler always
+   * sets this field to `3`.
+   * </pre>
+   *
+   * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+   */
+  private void clearConfigVersion() {
+    configVersion_ = null;
+    bitField0_ = (bitField0_ & ~0x00004000);
   }
 
   public static com.google.api.Service parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.Service parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.Service parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.Service parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.Service parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.Service parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.Service parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.Service parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.Service parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.Service parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.Service parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.Service parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.Service prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -2153,917 +3033,16 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.api.Service}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<com.google.api.Service, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.Service)
       com.google.api.ServiceOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.ServiceProto.internal_static_google_api_Service_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.ServiceProto.internal_static_google_api_Service_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.Service.class, com.google.api.Service.Builder.class);
-    }
-
     // Construct using com.google.api.Service.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getApisFieldBuilder();
-        getTypesFieldBuilder();
-        getEnumsFieldBuilder();
-        getDocumentationFieldBuilder();
-        getBackendFieldBuilder();
-        getHttpFieldBuilder();
-        getQuotaFieldBuilder();
-        getAuthenticationFieldBuilder();
-        getContextFieldBuilder();
-        getUsageFieldBuilder();
-        getEndpointsFieldBuilder();
-        getControlFieldBuilder();
-        getLogsFieldBuilder();
-        getMetricsFieldBuilder();
-        getMonitoredResourcesFieldBuilder();
-        getBillingFieldBuilder();
-        getLoggingFieldBuilder();
-        getMonitoringFieldBuilder();
-        getSystemParametersFieldBuilder();
-        getSourceInfoFieldBuilder();
-        getPublishingFieldBuilder();
-        getConfigVersionFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      name_ = "";
-      title_ = "";
-      producerProjectId_ = "";
-      id_ = "";
-      if (apisBuilder_ == null) {
-        apis_ = java.util.Collections.emptyList();
-      } else {
-        apis_ = null;
-        apisBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000010);
-      if (typesBuilder_ == null) {
-        types_ = java.util.Collections.emptyList();
-      } else {
-        types_ = null;
-        typesBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000020);
-      if (enumsBuilder_ == null) {
-        enums_ = java.util.Collections.emptyList();
-      } else {
-        enums_ = null;
-        enumsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000040);
-      documentation_ = null;
-      if (documentationBuilder_ != null) {
-        documentationBuilder_.dispose();
-        documentationBuilder_ = null;
-      }
-      backend_ = null;
-      if (backendBuilder_ != null) {
-        backendBuilder_.dispose();
-        backendBuilder_ = null;
-      }
-      http_ = null;
-      if (httpBuilder_ != null) {
-        httpBuilder_.dispose();
-        httpBuilder_ = null;
-      }
-      quota_ = null;
-      if (quotaBuilder_ != null) {
-        quotaBuilder_.dispose();
-        quotaBuilder_ = null;
-      }
-      authentication_ = null;
-      if (authenticationBuilder_ != null) {
-        authenticationBuilder_.dispose();
-        authenticationBuilder_ = null;
-      }
-      context_ = null;
-      if (contextBuilder_ != null) {
-        contextBuilder_.dispose();
-        contextBuilder_ = null;
-      }
-      usage_ = null;
-      if (usageBuilder_ != null) {
-        usageBuilder_.dispose();
-        usageBuilder_ = null;
-      }
-      if (endpointsBuilder_ == null) {
-        endpoints_ = java.util.Collections.emptyList();
-      } else {
-        endpoints_ = null;
-        endpointsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00004000);
-      control_ = null;
-      if (controlBuilder_ != null) {
-        controlBuilder_.dispose();
-        controlBuilder_ = null;
-      }
-      if (logsBuilder_ == null) {
-        logs_ = java.util.Collections.emptyList();
-      } else {
-        logs_ = null;
-        logsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00010000);
-      if (metricsBuilder_ == null) {
-        metrics_ = java.util.Collections.emptyList();
-      } else {
-        metrics_ = null;
-        metricsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00020000);
-      if (monitoredResourcesBuilder_ == null) {
-        monitoredResources_ = java.util.Collections.emptyList();
-      } else {
-        monitoredResources_ = null;
-        monitoredResourcesBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00040000);
-      billing_ = null;
-      if (billingBuilder_ != null) {
-        billingBuilder_.dispose();
-        billingBuilder_ = null;
-      }
-      logging_ = null;
-      if (loggingBuilder_ != null) {
-        loggingBuilder_.dispose();
-        loggingBuilder_ = null;
-      }
-      monitoring_ = null;
-      if (monitoringBuilder_ != null) {
-        monitoringBuilder_.dispose();
-        monitoringBuilder_ = null;
-      }
-      systemParameters_ = null;
-      if (systemParametersBuilder_ != null) {
-        systemParametersBuilder_.dispose();
-        systemParametersBuilder_ = null;
-      }
-      sourceInfo_ = null;
-      if (sourceInfoBuilder_ != null) {
-        sourceInfoBuilder_.dispose();
-        sourceInfoBuilder_ = null;
-      }
-      publishing_ = null;
-      if (publishingBuilder_ != null) {
-        publishingBuilder_.dispose();
-        publishingBuilder_ = null;
-      }
-      configVersion_ = null;
-      if (configVersionBuilder_ != null) {
-        configVersionBuilder_.dispose();
-        configVersionBuilder_ = null;
-      }
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.ServiceProto.internal_static_google_api_Service_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.Service getDefaultInstanceForType() {
-      return com.google.api.Service.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.Service build() {
-      com.google.api.Service result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.Service buildPartial() {
-      com.google.api.Service result = new com.google.api.Service(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.api.Service result) {
-      if (apisBuilder_ == null) {
-        if (((bitField0_ & 0x00000010) != 0)) {
-          apis_ = java.util.Collections.unmodifiableList(apis_);
-          bitField0_ = (bitField0_ & ~0x00000010);
-        }
-        result.apis_ = apis_;
-      } else {
-        result.apis_ = apisBuilder_.build();
-      }
-      if (typesBuilder_ == null) {
-        if (((bitField0_ & 0x00000020) != 0)) {
-          types_ = java.util.Collections.unmodifiableList(types_);
-          bitField0_ = (bitField0_ & ~0x00000020);
-        }
-        result.types_ = types_;
-      } else {
-        result.types_ = typesBuilder_.build();
-      }
-      if (enumsBuilder_ == null) {
-        if (((bitField0_ & 0x00000040) != 0)) {
-          enums_ = java.util.Collections.unmodifiableList(enums_);
-          bitField0_ = (bitField0_ & ~0x00000040);
-        }
-        result.enums_ = enums_;
-      } else {
-        result.enums_ = enumsBuilder_.build();
-      }
-      if (endpointsBuilder_ == null) {
-        if (((bitField0_ & 0x00004000) != 0)) {
-          endpoints_ = java.util.Collections.unmodifiableList(endpoints_);
-          bitField0_ = (bitField0_ & ~0x00004000);
-        }
-        result.endpoints_ = endpoints_;
-      } else {
-        result.endpoints_ = endpointsBuilder_.build();
-      }
-      if (logsBuilder_ == null) {
-        if (((bitField0_ & 0x00010000) != 0)) {
-          logs_ = java.util.Collections.unmodifiableList(logs_);
-          bitField0_ = (bitField0_ & ~0x00010000);
-        }
-        result.logs_ = logs_;
-      } else {
-        result.logs_ = logsBuilder_.build();
-      }
-      if (metricsBuilder_ == null) {
-        if (((bitField0_ & 0x00020000) != 0)) {
-          metrics_ = java.util.Collections.unmodifiableList(metrics_);
-          bitField0_ = (bitField0_ & ~0x00020000);
-        }
-        result.metrics_ = metrics_;
-      } else {
-        result.metrics_ = metricsBuilder_.build();
-      }
-      if (monitoredResourcesBuilder_ == null) {
-        if (((bitField0_ & 0x00040000) != 0)) {
-          monitoredResources_ = java.util.Collections.unmodifiableList(monitoredResources_);
-          bitField0_ = (bitField0_ & ~0x00040000);
-        }
-        result.monitoredResources_ = monitoredResources_;
-      } else {
-        result.monitoredResources_ = monitoredResourcesBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.api.Service result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.name_ = name_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.title_ = title_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.producerProjectId_ = producerProjectId_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.id_ = id_;
-      }
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000080) != 0)) {
-        result.documentation_ =
-            documentationBuilder_ == null ? documentation_ : documentationBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      if (((from_bitField0_ & 0x00000100) != 0)) {
-        result.backend_ = backendBuilder_ == null ? backend_ : backendBuilder_.build();
-        to_bitField0_ |= 0x00000002;
-      }
-      if (((from_bitField0_ & 0x00000200) != 0)) {
-        result.http_ = httpBuilder_ == null ? http_ : httpBuilder_.build();
-        to_bitField0_ |= 0x00000004;
-      }
-      if (((from_bitField0_ & 0x00000400) != 0)) {
-        result.quota_ = quotaBuilder_ == null ? quota_ : quotaBuilder_.build();
-        to_bitField0_ |= 0x00000008;
-      }
-      if (((from_bitField0_ & 0x00000800) != 0)) {
-        result.authentication_ =
-            authenticationBuilder_ == null ? authentication_ : authenticationBuilder_.build();
-        to_bitField0_ |= 0x00000010;
-      }
-      if (((from_bitField0_ & 0x00001000) != 0)) {
-        result.context_ = contextBuilder_ == null ? context_ : contextBuilder_.build();
-        to_bitField0_ |= 0x00000020;
-      }
-      if (((from_bitField0_ & 0x00002000) != 0)) {
-        result.usage_ = usageBuilder_ == null ? usage_ : usageBuilder_.build();
-        to_bitField0_ |= 0x00000040;
-      }
-      if (((from_bitField0_ & 0x00008000) != 0)) {
-        result.control_ = controlBuilder_ == null ? control_ : controlBuilder_.build();
-        to_bitField0_ |= 0x00000080;
-      }
-      if (((from_bitField0_ & 0x00080000) != 0)) {
-        result.billing_ = billingBuilder_ == null ? billing_ : billingBuilder_.build();
-        to_bitField0_ |= 0x00000100;
-      }
-      if (((from_bitField0_ & 0x00100000) != 0)) {
-        result.logging_ = loggingBuilder_ == null ? logging_ : loggingBuilder_.build();
-        to_bitField0_ |= 0x00000200;
-      }
-      if (((from_bitField0_ & 0x00200000) != 0)) {
-        result.monitoring_ = monitoringBuilder_ == null ? monitoring_ : monitoringBuilder_.build();
-        to_bitField0_ |= 0x00000400;
-      }
-      if (((from_bitField0_ & 0x00400000) != 0)) {
-        result.systemParameters_ =
-            systemParametersBuilder_ == null ? systemParameters_ : systemParametersBuilder_.build();
-        to_bitField0_ |= 0x00000800;
-      }
-      if (((from_bitField0_ & 0x00800000) != 0)) {
-        result.sourceInfo_ = sourceInfoBuilder_ == null ? sourceInfo_ : sourceInfoBuilder_.build();
-        to_bitField0_ |= 0x00001000;
-      }
-      if (((from_bitField0_ & 0x01000000) != 0)) {
-        result.publishing_ = publishingBuilder_ == null ? publishing_ : publishingBuilder_.build();
-        to_bitField0_ |= 0x00002000;
-      }
-      if (((from_bitField0_ & 0x02000000) != 0)) {
-        result.configVersion_ =
-            configVersionBuilder_ == null ? configVersion_ : configVersionBuilder_.build();
-        to_bitField0_ |= 0x00004000;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.Service) {
-        return mergeFrom((com.google.api.Service) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.Service other) {
-      if (other == com.google.api.Service.getDefaultInstance()) return this;
-      if (!other.getName().isEmpty()) {
-        name_ = other.name_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getTitle().isEmpty()) {
-        title_ = other.title_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      if (!other.getProducerProjectId().isEmpty()) {
-        producerProjectId_ = other.producerProjectId_;
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
-      if (!other.getId().isEmpty()) {
-        id_ = other.id_;
-        bitField0_ |= 0x00000008;
-        onChanged();
-      }
-      if (apisBuilder_ == null) {
-        if (!other.apis_.isEmpty()) {
-          if (apis_.isEmpty()) {
-            apis_ = other.apis_;
-            bitField0_ = (bitField0_ & ~0x00000010);
-          } else {
-            ensureApisIsMutable();
-            apis_.addAll(other.apis_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.apis_.isEmpty()) {
-          if (apisBuilder_.isEmpty()) {
-            apisBuilder_.dispose();
-            apisBuilder_ = null;
-            apis_ = other.apis_;
-            bitField0_ = (bitField0_ & ~0x00000010);
-            apisBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getApisFieldBuilder()
-                    : null;
-          } else {
-            apisBuilder_.addAllMessages(other.apis_);
-          }
-        }
-      }
-      if (typesBuilder_ == null) {
-        if (!other.types_.isEmpty()) {
-          if (types_.isEmpty()) {
-            types_ = other.types_;
-            bitField0_ = (bitField0_ & ~0x00000020);
-          } else {
-            ensureTypesIsMutable();
-            types_.addAll(other.types_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.types_.isEmpty()) {
-          if (typesBuilder_.isEmpty()) {
-            typesBuilder_.dispose();
-            typesBuilder_ = null;
-            types_ = other.types_;
-            bitField0_ = (bitField0_ & ~0x00000020);
-            typesBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getTypesFieldBuilder()
-                    : null;
-          } else {
-            typesBuilder_.addAllMessages(other.types_);
-          }
-        }
-      }
-      if (enumsBuilder_ == null) {
-        if (!other.enums_.isEmpty()) {
-          if (enums_.isEmpty()) {
-            enums_ = other.enums_;
-            bitField0_ = (bitField0_ & ~0x00000040);
-          } else {
-            ensureEnumsIsMutable();
-            enums_.addAll(other.enums_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.enums_.isEmpty()) {
-          if (enumsBuilder_.isEmpty()) {
-            enumsBuilder_.dispose();
-            enumsBuilder_ = null;
-            enums_ = other.enums_;
-            bitField0_ = (bitField0_ & ~0x00000040);
-            enumsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getEnumsFieldBuilder()
-                    : null;
-          } else {
-            enumsBuilder_.addAllMessages(other.enums_);
-          }
-        }
-      }
-      if (other.hasDocumentation()) {
-        mergeDocumentation(other.getDocumentation());
-      }
-      if (other.hasBackend()) {
-        mergeBackend(other.getBackend());
-      }
-      if (other.hasHttp()) {
-        mergeHttp(other.getHttp());
-      }
-      if (other.hasQuota()) {
-        mergeQuota(other.getQuota());
-      }
-      if (other.hasAuthentication()) {
-        mergeAuthentication(other.getAuthentication());
-      }
-      if (other.hasContext()) {
-        mergeContext(other.getContext());
-      }
-      if (other.hasUsage()) {
-        mergeUsage(other.getUsage());
-      }
-      if (endpointsBuilder_ == null) {
-        if (!other.endpoints_.isEmpty()) {
-          if (endpoints_.isEmpty()) {
-            endpoints_ = other.endpoints_;
-            bitField0_ = (bitField0_ & ~0x00004000);
-          } else {
-            ensureEndpointsIsMutable();
-            endpoints_.addAll(other.endpoints_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.endpoints_.isEmpty()) {
-          if (endpointsBuilder_.isEmpty()) {
-            endpointsBuilder_.dispose();
-            endpointsBuilder_ = null;
-            endpoints_ = other.endpoints_;
-            bitField0_ = (bitField0_ & ~0x00004000);
-            endpointsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getEndpointsFieldBuilder()
-                    : null;
-          } else {
-            endpointsBuilder_.addAllMessages(other.endpoints_);
-          }
-        }
-      }
-      if (other.hasControl()) {
-        mergeControl(other.getControl());
-      }
-      if (logsBuilder_ == null) {
-        if (!other.logs_.isEmpty()) {
-          if (logs_.isEmpty()) {
-            logs_ = other.logs_;
-            bitField0_ = (bitField0_ & ~0x00010000);
-          } else {
-            ensureLogsIsMutable();
-            logs_.addAll(other.logs_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.logs_.isEmpty()) {
-          if (logsBuilder_.isEmpty()) {
-            logsBuilder_.dispose();
-            logsBuilder_ = null;
-            logs_ = other.logs_;
-            bitField0_ = (bitField0_ & ~0x00010000);
-            logsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getLogsFieldBuilder()
-                    : null;
-          } else {
-            logsBuilder_.addAllMessages(other.logs_);
-          }
-        }
-      }
-      if (metricsBuilder_ == null) {
-        if (!other.metrics_.isEmpty()) {
-          if (metrics_.isEmpty()) {
-            metrics_ = other.metrics_;
-            bitField0_ = (bitField0_ & ~0x00020000);
-          } else {
-            ensureMetricsIsMutable();
-            metrics_.addAll(other.metrics_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.metrics_.isEmpty()) {
-          if (metricsBuilder_.isEmpty()) {
-            metricsBuilder_.dispose();
-            metricsBuilder_ = null;
-            metrics_ = other.metrics_;
-            bitField0_ = (bitField0_ & ~0x00020000);
-            metricsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getMetricsFieldBuilder()
-                    : null;
-          } else {
-            metricsBuilder_.addAllMessages(other.metrics_);
-          }
-        }
-      }
-      if (monitoredResourcesBuilder_ == null) {
-        if (!other.monitoredResources_.isEmpty()) {
-          if (monitoredResources_.isEmpty()) {
-            monitoredResources_ = other.monitoredResources_;
-            bitField0_ = (bitField0_ & ~0x00040000);
-          } else {
-            ensureMonitoredResourcesIsMutable();
-            monitoredResources_.addAll(other.monitoredResources_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.monitoredResources_.isEmpty()) {
-          if (monitoredResourcesBuilder_.isEmpty()) {
-            monitoredResourcesBuilder_.dispose();
-            monitoredResourcesBuilder_ = null;
-            monitoredResources_ = other.monitoredResources_;
-            bitField0_ = (bitField0_ & ~0x00040000);
-            monitoredResourcesBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getMonitoredResourcesFieldBuilder()
-                    : null;
-          } else {
-            monitoredResourcesBuilder_.addAllMessages(other.monitoredResources_);
-          }
-        }
-      }
-      if (other.hasBilling()) {
-        mergeBilling(other.getBilling());
-      }
-      if (other.hasLogging()) {
-        mergeLogging(other.getLogging());
-      }
-      if (other.hasMonitoring()) {
-        mergeMonitoring(other.getMonitoring());
-      }
-      if (other.hasSystemParameters()) {
-        mergeSystemParameters(other.getSystemParameters());
-      }
-      if (other.hasSourceInfo()) {
-        mergeSourceInfo(other.getSourceInfo());
-      }
-      if (other.hasPublishing()) {
-        mergePublishing(other.getPublishing());
-      }
-      if (other.hasConfigVersion()) {
-        mergeConfigVersion(other.getConfigVersion());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                name_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                title_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 26:
-              {
-                com.google.protobuf.Api m =
-                    input.readMessage(com.google.protobuf.Api.parser(), extensionRegistry);
-                if (apisBuilder_ == null) {
-                  ensureApisIsMutable();
-                  apis_.add(m);
-                } else {
-                  apisBuilder_.addMessage(m);
-                }
-                break;
-              } // case 26
-            case 34:
-              {
-                com.google.protobuf.Type m =
-                    input.readMessage(com.google.protobuf.Type.parser(), extensionRegistry);
-                if (typesBuilder_ == null) {
-                  ensureTypesIsMutable();
-                  types_.add(m);
-                } else {
-                  typesBuilder_.addMessage(m);
-                }
-                break;
-              } // case 34
-            case 42:
-              {
-                com.google.protobuf.Enum m =
-                    input.readMessage(com.google.protobuf.Enum.parser(), extensionRegistry);
-                if (enumsBuilder_ == null) {
-                  ensureEnumsIsMutable();
-                  enums_.add(m);
-                } else {
-                  enumsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 42
-            case 50:
-              {
-                input.readMessage(getDocumentationFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000080;
-                break;
-              } // case 50
-            case 66:
-              {
-                input.readMessage(getBackendFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000100;
-                break;
-              } // case 66
-            case 74:
-              {
-                input.readMessage(getHttpFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000200;
-                break;
-              } // case 74
-            case 82:
-              {
-                input.readMessage(getQuotaFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000400;
-                break;
-              } // case 82
-            case 90:
-              {
-                input.readMessage(getAuthenticationFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000800;
-                break;
-              } // case 90
-            case 98:
-              {
-                input.readMessage(getContextFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00001000;
-                break;
-              } // case 98
-            case 122:
-              {
-                input.readMessage(getUsageFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00002000;
-                break;
-              } // case 122
-            case 146:
-              {
-                com.google.api.Endpoint m =
-                    input.readMessage(com.google.api.Endpoint.parser(), extensionRegistry);
-                if (endpointsBuilder_ == null) {
-                  ensureEndpointsIsMutable();
-                  endpoints_.add(m);
-                } else {
-                  endpointsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 146
-            case 162:
-              {
-                input.readMessage(getConfigVersionFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x02000000;
-                break;
-              } // case 162
-            case 170:
-              {
-                input.readMessage(getControlFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00008000;
-                break;
-              } // case 170
-            case 178:
-              {
-                producerProjectId_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 178
-            case 186:
-              {
-                com.google.api.LogDescriptor m =
-                    input.readMessage(com.google.api.LogDescriptor.parser(), extensionRegistry);
-                if (logsBuilder_ == null) {
-                  ensureLogsIsMutable();
-                  logs_.add(m);
-                } else {
-                  logsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 186
-            case 194:
-              {
-                com.google.api.MetricDescriptor m =
-                    input.readMessage(com.google.api.MetricDescriptor.parser(), extensionRegistry);
-                if (metricsBuilder_ == null) {
-                  ensureMetricsIsMutable();
-                  metrics_.add(m);
-                } else {
-                  metricsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 194
-            case 202:
-              {
-                com.google.api.MonitoredResourceDescriptor m =
-                    input.readMessage(
-                        com.google.api.MonitoredResourceDescriptor.parser(), extensionRegistry);
-                if (monitoredResourcesBuilder_ == null) {
-                  ensureMonitoredResourcesIsMutable();
-                  monitoredResources_.add(m);
-                } else {
-                  monitoredResourcesBuilder_.addMessage(m);
-                }
-                break;
-              } // case 202
-            case 210:
-              {
-                input.readMessage(getBillingFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00080000;
-                break;
-              } // case 210
-            case 218:
-              {
-                input.readMessage(getLoggingFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00100000;
-                break;
-              } // case 218
-            case 226:
-              {
-                input.readMessage(getMonitoringFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00200000;
-                break;
-              } // case 226
-            case 234:
-              {
-                input.readMessage(
-                    getSystemParametersFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00400000;
-                break;
-              } // case 234
-            case 266:
-              {
-                id_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 266
-            case 298:
-              {
-                input.readMessage(getSourceInfoFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00800000;
-                break;
-              } // case 298
-            case 362:
-              {
-                input.readMessage(getPublishingFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x01000000;
-                break;
-              } // case 362
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object name_ = "";
     /**
      *
      *
@@ -3078,16 +3057,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        name_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getName();
     }
     /**
      *
@@ -3103,16 +3075,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getNameBytes() {
-      java.lang.Object ref = name_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        name_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getNameBytes();
     }
     /**
      *
@@ -3130,12 +3095,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setName(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setName(value);
       return this;
     }
     /**
@@ -3153,9 +3114,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearName() {
-      name_ = getDefaultInstance().getName();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearName();
       return this;
     }
     /**
@@ -3174,17 +3134,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setNameBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setNameBytes(value);
       return this;
     }
 
-    private java.lang.Object title_ = "";
     /**
      *
      *
@@ -3197,16 +3151,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The title.
      */
+    @java.lang.Override
     public java.lang.String getTitle() {
-      java.lang.Object ref = title_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        title_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getTitle();
     }
     /**
      *
@@ -3220,16 +3167,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for title.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getTitleBytes() {
-      java.lang.Object ref = title_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        title_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getTitleBytes();
     }
     /**
      *
@@ -3245,12 +3185,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setTitle(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      title_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setTitle(value);
       return this;
     }
     /**
@@ -3266,9 +3202,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearTitle() {
-      title_ = getDefaultInstance().getTitle();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearTitle();
       return this;
     }
     /**
@@ -3285,17 +3220,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setTitleBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      title_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setTitleBytes(value);
       return this;
     }
 
-    private java.lang.Object producerProjectId_ = "";
     /**
      *
      *
@@ -3307,16 +3236,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The producerProjectId.
      */
+    @java.lang.Override
     public java.lang.String getProducerProjectId() {
-      java.lang.Object ref = producerProjectId_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        producerProjectId_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getProducerProjectId();
     }
     /**
      *
@@ -3329,16 +3251,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for producerProjectId.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getProducerProjectIdBytes() {
-      java.lang.Object ref = producerProjectId_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        producerProjectId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getProducerProjectIdBytes();
     }
     /**
      *
@@ -3353,12 +3268,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setProducerProjectId(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      producerProjectId_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setProducerProjectId(value);
       return this;
     }
     /**
@@ -3373,9 +3284,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearProducerProjectId() {
-      producerProjectId_ = getDefaultInstance().getProducerProjectId();
-      bitField0_ = (bitField0_ & ~0x00000004);
-      onChanged();
+      copyOnWrite();
+      instance.clearProducerProjectId();
       return this;
     }
     /**
@@ -3391,17 +3301,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setProducerProjectIdBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      producerProjectId_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setProducerProjectIdBytes(value);
       return this;
     }
 
-    private java.lang.Object id_ = "";
     /**
      *
      *
@@ -3416,16 +3320,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The id.
      */
+    @java.lang.Override
     public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getId();
     }
     /**
      *
@@ -3441,16 +3338,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for id.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getIdBytes();
     }
     /**
      *
@@ -3468,12 +3358,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setId(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      id_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setId(value);
       return this;
     }
     /**
@@ -3491,9 +3377,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearId() {
-      id_ = getDefaultInstance().getId();
-      bitField0_ = (bitField0_ & ~0x00000008);
-      onChanged();
+      copyOnWrite();
+      instance.clearId();
       return this;
     }
     /**
@@ -3512,31 +3397,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setIdBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      id_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setIdBytes(value);
       return this;
     }
 
-    private java.util.List<com.google.protobuf.Api> apis_ = java.util.Collections.emptyList();
-
-    private void ensureApisIsMutable() {
-      if (!((bitField0_ & 0x00000010) != 0)) {
-        apis_ = new java.util.ArrayList<com.google.protobuf.Api>(apis_);
-        bitField0_ |= 0x00000010;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.protobuf.Api,
-            com.google.protobuf.Api.Builder,
-            com.google.protobuf.ApiOrBuilder>
-        apisBuilder_;
-
     /**
      *
      *
@@ -3550,12 +3415,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.protobuf.Api apis = 3;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.protobuf.Api> getApisList() {
-      if (apisBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(apis_);
-      } else {
-        return apisBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getApisList());
     }
     /**
      *
@@ -3570,12 +3432,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.protobuf.Api apis = 3;</code>
      */
+    @java.lang.Override
     public int getApisCount() {
-      if (apisBuilder_ == null) {
-        return apis_.size();
-      } else {
-        return apisBuilder_.getCount();
-      }
+      return instance.getApisCount();
     }
     /**
      *
@@ -3590,12 +3449,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.protobuf.Api apis = 3;</code>
      */
+
+    @java.lang.Override
     public com.google.protobuf.Api getApis(int index) {
-      if (apisBuilder_ == null) {
-        return apis_.get(index);
-      } else {
-        return apisBuilder_.getMessage(index);
-      }
+      return instance.getApis(index);
     }
     /**
      *
@@ -3611,16 +3468,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Api apis = 3;</code>
      */
     public Builder setApis(int index, com.google.protobuf.Api value) {
-      if (apisBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureApisIsMutable();
-        apis_.set(index, value);
-        onChanged();
-      } else {
-        apisBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setApis(index, value);
       return this;
     }
     /**
@@ -3637,13 +3486,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Api apis = 3;</code>
      */
     public Builder setApis(int index, com.google.protobuf.Api.Builder builderForValue) {
-      if (apisBuilder_ == null) {
-        ensureApisIsMutable();
-        apis_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        apisBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setApis(index, builderForValue.build());
       return this;
     }
     /**
@@ -3660,16 +3504,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Api apis = 3;</code>
      */
     public Builder addApis(com.google.protobuf.Api value) {
-      if (apisBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureApisIsMutable();
-        apis_.add(value);
-        onChanged();
-      } else {
-        apisBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addApis(value);
       return this;
     }
     /**
@@ -3686,16 +3522,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Api apis = 3;</code>
      */
     public Builder addApis(int index, com.google.protobuf.Api value) {
-      if (apisBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureApisIsMutable();
-        apis_.add(index, value);
-        onChanged();
-      } else {
-        apisBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addApis(index, value);
       return this;
     }
     /**
@@ -3712,13 +3540,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Api apis = 3;</code>
      */
     public Builder addApis(com.google.protobuf.Api.Builder builderForValue) {
-      if (apisBuilder_ == null) {
-        ensureApisIsMutable();
-        apis_.add(builderForValue.build());
-        onChanged();
-      } else {
-        apisBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addApis(builderForValue.build());
       return this;
     }
     /**
@@ -3735,13 +3558,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Api apis = 3;</code>
      */
     public Builder addApis(int index, com.google.protobuf.Api.Builder builderForValue) {
-      if (apisBuilder_ == null) {
-        ensureApisIsMutable();
-        apis_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        apisBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addApis(index, builderForValue.build());
       return this;
     }
     /**
@@ -3758,13 +3576,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Api apis = 3;</code>
      */
     public Builder addAllApis(java.lang.Iterable<? extends com.google.protobuf.Api> values) {
-      if (apisBuilder_ == null) {
-        ensureApisIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, apis_);
-        onChanged();
-      } else {
-        apisBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllApis(values);
       return this;
     }
     /**
@@ -3781,13 +3594,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Api apis = 3;</code>
      */
     public Builder clearApis() {
-      if (apisBuilder_ == null) {
-        apis_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000010);
-        onChanged();
-      } else {
-        apisBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearApis();
       return this;
     }
     /**
@@ -3804,151 +3612,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Api apis = 3;</code>
      */
     public Builder removeApis(int index) {
-      if (apisBuilder_ == null) {
-        ensureApisIsMutable();
-        apis_.remove(index);
-        onChanged();
-      } else {
-        apisBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeApis(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * A list of API interfaces exported by this service. Only the `name` field
-     * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by
-     * the configuration author, as the remaining fields will be derived from the
-     * IDL during the normalization process. It is an error to specify an API
-     * interface here which cannot be resolved against the associated IDL files.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Api apis = 3;</code>
-     */
-    public com.google.protobuf.Api.Builder getApisBuilder(int index) {
-      return getApisFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of API interfaces exported by this service. Only the `name` field
-     * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by
-     * the configuration author, as the remaining fields will be derived from the
-     * IDL during the normalization process. It is an error to specify an API
-     * interface here which cannot be resolved against the associated IDL files.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Api apis = 3;</code>
-     */
-    public com.google.protobuf.ApiOrBuilder getApisOrBuilder(int index) {
-      if (apisBuilder_ == null) {
-        return apis_.get(index);
-      } else {
-        return apisBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of API interfaces exported by this service. Only the `name` field
-     * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by
-     * the configuration author, as the remaining fields will be derived from the
-     * IDL during the normalization process. It is an error to specify an API
-     * interface here which cannot be resolved against the associated IDL files.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Api apis = 3;</code>
-     */
-    public java.util.List<? extends com.google.protobuf.ApiOrBuilder> getApisOrBuilderList() {
-      if (apisBuilder_ != null) {
-        return apisBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(apis_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of API interfaces exported by this service. Only the `name` field
-     * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by
-     * the configuration author, as the remaining fields will be derived from the
-     * IDL during the normalization process. It is an error to specify an API
-     * interface here which cannot be resolved against the associated IDL files.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Api apis = 3;</code>
-     */
-    public com.google.protobuf.Api.Builder addApisBuilder() {
-      return getApisFieldBuilder().addBuilder(com.google.protobuf.Api.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of API interfaces exported by this service. Only the `name` field
-     * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by
-     * the configuration author, as the remaining fields will be derived from the
-     * IDL during the normalization process. It is an error to specify an API
-     * interface here which cannot be resolved against the associated IDL files.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Api apis = 3;</code>
-     */
-    public com.google.protobuf.Api.Builder addApisBuilder(int index) {
-      return getApisFieldBuilder().addBuilder(index, com.google.protobuf.Api.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of API interfaces exported by this service. Only the `name` field
-     * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by
-     * the configuration author, as the remaining fields will be derived from the
-     * IDL during the normalization process. It is an error to specify an API
-     * interface here which cannot be resolved against the associated IDL files.
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Api apis = 3;</code>
-     */
-    public java.util.List<com.google.protobuf.Api.Builder> getApisBuilderList() {
-      return getApisFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.protobuf.Api,
-            com.google.protobuf.Api.Builder,
-            com.google.protobuf.ApiOrBuilder>
-        getApisFieldBuilder() {
-      if (apisBuilder_ == null) {
-        apisBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.protobuf.Api,
-                com.google.protobuf.Api.Builder,
-                com.google.protobuf.ApiOrBuilder>(
-                apis_, ((bitField0_ & 0x00000010) != 0), getParentForChildren(), isClean());
-        apis_ = null;
-      }
-      return apisBuilder_;
-    }
-
-    private java.util.List<com.google.protobuf.Type> types_ = java.util.Collections.emptyList();
-
-    private void ensureTypesIsMutable() {
-      if (!((bitField0_ & 0x00000020) != 0)) {
-        types_ = new java.util.ArrayList<com.google.protobuf.Type>(types_);
-        bitField0_ |= 0x00000020;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.protobuf.Type,
-            com.google.protobuf.Type.Builder,
-            com.google.protobuf.TypeOrBuilder>
-        typesBuilder_;
 
     /**
      *
@@ -3966,12 +3633,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.protobuf.Type types = 4;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.protobuf.Type> getTypesList() {
-      if (typesBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(types_);
-      } else {
-        return typesBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getTypesList());
     }
     /**
      *
@@ -3989,12 +3653,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.protobuf.Type types = 4;</code>
      */
+    @java.lang.Override
     public int getTypesCount() {
-      if (typesBuilder_ == null) {
-        return types_.size();
-      } else {
-        return typesBuilder_.getCount();
-      }
+      return instance.getTypesCount();
     }
     /**
      *
@@ -4012,12 +3673,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.protobuf.Type types = 4;</code>
      */
+
+    @java.lang.Override
     public com.google.protobuf.Type getTypes(int index) {
-      if (typesBuilder_ == null) {
-        return types_.get(index);
-      } else {
-        return typesBuilder_.getMessage(index);
-      }
+      return instance.getTypes(index);
     }
     /**
      *
@@ -4036,16 +3695,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Type types = 4;</code>
      */
     public Builder setTypes(int index, com.google.protobuf.Type value) {
-      if (typesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureTypesIsMutable();
-        types_.set(index, value);
-        onChanged();
-      } else {
-        typesBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setTypes(index, value);
       return this;
     }
     /**
@@ -4065,13 +3716,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Type types = 4;</code>
      */
     public Builder setTypes(int index, com.google.protobuf.Type.Builder builderForValue) {
-      if (typesBuilder_ == null) {
-        ensureTypesIsMutable();
-        types_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        typesBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setTypes(index, builderForValue.build());
       return this;
     }
     /**
@@ -4091,16 +3737,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Type types = 4;</code>
      */
     public Builder addTypes(com.google.protobuf.Type value) {
-      if (typesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureTypesIsMutable();
-        types_.add(value);
-        onChanged();
-      } else {
-        typesBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addTypes(value);
       return this;
     }
     /**
@@ -4120,16 +3758,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Type types = 4;</code>
      */
     public Builder addTypes(int index, com.google.protobuf.Type value) {
-      if (typesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureTypesIsMutable();
-        types_.add(index, value);
-        onChanged();
-      } else {
-        typesBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addTypes(index, value);
       return this;
     }
     /**
@@ -4149,13 +3779,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Type types = 4;</code>
      */
     public Builder addTypes(com.google.protobuf.Type.Builder builderForValue) {
-      if (typesBuilder_ == null) {
-        ensureTypesIsMutable();
-        types_.add(builderForValue.build());
-        onChanged();
-      } else {
-        typesBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addTypes(builderForValue.build());
       return this;
     }
     /**
@@ -4175,13 +3800,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Type types = 4;</code>
      */
     public Builder addTypes(int index, com.google.protobuf.Type.Builder builderForValue) {
-      if (typesBuilder_ == null) {
-        ensureTypesIsMutable();
-        types_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        typesBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addTypes(index, builderForValue.build());
       return this;
     }
     /**
@@ -4201,13 +3821,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Type types = 4;</code>
      */
     public Builder addAllTypes(java.lang.Iterable<? extends com.google.protobuf.Type> values) {
-      if (typesBuilder_ == null) {
-        ensureTypesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, types_);
-        onChanged();
-      } else {
-        typesBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllTypes(values);
       return this;
     }
     /**
@@ -4227,13 +3842,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Type types = 4;</code>
      */
     public Builder clearTypes() {
-      if (typesBuilder_ == null) {
-        types_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000020);
-        onChanged();
-      } else {
-        typesBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearTypes();
       return this;
     }
     /**
@@ -4253,170 +3863,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Type types = 4;</code>
      */
     public Builder removeTypes(int index) {
-      if (typesBuilder_ == null) {
-        ensureTypesIsMutable();
-        types_.remove(index);
-        onChanged();
-      } else {
-        typesBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeTypes(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are automatically
-     * included.  Messages which are not referenced but shall be included, such as
-     * types used by the `google.protobuf.Any` type, should be listed here by
-     * name by the configuration author. Example:
-     *
-     *     types:
-     *     - name: google.protobuf.Int32
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Type types = 4;</code>
-     */
-    public com.google.protobuf.Type.Builder getTypesBuilder(int index) {
-      return getTypesFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are automatically
-     * included.  Messages which are not referenced but shall be included, such as
-     * types used by the `google.protobuf.Any` type, should be listed here by
-     * name by the configuration author. Example:
-     *
-     *     types:
-     *     - name: google.protobuf.Int32
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Type types = 4;</code>
-     */
-    public com.google.protobuf.TypeOrBuilder getTypesOrBuilder(int index) {
-      if (typesBuilder_ == null) {
-        return types_.get(index);
-      } else {
-        return typesBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are automatically
-     * included.  Messages which are not referenced but shall be included, such as
-     * types used by the `google.protobuf.Any` type, should be listed here by
-     * name by the configuration author. Example:
-     *
-     *     types:
-     *     - name: google.protobuf.Int32
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Type types = 4;</code>
-     */
-    public java.util.List<? extends com.google.protobuf.TypeOrBuilder> getTypesOrBuilderList() {
-      if (typesBuilder_ != null) {
-        return typesBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(types_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are automatically
-     * included.  Messages which are not referenced but shall be included, such as
-     * types used by the `google.protobuf.Any` type, should be listed here by
-     * name by the configuration author. Example:
-     *
-     *     types:
-     *     - name: google.protobuf.Int32
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Type types = 4;</code>
-     */
-    public com.google.protobuf.Type.Builder addTypesBuilder() {
-      return getTypesFieldBuilder().addBuilder(com.google.protobuf.Type.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are automatically
-     * included.  Messages which are not referenced but shall be included, such as
-     * types used by the `google.protobuf.Any` type, should be listed here by
-     * name by the configuration author. Example:
-     *
-     *     types:
-     *     - name: google.protobuf.Int32
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Type types = 4;</code>
-     */
-    public com.google.protobuf.Type.Builder addTypesBuilder(int index) {
-      return getTypesFieldBuilder()
-          .addBuilder(index, com.google.protobuf.Type.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of all proto message types included in this API service.
-     * Types referenced directly or indirectly by the `apis` are automatically
-     * included.  Messages which are not referenced but shall be included, such as
-     * types used by the `google.protobuf.Any` type, should be listed here by
-     * name by the configuration author. Example:
-     *
-     *     types:
-     *     - name: google.protobuf.Int32
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Type types = 4;</code>
-     */
-    public java.util.List<com.google.protobuf.Type.Builder> getTypesBuilderList() {
-      return getTypesFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.protobuf.Type,
-            com.google.protobuf.Type.Builder,
-            com.google.protobuf.TypeOrBuilder>
-        getTypesFieldBuilder() {
-      if (typesBuilder_ == null) {
-        typesBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.protobuf.Type,
-                com.google.protobuf.Type.Builder,
-                com.google.protobuf.TypeOrBuilder>(
-                types_, ((bitField0_ & 0x00000020) != 0), getParentForChildren(), isClean());
-        types_ = null;
-      }
-      return typesBuilder_;
-    }
-
-    private java.util.List<com.google.protobuf.Enum> enums_ = java.util.Collections.emptyList();
-
-    private void ensureEnumsIsMutable() {
-      if (!((bitField0_ & 0x00000040) != 0)) {
-        enums_ = new java.util.ArrayList<com.google.protobuf.Enum>(enums_);
-        bitField0_ |= 0x00000040;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.protobuf.Enum,
-            com.google.protobuf.Enum.Builder,
-            com.google.protobuf.EnumOrBuilder>
-        enumsBuilder_;
 
     /**
      *
@@ -4433,12 +3883,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.protobuf.Enum enums = 5;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.protobuf.Enum> getEnumsList() {
-      if (enumsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(enums_);
-      } else {
-        return enumsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getEnumsList());
     }
     /**
      *
@@ -4455,12 +3902,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.protobuf.Enum enums = 5;</code>
      */
+    @java.lang.Override
     public int getEnumsCount() {
-      if (enumsBuilder_ == null) {
-        return enums_.size();
-      } else {
-        return enumsBuilder_.getCount();
-      }
+      return instance.getEnumsCount();
     }
     /**
      *
@@ -4477,12 +3921,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.protobuf.Enum enums = 5;</code>
      */
+
+    @java.lang.Override
     public com.google.protobuf.Enum getEnums(int index) {
-      if (enumsBuilder_ == null) {
-        return enums_.get(index);
-      } else {
-        return enumsBuilder_.getMessage(index);
-      }
+      return instance.getEnums(index);
     }
     /**
      *
@@ -4500,16 +3942,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Enum enums = 5;</code>
      */
     public Builder setEnums(int index, com.google.protobuf.Enum value) {
-      if (enumsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureEnumsIsMutable();
-        enums_.set(index, value);
-        onChanged();
-      } else {
-        enumsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setEnums(index, value);
       return this;
     }
     /**
@@ -4528,13 +3962,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Enum enums = 5;</code>
      */
     public Builder setEnums(int index, com.google.protobuf.Enum.Builder builderForValue) {
-      if (enumsBuilder_ == null) {
-        ensureEnumsIsMutable();
-        enums_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        enumsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setEnums(index, builderForValue.build());
       return this;
     }
     /**
@@ -4553,16 +3982,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Enum enums = 5;</code>
      */
     public Builder addEnums(com.google.protobuf.Enum value) {
-      if (enumsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureEnumsIsMutable();
-        enums_.add(value);
-        onChanged();
-      } else {
-        enumsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addEnums(value);
       return this;
     }
     /**
@@ -4581,16 +4002,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Enum enums = 5;</code>
      */
     public Builder addEnums(int index, com.google.protobuf.Enum value) {
-      if (enumsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureEnumsIsMutable();
-        enums_.add(index, value);
-        onChanged();
-      } else {
-        enumsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addEnums(index, value);
       return this;
     }
     /**
@@ -4609,13 +4022,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Enum enums = 5;</code>
      */
     public Builder addEnums(com.google.protobuf.Enum.Builder builderForValue) {
-      if (enumsBuilder_ == null) {
-        ensureEnumsIsMutable();
-        enums_.add(builderForValue.build());
-        onChanged();
-      } else {
-        enumsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addEnums(builderForValue.build());
       return this;
     }
     /**
@@ -4634,13 +4042,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Enum enums = 5;</code>
      */
     public Builder addEnums(int index, com.google.protobuf.Enum.Builder builderForValue) {
-      if (enumsBuilder_ == null) {
-        ensureEnumsIsMutable();
-        enums_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        enumsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addEnums(index, builderForValue.build());
       return this;
     }
     /**
@@ -4659,13 +4062,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Enum enums = 5;</code>
      */
     public Builder addAllEnums(java.lang.Iterable<? extends com.google.protobuf.Enum> values) {
-      if (enumsBuilder_ == null) {
-        ensureEnumsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, enums_);
-        onChanged();
-      } else {
-        enumsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllEnums(values);
       return this;
     }
     /**
@@ -4684,13 +4082,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Enum enums = 5;</code>
      */
     public Builder clearEnums() {
-      if (enumsBuilder_ == null) {
-        enums_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000040);
-        onChanged();
-      } else {
-        enumsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearEnums();
       return this;
     }
     /**
@@ -4709,156 +4102,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.protobuf.Enum enums = 5;</code>
      */
     public Builder removeEnums(int index) {
-      if (enumsBuilder_ == null) {
-        ensureEnumsIsMutable();
-        enums_.remove(index);
-        onChanged();
-      } else {
-        enumsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeEnums(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * A list of all enum types included in this API service.  Enums referenced
-     * directly or indirectly by the `apis` are automatically included.  Enums
-     * which are not referenced but shall be included should be listed here by
-     * name by the configuration author. Example:
-     *
-     *     enums:
-     *     - name: google.someapi.v1.SomeEnum
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Enum enums = 5;</code>
-     */
-    public com.google.protobuf.Enum.Builder getEnumsBuilder(int index) {
-      return getEnumsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of all enum types included in this API service.  Enums referenced
-     * directly or indirectly by the `apis` are automatically included.  Enums
-     * which are not referenced but shall be included should be listed here by
-     * name by the configuration author. Example:
-     *
-     *     enums:
-     *     - name: google.someapi.v1.SomeEnum
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Enum enums = 5;</code>
-     */
-    public com.google.protobuf.EnumOrBuilder getEnumsOrBuilder(int index) {
-      if (enumsBuilder_ == null) {
-        return enums_.get(index);
-      } else {
-        return enumsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of all enum types included in this API service.  Enums referenced
-     * directly or indirectly by the `apis` are automatically included.  Enums
-     * which are not referenced but shall be included should be listed here by
-     * name by the configuration author. Example:
-     *
-     *     enums:
-     *     - name: google.someapi.v1.SomeEnum
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Enum enums = 5;</code>
-     */
-    public java.util.List<? extends com.google.protobuf.EnumOrBuilder> getEnumsOrBuilderList() {
-      if (enumsBuilder_ != null) {
-        return enumsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(enums_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of all enum types included in this API service.  Enums referenced
-     * directly or indirectly by the `apis` are automatically included.  Enums
-     * which are not referenced but shall be included should be listed here by
-     * name by the configuration author. Example:
-     *
-     *     enums:
-     *     - name: google.someapi.v1.SomeEnum
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Enum enums = 5;</code>
-     */
-    public com.google.protobuf.Enum.Builder addEnumsBuilder() {
-      return getEnumsFieldBuilder().addBuilder(com.google.protobuf.Enum.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of all enum types included in this API service.  Enums referenced
-     * directly or indirectly by the `apis` are automatically included.  Enums
-     * which are not referenced but shall be included should be listed here by
-     * name by the configuration author. Example:
-     *
-     *     enums:
-     *     - name: google.someapi.v1.SomeEnum
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Enum enums = 5;</code>
-     */
-    public com.google.protobuf.Enum.Builder addEnumsBuilder(int index) {
-      return getEnumsFieldBuilder()
-          .addBuilder(index, com.google.protobuf.Enum.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A list of all enum types included in this API service.  Enums referenced
-     * directly or indirectly by the `apis` are automatically included.  Enums
-     * which are not referenced but shall be included should be listed here by
-     * name by the configuration author. Example:
-     *
-     *     enums:
-     *     - name: google.someapi.v1.SomeEnum
-     * </pre>
-     *
-     * <code>repeated .google.protobuf.Enum enums = 5;</code>
-     */
-    public java.util.List<com.google.protobuf.Enum.Builder> getEnumsBuilderList() {
-      return getEnumsFieldBuilder().getBuilderList();
-    }
 
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.protobuf.Enum,
-            com.google.protobuf.Enum.Builder,
-            com.google.protobuf.EnumOrBuilder>
-        getEnumsFieldBuilder() {
-      if (enumsBuilder_ == null) {
-        enumsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.protobuf.Enum,
-                com.google.protobuf.Enum.Builder,
-                com.google.protobuf.EnumOrBuilder>(
-                enums_, ((bitField0_ & 0x00000040) != 0), getParentForChildren(), isClean());
-        enums_ = null;
-      }
-      return enumsBuilder_;
-    }
-
-    private com.google.api.Documentation documentation_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Documentation,
-            com.google.api.Documentation.Builder,
-            com.google.api.DocumentationOrBuilder>
-        documentationBuilder_;
     /**
      *
      *
@@ -4867,11 +4115,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Documentation documentation = 6;</code>
-     *
-     * @return Whether the documentation field is set.
      */
+    @java.lang.Override
     public boolean hasDocumentation() {
-      return ((bitField0_ & 0x00000080) != 0);
+      return instance.hasDocumentation();
     }
     /**
      *
@@ -4881,17 +4128,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Documentation documentation = 6;</code>
-     *
-     * @return The documentation.
      */
+    @java.lang.Override
     public com.google.api.Documentation getDocumentation() {
-      if (documentationBuilder_ == null) {
-        return documentation_ == null
-            ? com.google.api.Documentation.getDefaultInstance()
-            : documentation_;
-      } else {
-        return documentationBuilder_.getMessage();
-      }
+      return instance.getDocumentation();
     }
     /**
      *
@@ -4903,16 +4143,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Documentation documentation = 6;</code>
      */
     public Builder setDocumentation(com.google.api.Documentation value) {
-      if (documentationBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        documentation_ = value;
-      } else {
-        documentationBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000080;
-      onChanged();
+      copyOnWrite();
+      instance.setDocumentation(value);
       return this;
     }
     /**
@@ -4925,13 +4157,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Documentation documentation = 6;</code>
      */
     public Builder setDocumentation(com.google.api.Documentation.Builder builderForValue) {
-      if (documentationBuilder_ == null) {
-        documentation_ = builderForValue.build();
-      } else {
-        documentationBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000080;
-      onChanged();
+      copyOnWrite();
+      instance.setDocumentation(builderForValue.build());
       return this;
     }
     /**
@@ -4944,21 +4171,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Documentation documentation = 6;</code>
      */
     public Builder mergeDocumentation(com.google.api.Documentation value) {
-      if (documentationBuilder_ == null) {
-        if (((bitField0_ & 0x00000080) != 0)
-            && documentation_ != null
-            && documentation_ != com.google.api.Documentation.getDefaultInstance()) {
-          getDocumentationBuilder().mergeFrom(value);
-        } else {
-          documentation_ = value;
-        }
-      } else {
-        documentationBuilder_.mergeFrom(value);
-      }
-      if (documentation_ != null) {
-        bitField0_ |= 0x00000080;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeDocumentation(value);
       return this;
     }
     /**
@@ -4971,77 +4185,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Documentation documentation = 6;</code>
      */
     public Builder clearDocumentation() {
-      bitField0_ = (bitField0_ & ~0x00000080);
-      documentation_ = null;
-      if (documentationBuilder_ != null) {
-        documentationBuilder_.dispose();
-        documentationBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearDocumentation();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Additional API documentation.
-     * </pre>
-     *
-     * <code>.google.api.Documentation documentation = 6;</code>
-     */
-    public com.google.api.Documentation.Builder getDocumentationBuilder() {
-      bitField0_ |= 0x00000080;
-      onChanged();
-      return getDocumentationFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Additional API documentation.
-     * </pre>
-     *
-     * <code>.google.api.Documentation documentation = 6;</code>
-     */
-    public com.google.api.DocumentationOrBuilder getDocumentationOrBuilder() {
-      if (documentationBuilder_ != null) {
-        return documentationBuilder_.getMessageOrBuilder();
-      } else {
-        return documentation_ == null
-            ? com.google.api.Documentation.getDefaultInstance()
-            : documentation_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Additional API documentation.
-     * </pre>
-     *
-     * <code>.google.api.Documentation documentation = 6;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Documentation,
-            com.google.api.Documentation.Builder,
-            com.google.api.DocumentationOrBuilder>
-        getDocumentationFieldBuilder() {
-      if (documentationBuilder_ == null) {
-        documentationBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.api.Documentation,
-                com.google.api.Documentation.Builder,
-                com.google.api.DocumentationOrBuilder>(
-                getDocumentation(), getParentForChildren(), isClean());
-        documentation_ = null;
-      }
-      return documentationBuilder_;
-    }
 
-    private com.google.api.Backend backend_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Backend, com.google.api.Backend.Builder, com.google.api.BackendOrBuilder>
-        backendBuilder_;
     /**
      *
      *
@@ -5050,11 +4198,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Backend backend = 8;</code>
-     *
-     * @return Whether the backend field is set.
      */
+    @java.lang.Override
     public boolean hasBackend() {
-      return ((bitField0_ & 0x00000100) != 0);
+      return instance.hasBackend();
     }
     /**
      *
@@ -5064,15 +4211,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Backend backend = 8;</code>
-     *
-     * @return The backend.
      */
+    @java.lang.Override
     public com.google.api.Backend getBackend() {
-      if (backendBuilder_ == null) {
-        return backend_ == null ? com.google.api.Backend.getDefaultInstance() : backend_;
-      } else {
-        return backendBuilder_.getMessage();
-      }
+      return instance.getBackend();
     }
     /**
      *
@@ -5084,16 +4226,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Backend backend = 8;</code>
      */
     public Builder setBackend(com.google.api.Backend value) {
-      if (backendBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        backend_ = value;
-      } else {
-        backendBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000100;
-      onChanged();
+      copyOnWrite();
+      instance.setBackend(value);
       return this;
     }
     /**
@@ -5106,13 +4240,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Backend backend = 8;</code>
      */
     public Builder setBackend(com.google.api.Backend.Builder builderForValue) {
-      if (backendBuilder_ == null) {
-        backend_ = builderForValue.build();
-      } else {
-        backendBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000100;
-      onChanged();
+      copyOnWrite();
+      instance.setBackend(builderForValue.build());
       return this;
     }
     /**
@@ -5125,21 +4254,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Backend backend = 8;</code>
      */
     public Builder mergeBackend(com.google.api.Backend value) {
-      if (backendBuilder_ == null) {
-        if (((bitField0_ & 0x00000100) != 0)
-            && backend_ != null
-            && backend_ != com.google.api.Backend.getDefaultInstance()) {
-          getBackendBuilder().mergeFrom(value);
-        } else {
-          backend_ = value;
-        }
-      } else {
-        backendBuilder_.mergeFrom(value);
-      }
-      if (backend_ != null) {
-        bitField0_ |= 0x00000100;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeBackend(value);
       return this;
     }
     /**
@@ -5152,72 +4268,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Backend backend = 8;</code>
      */
     public Builder clearBackend() {
-      bitField0_ = (bitField0_ & ~0x00000100);
-      backend_ = null;
-      if (backendBuilder_ != null) {
-        backendBuilder_.dispose();
-        backendBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearBackend();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * API backend configuration.
-     * </pre>
-     *
-     * <code>.google.api.Backend backend = 8;</code>
-     */
-    public com.google.api.Backend.Builder getBackendBuilder() {
-      bitField0_ |= 0x00000100;
-      onChanged();
-      return getBackendFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * API backend configuration.
-     * </pre>
-     *
-     * <code>.google.api.Backend backend = 8;</code>
-     */
-    public com.google.api.BackendOrBuilder getBackendOrBuilder() {
-      if (backendBuilder_ != null) {
-        return backendBuilder_.getMessageOrBuilder();
-      } else {
-        return backend_ == null ? com.google.api.Backend.getDefaultInstance() : backend_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * API backend configuration.
-     * </pre>
-     *
-     * <code>.google.api.Backend backend = 8;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Backend, com.google.api.Backend.Builder, com.google.api.BackendOrBuilder>
-        getBackendFieldBuilder() {
-      if (backendBuilder_ == null) {
-        backendBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.api.Backend,
-                com.google.api.Backend.Builder,
-                com.google.api.BackendOrBuilder>(getBackend(), getParentForChildren(), isClean());
-        backend_ = null;
-      }
-      return backendBuilder_;
-    }
 
-    private com.google.api.Http http_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Http, com.google.api.Http.Builder, com.google.api.HttpOrBuilder>
-        httpBuilder_;
     /**
      *
      *
@@ -5226,11 +4281,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Http http = 9;</code>
-     *
-     * @return Whether the http field is set.
      */
+    @java.lang.Override
     public boolean hasHttp() {
-      return ((bitField0_ & 0x00000200) != 0);
+      return instance.hasHttp();
     }
     /**
      *
@@ -5240,15 +4294,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Http http = 9;</code>
-     *
-     * @return The http.
      */
+    @java.lang.Override
     public com.google.api.Http getHttp() {
-      if (httpBuilder_ == null) {
-        return http_ == null ? com.google.api.Http.getDefaultInstance() : http_;
-      } else {
-        return httpBuilder_.getMessage();
-      }
+      return instance.getHttp();
     }
     /**
      *
@@ -5260,16 +4309,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Http http = 9;</code>
      */
     public Builder setHttp(com.google.api.Http value) {
-      if (httpBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        http_ = value;
-      } else {
-        httpBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000200;
-      onChanged();
+      copyOnWrite();
+      instance.setHttp(value);
       return this;
     }
     /**
@@ -5282,13 +4323,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Http http = 9;</code>
      */
     public Builder setHttp(com.google.api.Http.Builder builderForValue) {
-      if (httpBuilder_ == null) {
-        http_ = builderForValue.build();
-      } else {
-        httpBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000200;
-      onChanged();
+      copyOnWrite();
+      instance.setHttp(builderForValue.build());
       return this;
     }
     /**
@@ -5301,21 +4337,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Http http = 9;</code>
      */
     public Builder mergeHttp(com.google.api.Http value) {
-      if (httpBuilder_ == null) {
-        if (((bitField0_ & 0x00000200) != 0)
-            && http_ != null
-            && http_ != com.google.api.Http.getDefaultInstance()) {
-          getHttpBuilder().mergeFrom(value);
-        } else {
-          http_ = value;
-        }
-      } else {
-        httpBuilder_.mergeFrom(value);
-      }
-      if (http_ != null) {
-        bitField0_ |= 0x00000200;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeHttp(value);
       return this;
     }
     /**
@@ -5328,71 +4351,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Http http = 9;</code>
      */
     public Builder clearHttp() {
-      bitField0_ = (bitField0_ & ~0x00000200);
-      http_ = null;
-      if (httpBuilder_ != null) {
-        httpBuilder_.dispose();
-        httpBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearHttp();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * HTTP configuration.
-     * </pre>
-     *
-     * <code>.google.api.Http http = 9;</code>
-     */
-    public com.google.api.Http.Builder getHttpBuilder() {
-      bitField0_ |= 0x00000200;
-      onChanged();
-      return getHttpFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * HTTP configuration.
-     * </pre>
-     *
-     * <code>.google.api.Http http = 9;</code>
-     */
-    public com.google.api.HttpOrBuilder getHttpOrBuilder() {
-      if (httpBuilder_ != null) {
-        return httpBuilder_.getMessageOrBuilder();
-      } else {
-        return http_ == null ? com.google.api.Http.getDefaultInstance() : http_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * HTTP configuration.
-     * </pre>
-     *
-     * <code>.google.api.Http http = 9;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Http, com.google.api.Http.Builder, com.google.api.HttpOrBuilder>
-        getHttpFieldBuilder() {
-      if (httpBuilder_ == null) {
-        httpBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.api.Http, com.google.api.Http.Builder, com.google.api.HttpOrBuilder>(
-                getHttp(), getParentForChildren(), isClean());
-        http_ = null;
-      }
-      return httpBuilder_;
-    }
 
-    private com.google.api.Quota quota_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Quota, com.google.api.Quota.Builder, com.google.api.QuotaOrBuilder>
-        quotaBuilder_;
     /**
      *
      *
@@ -5401,11 +4364,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Quota quota = 10;</code>
-     *
-     * @return Whether the quota field is set.
      */
+    @java.lang.Override
     public boolean hasQuota() {
-      return ((bitField0_ & 0x00000400) != 0);
+      return instance.hasQuota();
     }
     /**
      *
@@ -5415,15 +4377,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Quota quota = 10;</code>
-     *
-     * @return The quota.
      */
+    @java.lang.Override
     public com.google.api.Quota getQuota() {
-      if (quotaBuilder_ == null) {
-        return quota_ == null ? com.google.api.Quota.getDefaultInstance() : quota_;
-      } else {
-        return quotaBuilder_.getMessage();
-      }
+      return instance.getQuota();
     }
     /**
      *
@@ -5435,16 +4392,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Quota quota = 10;</code>
      */
     public Builder setQuota(com.google.api.Quota value) {
-      if (quotaBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        quota_ = value;
-      } else {
-        quotaBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000400;
-      onChanged();
+      copyOnWrite();
+      instance.setQuota(value);
       return this;
     }
     /**
@@ -5457,13 +4406,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Quota quota = 10;</code>
      */
     public Builder setQuota(com.google.api.Quota.Builder builderForValue) {
-      if (quotaBuilder_ == null) {
-        quota_ = builderForValue.build();
-      } else {
-        quotaBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000400;
-      onChanged();
+      copyOnWrite();
+      instance.setQuota(builderForValue.build());
       return this;
     }
     /**
@@ -5476,21 +4420,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Quota quota = 10;</code>
      */
     public Builder mergeQuota(com.google.api.Quota value) {
-      if (quotaBuilder_ == null) {
-        if (((bitField0_ & 0x00000400) != 0)
-            && quota_ != null
-            && quota_ != com.google.api.Quota.getDefaultInstance()) {
-          getQuotaBuilder().mergeFrom(value);
-        } else {
-          quota_ = value;
-        }
-      } else {
-        quotaBuilder_.mergeFrom(value);
-      }
-      if (quota_ != null) {
-        bitField0_ |= 0x00000400;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeQuota(value);
       return this;
     }
     /**
@@ -5503,73 +4434,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Quota quota = 10;</code>
      */
     public Builder clearQuota() {
-      bitField0_ = (bitField0_ & ~0x00000400);
-      quota_ = null;
-      if (quotaBuilder_ != null) {
-        quotaBuilder_.dispose();
-        quotaBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearQuota();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Quota configuration.
-     * </pre>
-     *
-     * <code>.google.api.Quota quota = 10;</code>
-     */
-    public com.google.api.Quota.Builder getQuotaBuilder() {
-      bitField0_ |= 0x00000400;
-      onChanged();
-      return getQuotaFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Quota configuration.
-     * </pre>
-     *
-     * <code>.google.api.Quota quota = 10;</code>
-     */
-    public com.google.api.QuotaOrBuilder getQuotaOrBuilder() {
-      if (quotaBuilder_ != null) {
-        return quotaBuilder_.getMessageOrBuilder();
-      } else {
-        return quota_ == null ? com.google.api.Quota.getDefaultInstance() : quota_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Quota configuration.
-     * </pre>
-     *
-     * <code>.google.api.Quota quota = 10;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Quota, com.google.api.Quota.Builder, com.google.api.QuotaOrBuilder>
-        getQuotaFieldBuilder() {
-      if (quotaBuilder_ == null) {
-        quotaBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.api.Quota, com.google.api.Quota.Builder, com.google.api.QuotaOrBuilder>(
-                getQuota(), getParentForChildren(), isClean());
-        quota_ = null;
-      }
-      return quotaBuilder_;
-    }
 
-    private com.google.api.Authentication authentication_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Authentication,
-            com.google.api.Authentication.Builder,
-            com.google.api.AuthenticationOrBuilder>
-        authenticationBuilder_;
     /**
      *
      *
@@ -5578,11 +4447,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Authentication authentication = 11;</code>
-     *
-     * @return Whether the authentication field is set.
      */
+    @java.lang.Override
     public boolean hasAuthentication() {
-      return ((bitField0_ & 0x00000800) != 0);
+      return instance.hasAuthentication();
     }
     /**
      *
@@ -5592,17 +4460,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Authentication authentication = 11;</code>
-     *
-     * @return The authentication.
      */
+    @java.lang.Override
     public com.google.api.Authentication getAuthentication() {
-      if (authenticationBuilder_ == null) {
-        return authentication_ == null
-            ? com.google.api.Authentication.getDefaultInstance()
-            : authentication_;
-      } else {
-        return authenticationBuilder_.getMessage();
-      }
+      return instance.getAuthentication();
     }
     /**
      *
@@ -5614,16 +4475,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Authentication authentication = 11;</code>
      */
     public Builder setAuthentication(com.google.api.Authentication value) {
-      if (authenticationBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        authentication_ = value;
-      } else {
-        authenticationBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000800;
-      onChanged();
+      copyOnWrite();
+      instance.setAuthentication(value);
       return this;
     }
     /**
@@ -5636,13 +4489,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Authentication authentication = 11;</code>
      */
     public Builder setAuthentication(com.google.api.Authentication.Builder builderForValue) {
-      if (authenticationBuilder_ == null) {
-        authentication_ = builderForValue.build();
-      } else {
-        authenticationBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000800;
-      onChanged();
+      copyOnWrite();
+      instance.setAuthentication(builderForValue.build());
       return this;
     }
     /**
@@ -5655,21 +4503,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Authentication authentication = 11;</code>
      */
     public Builder mergeAuthentication(com.google.api.Authentication value) {
-      if (authenticationBuilder_ == null) {
-        if (((bitField0_ & 0x00000800) != 0)
-            && authentication_ != null
-            && authentication_ != com.google.api.Authentication.getDefaultInstance()) {
-          getAuthenticationBuilder().mergeFrom(value);
-        } else {
-          authentication_ = value;
-        }
-      } else {
-        authenticationBuilder_.mergeFrom(value);
-      }
-      if (authentication_ != null) {
-        bitField0_ |= 0x00000800;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeAuthentication(value);
       return this;
     }
     /**
@@ -5682,77 +4517,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Authentication authentication = 11;</code>
      */
     public Builder clearAuthentication() {
-      bitField0_ = (bitField0_ & ~0x00000800);
-      authentication_ = null;
-      if (authenticationBuilder_ != null) {
-        authenticationBuilder_.dispose();
-        authenticationBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearAuthentication();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Auth configuration.
-     * </pre>
-     *
-     * <code>.google.api.Authentication authentication = 11;</code>
-     */
-    public com.google.api.Authentication.Builder getAuthenticationBuilder() {
-      bitField0_ |= 0x00000800;
-      onChanged();
-      return getAuthenticationFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Auth configuration.
-     * </pre>
-     *
-     * <code>.google.api.Authentication authentication = 11;</code>
-     */
-    public com.google.api.AuthenticationOrBuilder getAuthenticationOrBuilder() {
-      if (authenticationBuilder_ != null) {
-        return authenticationBuilder_.getMessageOrBuilder();
-      } else {
-        return authentication_ == null
-            ? com.google.api.Authentication.getDefaultInstance()
-            : authentication_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Auth configuration.
-     * </pre>
-     *
-     * <code>.google.api.Authentication authentication = 11;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Authentication,
-            com.google.api.Authentication.Builder,
-            com.google.api.AuthenticationOrBuilder>
-        getAuthenticationFieldBuilder() {
-      if (authenticationBuilder_ == null) {
-        authenticationBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.api.Authentication,
-                com.google.api.Authentication.Builder,
-                com.google.api.AuthenticationOrBuilder>(
-                getAuthentication(), getParentForChildren(), isClean());
-        authentication_ = null;
-      }
-      return authenticationBuilder_;
-    }
 
-    private com.google.api.Context context_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Context, com.google.api.Context.Builder, com.google.api.ContextOrBuilder>
-        contextBuilder_;
     /**
      *
      *
@@ -5761,11 +4530,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Context context = 12;</code>
-     *
-     * @return Whether the context field is set.
      */
+    @java.lang.Override
     public boolean hasContext() {
-      return ((bitField0_ & 0x00001000) != 0);
+      return instance.hasContext();
     }
     /**
      *
@@ -5775,15 +4543,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Context context = 12;</code>
-     *
-     * @return The context.
      */
+    @java.lang.Override
     public com.google.api.Context getContext() {
-      if (contextBuilder_ == null) {
-        return context_ == null ? com.google.api.Context.getDefaultInstance() : context_;
-      } else {
-        return contextBuilder_.getMessage();
-      }
+      return instance.getContext();
     }
     /**
      *
@@ -5795,16 +4558,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Context context = 12;</code>
      */
     public Builder setContext(com.google.api.Context value) {
-      if (contextBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        context_ = value;
-      } else {
-        contextBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00001000;
-      onChanged();
+      copyOnWrite();
+      instance.setContext(value);
       return this;
     }
     /**
@@ -5817,13 +4572,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Context context = 12;</code>
      */
     public Builder setContext(com.google.api.Context.Builder builderForValue) {
-      if (contextBuilder_ == null) {
-        context_ = builderForValue.build();
-      } else {
-        contextBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00001000;
-      onChanged();
+      copyOnWrite();
+      instance.setContext(builderForValue.build());
       return this;
     }
     /**
@@ -5836,21 +4586,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Context context = 12;</code>
      */
     public Builder mergeContext(com.google.api.Context value) {
-      if (contextBuilder_ == null) {
-        if (((bitField0_ & 0x00001000) != 0)
-            && context_ != null
-            && context_ != com.google.api.Context.getDefaultInstance()) {
-          getContextBuilder().mergeFrom(value);
-        } else {
-          context_ = value;
-        }
-      } else {
-        contextBuilder_.mergeFrom(value);
-      }
-      if (context_ != null) {
-        bitField0_ |= 0x00001000;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeContext(value);
       return this;
     }
     /**
@@ -5863,72 +4600,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Context context = 12;</code>
      */
     public Builder clearContext() {
-      bitField0_ = (bitField0_ & ~0x00001000);
-      context_ = null;
-      if (contextBuilder_ != null) {
-        contextBuilder_.dispose();
-        contextBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearContext();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Context configuration.
-     * </pre>
-     *
-     * <code>.google.api.Context context = 12;</code>
-     */
-    public com.google.api.Context.Builder getContextBuilder() {
-      bitField0_ |= 0x00001000;
-      onChanged();
-      return getContextFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Context configuration.
-     * </pre>
-     *
-     * <code>.google.api.Context context = 12;</code>
-     */
-    public com.google.api.ContextOrBuilder getContextOrBuilder() {
-      if (contextBuilder_ != null) {
-        return contextBuilder_.getMessageOrBuilder();
-      } else {
-        return context_ == null ? com.google.api.Context.getDefaultInstance() : context_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Context configuration.
-     * </pre>
-     *
-     * <code>.google.api.Context context = 12;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Context, com.google.api.Context.Builder, com.google.api.ContextOrBuilder>
-        getContextFieldBuilder() {
-      if (contextBuilder_ == null) {
-        contextBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.api.Context,
-                com.google.api.Context.Builder,
-                com.google.api.ContextOrBuilder>(getContext(), getParentForChildren(), isClean());
-        context_ = null;
-      }
-      return contextBuilder_;
-    }
 
-    private com.google.api.Usage usage_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Usage, com.google.api.Usage.Builder, com.google.api.UsageOrBuilder>
-        usageBuilder_;
     /**
      *
      *
@@ -5937,11 +4613,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Usage usage = 15;</code>
-     *
-     * @return Whether the usage field is set.
      */
+    @java.lang.Override
     public boolean hasUsage() {
-      return ((bitField0_ & 0x00002000) != 0);
+      return instance.hasUsage();
     }
     /**
      *
@@ -5951,15 +4626,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Usage usage = 15;</code>
-     *
-     * @return The usage.
      */
+    @java.lang.Override
     public com.google.api.Usage getUsage() {
-      if (usageBuilder_ == null) {
-        return usage_ == null ? com.google.api.Usage.getDefaultInstance() : usage_;
-      } else {
-        return usageBuilder_.getMessage();
-      }
+      return instance.getUsage();
     }
     /**
      *
@@ -5971,16 +4641,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Usage usage = 15;</code>
      */
     public Builder setUsage(com.google.api.Usage value) {
-      if (usageBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        usage_ = value;
-      } else {
-        usageBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00002000;
-      onChanged();
+      copyOnWrite();
+      instance.setUsage(value);
       return this;
     }
     /**
@@ -5993,13 +4655,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Usage usage = 15;</code>
      */
     public Builder setUsage(com.google.api.Usage.Builder builderForValue) {
-      if (usageBuilder_ == null) {
-        usage_ = builderForValue.build();
-      } else {
-        usageBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00002000;
-      onChanged();
+      copyOnWrite();
+      instance.setUsage(builderForValue.build());
       return this;
     }
     /**
@@ -6012,21 +4669,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Usage usage = 15;</code>
      */
     public Builder mergeUsage(com.google.api.Usage value) {
-      if (usageBuilder_ == null) {
-        if (((bitField0_ & 0x00002000) != 0)
-            && usage_ != null
-            && usage_ != com.google.api.Usage.getDefaultInstance()) {
-          getUsageBuilder().mergeFrom(value);
-        } else {
-          usage_ = value;
-        }
-      } else {
-        usageBuilder_.mergeFrom(value);
-      }
-      if (usage_ != null) {
-        bitField0_ |= 0x00002000;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeUsage(value);
       return this;
     }
     /**
@@ -6039,81 +4683,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Usage usage = 15;</code>
      */
     public Builder clearUsage() {
-      bitField0_ = (bitField0_ & ~0x00002000);
-      usage_ = null;
-      if (usageBuilder_ != null) {
-        usageBuilder_.dispose();
-        usageBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearUsage();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Configuration controlling usage of this service.
-     * </pre>
-     *
-     * <code>.google.api.Usage usage = 15;</code>
-     */
-    public com.google.api.Usage.Builder getUsageBuilder() {
-      bitField0_ |= 0x00002000;
-      onChanged();
-      return getUsageFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Configuration controlling usage of this service.
-     * </pre>
-     *
-     * <code>.google.api.Usage usage = 15;</code>
-     */
-    public com.google.api.UsageOrBuilder getUsageOrBuilder() {
-      if (usageBuilder_ != null) {
-        return usageBuilder_.getMessageOrBuilder();
-      } else {
-        return usage_ == null ? com.google.api.Usage.getDefaultInstance() : usage_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Configuration controlling usage of this service.
-     * </pre>
-     *
-     * <code>.google.api.Usage usage = 15;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Usage, com.google.api.Usage.Builder, com.google.api.UsageOrBuilder>
-        getUsageFieldBuilder() {
-      if (usageBuilder_ == null) {
-        usageBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.api.Usage, com.google.api.Usage.Builder, com.google.api.UsageOrBuilder>(
-                getUsage(), getParentForChildren(), isClean());
-        usage_ = null;
-      }
-      return usageBuilder_;
-    }
-
-    private java.util.List<com.google.api.Endpoint> endpoints_ = java.util.Collections.emptyList();
-
-    private void ensureEndpointsIsMutable() {
-      if (!((bitField0_ & 0x00004000) != 0)) {
-        endpoints_ = new java.util.ArrayList<com.google.api.Endpoint>(endpoints_);
-        bitField0_ |= 0x00004000;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.Endpoint,
-            com.google.api.Endpoint.Builder,
-            com.google.api.EndpointOrBuilder>
-        endpointsBuilder_;
 
     /**
      *
@@ -6126,12 +4699,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.Endpoint endpoints = 18;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.api.Endpoint> getEndpointsList() {
-      if (endpointsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(endpoints_);
-      } else {
-        return endpointsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getEndpointsList());
     }
     /**
      *
@@ -6144,12 +4714,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.Endpoint endpoints = 18;</code>
      */
+    @java.lang.Override
     public int getEndpointsCount() {
-      if (endpointsBuilder_ == null) {
-        return endpoints_.size();
-      } else {
-        return endpointsBuilder_.getCount();
-      }
+      return instance.getEndpointsCount();
     }
     /**
      *
@@ -6162,12 +4729,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.Endpoint endpoints = 18;</code>
      */
+
+    @java.lang.Override
     public com.google.api.Endpoint getEndpoints(int index) {
-      if (endpointsBuilder_ == null) {
-        return endpoints_.get(index);
-      } else {
-        return endpointsBuilder_.getMessage(index);
-      }
+      return instance.getEndpoints(index);
     }
     /**
      *
@@ -6181,16 +4746,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.Endpoint endpoints = 18;</code>
      */
     public Builder setEndpoints(int index, com.google.api.Endpoint value) {
-      if (endpointsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureEndpointsIsMutable();
-        endpoints_.set(index, value);
-        onChanged();
-      } else {
-        endpointsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setEndpoints(index, value);
       return this;
     }
     /**
@@ -6205,13 +4762,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.Endpoint endpoints = 18;</code>
      */
     public Builder setEndpoints(int index, com.google.api.Endpoint.Builder builderForValue) {
-      if (endpointsBuilder_ == null) {
-        ensureEndpointsIsMutable();
-        endpoints_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        endpointsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setEndpoints(index, builderForValue.build());
       return this;
     }
     /**
@@ -6226,16 +4778,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.Endpoint endpoints = 18;</code>
      */
     public Builder addEndpoints(com.google.api.Endpoint value) {
-      if (endpointsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureEndpointsIsMutable();
-        endpoints_.add(value);
-        onChanged();
-      } else {
-        endpointsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addEndpoints(value);
       return this;
     }
     /**
@@ -6250,16 +4794,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.Endpoint endpoints = 18;</code>
      */
     public Builder addEndpoints(int index, com.google.api.Endpoint value) {
-      if (endpointsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureEndpointsIsMutable();
-        endpoints_.add(index, value);
-        onChanged();
-      } else {
-        endpointsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addEndpoints(index, value);
       return this;
     }
     /**
@@ -6274,13 +4810,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.Endpoint endpoints = 18;</code>
      */
     public Builder addEndpoints(com.google.api.Endpoint.Builder builderForValue) {
-      if (endpointsBuilder_ == null) {
-        ensureEndpointsIsMutable();
-        endpoints_.add(builderForValue.build());
-        onChanged();
-      } else {
-        endpointsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addEndpoints(builderForValue.build());
       return this;
     }
     /**
@@ -6295,13 +4826,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.Endpoint endpoints = 18;</code>
      */
     public Builder addEndpoints(int index, com.google.api.Endpoint.Builder builderForValue) {
-      if (endpointsBuilder_ == null) {
-        ensureEndpointsIsMutable();
-        endpoints_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        endpointsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addEndpoints(index, builderForValue.build());
       return this;
     }
     /**
@@ -6316,13 +4842,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.Endpoint endpoints = 18;</code>
      */
     public Builder addAllEndpoints(java.lang.Iterable<? extends com.google.api.Endpoint> values) {
-      if (endpointsBuilder_ == null) {
-        ensureEndpointsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, endpoints_);
-        onChanged();
-      } else {
-        endpointsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllEndpoints(values);
       return this;
     }
     /**
@@ -6337,13 +4858,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.Endpoint endpoints = 18;</code>
      */
     public Builder clearEndpoints() {
-      if (endpointsBuilder_ == null) {
-        endpoints_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00004000);
-        onChanged();
-      } else {
-        endpointsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearEndpoints();
       return this;
     }
     /**
@@ -6358,130 +4874,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.Endpoint endpoints = 18;</code>
      */
     public Builder removeEndpoints(int index) {
-      if (endpointsBuilder_ == null) {
-        ensureEndpointsIsMutable();
-        endpoints_.remove(index);
-        onChanged();
-      } else {
-        endpointsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeEndpoints(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Configuration for network endpoints.  If this is empty, then an endpoint
-     * with the same name as the service is automatically generated to service all
-     * defined APIs.
-     * </pre>
-     *
-     * <code>repeated .google.api.Endpoint endpoints = 18;</code>
-     */
-    public com.google.api.Endpoint.Builder getEndpointsBuilder(int index) {
-      return getEndpointsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Configuration for network endpoints.  If this is empty, then an endpoint
-     * with the same name as the service is automatically generated to service all
-     * defined APIs.
-     * </pre>
-     *
-     * <code>repeated .google.api.Endpoint endpoints = 18;</code>
-     */
-    public com.google.api.EndpointOrBuilder getEndpointsOrBuilder(int index) {
-      if (endpointsBuilder_ == null) {
-        return endpoints_.get(index);
-      } else {
-        return endpointsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Configuration for network endpoints.  If this is empty, then an endpoint
-     * with the same name as the service is automatically generated to service all
-     * defined APIs.
-     * </pre>
-     *
-     * <code>repeated .google.api.Endpoint endpoints = 18;</code>
-     */
-    public java.util.List<? extends com.google.api.EndpointOrBuilder> getEndpointsOrBuilderList() {
-      if (endpointsBuilder_ != null) {
-        return endpointsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(endpoints_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Configuration for network endpoints.  If this is empty, then an endpoint
-     * with the same name as the service is automatically generated to service all
-     * defined APIs.
-     * </pre>
-     *
-     * <code>repeated .google.api.Endpoint endpoints = 18;</code>
-     */
-    public com.google.api.Endpoint.Builder addEndpointsBuilder() {
-      return getEndpointsFieldBuilder().addBuilder(com.google.api.Endpoint.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Configuration for network endpoints.  If this is empty, then an endpoint
-     * with the same name as the service is automatically generated to service all
-     * defined APIs.
-     * </pre>
-     *
-     * <code>repeated .google.api.Endpoint endpoints = 18;</code>
-     */
-    public com.google.api.Endpoint.Builder addEndpointsBuilder(int index) {
-      return getEndpointsFieldBuilder()
-          .addBuilder(index, com.google.api.Endpoint.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Configuration for network endpoints.  If this is empty, then an endpoint
-     * with the same name as the service is automatically generated to service all
-     * defined APIs.
-     * </pre>
-     *
-     * <code>repeated .google.api.Endpoint endpoints = 18;</code>
-     */
-    public java.util.List<com.google.api.Endpoint.Builder> getEndpointsBuilderList() {
-      return getEndpointsFieldBuilder().getBuilderList();
-    }
 
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.Endpoint,
-            com.google.api.Endpoint.Builder,
-            com.google.api.EndpointOrBuilder>
-        getEndpointsFieldBuilder() {
-      if (endpointsBuilder_ == null) {
-        endpointsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.api.Endpoint,
-                com.google.api.Endpoint.Builder,
-                com.google.api.EndpointOrBuilder>(
-                endpoints_, ((bitField0_ & 0x00004000) != 0), getParentForChildren(), isClean());
-        endpoints_ = null;
-      }
-      return endpointsBuilder_;
-    }
-
-    private com.google.api.Control control_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Control, com.google.api.Control.Builder, com.google.api.ControlOrBuilder>
-        controlBuilder_;
     /**
      *
      *
@@ -6490,11 +4887,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Control control = 21;</code>
-     *
-     * @return Whether the control field is set.
      */
+    @java.lang.Override
     public boolean hasControl() {
-      return ((bitField0_ & 0x00008000) != 0);
+      return instance.hasControl();
     }
     /**
      *
@@ -6504,15 +4900,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Control control = 21;</code>
-     *
-     * @return The control.
      */
+    @java.lang.Override
     public com.google.api.Control getControl() {
-      if (controlBuilder_ == null) {
-        return control_ == null ? com.google.api.Control.getDefaultInstance() : control_;
-      } else {
-        return controlBuilder_.getMessage();
-      }
+      return instance.getControl();
     }
     /**
      *
@@ -6524,16 +4915,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Control control = 21;</code>
      */
     public Builder setControl(com.google.api.Control value) {
-      if (controlBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        control_ = value;
-      } else {
-        controlBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00008000;
-      onChanged();
+      copyOnWrite();
+      instance.setControl(value);
       return this;
     }
     /**
@@ -6546,13 +4929,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Control control = 21;</code>
      */
     public Builder setControl(com.google.api.Control.Builder builderForValue) {
-      if (controlBuilder_ == null) {
-        control_ = builderForValue.build();
-      } else {
-        controlBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00008000;
-      onChanged();
+      copyOnWrite();
+      instance.setControl(builderForValue.build());
       return this;
     }
     /**
@@ -6565,21 +4943,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Control control = 21;</code>
      */
     public Builder mergeControl(com.google.api.Control value) {
-      if (controlBuilder_ == null) {
-        if (((bitField0_ & 0x00008000) != 0)
-            && control_ != null
-            && control_ != com.google.api.Control.getDefaultInstance()) {
-          getControlBuilder().mergeFrom(value);
-        } else {
-          control_ = value;
-        }
-      } else {
-        controlBuilder_.mergeFrom(value);
-      }
-      if (control_ != null) {
-        bitField0_ |= 0x00008000;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeControl(value);
       return this;
     }
     /**
@@ -6592,82 +4957,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Control control = 21;</code>
      */
     public Builder clearControl() {
-      bitField0_ = (bitField0_ & ~0x00008000);
-      control_ = null;
-      if (controlBuilder_ != null) {
-        controlBuilder_.dispose();
-        controlBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearControl();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Configuration for the service control plane.
-     * </pre>
-     *
-     * <code>.google.api.Control control = 21;</code>
-     */
-    public com.google.api.Control.Builder getControlBuilder() {
-      bitField0_ |= 0x00008000;
-      onChanged();
-      return getControlFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Configuration for the service control plane.
-     * </pre>
-     *
-     * <code>.google.api.Control control = 21;</code>
-     */
-    public com.google.api.ControlOrBuilder getControlOrBuilder() {
-      if (controlBuilder_ != null) {
-        return controlBuilder_.getMessageOrBuilder();
-      } else {
-        return control_ == null ? com.google.api.Control.getDefaultInstance() : control_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Configuration for the service control plane.
-     * </pre>
-     *
-     * <code>.google.api.Control control = 21;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Control, com.google.api.Control.Builder, com.google.api.ControlOrBuilder>
-        getControlFieldBuilder() {
-      if (controlBuilder_ == null) {
-        controlBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.api.Control,
-                com.google.api.Control.Builder,
-                com.google.api.ControlOrBuilder>(getControl(), getParentForChildren(), isClean());
-        control_ = null;
-      }
-      return controlBuilder_;
-    }
-
-    private java.util.List<com.google.api.LogDescriptor> logs_ = java.util.Collections.emptyList();
-
-    private void ensureLogsIsMutable() {
-      if (!((bitField0_ & 0x00010000) != 0)) {
-        logs_ = new java.util.ArrayList<com.google.api.LogDescriptor>(logs_);
-        bitField0_ |= 0x00010000;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.LogDescriptor,
-            com.google.api.LogDescriptor.Builder,
-            com.google.api.LogDescriptorOrBuilder>
-        logsBuilder_;
 
     /**
      *
@@ -6678,12 +4971,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.LogDescriptor logs = 23;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.api.LogDescriptor> getLogsList() {
-      if (logsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(logs_);
-      } else {
-        return logsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getLogsList());
     }
     /**
      *
@@ -6694,12 +4984,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.LogDescriptor logs = 23;</code>
      */
+    @java.lang.Override
     public int getLogsCount() {
-      if (logsBuilder_ == null) {
-        return logs_.size();
-      } else {
-        return logsBuilder_.getCount();
-      }
+      return instance.getLogsCount();
     }
     /**
      *
@@ -6710,12 +4997,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.LogDescriptor logs = 23;</code>
      */
+
+    @java.lang.Override
     public com.google.api.LogDescriptor getLogs(int index) {
-      if (logsBuilder_ == null) {
-        return logs_.get(index);
-      } else {
-        return logsBuilder_.getMessage(index);
-      }
+      return instance.getLogs(index);
     }
     /**
      *
@@ -6727,16 +5012,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.LogDescriptor logs = 23;</code>
      */
     public Builder setLogs(int index, com.google.api.LogDescriptor value) {
-      if (logsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureLogsIsMutable();
-        logs_.set(index, value);
-        onChanged();
-      } else {
-        logsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setLogs(index, value);
       return this;
     }
     /**
@@ -6749,13 +5026,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.LogDescriptor logs = 23;</code>
      */
     public Builder setLogs(int index, com.google.api.LogDescriptor.Builder builderForValue) {
-      if (logsBuilder_ == null) {
-        ensureLogsIsMutable();
-        logs_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        logsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setLogs(index, builderForValue.build());
       return this;
     }
     /**
@@ -6768,16 +5040,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.LogDescriptor logs = 23;</code>
      */
     public Builder addLogs(com.google.api.LogDescriptor value) {
-      if (logsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureLogsIsMutable();
-        logs_.add(value);
-        onChanged();
-      } else {
-        logsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addLogs(value);
       return this;
     }
     /**
@@ -6790,16 +5054,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.LogDescriptor logs = 23;</code>
      */
     public Builder addLogs(int index, com.google.api.LogDescriptor value) {
-      if (logsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureLogsIsMutable();
-        logs_.add(index, value);
-        onChanged();
-      } else {
-        logsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addLogs(index, value);
       return this;
     }
     /**
@@ -6812,13 +5068,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.LogDescriptor logs = 23;</code>
      */
     public Builder addLogs(com.google.api.LogDescriptor.Builder builderForValue) {
-      if (logsBuilder_ == null) {
-        ensureLogsIsMutable();
-        logs_.add(builderForValue.build());
-        onChanged();
-      } else {
-        logsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addLogs(builderForValue.build());
       return this;
     }
     /**
@@ -6831,13 +5082,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.LogDescriptor logs = 23;</code>
      */
     public Builder addLogs(int index, com.google.api.LogDescriptor.Builder builderForValue) {
-      if (logsBuilder_ == null) {
-        ensureLogsIsMutable();
-        logs_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        logsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addLogs(index, builderForValue.build());
       return this;
     }
     /**
@@ -6850,13 +5096,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.LogDescriptor logs = 23;</code>
      */
     public Builder addAllLogs(java.lang.Iterable<? extends com.google.api.LogDescriptor> values) {
-      if (logsBuilder_ == null) {
-        ensureLogsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, logs_);
-        onChanged();
-      } else {
-        logsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllLogs(values);
       return this;
     }
     /**
@@ -6869,13 +5110,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.LogDescriptor logs = 23;</code>
      */
     public Builder clearLogs() {
-      if (logsBuilder_ == null) {
-        logs_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00010000);
-        onChanged();
-      } else {
-        logsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearLogs();
       return this;
     }
     /**
@@ -6888,129 +5124,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.LogDescriptor logs = 23;</code>
      */
     public Builder removeLogs(int index) {
-      if (logsBuilder_ == null) {
-        ensureLogsIsMutable();
-        logs_.remove(index);
-        onChanged();
-      } else {
-        logsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeLogs(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the logs used by this service.
-     * </pre>
-     *
-     * <code>repeated .google.api.LogDescriptor logs = 23;</code>
-     */
-    public com.google.api.LogDescriptor.Builder getLogsBuilder(int index) {
-      return getLogsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the logs used by this service.
-     * </pre>
-     *
-     * <code>repeated .google.api.LogDescriptor logs = 23;</code>
-     */
-    public com.google.api.LogDescriptorOrBuilder getLogsOrBuilder(int index) {
-      if (logsBuilder_ == null) {
-        return logs_.get(index);
-      } else {
-        return logsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the logs used by this service.
-     * </pre>
-     *
-     * <code>repeated .google.api.LogDescriptor logs = 23;</code>
-     */
-    public java.util.List<? extends com.google.api.LogDescriptorOrBuilder> getLogsOrBuilderList() {
-      if (logsBuilder_ != null) {
-        return logsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(logs_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the logs used by this service.
-     * </pre>
-     *
-     * <code>repeated .google.api.LogDescriptor logs = 23;</code>
-     */
-    public com.google.api.LogDescriptor.Builder addLogsBuilder() {
-      return getLogsFieldBuilder().addBuilder(com.google.api.LogDescriptor.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the logs used by this service.
-     * </pre>
-     *
-     * <code>repeated .google.api.LogDescriptor logs = 23;</code>
-     */
-    public com.google.api.LogDescriptor.Builder addLogsBuilder(int index) {
-      return getLogsFieldBuilder()
-          .addBuilder(index, com.google.api.LogDescriptor.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the logs used by this service.
-     * </pre>
-     *
-     * <code>repeated .google.api.LogDescriptor logs = 23;</code>
-     */
-    public java.util.List<com.google.api.LogDescriptor.Builder> getLogsBuilderList() {
-      return getLogsFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.LogDescriptor,
-            com.google.api.LogDescriptor.Builder,
-            com.google.api.LogDescriptorOrBuilder>
-        getLogsFieldBuilder() {
-      if (logsBuilder_ == null) {
-        logsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.api.LogDescriptor,
-                com.google.api.LogDescriptor.Builder,
-                com.google.api.LogDescriptorOrBuilder>(
-                logs_, ((bitField0_ & 0x00010000) != 0), getParentForChildren(), isClean());
-        logs_ = null;
-      }
-      return logsBuilder_;
-    }
-
-    private java.util.List<com.google.api.MetricDescriptor> metrics_ =
-        java.util.Collections.emptyList();
-
-    private void ensureMetricsIsMutable() {
-      if (!((bitField0_ & 0x00020000) != 0)) {
-        metrics_ = new java.util.ArrayList<com.google.api.MetricDescriptor>(metrics_);
-        bitField0_ |= 0x00020000;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.MetricDescriptor,
-            com.google.api.MetricDescriptor.Builder,
-            com.google.api.MetricDescriptorOrBuilder>
-        metricsBuilder_;
 
     /**
      *
@@ -7021,12 +5138,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.api.MetricDescriptor> getMetricsList() {
-      if (metricsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(metrics_);
-      } else {
-        return metricsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getMetricsList());
     }
     /**
      *
@@ -7037,12 +5151,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
      */
+    @java.lang.Override
     public int getMetricsCount() {
-      if (metricsBuilder_ == null) {
-        return metrics_.size();
-      } else {
-        return metricsBuilder_.getCount();
-      }
+      return instance.getMetricsCount();
     }
     /**
      *
@@ -7053,12 +5164,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
      */
+
+    @java.lang.Override
     public com.google.api.MetricDescriptor getMetrics(int index) {
-      if (metricsBuilder_ == null) {
-        return metrics_.get(index);
-      } else {
-        return metricsBuilder_.getMessage(index);
-      }
+      return instance.getMetrics(index);
     }
     /**
      *
@@ -7070,16 +5179,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
      */
     public Builder setMetrics(int index, com.google.api.MetricDescriptor value) {
-      if (metricsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureMetricsIsMutable();
-        metrics_.set(index, value);
-        onChanged();
-      } else {
-        metricsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setMetrics(index, value);
       return this;
     }
     /**
@@ -7092,13 +5193,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
      */
     public Builder setMetrics(int index, com.google.api.MetricDescriptor.Builder builderForValue) {
-      if (metricsBuilder_ == null) {
-        ensureMetricsIsMutable();
-        metrics_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        metricsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setMetrics(index, builderForValue.build());
       return this;
     }
     /**
@@ -7111,16 +5207,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
      */
     public Builder addMetrics(com.google.api.MetricDescriptor value) {
-      if (metricsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureMetricsIsMutable();
-        metrics_.add(value);
-        onChanged();
-      } else {
-        metricsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addMetrics(value);
       return this;
     }
     /**
@@ -7133,16 +5221,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
      */
     public Builder addMetrics(int index, com.google.api.MetricDescriptor value) {
-      if (metricsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureMetricsIsMutable();
-        metrics_.add(index, value);
-        onChanged();
-      } else {
-        metricsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addMetrics(index, value);
       return this;
     }
     /**
@@ -7155,13 +5235,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
      */
     public Builder addMetrics(com.google.api.MetricDescriptor.Builder builderForValue) {
-      if (metricsBuilder_ == null) {
-        ensureMetricsIsMutable();
-        metrics_.add(builderForValue.build());
-        onChanged();
-      } else {
-        metricsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addMetrics(builderForValue.build());
       return this;
     }
     /**
@@ -7174,13 +5249,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
      */
     public Builder addMetrics(int index, com.google.api.MetricDescriptor.Builder builderForValue) {
-      if (metricsBuilder_ == null) {
-        ensureMetricsIsMutable();
-        metrics_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        metricsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addMetrics(index, builderForValue.build());
       return this;
     }
     /**
@@ -7194,13 +5264,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addAllMetrics(
         java.lang.Iterable<? extends com.google.api.MetricDescriptor> values) {
-      if (metricsBuilder_ == null) {
-        ensureMetricsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, metrics_);
-        onChanged();
-      } else {
-        metricsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllMetrics(values);
       return this;
     }
     /**
@@ -7213,13 +5278,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
      */
     public Builder clearMetrics() {
-      if (metricsBuilder_ == null) {
-        metrics_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00020000);
-        onChanged();
-      } else {
-        metricsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearMetrics();
       return this;
     }
     /**
@@ -7232,133 +5292,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
      */
     public Builder removeMetrics(int index) {
-      if (metricsBuilder_ == null) {
-        ensureMetricsIsMutable();
-        metrics_.remove(index);
-        onChanged();
-      } else {
-        metricsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeMetrics(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the metrics used by this service.
-     * </pre>
-     *
-     * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
-     */
-    public com.google.api.MetricDescriptor.Builder getMetricsBuilder(int index) {
-      return getMetricsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the metrics used by this service.
-     * </pre>
-     *
-     * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
-     */
-    public com.google.api.MetricDescriptorOrBuilder getMetricsOrBuilder(int index) {
-      if (metricsBuilder_ == null) {
-        return metrics_.get(index);
-      } else {
-        return metricsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the metrics used by this service.
-     * </pre>
-     *
-     * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
-     */
-    public java.util.List<? extends com.google.api.MetricDescriptorOrBuilder>
-        getMetricsOrBuilderList() {
-      if (metricsBuilder_ != null) {
-        return metricsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(metrics_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the metrics used by this service.
-     * </pre>
-     *
-     * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
-     */
-    public com.google.api.MetricDescriptor.Builder addMetricsBuilder() {
-      return getMetricsFieldBuilder()
-          .addBuilder(com.google.api.MetricDescriptor.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the metrics used by this service.
-     * </pre>
-     *
-     * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
-     */
-    public com.google.api.MetricDescriptor.Builder addMetricsBuilder(int index) {
-      return getMetricsFieldBuilder()
-          .addBuilder(index, com.google.api.MetricDescriptor.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the metrics used by this service.
-     * </pre>
-     *
-     * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
-     */
-    public java.util.List<com.google.api.MetricDescriptor.Builder> getMetricsBuilderList() {
-      return getMetricsFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.MetricDescriptor,
-            com.google.api.MetricDescriptor.Builder,
-            com.google.api.MetricDescriptorOrBuilder>
-        getMetricsFieldBuilder() {
-      if (metricsBuilder_ == null) {
-        metricsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.api.MetricDescriptor,
-                com.google.api.MetricDescriptor.Builder,
-                com.google.api.MetricDescriptorOrBuilder>(
-                metrics_, ((bitField0_ & 0x00020000) != 0), getParentForChildren(), isClean());
-        metrics_ = null;
-      }
-      return metricsBuilder_;
-    }
-
-    private java.util.List<com.google.api.MonitoredResourceDescriptor> monitoredResources_ =
-        java.util.Collections.emptyList();
-
-    private void ensureMonitoredResourcesIsMutable() {
-      if (!((bitField0_ & 0x00040000) != 0)) {
-        monitoredResources_ =
-            new java.util.ArrayList<com.google.api.MonitoredResourceDescriptor>(
-                monitoredResources_);
-        bitField0_ |= 0x00040000;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.MonitoredResourceDescriptor,
-            com.google.api.MonitoredResourceDescriptor.Builder,
-            com.google.api.MonitoredResourceDescriptorOrBuilder>
-        monitoredResourcesBuilder_;
 
     /**
      *
@@ -7371,12 +5308,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.api.MonitoredResourceDescriptor> getMonitoredResourcesList() {
-      if (monitoredResourcesBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(monitoredResources_);
-      } else {
-        return monitoredResourcesBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getMonitoredResourcesList());
     }
     /**
      *
@@ -7389,12 +5323,9 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
      */
+    @java.lang.Override
     public int getMonitoredResourcesCount() {
-      if (monitoredResourcesBuilder_ == null) {
-        return monitoredResources_.size();
-      } else {
-        return monitoredResourcesBuilder_.getCount();
-      }
+      return instance.getMonitoredResourcesCount();
     }
     /**
      *
@@ -7407,12 +5338,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
      */
+
+    @java.lang.Override
     public com.google.api.MonitoredResourceDescriptor getMonitoredResources(int index) {
-      if (monitoredResourcesBuilder_ == null) {
-        return monitoredResources_.get(index);
-      } else {
-        return monitoredResourcesBuilder_.getMessage(index);
-      }
+      return instance.getMonitoredResources(index);
     }
     /**
      *
@@ -7427,16 +5356,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder setMonitoredResources(
         int index, com.google.api.MonitoredResourceDescriptor value) {
-      if (monitoredResourcesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureMonitoredResourcesIsMutable();
-        monitoredResources_.set(index, value);
-        onChanged();
-      } else {
-        monitoredResourcesBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setMonitoredResources(index, value);
       return this;
     }
     /**
@@ -7452,13 +5373,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder setMonitoredResources(
         int index, com.google.api.MonitoredResourceDescriptor.Builder builderForValue) {
-      if (monitoredResourcesBuilder_ == null) {
-        ensureMonitoredResourcesIsMutable();
-        monitoredResources_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        monitoredResourcesBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setMonitoredResources(index, builderForValue.build());
       return this;
     }
     /**
@@ -7473,16 +5389,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
      */
     public Builder addMonitoredResources(com.google.api.MonitoredResourceDescriptor value) {
-      if (monitoredResourcesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureMonitoredResourcesIsMutable();
-        monitoredResources_.add(value);
-        onChanged();
-      } else {
-        monitoredResourcesBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addMonitoredResources(value);
       return this;
     }
     /**
@@ -7498,16 +5406,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addMonitoredResources(
         int index, com.google.api.MonitoredResourceDescriptor value) {
-      if (monitoredResourcesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureMonitoredResourcesIsMutable();
-        monitoredResources_.add(index, value);
-        onChanged();
-      } else {
-        monitoredResourcesBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addMonitoredResources(index, value);
       return this;
     }
     /**
@@ -7523,13 +5423,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addMonitoredResources(
         com.google.api.MonitoredResourceDescriptor.Builder builderForValue) {
-      if (monitoredResourcesBuilder_ == null) {
-        ensureMonitoredResourcesIsMutable();
-        monitoredResources_.add(builderForValue.build());
-        onChanged();
-      } else {
-        monitoredResourcesBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addMonitoredResources(builderForValue.build());
       return this;
     }
     /**
@@ -7545,13 +5440,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addMonitoredResources(
         int index, com.google.api.MonitoredResourceDescriptor.Builder builderForValue) {
-      if (monitoredResourcesBuilder_ == null) {
-        ensureMonitoredResourcesIsMutable();
-        monitoredResources_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        monitoredResourcesBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addMonitoredResources(index, builderForValue.build());
       return this;
     }
     /**
@@ -7567,13 +5457,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addAllMonitoredResources(
         java.lang.Iterable<? extends com.google.api.MonitoredResourceDescriptor> values) {
-      if (monitoredResourcesBuilder_ == null) {
-        ensureMonitoredResourcesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, monitoredResources_);
-        onChanged();
-      } else {
-        monitoredResourcesBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllMonitoredResources(values);
       return this;
     }
     /**
@@ -7588,13 +5473,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
      */
     public Builder clearMonitoredResources() {
-      if (monitoredResourcesBuilder_ == null) {
-        monitoredResources_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00040000);
-        onChanged();
-      } else {
-        monitoredResourcesBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearMonitoredResources();
       return this;
     }
     /**
@@ -7609,139 +5489,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
      */
     public Builder removeMonitoredResources(int index) {
-      if (monitoredResourcesBuilder_ == null) {
-        ensureMonitoredResourcesIsMutable();
-        monitoredResources_.remove(index);
-        onChanged();
-      } else {
-        monitoredResourcesBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeMonitoredResources(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the monitored resources used by this service. This is required
-     * by the [Service.monitoring][google.api.Service.monitoring] and
-     * [Service.logging][google.api.Service.logging] configurations.
-     * </pre>
-     *
-     * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
-     */
-    public com.google.api.MonitoredResourceDescriptor.Builder getMonitoredResourcesBuilder(
-        int index) {
-      return getMonitoredResourcesFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the monitored resources used by this service. This is required
-     * by the [Service.monitoring][google.api.Service.monitoring] and
-     * [Service.logging][google.api.Service.logging] configurations.
-     * </pre>
-     *
-     * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
-     */
-    public com.google.api.MonitoredResourceDescriptorOrBuilder getMonitoredResourcesOrBuilder(
-        int index) {
-      if (monitoredResourcesBuilder_ == null) {
-        return monitoredResources_.get(index);
-      } else {
-        return monitoredResourcesBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the monitored resources used by this service. This is required
-     * by the [Service.monitoring][google.api.Service.monitoring] and
-     * [Service.logging][google.api.Service.logging] configurations.
-     * </pre>
-     *
-     * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
-     */
-    public java.util.List<? extends com.google.api.MonitoredResourceDescriptorOrBuilder>
-        getMonitoredResourcesOrBuilderList() {
-      if (monitoredResourcesBuilder_ != null) {
-        return monitoredResourcesBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(monitoredResources_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the monitored resources used by this service. This is required
-     * by the [Service.monitoring][google.api.Service.monitoring] and
-     * [Service.logging][google.api.Service.logging] configurations.
-     * </pre>
-     *
-     * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
-     */
-    public com.google.api.MonitoredResourceDescriptor.Builder addMonitoredResourcesBuilder() {
-      return getMonitoredResourcesFieldBuilder()
-          .addBuilder(com.google.api.MonitoredResourceDescriptor.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the monitored resources used by this service. This is required
-     * by the [Service.monitoring][google.api.Service.monitoring] and
-     * [Service.logging][google.api.Service.logging] configurations.
-     * </pre>
-     *
-     * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
-     */
-    public com.google.api.MonitoredResourceDescriptor.Builder addMonitoredResourcesBuilder(
-        int index) {
-      return getMonitoredResourcesFieldBuilder()
-          .addBuilder(index, com.google.api.MonitoredResourceDescriptor.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Defines the monitored resources used by this service. This is required
-     * by the [Service.monitoring][google.api.Service.monitoring] and
-     * [Service.logging][google.api.Service.logging] configurations.
-     * </pre>
-     *
-     * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
-     */
-    public java.util.List<com.google.api.MonitoredResourceDescriptor.Builder>
-        getMonitoredResourcesBuilderList() {
-      return getMonitoredResourcesFieldBuilder().getBuilderList();
-    }
 
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.MonitoredResourceDescriptor,
-            com.google.api.MonitoredResourceDescriptor.Builder,
-            com.google.api.MonitoredResourceDescriptorOrBuilder>
-        getMonitoredResourcesFieldBuilder() {
-      if (monitoredResourcesBuilder_ == null) {
-        monitoredResourcesBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.api.MonitoredResourceDescriptor,
-                com.google.api.MonitoredResourceDescriptor.Builder,
-                com.google.api.MonitoredResourceDescriptorOrBuilder>(
-                monitoredResources_,
-                ((bitField0_ & 0x00040000) != 0),
-                getParentForChildren(),
-                isClean());
-        monitoredResources_ = null;
-      }
-      return monitoredResourcesBuilder_;
-    }
-
-    private com.google.api.Billing billing_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Billing, com.google.api.Billing.Builder, com.google.api.BillingOrBuilder>
-        billingBuilder_;
     /**
      *
      *
@@ -7750,11 +5502,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Billing billing = 26;</code>
-     *
-     * @return Whether the billing field is set.
      */
+    @java.lang.Override
     public boolean hasBilling() {
-      return ((bitField0_ & 0x00080000) != 0);
+      return instance.hasBilling();
     }
     /**
      *
@@ -7764,15 +5515,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Billing billing = 26;</code>
-     *
-     * @return The billing.
      */
+    @java.lang.Override
     public com.google.api.Billing getBilling() {
-      if (billingBuilder_ == null) {
-        return billing_ == null ? com.google.api.Billing.getDefaultInstance() : billing_;
-      } else {
-        return billingBuilder_.getMessage();
-      }
+      return instance.getBilling();
     }
     /**
      *
@@ -7784,16 +5530,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Billing billing = 26;</code>
      */
     public Builder setBilling(com.google.api.Billing value) {
-      if (billingBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        billing_ = value;
-      } else {
-        billingBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00080000;
-      onChanged();
+      copyOnWrite();
+      instance.setBilling(value);
       return this;
     }
     /**
@@ -7806,13 +5544,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Billing billing = 26;</code>
      */
     public Builder setBilling(com.google.api.Billing.Builder builderForValue) {
-      if (billingBuilder_ == null) {
-        billing_ = builderForValue.build();
-      } else {
-        billingBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00080000;
-      onChanged();
+      copyOnWrite();
+      instance.setBilling(builderForValue.build());
       return this;
     }
     /**
@@ -7825,21 +5558,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Billing billing = 26;</code>
      */
     public Builder mergeBilling(com.google.api.Billing value) {
-      if (billingBuilder_ == null) {
-        if (((bitField0_ & 0x00080000) != 0)
-            && billing_ != null
-            && billing_ != com.google.api.Billing.getDefaultInstance()) {
-          getBillingBuilder().mergeFrom(value);
-        } else {
-          billing_ = value;
-        }
-      } else {
-        billingBuilder_.mergeFrom(value);
-      }
-      if (billing_ != null) {
-        bitField0_ |= 0x00080000;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeBilling(value);
       return this;
     }
     /**
@@ -7852,72 +5572,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Billing billing = 26;</code>
      */
     public Builder clearBilling() {
-      bitField0_ = (bitField0_ & ~0x00080000);
-      billing_ = null;
-      if (billingBuilder_ != null) {
-        billingBuilder_.dispose();
-        billingBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearBilling();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Billing configuration.
-     * </pre>
-     *
-     * <code>.google.api.Billing billing = 26;</code>
-     */
-    public com.google.api.Billing.Builder getBillingBuilder() {
-      bitField0_ |= 0x00080000;
-      onChanged();
-      return getBillingFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Billing configuration.
-     * </pre>
-     *
-     * <code>.google.api.Billing billing = 26;</code>
-     */
-    public com.google.api.BillingOrBuilder getBillingOrBuilder() {
-      if (billingBuilder_ != null) {
-        return billingBuilder_.getMessageOrBuilder();
-      } else {
-        return billing_ == null ? com.google.api.Billing.getDefaultInstance() : billing_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Billing configuration.
-     * </pre>
-     *
-     * <code>.google.api.Billing billing = 26;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Billing, com.google.api.Billing.Builder, com.google.api.BillingOrBuilder>
-        getBillingFieldBuilder() {
-      if (billingBuilder_ == null) {
-        billingBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.api.Billing,
-                com.google.api.Billing.Builder,
-                com.google.api.BillingOrBuilder>(getBilling(), getParentForChildren(), isClean());
-        billing_ = null;
-      }
-      return billingBuilder_;
-    }
 
-    private com.google.api.Logging logging_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Logging, com.google.api.Logging.Builder, com.google.api.LoggingOrBuilder>
-        loggingBuilder_;
     /**
      *
      *
@@ -7926,11 +5585,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Logging logging = 27;</code>
-     *
-     * @return Whether the logging field is set.
      */
+    @java.lang.Override
     public boolean hasLogging() {
-      return ((bitField0_ & 0x00100000) != 0);
+      return instance.hasLogging();
     }
     /**
      *
@@ -7940,15 +5598,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Logging logging = 27;</code>
-     *
-     * @return The logging.
      */
+    @java.lang.Override
     public com.google.api.Logging getLogging() {
-      if (loggingBuilder_ == null) {
-        return logging_ == null ? com.google.api.Logging.getDefaultInstance() : logging_;
-      } else {
-        return loggingBuilder_.getMessage();
-      }
+      return instance.getLogging();
     }
     /**
      *
@@ -7960,16 +5613,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Logging logging = 27;</code>
      */
     public Builder setLogging(com.google.api.Logging value) {
-      if (loggingBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        logging_ = value;
-      } else {
-        loggingBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00100000;
-      onChanged();
+      copyOnWrite();
+      instance.setLogging(value);
       return this;
     }
     /**
@@ -7982,13 +5627,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Logging logging = 27;</code>
      */
     public Builder setLogging(com.google.api.Logging.Builder builderForValue) {
-      if (loggingBuilder_ == null) {
-        logging_ = builderForValue.build();
-      } else {
-        loggingBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00100000;
-      onChanged();
+      copyOnWrite();
+      instance.setLogging(builderForValue.build());
       return this;
     }
     /**
@@ -8001,21 +5641,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Logging logging = 27;</code>
      */
     public Builder mergeLogging(com.google.api.Logging value) {
-      if (loggingBuilder_ == null) {
-        if (((bitField0_ & 0x00100000) != 0)
-            && logging_ != null
-            && logging_ != com.google.api.Logging.getDefaultInstance()) {
-          getLoggingBuilder().mergeFrom(value);
-        } else {
-          logging_ = value;
-        }
-      } else {
-        loggingBuilder_.mergeFrom(value);
-      }
-      if (logging_ != null) {
-        bitField0_ |= 0x00100000;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeLogging(value);
       return this;
     }
     /**
@@ -8028,74 +5655,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Logging logging = 27;</code>
      */
     public Builder clearLogging() {
-      bitField0_ = (bitField0_ & ~0x00100000);
-      logging_ = null;
-      if (loggingBuilder_ != null) {
-        loggingBuilder_.dispose();
-        loggingBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearLogging();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Logging configuration.
-     * </pre>
-     *
-     * <code>.google.api.Logging logging = 27;</code>
-     */
-    public com.google.api.Logging.Builder getLoggingBuilder() {
-      bitField0_ |= 0x00100000;
-      onChanged();
-      return getLoggingFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Logging configuration.
-     * </pre>
-     *
-     * <code>.google.api.Logging logging = 27;</code>
-     */
-    public com.google.api.LoggingOrBuilder getLoggingOrBuilder() {
-      if (loggingBuilder_ != null) {
-        return loggingBuilder_.getMessageOrBuilder();
-      } else {
-        return logging_ == null ? com.google.api.Logging.getDefaultInstance() : logging_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Logging configuration.
-     * </pre>
-     *
-     * <code>.google.api.Logging logging = 27;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Logging, com.google.api.Logging.Builder, com.google.api.LoggingOrBuilder>
-        getLoggingFieldBuilder() {
-      if (loggingBuilder_ == null) {
-        loggingBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.api.Logging,
-                com.google.api.Logging.Builder,
-                com.google.api.LoggingOrBuilder>(getLogging(), getParentForChildren(), isClean());
-        logging_ = null;
-      }
-      return loggingBuilder_;
-    }
 
-    private com.google.api.Monitoring monitoring_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Monitoring,
-            com.google.api.Monitoring.Builder,
-            com.google.api.MonitoringOrBuilder>
-        monitoringBuilder_;
     /**
      *
      *
@@ -8104,11 +5668,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Monitoring monitoring = 28;</code>
-     *
-     * @return Whether the monitoring field is set.
      */
+    @java.lang.Override
     public boolean hasMonitoring() {
-      return ((bitField0_ & 0x00200000) != 0);
+      return instance.hasMonitoring();
     }
     /**
      *
@@ -8118,15 +5681,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Monitoring monitoring = 28;</code>
-     *
-     * @return The monitoring.
      */
+    @java.lang.Override
     public com.google.api.Monitoring getMonitoring() {
-      if (monitoringBuilder_ == null) {
-        return monitoring_ == null ? com.google.api.Monitoring.getDefaultInstance() : monitoring_;
-      } else {
-        return monitoringBuilder_.getMessage();
-      }
+      return instance.getMonitoring();
     }
     /**
      *
@@ -8138,16 +5696,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Monitoring monitoring = 28;</code>
      */
     public Builder setMonitoring(com.google.api.Monitoring value) {
-      if (monitoringBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        monitoring_ = value;
-      } else {
-        monitoringBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00200000;
-      onChanged();
+      copyOnWrite();
+      instance.setMonitoring(value);
       return this;
     }
     /**
@@ -8160,13 +5710,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Monitoring monitoring = 28;</code>
      */
     public Builder setMonitoring(com.google.api.Monitoring.Builder builderForValue) {
-      if (monitoringBuilder_ == null) {
-        monitoring_ = builderForValue.build();
-      } else {
-        monitoringBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00200000;
-      onChanged();
+      copyOnWrite();
+      instance.setMonitoring(builderForValue.build());
       return this;
     }
     /**
@@ -8179,21 +5724,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Monitoring monitoring = 28;</code>
      */
     public Builder mergeMonitoring(com.google.api.Monitoring value) {
-      if (monitoringBuilder_ == null) {
-        if (((bitField0_ & 0x00200000) != 0)
-            && monitoring_ != null
-            && monitoring_ != com.google.api.Monitoring.getDefaultInstance()) {
-          getMonitoringBuilder().mergeFrom(value);
-        } else {
-          monitoring_ = value;
-        }
-      } else {
-        monitoringBuilder_.mergeFrom(value);
-      }
-      if (monitoring_ != null) {
-        bitField0_ |= 0x00200000;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeMonitoring(value);
       return this;
     }
     /**
@@ -8206,77 +5738,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Monitoring monitoring = 28;</code>
      */
     public Builder clearMonitoring() {
-      bitField0_ = (bitField0_ & ~0x00200000);
-      monitoring_ = null;
-      if (monitoringBuilder_ != null) {
-        monitoringBuilder_.dispose();
-        monitoringBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearMonitoring();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Monitoring configuration.
-     * </pre>
-     *
-     * <code>.google.api.Monitoring monitoring = 28;</code>
-     */
-    public com.google.api.Monitoring.Builder getMonitoringBuilder() {
-      bitField0_ |= 0x00200000;
-      onChanged();
-      return getMonitoringFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Monitoring configuration.
-     * </pre>
-     *
-     * <code>.google.api.Monitoring monitoring = 28;</code>
-     */
-    public com.google.api.MonitoringOrBuilder getMonitoringOrBuilder() {
-      if (monitoringBuilder_ != null) {
-        return monitoringBuilder_.getMessageOrBuilder();
-      } else {
-        return monitoring_ == null ? com.google.api.Monitoring.getDefaultInstance() : monitoring_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Monitoring configuration.
-     * </pre>
-     *
-     * <code>.google.api.Monitoring monitoring = 28;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Monitoring,
-            com.google.api.Monitoring.Builder,
-            com.google.api.MonitoringOrBuilder>
-        getMonitoringFieldBuilder() {
-      if (monitoringBuilder_ == null) {
-        monitoringBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.api.Monitoring,
-                com.google.api.Monitoring.Builder,
-                com.google.api.MonitoringOrBuilder>(
-                getMonitoring(), getParentForChildren(), isClean());
-        monitoring_ = null;
-      }
-      return monitoringBuilder_;
-    }
 
-    private com.google.api.SystemParameters systemParameters_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.SystemParameters,
-            com.google.api.SystemParameters.Builder,
-            com.google.api.SystemParametersOrBuilder>
-        systemParametersBuilder_;
     /**
      *
      *
@@ -8285,11 +5751,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.SystemParameters system_parameters = 29;</code>
-     *
-     * @return Whether the systemParameters field is set.
      */
+    @java.lang.Override
     public boolean hasSystemParameters() {
-      return ((bitField0_ & 0x00400000) != 0);
+      return instance.hasSystemParameters();
     }
     /**
      *
@@ -8299,17 +5764,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.SystemParameters system_parameters = 29;</code>
-     *
-     * @return The systemParameters.
      */
+    @java.lang.Override
     public com.google.api.SystemParameters getSystemParameters() {
-      if (systemParametersBuilder_ == null) {
-        return systemParameters_ == null
-            ? com.google.api.SystemParameters.getDefaultInstance()
-            : systemParameters_;
-      } else {
-        return systemParametersBuilder_.getMessage();
-      }
+      return instance.getSystemParameters();
     }
     /**
      *
@@ -8321,16 +5779,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.SystemParameters system_parameters = 29;</code>
      */
     public Builder setSystemParameters(com.google.api.SystemParameters value) {
-      if (systemParametersBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        systemParameters_ = value;
-      } else {
-        systemParametersBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00400000;
-      onChanged();
+      copyOnWrite();
+      instance.setSystemParameters(value);
       return this;
     }
     /**
@@ -8343,13 +5793,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.SystemParameters system_parameters = 29;</code>
      */
     public Builder setSystemParameters(com.google.api.SystemParameters.Builder builderForValue) {
-      if (systemParametersBuilder_ == null) {
-        systemParameters_ = builderForValue.build();
-      } else {
-        systemParametersBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00400000;
-      onChanged();
+      copyOnWrite();
+      instance.setSystemParameters(builderForValue.build());
       return this;
     }
     /**
@@ -8362,21 +5807,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.SystemParameters system_parameters = 29;</code>
      */
     public Builder mergeSystemParameters(com.google.api.SystemParameters value) {
-      if (systemParametersBuilder_ == null) {
-        if (((bitField0_ & 0x00400000) != 0)
-            && systemParameters_ != null
-            && systemParameters_ != com.google.api.SystemParameters.getDefaultInstance()) {
-          getSystemParametersBuilder().mergeFrom(value);
-        } else {
-          systemParameters_ = value;
-        }
-      } else {
-        systemParametersBuilder_.mergeFrom(value);
-      }
-      if (systemParameters_ != null) {
-        bitField0_ |= 0x00400000;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeSystemParameters(value);
       return this;
     }
     /**
@@ -8389,79 +5821,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.SystemParameters system_parameters = 29;</code>
      */
     public Builder clearSystemParameters() {
-      bitField0_ = (bitField0_ & ~0x00400000);
-      systemParameters_ = null;
-      if (systemParametersBuilder_ != null) {
-        systemParametersBuilder_.dispose();
-        systemParametersBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearSystemParameters();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * System parameter configuration.
-     * </pre>
-     *
-     * <code>.google.api.SystemParameters system_parameters = 29;</code>
-     */
-    public com.google.api.SystemParameters.Builder getSystemParametersBuilder() {
-      bitField0_ |= 0x00400000;
-      onChanged();
-      return getSystemParametersFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * System parameter configuration.
-     * </pre>
-     *
-     * <code>.google.api.SystemParameters system_parameters = 29;</code>
-     */
-    public com.google.api.SystemParametersOrBuilder getSystemParametersOrBuilder() {
-      if (systemParametersBuilder_ != null) {
-        return systemParametersBuilder_.getMessageOrBuilder();
-      } else {
-        return systemParameters_ == null
-            ? com.google.api.SystemParameters.getDefaultInstance()
-            : systemParameters_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * System parameter configuration.
-     * </pre>
-     *
-     * <code>.google.api.SystemParameters system_parameters = 29;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.SystemParameters,
-            com.google.api.SystemParameters.Builder,
-            com.google.api.SystemParametersOrBuilder>
-        getSystemParametersFieldBuilder() {
-      if (systemParametersBuilder_ == null) {
-        systemParametersBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.api.SystemParameters,
-                com.google.api.SystemParameters.Builder,
-                com.google.api.SystemParametersOrBuilder>(
-                getSystemParameters(), getParentForChildren(), isClean());
-        systemParameters_ = null;
-      }
-      return systemParametersBuilder_;
-    }
 
-    private com.google.api.SourceInfo sourceInfo_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.SourceInfo,
-            com.google.api.SourceInfo.Builder,
-            com.google.api.SourceInfoOrBuilder>
-        sourceInfoBuilder_;
     /**
      *
      *
@@ -8470,11 +5834,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.SourceInfo source_info = 37;</code>
-     *
-     * @return Whether the sourceInfo field is set.
      */
+    @java.lang.Override
     public boolean hasSourceInfo() {
-      return ((bitField0_ & 0x00800000) != 0);
+      return instance.hasSourceInfo();
     }
     /**
      *
@@ -8484,15 +5847,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.SourceInfo source_info = 37;</code>
-     *
-     * @return The sourceInfo.
      */
+    @java.lang.Override
     public com.google.api.SourceInfo getSourceInfo() {
-      if (sourceInfoBuilder_ == null) {
-        return sourceInfo_ == null ? com.google.api.SourceInfo.getDefaultInstance() : sourceInfo_;
-      } else {
-        return sourceInfoBuilder_.getMessage();
-      }
+      return instance.getSourceInfo();
     }
     /**
      *
@@ -8504,16 +5862,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.SourceInfo source_info = 37;</code>
      */
     public Builder setSourceInfo(com.google.api.SourceInfo value) {
-      if (sourceInfoBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        sourceInfo_ = value;
-      } else {
-        sourceInfoBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00800000;
-      onChanged();
+      copyOnWrite();
+      instance.setSourceInfo(value);
       return this;
     }
     /**
@@ -8526,13 +5876,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.SourceInfo source_info = 37;</code>
      */
     public Builder setSourceInfo(com.google.api.SourceInfo.Builder builderForValue) {
-      if (sourceInfoBuilder_ == null) {
-        sourceInfo_ = builderForValue.build();
-      } else {
-        sourceInfoBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00800000;
-      onChanged();
+      copyOnWrite();
+      instance.setSourceInfo(builderForValue.build());
       return this;
     }
     /**
@@ -8545,21 +5890,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.SourceInfo source_info = 37;</code>
      */
     public Builder mergeSourceInfo(com.google.api.SourceInfo value) {
-      if (sourceInfoBuilder_ == null) {
-        if (((bitField0_ & 0x00800000) != 0)
-            && sourceInfo_ != null
-            && sourceInfo_ != com.google.api.SourceInfo.getDefaultInstance()) {
-          getSourceInfoBuilder().mergeFrom(value);
-        } else {
-          sourceInfo_ = value;
-        }
-      } else {
-        sourceInfoBuilder_.mergeFrom(value);
-      }
-      if (sourceInfo_ != null) {
-        bitField0_ |= 0x00800000;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeSourceInfo(value);
       return this;
     }
     /**
@@ -8572,77 +5904,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.SourceInfo source_info = 37;</code>
      */
     public Builder clearSourceInfo() {
-      bitField0_ = (bitField0_ & ~0x00800000);
-      sourceInfo_ = null;
-      if (sourceInfoBuilder_ != null) {
-        sourceInfoBuilder_.dispose();
-        sourceInfoBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearSourceInfo();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Output only. The source information for this configuration if available.
-     * </pre>
-     *
-     * <code>.google.api.SourceInfo source_info = 37;</code>
-     */
-    public com.google.api.SourceInfo.Builder getSourceInfoBuilder() {
-      bitField0_ |= 0x00800000;
-      onChanged();
-      return getSourceInfoFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Output only. The source information for this configuration if available.
-     * </pre>
-     *
-     * <code>.google.api.SourceInfo source_info = 37;</code>
-     */
-    public com.google.api.SourceInfoOrBuilder getSourceInfoOrBuilder() {
-      if (sourceInfoBuilder_ != null) {
-        return sourceInfoBuilder_.getMessageOrBuilder();
-      } else {
-        return sourceInfo_ == null ? com.google.api.SourceInfo.getDefaultInstance() : sourceInfo_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Output only. The source information for this configuration if available.
-     * </pre>
-     *
-     * <code>.google.api.SourceInfo source_info = 37;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.SourceInfo,
-            com.google.api.SourceInfo.Builder,
-            com.google.api.SourceInfoOrBuilder>
-        getSourceInfoFieldBuilder() {
-      if (sourceInfoBuilder_ == null) {
-        sourceInfoBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.api.SourceInfo,
-                com.google.api.SourceInfo.Builder,
-                com.google.api.SourceInfoOrBuilder>(
-                getSourceInfo(), getParentForChildren(), isClean());
-        sourceInfo_ = null;
-      }
-      return sourceInfoBuilder_;
-    }
 
-    private com.google.api.Publishing publishing_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Publishing,
-            com.google.api.Publishing.Builder,
-            com.google.api.PublishingOrBuilder>
-        publishingBuilder_;
     /**
      *
      *
@@ -8653,11 +5919,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Publishing publishing = 45;</code>
-     *
-     * @return Whether the publishing field is set.
      */
+    @java.lang.Override
     public boolean hasPublishing() {
-      return ((bitField0_ & 0x01000000) != 0);
+      return instance.hasPublishing();
     }
     /**
      *
@@ -8669,15 +5934,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.Publishing publishing = 45;</code>
-     *
-     * @return The publishing.
      */
+    @java.lang.Override
     public com.google.api.Publishing getPublishing() {
-      if (publishingBuilder_ == null) {
-        return publishing_ == null ? com.google.api.Publishing.getDefaultInstance() : publishing_;
-      } else {
-        return publishingBuilder_.getMessage();
-      }
+      return instance.getPublishing();
     }
     /**
      *
@@ -8691,16 +5951,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Publishing publishing = 45;</code>
      */
     public Builder setPublishing(com.google.api.Publishing value) {
-      if (publishingBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        publishing_ = value;
-      } else {
-        publishingBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x01000000;
-      onChanged();
+      copyOnWrite();
+      instance.setPublishing(value);
       return this;
     }
     /**
@@ -8715,13 +5967,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Publishing publishing = 45;</code>
      */
     public Builder setPublishing(com.google.api.Publishing.Builder builderForValue) {
-      if (publishingBuilder_ == null) {
-        publishing_ = builderForValue.build();
-      } else {
-        publishingBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x01000000;
-      onChanged();
+      copyOnWrite();
+      instance.setPublishing(builderForValue.build());
       return this;
     }
     /**
@@ -8736,21 +5983,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Publishing publishing = 45;</code>
      */
     public Builder mergePublishing(com.google.api.Publishing value) {
-      if (publishingBuilder_ == null) {
-        if (((bitField0_ & 0x01000000) != 0)
-            && publishing_ != null
-            && publishing_ != com.google.api.Publishing.getDefaultInstance()) {
-          getPublishingBuilder().mergeFrom(value);
-        } else {
-          publishing_ = value;
-        }
-      } else {
-        publishingBuilder_.mergeFrom(value);
-      }
-      if (publishing_ != null) {
-        bitField0_ |= 0x01000000;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergePublishing(value);
       return this;
     }
     /**
@@ -8765,83 +5999,11 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Publishing publishing = 45;</code>
      */
     public Builder clearPublishing() {
-      bitField0_ = (bitField0_ & ~0x01000000);
-      publishing_ = null;
-      if (publishingBuilder_ != null) {
-        publishingBuilder_.dispose();
-        publishingBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearPublishing();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Settings for [Google Cloud Client
-     * libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
-     * generated from APIs defined as protocol buffers.
-     * </pre>
-     *
-     * <code>.google.api.Publishing publishing = 45;</code>
-     */
-    public com.google.api.Publishing.Builder getPublishingBuilder() {
-      bitField0_ |= 0x01000000;
-      onChanged();
-      return getPublishingFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Settings for [Google Cloud Client
-     * libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
-     * generated from APIs defined as protocol buffers.
-     * </pre>
-     *
-     * <code>.google.api.Publishing publishing = 45;</code>
-     */
-    public com.google.api.PublishingOrBuilder getPublishingOrBuilder() {
-      if (publishingBuilder_ != null) {
-        return publishingBuilder_.getMessageOrBuilder();
-      } else {
-        return publishing_ == null ? com.google.api.Publishing.getDefaultInstance() : publishing_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Settings for [Google Cloud Client
-     * libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
-     * generated from APIs defined as protocol buffers.
-     * </pre>
-     *
-     * <code>.google.api.Publishing publishing = 45;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Publishing,
-            com.google.api.Publishing.Builder,
-            com.google.api.PublishingOrBuilder>
-        getPublishingFieldBuilder() {
-      if (publishingBuilder_ == null) {
-        publishingBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.api.Publishing,
-                com.google.api.Publishing.Builder,
-                com.google.api.PublishingOrBuilder>(
-                getPublishing(), getParentForChildren(), isClean());
-        publishing_ = null;
-      }
-      return publishingBuilder_;
-    }
 
-    private com.google.protobuf.UInt32Value configVersion_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.UInt32Value,
-            com.google.protobuf.UInt32Value.Builder,
-            com.google.protobuf.UInt32ValueOrBuilder>
-        configVersionBuilder_;
     /**
      *
      *
@@ -8853,11 +6015,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.protobuf.UInt32Value config_version = 20;</code>
-     *
-     * @return Whether the configVersion field is set.
      */
+    @java.lang.Override
     public boolean hasConfigVersion() {
-      return ((bitField0_ & 0x02000000) != 0);
+      return instance.hasConfigVersion();
     }
     /**
      *
@@ -8870,17 +6031,10 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.protobuf.UInt32Value config_version = 20;</code>
-     *
-     * @return The configVersion.
      */
+    @java.lang.Override
     public com.google.protobuf.UInt32Value getConfigVersion() {
-      if (configVersionBuilder_ == null) {
-        return configVersion_ == null
-            ? com.google.protobuf.UInt32Value.getDefaultInstance()
-            : configVersion_;
-      } else {
-        return configVersionBuilder_.getMessage();
-      }
+      return instance.getConfigVersion();
     }
     /**
      *
@@ -8895,16 +6049,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.UInt32Value config_version = 20;</code>
      */
     public Builder setConfigVersion(com.google.protobuf.UInt32Value value) {
-      if (configVersionBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        configVersion_ = value;
-      } else {
-        configVersionBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x02000000;
-      onChanged();
+      copyOnWrite();
+      instance.setConfigVersion(value);
       return this;
     }
     /**
@@ -8920,13 +6066,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.UInt32Value config_version = 20;</code>
      */
     public Builder setConfigVersion(com.google.protobuf.UInt32Value.Builder builderForValue) {
-      if (configVersionBuilder_ == null) {
-        configVersion_ = builderForValue.build();
-      } else {
-        configVersionBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x02000000;
-      onChanged();
+      copyOnWrite();
+      instance.setConfigVersion(builderForValue.build());
       return this;
     }
     /**
@@ -8942,21 +6083,8 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.UInt32Value config_version = 20;</code>
      */
     public Builder mergeConfigVersion(com.google.protobuf.UInt32Value value) {
-      if (configVersionBuilder_ == null) {
-        if (((bitField0_ & 0x02000000) != 0)
-            && configVersion_ != null
-            && configVersion_ != com.google.protobuf.UInt32Value.getDefaultInstance()) {
-          getConfigVersionBuilder().mergeFrom(value);
-        } else {
-          configVersion_ = value;
-        }
-      } else {
-        configVersionBuilder_.mergeFrom(value);
-      }
-      if (configVersion_ != null) {
-        bitField0_ |= 0x02000000;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeConfigVersion(value);
       return this;
     }
     /**
@@ -8972,140 +6100,126 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.UInt32Value config_version = 20;</code>
      */
     public Builder clearConfigVersion() {
-      bitField0_ = (bitField0_ & ~0x02000000);
-      configVersion_ = null;
-      if (configVersionBuilder_ != null) {
-        configVersionBuilder_.dispose();
-        configVersionBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearConfigVersion();
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Obsolete. Do not use.
-     *
-     * This field has no semantic meaning. The service config compiler always
-     * sets this field to `3`.
-     * </pre>
-     *
-     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
-     */
-    public com.google.protobuf.UInt32Value.Builder getConfigVersionBuilder() {
-      bitField0_ |= 0x02000000;
-      onChanged();
-      return getConfigVersionFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Obsolete. Do not use.
-     *
-     * This field has no semantic meaning. The service config compiler always
-     * sets this field to `3`.
-     * </pre>
-     *
-     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
-     */
-    public com.google.protobuf.UInt32ValueOrBuilder getConfigVersionOrBuilder() {
-      if (configVersionBuilder_ != null) {
-        return configVersionBuilder_.getMessageOrBuilder();
-      } else {
-        return configVersion_ == null
-            ? com.google.protobuf.UInt32Value.getDefaultInstance()
-            : configVersion_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Obsolete. Do not use.
-     *
-     * This field has no semantic meaning. The service config compiler always
-     * sets this field to `3`.
-     * </pre>
-     *
-     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.UInt32Value,
-            com.google.protobuf.UInt32Value.Builder,
-            com.google.protobuf.UInt32ValueOrBuilder>
-        getConfigVersionFieldBuilder() {
-      if (configVersionBuilder_ == null) {
-        configVersionBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.protobuf.UInt32Value,
-                com.google.protobuf.UInt32Value.Builder,
-                com.google.protobuf.UInt32ValueOrBuilder>(
-                getConfigVersion(), getParentForChildren(), isClean());
-        configVersion_ = null;
-      }
-      return configVersionBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.api.Service)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.Service();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_",
+                "name_",
+                "title_",
+                "apis_",
+                com.google.protobuf.Api.class,
+                "types_",
+                com.google.protobuf.Type.class,
+                "enums_",
+                com.google.protobuf.Enum.class,
+                "documentation_",
+                "backend_",
+                "http_",
+                "quota_",
+                "authentication_",
+                "context_",
+                "usage_",
+                "endpoints_",
+                com.google.api.Endpoint.class,
+                "configVersion_",
+                "control_",
+                "producerProjectId_",
+                "logs_",
+                com.google.api.LogDescriptor.class,
+                "metrics_",
+                com.google.api.MetricDescriptor.class,
+                "monitoredResources_",
+                com.google.api.MonitoredResourceDescriptor.class,
+                "billing_",
+                "logging_",
+                "monitoring_",
+                "systemParameters_",
+                "id_",
+                "sourceInfo_",
+                "publishing_",
+              };
+          java.lang.String info =
+              "\u0000\u001a\u0000\u0001\u0001-\u001a\u0000\u0007\u0000\u0001\u0208\u0002\u0208\u0003"
+                  + "\u001b\u0004\u001b\u0005\u001b\u0006\u1009\u0000\b\u1009\u0001\t\u1009\u0002\n\u1009"
+                  + "\u0003\u000b\u1009\u0004\f\u1009\u0005\u000f\u1009\u0006\u0012\u001b\u0014\u1009"
+                  + "\u000e\u0015\u1009\u0007\u0016\u0208\u0017\u001b\u0018\u001b\u0019\u001b\u001a\u1009"
+                  + "\b\u001b\u1009\t\u001c\u1009\n\u001d\u1009\u000b!\u0208%\u1009\f-\u1009\r";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.Service> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.Service.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser = new DefaultInstanceBasedParser<com.google.api.Service>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.Service)
   private static final com.google.api.Service DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.Service();
+    Service defaultInstance = new Service();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        Service.class, defaultInstance);
   }
 
   public static com.google.api.Service getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Service> PARSER =
-      new com.google.protobuf.AbstractParser<Service>() {
-        @java.lang.Override
-        public Service parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<Service> PARSER;
 
   public static com.google.protobuf.Parser<Service> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<Service> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.Service getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

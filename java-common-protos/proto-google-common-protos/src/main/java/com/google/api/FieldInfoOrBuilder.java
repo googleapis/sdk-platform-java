@@ -22,7 +22,7 @@ package com.google.api;
 public interface FieldInfoOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.FieldInfo)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -92,30 +92,4 @@ public interface FieldInfoOrBuilder
    * <code>repeated .google.api.TypeReference referenced_types = 2;</code>
    */
   int getReferencedTypesCount();
-  /**
-   *
-   *
-   * <pre>
-   * The type(s) that the annotated, generic field may represent.
-   *
-   * Currently, this must only be used on fields of type `google.protobuf.Any`.
-   * Supporting other generic types may be considered in the future.
-   * </pre>
-   *
-   * <code>repeated .google.api.TypeReference referenced_types = 2;</code>
-   */
-  java.util.List<? extends com.google.api.TypeReferenceOrBuilder> getReferencedTypesOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * The type(s) that the annotated, generic field may represent.
-   *
-   * Currently, this must only be used on fields of type `google.protobuf.Any`.
-   * Supporting other generic types may be considered in the future.
-   * </pre>
-   *
-   * <code>repeated .google.api.TypeReference referenced_types = 2;</code>
-   */
-  com.google.api.TypeReferenceOrBuilder getReferencedTypesOrBuilder(int index);
 }

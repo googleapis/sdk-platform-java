@@ -22,7 +22,7 @@ package com.google.api;
 public interface BackendRuleOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.BackendRule)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -356,6 +356,7 @@ public interface BackendRuleOrBuilder
    *
    * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
    */
+
   /* nullable */
   com.google.api.BackendRule getOverridesByRequestProtocolOrDefault(
       java.lang.String key,
@@ -372,5 +373,5 @@ public interface BackendRuleOrBuilder
    */
   com.google.api.BackendRule getOverridesByRequestProtocolOrThrow(java.lang.String key);
 
-  com.google.api.BackendRule.AuthenticationCase getAuthenticationCase();
+  public com.google.api.BackendRule.AuthenticationCase getAuthenticationCase();
 }

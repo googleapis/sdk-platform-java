@@ -28,43 +28,17 @@ package com.google.shopping.type;
  *
  * Protobuf type {@code google.shopping.type.Price}
  */
-public final class Price extends com.google.protobuf.GeneratedMessageV3
+public final class Price extends com.google.protobuf.GeneratedMessageLite<Price, Price.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.shopping.type.Price)
     PriceOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use Price.newBuilder() to construct.
-  private Price(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private Price() {
     currencyCode_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new Price();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.shopping.type.TypesProto
-        .internal_static_google_shopping_type_Price_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.shopping.type.TypesProto
-        .internal_static_google_shopping_type_Price_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.shopping.type.Price.class, com.google.shopping.type.Price.Builder.class);
-  }
-
   private int bitField0_;
   public static final int AMOUNT_MICROS_FIELD_NUMBER = 1;
-  private long amountMicros_ = 0L;
+  private long amountMicros_;
   /**
    *
    *
@@ -99,11 +73,41 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
   public long getAmountMicros() {
     return amountMicros_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The price represented as a number in micros (1 million micros is an
+   * equivalent to one's currency standard unit, for example, 1 USD = 1000000
+   * micros).
+   * </pre>
+   *
+   * <code>optional int64 amount_micros = 1;</code>
+   *
+   * @param value The amountMicros to set.
+   */
+  private void setAmountMicros(long value) {
+    bitField0_ |= 0x00000001;
+    amountMicros_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The price represented as a number in micros (1 million micros is an
+   * equivalent to one's currency standard unit, for example, 1 USD = 1000000
+   * micros).
+   * </pre>
+   *
+   * <code>optional int64 amount_micros = 1;</code>
+   */
+  private void clearAmountMicros() {
+    bitField0_ = (bitField0_ & ~0x00000001);
+    amountMicros_ = 0L;
+  }
 
   public static final int CURRENCY_CODE_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object currencyCode_ = "";
+  private java.lang.String currencyCode_;
   /**
    *
    *
@@ -134,15 +138,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getCurrencyCode() {
-    java.lang.Object ref = currencyCode_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      currencyCode_ = s;
-      return s;
-    }
+    return currencyCode_;
   }
   /**
    *
@@ -158,193 +154,138 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getCurrencyCodeBytes() {
-    java.lang.Object ref = currencyCode_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      currencyCode_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(currencyCode_);
   }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * The currency of the price using three-letter acronyms according to [ISO
+   * 4217](http://en.wikipedia.org/wiki/ISO_4217).
+   * </pre>
+   *
+   * <code>optional string currency_code = 2;</code>
+   *
+   * @param value The currencyCode to set.
+   */
+  private void setCurrencyCode(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    bitField0_ |= 0x00000002;
+    currencyCode_ = value;
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeInt64(1, amountMicros_);
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, currencyCode_);
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * The currency of the price using three-letter acronyms according to [ISO
+   * 4217](http://en.wikipedia.org/wiki/ISO_4217).
+   * </pre>
+   *
+   * <code>optional string currency_code = 2;</code>
+   */
+  private void clearCurrencyCode() {
+    bitField0_ = (bitField0_ & ~0x00000002);
+    currencyCode_ = getDefaultInstance().getCurrencyCode();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeInt64Size(1, amountMicros_);
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, currencyCode_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.shopping.type.Price)) {
-      return super.equals(obj);
-    }
-    com.google.shopping.type.Price other = (com.google.shopping.type.Price) obj;
-
-    if (hasAmountMicros() != other.hasAmountMicros()) return false;
-    if (hasAmountMicros()) {
-      if (getAmountMicros() != other.getAmountMicros()) return false;
-    }
-    if (hasCurrencyCode() != other.hasCurrencyCode()) return false;
-    if (hasCurrencyCode()) {
-      if (!getCurrencyCode().equals(other.getCurrencyCode())) return false;
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (hasAmountMicros()) {
-      hash = (37 * hash) + AMOUNT_MICROS_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(getAmountMicros());
-    }
-    if (hasCurrencyCode()) {
-      hash = (37 * hash) + CURRENCY_CODE_FIELD_NUMBER;
-      hash = (53 * hash) + getCurrencyCode().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * The currency of the price using three-letter acronyms according to [ISO
+   * 4217](http://en.wikipedia.org/wiki/ISO_4217).
+   * </pre>
+   *
+   * <code>optional string currency_code = 2;</code>
+   *
+   * @param value The bytes for currencyCode to set.
+   */
+  private void setCurrencyCodeBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    currencyCode_ = value.toStringUtf8();
+    bitField0_ |= 0x00000002;
   }
 
   public static com.google.shopping.type.Price parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.shopping.type.Price parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.shopping.type.Price parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.shopping.type.Price parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.shopping.type.Price parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.shopping.type.Price parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.shopping.type.Price parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.shopping.type.Price parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.shopping.type.Price parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.shopping.type.Price parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.shopping.type.Price parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.shopping.type.Price parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.shopping.type.Price prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -354,195 +295,17 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.shopping.type.Price}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.shopping.type.Price, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.shopping.type.Price)
       com.google.shopping.type.PriceOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.shopping.type.TypesProto
-          .internal_static_google_shopping_type_Price_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.shopping.type.TypesProto
-          .internal_static_google_shopping_type_Price_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.shopping.type.Price.class, com.google.shopping.type.Price.Builder.class);
-    }
-
     // Construct using com.google.shopping.type.Price.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      amountMicros_ = 0L;
-      currencyCode_ = "";
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.shopping.type.TypesProto
-          .internal_static_google_shopping_type_Price_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.shopping.type.Price getDefaultInstanceForType() {
-      return com.google.shopping.type.Price.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.shopping.type.Price build() {
-      com.google.shopping.type.Price result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.shopping.type.Price buildPartial() {
-      com.google.shopping.type.Price result = new com.google.shopping.type.Price(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.shopping.type.Price result) {
-      int from_bitField0_ = bitField0_;
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.amountMicros_ = amountMicros_;
-        to_bitField0_ |= 0x00000001;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.currencyCode_ = currencyCode_;
-        to_bitField0_ |= 0x00000002;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.shopping.type.Price) {
-        return mergeFrom((com.google.shopping.type.Price) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.shopping.type.Price other) {
-      if (other == com.google.shopping.type.Price.getDefaultInstance()) return this;
-      if (other.hasAmountMicros()) {
-        setAmountMicros(other.getAmountMicros());
-      }
-      if (other.hasCurrencyCode()) {
-        currencyCode_ = other.currencyCode_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 8:
-              {
-                amountMicros_ = input.readInt64();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 8
-            case 18:
-              {
-                currencyCode_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private long amountMicros_;
     /**
      *
      *
@@ -558,7 +321,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean hasAmountMicros() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return instance.hasAmountMicros();
     }
     /**
      *
@@ -575,7 +338,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public long getAmountMicros() {
-      return amountMicros_;
+      return instance.getAmountMicros();
     }
     /**
      *
@@ -592,10 +355,8 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAmountMicros(long value) {
-
-      amountMicros_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setAmountMicros(value);
       return this;
     }
     /**
@@ -612,13 +373,11 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAmountMicros() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      amountMicros_ = 0L;
-      onChanged();
+      copyOnWrite();
+      instance.clearAmountMicros();
       return this;
     }
 
-    private java.lang.Object currencyCode_ = "";
     /**
      *
      *
@@ -631,8 +390,9 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
      *
      * @return Whether the currencyCode field is set.
      */
+    @java.lang.Override
     public boolean hasCurrencyCode() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return instance.hasCurrencyCode();
     }
     /**
      *
@@ -646,16 +406,9 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The currencyCode.
      */
+    @java.lang.Override
     public java.lang.String getCurrencyCode() {
-      java.lang.Object ref = currencyCode_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        currencyCode_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getCurrencyCode();
     }
     /**
      *
@@ -669,16 +422,9 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for currencyCode.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getCurrencyCodeBytes() {
-      java.lang.Object ref = currencyCode_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        currencyCode_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getCurrencyCodeBytes();
     }
     /**
      *
@@ -694,12 +440,8 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setCurrencyCode(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      currencyCode_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setCurrencyCode(value);
       return this;
     }
     /**
@@ -715,9 +457,8 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearCurrencyCode() {
-      currencyCode_ = getDefaultInstance().getCurrencyCode();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearCurrencyCode();
       return this;
     }
     /**
@@ -734,74 +475,91 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setCurrencyCodeBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      currencyCode_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setCurrencyCodeBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.shopping.type.Price)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.shopping.type.Price();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_", "amountMicros_", "currencyCode_",
+              };
+          java.lang.String info =
+              "\u0000\u0002\u0000\u0001\u0001\u0002\u0002\u0000\u0000\u0000\u0001\u1002\u0000\u0002"
+                  + "\u1208\u0001";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.shopping.type.Price> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.shopping.type.Price.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.shopping.type.Price>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.shopping.type.Price)
   private static final com.google.shopping.type.Price DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.shopping.type.Price();
+    Price defaultInstance = new Price();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(Price.class, defaultInstance);
   }
 
   public static com.google.shopping.type.Price getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Price> PARSER =
-      new com.google.protobuf.AbstractParser<Price>() {
-        @java.lang.Override
-        public Price parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<Price> PARSER;
 
   public static com.google.protobuf.Parser<Price> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<Price> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.shopping.type.Price getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

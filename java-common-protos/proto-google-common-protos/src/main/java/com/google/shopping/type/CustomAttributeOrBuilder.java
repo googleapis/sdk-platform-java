@@ -22,7 +22,7 @@ package com.google.shopping.type;
 public interface CustomAttributeOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.shopping.type.CustomAttribute)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -134,27 +134,4 @@ public interface CustomAttributeOrBuilder
    * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
    */
   int getGroupValuesCount();
-  /**
-   *
-   *
-   * <pre>
-   * Subattributes within this attribute group.  If
-   * `group_values` is not empty, `value` must be empty.
-   * </pre>
-   *
-   * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
-   */
-  java.util.List<? extends com.google.shopping.type.CustomAttributeOrBuilder>
-      getGroupValuesOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Subattributes within this attribute group.  If
-   * `group_values` is not empty, `value` must be empty.
-   * </pre>
-   *
-   * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
-   */
-  com.google.shopping.type.CustomAttributeOrBuilder getGroupValuesOrBuilder(int index);
 }

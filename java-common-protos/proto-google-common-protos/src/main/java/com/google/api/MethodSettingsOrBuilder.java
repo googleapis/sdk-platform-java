@@ -22,7 +22,7 @@ package com.google.api;
 public interface MethodSettingsOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.MethodSettings)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -115,29 +115,6 @@ public interface MethodSettingsOrBuilder
    * @return The longRunning.
    */
   com.google.api.MethodSettings.LongRunning getLongRunning();
-  /**
-   *
-   *
-   * <pre>
-   * Describes settings to use for long-running operations when generating
-   * API methods for RPCs. Complements RPCs that use the annotations in
-   * google/longrunning/operations.proto.
-   *
-   * Example of a YAML configuration::
-   *
-   *    publishing:
-   *      method_settings:
-   *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
-   *        long_running:
-   *          initial_poll_delay: 60s # 1 minute
-   *          poll_delay_multiplier: 1.5
-   *          max_poll_delay: 360s # 6 minutes
-   *          total_poll_timeout: 54000s # 90 minutes
-   * </pre>
-   *
-   * <code>.google.api.MethodSettings.LongRunning long_running = 2;</code>
-   */
-  com.google.api.MethodSettings.LongRunningOrBuilder getLongRunningOrBuilder();
 
   /**
    *
@@ -225,8 +202,8 @@ public interface MethodSettingsOrBuilder
    *
    * <code>repeated string auto_populated_fields = 3;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the autoPopulatedFields at the given index.
+   * @param index The index of the element to return.
+   * @return The autoPopulatedFields at the given index.
    */
   com.google.protobuf.ByteString getAutoPopulatedFieldsBytes(int index);
 }

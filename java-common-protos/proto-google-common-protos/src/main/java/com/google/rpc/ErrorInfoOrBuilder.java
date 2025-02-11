@@ -22,7 +22,7 @@ package com.google.rpc;
 public interface ErrorInfoOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.rpc.ErrorInfo)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -166,6 +166,7 @@ public interface ErrorInfoOrBuilder
    *
    * <code>map&lt;string, string&gt; metadata = 3;</code>
    */
+
   /* nullable */
   java.lang.String getMetadataOrDefault(
       java.lang.String key,

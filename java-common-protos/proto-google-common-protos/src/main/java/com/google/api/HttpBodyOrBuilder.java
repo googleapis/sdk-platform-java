@@ -22,7 +22,7 @@ package com.google.api;
 public interface HttpBodyOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.HttpBody)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -95,26 +95,4 @@ public interface HttpBodyOrBuilder
    * <code>repeated .google.protobuf.Any extensions = 3;</code>
    */
   int getExtensionsCount();
-  /**
-   *
-   *
-   * <pre>
-   * Application specific response metadata. Must be set in the first response
-   * for streaming APIs.
-   * </pre>
-   *
-   * <code>repeated .google.protobuf.Any extensions = 3;</code>
-   */
-  java.util.List<? extends com.google.protobuf.AnyOrBuilder> getExtensionsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Application specific response metadata. Must be set in the first response
-   * for streaming APIs.
-   * </pre>
-   *
-   * <code>repeated .google.protobuf.Any extensions = 3;</code>
-   */
-  com.google.protobuf.AnyOrBuilder getExtensionsOrBuilder(int index);
 }

@@ -28,40 +28,17 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.PythonSettings}
  */
-public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
+public final class PythonSettings
+    extends com.google.protobuf.GeneratedMessageLite<PythonSettings, PythonSettings.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.PythonSettings)
     PythonSettingsOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use PythonSettings.newBuilder() to construct.
-  private PythonSettings(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private PythonSettings() {}
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new PythonSettings();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.ClientProto.internal_static_google_api_PythonSettings_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.ClientProto.internal_static_google_api_PythonSettings_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.PythonSettings.class, com.google.api.PythonSettings.Builder.class);
-  }
 
   public interface ExperimentalFeaturesOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:google.api.PythonSettings.ExperimentalFeatures)
-      com.google.protobuf.MessageOrBuilder {
+      com.google.protobuf.MessageLiteOrBuilder {
 
     /**
      *
@@ -122,41 +99,16 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.api.PythonSettings.ExperimentalFeatures}
    */
-  public static final class ExperimentalFeatures extends com.google.protobuf.GeneratedMessageV3
+  public static final class ExperimentalFeatures
+      extends com.google.protobuf.GeneratedMessageLite<
+          ExperimentalFeatures, ExperimentalFeatures.Builder>
       implements
       // @@protoc_insertion_point(message_implements:google.api.PythonSettings.ExperimentalFeatures)
       ExperimentalFeaturesOrBuilder {
-    private static final long serialVersionUID = 0L;
-    // Use ExperimentalFeatures.newBuilder() to construct.
-    private ExperimentalFeatures(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-
     private ExperimentalFeatures() {}
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-      return new ExperimentalFeatures();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.ClientProto
-          .internal_static_google_api_PythonSettings_ExperimentalFeatures_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.ClientProto
-          .internal_static_google_api_PythonSettings_ExperimentalFeatures_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.PythonSettings.ExperimentalFeatures.class,
-              com.google.api.PythonSettings.ExperimentalFeatures.Builder.class);
-    }
-
     public static final int REST_ASYNC_IO_ENABLED_FIELD_NUMBER = 1;
-    private boolean restAsyncIoEnabled_ = false;
+    private boolean restAsyncIoEnabled_;
     /**
      *
      *
@@ -175,9 +127,43 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
     public boolean getRestAsyncIoEnabled() {
       return restAsyncIoEnabled_;
     }
+    /**
+     *
+     *
+     * <pre>
+     * Enables generation of asynchronous REST clients if `rest` transport is
+     * enabled. By default, asynchronous REST clients will not be generated.
+     * This feature will be enabled by default 1 month after launching the
+     * feature in preview packages.
+     * </pre>
+     *
+     * <code>bool rest_async_io_enabled = 1;</code>
+     *
+     * @param value The restAsyncIoEnabled to set.
+     */
+    private void setRestAsyncIoEnabled(boolean value) {
+
+      restAsyncIoEnabled_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Enables generation of asynchronous REST clients if `rest` transport is
+     * enabled. By default, asynchronous REST clients will not be generated.
+     * This feature will be enabled by default 1 month after launching the
+     * feature in preview packages.
+     * </pre>
+     *
+     * <code>bool rest_async_io_enabled = 1;</code>
+     */
+    private void clearRestAsyncIoEnabled() {
+
+      restAsyncIoEnabled_ = false;
+    }
 
     public static final int PROTOBUF_PYTHONIC_TYPES_ENABLED_FIELD_NUMBER = 2;
-    private boolean protobufPythonicTypesEnabled_ = false;
+    private boolean protobufPythonicTypesEnabled_;
     /**
      *
      *
@@ -196,9 +182,43 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
     public boolean getProtobufPythonicTypesEnabled() {
       return protobufPythonicTypesEnabled_;
     }
+    /**
+     *
+     *
+     * <pre>
+     * Enables generation of protobuf code using new types that are more
+     * Pythonic which are included in `protobuf&gt;=5.29.x`. This feature will be
+     * enabled by default 1 month after launching the feature in preview
+     * packages.
+     * </pre>
+     *
+     * <code>bool protobuf_pythonic_types_enabled = 2;</code>
+     *
+     * @param value The protobufPythonicTypesEnabled to set.
+     */
+    private void setProtobufPythonicTypesEnabled(boolean value) {
+
+      protobufPythonicTypesEnabled_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Enables generation of protobuf code using new types that are more
+     * Pythonic which are included in `protobuf&gt;=5.29.x`. This feature will be
+     * enabled by default 1 month after launching the feature in preview
+     * packages.
+     * </pre>
+     *
+     * <code>bool protobuf_pythonic_types_enabled = 2;</code>
+     */
+    private void clearProtobufPythonicTypesEnabled() {
+
+      protobufPythonicTypesEnabled_ = false;
+    }
 
     public static final int UNVERSIONED_PACKAGE_DISABLED_FIELD_NUMBER = 3;
-    private boolean unversionedPackageDisabled_ = false;
+    private boolean unversionedPackageDisabled_;
     /**
      *
      *
@@ -217,190 +237,123 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
     public boolean getUnversionedPackageDisabled() {
       return unversionedPackageDisabled_;
     }
+    /**
+     *
+     *
+     * <pre>
+     * Disables generation of an unversioned Python package for this client
+     * library. This means that the module names will need to be versioned in
+     * import statements. For example `import google.cloud.library_v2` instead
+     * of `import google.cloud.library`.
+     * </pre>
+     *
+     * <code>bool unversioned_package_disabled = 3;</code>
+     *
+     * @param value The unversionedPackageDisabled to set.
+     */
+    private void setUnversionedPackageDisabled(boolean value) {
 
-    private byte memoizedIsInitialized = -1;
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
+      unversionedPackageDisabled_ = value;
     }
+    /**
+     *
+     *
+     * <pre>
+     * Disables generation of an unversioned Python package for this client
+     * library. This means that the module names will need to be versioned in
+     * import statements. For example `import google.cloud.library_v2` instead
+     * of `import google.cloud.library`.
+     * </pre>
+     *
+     * <code>bool unversioned_package_disabled = 3;</code>
+     */
+    private void clearUnversionedPackageDisabled() {
 
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-      if (restAsyncIoEnabled_ != false) {
-        output.writeBool(1, restAsyncIoEnabled_);
-      }
-      if (protobufPythonicTypesEnabled_ != false) {
-        output.writeBool(2, protobufPythonicTypesEnabled_);
-      }
-      if (unversionedPackageDisabled_ != false) {
-        output.writeBool(3, unversionedPackageDisabled_);
-      }
-      getUnknownFields().writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (restAsyncIoEnabled_ != false) {
-        size += com.google.protobuf.CodedOutputStream.computeBoolSize(1, restAsyncIoEnabled_);
-      }
-      if (protobufPythonicTypesEnabled_ != false) {
-        size +=
-            com.google.protobuf.CodedOutputStream.computeBoolSize(2, protobufPythonicTypesEnabled_);
-      }
-      if (unversionedPackageDisabled_ != false) {
-        size +=
-            com.google.protobuf.CodedOutputStream.computeBoolSize(3, unversionedPackageDisabled_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-        return true;
-      }
-      if (!(obj instanceof com.google.api.PythonSettings.ExperimentalFeatures)) {
-        return super.equals(obj);
-      }
-      com.google.api.PythonSettings.ExperimentalFeatures other =
-          (com.google.api.PythonSettings.ExperimentalFeatures) obj;
-
-      if (getRestAsyncIoEnabled() != other.getRestAsyncIoEnabled()) return false;
-      if (getProtobufPythonicTypesEnabled() != other.getProtobufPythonicTypesEnabled())
-        return false;
-      if (getUnversionedPackageDisabled() != other.getUnversionedPackageDisabled()) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + REST_ASYNC_IO_ENABLED_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getRestAsyncIoEnabled());
-      hash = (37 * hash) + PROTOBUF_PYTHONIC_TYPES_ENABLED_FIELD_NUMBER;
-      hash =
-          (53 * hash) + com.google.protobuf.Internal.hashBoolean(getProtobufPythonicTypesEnabled());
-      hash = (37 * hash) + UNVERSIONED_PACKAGE_DISABLED_FIELD_NUMBER;
-      hash =
-          (53 * hash) + com.google.protobuf.Internal.hashBoolean(getUnversionedPackageDisabled());
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
+      unversionedPackageDisabled_ = false;
     }
 
     public static com.google.api.PythonSettings.ExperimentalFeatures parseFrom(
         java.nio.ByteBuffer data) throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.api.PythonSettings.ExperimentalFeatures parseFrom(
         java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.api.PythonSettings.ExperimentalFeatures parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.api.PythonSettings.ExperimentalFeatures parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.api.PythonSettings.ExperimentalFeatures parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.api.PythonSettings.ExperimentalFeatures parseFrom(
         byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.api.PythonSettings.ExperimentalFeatures parseFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.api.PythonSettings.ExperimentalFeatures parseFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.api.PythonSettings.ExperimentalFeatures parseDelimitedFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.api.PythonSettings.ExperimentalFeatures parseDelimitedFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.api.PythonSettings.ExperimentalFeatures parseFrom(
         com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.api.PythonSettings.ExperimentalFeatures parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
+      return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
 
     public static Builder newBuilder(com.google.api.PythonSettings.ExperimentalFeatures prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      *
      *
@@ -413,207 +366,16 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
      * Protobuf type {@code google.api.PythonSettings.ExperimentalFeatures}
      */
     public static final class Builder
-        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+        extends com.google.protobuf.GeneratedMessageLite.Builder<
+            com.google.api.PythonSettings.ExperimentalFeatures, Builder>
         implements
         // @@protoc_insertion_point(builder_implements:google.api.PythonSettings.ExperimentalFeatures)
         com.google.api.PythonSettings.ExperimentalFeaturesOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return com.google.api.ClientProto
-            .internal_static_google_api_PythonSettings_ExperimentalFeatures_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.google.api.ClientProto
-            .internal_static_google_api_PythonSettings_ExperimentalFeatures_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.google.api.PythonSettings.ExperimentalFeatures.class,
-                com.google.api.PythonSettings.ExperimentalFeatures.Builder.class);
-      }
-
       // Construct using com.google.api.PythonSettings.ExperimentalFeatures.newBuilder()
-      private Builder() {}
-
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
+      private Builder() {
+        super(DEFAULT_INSTANCE);
       }
 
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        restAsyncIoEnabled_ = false;
-        protobufPythonicTypesEnabled_ = false;
-        unversionedPackageDisabled_ = false;
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return com.google.api.ClientProto
-            .internal_static_google_api_PythonSettings_ExperimentalFeatures_descriptor;
-      }
-
-      @java.lang.Override
-      public com.google.api.PythonSettings.ExperimentalFeatures getDefaultInstanceForType() {
-        return com.google.api.PythonSettings.ExperimentalFeatures.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.google.api.PythonSettings.ExperimentalFeatures build() {
-        com.google.api.PythonSettings.ExperimentalFeatures result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.google.api.PythonSettings.ExperimentalFeatures buildPartial() {
-        com.google.api.PythonSettings.ExperimentalFeatures result =
-            new com.google.api.PythonSettings.ExperimentalFeatures(this);
-        if (bitField0_ != 0) {
-          buildPartial0(result);
-        }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartial0(com.google.api.PythonSettings.ExperimentalFeatures result) {
-        int from_bitField0_ = bitField0_;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.restAsyncIoEnabled_ = restAsyncIoEnabled_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.protobufPythonicTypesEnabled_ = protobufPythonicTypesEnabled_;
-        }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.unversionedPackageDisabled_ = unversionedPackageDisabled_;
-        }
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.api.PythonSettings.ExperimentalFeatures) {
-          return mergeFrom((com.google.api.PythonSettings.ExperimentalFeatures) other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.google.api.PythonSettings.ExperimentalFeatures other) {
-        if (other == com.google.api.PythonSettings.ExperimentalFeatures.getDefaultInstance())
-          return this;
-        if (other.getRestAsyncIoEnabled() != false) {
-          setRestAsyncIoEnabled(other.getRestAsyncIoEnabled());
-        }
-        if (other.getProtobufPythonicTypesEnabled() != false) {
-          setProtobufPythonicTypesEnabled(other.getProtobufPythonicTypesEnabled());
-        }
-        if (other.getUnversionedPackageDisabled() != false) {
-          setUnversionedPackageDisabled(other.getUnversionedPackageDisabled());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 8:
-                {
-                  restAsyncIoEnabled_ = input.readBool();
-                  bitField0_ |= 0x00000001;
-                  break;
-                } // case 8
-              case 16:
-                {
-                  protobufPythonicTypesEnabled_ = input.readBool();
-                  bitField0_ |= 0x00000002;
-                  break;
-                } // case 16
-              case 24:
-                {
-                  unversionedPackageDisabled_ = input.readBool();
-                  bitField0_ |= 0x00000004;
-                  break;
-                } // case 24
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-
-      private int bitField0_;
-
-      private boolean restAsyncIoEnabled_;
       /**
        *
        *
@@ -630,7 +392,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
        */
       @java.lang.Override
       public boolean getRestAsyncIoEnabled() {
-        return restAsyncIoEnabled_;
+        return instance.getRestAsyncIoEnabled();
       }
       /**
        *
@@ -648,10 +410,8 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setRestAsyncIoEnabled(boolean value) {
-
-        restAsyncIoEnabled_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setRestAsyncIoEnabled(value);
         return this;
       }
       /**
@@ -669,13 +429,11 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearRestAsyncIoEnabled() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        restAsyncIoEnabled_ = false;
-        onChanged();
+        copyOnWrite();
+        instance.clearRestAsyncIoEnabled();
         return this;
       }
 
-      private boolean protobufPythonicTypesEnabled_;
       /**
        *
        *
@@ -692,7 +450,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
        */
       @java.lang.Override
       public boolean getProtobufPythonicTypesEnabled() {
-        return protobufPythonicTypesEnabled_;
+        return instance.getProtobufPythonicTypesEnabled();
       }
       /**
        *
@@ -710,10 +468,8 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setProtobufPythonicTypesEnabled(boolean value) {
-
-        protobufPythonicTypesEnabled_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setProtobufPythonicTypesEnabled(value);
         return this;
       }
       /**
@@ -731,13 +487,11 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearProtobufPythonicTypesEnabled() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        protobufPythonicTypesEnabled_ = false;
-        onChanged();
+        copyOnWrite();
+        instance.clearProtobufPythonicTypesEnabled();
         return this;
       }
 
-      private boolean unversionedPackageDisabled_;
       /**
        *
        *
@@ -754,7 +508,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
        */
       @java.lang.Override
       public boolean getUnversionedPackageDisabled() {
-        return unversionedPackageDisabled_;
+        return instance.getUnversionedPackageDisabled();
       }
       /**
        *
@@ -772,10 +526,8 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setUnversionedPackageDisabled(boolean value) {
-
-        unversionedPackageDisabled_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
+        copyOnWrite();
+        instance.setUnversionedPackageDisabled(value);
         return this;
       }
       /**
@@ -793,73 +545,96 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearUnversionedPackageDisabled() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        unversionedPackageDisabled_ = false;
-        onChanged();
+        copyOnWrite();
+        instance.clearUnversionedPackageDisabled();
         return this;
       }
 
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
       // @@protoc_insertion_point(builder_scope:google.api.PythonSettings.ExperimentalFeatures)
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0,
+        java.lang.Object arg1) {
+      switch (method) {
+        case NEW_MUTABLE_INSTANCE:
+          {
+            return new com.google.api.PythonSettings.ExperimentalFeatures();
+          }
+        case NEW_BUILDER:
+          {
+            return new Builder();
+          }
+        case BUILD_MESSAGE_INFO:
+          {
+            java.lang.Object[] objects =
+                new java.lang.Object[] {
+                  "restAsyncIoEnabled_",
+                  "protobufPythonicTypesEnabled_",
+                  "unversionedPackageDisabled_",
+                };
+            java.lang.String info =
+                "\u0000\u0003\u0000\u0000\u0001\u0003\u0003\u0000\u0000\u0000\u0001\u0007\u0002\u0007"
+                    + "\u0003\u0007";
+            return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+          }
+          // fall through
+        case GET_DEFAULT_INSTANCE:
+          {
+            return DEFAULT_INSTANCE;
+          }
+        case GET_PARSER:
+          {
+            com.google.protobuf.Parser<com.google.api.PythonSettings.ExperimentalFeatures> parser =
+                PARSER;
+            if (parser == null) {
+              synchronized (com.google.api.PythonSettings.ExperimentalFeatures.class) {
+                parser = PARSER;
+                if (parser == null) {
+                  parser =
+                      new DefaultInstanceBasedParser<
+                          com.google.api.PythonSettings.ExperimentalFeatures>(DEFAULT_INSTANCE);
+                  PARSER = parser;
+                }
+              }
+            }
+            return parser;
+          }
+        case GET_MEMOIZED_IS_INITIALIZED:
+          {
+            return (byte) 1;
+          }
+        case SET_MEMOIZED_IS_INITIALIZED:
+          {
+            return null;
+          }
+      }
+      throw new UnsupportedOperationException();
     }
 
     // @@protoc_insertion_point(class_scope:google.api.PythonSettings.ExperimentalFeatures)
     private static final com.google.api.PythonSettings.ExperimentalFeatures DEFAULT_INSTANCE;
 
     static {
-      DEFAULT_INSTANCE = new com.google.api.PythonSettings.ExperimentalFeatures();
+      ExperimentalFeatures defaultInstance = new ExperimentalFeatures();
+      // New instances are implicitly immutable so no need to make
+      // immutable.
+      DEFAULT_INSTANCE = defaultInstance;
+      com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+          ExperimentalFeatures.class, defaultInstance);
     }
 
     public static com.google.api.PythonSettings.ExperimentalFeatures getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<ExperimentalFeatures> PARSER =
-        new com.google.protobuf.AbstractParser<ExperimentalFeatures>() {
-          @java.lang.Override
-          public ExperimentalFeatures parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-          }
-        };
+    private static volatile com.google.protobuf.Parser<ExperimentalFeatures> PARSER;
 
     public static com.google.protobuf.Parser<ExperimentalFeatures> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ExperimentalFeatures> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.api.PythonSettings.ExperimentalFeatures getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
+      return DEFAULT_INSTANCE.getParserForType();
     }
   }
 
@@ -874,8 +649,6 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.CommonLanguageSettings common = 1;</code>
-   *
-   * @return Whether the common field is set.
    */
   @java.lang.Override
   public boolean hasCommon() {
@@ -889,8 +662,6 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.CommonLanguageSettings common = 1;</code>
-   *
-   * @return The common.
    */
   @java.lang.Override
   public com.google.api.CommonLanguageSettings getCommon() {
@@ -905,9 +676,43 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.CommonLanguageSettings common = 1;</code>
    */
-  @java.lang.Override
-  public com.google.api.CommonLanguageSettingsOrBuilder getCommonOrBuilder() {
-    return common_ == null ? com.google.api.CommonLanguageSettings.getDefaultInstance() : common_;
+  private void setCommon(com.google.api.CommonLanguageSettings value) {
+    value.getClass();
+    common_ = value;
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Some settings.
+   * </pre>
+   *
+   * <code>.google.api.CommonLanguageSettings common = 1;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeCommon(com.google.api.CommonLanguageSettings value) {
+    value.getClass();
+    if (common_ != null && common_ != com.google.api.CommonLanguageSettings.getDefaultInstance()) {
+      common_ =
+          com.google.api.CommonLanguageSettings.newBuilder(common_).mergeFrom(value).buildPartial();
+    } else {
+      common_ = value;
+    }
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Some settings.
+   * </pre>
+   *
+   * <code>.google.api.CommonLanguageSettings common = 1;</code>
+   */
+  private void clearCommon() {
+    common_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static final int EXPERIMENTAL_FEATURES_FIELD_NUMBER = 2;
@@ -920,8 +725,6 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.PythonSettings.ExperimentalFeatures experimental_features = 2;</code>
-   *
-   * @return Whether the experimentalFeatures field is set.
    */
   @java.lang.Override
   public boolean hasExperimentalFeatures() {
@@ -935,8 +738,6 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.api.PythonSettings.ExperimentalFeatures experimental_features = 2;</code>
-   *
-   * @return The experimentalFeatures.
    */
   @java.lang.Override
   public com.google.api.PythonSettings.ExperimentalFeatures getExperimentalFeatures() {
@@ -953,191 +754,130 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.PythonSettings.ExperimentalFeatures experimental_features = 2;</code>
    */
-  @java.lang.Override
-  public com.google.api.PythonSettings.ExperimentalFeaturesOrBuilder
-      getExperimentalFeaturesOrBuilder() {
-    return experimentalFeatures_ == null
-        ? com.google.api.PythonSettings.ExperimentalFeatures.getDefaultInstance()
-        : experimentalFeatures_;
+  private void setExperimentalFeatures(com.google.api.PythonSettings.ExperimentalFeatures value) {
+    value.getClass();
+    experimentalFeatures_ = value;
+    bitField0_ |= 0x00000002;
   }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Experimental features to be included during client library generation.
+   * </pre>
+   *
+   * <code>.google.api.PythonSettings.ExperimentalFeatures experimental_features = 2;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeExperimentalFeatures(com.google.api.PythonSettings.ExperimentalFeatures value) {
+    value.getClass();
+    if (experimentalFeatures_ != null
+        && experimentalFeatures_
+            != com.google.api.PythonSettings.ExperimentalFeatures.getDefaultInstance()) {
+      experimentalFeatures_ =
+          com.google.api.PythonSettings.ExperimentalFeatures.newBuilder(experimentalFeatures_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      experimentalFeatures_ = value;
+    }
+    bitField0_ |= 0x00000002;
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(1, getCommon());
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      output.writeMessage(2, getExperimentalFeatures());
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getCommon());
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(2, getExperimentalFeatures());
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.PythonSettings)) {
-      return super.equals(obj);
-    }
-    com.google.api.PythonSettings other = (com.google.api.PythonSettings) obj;
-
-    if (hasCommon() != other.hasCommon()) return false;
-    if (hasCommon()) {
-      if (!getCommon().equals(other.getCommon())) return false;
-    }
-    if (hasExperimentalFeatures() != other.hasExperimentalFeatures()) return false;
-    if (hasExperimentalFeatures()) {
-      if (!getExperimentalFeatures().equals(other.getExperimentalFeatures())) return false;
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (hasCommon()) {
-      hash = (37 * hash) + COMMON_FIELD_NUMBER;
-      hash = (53 * hash) + getCommon().hashCode();
-    }
-    if (hasExperimentalFeatures()) {
-      hash = (37 * hash) + EXPERIMENTAL_FEATURES_FIELD_NUMBER;
-      hash = (53 * hash) + getExperimentalFeatures().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Experimental features to be included during client library generation.
+   * </pre>
+   *
+   * <code>.google.api.PythonSettings.ExperimentalFeatures experimental_features = 2;</code>
+   */
+  private void clearExperimentalFeatures() {
+    experimentalFeatures_ = null;
+    bitField0_ = (bitField0_ & ~0x00000002);
   }
 
   public static com.google.api.PythonSettings parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.PythonSettings parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.PythonSettings parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.PythonSettings parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.PythonSettings parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.PythonSettings parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.PythonSettings parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.PythonSettings parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.PythonSettings parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.PythonSettings parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.PythonSettings parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.PythonSettings parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.PythonSettings prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -1147,217 +887,17 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.api.PythonSettings}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.api.PythonSettings, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.PythonSettings)
       com.google.api.PythonSettingsOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.ClientProto.internal_static_google_api_PythonSettings_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.ClientProto.internal_static_google_api_PythonSettings_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.PythonSettings.class, com.google.api.PythonSettings.Builder.class);
-    }
-
     // Construct using com.google.api.PythonSettings.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getCommonFieldBuilder();
-        getExperimentalFeaturesFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      common_ = null;
-      if (commonBuilder_ != null) {
-        commonBuilder_.dispose();
-        commonBuilder_ = null;
-      }
-      experimentalFeatures_ = null;
-      if (experimentalFeaturesBuilder_ != null) {
-        experimentalFeaturesBuilder_.dispose();
-        experimentalFeaturesBuilder_ = null;
-      }
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.ClientProto.internal_static_google_api_PythonSettings_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.PythonSettings getDefaultInstanceForType() {
-      return com.google.api.PythonSettings.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.PythonSettings build() {
-      com.google.api.PythonSettings result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.PythonSettings buildPartial() {
-      com.google.api.PythonSettings result = new com.google.api.PythonSettings(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.api.PythonSettings result) {
-      int from_bitField0_ = bitField0_;
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.common_ = commonBuilder_ == null ? common_ : commonBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.experimentalFeatures_ =
-            experimentalFeaturesBuilder_ == null
-                ? experimentalFeatures_
-                : experimentalFeaturesBuilder_.build();
-        to_bitField0_ |= 0x00000002;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.PythonSettings) {
-        return mergeFrom((com.google.api.PythonSettings) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.PythonSettings other) {
-      if (other == com.google.api.PythonSettings.getDefaultInstance()) return this;
-      if (other.hasCommon()) {
-        mergeCommon(other.getCommon());
-      }
-      if (other.hasExperimentalFeatures()) {
-        mergeExperimentalFeatures(other.getExperimentalFeatures());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                input.readMessage(getCommonFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                input.readMessage(
-                    getExperimentalFeaturesFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private com.google.api.CommonLanguageSettings common_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.CommonLanguageSettings,
-            com.google.api.CommonLanguageSettings.Builder,
-            com.google.api.CommonLanguageSettingsOrBuilder>
-        commonBuilder_;
     /**
      *
      *
@@ -1366,11 +906,10 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.CommonLanguageSettings common = 1;</code>
-     *
-     * @return Whether the common field is set.
      */
+    @java.lang.Override
     public boolean hasCommon() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return instance.hasCommon();
     }
     /**
      *
@@ -1380,17 +919,10 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.CommonLanguageSettings common = 1;</code>
-     *
-     * @return The common.
      */
+    @java.lang.Override
     public com.google.api.CommonLanguageSettings getCommon() {
-      if (commonBuilder_ == null) {
-        return common_ == null
-            ? com.google.api.CommonLanguageSettings.getDefaultInstance()
-            : common_;
-      } else {
-        return commonBuilder_.getMessage();
-      }
+      return instance.getCommon();
     }
     /**
      *
@@ -1402,16 +934,8 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.CommonLanguageSettings common = 1;</code>
      */
     public Builder setCommon(com.google.api.CommonLanguageSettings value) {
-      if (commonBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        common_ = value;
-      } else {
-        commonBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setCommon(value);
       return this;
     }
     /**
@@ -1424,13 +948,8 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.CommonLanguageSettings common = 1;</code>
      */
     public Builder setCommon(com.google.api.CommonLanguageSettings.Builder builderForValue) {
-      if (commonBuilder_ == null) {
-        common_ = builderForValue.build();
-      } else {
-        commonBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setCommon(builderForValue.build());
       return this;
     }
     /**
@@ -1443,21 +962,8 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.CommonLanguageSettings common = 1;</code>
      */
     public Builder mergeCommon(com.google.api.CommonLanguageSettings value) {
-      if (commonBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)
-            && common_ != null
-            && common_ != com.google.api.CommonLanguageSettings.getDefaultInstance()) {
-          getCommonBuilder().mergeFrom(value);
-        } else {
-          common_ = value;
-        }
-      } else {
-        commonBuilder_.mergeFrom(value);
-      }
-      if (common_ != null) {
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeCommon(value);
       return this;
     }
     /**
@@ -1470,79 +976,11 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.CommonLanguageSettings common = 1;</code>
      */
     public Builder clearCommon() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      common_ = null;
-      if (commonBuilder_ != null) {
-        commonBuilder_.dispose();
-        commonBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearCommon();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Some settings.
-     * </pre>
-     *
-     * <code>.google.api.CommonLanguageSettings common = 1;</code>
-     */
-    public com.google.api.CommonLanguageSettings.Builder getCommonBuilder() {
-      bitField0_ |= 0x00000001;
-      onChanged();
-      return getCommonFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Some settings.
-     * </pre>
-     *
-     * <code>.google.api.CommonLanguageSettings common = 1;</code>
-     */
-    public com.google.api.CommonLanguageSettingsOrBuilder getCommonOrBuilder() {
-      if (commonBuilder_ != null) {
-        return commonBuilder_.getMessageOrBuilder();
-      } else {
-        return common_ == null
-            ? com.google.api.CommonLanguageSettings.getDefaultInstance()
-            : common_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Some settings.
-     * </pre>
-     *
-     * <code>.google.api.CommonLanguageSettings common = 1;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.CommonLanguageSettings,
-            com.google.api.CommonLanguageSettings.Builder,
-            com.google.api.CommonLanguageSettingsOrBuilder>
-        getCommonFieldBuilder() {
-      if (commonBuilder_ == null) {
-        commonBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.api.CommonLanguageSettings,
-                com.google.api.CommonLanguageSettings.Builder,
-                com.google.api.CommonLanguageSettingsOrBuilder>(
-                getCommon(), getParentForChildren(), isClean());
-        common_ = null;
-      }
-      return commonBuilder_;
-    }
 
-    private com.google.api.PythonSettings.ExperimentalFeatures experimentalFeatures_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.PythonSettings.ExperimentalFeatures,
-            com.google.api.PythonSettings.ExperimentalFeatures.Builder,
-            com.google.api.PythonSettings.ExperimentalFeaturesOrBuilder>
-        experimentalFeaturesBuilder_;
     /**
      *
      *
@@ -1551,11 +989,10 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.PythonSettings.ExperimentalFeatures experimental_features = 2;</code>
-     *
-     * @return Whether the experimentalFeatures field is set.
      */
+    @java.lang.Override
     public boolean hasExperimentalFeatures() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return instance.hasExperimentalFeatures();
     }
     /**
      *
@@ -1565,17 +1002,10 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.api.PythonSettings.ExperimentalFeatures experimental_features = 2;</code>
-     *
-     * @return The experimentalFeatures.
      */
+    @java.lang.Override
     public com.google.api.PythonSettings.ExperimentalFeatures getExperimentalFeatures() {
-      if (experimentalFeaturesBuilder_ == null) {
-        return experimentalFeatures_ == null
-            ? com.google.api.PythonSettings.ExperimentalFeatures.getDefaultInstance()
-            : experimentalFeatures_;
-      } else {
-        return experimentalFeaturesBuilder_.getMessage();
-      }
+      return instance.getExperimentalFeatures();
     }
     /**
      *
@@ -1588,16 +1018,8 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder setExperimentalFeatures(
         com.google.api.PythonSettings.ExperimentalFeatures value) {
-      if (experimentalFeaturesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        experimentalFeatures_ = value;
-      } else {
-        experimentalFeaturesBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setExperimentalFeatures(value);
       return this;
     }
     /**
@@ -1611,13 +1033,8 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder setExperimentalFeatures(
         com.google.api.PythonSettings.ExperimentalFeatures.Builder builderForValue) {
-      if (experimentalFeaturesBuilder_ == null) {
-        experimentalFeatures_ = builderForValue.build();
-      } else {
-        experimentalFeaturesBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setExperimentalFeatures(builderForValue.build());
       return this;
     }
     /**
@@ -1631,22 +1048,8 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder mergeExperimentalFeatures(
         com.google.api.PythonSettings.ExperimentalFeatures value) {
-      if (experimentalFeaturesBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)
-            && experimentalFeatures_ != null
-            && experimentalFeatures_
-                != com.google.api.PythonSettings.ExperimentalFeatures.getDefaultInstance()) {
-          getExperimentalFeaturesBuilder().mergeFrom(value);
-        } else {
-          experimentalFeatures_ = value;
-        }
-      } else {
-        experimentalFeaturesBuilder_.mergeFrom(value);
-      }
-      if (experimentalFeatures_ != null) {
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeExperimentalFeatures(value);
       return this;
     }
     /**
@@ -1659,133 +1062,91 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.PythonSettings.ExperimentalFeatures experimental_features = 2;</code>
      */
     public Builder clearExperimentalFeatures() {
-      bitField0_ = (bitField0_ & ~0x00000002);
-      experimentalFeatures_ = null;
-      if (experimentalFeaturesBuilder_ != null) {
-        experimentalFeaturesBuilder_.dispose();
-        experimentalFeaturesBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearExperimentalFeatures();
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Experimental features to be included during client library generation.
-     * </pre>
-     *
-     * <code>.google.api.PythonSettings.ExperimentalFeatures experimental_features = 2;</code>
-     */
-    public com.google.api.PythonSettings.ExperimentalFeatures.Builder
-        getExperimentalFeaturesBuilder() {
-      bitField0_ |= 0x00000002;
-      onChanged();
-      return getExperimentalFeaturesFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Experimental features to be included during client library generation.
-     * </pre>
-     *
-     * <code>.google.api.PythonSettings.ExperimentalFeatures experimental_features = 2;</code>
-     */
-    public com.google.api.PythonSettings.ExperimentalFeaturesOrBuilder
-        getExperimentalFeaturesOrBuilder() {
-      if (experimentalFeaturesBuilder_ != null) {
-        return experimentalFeaturesBuilder_.getMessageOrBuilder();
-      } else {
-        return experimentalFeatures_ == null
-            ? com.google.api.PythonSettings.ExperimentalFeatures.getDefaultInstance()
-            : experimentalFeatures_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Experimental features to be included during client library generation.
-     * </pre>
-     *
-     * <code>.google.api.PythonSettings.ExperimentalFeatures experimental_features = 2;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.PythonSettings.ExperimentalFeatures,
-            com.google.api.PythonSettings.ExperimentalFeatures.Builder,
-            com.google.api.PythonSettings.ExperimentalFeaturesOrBuilder>
-        getExperimentalFeaturesFieldBuilder() {
-      if (experimentalFeaturesBuilder_ == null) {
-        experimentalFeaturesBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.api.PythonSettings.ExperimentalFeatures,
-                com.google.api.PythonSettings.ExperimentalFeatures.Builder,
-                com.google.api.PythonSettings.ExperimentalFeaturesOrBuilder>(
-                getExperimentalFeatures(), getParentForChildren(), isClean());
-        experimentalFeatures_ = null;
-      }
-      return experimentalFeaturesBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.api.PythonSettings)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.PythonSettings();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_", "common_", "experimentalFeatures_",
+              };
+          java.lang.String info =
+              "\u0000\u0002\u0000\u0001\u0001\u0002\u0002\u0000\u0000\u0000\u0001\u1009\u0000\u0002"
+                  + "\u1009\u0001";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.PythonSettings> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.PythonSettings.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.api.PythonSettings>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.PythonSettings)
   private static final com.google.api.PythonSettings DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.PythonSettings();
+    PythonSettings defaultInstance = new PythonSettings();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        PythonSettings.class, defaultInstance);
   }
 
   public static com.google.api.PythonSettings getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<PythonSettings> PARSER =
-      new com.google.protobuf.AbstractParser<PythonSettings>() {
-        @java.lang.Override
-        public PythonSettings parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<PythonSettings> PARSER;
 
   public static com.google.protobuf.Parser<PythonSettings> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<PythonSettings> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.PythonSettings getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

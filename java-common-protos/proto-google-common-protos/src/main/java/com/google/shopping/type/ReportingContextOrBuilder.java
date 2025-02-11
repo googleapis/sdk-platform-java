@@ -22,4 +22,4 @@ package com.google.shopping.type;
 public interface ReportingContextOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.shopping.type.ReportingContext)
-    com.google.protobuf.MessageOrBuilder {}
+    com.google.protobuf.MessageLiteOrBuilder {}

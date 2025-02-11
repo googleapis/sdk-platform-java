@@ -30,10 +30,6 @@ public final class ExtendedOperationsProto {
     registry.add(com.google.cloud.ExtendedOperationsProto.operationPollingMethod);
   }
 
-  public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
-  }
-
   public static final int OPERATION_FIELD_FIELD_NUMBER = 1149;
   /**
    *
@@ -46,12 +42,18 @@ public final class ExtendedOperationsProto {
    *
    * <code>extend .google.protobuf.FieldOptions { ... }</code>
    */
-  public static final com.google.protobuf.GeneratedMessage.GeneratedExtension<
+  public static final com.google.protobuf.GeneratedMessageLite.GeneratedExtension<
           com.google.protobuf.DescriptorProtos.FieldOptions,
           com.google.cloud.OperationResponseMapping>
       operationField =
-          com.google.protobuf.GeneratedMessage.newFileScopedGeneratedExtension(
-              com.google.cloud.OperationResponseMapping.class, null);
+          com.google.protobuf.GeneratedMessageLite.newSingularGeneratedExtension(
+              com.google.protobuf.DescriptorProtos.FieldOptions.getDefaultInstance(),
+              com.google.cloud.OperationResponseMapping.UNDEFINED,
+              null,
+              com.google.cloud.OperationResponseMapping.internalGetValueMap(),
+              1149,
+              com.google.protobuf.WireFormat.FieldType.ENUM,
+              com.google.cloud.OperationResponseMapping.class);
 
   public static final int OPERATION_REQUEST_FIELD_FIELD_NUMBER = 1150;
   /**
@@ -71,11 +73,17 @@ public final class ExtendedOperationsProto {
    *
    * <code>extend .google.protobuf.FieldOptions { ... }</code>
    */
-  public static final com.google.protobuf.GeneratedMessage.GeneratedExtension<
+  public static final com.google.protobuf.GeneratedMessageLite.GeneratedExtension<
           com.google.protobuf.DescriptorProtos.FieldOptions, java.lang.String>
       operationRequestField =
-          com.google.protobuf.GeneratedMessage.newFileScopedGeneratedExtension(
-              java.lang.String.class, null);
+          com.google.protobuf.GeneratedMessageLite.newSingularGeneratedExtension(
+              com.google.protobuf.DescriptorProtos.FieldOptions.getDefaultInstance(),
+              "",
+              null,
+              null,
+              1150,
+              com.google.protobuf.WireFormat.FieldType.STRING,
+              java.lang.String.class);
 
   public static final int OPERATION_RESPONSE_FIELD_FIELD_NUMBER = 1151;
   /**
@@ -95,11 +103,17 @@ public final class ExtendedOperationsProto {
    *
    * <code>extend .google.protobuf.FieldOptions { ... }</code>
    */
-  public static final com.google.protobuf.GeneratedMessage.GeneratedExtension<
+  public static final com.google.protobuf.GeneratedMessageLite.GeneratedExtension<
           com.google.protobuf.DescriptorProtos.FieldOptions, java.lang.String>
       operationResponseField =
-          com.google.protobuf.GeneratedMessage.newFileScopedGeneratedExtension(
-              java.lang.String.class, null);
+          com.google.protobuf.GeneratedMessageLite.newSingularGeneratedExtension(
+              com.google.protobuf.DescriptorProtos.FieldOptions.getDefaultInstance(),
+              "",
+              null,
+              null,
+              1151,
+              com.google.protobuf.WireFormat.FieldType.STRING,
+              java.lang.String.class);
 
   public static final int OPERATION_SERVICE_FIELD_NUMBER = 1249;
   /**
@@ -115,11 +129,17 @@ public final class ExtendedOperationsProto {
    *
    * <code>extend .google.protobuf.MethodOptions { ... }</code>
    */
-  public static final com.google.protobuf.GeneratedMessage.GeneratedExtension<
+  public static final com.google.protobuf.GeneratedMessageLite.GeneratedExtension<
           com.google.protobuf.DescriptorProtos.MethodOptions, java.lang.String>
       operationService =
-          com.google.protobuf.GeneratedMessage.newFileScopedGeneratedExtension(
-              java.lang.String.class, null);
+          com.google.protobuf.GeneratedMessageLite.newSingularGeneratedExtension(
+              com.google.protobuf.DescriptorProtos.MethodOptions.getDefaultInstance(),
+              "",
+              null,
+              null,
+              1249,
+              com.google.protobuf.WireFormat.FieldType.STRING,
+              java.lang.String.class);
 
   public static final int OPERATION_POLLING_METHOD_FIELD_NUMBER = 1250;
   /**
@@ -132,50 +152,19 @@ public final class ExtendedOperationsProto {
    *
    * <code>extend .google.protobuf.MethodOptions { ... }</code>
    */
-  public static final com.google.protobuf.GeneratedMessage.GeneratedExtension<
+  public static final com.google.protobuf.GeneratedMessageLite.GeneratedExtension<
           com.google.protobuf.DescriptorProtos.MethodOptions, java.lang.Boolean>
       operationPollingMethod =
-          com.google.protobuf.GeneratedMessage.newFileScopedGeneratedExtension(
-              java.lang.Boolean.class, null);
-
-  public static com.google.protobuf.Descriptors.FileDescriptor getDescriptor() {
-    return descriptor;
-  }
-
-  private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
+          com.google.protobuf.GeneratedMessageLite.newSingularGeneratedExtension(
+              com.google.protobuf.DescriptorProtos.MethodOptions.getDefaultInstance(),
+              false,
+              null,
+              null,
+              1250,
+              com.google.protobuf.WireFormat.FieldType.BOOL,
+              java.lang.Boolean.class);
 
   static {
-    java.lang.String[] descriptorData = {
-      "\n&google/cloud/extended_operations.proto"
-          + "\022\014google.cloud\032 google/protobuf/descript"
-          + "or.proto*b\n\030OperationResponseMapping\022\r\n\t"
-          + "UNDEFINED\020\000\022\010\n\004NAME\020\001\022\n\n\006STATUS\020\002\022\016\n\nERR"
-          + "OR_CODE\020\003\022\021\n\rERROR_MESSAGE\020\004:_\n\017operatio"
-          + "n_field\022\035.google.protobuf.FieldOptions\030\375"
-          + "\010 \001(\0162&.google.cloud.OperationResponseMa"
-          + "pping:?\n\027operation_request_field\022\035.googl"
-          + "e.protobuf.FieldOptions\030\376\010 \001(\t:@\n\030operat"
-          + "ion_response_field\022\035.google.protobuf.Fie"
-          + "ldOptions\030\377\010 \001(\t::\n\021operation_service\022\036."
-          + "google.protobuf.MethodOptions\030\341\t \001(\t:A\n\030"
-          + "operation_polling_method\022\036.google.protob"
-          + "uf.MethodOptions\030\342\t \001(\010By\n\020com.google.cl"
-          + "oudB\027ExtendedOperationsProtoP\001ZCgoogle.g"
-          + "olang.org/genproto/googleapis/cloud/exte"
-          + "ndedops;extendedops\242\002\004GAPIb\006proto3"
-    };
-    descriptor =
-        com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
-            descriptorData,
-            new com.google.protobuf.Descriptors.FileDescriptor[] {
-              com.google.protobuf.DescriptorProtos.getDescriptor(),
-            });
-    operationField.internalInit(descriptor.getExtensions().get(0));
-    operationRequestField.internalInit(descriptor.getExtensions().get(1));
-    operationResponseField.internalInit(descriptor.getExtensions().get(2));
-    operationService.internalInit(descriptor.getExtensions().get(3));
-    operationPollingMethod.internalInit(descriptor.getExtensions().get(4));
-    com.google.protobuf.DescriptorProtos.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -22,7 +22,7 @@ package com.google.api;
 public interface MetricRuleOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.MetricRule)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

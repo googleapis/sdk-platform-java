@@ -22,7 +22,7 @@ package com.google.api;
 public interface CommonLanguageSettingsOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.CommonLanguageSettings)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -144,14 +144,4 @@ public interface CommonLanguageSettingsOrBuilder
    * @return The selectiveGapicGeneration.
    */
   com.google.api.SelectiveGapicGeneration getSelectiveGapicGeneration();
-  /**
-   *
-   *
-   * <pre>
-   * Configuration for which RPCs should be generated in the GAPIC client.
-   * </pre>
-   *
-   * <code>.google.api.SelectiveGapicGeneration selective_gapic_generation = 3;</code>
-   */
-  com.google.api.SelectiveGapicGenerationOrBuilder getSelectiveGapicGenerationOrBuilder();
 }

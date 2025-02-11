@@ -22,7 +22,7 @@ package com.google.api;
 public interface ServiceOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.Service)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -180,34 +180,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.protobuf.Api apis = 3;</code>
    */
   int getApisCount();
-  /**
-   *
-   *
-   * <pre>
-   * A list of API interfaces exported by this service. Only the `name` field
-   * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by
-   * the configuration author, as the remaining fields will be derived from the
-   * IDL during the normalization process. It is an error to specify an API
-   * interface here which cannot be resolved against the associated IDL files.
-   * </pre>
-   *
-   * <code>repeated .google.protobuf.Api apis = 3;</code>
-   */
-  java.util.List<? extends com.google.protobuf.ApiOrBuilder> getApisOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * A list of API interfaces exported by this service. Only the `name` field
-   * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by
-   * the configuration author, as the remaining fields will be derived from the
-   * IDL during the normalization process. It is an error to specify an API
-   * interface here which cannot be resolved against the associated IDL files.
-   * </pre>
-   *
-   * <code>repeated .google.protobuf.Api apis = 3;</code>
-   */
-  com.google.protobuf.ApiOrBuilder getApisOrBuilder(int index);
 
   /**
    *
@@ -260,40 +232,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.protobuf.Type types = 4;</code>
    */
   int getTypesCount();
-  /**
-   *
-   *
-   * <pre>
-   * A list of all proto message types included in this API service.
-   * Types referenced directly or indirectly by the `apis` are automatically
-   * included.  Messages which are not referenced but shall be included, such as
-   * types used by the `google.protobuf.Any` type, should be listed here by
-   * name by the configuration author. Example:
-   *
-   *     types:
-   *     - name: google.protobuf.Int32
-   * </pre>
-   *
-   * <code>repeated .google.protobuf.Type types = 4;</code>
-   */
-  java.util.List<? extends com.google.protobuf.TypeOrBuilder> getTypesOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * A list of all proto message types included in this API service.
-   * Types referenced directly or indirectly by the `apis` are automatically
-   * included.  Messages which are not referenced but shall be included, such as
-   * types used by the `google.protobuf.Any` type, should be listed here by
-   * name by the configuration author. Example:
-   *
-   *     types:
-   *     - name: google.protobuf.Int32
-   * </pre>
-   *
-   * <code>repeated .google.protobuf.Type types = 4;</code>
-   */
-  com.google.protobuf.TypeOrBuilder getTypesOrBuilder(int index);
 
   /**
    *
@@ -343,38 +281,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.protobuf.Enum enums = 5;</code>
    */
   int getEnumsCount();
-  /**
-   *
-   *
-   * <pre>
-   * A list of all enum types included in this API service.  Enums referenced
-   * directly or indirectly by the `apis` are automatically included.  Enums
-   * which are not referenced but shall be included should be listed here by
-   * name by the configuration author. Example:
-   *
-   *     enums:
-   *     - name: google.someapi.v1.SomeEnum
-   * </pre>
-   *
-   * <code>repeated .google.protobuf.Enum enums = 5;</code>
-   */
-  java.util.List<? extends com.google.protobuf.EnumOrBuilder> getEnumsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * A list of all enum types included in this API service.  Enums referenced
-   * directly or indirectly by the `apis` are automatically included.  Enums
-   * which are not referenced but shall be included should be listed here by
-   * name by the configuration author. Example:
-   *
-   *     enums:
-   *     - name: google.someapi.v1.SomeEnum
-   * </pre>
-   *
-   * <code>repeated .google.protobuf.Enum enums = 5;</code>
-   */
-  com.google.protobuf.EnumOrBuilder getEnumsOrBuilder(int index);
 
   /**
    *
@@ -400,16 +306,6 @@ public interface ServiceOrBuilder
    * @return The documentation.
    */
   com.google.api.Documentation getDocumentation();
-  /**
-   *
-   *
-   * <pre>
-   * Additional API documentation.
-   * </pre>
-   *
-   * <code>.google.api.Documentation documentation = 6;</code>
-   */
-  com.google.api.DocumentationOrBuilder getDocumentationOrBuilder();
 
   /**
    *
@@ -435,16 +331,6 @@ public interface ServiceOrBuilder
    * @return The backend.
    */
   com.google.api.Backend getBackend();
-  /**
-   *
-   *
-   * <pre>
-   * API backend configuration.
-   * </pre>
-   *
-   * <code>.google.api.Backend backend = 8;</code>
-   */
-  com.google.api.BackendOrBuilder getBackendOrBuilder();
 
   /**
    *
@@ -470,16 +356,6 @@ public interface ServiceOrBuilder
    * @return The http.
    */
   com.google.api.Http getHttp();
-  /**
-   *
-   *
-   * <pre>
-   * HTTP configuration.
-   * </pre>
-   *
-   * <code>.google.api.Http http = 9;</code>
-   */
-  com.google.api.HttpOrBuilder getHttpOrBuilder();
 
   /**
    *
@@ -505,16 +381,6 @@ public interface ServiceOrBuilder
    * @return The quota.
    */
   com.google.api.Quota getQuota();
-  /**
-   *
-   *
-   * <pre>
-   * Quota configuration.
-   * </pre>
-   *
-   * <code>.google.api.Quota quota = 10;</code>
-   */
-  com.google.api.QuotaOrBuilder getQuotaOrBuilder();
 
   /**
    *
@@ -540,16 +406,6 @@ public interface ServiceOrBuilder
    * @return The authentication.
    */
   com.google.api.Authentication getAuthentication();
-  /**
-   *
-   *
-   * <pre>
-   * Auth configuration.
-   * </pre>
-   *
-   * <code>.google.api.Authentication authentication = 11;</code>
-   */
-  com.google.api.AuthenticationOrBuilder getAuthenticationOrBuilder();
 
   /**
    *
@@ -575,16 +431,6 @@ public interface ServiceOrBuilder
    * @return The context.
    */
   com.google.api.Context getContext();
-  /**
-   *
-   *
-   * <pre>
-   * Context configuration.
-   * </pre>
-   *
-   * <code>.google.api.Context context = 12;</code>
-   */
-  com.google.api.ContextOrBuilder getContextOrBuilder();
 
   /**
    *
@@ -610,16 +456,6 @@ public interface ServiceOrBuilder
    * @return The usage.
    */
   com.google.api.Usage getUsage();
-  /**
-   *
-   *
-   * <pre>
-   * Configuration controlling usage of this service.
-   * </pre>
-   *
-   * <code>.google.api.Usage usage = 15;</code>
-   */
-  com.google.api.UsageOrBuilder getUsageOrBuilder();
 
   /**
    *
@@ -657,30 +493,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.api.Endpoint endpoints = 18;</code>
    */
   int getEndpointsCount();
-  /**
-   *
-   *
-   * <pre>
-   * Configuration for network endpoints.  If this is empty, then an endpoint
-   * with the same name as the service is automatically generated to service all
-   * defined APIs.
-   * </pre>
-   *
-   * <code>repeated .google.api.Endpoint endpoints = 18;</code>
-   */
-  java.util.List<? extends com.google.api.EndpointOrBuilder> getEndpointsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Configuration for network endpoints.  If this is empty, then an endpoint
-   * with the same name as the service is automatically generated to service all
-   * defined APIs.
-   * </pre>
-   *
-   * <code>repeated .google.api.Endpoint endpoints = 18;</code>
-   */
-  com.google.api.EndpointOrBuilder getEndpointsOrBuilder(int index);
 
   /**
    *
@@ -706,16 +518,6 @@ public interface ServiceOrBuilder
    * @return The control.
    */
   com.google.api.Control getControl();
-  /**
-   *
-   *
-   * <pre>
-   * Configuration for the service control plane.
-   * </pre>
-   *
-   * <code>.google.api.Control control = 21;</code>
-   */
-  com.google.api.ControlOrBuilder getControlOrBuilder();
 
   /**
    *
@@ -747,26 +549,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.api.LogDescriptor logs = 23;</code>
    */
   int getLogsCount();
-  /**
-   *
-   *
-   * <pre>
-   * Defines the logs used by this service.
-   * </pre>
-   *
-   * <code>repeated .google.api.LogDescriptor logs = 23;</code>
-   */
-  java.util.List<? extends com.google.api.LogDescriptorOrBuilder> getLogsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Defines the logs used by this service.
-   * </pre>
-   *
-   * <code>repeated .google.api.LogDescriptor logs = 23;</code>
-   */
-  com.google.api.LogDescriptorOrBuilder getLogsOrBuilder(int index);
 
   /**
    *
@@ -798,26 +580,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
    */
   int getMetricsCount();
-  /**
-   *
-   *
-   * <pre>
-   * Defines the metrics used by this service.
-   * </pre>
-   *
-   * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
-   */
-  java.util.List<? extends com.google.api.MetricDescriptorOrBuilder> getMetricsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Defines the metrics used by this service.
-   * </pre>
-   *
-   * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
-   */
-  com.google.api.MetricDescriptorOrBuilder getMetricsOrBuilder(int index);
 
   /**
    *
@@ -855,31 +617,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
    */
   int getMonitoredResourcesCount();
-  /**
-   *
-   *
-   * <pre>
-   * Defines the monitored resources used by this service. This is required
-   * by the [Service.monitoring][google.api.Service.monitoring] and
-   * [Service.logging][google.api.Service.logging] configurations.
-   * </pre>
-   *
-   * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
-   */
-  java.util.List<? extends com.google.api.MonitoredResourceDescriptorOrBuilder>
-      getMonitoredResourcesOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Defines the monitored resources used by this service. This is required
-   * by the [Service.monitoring][google.api.Service.monitoring] and
-   * [Service.logging][google.api.Service.logging] configurations.
-   * </pre>
-   *
-   * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
-   */
-  com.google.api.MonitoredResourceDescriptorOrBuilder getMonitoredResourcesOrBuilder(int index);
 
   /**
    *
@@ -905,16 +642,6 @@ public interface ServiceOrBuilder
    * @return The billing.
    */
   com.google.api.Billing getBilling();
-  /**
-   *
-   *
-   * <pre>
-   * Billing configuration.
-   * </pre>
-   *
-   * <code>.google.api.Billing billing = 26;</code>
-   */
-  com.google.api.BillingOrBuilder getBillingOrBuilder();
 
   /**
    *
@@ -940,16 +667,6 @@ public interface ServiceOrBuilder
    * @return The logging.
    */
   com.google.api.Logging getLogging();
-  /**
-   *
-   *
-   * <pre>
-   * Logging configuration.
-   * </pre>
-   *
-   * <code>.google.api.Logging logging = 27;</code>
-   */
-  com.google.api.LoggingOrBuilder getLoggingOrBuilder();
 
   /**
    *
@@ -975,16 +692,6 @@ public interface ServiceOrBuilder
    * @return The monitoring.
    */
   com.google.api.Monitoring getMonitoring();
-  /**
-   *
-   *
-   * <pre>
-   * Monitoring configuration.
-   * </pre>
-   *
-   * <code>.google.api.Monitoring monitoring = 28;</code>
-   */
-  com.google.api.MonitoringOrBuilder getMonitoringOrBuilder();
 
   /**
    *
@@ -1010,16 +717,6 @@ public interface ServiceOrBuilder
    * @return The systemParameters.
    */
   com.google.api.SystemParameters getSystemParameters();
-  /**
-   *
-   *
-   * <pre>
-   * System parameter configuration.
-   * </pre>
-   *
-   * <code>.google.api.SystemParameters system_parameters = 29;</code>
-   */
-  com.google.api.SystemParametersOrBuilder getSystemParametersOrBuilder();
 
   /**
    *
@@ -1045,16 +742,6 @@ public interface ServiceOrBuilder
    * @return The sourceInfo.
    */
   com.google.api.SourceInfo getSourceInfo();
-  /**
-   *
-   *
-   * <pre>
-   * Output only. The source information for this configuration if available.
-   * </pre>
-   *
-   * <code>.google.api.SourceInfo source_info = 37;</code>
-   */
-  com.google.api.SourceInfoOrBuilder getSourceInfoOrBuilder();
 
   /**
    *
@@ -1084,18 +771,6 @@ public interface ServiceOrBuilder
    * @return The publishing.
    */
   com.google.api.Publishing getPublishing();
-  /**
-   *
-   *
-   * <pre>
-   * Settings for [Google Cloud Client
-   * libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
-   * generated from APIs defined as protocol buffers.
-   * </pre>
-   *
-   * <code>.google.api.Publishing publishing = 45;</code>
-   */
-  com.google.api.PublishingOrBuilder getPublishingOrBuilder();
 
   /**
    *
@@ -1127,17 +802,4 @@ public interface ServiceOrBuilder
    * @return The configVersion.
    */
   com.google.protobuf.UInt32Value getConfigVersion();
-  /**
-   *
-   *
-   * <pre>
-   * Obsolete. Do not use.
-   *
-   * This field has no semantic meaning. The service config compiler always
-   * sets this field to `3`.
-   * </pre>
-   *
-   * <code>.google.protobuf.UInt32Value config_version = 20;</code>
-   */
-  com.google.protobuf.UInt32ValueOrBuilder getConfigVersionOrBuilder();
 }

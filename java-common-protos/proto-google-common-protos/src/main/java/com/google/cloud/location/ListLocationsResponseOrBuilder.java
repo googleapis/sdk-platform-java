@@ -22,7 +22,7 @@ package com.google.cloud.location;
 public interface ListLocationsResponseOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.cloud.location.ListLocationsResponse)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -54,26 +54,6 @@ public interface ListLocationsResponseOrBuilder
    * <code>repeated .google.cloud.location.Location locations = 1;</code>
    */
   int getLocationsCount();
-  /**
-   *
-   *
-   * <pre>
-   * A list of locations that matches the specified filter in the request.
-   * </pre>
-   *
-   * <code>repeated .google.cloud.location.Location locations = 1;</code>
-   */
-  java.util.List<? extends com.google.cloud.location.LocationOrBuilder> getLocationsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * A list of locations that matches the specified filter in the request.
-   * </pre>
-   *
-   * <code>repeated .google.cloud.location.Location locations = 1;</code>
-   */
-  com.google.cloud.location.LocationOrBuilder getLocationsOrBuilder(int index);
 
   /**
    *

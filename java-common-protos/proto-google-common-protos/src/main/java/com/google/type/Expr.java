@@ -58,16 +58,10 @@ package com.google.type;
  *
  * Protobuf type {@code google.type.Expr}
  */
-public final class Expr extends com.google.protobuf.GeneratedMessageV3
+public final class Expr extends com.google.protobuf.GeneratedMessageLite<Expr, Expr.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.type.Expr)
     ExprOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use Expr.newBuilder() to construct.
-  private Expr(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private Expr() {
     expression_ = "";
     title_ = "";
@@ -75,28 +69,8 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
     location_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new Expr();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.type.ExprProto.internal_static_google_type_Expr_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.type.ExprProto.internal_static_google_type_Expr_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.type.Expr.class, com.google.type.Expr.Builder.class);
-  }
-
   public static final int EXPRESSION_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object expression_ = "";
+  private java.lang.String expression_;
   /**
    *
    *
@@ -111,15 +85,7 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getExpression() {
-    java.lang.Object ref = expression_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      expression_ = s;
-      return s;
-    }
+    return expression_;
   }
   /**
    *
@@ -135,21 +101,58 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getExpressionBytes() {
-    java.lang.Object ref = expression_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      expression_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(expression_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Textual representation of an expression in Common Expression Language
+   * syntax.
+   * </pre>
+   *
+   * <code>string expression = 1;</code>
+   *
+   * @param value The expression to set.
+   */
+  private void setExpression(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    expression_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Textual representation of an expression in Common Expression Language
+   * syntax.
+   * </pre>
+   *
+   * <code>string expression = 1;</code>
+   */
+  private void clearExpression() {
+
+    expression_ = getDefaultInstance().getExpression();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Textual representation of an expression in Common Expression Language
+   * syntax.
+   * </pre>
+   *
+   * <code>string expression = 1;</code>
+   *
+   * @param value The bytes for expression to set.
+   */
+  private void setExpressionBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    expression_ = value.toStringUtf8();
   }
 
   public static final int TITLE_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object title_ = "";
+  private java.lang.String title_;
   /**
    *
    *
@@ -165,15 +168,7 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getTitle() {
-    java.lang.Object ref = title_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      title_ = s;
-      return s;
-    }
+    return title_;
   }
   /**
    *
@@ -190,21 +185,61 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getTitleBytes() {
-    java.lang.Object ref = title_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      title_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(title_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Title for the expression, i.e. a short string describing
+   * its purpose. This can be used e.g. in UIs which allow to enter the
+   * expression.
+   * </pre>
+   *
+   * <code>string title = 2;</code>
+   *
+   * @param value The title to set.
+   */
+  private void setTitle(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    title_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Title for the expression, i.e. a short string describing
+   * its purpose. This can be used e.g. in UIs which allow to enter the
+   * expression.
+   * </pre>
+   *
+   * <code>string title = 2;</code>
+   */
+  private void clearTitle() {
+
+    title_ = getDefaultInstance().getTitle();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Title for the expression, i.e. a short string describing
+   * its purpose. This can be used e.g. in UIs which allow to enter the
+   * expression.
+   * </pre>
+   *
+   * <code>string title = 2;</code>
+   *
+   * @param value The bytes for title to set.
+   */
+  private void setTitleBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    title_ = value.toStringUtf8();
   }
 
   public static final int DESCRIPTION_FIELD_NUMBER = 3;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object description_ = "";
+  private java.lang.String description_;
   /**
    *
    *
@@ -219,15 +254,7 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getDescription() {
-    java.lang.Object ref = description_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      description_ = s;
-      return s;
-    }
+    return description_;
   }
   /**
    *
@@ -243,21 +270,58 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getDescriptionBytes() {
-    java.lang.Object ref = description_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      description_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(description_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Description of the expression. This is a longer text which
+   * describes the expression, e.g. when hovered over it in a UI.
+   * </pre>
+   *
+   * <code>string description = 3;</code>
+   *
+   * @param value The description to set.
+   */
+  private void setDescription(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    description_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Description of the expression. This is a longer text which
+   * describes the expression, e.g. when hovered over it in a UI.
+   * </pre>
+   *
+   * <code>string description = 3;</code>
+   */
+  private void clearDescription() {
+
+    description_ = getDefaultInstance().getDescription();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Description of the expression. This is a longer text which
+   * describes the expression, e.g. when hovered over it in a UI.
+   * </pre>
+   *
+   * <code>string description = 3;</code>
+   *
+   * @param value The bytes for description to set.
+   */
+  private void setDescriptionBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    description_ = value.toStringUtf8();
   }
 
   public static final int LOCATION_FIELD_NUMBER = 4;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object location_ = "";
+  private java.lang.String location_;
   /**
    *
    *
@@ -272,15 +336,7 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getLocation() {
-    java.lang.Object ref = location_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      location_ = s;
-      return s;
-    }
+    return location_;
   }
   /**
    *
@@ -296,201 +352,137 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getLocationBytes() {
-    java.lang.Object ref = location_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      location_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(location_);
   }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. String indicating the location of the expression for error
+   * reporting, e.g. a file name and a position in the file.
+   * </pre>
+   *
+   * <code>string location = 4;</code>
+   *
+   * @param value The location to set.
+   */
+  private void setLocation(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    location_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. String indicating the location of the expression for error
+   * reporting, e.g. a file name and a position in the file.
+   * </pre>
+   *
+   * <code>string location = 4;</code>
+   */
+  private void clearLocation() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(expression_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, expression_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(title_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, title_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, description_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(location_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, location_);
-    }
-    getUnknownFields().writeTo(output);
+    location_ = getDefaultInstance().getLocation();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(expression_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, expression_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(title_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, title_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, description_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(location_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, location_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.type.Expr)) {
-      return super.equals(obj);
-    }
-    com.google.type.Expr other = (com.google.type.Expr) obj;
-
-    if (!getExpression().equals(other.getExpression())) return false;
-    if (!getTitle().equals(other.getTitle())) return false;
-    if (!getDescription().equals(other.getDescription())) return false;
-    if (!getLocation().equals(other.getLocation())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + EXPRESSION_FIELD_NUMBER;
-    hash = (53 * hash) + getExpression().hashCode();
-    hash = (37 * hash) + TITLE_FIELD_NUMBER;
-    hash = (53 * hash) + getTitle().hashCode();
-    hash = (37 * hash) + DESCRIPTION_FIELD_NUMBER;
-    hash = (53 * hash) + getDescription().hashCode();
-    hash = (37 * hash) + LOCATION_FIELD_NUMBER;
-    hash = (53 * hash) + getLocation().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Optional. String indicating the location of the expression for error
+   * reporting, e.g. a file name and a position in the file.
+   * </pre>
+   *
+   * <code>string location = 4;</code>
+   *
+   * @param value The bytes for location to set.
+   */
+  private void setLocationBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    location_ = value.toStringUtf8();
   }
 
   public static com.google.type.Expr parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.type.Expr parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.type.Expr parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.type.Expr parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.type.Expr parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.type.Expr parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.type.Expr parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.type.Expr parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.type.Expr parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.type.Expr parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.type.Expr parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.type.Expr parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.type.Expr prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -530,220 +522,16 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.type.Expr}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<com.google.type.Expr, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.type.Expr)
       com.google.type.ExprOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.type.ExprProto.internal_static_google_type_Expr_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.type.ExprProto.internal_static_google_type_Expr_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.type.Expr.class, com.google.type.Expr.Builder.class);
-    }
-
     // Construct using com.google.type.Expr.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      expression_ = "";
-      title_ = "";
-      description_ = "";
-      location_ = "";
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.type.ExprProto.internal_static_google_type_Expr_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.type.Expr getDefaultInstanceForType() {
-      return com.google.type.Expr.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.type.Expr build() {
-      com.google.type.Expr result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.type.Expr buildPartial() {
-      com.google.type.Expr result = new com.google.type.Expr(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.type.Expr result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.expression_ = expression_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.title_ = title_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.description_ = description_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.location_ = location_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.type.Expr) {
-        return mergeFrom((com.google.type.Expr) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.type.Expr other) {
-      if (other == com.google.type.Expr.getDefaultInstance()) return this;
-      if (!other.getExpression().isEmpty()) {
-        expression_ = other.expression_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getTitle().isEmpty()) {
-        title_ = other.title_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      if (!other.getDescription().isEmpty()) {
-        description_ = other.description_;
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
-      if (!other.getLocation().isEmpty()) {
-        location_ = other.location_;
-        bitField0_ |= 0x00000008;
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                expression_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                title_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 26:
-              {
-                description_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 26
-            case 34:
-              {
-                location_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 34
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object expression_ = "";
     /**
      *
      *
@@ -756,16 +544,9 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The expression.
      */
+    @java.lang.Override
     public java.lang.String getExpression() {
-      java.lang.Object ref = expression_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        expression_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getExpression();
     }
     /**
      *
@@ -779,16 +560,9 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for expression.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getExpressionBytes() {
-      java.lang.Object ref = expression_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        expression_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getExpressionBytes();
     }
     /**
      *
@@ -804,12 +578,8 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setExpression(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      expression_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setExpression(value);
       return this;
     }
     /**
@@ -825,9 +595,8 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearExpression() {
-      expression_ = getDefaultInstance().getExpression();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearExpression();
       return this;
     }
     /**
@@ -844,17 +613,11 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setExpressionBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      expression_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setExpressionBytes(value);
       return this;
     }
 
-    private java.lang.Object title_ = "";
     /**
      *
      *
@@ -868,16 +631,9 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The title.
      */
+    @java.lang.Override
     public java.lang.String getTitle() {
-      java.lang.Object ref = title_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        title_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getTitle();
     }
     /**
      *
@@ -892,16 +648,9 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for title.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getTitleBytes() {
-      java.lang.Object ref = title_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        title_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getTitleBytes();
     }
     /**
      *
@@ -918,12 +667,8 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setTitle(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      title_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setTitle(value);
       return this;
     }
     /**
@@ -940,9 +685,8 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearTitle() {
-      title_ = getDefaultInstance().getTitle();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearTitle();
       return this;
     }
     /**
@@ -960,17 +704,11 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setTitleBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      title_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setTitleBytes(value);
       return this;
     }
 
-    private java.lang.Object description_ = "";
     /**
      *
      *
@@ -983,16 +721,9 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The description.
      */
+    @java.lang.Override
     public java.lang.String getDescription() {
-      java.lang.Object ref = description_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        description_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getDescription();
     }
     /**
      *
@@ -1006,16 +737,9 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for description.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getDescriptionBytes() {
-      java.lang.Object ref = description_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        description_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getDescriptionBytes();
     }
     /**
      *
@@ -1031,12 +755,8 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDescription(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      description_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setDescription(value);
       return this;
     }
     /**
@@ -1052,9 +772,8 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDescription() {
-      description_ = getDefaultInstance().getDescription();
-      bitField0_ = (bitField0_ & ~0x00000004);
-      onChanged();
+      copyOnWrite();
+      instance.clearDescription();
       return this;
     }
     /**
@@ -1071,17 +790,11 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDescriptionBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      description_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setDescriptionBytes(value);
       return this;
     }
 
-    private java.lang.Object location_ = "";
     /**
      *
      *
@@ -1094,16 +807,9 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The location.
      */
+    @java.lang.Override
     public java.lang.String getLocation() {
-      java.lang.Object ref = location_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        location_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getLocation();
     }
     /**
      *
@@ -1117,16 +823,9 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for location.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getLocationBytes() {
-      java.lang.Object ref = location_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        location_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getLocationBytes();
     }
     /**
      *
@@ -1142,12 +841,8 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setLocation(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      location_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setLocation(value);
       return this;
     }
     /**
@@ -1163,9 +858,8 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearLocation() {
-      location_ = getDefaultInstance().getLocation();
-      bitField0_ = (bitField0_ & ~0x00000008);
-      onChanged();
+      copyOnWrite();
+      instance.clearLocation();
       return this;
     }
     /**
@@ -1182,74 +876,89 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setLocationBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      location_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setLocationBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.type.Expr)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.type.Expr();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "expression_", "title_", "description_", "location_",
+              };
+          java.lang.String info =
+              "\u0000\u0004\u0000\u0000\u0001\u0004\u0004\u0000\u0000\u0000\u0001\u0208\u0002\u0208"
+                  + "\u0003\u0208\u0004\u0208";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.type.Expr> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.type.Expr.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser = new DefaultInstanceBasedParser<com.google.type.Expr>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.type.Expr)
   private static final com.google.type.Expr DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.type.Expr();
+    Expr defaultInstance = new Expr();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(Expr.class, defaultInstance);
   }
 
   public static com.google.type.Expr getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Expr> PARSER =
-      new com.google.protobuf.AbstractParser<Expr>() {
-        @java.lang.Override
-        public Expr parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<Expr> PARSER;
 
   public static com.google.protobuf.Parser<Expr> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<Expr> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.type.Expr getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

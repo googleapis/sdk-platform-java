@@ -28,52 +28,15 @@ package com.google.cloud.audit;
  *
  * Protobuf type {@code google.cloud.audit.OrgPolicyViolationInfo}
  */
-public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedMessageV3
+public final class OrgPolicyViolationInfo
+    extends com.google.protobuf.GeneratedMessageLite<
+        OrgPolicyViolationInfo, OrgPolicyViolationInfo.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.cloud.audit.OrgPolicyViolationInfo)
     OrgPolicyViolationInfoOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use OrgPolicyViolationInfo.newBuilder() to construct.
-  private OrgPolicyViolationInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private OrgPolicyViolationInfo() {
     resourceType_ = "";
-    violationInfo_ = java.util.Collections.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new OrgPolicyViolationInfo();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.cloud.audit.AuditLogProto
-        .internal_static_google_cloud_audit_OrgPolicyViolationInfo_descriptor;
-  }
-
-  @SuppressWarnings({"rawtypes"})
-  @java.lang.Override
-  protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-      int number) {
-    switch (number) {
-      case 3:
-        return internalGetResourceTags();
-      default:
-        throw new RuntimeException("Invalid map field number: " + number);
-    }
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.cloud.audit.AuditLogProto
-        .internal_static_google_cloud_audit_OrgPolicyViolationInfo_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.cloud.audit.OrgPolicyViolationInfo.class,
-            com.google.cloud.audit.OrgPolicyViolationInfo.Builder.class);
+    violationInfo_ = emptyProtobufList();
   }
 
   private int bitField0_;
@@ -89,8 +52,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
    * </pre>
    *
    * <code>.google.protobuf.Struct payload = 1 [(.google.api.field_behavior) = OPTIONAL];</code>
-   *
-   * @return Whether the payload field is set.
    */
   @java.lang.Override
   public boolean hasPayload() {
@@ -106,8 +67,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
    * </pre>
    *
    * <code>.google.protobuf.Struct payload = 1 [(.google.api.field_behavior) = OPTIONAL];</code>
-   *
-   * @return The payload.
    */
   @java.lang.Override
   public com.google.protobuf.Struct getPayload() {
@@ -124,15 +83,50 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
    *
    * <code>.google.protobuf.Struct payload = 1 [(.google.api.field_behavior) = OPTIONAL];</code>
    */
-  @java.lang.Override
-  public com.google.protobuf.StructOrBuilder getPayloadOrBuilder() {
-    return payload_ == null ? com.google.protobuf.Struct.getDefaultInstance() : payload_;
+  private void setPayload(com.google.protobuf.Struct value) {
+    value.getClass();
+    payload_ = value;
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Resource payload that is currently in scope and is subjected to orgpolicy
+   * conditions. This payload may be the subset of the actual Resource that may
+   * come in the request. This payload should not contain any core content.
+   * </pre>
+   *
+   * <code>.google.protobuf.Struct payload = 1 [(.google.api.field_behavior) = OPTIONAL];</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergePayload(com.google.protobuf.Struct value) {
+    value.getClass();
+    if (payload_ != null && payload_ != com.google.protobuf.Struct.getDefaultInstance()) {
+      payload_ = com.google.protobuf.Struct.newBuilder(payload_).mergeFrom(value).buildPartial();
+    } else {
+      payload_ = value;
+    }
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Resource payload that is currently in scope and is subjected to orgpolicy
+   * conditions. This payload may be the subset of the actual Resource that may
+   * come in the request. This payload should not contain any core content.
+   * </pre>
+   *
+   * <code>.google.protobuf.Struct payload = 1 [(.google.api.field_behavior) = OPTIONAL];</code>
+   */
+  private void clearPayload() {
+    payload_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static final int RESOURCE_TYPE_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object resourceType_ = "";
+  private java.lang.String resourceType_;
   /**
    *
    *
@@ -147,15 +141,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
    */
   @java.lang.Override
   public java.lang.String getResourceType() {
-    java.lang.Object ref = resourceType_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      resourceType_ = s;
-      return s;
-    }
+    return resourceType_;
   }
   /**
    *
@@ -171,44 +157,86 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getResourceTypeBytes() {
-    java.lang.Object ref = resourceType_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      resourceType_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(resourceType_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Resource type that the orgpolicy is checked against.
+   * Example: compute.googleapis.com/Instance, store.googleapis.com/bucket
+   * </pre>
+   *
+   * <code>string resource_type = 2 [(.google.api.field_behavior) = OPTIONAL];</code>
+   *
+   * @param value The resourceType to set.
+   */
+  private void setResourceType(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    resourceType_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Resource type that the orgpolicy is checked against.
+   * Example: compute.googleapis.com/Instance, store.googleapis.com/bucket
+   * </pre>
+   *
+   * <code>string resource_type = 2 [(.google.api.field_behavior) = OPTIONAL];</code>
+   */
+  private void clearResourceType() {
+
+    resourceType_ = getDefaultInstance().getResourceType();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Resource type that the orgpolicy is checked against.
+   * Example: compute.googleapis.com/Instance, store.googleapis.com/bucket
+   * </pre>
+   *
+   * <code>string resource_type = 2 [(.google.api.field_behavior) = OPTIONAL];</code>
+   *
+   * @param value The bytes for resourceType to set.
+   */
+  private void setResourceTypeBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    resourceType_ = value.toStringUtf8();
   }
 
   public static final int RESOURCE_TAGS_FIELD_NUMBER = 3;
 
   private static final class ResourceTagsDefaultEntryHolder {
-    static final com.google.protobuf.MapEntry<java.lang.String, java.lang.String> defaultEntry =
-        com.google.protobuf.MapEntry.<java.lang.String, java.lang.String>newDefaultInstance(
-            com.google.cloud.audit.AuditLogProto
-                .internal_static_google_cloud_audit_OrgPolicyViolationInfo_ResourceTagsEntry_descriptor,
+    static final com.google.protobuf.MapEntryLite<java.lang.String, java.lang.String> defaultEntry =
+        com.google.protobuf.MapEntryLite.<java.lang.String, java.lang.String>newDefaultInstance(
             com.google.protobuf.WireFormat.FieldType.STRING,
             "",
             com.google.protobuf.WireFormat.FieldType.STRING,
             "");
   }
 
-  @SuppressWarnings("serial")
-  private com.google.protobuf.MapField<java.lang.String, java.lang.String> resourceTags_;
+  private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String> resourceTags_ =
+      com.google.protobuf.MapFieldLite.emptyMapField();
 
-  private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+  private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
       internalGetResourceTags() {
-    if (resourceTags_ == null) {
-      return com.google.protobuf.MapField.emptyMapField(
-          ResourceTagsDefaultEntryHolder.defaultEntry);
+    return resourceTags_;
+  }
+
+  private com.google.protobuf.MapFieldLite<java.lang.String, java.lang.String>
+      internalGetMutableResourceTags() {
+    if (!resourceTags_.isMutable()) {
+      resourceTags_ = resourceTags_.mutableCopy();
     }
     return resourceTags_;
   }
 
+  @java.lang.Override
   public int getResourceTagsCount() {
-    return internalGetResourceTags().getMap().size();
+    return internalGetResourceTags().size();
   }
   /**
    *
@@ -228,10 +256,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
    */
   @java.lang.Override
   public boolean containsResourceTags(java.lang.String key) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
-    return internalGetResourceTags().getMap().containsKey(key);
+    java.lang.Class<?> keyClass = key.getClass();
+    return internalGetResourceTags().containsKey(key);
   }
   /** Use {@link #getResourceTagsMap()} instead. */
   @java.lang.Override
@@ -257,7 +283,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
    */
   @java.lang.Override
   public java.util.Map<java.lang.String, java.lang.String> getResourceTagsMap() {
-    return internalGetResourceTags().getMap();
+    return java.util.Collections.unmodifiableMap(internalGetResourceTags());
   }
   /**
    *
@@ -280,10 +306,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       java.lang.String key,
       /* nullable */
       java.lang.String defaultValue) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
-    java.util.Map<java.lang.String, java.lang.String> map = internalGetResourceTags().getMap();
+    java.lang.Class<?> keyClass = key.getClass();
+    java.util.Map<java.lang.String, java.lang.String> map = internalGetResourceTags();
     return map.containsKey(key) ? map.get(key) : defaultValue;
   }
   /**
@@ -304,20 +328,36 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
    */
   @java.lang.Override
   public java.lang.String getResourceTagsOrThrow(java.lang.String key) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
-    java.util.Map<java.lang.String, java.lang.String> map = internalGetResourceTags().getMap();
+    java.lang.Class<?> keyClass = key.getClass();
+    java.util.Map<java.lang.String, java.lang.String> map = internalGetResourceTags();
     if (!map.containsKey(key)) {
       throw new java.lang.IllegalArgumentException();
     }
     return map.get(key);
   }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Tags referenced on the resource at the time of evaluation. These also
+   * include the federated tags, if they are supplied in the CheckOrgPolicy
+   * or CheckCustomConstraints Requests.
+   *
+   * Optional field as of now. These tags are the Cloud tags that are
+   * available on the resource during the policy evaluation and will
+   * be available as part of the OrgPolicy check response for logging purposes.
+   * </pre>
+   *
+   * <code>map&lt;string, string&gt; resource_tags = 3 [(.google.api.field_behavior) = OPTIONAL];
+   * </code>
+   */
+  private java.util.Map<java.lang.String, java.lang.String> getMutableResourceTagsMap() {
+    return internalGetMutableResourceTags();
+  }
 
   public static final int VIOLATION_INFO_FIELD_NUMBER = 4;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.cloud.audit.ViolationInfo> violationInfo_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.cloud.audit.ViolationInfo>
+      violationInfo_;
   /**
    *
    *
@@ -344,7 +384,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
    * repeated .google.cloud.audit.ViolationInfo violation_info = 4 [(.google.api.field_behavior) = OPTIONAL];
    * </code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.cloud.audit.ViolationInfoOrBuilder>
       getViolationInfoOrBuilderList() {
     return violationInfo_;
@@ -390,212 +429,194 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
    * repeated .google.cloud.audit.ViolationInfo violation_info = 4 [(.google.api.field_behavior) = OPTIONAL];
    * </code>
    */
-  @java.lang.Override
   public com.google.cloud.audit.ViolationInfoOrBuilder getViolationInfoOrBuilder(int index) {
     return violationInfo_.get(index);
   }
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  private void ensureViolationInfoIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.cloud.audit.ViolationInfo> tmp =
+        violationInfo_;
+    if (!tmp.isModifiable()) {
+      violationInfo_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
   }
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(1, getPayload());
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(resourceType_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, resourceType_);
-    }
-    com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
-        output, internalGetResourceTags(), ResourceTagsDefaultEntryHolder.defaultEntry, 3);
-    for (int i = 0; i < violationInfo_.size(); i++) {
-      output.writeMessage(4, violationInfo_.get(i));
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Policy violations
+   * </pre>
+   *
+   * <code>
+   * repeated .google.cloud.audit.ViolationInfo violation_info = 4 [(.google.api.field_behavior) = OPTIONAL];
+   * </code>
+   */
+  private void setViolationInfo(int index, com.google.cloud.audit.ViolationInfo value) {
+    value.getClass();
+    ensureViolationInfoIsMutable();
+    violationInfo_.set(index, value);
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getPayload());
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(resourceType_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, resourceType_);
-    }
-    for (java.util.Map.Entry<java.lang.String, java.lang.String> entry :
-        internalGetResourceTags().getMap().entrySet()) {
-      com.google.protobuf.MapEntry<java.lang.String, java.lang.String> resourceTags__ =
-          ResourceTagsDefaultEntryHolder.defaultEntry
-              .newBuilderForType()
-              .setKey(entry.getKey())
-              .setValue(entry.getValue())
-              .build();
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, resourceTags__);
-    }
-    for (int i = 0; i < violationInfo_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, violationInfo_.get(i));
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Policy violations
+   * </pre>
+   *
+   * <code>
+   * repeated .google.cloud.audit.ViolationInfo violation_info = 4 [(.google.api.field_behavior) = OPTIONAL];
+   * </code>
+   */
+  private void addViolationInfo(com.google.cloud.audit.ViolationInfo value) {
+    value.getClass();
+    ensureViolationInfoIsMutable();
+    violationInfo_.add(value);
   }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.cloud.audit.OrgPolicyViolationInfo)) {
-      return super.equals(obj);
-    }
-    com.google.cloud.audit.OrgPolicyViolationInfo other =
-        (com.google.cloud.audit.OrgPolicyViolationInfo) obj;
-
-    if (hasPayload() != other.hasPayload()) return false;
-    if (hasPayload()) {
-      if (!getPayload().equals(other.getPayload())) return false;
-    }
-    if (!getResourceType().equals(other.getResourceType())) return false;
-    if (!internalGetResourceTags().equals(other.internalGetResourceTags())) return false;
-    if (!getViolationInfoList().equals(other.getViolationInfoList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Policy violations
+   * </pre>
+   *
+   * <code>
+   * repeated .google.cloud.audit.ViolationInfo violation_info = 4 [(.google.api.field_behavior) = OPTIONAL];
+   * </code>
+   */
+  private void addViolationInfo(int index, com.google.cloud.audit.ViolationInfo value) {
+    value.getClass();
+    ensureViolationInfoIsMutable();
+    violationInfo_.add(index, value);
   }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (hasPayload()) {
-      hash = (37 * hash) + PAYLOAD_FIELD_NUMBER;
-      hash = (53 * hash) + getPayload().hashCode();
-    }
-    hash = (37 * hash) + RESOURCE_TYPE_FIELD_NUMBER;
-    hash = (53 * hash) + getResourceType().hashCode();
-    if (!internalGetResourceTags().getMap().isEmpty()) {
-      hash = (37 * hash) + RESOURCE_TAGS_FIELD_NUMBER;
-      hash = (53 * hash) + internalGetResourceTags().hashCode();
-    }
-    if (getViolationInfoCount() > 0) {
-      hash = (37 * hash) + VIOLATION_INFO_FIELD_NUMBER;
-      hash = (53 * hash) + getViolationInfoList().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Policy violations
+   * </pre>
+   *
+   * <code>
+   * repeated .google.cloud.audit.ViolationInfo violation_info = 4 [(.google.api.field_behavior) = OPTIONAL];
+   * </code>
+   */
+  private void addAllViolationInfo(
+      java.lang.Iterable<? extends com.google.cloud.audit.ViolationInfo> values) {
+    ensureViolationInfoIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, violationInfo_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Policy violations
+   * </pre>
+   *
+   * <code>
+   * repeated .google.cloud.audit.ViolationInfo violation_info = 4 [(.google.api.field_behavior) = OPTIONAL];
+   * </code>
+   */
+  private void clearViolationInfo() {
+    violationInfo_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Policy violations
+   * </pre>
+   *
+   * <code>
+   * repeated .google.cloud.audit.ViolationInfo violation_info = 4 [(.google.api.field_behavior) = OPTIONAL];
+   * </code>
+   */
+  private void removeViolationInfo(int index) {
+    ensureViolationInfoIsMutable();
+    violationInfo_.remove(index);
   }
 
   public static com.google.cloud.audit.OrgPolicyViolationInfo parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.OrgPolicyViolationInfo parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.OrgPolicyViolationInfo parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.OrgPolicyViolationInfo parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.OrgPolicyViolationInfo parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.OrgPolicyViolationInfo parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.OrgPolicyViolationInfo parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.OrgPolicyViolationInfo parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.cloud.audit.OrgPolicyViolationInfo parseDelimitedFrom(
       java.io.InputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.OrgPolicyViolationInfo parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.cloud.audit.OrgPolicyViolationInfo parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.OrgPolicyViolationInfo parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.cloud.audit.OrgPolicyViolationInfo prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -605,316 +626,17 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
    *
    * Protobuf type {@code google.cloud.audit.OrgPolicyViolationInfo}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.cloud.audit.OrgPolicyViolationInfo, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.cloud.audit.OrgPolicyViolationInfo)
       com.google.cloud.audit.OrgPolicyViolationInfoOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_OrgPolicyViolationInfo_descriptor;
-    }
-
-    @SuppressWarnings({"rawtypes"})
-    protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-        int number) {
-      switch (number) {
-        case 3:
-          return internalGetResourceTags();
-        default:
-          throw new RuntimeException("Invalid map field number: " + number);
-      }
-    }
-
-    @SuppressWarnings({"rawtypes"})
-    protected com.google.protobuf.MapFieldReflectionAccessor internalGetMutableMapFieldReflection(
-        int number) {
-      switch (number) {
-        case 3:
-          return internalGetMutableResourceTags();
-        default:
-          throw new RuntimeException("Invalid map field number: " + number);
-      }
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_OrgPolicyViolationInfo_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.cloud.audit.OrgPolicyViolationInfo.class,
-              com.google.cloud.audit.OrgPolicyViolationInfo.Builder.class);
-    }
-
     // Construct using com.google.cloud.audit.OrgPolicyViolationInfo.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getPayloadFieldBuilder();
-        getViolationInfoFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      payload_ = null;
-      if (payloadBuilder_ != null) {
-        payloadBuilder_.dispose();
-        payloadBuilder_ = null;
-      }
-      resourceType_ = "";
-      internalGetMutableResourceTags().clear();
-      if (violationInfoBuilder_ == null) {
-        violationInfo_ = java.util.Collections.emptyList();
-      } else {
-        violationInfo_ = null;
-        violationInfoBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000008);
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_OrgPolicyViolationInfo_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.OrgPolicyViolationInfo getDefaultInstanceForType() {
-      return com.google.cloud.audit.OrgPolicyViolationInfo.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.OrgPolicyViolationInfo build() {
-      com.google.cloud.audit.OrgPolicyViolationInfo result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.OrgPolicyViolationInfo buildPartial() {
-      com.google.cloud.audit.OrgPolicyViolationInfo result =
-          new com.google.cloud.audit.OrgPolicyViolationInfo(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.cloud.audit.OrgPolicyViolationInfo result) {
-      if (violationInfoBuilder_ == null) {
-        if (((bitField0_ & 0x00000008) != 0)) {
-          violationInfo_ = java.util.Collections.unmodifiableList(violationInfo_);
-          bitField0_ = (bitField0_ & ~0x00000008);
-        }
-        result.violationInfo_ = violationInfo_;
-      } else {
-        result.violationInfo_ = violationInfoBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.cloud.audit.OrgPolicyViolationInfo result) {
-      int from_bitField0_ = bitField0_;
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.payload_ = payloadBuilder_ == null ? payload_ : payloadBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.resourceType_ = resourceType_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.resourceTags_ = internalGetResourceTags();
-        result.resourceTags_.makeImmutable();
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.cloud.audit.OrgPolicyViolationInfo) {
-        return mergeFrom((com.google.cloud.audit.OrgPolicyViolationInfo) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.cloud.audit.OrgPolicyViolationInfo other) {
-      if (other == com.google.cloud.audit.OrgPolicyViolationInfo.getDefaultInstance()) return this;
-      if (other.hasPayload()) {
-        mergePayload(other.getPayload());
-      }
-      if (!other.getResourceType().isEmpty()) {
-        resourceType_ = other.resourceType_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      internalGetMutableResourceTags().mergeFrom(other.internalGetResourceTags());
-      bitField0_ |= 0x00000004;
-      if (violationInfoBuilder_ == null) {
-        if (!other.violationInfo_.isEmpty()) {
-          if (violationInfo_.isEmpty()) {
-            violationInfo_ = other.violationInfo_;
-            bitField0_ = (bitField0_ & ~0x00000008);
-          } else {
-            ensureViolationInfoIsMutable();
-            violationInfo_.addAll(other.violationInfo_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.violationInfo_.isEmpty()) {
-          if (violationInfoBuilder_.isEmpty()) {
-            violationInfoBuilder_.dispose();
-            violationInfoBuilder_ = null;
-            violationInfo_ = other.violationInfo_;
-            bitField0_ = (bitField0_ & ~0x00000008);
-            violationInfoBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getViolationInfoFieldBuilder()
-                    : null;
-          } else {
-            violationInfoBuilder_.addAllMessages(other.violationInfo_);
-          }
-        }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                input.readMessage(getPayloadFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                resourceType_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 26:
-              {
-                com.google.protobuf.MapEntry<java.lang.String, java.lang.String> resourceTags__ =
-                    input.readMessage(
-                        ResourceTagsDefaultEntryHolder.defaultEntry.getParserForType(),
-                        extensionRegistry);
-                internalGetMutableResourceTags()
-                    .getMutableMap()
-                    .put(resourceTags__.getKey(), resourceTags__.getValue());
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 26
-            case 34:
-              {
-                com.google.cloud.audit.ViolationInfo m =
-                    input.readMessage(
-                        com.google.cloud.audit.ViolationInfo.parser(), extensionRegistry);
-                if (violationInfoBuilder_ == null) {
-                  ensureViolationInfoIsMutable();
-                  violationInfo_.add(m);
-                } else {
-                  violationInfoBuilder_.addMessage(m);
-                }
-                break;
-              } // case 34
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private com.google.protobuf.Struct payload_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Struct,
-            com.google.protobuf.Struct.Builder,
-            com.google.protobuf.StructOrBuilder>
-        payloadBuilder_;
     /**
      *
      *
@@ -925,11 +647,10 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * </pre>
      *
      * <code>.google.protobuf.Struct payload = 1 [(.google.api.field_behavior) = OPTIONAL];</code>
-     *
-     * @return Whether the payload field is set.
      */
+    @java.lang.Override
     public boolean hasPayload() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return instance.hasPayload();
     }
     /**
      *
@@ -941,15 +662,10 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * </pre>
      *
      * <code>.google.protobuf.Struct payload = 1 [(.google.api.field_behavior) = OPTIONAL];</code>
-     *
-     * @return The payload.
      */
+    @java.lang.Override
     public com.google.protobuf.Struct getPayload() {
-      if (payloadBuilder_ == null) {
-        return payload_ == null ? com.google.protobuf.Struct.getDefaultInstance() : payload_;
-      } else {
-        return payloadBuilder_.getMessage();
-      }
+      return instance.getPayload();
     }
     /**
      *
@@ -963,16 +679,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * <code>.google.protobuf.Struct payload = 1 [(.google.api.field_behavior) = OPTIONAL];</code>
      */
     public Builder setPayload(com.google.protobuf.Struct value) {
-      if (payloadBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        payload_ = value;
-      } else {
-        payloadBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setPayload(value);
       return this;
     }
     /**
@@ -987,13 +695,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * <code>.google.protobuf.Struct payload = 1 [(.google.api.field_behavior) = OPTIONAL];</code>
      */
     public Builder setPayload(com.google.protobuf.Struct.Builder builderForValue) {
-      if (payloadBuilder_ == null) {
-        payload_ = builderForValue.build();
-      } else {
-        payloadBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setPayload(builderForValue.build());
       return this;
     }
     /**
@@ -1008,21 +711,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * <code>.google.protobuf.Struct payload = 1 [(.google.api.field_behavior) = OPTIONAL];</code>
      */
     public Builder mergePayload(com.google.protobuf.Struct value) {
-      if (payloadBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)
-            && payload_ != null
-            && payload_ != com.google.protobuf.Struct.getDefaultInstance()) {
-          getPayloadBuilder().mergeFrom(value);
-        } else {
-          payload_ = value;
-        }
-      } else {
-        payloadBuilder_.mergeFrom(value);
-      }
-      if (payload_ != null) {
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergePayload(value);
       return this;
     }
     /**
@@ -1037,78 +727,11 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * <code>.google.protobuf.Struct payload = 1 [(.google.api.field_behavior) = OPTIONAL];</code>
      */
     public Builder clearPayload() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      payload_ = null;
-      if (payloadBuilder_ != null) {
-        payloadBuilder_.dispose();
-        payloadBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearPayload();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Optional. Resource payload that is currently in scope and is subjected to orgpolicy
-     * conditions. This payload may be the subset of the actual Resource that may
-     * come in the request. This payload should not contain any core content.
-     * </pre>
-     *
-     * <code>.google.protobuf.Struct payload = 1 [(.google.api.field_behavior) = OPTIONAL];</code>
-     */
-    public com.google.protobuf.Struct.Builder getPayloadBuilder() {
-      bitField0_ |= 0x00000001;
-      onChanged();
-      return getPayloadFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Optional. Resource payload that is currently in scope and is subjected to orgpolicy
-     * conditions. This payload may be the subset of the actual Resource that may
-     * come in the request. This payload should not contain any core content.
-     * </pre>
-     *
-     * <code>.google.protobuf.Struct payload = 1 [(.google.api.field_behavior) = OPTIONAL];</code>
-     */
-    public com.google.protobuf.StructOrBuilder getPayloadOrBuilder() {
-      if (payloadBuilder_ != null) {
-        return payloadBuilder_.getMessageOrBuilder();
-      } else {
-        return payload_ == null ? com.google.protobuf.Struct.getDefaultInstance() : payload_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Optional. Resource payload that is currently in scope and is subjected to orgpolicy
-     * conditions. This payload may be the subset of the actual Resource that may
-     * come in the request. This payload should not contain any core content.
-     * </pre>
-     *
-     * <code>.google.protobuf.Struct payload = 1 [(.google.api.field_behavior) = OPTIONAL];</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Struct,
-            com.google.protobuf.Struct.Builder,
-            com.google.protobuf.StructOrBuilder>
-        getPayloadFieldBuilder() {
-      if (payloadBuilder_ == null) {
-        payloadBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.protobuf.Struct,
-                com.google.protobuf.Struct.Builder,
-                com.google.protobuf.StructOrBuilder>(
-                getPayload(), getParentForChildren(), isClean());
-        payload_ = null;
-      }
-      return payloadBuilder_;
-    }
 
-    private java.lang.Object resourceType_ = "";
     /**
      *
      *
@@ -1121,16 +744,9 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      *
      * @return The resourceType.
      */
+    @java.lang.Override
     public java.lang.String getResourceType() {
-      java.lang.Object ref = resourceType_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        resourceType_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getResourceType();
     }
     /**
      *
@@ -1144,16 +760,9 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      *
      * @return The bytes for resourceType.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getResourceTypeBytes() {
-      java.lang.Object ref = resourceType_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        resourceType_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getResourceTypeBytes();
     }
     /**
      *
@@ -1169,12 +778,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * @return This builder for chaining.
      */
     public Builder setResourceType(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      resourceType_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setResourceType(value);
       return this;
     }
     /**
@@ -1190,9 +795,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * @return This builder for chaining.
      */
     public Builder clearResourceType() {
-      resourceType_ = getDefaultInstance().getResourceType();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearResourceType();
       return this;
     }
     /**
@@ -1209,43 +813,14 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * @return This builder for chaining.
      */
     public Builder setResourceTypeBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      resourceType_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setResourceTypeBytes(value);
       return this;
     }
 
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String> resourceTags_;
-
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-        internalGetResourceTags() {
-      if (resourceTags_ == null) {
-        return com.google.protobuf.MapField.emptyMapField(
-            ResourceTagsDefaultEntryHolder.defaultEntry);
-      }
-      return resourceTags_;
-    }
-
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-        internalGetMutableResourceTags() {
-      if (resourceTags_ == null) {
-        resourceTags_ =
-            com.google.protobuf.MapField.newMapField(ResourceTagsDefaultEntryHolder.defaultEntry);
-      }
-      if (!resourceTags_.isMutable()) {
-        resourceTags_ = resourceTags_.copy();
-      }
-      bitField0_ |= 0x00000004;
-      onChanged();
-      return resourceTags_;
-    }
-
+    @java.lang.Override
     public int getResourceTagsCount() {
-      return internalGetResourceTags().getMap().size();
+      return instance.getResourceTagsMap().size();
     }
     /**
      *
@@ -1265,10 +840,36 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      */
     @java.lang.Override
     public boolean containsResourceTags(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      return internalGetResourceTags().getMap().containsKey(key);
+      java.lang.Class<?> keyClass = key.getClass();
+      return instance.getResourceTagsMap().containsKey(key);
+    }
+
+    public Builder clearResourceTags() {
+      copyOnWrite();
+      instance.getMutableResourceTagsMap().clear();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Optional. Tags referenced on the resource at the time of evaluation. These also
+     * include the federated tags, if they are supplied in the CheckOrgPolicy
+     * or CheckCustomConstraints Requests.
+     *
+     * Optional field as of now. These tags are the Cloud tags that are
+     * available on the resource during the policy evaluation and will
+     * be available as part of the OrgPolicy check response for logging purposes.
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; resource_tags = 3 [(.google.api.field_behavior) = OPTIONAL];
+     * </code>
+     */
+    public Builder removeResourceTags(java.lang.String key) {
+      java.lang.Class<?> keyClass = key.getClass();
+      copyOnWrite();
+      instance.getMutableResourceTagsMap().remove(key);
+      return this;
     }
     /** Use {@link #getResourceTagsMap()} instead. */
     @java.lang.Override
@@ -1294,7 +895,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      */
     @java.lang.Override
     public java.util.Map<java.lang.String, java.lang.String> getResourceTagsMap() {
-      return internalGetResourceTags().getMap();
+      return java.util.Collections.unmodifiableMap(instance.getResourceTagsMap());
     }
     /**
      *
@@ -1317,10 +918,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
         java.lang.String key,
         /* nullable */
         java.lang.String defaultValue) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map = internalGetResourceTags().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = instance.getResourceTagsMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
     /**
@@ -1341,49 +940,12 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      */
     @java.lang.Override
     public java.lang.String getResourceTagsOrThrow(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, java.lang.String> map = internalGetResourceTags().getMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, java.lang.String> map = instance.getResourceTagsMap();
       if (!map.containsKey(key)) {
         throw new java.lang.IllegalArgumentException();
       }
       return map.get(key);
-    }
-
-    public Builder clearResourceTags() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      internalGetMutableResourceTags().getMutableMap().clear();
-      return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Optional. Tags referenced on the resource at the time of evaluation. These also
-     * include the federated tags, if they are supplied in the CheckOrgPolicy
-     * or CheckCustomConstraints Requests.
-     *
-     * Optional field as of now. These tags are the Cloud tags that are
-     * available on the resource during the policy evaluation and will
-     * be available as part of the OrgPolicy check response for logging purposes.
-     * </pre>
-     *
-     * <code>map&lt;string, string&gt; resource_tags = 3 [(.google.api.field_behavior) = OPTIONAL];
-     * </code>
-     */
-    public Builder removeResourceTags(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      internalGetMutableResourceTags().getMutableMap().remove(key);
-      return this;
-    }
-    /** Use alternate mutation accessors instead. */
-    @java.lang.Deprecated
-    public java.util.Map<java.lang.String, java.lang.String> getMutableResourceTags() {
-      bitField0_ |= 0x00000004;
-      return internalGetMutableResourceTags().getMutableMap();
     }
     /**
      *
@@ -1402,14 +964,10 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * </code>
      */
     public Builder putResourceTags(java.lang.String key, java.lang.String value) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      if (value == null) {
-        throw new NullPointerException("map value");
-      }
-      internalGetMutableResourceTags().getMutableMap().put(key, value);
-      bitField0_ |= 0x00000004;
+      java.lang.Class<?> keyClass = key.getClass();
+      java.lang.Class<?> valueClass = value.getClass();
+      copyOnWrite();
+      instance.getMutableResourceTagsMap().put(key, value);
       return this;
     }
     /**
@@ -1429,28 +987,11 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * </code>
      */
     public Builder putAllResourceTags(java.util.Map<java.lang.String, java.lang.String> values) {
-      internalGetMutableResourceTags().getMutableMap().putAll(values);
-      bitField0_ |= 0x00000004;
+      copyOnWrite();
+      instance.getMutableResourceTagsMap().putAll(values);
       return this;
     }
 
-    private java.util.List<com.google.cloud.audit.ViolationInfo> violationInfo_ =
-        java.util.Collections.emptyList();
-
-    private void ensureViolationInfoIsMutable() {
-      if (!((bitField0_ & 0x00000008) != 0)) {
-        violationInfo_ =
-            new java.util.ArrayList<com.google.cloud.audit.ViolationInfo>(violationInfo_);
-        bitField0_ |= 0x00000008;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.cloud.audit.ViolationInfo,
-            com.google.cloud.audit.ViolationInfo.Builder,
-            com.google.cloud.audit.ViolationInfoOrBuilder>
-        violationInfoBuilder_;
-
     /**
      *
      *
@@ -1462,12 +1003,9 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * repeated .google.cloud.audit.ViolationInfo violation_info = 4 [(.google.api.field_behavior) = OPTIONAL];
      * </code>
      */
+    @java.lang.Override
     public java.util.List<com.google.cloud.audit.ViolationInfo> getViolationInfoList() {
-      if (violationInfoBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(violationInfo_);
-      } else {
-        return violationInfoBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getViolationInfoList());
     }
     /**
      *
@@ -1480,12 +1018,9 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * repeated .google.cloud.audit.ViolationInfo violation_info = 4 [(.google.api.field_behavior) = OPTIONAL];
      * </code>
      */
+    @java.lang.Override
     public int getViolationInfoCount() {
-      if (violationInfoBuilder_ == null) {
-        return violationInfo_.size();
-      } else {
-        return violationInfoBuilder_.getCount();
-      }
+      return instance.getViolationInfoCount();
     }
     /**
      *
@@ -1498,12 +1033,10 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * repeated .google.cloud.audit.ViolationInfo violation_info = 4 [(.google.api.field_behavior) = OPTIONAL];
      * </code>
      */
+
+    @java.lang.Override
     public com.google.cloud.audit.ViolationInfo getViolationInfo(int index) {
-      if (violationInfoBuilder_ == null) {
-        return violationInfo_.get(index);
-      } else {
-        return violationInfoBuilder_.getMessage(index);
-      }
+      return instance.getViolationInfo(index);
     }
     /**
      *
@@ -1517,16 +1050,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * </code>
      */
     public Builder setViolationInfo(int index, com.google.cloud.audit.ViolationInfo value) {
-      if (violationInfoBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureViolationInfoIsMutable();
-        violationInfo_.set(index, value);
-        onChanged();
-      } else {
-        violationInfoBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setViolationInfo(index, value);
       return this;
     }
     /**
@@ -1542,13 +1067,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      */
     public Builder setViolationInfo(
         int index, com.google.cloud.audit.ViolationInfo.Builder builderForValue) {
-      if (violationInfoBuilder_ == null) {
-        ensureViolationInfoIsMutable();
-        violationInfo_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        violationInfoBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setViolationInfo(index, builderForValue.build());
       return this;
     }
     /**
@@ -1563,16 +1083,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * </code>
      */
     public Builder addViolationInfo(com.google.cloud.audit.ViolationInfo value) {
-      if (violationInfoBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureViolationInfoIsMutable();
-        violationInfo_.add(value);
-        onChanged();
-      } else {
-        violationInfoBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addViolationInfo(value);
       return this;
     }
     /**
@@ -1587,16 +1099,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * </code>
      */
     public Builder addViolationInfo(int index, com.google.cloud.audit.ViolationInfo value) {
-      if (violationInfoBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureViolationInfoIsMutable();
-        violationInfo_.add(index, value);
-        onChanged();
-      } else {
-        violationInfoBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addViolationInfo(index, value);
       return this;
     }
     /**
@@ -1611,13 +1115,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * </code>
      */
     public Builder addViolationInfo(com.google.cloud.audit.ViolationInfo.Builder builderForValue) {
-      if (violationInfoBuilder_ == null) {
-        ensureViolationInfoIsMutable();
-        violationInfo_.add(builderForValue.build());
-        onChanged();
-      } else {
-        violationInfoBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addViolationInfo(builderForValue.build());
       return this;
     }
     /**
@@ -1633,13 +1132,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      */
     public Builder addViolationInfo(
         int index, com.google.cloud.audit.ViolationInfo.Builder builderForValue) {
-      if (violationInfoBuilder_ == null) {
-        ensureViolationInfoIsMutable();
-        violationInfo_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        violationInfoBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addViolationInfo(index, builderForValue.build());
       return this;
     }
     /**
@@ -1655,13 +1149,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      */
     public Builder addAllViolationInfo(
         java.lang.Iterable<? extends com.google.cloud.audit.ViolationInfo> values) {
-      if (violationInfoBuilder_ == null) {
-        ensureViolationInfoIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, violationInfo_);
-        onChanged();
-      } else {
-        violationInfoBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllViolationInfo(values);
       return this;
     }
     /**
@@ -1676,13 +1165,8 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * </code>
      */
     public Builder clearViolationInfo() {
-      if (violationInfoBuilder_ == null) {
-        violationInfo_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000008);
-        onChanged();
-      } else {
-        violationInfoBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearViolationInfo();
       return this;
     }
     /**
@@ -1697,190 +1181,98 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * </code>
      */
     public Builder removeViolationInfo(int index) {
-      if (violationInfoBuilder_ == null) {
-        ensureViolationInfoIsMutable();
-        violationInfo_.remove(index);
-        onChanged();
-      } else {
-        violationInfoBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeViolationInfo(index);
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Optional. Policy violations
-     * </pre>
-     *
-     * <code>
-     * repeated .google.cloud.audit.ViolationInfo violation_info = 4 [(.google.api.field_behavior) = OPTIONAL];
-     * </code>
-     */
-    public com.google.cloud.audit.ViolationInfo.Builder getViolationInfoBuilder(int index) {
-      return getViolationInfoFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Optional. Policy violations
-     * </pre>
-     *
-     * <code>
-     * repeated .google.cloud.audit.ViolationInfo violation_info = 4 [(.google.api.field_behavior) = OPTIONAL];
-     * </code>
-     */
-    public com.google.cloud.audit.ViolationInfoOrBuilder getViolationInfoOrBuilder(int index) {
-      if (violationInfoBuilder_ == null) {
-        return violationInfo_.get(index);
-      } else {
-        return violationInfoBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Optional. Policy violations
-     * </pre>
-     *
-     * <code>
-     * repeated .google.cloud.audit.ViolationInfo violation_info = 4 [(.google.api.field_behavior) = OPTIONAL];
-     * </code>
-     */
-    public java.util.List<? extends com.google.cloud.audit.ViolationInfoOrBuilder>
-        getViolationInfoOrBuilderList() {
-      if (violationInfoBuilder_ != null) {
-        return violationInfoBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(violationInfo_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Optional. Policy violations
-     * </pre>
-     *
-     * <code>
-     * repeated .google.cloud.audit.ViolationInfo violation_info = 4 [(.google.api.field_behavior) = OPTIONAL];
-     * </code>
-     */
-    public com.google.cloud.audit.ViolationInfo.Builder addViolationInfoBuilder() {
-      return getViolationInfoFieldBuilder()
-          .addBuilder(com.google.cloud.audit.ViolationInfo.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Optional. Policy violations
-     * </pre>
-     *
-     * <code>
-     * repeated .google.cloud.audit.ViolationInfo violation_info = 4 [(.google.api.field_behavior) = OPTIONAL];
-     * </code>
-     */
-    public com.google.cloud.audit.ViolationInfo.Builder addViolationInfoBuilder(int index) {
-      return getViolationInfoFieldBuilder()
-          .addBuilder(index, com.google.cloud.audit.ViolationInfo.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Optional. Policy violations
-     * </pre>
-     *
-     * <code>
-     * repeated .google.cloud.audit.ViolationInfo violation_info = 4 [(.google.api.field_behavior) = OPTIONAL];
-     * </code>
-     */
-    public java.util.List<com.google.cloud.audit.ViolationInfo.Builder>
-        getViolationInfoBuilderList() {
-      return getViolationInfoFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.cloud.audit.ViolationInfo,
-            com.google.cloud.audit.ViolationInfo.Builder,
-            com.google.cloud.audit.ViolationInfoOrBuilder>
-        getViolationInfoFieldBuilder() {
-      if (violationInfoBuilder_ == null) {
-        violationInfoBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.cloud.audit.ViolationInfo,
-                com.google.cloud.audit.ViolationInfo.Builder,
-                com.google.cloud.audit.ViolationInfoOrBuilder>(
-                violationInfo_,
-                ((bitField0_ & 0x00000008) != 0),
-                getParentForChildren(),
-                isClean());
-        violationInfo_ = null;
-      }
-      return violationInfoBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.cloud.audit.OrgPolicyViolationInfo)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.cloud.audit.OrgPolicyViolationInfo();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_",
+                "payload_",
+                "resourceType_",
+                "resourceTags_",
+                ResourceTagsDefaultEntryHolder.defaultEntry,
+                "violationInfo_",
+                com.google.cloud.audit.ViolationInfo.class,
+              };
+          java.lang.String info =
+              "\u0000\u0004\u0000\u0001\u0001\u0004\u0004\u0001\u0001\u0000\u0001\u1009\u0000\u0002"
+                  + "\u0208\u00032\u0004\u001b";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.cloud.audit.OrgPolicyViolationInfo> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.cloud.audit.OrgPolicyViolationInfo.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.cloud.audit.OrgPolicyViolationInfo>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.cloud.audit.OrgPolicyViolationInfo)
   private static final com.google.cloud.audit.OrgPolicyViolationInfo DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.cloud.audit.OrgPolicyViolationInfo();
+    OrgPolicyViolationInfo defaultInstance = new OrgPolicyViolationInfo();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        OrgPolicyViolationInfo.class, defaultInstance);
   }
 
   public static com.google.cloud.audit.OrgPolicyViolationInfo getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<OrgPolicyViolationInfo> PARSER =
-      new com.google.protobuf.AbstractParser<OrgPolicyViolationInfo>() {
-        @java.lang.Override
-        public OrgPolicyViolationInfo parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<OrgPolicyViolationInfo> PARSER;
 
   public static com.google.protobuf.Parser<OrgPolicyViolationInfo> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<OrgPolicyViolationInfo> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.cloud.audit.OrgPolicyViolationInfo getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

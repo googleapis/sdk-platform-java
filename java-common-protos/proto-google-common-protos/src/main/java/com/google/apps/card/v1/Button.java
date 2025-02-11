@@ -39,45 +39,18 @@ package com.google.apps.card.v1;
  *
  * Protobuf type {@code google.apps.card.v1.Button}
  */
-public final class Button extends com.google.protobuf.GeneratedMessageV3
+public final class Button extends com.google.protobuf.GeneratedMessageLite<Button, Button.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.Button)
     ButtonOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use Button.newBuilder() to construct.
-  private Button(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private Button() {
     text_ = "";
     altText_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new Button();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.apps.card.v1.CardProto.internal_static_google_apps_card_v1_Button_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_Button_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.apps.card.v1.Button.class, com.google.apps.card.v1.Button.Builder.class);
-  }
-
   private int bitField0_;
   public static final int TEXT_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object text_ = "";
+  private java.lang.String text_;
   /**
    *
    *
@@ -91,15 +64,7 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getText() {
-    java.lang.Object ref = text_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      text_ = s;
-      return s;
-    }
+    return text_;
   }
   /**
    *
@@ -114,15 +79,51 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getTextBytes() {
-    java.lang.Object ref = text_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      text_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(text_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text displayed inside the button.
+   * </pre>
+   *
+   * <code>string text = 1;</code>
+   *
+   * @param value The text to set.
+   */
+  private void setText(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    text_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text displayed inside the button.
+   * </pre>
+   *
+   * <code>string text = 1;</code>
+   */
+  private void clearText() {
+
+    text_ = getDefaultInstance().getText();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text displayed inside the button.
+   * </pre>
+   *
+   * <code>string text = 1;</code>
+   *
+   * @param value The bytes for text to set.
+   */
+  private void setTextBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    text_ = value.toStringUtf8();
   }
 
   public static final int ICON_FIELD_NUMBER = 2;
@@ -136,8 +137,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Icon icon = 2;</code>
-   *
-   * @return Whether the icon field is set.
    */
   @java.lang.Override
   public boolean hasIcon() {
@@ -152,8 +151,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Icon icon = 2;</code>
-   *
-   * @return The icon.
    */
   @java.lang.Override
   public com.google.apps.card.v1.Icon getIcon() {
@@ -169,9 +166,44 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.apps.card.v1.Icon icon = 2;</code>
    */
-  @java.lang.Override
-  public com.google.apps.card.v1.IconOrBuilder getIconOrBuilder() {
-    return icon_ == null ? com.google.apps.card.v1.Icon.getDefaultInstance() : icon_;
+  private void setIcon(com.google.apps.card.v1.Icon value) {
+    value.getClass();
+    icon_ = value;
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The icon image. If both `icon` and `text` are set, then the icon appears
+   * before the text.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Icon icon = 2;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeIcon(com.google.apps.card.v1.Icon value) {
+    value.getClass();
+    if (icon_ != null && icon_ != com.google.apps.card.v1.Icon.getDefaultInstance()) {
+      icon_ = com.google.apps.card.v1.Icon.newBuilder(icon_).mergeFrom(value).buildPartial();
+    } else {
+      icon_ = value;
+    }
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The icon image. If both `icon` and `text` are set, then the icon appears
+   * before the text.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Icon icon = 2;</code>
+   */
+  private void clearIcon() {
+    icon_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static final int COLOR_FIELD_NUMBER = 3;
@@ -215,8 +247,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.type.Color color = 3;</code>
-   *
-   * @return Whether the color field is set.
    */
   @java.lang.Override
   public boolean hasColor() {
@@ -261,8 +291,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.type.Color color = 3;</code>
-   *
-   * @return The color.
    */
   @java.lang.Override
   public com.google.type.Color getColor() {
@@ -308,9 +336,104 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.type.Color color = 3;</code>
    */
-  @java.lang.Override
-  public com.google.type.ColorOrBuilder getColorOrBuilder() {
-    return color_ == null ? com.google.type.Color.getDefaultInstance() : color_;
+  private void setColor(com.google.type.Color value) {
+    value.getClass();
+    color_ = value;
+    bitField0_ |= 0x00000002;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * If set, the button is filled with a solid background color and the font
+   * color changes to maintain contrast with the background color. For example,
+   * setting a blue background likely results in white text.
+   *
+   * If unset, the image background is white and the font color is blue.
+   *
+   * For red, green, and blue, the value of each field is a `float` number that
+   * you can express in either of two ways: as a number between 0 and 255
+   * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
+   * the absence of a color and 1 or 255/255 represent the full presence of that
+   * color on the RGB scale.
+   *
+   * Optionally set `alpha`, which sets a level of transparency using this
+   * equation:
+   *
+   * ```
+   * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
+   * ```
+   *
+   * For `alpha`, a value of `1` corresponds with a solid color, and a value of
+   * `0` corresponds with a completely transparent color.
+   *
+   * For example, the following color represents a half transparent red:
+   *
+   * ```
+   * "color": {
+   *    "red": 1,
+   *    "green": 0,
+   *    "blue": 0,
+   *    "alpha": 0.5
+   * }
+   * ```
+   * </pre>
+   *
+   * <code>.google.type.Color color = 3;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeColor(com.google.type.Color value) {
+    value.getClass();
+    if (color_ != null && color_ != com.google.type.Color.getDefaultInstance()) {
+      color_ = com.google.type.Color.newBuilder(color_).mergeFrom(value).buildPartial();
+    } else {
+      color_ = value;
+    }
+    bitField0_ |= 0x00000002;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * If set, the button is filled with a solid background color and the font
+   * color changes to maintain contrast with the background color. For example,
+   * setting a blue background likely results in white text.
+   *
+   * If unset, the image background is white and the font color is blue.
+   *
+   * For red, green, and blue, the value of each field is a `float` number that
+   * you can express in either of two ways: as a number between 0 and 255
+   * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
+   * the absence of a color and 1 or 255/255 represent the full presence of that
+   * color on the RGB scale.
+   *
+   * Optionally set `alpha`, which sets a level of transparency using this
+   * equation:
+   *
+   * ```
+   * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
+   * ```
+   *
+   * For `alpha`, a value of `1` corresponds with a solid color, and a value of
+   * `0` corresponds with a completely transparent color.
+   *
+   * For example, the following color represents a half transparent red:
+   *
+   * ```
+   * "color": {
+   *    "red": 1,
+   *    "green": 0,
+   *    "blue": 0,
+   *    "alpha": 0.5
+   * }
+   * ```
+   * </pre>
+   *
+   * <code>.google.type.Color color = 3;</code>
+   */
+  private void clearColor() {
+    color_ = null;
+    bitField0_ = (bitField0_ & ~0x00000002);
   }
 
   public static final int ON_CLICK_FIELD_NUMBER = 4;
@@ -324,8 +447,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.OnClick on_click = 4;</code>
-   *
-   * @return Whether the onClick field is set.
    */
   @java.lang.Override
   public boolean hasOnClick() {
@@ -340,8 +461,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.OnClick on_click = 4;</code>
-   *
-   * @return The onClick.
    */
   @java.lang.Override
   public com.google.apps.card.v1.OnClick getOnClick() {
@@ -357,13 +476,49 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.apps.card.v1.OnClick on_click = 4;</code>
    */
-  @java.lang.Override
-  public com.google.apps.card.v1.OnClickOrBuilder getOnClickOrBuilder() {
-    return onClick_ == null ? com.google.apps.card.v1.OnClick.getDefaultInstance() : onClick_;
+  private void setOnClick(com.google.apps.card.v1.OnClick value) {
+    value.getClass();
+    onClick_ = value;
+    bitField0_ |= 0x00000004;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. The action to perform when a user clicks the button, such as
+   * opening a hyperlink or running a custom function.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.OnClick on_click = 4;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeOnClick(com.google.apps.card.v1.OnClick value) {
+    value.getClass();
+    if (onClick_ != null && onClick_ != com.google.apps.card.v1.OnClick.getDefaultInstance()) {
+      onClick_ =
+          com.google.apps.card.v1.OnClick.newBuilder(onClick_).mergeFrom(value).buildPartial();
+    } else {
+      onClick_ = value;
+    }
+    bitField0_ |= 0x00000004;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. The action to perform when a user clicks the button, such as
+   * opening a hyperlink or running a custom function.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.OnClick on_click = 4;</code>
+   */
+  private void clearOnClick() {
+    onClick_ = null;
+    bitField0_ = (bitField0_ & ~0x00000004);
   }
 
   public static final int DISABLED_FIELD_NUMBER = 5;
-  private boolean disabled_ = false;
+  private boolean disabled_;
   /**
    *
    *
@@ -380,11 +535,39 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
   public boolean getDisabled() {
     return disabled_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * If `true`, the button is displayed in an inactive state and doesn't respond
+   * to user actions.
+   * </pre>
+   *
+   * <code>bool disabled = 5;</code>
+   *
+   * @param value The disabled to set.
+   */
+  private void setDisabled(boolean value) {
+
+    disabled_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * If `true`, the button is displayed in an inactive state and doesn't respond
+   * to user actions.
+   * </pre>
+   *
+   * <code>bool disabled = 5;</code>
+   */
+  private void clearDisabled() {
+
+    disabled_ = false;
+  }
 
   public static final int ALT_TEXT_FIELD_NUMBER = 6;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object altText_ = "";
+  private java.lang.String altText_;
   /**
    *
    *
@@ -403,15 +586,7 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getAltText() {
-    java.lang.Object ref = altText_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      altText_ = s;
-      return s;
-    }
+    return altText_;
   }
   /**
    *
@@ -431,234 +606,149 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getAltTextBytes() {
-    java.lang.Object ref = altText_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      altText_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(altText_);
   }
+  /**
+   *
+   *
+   * <pre>
+   * The alternative text that's used for accessibility.
+   *
+   * Set descriptive text that lets users know what the button does. For
+   * example, if a button opens a hyperlink, you might write: "Opens a new
+   * browser tab and navigates to the Google Chat developer documentation at
+   * https://developers.google.com/workspace/chat".
+   * </pre>
+   *
+   * <code>string alt_text = 6;</code>
+   *
+   * @param value The altText to set.
+   */
+  private void setAltText(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    altText_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The alternative text that's used for accessibility.
+   *
+   * Set descriptive text that lets users know what the button does. For
+   * example, if a button opens a hyperlink, you might write: "Opens a new
+   * browser tab and navigates to the Google Chat developer documentation at
+   * https://developers.google.com/workspace/chat".
+   * </pre>
+   *
+   * <code>string alt_text = 6;</code>
+   */
+  private void clearAltText() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(text_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, text_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(2, getIcon());
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      output.writeMessage(3, getColor());
-    }
-    if (((bitField0_ & 0x00000004) != 0)) {
-      output.writeMessage(4, getOnClick());
-    }
-    if (disabled_ != false) {
-      output.writeBool(5, disabled_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(altText_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, altText_);
-    }
-    getUnknownFields().writeTo(output);
+    altText_ = getDefaultInstance().getAltText();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(text_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, text_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, getIcon());
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, getColor());
-    }
-    if (((bitField0_ & 0x00000004) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, getOnClick());
-    }
-    if (disabled_ != false) {
-      size += com.google.protobuf.CodedOutputStream.computeBoolSize(5, disabled_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(altText_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, altText_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.apps.card.v1.Button)) {
-      return super.equals(obj);
-    }
-    com.google.apps.card.v1.Button other = (com.google.apps.card.v1.Button) obj;
-
-    if (!getText().equals(other.getText())) return false;
-    if (hasIcon() != other.hasIcon()) return false;
-    if (hasIcon()) {
-      if (!getIcon().equals(other.getIcon())) return false;
-    }
-    if (hasColor() != other.hasColor()) return false;
-    if (hasColor()) {
-      if (!getColor().equals(other.getColor())) return false;
-    }
-    if (hasOnClick() != other.hasOnClick()) return false;
-    if (hasOnClick()) {
-      if (!getOnClick().equals(other.getOnClick())) return false;
-    }
-    if (getDisabled() != other.getDisabled()) return false;
-    if (!getAltText().equals(other.getAltText())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + TEXT_FIELD_NUMBER;
-    hash = (53 * hash) + getText().hashCode();
-    if (hasIcon()) {
-      hash = (37 * hash) + ICON_FIELD_NUMBER;
-      hash = (53 * hash) + getIcon().hashCode();
-    }
-    if (hasColor()) {
-      hash = (37 * hash) + COLOR_FIELD_NUMBER;
-      hash = (53 * hash) + getColor().hashCode();
-    }
-    if (hasOnClick()) {
-      hash = (37 * hash) + ON_CLICK_FIELD_NUMBER;
-      hash = (53 * hash) + getOnClick().hashCode();
-    }
-    hash = (37 * hash) + DISABLED_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getDisabled());
-    hash = (37 * hash) + ALT_TEXT_FIELD_NUMBER;
-    hash = (53 * hash) + getAltText().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * The alternative text that's used for accessibility.
+   *
+   * Set descriptive text that lets users know what the button does. For
+   * example, if a button opens a hyperlink, you might write: "Opens a new
+   * browser tab and navigates to the Google Chat developer documentation at
+   * https://developers.google.com/workspace/chat".
+   * </pre>
+   *
+   * <code>string alt_text = 6;</code>
+   *
+   * @param value The bytes for altText to set.
+   */
+  private void setAltTextBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    altText_ = value.toStringUtf8();
   }
 
   public static com.google.apps.card.v1.Button parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.Button parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Button parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.Button parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Button parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.Button parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Button parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.Button parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Button parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.Button parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Button parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.Button parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.apps.card.v1.Button prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -679,273 +769,17 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.apps.card.v1.Button}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.apps.card.v1.Button, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.apps.card.v1.Button)
       com.google.apps.card.v1.ButtonOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Button_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Button_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.apps.card.v1.Button.class, com.google.apps.card.v1.Button.Builder.class);
-    }
-
     // Construct using com.google.apps.card.v1.Button.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getIconFieldBuilder();
-        getColorFieldBuilder();
-        getOnClickFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      text_ = "";
-      icon_ = null;
-      if (iconBuilder_ != null) {
-        iconBuilder_.dispose();
-        iconBuilder_ = null;
-      }
-      color_ = null;
-      if (colorBuilder_ != null) {
-        colorBuilder_.dispose();
-        colorBuilder_ = null;
-      }
-      onClick_ = null;
-      if (onClickBuilder_ != null) {
-        onClickBuilder_.dispose();
-        onClickBuilder_ = null;
-      }
-      disabled_ = false;
-      altText_ = "";
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Button_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.Button getDefaultInstanceForType() {
-      return com.google.apps.card.v1.Button.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.Button build() {
-      com.google.apps.card.v1.Button result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.Button buildPartial() {
-      com.google.apps.card.v1.Button result = new com.google.apps.card.v1.Button(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.apps.card.v1.Button result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.text_ = text_;
-      }
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.icon_ = iconBuilder_ == null ? icon_ : iconBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.color_ = colorBuilder_ == null ? color_ : colorBuilder_.build();
-        to_bitField0_ |= 0x00000002;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.onClick_ = onClickBuilder_ == null ? onClick_ : onClickBuilder_.build();
-        to_bitField0_ |= 0x00000004;
-      }
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.disabled_ = disabled_;
-      }
-      if (((from_bitField0_ & 0x00000020) != 0)) {
-        result.altText_ = altText_;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.apps.card.v1.Button) {
-        return mergeFrom((com.google.apps.card.v1.Button) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.apps.card.v1.Button other) {
-      if (other == com.google.apps.card.v1.Button.getDefaultInstance()) return this;
-      if (!other.getText().isEmpty()) {
-        text_ = other.text_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (other.hasIcon()) {
-        mergeIcon(other.getIcon());
-      }
-      if (other.hasColor()) {
-        mergeColor(other.getColor());
-      }
-      if (other.hasOnClick()) {
-        mergeOnClick(other.getOnClick());
-      }
-      if (other.getDisabled() != false) {
-        setDisabled(other.getDisabled());
-      }
-      if (!other.getAltText().isEmpty()) {
-        altText_ = other.altText_;
-        bitField0_ |= 0x00000020;
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                text_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                input.readMessage(getIconFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 26:
-              {
-                input.readMessage(getColorFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 26
-            case 34:
-              {
-                input.readMessage(getOnClickFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 34
-            case 40:
-              {
-                disabled_ = input.readBool();
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 40
-            case 50:
-              {
-                altText_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000020;
-                break;
-              } // case 50
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object text_ = "";
     /**
      *
      *
@@ -957,16 +791,9 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The text.
      */
+    @java.lang.Override
     public java.lang.String getText() {
-      java.lang.Object ref = text_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        text_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getText();
     }
     /**
      *
@@ -979,16 +806,9 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for text.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getTextBytes() {
-      java.lang.Object ref = text_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        text_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getTextBytes();
     }
     /**
      *
@@ -1003,12 +823,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setText(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      text_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setText(value);
       return this;
     }
     /**
@@ -1023,9 +839,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearText() {
-      text_ = getDefaultInstance().getText();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearText();
       return this;
     }
     /**
@@ -1041,22 +856,11 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setTextBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      text_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setTextBytes(value);
       return this;
     }
 
-    private com.google.apps.card.v1.Icon icon_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Icon,
-            com.google.apps.card.v1.Icon.Builder,
-            com.google.apps.card.v1.IconOrBuilder>
-        iconBuilder_;
     /**
      *
      *
@@ -1066,11 +870,10 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Icon icon = 2;</code>
-     *
-     * @return Whether the icon field is set.
      */
+    @java.lang.Override
     public boolean hasIcon() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return instance.hasIcon();
     }
     /**
      *
@@ -1081,15 +884,10 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Icon icon = 2;</code>
-     *
-     * @return The icon.
      */
+    @java.lang.Override
     public com.google.apps.card.v1.Icon getIcon() {
-      if (iconBuilder_ == null) {
-        return icon_ == null ? com.google.apps.card.v1.Icon.getDefaultInstance() : icon_;
-      } else {
-        return iconBuilder_.getMessage();
-      }
+      return instance.getIcon();
     }
     /**
      *
@@ -1102,16 +900,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Icon icon = 2;</code>
      */
     public Builder setIcon(com.google.apps.card.v1.Icon value) {
-      if (iconBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        icon_ = value;
-      } else {
-        iconBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setIcon(value);
       return this;
     }
     /**
@@ -1125,13 +915,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Icon icon = 2;</code>
      */
     public Builder setIcon(com.google.apps.card.v1.Icon.Builder builderForValue) {
-      if (iconBuilder_ == null) {
-        icon_ = builderForValue.build();
-      } else {
-        iconBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setIcon(builderForValue.build());
       return this;
     }
     /**
@@ -1145,21 +930,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Icon icon = 2;</code>
      */
     public Builder mergeIcon(com.google.apps.card.v1.Icon value) {
-      if (iconBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)
-            && icon_ != null
-            && icon_ != com.google.apps.card.v1.Icon.getDefaultInstance()) {
-          getIconBuilder().mergeFrom(value);
-        } else {
-          icon_ = value;
-        }
-      } else {
-        iconBuilder_.mergeFrom(value);
-      }
-      if (icon_ != null) {
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeIcon(value);
       return this;
     }
     /**
@@ -1173,78 +945,11 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Icon icon = 2;</code>
      */
     public Builder clearIcon() {
-      bitField0_ = (bitField0_ & ~0x00000002);
-      icon_ = null;
-      if (iconBuilder_ != null) {
-        iconBuilder_.dispose();
-        iconBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearIcon();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * The icon image. If both `icon` and `text` are set, then the icon appears
-     * before the text.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Icon icon = 2;</code>
-     */
-    public com.google.apps.card.v1.Icon.Builder getIconBuilder() {
-      bitField0_ |= 0x00000002;
-      onChanged();
-      return getIconFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The icon image. If both `icon` and `text` are set, then the icon appears
-     * before the text.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Icon icon = 2;</code>
-     */
-    public com.google.apps.card.v1.IconOrBuilder getIconOrBuilder() {
-      if (iconBuilder_ != null) {
-        return iconBuilder_.getMessageOrBuilder();
-      } else {
-        return icon_ == null ? com.google.apps.card.v1.Icon.getDefaultInstance() : icon_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The icon image. If both `icon` and `text` are set, then the icon appears
-     * before the text.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Icon icon = 2;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Icon,
-            com.google.apps.card.v1.Icon.Builder,
-            com.google.apps.card.v1.IconOrBuilder>
-        getIconFieldBuilder() {
-      if (iconBuilder_ == null) {
-        iconBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.Icon,
-                com.google.apps.card.v1.Icon.Builder,
-                com.google.apps.card.v1.IconOrBuilder>(
-                getIcon(), getParentForChildren(), isClean());
-        icon_ = null;
-      }
-      return iconBuilder_;
-    }
 
-    private com.google.type.Color color_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.type.Color, com.google.type.Color.Builder, com.google.type.ColorOrBuilder>
-        colorBuilder_;
     /**
      *
      *
@@ -1284,11 +989,10 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.type.Color color = 3;</code>
-     *
-     * @return Whether the color field is set.
      */
+    @java.lang.Override
     public boolean hasColor() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return instance.hasColor();
     }
     /**
      *
@@ -1329,15 +1033,10 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.type.Color color = 3;</code>
-     *
-     * @return The color.
      */
+    @java.lang.Override
     public com.google.type.Color getColor() {
-      if (colorBuilder_ == null) {
-        return color_ == null ? com.google.type.Color.getDefaultInstance() : color_;
-      } else {
-        return colorBuilder_.getMessage();
-      }
+      return instance.getColor();
     }
     /**
      *
@@ -1380,16 +1079,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.Color color = 3;</code>
      */
     public Builder setColor(com.google.type.Color value) {
-      if (colorBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        color_ = value;
-      } else {
-        colorBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setColor(value);
       return this;
     }
     /**
@@ -1433,13 +1124,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.Color color = 3;</code>
      */
     public Builder setColor(com.google.type.Color.Builder builderForValue) {
-      if (colorBuilder_ == null) {
-        color_ = builderForValue.build();
-      } else {
-        colorBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setColor(builderForValue.build());
       return this;
     }
     /**
@@ -1483,21 +1169,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.Color color = 3;</code>
      */
     public Builder mergeColor(com.google.type.Color value) {
-      if (colorBuilder_ == null) {
-        if (((bitField0_ & 0x00000004) != 0)
-            && color_ != null
-            && color_ != com.google.type.Color.getDefaultInstance()) {
-          getColorBuilder().mergeFrom(value);
-        } else {
-          color_ = value;
-        }
-      } else {
-        colorBuilder_.mergeFrom(value);
-      }
-      if (color_ != null) {
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeColor(value);
       return this;
     }
     /**
@@ -1541,167 +1214,11 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.Color color = 3;</code>
      */
     public Builder clearColor() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      color_ = null;
-      if (colorBuilder_ != null) {
-        colorBuilder_.dispose();
-        colorBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearColor();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * If set, the button is filled with a solid background color and the font
-     * color changes to maintain contrast with the background color. For example,
-     * setting a blue background likely results in white text.
-     *
-     * If unset, the image background is white and the font color is blue.
-     *
-     * For red, green, and blue, the value of each field is a `float` number that
-     * you can express in either of two ways: as a number between 0 and 255
-     * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
-     * the absence of a color and 1 or 255/255 represent the full presence of that
-     * color on the RGB scale.
-     *
-     * Optionally set `alpha`, which sets a level of transparency using this
-     * equation:
-     *
-     * ```
-     * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
-     * ```
-     *
-     * For `alpha`, a value of `1` corresponds with a solid color, and a value of
-     * `0` corresponds with a completely transparent color.
-     *
-     * For example, the following color represents a half transparent red:
-     *
-     * ```
-     * "color": {
-     *    "red": 1,
-     *    "green": 0,
-     *    "blue": 0,
-     *    "alpha": 0.5
-     * }
-     * ```
-     * </pre>
-     *
-     * <code>.google.type.Color color = 3;</code>
-     */
-    public com.google.type.Color.Builder getColorBuilder() {
-      bitField0_ |= 0x00000004;
-      onChanged();
-      return getColorFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * If set, the button is filled with a solid background color and the font
-     * color changes to maintain contrast with the background color. For example,
-     * setting a blue background likely results in white text.
-     *
-     * If unset, the image background is white and the font color is blue.
-     *
-     * For red, green, and blue, the value of each field is a `float` number that
-     * you can express in either of two ways: as a number between 0 and 255
-     * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
-     * the absence of a color and 1 or 255/255 represent the full presence of that
-     * color on the RGB scale.
-     *
-     * Optionally set `alpha`, which sets a level of transparency using this
-     * equation:
-     *
-     * ```
-     * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
-     * ```
-     *
-     * For `alpha`, a value of `1` corresponds with a solid color, and a value of
-     * `0` corresponds with a completely transparent color.
-     *
-     * For example, the following color represents a half transparent red:
-     *
-     * ```
-     * "color": {
-     *    "red": 1,
-     *    "green": 0,
-     *    "blue": 0,
-     *    "alpha": 0.5
-     * }
-     * ```
-     * </pre>
-     *
-     * <code>.google.type.Color color = 3;</code>
-     */
-    public com.google.type.ColorOrBuilder getColorOrBuilder() {
-      if (colorBuilder_ != null) {
-        return colorBuilder_.getMessageOrBuilder();
-      } else {
-        return color_ == null ? com.google.type.Color.getDefaultInstance() : color_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * If set, the button is filled with a solid background color and the font
-     * color changes to maintain contrast with the background color. For example,
-     * setting a blue background likely results in white text.
-     *
-     * If unset, the image background is white and the font color is blue.
-     *
-     * For red, green, and blue, the value of each field is a `float` number that
-     * you can express in either of two ways: as a number between 0 and 255
-     * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
-     * the absence of a color and 1 or 255/255 represent the full presence of that
-     * color on the RGB scale.
-     *
-     * Optionally set `alpha`, which sets a level of transparency using this
-     * equation:
-     *
-     * ```
-     * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
-     * ```
-     *
-     * For `alpha`, a value of `1` corresponds with a solid color, and a value of
-     * `0` corresponds with a completely transparent color.
-     *
-     * For example, the following color represents a half transparent red:
-     *
-     * ```
-     * "color": {
-     *    "red": 1,
-     *    "green": 0,
-     *    "blue": 0,
-     *    "alpha": 0.5
-     * }
-     * ```
-     * </pre>
-     *
-     * <code>.google.type.Color color = 3;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.type.Color, com.google.type.Color.Builder, com.google.type.ColorOrBuilder>
-        getColorFieldBuilder() {
-      if (colorBuilder_ == null) {
-        colorBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.type.Color,
-                com.google.type.Color.Builder,
-                com.google.type.ColorOrBuilder>(getColor(), getParentForChildren(), isClean());
-        color_ = null;
-      }
-      return colorBuilder_;
-    }
 
-    private com.google.apps.card.v1.OnClick onClick_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.OnClick,
-            com.google.apps.card.v1.OnClick.Builder,
-            com.google.apps.card.v1.OnClickOrBuilder>
-        onClickBuilder_;
     /**
      *
      *
@@ -1711,11 +1228,10 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.OnClick on_click = 4;</code>
-     *
-     * @return Whether the onClick field is set.
      */
+    @java.lang.Override
     public boolean hasOnClick() {
-      return ((bitField0_ & 0x00000008) != 0);
+      return instance.hasOnClick();
     }
     /**
      *
@@ -1726,15 +1242,10 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.OnClick on_click = 4;</code>
-     *
-     * @return The onClick.
      */
+    @java.lang.Override
     public com.google.apps.card.v1.OnClick getOnClick() {
-      if (onClickBuilder_ == null) {
-        return onClick_ == null ? com.google.apps.card.v1.OnClick.getDefaultInstance() : onClick_;
-      } else {
-        return onClickBuilder_.getMessage();
-      }
+      return instance.getOnClick();
     }
     /**
      *
@@ -1747,16 +1258,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.OnClick on_click = 4;</code>
      */
     public Builder setOnClick(com.google.apps.card.v1.OnClick value) {
-      if (onClickBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        onClick_ = value;
-      } else {
-        onClickBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setOnClick(value);
       return this;
     }
     /**
@@ -1770,13 +1273,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.OnClick on_click = 4;</code>
      */
     public Builder setOnClick(com.google.apps.card.v1.OnClick.Builder builderForValue) {
-      if (onClickBuilder_ == null) {
-        onClick_ = builderForValue.build();
-      } else {
-        onClickBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setOnClick(builderForValue.build());
       return this;
     }
     /**
@@ -1790,21 +1288,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.OnClick on_click = 4;</code>
      */
     public Builder mergeOnClick(com.google.apps.card.v1.OnClick value) {
-      if (onClickBuilder_ == null) {
-        if (((bitField0_ & 0x00000008) != 0)
-            && onClick_ != null
-            && onClick_ != com.google.apps.card.v1.OnClick.getDefaultInstance()) {
-          getOnClickBuilder().mergeFrom(value);
-        } else {
-          onClick_ = value;
-        }
-      } else {
-        onClickBuilder_.mergeFrom(value);
-      }
-      if (onClick_ != null) {
-        bitField0_ |= 0x00000008;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeOnClick(value);
       return this;
     }
     /**
@@ -1818,75 +1303,11 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.OnClick on_click = 4;</code>
      */
     public Builder clearOnClick() {
-      bitField0_ = (bitField0_ & ~0x00000008);
-      onClick_ = null;
-      if (onClickBuilder_ != null) {
-        onClickBuilder_.dispose();
-        onClickBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearOnClick();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Required. The action to perform when a user clicks the button, such as
-     * opening a hyperlink or running a custom function.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.OnClick on_click = 4;</code>
-     */
-    public com.google.apps.card.v1.OnClick.Builder getOnClickBuilder() {
-      bitField0_ |= 0x00000008;
-      onChanged();
-      return getOnClickFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Required. The action to perform when a user clicks the button, such as
-     * opening a hyperlink or running a custom function.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.OnClick on_click = 4;</code>
-     */
-    public com.google.apps.card.v1.OnClickOrBuilder getOnClickOrBuilder() {
-      if (onClickBuilder_ != null) {
-        return onClickBuilder_.getMessageOrBuilder();
-      } else {
-        return onClick_ == null ? com.google.apps.card.v1.OnClick.getDefaultInstance() : onClick_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Required. The action to perform when a user clicks the button, such as
-     * opening a hyperlink or running a custom function.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.OnClick on_click = 4;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.OnClick,
-            com.google.apps.card.v1.OnClick.Builder,
-            com.google.apps.card.v1.OnClickOrBuilder>
-        getOnClickFieldBuilder() {
-      if (onClickBuilder_ == null) {
-        onClickBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.OnClick,
-                com.google.apps.card.v1.OnClick.Builder,
-                com.google.apps.card.v1.OnClickOrBuilder>(
-                getOnClick(), getParentForChildren(), isClean());
-        onClick_ = null;
-      }
-      return onClickBuilder_;
-    }
 
-    private boolean disabled_;
     /**
      *
      *
@@ -1901,7 +1322,7 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean getDisabled() {
-      return disabled_;
+      return instance.getDisabled();
     }
     /**
      *
@@ -1917,10 +1338,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDisabled(boolean value) {
-
-      disabled_ = value;
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setDisabled(value);
       return this;
     }
     /**
@@ -1936,13 +1355,11 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDisabled() {
-      bitField0_ = (bitField0_ & ~0x00000010);
-      disabled_ = false;
-      onChanged();
+      copyOnWrite();
+      instance.clearDisabled();
       return this;
     }
 
-    private java.lang.Object altText_ = "";
     /**
      *
      *
@@ -1959,16 +1376,9 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The altText.
      */
+    @java.lang.Override
     public java.lang.String getAltText() {
-      java.lang.Object ref = altText_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        altText_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getAltText();
     }
     /**
      *
@@ -1986,16 +1396,9 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for altText.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getAltTextBytes() {
-      java.lang.Object ref = altText_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        altText_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getAltTextBytes();
     }
     /**
      *
@@ -2015,12 +1418,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAltText(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      altText_ = value;
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setAltText(value);
       return this;
     }
     /**
@@ -2040,9 +1439,8 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAltText() {
-      altText_ = getDefaultInstance().getAltText();
-      bitField0_ = (bitField0_ & ~0x00000020);
-      onChanged();
+      copyOnWrite();
+      instance.clearAltText();
       return this;
     }
     /**
@@ -2063,74 +1461,91 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAltTextBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      altText_ = value;
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setAltTextBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.apps.card.v1.Button)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.apps.card.v1.Button();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_", "text_", "icon_", "color_", "onClick_", "disabled_", "altText_",
+              };
+          java.lang.String info =
+              "\u0000\u0006\u0000\u0001\u0001\u0006\u0006\u0000\u0000\u0000\u0001\u0208\u0002\u1009"
+                  + "\u0000\u0003\u1009\u0001\u0004\u1009\u0002\u0005\u0007\u0006\u0208";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.apps.card.v1.Button> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.apps.card.v1.Button.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.apps.card.v1.Button>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.apps.card.v1.Button)
   private static final com.google.apps.card.v1.Button DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.apps.card.v1.Button();
+    Button defaultInstance = new Button();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(Button.class, defaultInstance);
   }
 
   public static com.google.apps.card.v1.Button getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Button> PARSER =
-      new com.google.protobuf.AbstractParser<Button>() {
-        @java.lang.Override
-        public Button parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<Button> PARSER;
 
   public static com.google.protobuf.Parser<Button> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<Button> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.apps.card.v1.Button getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

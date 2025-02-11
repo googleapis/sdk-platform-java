@@ -37,43 +37,15 @@ package com.google.apps.card.v1;
  *
  * Protobuf type {@code google.apps.card.v1.DateTimePicker}
  */
-public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
+public final class DateTimePicker
+    extends com.google.protobuf.GeneratedMessageLite<DateTimePicker, DateTimePicker.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.DateTimePicker)
     DateTimePickerOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use DateTimePicker.newBuilder() to construct.
-  private DateTimePicker(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private DateTimePicker() {
     name_ = "";
     label_ = "";
-    type_ = 0;
   }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new DateTimePicker();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_DateTimePicker_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_DateTimePicker_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.apps.card.v1.DateTimePicker.class,
-            com.google.apps.card.v1.DateTimePicker.Builder.class);
-  }
-
   /**
    *
    *
@@ -87,7 +59,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf enum {@code google.apps.card.v1.DateTimePicker.DateTimePickerType}
    */
-  public enum DateTimePickerType implements com.google.protobuf.ProtocolMessageEnum {
+  public enum DateTimePickerType implements com.google.protobuf.Internal.EnumLite {
     /**
      *
      *
@@ -152,6 +124,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      */
     public static final int TIME_ONLY_VALUE = 2;
 
+    @java.lang.Override
     public final int getNumber() {
       if (this == UNRECOGNIZED) {
         throw new java.lang.IllegalArgumentException(
@@ -161,8 +134,8 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
     }
 
     /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
+     * @param value The number of the enum to look for.
+     * @return The enum associated with the given number.
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
@@ -170,10 +143,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
       return forNumber(value);
     }
 
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
     public static DateTimePickerType forNumber(int value) {
       switch (value) {
         case 0:
@@ -195,39 +164,26 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
     private static final com.google.protobuf.Internal.EnumLiteMap<DateTimePickerType>
         internalValueMap =
             new com.google.protobuf.Internal.EnumLiteMap<DateTimePickerType>() {
+              @java.lang.Override
               public DateTimePickerType findValueByNumber(int number) {
                 return DateTimePickerType.forNumber(number);
               }
             };
 
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalStateException(
-            "Can't get the descriptor of an unrecognized enum value.");
+    public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+      return DateTimePickerTypeVerifier.INSTANCE;
+    }
+
+    private static final class DateTimePickerTypeVerifier
+        implements com.google.protobuf.Internal.EnumVerifier {
+      static final com.google.protobuf.Internal.EnumVerifier INSTANCE =
+          new DateTimePickerTypeVerifier();
+
+      @java.lang.Override
+      public boolean isInRange(int number) {
+        return DateTimePickerType.forNumber(number) != null;
       }
-      return getDescriptor().getValues().get(ordinal());
-    }
-
-    public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-      return getDescriptor();
-    }
-
-    public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-      return com.google.apps.card.v1.DateTimePicker.getDescriptor().getEnumTypes().get(0);
-    }
-
-    private static final DateTimePickerType[] VALUES = values();
-
-    public static DateTimePickerType valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
+    };
 
     private final int value;
 
@@ -240,9 +196,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
 
   private int bitField0_;
   public static final int NAME_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object name_ = "";
+  private java.lang.String name_;
   /**
    *
    *
@@ -259,15 +213,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getName() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      name_ = s;
-      return s;
-    }
+    return name_;
   }
   /**
    *
@@ -285,21 +231,64 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      name_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(name_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name by which the `DateTimePicker` is identified in a form input event.
+   *
+   * For details about working with form inputs, see [Receive form
+   * data](https://developers.google.com/workspace/chat/read-form-data).
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The name to set.
+   */
+  private void setName(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    name_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name by which the `DateTimePicker` is identified in a form input event.
+   *
+   * For details about working with form inputs, see [Receive form
+   * data](https://developers.google.com/workspace/chat/read-form-data).
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   */
+  private void clearName() {
+
+    name_ = getDefaultInstance().getName();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name by which the `DateTimePicker` is identified in a form input event.
+   *
+   * For details about working with form inputs, see [Receive form
+   * data](https://developers.google.com/workspace/chat/read-form-data).
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The bytes for name to set.
+   */
+  private void setNameBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    name_ = value.toStringUtf8();
   }
 
   public static final int LABEL_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object label_ = "";
+  private java.lang.String label_;
   /**
    *
    *
@@ -315,15 +304,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getLabel() {
-    java.lang.Object ref = label_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      label_ = s;
-      return s;
-    }
+    return label_;
   }
   /**
    *
@@ -340,19 +321,61 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getLabelBytes() {
-    java.lang.Object ref = label_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      label_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(label_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text that prompts users to input a date, a time, or a date and time.
+   * For example, if users are scheduling an appointment, use a label such as
+   * `Appointment date` or `Appointment date and time`.
+   * </pre>
+   *
+   * <code>string label = 2;</code>
+   *
+   * @param value The label to set.
+   */
+  private void setLabel(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    label_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text that prompts users to input a date, a time, or a date and time.
+   * For example, if users are scheduling an appointment, use a label such as
+   * `Appointment date` or `Appointment date and time`.
+   * </pre>
+   *
+   * <code>string label = 2;</code>
+   */
+  private void clearLabel() {
+
+    label_ = getDefaultInstance().getLabel();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text that prompts users to input a date, a time, or a date and time.
+   * For example, if users are scheduling an appointment, use a label such as
+   * `Appointment date` or `Appointment date and time`.
+   * </pre>
+   *
+   * <code>string label = 2;</code>
+   *
+   * @param value The bytes for label to set.
+   */
+  private void setLabelBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    label_ = value.toStringUtf8();
   }
 
   public static final int TYPE_FIELD_NUMBER = 3;
-  private int type_ = 0;
+  private int type_;
   /**
    *
    *
@@ -387,9 +410,50 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
         ? com.google.apps.card.v1.DateTimePicker.DateTimePickerType.UNRECOGNIZED
         : result;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Whether the widget supports inputting a date, a time, or the date and time.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.DateTimePicker.DateTimePickerType type = 3;</code>
+   *
+   * @param value The enum numeric value on the wire for type to set.
+   */
+  private void setTypeValue(int value) {
+    type_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Whether the widget supports inputting a date, a time, or the date and time.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.DateTimePicker.DateTimePickerType type = 3;</code>
+   *
+   * @param value The type to set.
+   */
+  private void setType(com.google.apps.card.v1.DateTimePicker.DateTimePickerType value) {
+    type_ = value.getNumber();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Whether the widget supports inputting a date, a time, or the date and time.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.DateTimePicker.DateTimePickerType type = 3;</code>
+   */
+  private void clearType() {
+
+    type_ = 0;
+  }
 
   public static final int VALUE_MS_EPOCH_FIELD_NUMBER = 4;
-  private long valueMsEpoch_ = 0L;
+  private long valueMsEpoch_;
   /**
    *
    *
@@ -415,9 +479,57 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
   public long getValueMsEpoch() {
     return valueMsEpoch_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The default value displayed in the widget, in milliseconds since [Unix
+   * epoch time](https://en.wikipedia.org/wiki/Unix_time).
+   *
+   * Specify the value based on the type of picker (`DateTimePickerType`):
+   *
+   * * `DATE_AND_TIME`: a calendar date and time in UTC. For example, to
+   *   represent January 1, 2023 at 12:00 PM UTC, use `1672574400000`.
+   * * `DATE_ONLY`: a calendar date at 00:00:00 UTC. For example, to represent
+   *   January 1, 2023, use `1672531200000`.
+   * * `TIME_ONLY`: a time in UTC. For example, to represent 12:00 PM, use
+   *   `43200000` (or `12 * 60 * 60 * 1000`).
+   * </pre>
+   *
+   * <code>int64 value_ms_epoch = 4;</code>
+   *
+   * @param value The valueMsEpoch to set.
+   */
+  private void setValueMsEpoch(long value) {
+
+    valueMsEpoch_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The default value displayed in the widget, in milliseconds since [Unix
+   * epoch time](https://en.wikipedia.org/wiki/Unix_time).
+   *
+   * Specify the value based on the type of picker (`DateTimePickerType`):
+   *
+   * * `DATE_AND_TIME`: a calendar date and time in UTC. For example, to
+   *   represent January 1, 2023 at 12:00 PM UTC, use `1672574400000`.
+   * * `DATE_ONLY`: a calendar date at 00:00:00 UTC. For example, to represent
+   *   January 1, 2023, use `1672531200000`.
+   * * `TIME_ONLY`: a time in UTC. For example, to represent 12:00 PM, use
+   *   `43200000` (or `12 * 60 * 60 * 1000`).
+   * </pre>
+   *
+   * <code>int64 value_ms_epoch = 4;</code>
+   */
+  private void clearValueMsEpoch() {
+
+    valueMsEpoch_ = 0L;
+  }
 
   public static final int TIMEZONE_OFFSET_DATE_FIELD_NUMBER = 5;
-  private int timezoneOffsetDate_ = 0;
+  private int timezoneOffsetDate_;
   /**
    *
    *
@@ -435,6 +547,38 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
   public int getTimezoneOffsetDate() {
     return timezoneOffsetDate_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The number representing the time zone offset from UTC, in minutes.
+   * If set, the `value_ms_epoch` is displayed in the specified time zone.
+   * If unset, the value defaults to the user's time zone setting.
+   * </pre>
+   *
+   * <code>int32 timezone_offset_date = 5;</code>
+   *
+   * @param value The timezoneOffsetDate to set.
+   */
+  private void setTimezoneOffsetDate(int value) {
+
+    timezoneOffsetDate_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The number representing the time zone offset from UTC, in minutes.
+   * If set, the `value_ms_epoch` is displayed in the specified time zone.
+   * If unset, the value defaults to the user's time zone setting.
+   * </pre>
+   *
+   * <code>int32 timezone_offset_date = 5;</code>
+   */
+  private void clearTimezoneOffsetDate() {
+
+    timezoneOffsetDate_ = 0;
+  }
 
   public static final int ON_CHANGE_ACTION_FIELD_NUMBER = 6;
   private com.google.apps.card.v1.Action onChangeAction_;
@@ -447,8 +591,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
-   *
-   * @return Whether the onChangeAction field is set.
    */
   @java.lang.Override
   public boolean hasOnChangeAction() {
@@ -463,8 +605,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
-   *
-   * @return The onChangeAction.
    */
   @java.lang.Override
   public com.google.apps.card.v1.Action getOnChangeAction() {
@@ -482,223 +622,132 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
    */
-  @java.lang.Override
-  public com.google.apps.card.v1.ActionOrBuilder getOnChangeActionOrBuilder() {
-    return onChangeAction_ == null
-        ? com.google.apps.card.v1.Action.getDefaultInstance()
-        : onChangeAction_;
+  private void setOnChangeAction(com.google.apps.card.v1.Action value) {
+    value.getClass();
+    onChangeAction_ = value;
+    bitField0_ |= 0x00000001;
   }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Triggered when the user clicks **Save** or **Clear** from the
+   * `DateTimePicker` interface.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeOnChangeAction(com.google.apps.card.v1.Action value) {
+    value.getClass();
+    if (onChangeAction_ != null
+        && onChangeAction_ != com.google.apps.card.v1.Action.getDefaultInstance()) {
+      onChangeAction_ =
+          com.google.apps.card.v1.Action.newBuilder(onChangeAction_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      onChangeAction_ = value;
+    }
+    bitField0_ |= 0x00000001;
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(label_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, label_);
-    }
-    if (type_
-        != com.google.apps.card.v1.DateTimePicker.DateTimePickerType.DATE_AND_TIME.getNumber()) {
-      output.writeEnum(3, type_);
-    }
-    if (valueMsEpoch_ != 0L) {
-      output.writeInt64(4, valueMsEpoch_);
-    }
-    if (timezoneOffsetDate_ != 0) {
-      output.writeInt32(5, timezoneOffsetDate_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(6, getOnChangeAction());
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(label_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, label_);
-    }
-    if (type_
-        != com.google.apps.card.v1.DateTimePicker.DateTimePickerType.DATE_AND_TIME.getNumber()) {
-      size += com.google.protobuf.CodedOutputStream.computeEnumSize(3, type_);
-    }
-    if (valueMsEpoch_ != 0L) {
-      size += com.google.protobuf.CodedOutputStream.computeInt64Size(4, valueMsEpoch_);
-    }
-    if (timezoneOffsetDate_ != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeInt32Size(5, timezoneOffsetDate_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(6, getOnChangeAction());
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.apps.card.v1.DateTimePicker)) {
-      return super.equals(obj);
-    }
-    com.google.apps.card.v1.DateTimePicker other = (com.google.apps.card.v1.DateTimePicker) obj;
-
-    if (!getName().equals(other.getName())) return false;
-    if (!getLabel().equals(other.getLabel())) return false;
-    if (type_ != other.type_) return false;
-    if (getValueMsEpoch() != other.getValueMsEpoch()) return false;
-    if (getTimezoneOffsetDate() != other.getTimezoneOffsetDate()) return false;
-    if (hasOnChangeAction() != other.hasOnChangeAction()) return false;
-    if (hasOnChangeAction()) {
-      if (!getOnChangeAction().equals(other.getOnChangeAction())) return false;
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getName().hashCode();
-    hash = (37 * hash) + LABEL_FIELD_NUMBER;
-    hash = (53 * hash) + getLabel().hashCode();
-    hash = (37 * hash) + TYPE_FIELD_NUMBER;
-    hash = (53 * hash) + type_;
-    hash = (37 * hash) + VALUE_MS_EPOCH_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(getValueMsEpoch());
-    hash = (37 * hash) + TIMEZONE_OFFSET_DATE_FIELD_NUMBER;
-    hash = (53 * hash) + getTimezoneOffsetDate();
-    if (hasOnChangeAction()) {
-      hash = (37 * hash) + ON_CHANGE_ACTION_FIELD_NUMBER;
-      hash = (53 * hash) + getOnChangeAction().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Triggered when the user clicks **Save** or **Clear** from the
+   * `DateTimePicker` interface.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
+   */
+  private void clearOnChangeAction() {
+    onChangeAction_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static com.google.apps.card.v1.DateTimePicker parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.DateTimePicker parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.DateTimePicker parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.DateTimePicker parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.DateTimePicker parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.DateTimePicker parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.DateTimePicker parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.DateTimePicker parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.DateTimePicker parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.DateTimePicker parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.DateTimePicker parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.DateTimePicker parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.apps.card.v1.DateTimePicker prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -717,264 +766,17 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.apps.card.v1.DateTimePicker}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.apps.card.v1.DateTimePicker, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.apps.card.v1.DateTimePicker)
       com.google.apps.card.v1.DateTimePickerOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_DateTimePicker_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_DateTimePicker_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.apps.card.v1.DateTimePicker.class,
-              com.google.apps.card.v1.DateTimePicker.Builder.class);
-    }
-
     // Construct using com.google.apps.card.v1.DateTimePicker.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getOnChangeActionFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      name_ = "";
-      label_ = "";
-      type_ = 0;
-      valueMsEpoch_ = 0L;
-      timezoneOffsetDate_ = 0;
-      onChangeAction_ = null;
-      if (onChangeActionBuilder_ != null) {
-        onChangeActionBuilder_.dispose();
-        onChangeActionBuilder_ = null;
-      }
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_DateTimePicker_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.DateTimePicker getDefaultInstanceForType() {
-      return com.google.apps.card.v1.DateTimePicker.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.DateTimePicker build() {
-      com.google.apps.card.v1.DateTimePicker result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.DateTimePicker buildPartial() {
-      com.google.apps.card.v1.DateTimePicker result =
-          new com.google.apps.card.v1.DateTimePicker(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.apps.card.v1.DateTimePicker result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.name_ = name_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.label_ = label_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.type_ = type_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.valueMsEpoch_ = valueMsEpoch_;
-      }
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.timezoneOffsetDate_ = timezoneOffsetDate_;
-      }
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000020) != 0)) {
-        result.onChangeAction_ =
-            onChangeActionBuilder_ == null ? onChangeAction_ : onChangeActionBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.apps.card.v1.DateTimePicker) {
-        return mergeFrom((com.google.apps.card.v1.DateTimePicker) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.apps.card.v1.DateTimePicker other) {
-      if (other == com.google.apps.card.v1.DateTimePicker.getDefaultInstance()) return this;
-      if (!other.getName().isEmpty()) {
-        name_ = other.name_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getLabel().isEmpty()) {
-        label_ = other.label_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      if (other.type_ != 0) {
-        setTypeValue(other.getTypeValue());
-      }
-      if (other.getValueMsEpoch() != 0L) {
-        setValueMsEpoch(other.getValueMsEpoch());
-      }
-      if (other.getTimezoneOffsetDate() != 0) {
-        setTimezoneOffsetDate(other.getTimezoneOffsetDate());
-      }
-      if (other.hasOnChangeAction()) {
-        mergeOnChangeAction(other.getOnChangeAction());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                name_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                label_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 24:
-              {
-                type_ = input.readEnum();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 24
-            case 32:
-              {
-                valueMsEpoch_ = input.readInt64();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 32
-            case 40:
-              {
-                timezoneOffsetDate_ = input.readInt32();
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 40
-            case 50:
-              {
-                input.readMessage(getOnChangeActionFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000020;
-                break;
-              } // case 50
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object name_ = "";
     /**
      *
      *
@@ -989,16 +791,9 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        name_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getName();
     }
     /**
      *
@@ -1014,16 +809,9 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getNameBytes() {
-      java.lang.Object ref = name_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        name_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getNameBytes();
     }
     /**
      *
@@ -1041,12 +829,8 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setName(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setName(value);
       return this;
     }
     /**
@@ -1064,9 +848,8 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearName() {
-      name_ = getDefaultInstance().getName();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearName();
       return this;
     }
     /**
@@ -1085,17 +868,11 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setNameBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setNameBytes(value);
       return this;
     }
 
-    private java.lang.Object label_ = "";
     /**
      *
      *
@@ -1109,16 +886,9 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The label.
      */
+    @java.lang.Override
     public java.lang.String getLabel() {
-      java.lang.Object ref = label_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        label_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getLabel();
     }
     /**
      *
@@ -1133,16 +903,9 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for label.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getLabelBytes() {
-      java.lang.Object ref = label_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        label_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getLabelBytes();
     }
     /**
      *
@@ -1159,12 +922,8 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setLabel(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      label_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setLabel(value);
       return this;
     }
     /**
@@ -1181,9 +940,8 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearLabel() {
-      label_ = getDefaultInstance().getLabel();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearLabel();
       return this;
     }
     /**
@@ -1201,17 +959,11 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setLabelBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      label_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setLabelBytes(value);
       return this;
     }
 
-    private int type_ = 0;
     /**
      *
      *
@@ -1225,7 +977,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getTypeValue() {
-      return type_;
+      return instance.getTypeValue();
     }
     /**
      *
@@ -1236,13 +988,12 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.apps.card.v1.DateTimePicker.DateTimePickerType type = 3;</code>
      *
-     * @param value The enum numeric value on the wire for type to set.
+     * @param value The type to set.
      * @return This builder for chaining.
      */
     public Builder setTypeValue(int value) {
-      type_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setTypeValue(value);
       return this;
     }
     /**
@@ -1258,11 +1009,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.apps.card.v1.DateTimePicker.DateTimePickerType getType() {
-      com.google.apps.card.v1.DateTimePicker.DateTimePickerType result =
-          com.google.apps.card.v1.DateTimePicker.DateTimePickerType.forNumber(type_);
-      return result == null
-          ? com.google.apps.card.v1.DateTimePicker.DateTimePickerType.UNRECOGNIZED
-          : result;
+      return instance.getType();
     }
     /**
      *
@@ -1273,16 +1020,12 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.apps.card.v1.DateTimePicker.DateTimePickerType type = 3;</code>
      *
-     * @param value The type to set.
+     * @param value The enum numeric value on the wire for type to set.
      * @return This builder for chaining.
      */
     public Builder setType(com.google.apps.card.v1.DateTimePicker.DateTimePickerType value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      bitField0_ |= 0x00000004;
-      type_ = value.getNumber();
-      onChanged();
+      copyOnWrite();
+      instance.setType(value);
       return this;
     }
     /**
@@ -1297,13 +1040,11 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearType() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      type_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearType();
       return this;
     }
 
-    private long valueMsEpoch_;
     /**
      *
      *
@@ -1327,7 +1068,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public long getValueMsEpoch() {
-      return valueMsEpoch_;
+      return instance.getValueMsEpoch();
     }
     /**
      *
@@ -1352,10 +1093,8 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setValueMsEpoch(long value) {
-
-      valueMsEpoch_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setValueMsEpoch(value);
       return this;
     }
     /**
@@ -1380,13 +1119,11 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearValueMsEpoch() {
-      bitField0_ = (bitField0_ & ~0x00000008);
-      valueMsEpoch_ = 0L;
-      onChanged();
+      copyOnWrite();
+      instance.clearValueMsEpoch();
       return this;
     }
 
-    private int timezoneOffsetDate_;
     /**
      *
      *
@@ -1402,7 +1139,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getTimezoneOffsetDate() {
-      return timezoneOffsetDate_;
+      return instance.getTimezoneOffsetDate();
     }
     /**
      *
@@ -1419,10 +1156,8 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setTimezoneOffsetDate(int value) {
-
-      timezoneOffsetDate_ = value;
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setTimezoneOffsetDate(value);
       return this;
     }
     /**
@@ -1439,18 +1174,11 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearTimezoneOffsetDate() {
-      bitField0_ = (bitField0_ & ~0x00000010);
-      timezoneOffsetDate_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearTimezoneOffsetDate();
       return this;
     }
 
-    private com.google.apps.card.v1.Action onChangeAction_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Action,
-            com.google.apps.card.v1.Action.Builder,
-            com.google.apps.card.v1.ActionOrBuilder>
-        onChangeActionBuilder_;
     /**
      *
      *
@@ -1460,11 +1188,10 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
-     *
-     * @return Whether the onChangeAction field is set.
      */
+    @java.lang.Override
     public boolean hasOnChangeAction() {
-      return ((bitField0_ & 0x00000020) != 0);
+      return instance.hasOnChangeAction();
     }
     /**
      *
@@ -1475,17 +1202,10 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
-     *
-     * @return The onChangeAction.
      */
+    @java.lang.Override
     public com.google.apps.card.v1.Action getOnChangeAction() {
-      if (onChangeActionBuilder_ == null) {
-        return onChangeAction_ == null
-            ? com.google.apps.card.v1.Action.getDefaultInstance()
-            : onChangeAction_;
-      } else {
-        return onChangeActionBuilder_.getMessage();
-      }
+      return instance.getOnChangeAction();
     }
     /**
      *
@@ -1498,16 +1218,8 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
      */
     public Builder setOnChangeAction(com.google.apps.card.v1.Action value) {
-      if (onChangeActionBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        onChangeAction_ = value;
-      } else {
-        onChangeActionBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setOnChangeAction(value);
       return this;
     }
     /**
@@ -1521,13 +1233,8 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
      */
     public Builder setOnChangeAction(com.google.apps.card.v1.Action.Builder builderForValue) {
-      if (onChangeActionBuilder_ == null) {
-        onChangeAction_ = builderForValue.build();
-      } else {
-        onChangeActionBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setOnChangeAction(builderForValue.build());
       return this;
     }
     /**
@@ -1541,21 +1248,8 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
      */
     public Builder mergeOnChangeAction(com.google.apps.card.v1.Action value) {
-      if (onChangeActionBuilder_ == null) {
-        if (((bitField0_ & 0x00000020) != 0)
-            && onChangeAction_ != null
-            && onChangeAction_ != com.google.apps.card.v1.Action.getDefaultInstance()) {
-          getOnChangeActionBuilder().mergeFrom(value);
-        } else {
-          onChangeAction_ = value;
-        }
-      } else {
-        onChangeActionBuilder_.mergeFrom(value);
-      }
-      if (onChangeAction_ != null) {
-        bitField0_ |= 0x00000020;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeOnChangeAction(value);
       return this;
     }
     /**
@@ -1569,134 +1263,98 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
      */
     public Builder clearOnChangeAction() {
-      bitField0_ = (bitField0_ & ~0x00000020);
-      onChangeAction_ = null;
-      if (onChangeActionBuilder_ != null) {
-        onChangeActionBuilder_.dispose();
-        onChangeActionBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearOnChangeAction();
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Triggered when the user clicks **Save** or **Clear** from the
-     * `DateTimePicker` interface.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
-     */
-    public com.google.apps.card.v1.Action.Builder getOnChangeActionBuilder() {
-      bitField0_ |= 0x00000020;
-      onChanged();
-      return getOnChangeActionFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Triggered when the user clicks **Save** or **Clear** from the
-     * `DateTimePicker` interface.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
-     */
-    public com.google.apps.card.v1.ActionOrBuilder getOnChangeActionOrBuilder() {
-      if (onChangeActionBuilder_ != null) {
-        return onChangeActionBuilder_.getMessageOrBuilder();
-      } else {
-        return onChangeAction_ == null
-            ? com.google.apps.card.v1.Action.getDefaultInstance()
-            : onChangeAction_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Triggered when the user clicks **Save** or **Clear** from the
-     * `DateTimePicker` interface.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Action,
-            com.google.apps.card.v1.Action.Builder,
-            com.google.apps.card.v1.ActionOrBuilder>
-        getOnChangeActionFieldBuilder() {
-      if (onChangeActionBuilder_ == null) {
-        onChangeActionBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.Action,
-                com.google.apps.card.v1.Action.Builder,
-                com.google.apps.card.v1.ActionOrBuilder>(
-                getOnChangeAction(), getParentForChildren(), isClean());
-        onChangeAction_ = null;
-      }
-      return onChangeActionBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.apps.card.v1.DateTimePicker)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.apps.card.v1.DateTimePicker();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_",
+                "name_",
+                "label_",
+                "type_",
+                "valueMsEpoch_",
+                "timezoneOffsetDate_",
+                "onChangeAction_",
+              };
+          java.lang.String info =
+              "\u0000\u0006\u0000\u0001\u0001\u0006\u0006\u0000\u0000\u0000\u0001\u0208\u0002\u0208"
+                  + "\u0003\f\u0004\u0002\u0005\u0004\u0006\u1009\u0000";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.apps.card.v1.DateTimePicker> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.apps.card.v1.DateTimePicker.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.apps.card.v1.DateTimePicker>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.apps.card.v1.DateTimePicker)
   private static final com.google.apps.card.v1.DateTimePicker DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.apps.card.v1.DateTimePicker();
+    DateTimePicker defaultInstance = new DateTimePicker();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        DateTimePicker.class, defaultInstance);
   }
 
   public static com.google.apps.card.v1.DateTimePicker getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<DateTimePicker> PARSER =
-      new com.google.protobuf.AbstractParser<DateTimePicker>() {
-        @java.lang.Override
-        public DateTimePicker parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<DateTimePicker> PARSER;
 
   public static com.google.protobuf.Parser<DateTimePicker> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<DateTimePicker> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.apps.card.v1.DateTimePicker getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

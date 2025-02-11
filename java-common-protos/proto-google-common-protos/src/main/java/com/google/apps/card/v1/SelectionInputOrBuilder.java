@@ -22,7 +22,7 @@ package com.google.apps.card.v1;
 public interface SelectionInputOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.apps.card.v1.SelectionInput)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -154,29 +154,6 @@ public interface SelectionInputOrBuilder
    * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
    */
   int getItemsCount();
-  /**
-   *
-   *
-   * <pre>
-   * An array of selectable items. For example, an array of radio buttons or
-   * checkboxes. Supports up to 100 items.
-   * </pre>
-   *
-   * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
-   */
-  java.util.List<? extends com.google.apps.card.v1.SelectionInput.SelectionItemOrBuilder>
-      getItemsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * An array of selectable items. For example, an array of radio buttons or
-   * checkboxes. Supports up to 100 items.
-   * </pre>
-   *
-   * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
-   */
-  com.google.apps.card.v1.SelectionInput.SelectionItemOrBuilder getItemsOrBuilder(int index);
 
   /**
    *
@@ -210,20 +187,6 @@ public interface SelectionInputOrBuilder
    * @return The onChangeAction.
    */
   com.google.apps.card.v1.Action getOnChangeAction();
-  /**
-   *
-   *
-   * <pre>
-   * If specified, the form is submitted when the selection changes. If not
-   * specified, you must specify a separate button that submits the form.
-   *
-   * For details about working with form inputs, see [Receive form
-   * data](https://developers.google.com/workspace/chat/read-form-data).
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.Action on_change_action = 5;</code>
-   */
-  com.google.apps.card.v1.ActionOrBuilder getOnChangeActionOrBuilder();
 
   /**
    *
@@ -281,16 +244,6 @@ public interface SelectionInputOrBuilder
    * @return The externalDataSource.
    */
   com.google.apps.card.v1.Action getExternalDataSource();
-  /**
-   *
-   *
-   * <pre>
-   * An external data source, such as a relational data base.
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
-   */
-  com.google.apps.card.v1.ActionOrBuilder getExternalDataSourceOrBuilder();
 
   /**
    *
@@ -316,17 +269,7 @@ public interface SelectionInputOrBuilder
    * @return The platformDataSource.
    */
   com.google.apps.card.v1.SelectionInput.PlatformDataSource getPlatformDataSource();
-  /**
-   *
-   *
-   * <pre>
-   * A data source from Google Workspace.
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.SelectionInput.PlatformDataSource platform_data_source = 9;</code>
-   */
-  com.google.apps.card.v1.SelectionInput.PlatformDataSourceOrBuilder
-      getPlatformDataSourceOrBuilder();
 
-  com.google.apps.card.v1.SelectionInput.MultiSelectDataSourceCase getMultiSelectDataSourceCase();
+  public com.google.apps.card.v1.SelectionInput.MultiSelectDataSourceCase
+      getMultiSelectDataSourceCase();
 }

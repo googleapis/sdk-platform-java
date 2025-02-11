@@ -22,7 +22,7 @@ package com.google.api;
 public interface MonitoredResourceOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.MonitoredResource)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -111,6 +111,7 @@ public interface MonitoredResourceOrBuilder
    *
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
+
   /* nullable */
   java.lang.String getLabelsOrDefault(
       java.lang.String key,

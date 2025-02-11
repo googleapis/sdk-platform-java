@@ -35,47 +35,21 @@ package com.google.apps.card.v1;
  *
  * Protobuf type {@code google.apps.card.v1.DecoratedText}
  */
-public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
+public final class DecoratedText
+    extends com.google.protobuf.GeneratedMessageLite<DecoratedText, DecoratedText.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.DecoratedText)
     DecoratedTextOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use DecoratedText.newBuilder() to construct.
-  private DecoratedText(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private DecoratedText() {
     topLabel_ = "";
     text_ = "";
     bottomLabel_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new DecoratedText();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_DecoratedText_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_DecoratedText_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.apps.card.v1.DecoratedText.class,
-            com.google.apps.card.v1.DecoratedText.Builder.class);
-  }
-
   public interface SwitchControlOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:google.apps.card.v1.DecoratedText.SwitchControl)
-      com.google.protobuf.MessageOrBuilder {
+      com.google.protobuf.MessageLiteOrBuilder {
 
     /**
      *
@@ -178,17 +152,6 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * @return The onChangeAction.
      */
     com.google.apps.card.v1.Action getOnChangeAction();
-    /**
-     *
-     *
-     * <pre>
-     * The action to perform when the switch state is changed, such as what
-     *  function to run.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Action on_change_action = 4;</code>
-     */
-    com.google.apps.card.v1.ActionOrBuilder getOnChangeActionOrBuilder();
 
     /**
      *
@@ -235,43 +198,15 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.apps.card.v1.DecoratedText.SwitchControl}
    */
-  public static final class SwitchControl extends com.google.protobuf.GeneratedMessageV3
+  public static final class SwitchControl
+      extends com.google.protobuf.GeneratedMessageLite<SwitchControl, SwitchControl.Builder>
       implements
       // @@protoc_insertion_point(message_implements:google.apps.card.v1.DecoratedText.SwitchControl)
       SwitchControlOrBuilder {
-    private static final long serialVersionUID = 0L;
-    // Use SwitchControl.newBuilder() to construct.
-    private SwitchControl(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-
     private SwitchControl() {
       name_ = "";
       value_ = "";
-      controlType_ = 0;
     }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-      return new SwitchControl();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_DecoratedText_SwitchControl_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_DecoratedText_SwitchControl_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.apps.card.v1.DecoratedText.SwitchControl.class,
-              com.google.apps.card.v1.DecoratedText.SwitchControl.Builder.class);
-    }
-
     /**
      *
      *
@@ -284,7 +219,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      *
      * Protobuf enum {@code google.apps.card.v1.DecoratedText.SwitchControl.ControlType}
      */
-    public enum ControlType implements com.google.protobuf.ProtocolMessageEnum {
+    public enum ControlType implements com.google.protobuf.Internal.EnumLite {
       /**
        *
        *
@@ -349,6 +284,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        */
       public static final int CHECK_BOX_VALUE = 2;
 
+      @java.lang.Override
       public final int getNumber() {
         if (this == UNRECOGNIZED) {
           throw new java.lang.IllegalArgumentException(
@@ -358,8 +294,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       }
 
       /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
+       * @param value The number of the enum to look for.
+       * @return The enum associated with the given number.
        * @deprecated Use {@link #forNumber(int)} instead.
        */
       @java.lang.Deprecated
@@ -367,10 +303,6 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return forNumber(value);
       }
 
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       */
       public static ControlType forNumber(int value) {
         switch (value) {
           case 0:
@@ -390,40 +322,25 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
 
       private static final com.google.protobuf.Internal.EnumLiteMap<ControlType> internalValueMap =
           new com.google.protobuf.Internal.EnumLiteMap<ControlType>() {
+            @java.lang.Override
             public ControlType findValueByNumber(int number) {
               return ControlType.forNumber(number);
             }
           };
 
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-        if (this == UNRECOGNIZED) {
-          throw new java.lang.IllegalStateException(
-              "Can't get the descriptor of an unrecognized enum value.");
+      public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+        return ControlTypeVerifier.INSTANCE;
+      }
+
+      private static final class ControlTypeVerifier
+          implements com.google.protobuf.Internal.EnumVerifier {
+        static final com.google.protobuf.Internal.EnumVerifier INSTANCE = new ControlTypeVerifier();
+
+        @java.lang.Override
+        public boolean isInRange(int number) {
+          return ControlType.forNumber(number) != null;
         }
-        return getDescriptor().getValues().get(ordinal());
-      }
-
-      public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-        return getDescriptor();
-      }
-
-      public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-        return com.google.apps.card.v1.DecoratedText.SwitchControl.getDescriptor()
-            .getEnumTypes()
-            .get(0);
-      }
-
-      private static final ControlType[] VALUES = values();
-
-      public static ControlType valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-        }
-        if (desc.getIndex() == -1) {
-          return UNRECOGNIZED;
-        }
-        return VALUES[desc.getIndex()];
-      }
+      };
 
       private final int value;
 
@@ -436,9 +353,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
 
     private int bitField0_;
     public static final int NAME_FIELD_NUMBER = 1;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object name_ = "";
+    private java.lang.String name_;
     /**
      *
      *
@@ -455,15 +370,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        name_ = s;
-        return s;
-      }
+      return name_;
     }
     /**
      *
@@ -481,21 +388,64 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getNameBytes() {
-      java.lang.Object ref = name_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        name_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(name_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The name by which the switch widget is identified in a form input event.
+     *
+     * For details about working with form inputs, see [Receive form
+     * data](https://developers.google.com/workspace/chat/read-form-data).
+     * </pre>
+     *
+     * <code>string name = 1;</code>
+     *
+     * @param value The name to set.
+     */
+    private void setName(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      name_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The name by which the switch widget is identified in a form input event.
+     *
+     * For details about working with form inputs, see [Receive form
+     * data](https://developers.google.com/workspace/chat/read-form-data).
+     * </pre>
+     *
+     * <code>string name = 1;</code>
+     */
+    private void clearName() {
+
+      name_ = getDefaultInstance().getName();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The name by which the switch widget is identified in a form input event.
+     *
+     * For details about working with form inputs, see [Receive form
+     * data](https://developers.google.com/workspace/chat/read-form-data).
+     * </pre>
+     *
+     * <code>string name = 1;</code>
+     *
+     * @param value The bytes for name to set.
+     */
+    private void setNameBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      name_ = value.toStringUtf8();
     }
 
     public static final int VALUE_FIELD_NUMBER = 2;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object value_ = "";
+    private java.lang.String value_;
     /**
      *
      *
@@ -512,15 +462,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getValue() {
-      java.lang.Object ref = value_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        value_ = s;
-        return s;
-      }
+      return value_;
     }
     /**
      *
@@ -538,19 +480,64 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getValueBytes() {
-      java.lang.Object ref = value_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        value_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(value_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The value entered by a user, returned as part of a form input event.
+     *
+     * For details about working with form inputs, see [Receive form
+     * data](https://developers.google.com/workspace/chat/read-form-data).
+     * </pre>
+     *
+     * <code>string value = 2;</code>
+     *
+     * @param value The value to set.
+     */
+    private void setValue(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      value_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The value entered by a user, returned as part of a form input event.
+     *
+     * For details about working with form inputs, see [Receive form
+     * data](https://developers.google.com/workspace/chat/read-form-data).
+     * </pre>
+     *
+     * <code>string value = 2;</code>
+     */
+    private void clearValue() {
+
+      value_ = getDefaultInstance().getValue();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The value entered by a user, returned as part of a form input event.
+     *
+     * For details about working with form inputs, see [Receive form
+     * data](https://developers.google.com/workspace/chat/read-form-data).
+     * </pre>
+     *
+     * <code>string value = 2;</code>
+     *
+     * @param value The bytes for value to set.
+     */
+    private void setValueBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      value_ = value.toStringUtf8();
     }
 
     public static final int SELECTED_FIELD_NUMBER = 3;
-    private boolean selected_ = false;
+    private boolean selected_;
     /**
      *
      *
@@ -566,6 +553,34 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     public boolean getSelected() {
       return selected_;
     }
+    /**
+     *
+     *
+     * <pre>
+     * When `true`, the switch is selected.
+     * </pre>
+     *
+     * <code>bool selected = 3;</code>
+     *
+     * @param value The selected to set.
+     */
+    private void setSelected(boolean value) {
+
+      selected_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * When `true`, the switch is selected.
+     * </pre>
+     *
+     * <code>bool selected = 3;</code>
+     */
+    private void clearSelected() {
+
+      selected_ = false;
+    }
 
     public static final int ON_CHANGE_ACTION_FIELD_NUMBER = 4;
     private com.google.apps.card.v1.Action onChangeAction_;
@@ -578,8 +593,6 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Action on_change_action = 4;</code>
-     *
-     * @return Whether the onChangeAction field is set.
      */
     @java.lang.Override
     public boolean hasOnChangeAction() {
@@ -594,8 +607,6 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Action on_change_action = 4;</code>
-     *
-     * @return The onChangeAction.
      */
     @java.lang.Override
     public com.google.apps.card.v1.Action getOnChangeAction() {
@@ -613,15 +624,52 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.apps.card.v1.Action on_change_action = 4;</code>
      */
-    @java.lang.Override
-    public com.google.apps.card.v1.ActionOrBuilder getOnChangeActionOrBuilder() {
-      return onChangeAction_ == null
-          ? com.google.apps.card.v1.Action.getDefaultInstance()
-          : onChangeAction_;
+    private void setOnChangeAction(com.google.apps.card.v1.Action value) {
+      value.getClass();
+      onChangeAction_ = value;
+      bitField0_ |= 0x00000001;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The action to perform when the switch state is changed, such as what
+     *  function to run.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Action on_change_action = 4;</code>
+     */
+    @java.lang.SuppressWarnings({"ReferenceEquality"})
+    private void mergeOnChangeAction(com.google.apps.card.v1.Action value) {
+      value.getClass();
+      if (onChangeAction_ != null
+          && onChangeAction_ != com.google.apps.card.v1.Action.getDefaultInstance()) {
+        onChangeAction_ =
+            com.google.apps.card.v1.Action.newBuilder(onChangeAction_)
+                .mergeFrom(value)
+                .buildPartial();
+      } else {
+        onChangeAction_ = value;
+      }
+      bitField0_ |= 0x00000001;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The action to perform when the switch state is changed, such as what
+     *  function to run.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Action on_change_action = 4;</code>
+     */
+    private void clearOnChangeAction() {
+      onChangeAction_ = null;
+      bitField0_ = (bitField0_ & ~0x00000001);
     }
 
     public static final int CONTROL_TYPE_FIELD_NUMBER = 5;
-    private int controlType_ = 0;
+    private int controlType_;
     /**
      *
      *
@@ -662,211 +710,141 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
           ? com.google.apps.card.v1.DecoratedText.SwitchControl.ControlType.UNRECOGNIZED
           : result;
     }
-
-    private byte memoizedIsInitialized = -1;
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
+    /**
+     *
+     *
+     * <pre>
+     * How the switch appears in the user interface.
+     *
+     * [Google Workspace Add-ons
+     * and Chat apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.DecoratedText.SwitchControl.ControlType control_type = 5;</code>
+     *
+     * @param value The enum numeric value on the wire for controlType to set.
+     */
+    private void setControlTypeValue(int value) {
+      controlType_ = value;
     }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(value_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, value_);
-      }
-      if (selected_ != false) {
-        output.writeBool(3, selected_);
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeMessage(4, getOnChangeAction());
-      }
-      if (controlType_
-          != com.google.apps.card.v1.DecoratedText.SwitchControl.ControlType.SWITCH.getNumber()) {
-        output.writeEnum(5, controlType_);
-      }
-      getUnknownFields().writeTo(output);
+    /**
+     *
+     *
+     * <pre>
+     * How the switch appears in the user interface.
+     *
+     * [Google Workspace Add-ons
+     * and Chat apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.DecoratedText.SwitchControl.ControlType control_type = 5;</code>
+     *
+     * @param value The controlType to set.
+     */
+    private void setControlType(
+        com.google.apps.card.v1.DecoratedText.SwitchControl.ControlType value) {
+      controlType_ = value.getNumber();
     }
+    /**
+     *
+     *
+     * <pre>
+     * How the switch appears in the user interface.
+     *
+     * [Google Workspace Add-ons
+     * and Chat apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.DecoratedText.SwitchControl.ControlType control_type = 5;</code>
+     */
+    private void clearControlType() {
 
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(value_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, value_);
-      }
-      if (selected_ != false) {
-        size += com.google.protobuf.CodedOutputStream.computeBoolSize(3, selected_);
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, getOnChangeAction());
-      }
-      if (controlType_
-          != com.google.apps.card.v1.DecoratedText.SwitchControl.ControlType.SWITCH.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream.computeEnumSize(5, controlType_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-        return true;
-      }
-      if (!(obj instanceof com.google.apps.card.v1.DecoratedText.SwitchControl)) {
-        return super.equals(obj);
-      }
-      com.google.apps.card.v1.DecoratedText.SwitchControl other =
-          (com.google.apps.card.v1.DecoratedText.SwitchControl) obj;
-
-      if (!getName().equals(other.getName())) return false;
-      if (!getValue().equals(other.getValue())) return false;
-      if (getSelected() != other.getSelected()) return false;
-      if (hasOnChangeAction() != other.hasOnChangeAction()) return false;
-      if (hasOnChangeAction()) {
-        if (!getOnChangeAction().equals(other.getOnChangeAction())) return false;
-      }
-      if (controlType_ != other.controlType_) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + NAME_FIELD_NUMBER;
-      hash = (53 * hash) + getName().hashCode();
-      hash = (37 * hash) + VALUE_FIELD_NUMBER;
-      hash = (53 * hash) + getValue().hashCode();
-      hash = (37 * hash) + SELECTED_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getSelected());
-      if (hasOnChangeAction()) {
-        hash = (37 * hash) + ON_CHANGE_ACTION_FIELD_NUMBER;
-        hash = (53 * hash) + getOnChangeAction().hashCode();
-      }
-      hash = (37 * hash) + CONTROL_TYPE_FIELD_NUMBER;
-      hash = (53 * hash) + controlType_;
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
+      controlType_ = 0;
     }
 
     public static com.google.apps.card.v1.DecoratedText.SwitchControl parseFrom(
         java.nio.ByteBuffer data) throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.DecoratedText.SwitchControl parseFrom(
         java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.DecoratedText.SwitchControl parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.DecoratedText.SwitchControl parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.DecoratedText.SwitchControl parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.DecoratedText.SwitchControl parseFrom(
         byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.DecoratedText.SwitchControl parseFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.DecoratedText.SwitchControl parseFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.DecoratedText.SwitchControl parseDelimitedFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.DecoratedText.SwitchControl parseDelimitedFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.DecoratedText.SwitchControl parseFrom(
         com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.DecoratedText.SwitchControl parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
+      return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
 
     public static Builder newBuilder(
         com.google.apps.card.v1.DecoratedText.SwitchControl prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      *
      *
@@ -882,255 +860,16 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * Protobuf type {@code google.apps.card.v1.DecoratedText.SwitchControl}
      */
     public static final class Builder
-        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+        extends com.google.protobuf.GeneratedMessageLite.Builder<
+            com.google.apps.card.v1.DecoratedText.SwitchControl, Builder>
         implements
         // @@protoc_insertion_point(builder_implements:google.apps.card.v1.DecoratedText.SwitchControl)
         com.google.apps.card.v1.DecoratedText.SwitchControlOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_DecoratedText_SwitchControl_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_DecoratedText_SwitchControl_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.google.apps.card.v1.DecoratedText.SwitchControl.class,
-                com.google.apps.card.v1.DecoratedText.SwitchControl.Builder.class);
-      }
-
       // Construct using com.google.apps.card.v1.DecoratedText.SwitchControl.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+        super(DEFAULT_INSTANCE);
       }
 
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-          getOnChangeActionFieldBuilder();
-        }
-      }
-
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        name_ = "";
-        value_ = "";
-        selected_ = false;
-        onChangeAction_ = null;
-        if (onChangeActionBuilder_ != null) {
-          onChangeActionBuilder_.dispose();
-          onChangeActionBuilder_ = null;
-        }
-        controlType_ = 0;
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_DecoratedText_SwitchControl_descriptor;
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.DecoratedText.SwitchControl getDefaultInstanceForType() {
-        return com.google.apps.card.v1.DecoratedText.SwitchControl.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.DecoratedText.SwitchControl build() {
-        com.google.apps.card.v1.DecoratedText.SwitchControl result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.DecoratedText.SwitchControl buildPartial() {
-        com.google.apps.card.v1.DecoratedText.SwitchControl result =
-            new com.google.apps.card.v1.DecoratedText.SwitchControl(this);
-        if (bitField0_ != 0) {
-          buildPartial0(result);
-        }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartial0(com.google.apps.card.v1.DecoratedText.SwitchControl result) {
-        int from_bitField0_ = bitField0_;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.name_ = name_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.value_ = value_;
-        }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.selected_ = selected_;
-        }
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.onChangeAction_ =
-              onChangeActionBuilder_ == null ? onChangeAction_ : onChangeActionBuilder_.build();
-          to_bitField0_ |= 0x00000001;
-        }
-        if (((from_bitField0_ & 0x00000010) != 0)) {
-          result.controlType_ = controlType_;
-        }
-        result.bitField0_ |= to_bitField0_;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.apps.card.v1.DecoratedText.SwitchControl) {
-          return mergeFrom((com.google.apps.card.v1.DecoratedText.SwitchControl) other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.google.apps.card.v1.DecoratedText.SwitchControl other) {
-        if (other == com.google.apps.card.v1.DecoratedText.SwitchControl.getDefaultInstance())
-          return this;
-        if (!other.getName().isEmpty()) {
-          name_ = other.name_;
-          bitField0_ |= 0x00000001;
-          onChanged();
-        }
-        if (!other.getValue().isEmpty()) {
-          value_ = other.value_;
-          bitField0_ |= 0x00000002;
-          onChanged();
-        }
-        if (other.getSelected() != false) {
-          setSelected(other.getSelected());
-        }
-        if (other.hasOnChangeAction()) {
-          mergeOnChangeAction(other.getOnChangeAction());
-        }
-        if (other.controlType_ != 0) {
-          setControlTypeValue(other.getControlTypeValue());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10:
-                {
-                  name_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000001;
-                  break;
-                } // case 10
-              case 18:
-                {
-                  value_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000002;
-                  break;
-                } // case 18
-              case 24:
-                {
-                  selected_ = input.readBool();
-                  bitField0_ |= 0x00000004;
-                  break;
-                } // case 24
-              case 34:
-                {
-                  input.readMessage(
-                      getOnChangeActionFieldBuilder().getBuilder(), extensionRegistry);
-                  bitField0_ |= 0x00000008;
-                  break;
-                } // case 34
-              case 40:
-                {
-                  controlType_ = input.readEnum();
-                  bitField0_ |= 0x00000010;
-                  break;
-                } // case 40
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-
-      private int bitField0_;
-
-      private java.lang.Object name_ = "";
       /**
        *
        *
@@ -1145,16 +884,9 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The name.
        */
+      @java.lang.Override
       public java.lang.String getName() {
-        java.lang.Object ref = name_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          name_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getName();
       }
       /**
        *
@@ -1170,16 +902,9 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The bytes for name.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getNameBytes() {
-        java.lang.Object ref = name_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          name_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getNameBytes();
       }
       /**
        *
@@ -1197,12 +922,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setName(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        name_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setName(value);
         return this;
       }
       /**
@@ -1220,9 +941,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearName() {
-        name_ = getDefaultInstance().getName();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
+        copyOnWrite();
+        instance.clearName();
         return this;
       }
       /**
@@ -1241,17 +961,11 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setNameBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        name_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setNameBytes(value);
         return this;
       }
 
-      private java.lang.Object value_ = "";
       /**
        *
        *
@@ -1266,16 +980,9 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The value.
        */
+      @java.lang.Override
       public java.lang.String getValue() {
-        java.lang.Object ref = value_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          value_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getValue();
       }
       /**
        *
@@ -1291,16 +998,9 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The bytes for value.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getValueBytes() {
-        java.lang.Object ref = value_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          value_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getValueBytes();
       }
       /**
        *
@@ -1318,12 +1018,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setValue(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        value_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setValue(value);
         return this;
       }
       /**
@@ -1341,9 +1037,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearValue() {
-        value_ = getDefaultInstance().getValue();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
+        copyOnWrite();
+        instance.clearValue();
         return this;
       }
       /**
@@ -1362,17 +1057,11 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setValueBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        value_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setValueBytes(value);
         return this;
       }
 
-      private boolean selected_;
       /**
        *
        *
@@ -1386,7 +1075,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        */
       @java.lang.Override
       public boolean getSelected() {
-        return selected_;
+        return instance.getSelected();
       }
       /**
        *
@@ -1401,10 +1090,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setSelected(boolean value) {
-
-        selected_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
+        copyOnWrite();
+        instance.setSelected(value);
         return this;
       }
       /**
@@ -1419,18 +1106,11 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearSelected() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        selected_ = false;
-        onChanged();
+        copyOnWrite();
+        instance.clearSelected();
         return this;
       }
 
-      private com.google.apps.card.v1.Action onChangeAction_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.apps.card.v1.Action,
-              com.google.apps.card.v1.Action.Builder,
-              com.google.apps.card.v1.ActionOrBuilder>
-          onChangeActionBuilder_;
       /**
        *
        *
@@ -1440,11 +1120,10 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * </pre>
        *
        * <code>.google.apps.card.v1.Action on_change_action = 4;</code>
-       *
-       * @return Whether the onChangeAction field is set.
        */
+      @java.lang.Override
       public boolean hasOnChangeAction() {
-        return ((bitField0_ & 0x00000008) != 0);
+        return instance.hasOnChangeAction();
       }
       /**
        *
@@ -1455,17 +1134,10 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * </pre>
        *
        * <code>.google.apps.card.v1.Action on_change_action = 4;</code>
-       *
-       * @return The onChangeAction.
        */
+      @java.lang.Override
       public com.google.apps.card.v1.Action getOnChangeAction() {
-        if (onChangeActionBuilder_ == null) {
-          return onChangeAction_ == null
-              ? com.google.apps.card.v1.Action.getDefaultInstance()
-              : onChangeAction_;
-        } else {
-          return onChangeActionBuilder_.getMessage();
-        }
+        return instance.getOnChangeAction();
       }
       /**
        *
@@ -1478,16 +1150,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * <code>.google.apps.card.v1.Action on_change_action = 4;</code>
        */
       public Builder setOnChangeAction(com.google.apps.card.v1.Action value) {
-        if (onChangeActionBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          onChangeAction_ = value;
-        } else {
-          onChangeActionBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000008;
-        onChanged();
+        copyOnWrite();
+        instance.setOnChangeAction(value);
         return this;
       }
       /**
@@ -1501,13 +1165,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * <code>.google.apps.card.v1.Action on_change_action = 4;</code>
        */
       public Builder setOnChangeAction(com.google.apps.card.v1.Action.Builder builderForValue) {
-        if (onChangeActionBuilder_ == null) {
-          onChangeAction_ = builderForValue.build();
-        } else {
-          onChangeActionBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000008;
-        onChanged();
+        copyOnWrite();
+        instance.setOnChangeAction(builderForValue.build());
         return this;
       }
       /**
@@ -1521,21 +1180,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * <code>.google.apps.card.v1.Action on_change_action = 4;</code>
        */
       public Builder mergeOnChangeAction(com.google.apps.card.v1.Action value) {
-        if (onChangeActionBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) != 0)
-              && onChangeAction_ != null
-              && onChangeAction_ != com.google.apps.card.v1.Action.getDefaultInstance()) {
-            getOnChangeActionBuilder().mergeFrom(value);
-          } else {
-            onChangeAction_ = value;
-          }
-        } else {
-          onChangeActionBuilder_.mergeFrom(value);
-        }
-        if (onChangeAction_ != null) {
-          bitField0_ |= 0x00000008;
-          onChanged();
-        }
+        copyOnWrite();
+        instance.mergeOnChangeAction(value);
         return this;
       }
       /**
@@ -1549,77 +1195,11 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * <code>.google.apps.card.v1.Action on_change_action = 4;</code>
        */
       public Builder clearOnChangeAction() {
-        bitField0_ = (bitField0_ & ~0x00000008);
-        onChangeAction_ = null;
-        if (onChangeActionBuilder_ != null) {
-          onChangeActionBuilder_.dispose();
-          onChangeActionBuilder_ = null;
-        }
-        onChanged();
+        copyOnWrite();
+        instance.clearOnChangeAction();
         return this;
       }
-      /**
-       *
-       *
-       * <pre>
-       * The action to perform when the switch state is changed, such as what
-       *  function to run.
-       * </pre>
-       *
-       * <code>.google.apps.card.v1.Action on_change_action = 4;</code>
-       */
-      public com.google.apps.card.v1.Action.Builder getOnChangeActionBuilder() {
-        bitField0_ |= 0x00000008;
-        onChanged();
-        return getOnChangeActionFieldBuilder().getBuilder();
-      }
-      /**
-       *
-       *
-       * <pre>
-       * The action to perform when the switch state is changed, such as what
-       *  function to run.
-       * </pre>
-       *
-       * <code>.google.apps.card.v1.Action on_change_action = 4;</code>
-       */
-      public com.google.apps.card.v1.ActionOrBuilder getOnChangeActionOrBuilder() {
-        if (onChangeActionBuilder_ != null) {
-          return onChangeActionBuilder_.getMessageOrBuilder();
-        } else {
-          return onChangeAction_ == null
-              ? com.google.apps.card.v1.Action.getDefaultInstance()
-              : onChangeAction_;
-        }
-      }
-      /**
-       *
-       *
-       * <pre>
-       * The action to perform when the switch state is changed, such as what
-       *  function to run.
-       * </pre>
-       *
-       * <code>.google.apps.card.v1.Action on_change_action = 4;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.apps.card.v1.Action,
-              com.google.apps.card.v1.Action.Builder,
-              com.google.apps.card.v1.ActionOrBuilder>
-          getOnChangeActionFieldBuilder() {
-        if (onChangeActionBuilder_ == null) {
-          onChangeActionBuilder_ =
-              new com.google.protobuf.SingleFieldBuilderV3<
-                  com.google.apps.card.v1.Action,
-                  com.google.apps.card.v1.Action.Builder,
-                  com.google.apps.card.v1.ActionOrBuilder>(
-                  getOnChangeAction(), getParentForChildren(), isClean());
-          onChangeAction_ = null;
-        }
-        return onChangeActionBuilder_;
-      }
 
-      private int controlType_ = 0;
       /**
        *
        *
@@ -1636,7 +1216,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        */
       @java.lang.Override
       public int getControlTypeValue() {
-        return controlType_;
+        return instance.getControlTypeValue();
       }
       /**
        *
@@ -1650,13 +1230,12 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>.google.apps.card.v1.DecoratedText.SwitchControl.ControlType control_type = 5;</code>
        *
-       * @param value The enum numeric value on the wire for controlType to set.
+       * @param value The controlType to set.
        * @return This builder for chaining.
        */
       public Builder setControlTypeValue(int value) {
-        controlType_ = value;
-        bitField0_ |= 0x00000010;
-        onChanged();
+        copyOnWrite();
+        instance.setControlTypeValue(value);
         return this;
       }
       /**
@@ -1675,11 +1254,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        */
       @java.lang.Override
       public com.google.apps.card.v1.DecoratedText.SwitchControl.ControlType getControlType() {
-        com.google.apps.card.v1.DecoratedText.SwitchControl.ControlType result =
-            com.google.apps.card.v1.DecoratedText.SwitchControl.ControlType.forNumber(controlType_);
-        return result == null
-            ? com.google.apps.card.v1.DecoratedText.SwitchControl.ControlType.UNRECOGNIZED
-            : result;
+        return instance.getControlType();
       }
       /**
        *
@@ -1693,17 +1268,13 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>.google.apps.card.v1.DecoratedText.SwitchControl.ControlType control_type = 5;</code>
        *
-       * @param value The controlType to set.
+       * @param value The enum numeric value on the wire for controlType to set.
        * @return This builder for chaining.
        */
       public Builder setControlType(
           com.google.apps.card.v1.DecoratedText.SwitchControl.ControlType value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000010;
-        controlType_ = value.getNumber();
-        onChanged();
+        copyOnWrite();
+        instance.setControlType(value);
         return this;
       }
       /**
@@ -1721,86 +1292,102 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearControlType() {
-        bitField0_ = (bitField0_ & ~0x00000010);
-        controlType_ = 0;
-        onChanged();
+        copyOnWrite();
+        instance.clearControlType();
         return this;
       }
 
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
       // @@protoc_insertion_point(builder_scope:google.apps.card.v1.DecoratedText.SwitchControl)
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0,
+        java.lang.Object arg1) {
+      switch (method) {
+        case NEW_MUTABLE_INSTANCE:
+          {
+            return new com.google.apps.card.v1.DecoratedText.SwitchControl();
+          }
+        case NEW_BUILDER:
+          {
+            return new Builder();
+          }
+        case BUILD_MESSAGE_INFO:
+          {
+            java.lang.Object[] objects =
+                new java.lang.Object[] {
+                  "bitField0_", "name_", "value_", "selected_", "onChangeAction_", "controlType_",
+                };
+            java.lang.String info =
+                "\u0000\u0005\u0000\u0001\u0001\u0005\u0005\u0000\u0000\u0000\u0001\u0208\u0002\u0208"
+                    + "\u0003\u0007\u0004\u1009\u0000\u0005\f";
+            return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+          }
+          // fall through
+        case GET_DEFAULT_INSTANCE:
+          {
+            return DEFAULT_INSTANCE;
+          }
+        case GET_PARSER:
+          {
+            com.google.protobuf.Parser<com.google.apps.card.v1.DecoratedText.SwitchControl> parser =
+                PARSER;
+            if (parser == null) {
+              synchronized (com.google.apps.card.v1.DecoratedText.SwitchControl.class) {
+                parser = PARSER;
+                if (parser == null) {
+                  parser =
+                      new DefaultInstanceBasedParser<
+                          com.google.apps.card.v1.DecoratedText.SwitchControl>(DEFAULT_INSTANCE);
+                  PARSER = parser;
+                }
+              }
+            }
+            return parser;
+          }
+        case GET_MEMOIZED_IS_INITIALIZED:
+          {
+            return (byte) 1;
+          }
+        case SET_MEMOIZED_IS_INITIALIZED:
+          {
+            return null;
+          }
+      }
+      throw new UnsupportedOperationException();
     }
 
     // @@protoc_insertion_point(class_scope:google.apps.card.v1.DecoratedText.SwitchControl)
     private static final com.google.apps.card.v1.DecoratedText.SwitchControl DEFAULT_INSTANCE;
 
     static {
-      DEFAULT_INSTANCE = new com.google.apps.card.v1.DecoratedText.SwitchControl();
+      SwitchControl defaultInstance = new SwitchControl();
+      // New instances are implicitly immutable so no need to make
+      // immutable.
+      DEFAULT_INSTANCE = defaultInstance;
+      com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+          SwitchControl.class, defaultInstance);
     }
 
     public static com.google.apps.card.v1.DecoratedText.SwitchControl getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<SwitchControl> PARSER =
-        new com.google.protobuf.AbstractParser<SwitchControl>() {
-          @java.lang.Override
-          public SwitchControl parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-          }
-        };
+    private static volatile com.google.protobuf.Parser<SwitchControl> PARSER;
 
     public static com.google.protobuf.Parser<SwitchControl> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<SwitchControl> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.DecoratedText.SwitchControl getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
+      return DEFAULT_INSTANCE.getParserForType();
     }
   }
 
   private int bitField0_;
   private int controlCase_ = 0;
-
-  @SuppressWarnings("serial")
   private java.lang.Object control_;
 
-  public enum ControlCase
-      implements
-          com.google.protobuf.Internal.EnumLite,
-          com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+  public enum ControlCase {
     BUTTON(8),
     SWITCH_CONTROL(9),
     END_ICON(11),
@@ -1810,11 +1397,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     private ControlCase(int value) {
       this.value = value;
     }
-    /**
-     * @param value The number of the enum to look for.
-     * @return The enum associated with the given number.
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
+    /** @deprecated Use {@link #forNumber(int)} instead. */
     @java.lang.Deprecated
     public static ControlCase valueOf(int value) {
       return forNumber(value);
@@ -1840,8 +1423,14 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     }
   };
 
+  @java.lang.Override
   public ControlCase getControlCase() {
     return ControlCase.forNumber(controlCase_);
+  }
+
+  private void clearControl() {
+    controlCase_ = 0;
+    control_ = null;
   }
 
   public static final int ICON_FIELD_NUMBER = 1;
@@ -1854,10 +1443,6 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Icon icon = 1 [deprecated = true];</code>
-   *
-   * @deprecated google.apps.card.v1.DecoratedText.icon is deprecated. See
-   *     google/apps/card/v1/card.proto;l=796
-   * @return Whether the icon field is set.
    */
   @java.lang.Override
   @java.lang.Deprecated
@@ -1872,10 +1457,6 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Icon icon = 1 [deprecated = true];</code>
-   *
-   * @deprecated google.apps.card.v1.DecoratedText.icon is deprecated. See
-   *     google/apps/card/v1/card.proto;l=796
-   * @return The icon.
    */
   @java.lang.Override
   @java.lang.Deprecated
@@ -1891,10 +1472,42 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.apps.card.v1.Icon icon = 1 [deprecated = true];</code>
    */
-  @java.lang.Override
-  @java.lang.Deprecated
-  public com.google.apps.card.v1.IconOrBuilder getIconOrBuilder() {
-    return icon_ == null ? com.google.apps.card.v1.Icon.getDefaultInstance() : icon_;
+  private void setIcon(com.google.apps.card.v1.Icon value) {
+    value.getClass();
+    icon_ = value;
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Deprecated in favor of `startIcon`.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Icon icon = 1 [deprecated = true];</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeIcon(com.google.apps.card.v1.Icon value) {
+    value.getClass();
+    if (icon_ != null && icon_ != com.google.apps.card.v1.Icon.getDefaultInstance()) {
+      icon_ = com.google.apps.card.v1.Icon.newBuilder(icon_).mergeFrom(value).buildPartial();
+    } else {
+      icon_ = value;
+    }
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Deprecated in favor of `startIcon`.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Icon icon = 1 [deprecated = true];</code>
+   */
+  private void clearIcon() {
+    icon_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static final int START_ICON_FIELD_NUMBER = 12;
@@ -1907,8 +1520,6 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Icon start_icon = 12;</code>
-   *
-   * @return Whether the startIcon field is set.
    */
   @java.lang.Override
   public boolean hasStartIcon() {
@@ -1922,8 +1533,6 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Icon start_icon = 12;</code>
-   *
-   * @return The startIcon.
    */
   @java.lang.Override
   public com.google.apps.card.v1.Icon getStartIcon() {
@@ -1938,15 +1547,47 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.apps.card.v1.Icon start_icon = 12;</code>
    */
-  @java.lang.Override
-  public com.google.apps.card.v1.IconOrBuilder getStartIconOrBuilder() {
-    return startIcon_ == null ? com.google.apps.card.v1.Icon.getDefaultInstance() : startIcon_;
+  private void setStartIcon(com.google.apps.card.v1.Icon value) {
+    value.getClass();
+    startIcon_ = value;
+    bitField0_ |= 0x00000002;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The icon displayed in front of the text.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Icon start_icon = 12;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeStartIcon(com.google.apps.card.v1.Icon value) {
+    value.getClass();
+    if (startIcon_ != null && startIcon_ != com.google.apps.card.v1.Icon.getDefaultInstance()) {
+      startIcon_ =
+          com.google.apps.card.v1.Icon.newBuilder(startIcon_).mergeFrom(value).buildPartial();
+    } else {
+      startIcon_ = value;
+    }
+    bitField0_ |= 0x00000002;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The icon displayed in front of the text.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Icon start_icon = 12;</code>
+   */
+  private void clearStartIcon() {
+    startIcon_ = null;
+    bitField0_ = (bitField0_ & ~0x00000002);
   }
 
   public static final int TOP_LABEL_FIELD_NUMBER = 3;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object topLabel_ = "";
+  private java.lang.String topLabel_;
   /**
    *
    *
@@ -1960,15 +1601,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getTopLabel() {
-    java.lang.Object ref = topLabel_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      topLabel_ = s;
-      return s;
-    }
+    return topLabel_;
   }
   /**
    *
@@ -1983,21 +1616,55 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getTopLabelBytes() {
-    java.lang.Object ref = topLabel_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      topLabel_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(topLabel_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text that appears above `text`. Always truncates.
+   * </pre>
+   *
+   * <code>string top_label = 3;</code>
+   *
+   * @param value The topLabel to set.
+   */
+  private void setTopLabel(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    topLabel_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text that appears above `text`. Always truncates.
+   * </pre>
+   *
+   * <code>string top_label = 3;</code>
+   */
+  private void clearTopLabel() {
+
+    topLabel_ = getDefaultInstance().getTopLabel();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text that appears above `text`. Always truncates.
+   * </pre>
+   *
+   * <code>string top_label = 3;</code>
+   *
+   * @param value The bytes for topLabel to set.
+   */
+  private void setTopLabelBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    topLabel_ = value.toStringUtf8();
   }
 
   public static final int TEXT_FIELD_NUMBER = 4;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object text_ = "";
+  private java.lang.String text_;
   /**
    *
    *
@@ -2020,15 +1687,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getText() {
-    java.lang.Object ref = text_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      text_ = s;
-      return s;
-    }
+    return text_;
   }
   /**
    *
@@ -2052,19 +1711,82 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getTextBytes() {
-    java.lang.Object ref = text_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      text_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(text_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. The primary text.
+   *
+   * Supports simple formatting. For more information
+   * about formatting text, see
+   * [Formatting text in Google Chat
+   * apps](https://developers.google.com/workspace/chat/format-messages#card-formatting)
+   * and
+   * [Formatting
+   * text in Google Workspace
+   * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+   * </pre>
+   *
+   * <code>string text = 4;</code>
+   *
+   * @param value The text to set.
+   */
+  private void setText(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    text_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. The primary text.
+   *
+   * Supports simple formatting. For more information
+   * about formatting text, see
+   * [Formatting text in Google Chat
+   * apps](https://developers.google.com/workspace/chat/format-messages#card-formatting)
+   * and
+   * [Formatting
+   * text in Google Workspace
+   * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+   * </pre>
+   *
+   * <code>string text = 4;</code>
+   */
+  private void clearText() {
+
+    text_ = getDefaultInstance().getText();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. The primary text.
+   *
+   * Supports simple formatting. For more information
+   * about formatting text, see
+   * [Formatting text in Google Chat
+   * apps](https://developers.google.com/workspace/chat/format-messages#card-formatting)
+   * and
+   * [Formatting
+   * text in Google Workspace
+   * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+   * </pre>
+   *
+   * <code>string text = 4;</code>
+   *
+   * @param value The bytes for text to set.
+   */
+  private void setTextBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    text_ = value.toStringUtf8();
   }
 
   public static final int WRAP_TEXT_FIELD_NUMBER = 5;
-  private boolean wrapText_ = false;
+  private boolean wrapText_;
   /**
    *
    *
@@ -2083,11 +1805,43 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
   public boolean getWrapText() {
     return wrapText_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The wrap text setting. If `true`, the text wraps and displays on
+   * multiple lines. Otherwise, the text is truncated.
+   *
+   * Only applies to `text`, not `topLabel` and `bottomLabel`.
+   * </pre>
+   *
+   * <code>bool wrap_text = 5;</code>
+   *
+   * @param value The wrapText to set.
+   */
+  private void setWrapText(boolean value) {
+
+    wrapText_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The wrap text setting. If `true`, the text wraps and displays on
+   * multiple lines. Otherwise, the text is truncated.
+   *
+   * Only applies to `text`, not `topLabel` and `bottomLabel`.
+   * </pre>
+   *
+   * <code>bool wrap_text = 5;</code>
+   */
+  private void clearWrapText() {
+
+    wrapText_ = false;
+  }
 
   public static final int BOTTOM_LABEL_FIELD_NUMBER = 6;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object bottomLabel_ = "";
+  private java.lang.String bottomLabel_;
   /**
    *
    *
@@ -2101,15 +1855,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getBottomLabel() {
-    java.lang.Object ref = bottomLabel_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      bottomLabel_ = s;
-      return s;
-    }
+    return bottomLabel_;
   }
   /**
    *
@@ -2124,15 +1870,51 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getBottomLabelBytes() {
-    java.lang.Object ref = bottomLabel_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      bottomLabel_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(bottomLabel_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text that appears below `text`. Always wraps.
+   * </pre>
+   *
+   * <code>string bottom_label = 6;</code>
+   *
+   * @param value The bottomLabel to set.
+   */
+  private void setBottomLabel(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    bottomLabel_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text that appears below `text`. Always wraps.
+   * </pre>
+   *
+   * <code>string bottom_label = 6;</code>
+   */
+  private void clearBottomLabel() {
+
+    bottomLabel_ = getDefaultInstance().getBottomLabel();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text that appears below `text`. Always wraps.
+   * </pre>
+   *
+   * <code>string bottom_label = 6;</code>
+   *
+   * @param value The bytes for bottomLabel to set.
+   */
+  private void setBottomLabelBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    bottomLabel_ = value.toStringUtf8();
   }
 
   public static final int ON_CLICK_FIELD_NUMBER = 7;
@@ -2145,8 +1927,6 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.OnClick on_click = 7;</code>
-   *
-   * @return Whether the onClick field is set.
    */
   @java.lang.Override
   public boolean hasOnClick() {
@@ -2160,8 +1940,6 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.OnClick on_click = 7;</code>
-   *
-   * @return The onClick.
    */
   @java.lang.Override
   public com.google.apps.card.v1.OnClick getOnClick() {
@@ -2176,9 +1954,43 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.apps.card.v1.OnClick on_click = 7;</code>
    */
-  @java.lang.Override
-  public com.google.apps.card.v1.OnClickOrBuilder getOnClickOrBuilder() {
-    return onClick_ == null ? com.google.apps.card.v1.OnClick.getDefaultInstance() : onClick_;
+  private void setOnClick(com.google.apps.card.v1.OnClick value) {
+    value.getClass();
+    onClick_ = value;
+    bitField0_ |= 0x00000004;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * This action is triggered when users click `topLabel` or `bottomLabel`.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.OnClick on_click = 7;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeOnClick(com.google.apps.card.v1.OnClick value) {
+    value.getClass();
+    if (onClick_ != null && onClick_ != com.google.apps.card.v1.OnClick.getDefaultInstance()) {
+      onClick_ =
+          com.google.apps.card.v1.OnClick.newBuilder(onClick_).mergeFrom(value).buildPartial();
+    } else {
+      onClick_ = value;
+    }
+    bitField0_ |= 0x00000004;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * This action is triggered when users click `topLabel` or `bottomLabel`.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.OnClick on_click = 7;</code>
+   */
+  private void clearOnClick() {
+    onClick_ = null;
+    bitField0_ = (bitField0_ & ~0x00000004);
   }
 
   public static final int BUTTON_FIELD_NUMBER = 8;
@@ -2190,8 +2002,6 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Button button = 8;</code>
-   *
-   * @return Whether the button field is set.
    */
   @java.lang.Override
   public boolean hasButton() {
@@ -2205,8 +2015,6 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Button button = 8;</code>
-   *
-   * @return The button.
    */
   @java.lang.Override
   public com.google.apps.card.v1.Button getButton() {
@@ -2224,12 +2032,46 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.apps.card.v1.Button button = 8;</code>
    */
-  @java.lang.Override
-  public com.google.apps.card.v1.ButtonOrBuilder getButtonOrBuilder() {
-    if (controlCase_ == 8) {
-      return (com.google.apps.card.v1.Button) control_;
+  private void setButton(com.google.apps.card.v1.Button value) {
+    value.getClass();
+    control_ = value;
+    controlCase_ = 8;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A button that a user can click to trigger an action.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Button button = 8;</code>
+   */
+  private void mergeButton(com.google.apps.card.v1.Button value) {
+    value.getClass();
+    if (controlCase_ == 8 && control_ != com.google.apps.card.v1.Button.getDefaultInstance()) {
+      control_ =
+          com.google.apps.card.v1.Button.newBuilder((com.google.apps.card.v1.Button) control_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      control_ = value;
     }
-    return com.google.apps.card.v1.Button.getDefaultInstance();
+    controlCase_ = 8;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A button that a user can click to trigger an action.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Button button = 8;</code>
+   */
+  private void clearButton() {
+    if (controlCase_ == 8) {
+      controlCase_ = 0;
+      control_ = null;
+    }
   }
 
   public static final int SWITCH_CONTROL_FIELD_NUMBER = 9;
@@ -2242,8 +2084,6 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.DecoratedText.SwitchControl switch_control = 9;</code>
-   *
-   * @return Whether the switchControl field is set.
    */
   @java.lang.Override
   public boolean hasSwitchControl() {
@@ -2258,8 +2098,6 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.DecoratedText.SwitchControl switch_control = 9;</code>
-   *
-   * @return The switchControl.
    */
   @java.lang.Override
   public com.google.apps.card.v1.DecoratedText.SwitchControl getSwitchControl() {
@@ -2278,12 +2116,50 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.apps.card.v1.DecoratedText.SwitchControl switch_control = 9;</code>
    */
-  @java.lang.Override
-  public com.google.apps.card.v1.DecoratedText.SwitchControlOrBuilder getSwitchControlOrBuilder() {
-    if (controlCase_ == 9) {
-      return (com.google.apps.card.v1.DecoratedText.SwitchControl) control_;
+  private void setSwitchControl(com.google.apps.card.v1.DecoratedText.SwitchControl value) {
+    value.getClass();
+    control_ = value;
+    controlCase_ = 9;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A switch widget that a user can click to change its state and trigger an
+   * action.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.DecoratedText.SwitchControl switch_control = 9;</code>
+   */
+  private void mergeSwitchControl(com.google.apps.card.v1.DecoratedText.SwitchControl value) {
+    value.getClass();
+    if (controlCase_ == 9
+        && control_ != com.google.apps.card.v1.DecoratedText.SwitchControl.getDefaultInstance()) {
+      control_ =
+          com.google.apps.card.v1.DecoratedText.SwitchControl.newBuilder(
+                  (com.google.apps.card.v1.DecoratedText.SwitchControl) control_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      control_ = value;
     }
-    return com.google.apps.card.v1.DecoratedText.SwitchControl.getDefaultInstance();
+    controlCase_ = 9;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A switch widget that a user can click to change its state and trigger an
+   * action.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.DecoratedText.SwitchControl switch_control = 9;</code>
+   */
+  private void clearSwitchControl() {
+    if (controlCase_ == 9) {
+      controlCase_ = 0;
+      control_ = null;
+    }
   }
 
   public static final int END_ICON_FIELD_NUMBER = 11;
@@ -2301,8 +2177,6 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Icon end_icon = 11;</code>
-   *
-   * @return Whether the endIcon field is set.
    */
   @java.lang.Override
   public boolean hasEndIcon() {
@@ -2322,8 +2196,6 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Icon end_icon = 11;</code>
-   *
-   * @return The endIcon.
    */
   @java.lang.Override
   public com.google.apps.card.v1.Icon getEndIcon() {
@@ -2347,294 +2219,141 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.apps.card.v1.Icon end_icon = 11;</code>
    */
-  @java.lang.Override
-  public com.google.apps.card.v1.IconOrBuilder getEndIconOrBuilder() {
+  private void setEndIcon(com.google.apps.card.v1.Icon value) {
+    value.getClass();
+    control_ = value;
+    controlCase_ = 11;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * An icon displayed after the text.
+   *
+   * Supports
+   * [built-in](https://developers.google.com/workspace/chat/format-messages#builtinicons)
+   * and
+   * [custom](https://developers.google.com/workspace/chat/format-messages#customicons)
+   * icons.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Icon end_icon = 11;</code>
+   */
+  private void mergeEndIcon(com.google.apps.card.v1.Icon value) {
+    value.getClass();
+    if (controlCase_ == 11 && control_ != com.google.apps.card.v1.Icon.getDefaultInstance()) {
+      control_ =
+          com.google.apps.card.v1.Icon.newBuilder((com.google.apps.card.v1.Icon) control_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      control_ = value;
+    }
+    controlCase_ = 11;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * An icon displayed after the text.
+   *
+   * Supports
+   * [built-in](https://developers.google.com/workspace/chat/format-messages#builtinicons)
+   * and
+   * [custom](https://developers.google.com/workspace/chat/format-messages#customicons)
+   * icons.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Icon end_icon = 11;</code>
+   */
+  private void clearEndIcon() {
     if (controlCase_ == 11) {
-      return (com.google.apps.card.v1.Icon) control_;
+      controlCase_ = 0;
+      control_ = null;
     }
-    return com.google.apps.card.v1.Icon.getDefaultInstance();
-  }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
-  }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(1, getIcon());
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(topLabel_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, topLabel_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(text_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, text_);
-    }
-    if (wrapText_ != false) {
-      output.writeBool(5, wrapText_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(bottomLabel_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, bottomLabel_);
-    }
-    if (((bitField0_ & 0x00000004) != 0)) {
-      output.writeMessage(7, getOnClick());
-    }
-    if (controlCase_ == 8) {
-      output.writeMessage(8, (com.google.apps.card.v1.Button) control_);
-    }
-    if (controlCase_ == 9) {
-      output.writeMessage(9, (com.google.apps.card.v1.DecoratedText.SwitchControl) control_);
-    }
-    if (controlCase_ == 11) {
-      output.writeMessage(11, (com.google.apps.card.v1.Icon) control_);
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      output.writeMessage(12, getStartIcon());
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getIcon());
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(topLabel_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, topLabel_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(text_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, text_);
-    }
-    if (wrapText_ != false) {
-      size += com.google.protobuf.CodedOutputStream.computeBoolSize(5, wrapText_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(bottomLabel_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, bottomLabel_);
-    }
-    if (((bitField0_ & 0x00000004) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(7, getOnClick());
-    }
-    if (controlCase_ == 8) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(
-              8, (com.google.apps.card.v1.Button) control_);
-    }
-    if (controlCase_ == 9) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(
-              9, (com.google.apps.card.v1.DecoratedText.SwitchControl) control_);
-    }
-    if (controlCase_ == 11) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(
-              11, (com.google.apps.card.v1.Icon) control_);
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(12, getStartIcon());
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.apps.card.v1.DecoratedText)) {
-      return super.equals(obj);
-    }
-    com.google.apps.card.v1.DecoratedText other = (com.google.apps.card.v1.DecoratedText) obj;
-
-    if (hasIcon() != other.hasIcon()) return false;
-    if (hasIcon()) {
-      if (!getIcon().equals(other.getIcon())) return false;
-    }
-    if (hasStartIcon() != other.hasStartIcon()) return false;
-    if (hasStartIcon()) {
-      if (!getStartIcon().equals(other.getStartIcon())) return false;
-    }
-    if (!getTopLabel().equals(other.getTopLabel())) return false;
-    if (!getText().equals(other.getText())) return false;
-    if (getWrapText() != other.getWrapText()) return false;
-    if (!getBottomLabel().equals(other.getBottomLabel())) return false;
-    if (hasOnClick() != other.hasOnClick()) return false;
-    if (hasOnClick()) {
-      if (!getOnClick().equals(other.getOnClick())) return false;
-    }
-    if (!getControlCase().equals(other.getControlCase())) return false;
-    switch (controlCase_) {
-      case 8:
-        if (!getButton().equals(other.getButton())) return false;
-        break;
-      case 9:
-        if (!getSwitchControl().equals(other.getSwitchControl())) return false;
-        break;
-      case 11:
-        if (!getEndIcon().equals(other.getEndIcon())) return false;
-        break;
-      case 0:
-      default:
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (hasIcon()) {
-      hash = (37 * hash) + ICON_FIELD_NUMBER;
-      hash = (53 * hash) + getIcon().hashCode();
-    }
-    if (hasStartIcon()) {
-      hash = (37 * hash) + START_ICON_FIELD_NUMBER;
-      hash = (53 * hash) + getStartIcon().hashCode();
-    }
-    hash = (37 * hash) + TOP_LABEL_FIELD_NUMBER;
-    hash = (53 * hash) + getTopLabel().hashCode();
-    hash = (37 * hash) + TEXT_FIELD_NUMBER;
-    hash = (53 * hash) + getText().hashCode();
-    hash = (37 * hash) + WRAP_TEXT_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getWrapText());
-    hash = (37 * hash) + BOTTOM_LABEL_FIELD_NUMBER;
-    hash = (53 * hash) + getBottomLabel().hashCode();
-    if (hasOnClick()) {
-      hash = (37 * hash) + ON_CLICK_FIELD_NUMBER;
-      hash = (53 * hash) + getOnClick().hashCode();
-    }
-    switch (controlCase_) {
-      case 8:
-        hash = (37 * hash) + BUTTON_FIELD_NUMBER;
-        hash = (53 * hash) + getButton().hashCode();
-        break;
-      case 9:
-        hash = (37 * hash) + SWITCH_CONTROL_FIELD_NUMBER;
-        hash = (53 * hash) + getSwitchControl().hashCode();
-        break;
-      case 11:
-        hash = (37 * hash) + END_ICON_FIELD_NUMBER;
-        hash = (53 * hash) + getEndIcon().hashCode();
-        break;
-      case 0:
-      default:
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
   }
 
   public static com.google.apps.card.v1.DecoratedText parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.DecoratedText parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.DecoratedText parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.DecoratedText parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.DecoratedText parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.DecoratedText parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.DecoratedText parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.DecoratedText parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.DecoratedText parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.DecoratedText parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.DecoratedText parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.DecoratedText parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.apps.card.v1.DecoratedText prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -2651,374 +2370,28 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.apps.card.v1.DecoratedText}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.apps.card.v1.DecoratedText, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.apps.card.v1.DecoratedText)
       com.google.apps.card.v1.DecoratedTextOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_DecoratedText_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_DecoratedText_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.apps.card.v1.DecoratedText.class,
-              com.google.apps.card.v1.DecoratedText.Builder.class);
-    }
-
     // Construct using com.google.apps.card.v1.DecoratedText.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
-    }
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getIconFieldBuilder();
-        getStartIconFieldBuilder();
-        getOnClickFieldBuilder();
-      }
+      super(DEFAULT_INSTANCE);
     }
 
     @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      icon_ = null;
-      if (iconBuilder_ != null) {
-        iconBuilder_.dispose();
-        iconBuilder_ = null;
-      }
-      startIcon_ = null;
-      if (startIconBuilder_ != null) {
-        startIconBuilder_.dispose();
-        startIconBuilder_ = null;
-      }
-      topLabel_ = "";
-      text_ = "";
-      wrapText_ = false;
-      bottomLabel_ = "";
-      onClick_ = null;
-      if (onClickBuilder_ != null) {
-        onClickBuilder_.dispose();
-        onClickBuilder_ = null;
-      }
-      if (buttonBuilder_ != null) {
-        buttonBuilder_.clear();
-      }
-      if (switchControlBuilder_ != null) {
-        switchControlBuilder_.clear();
-      }
-      if (endIconBuilder_ != null) {
-        endIconBuilder_.clear();
-      }
-      controlCase_ = 0;
-      control_ = null;
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_DecoratedText_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.DecoratedText getDefaultInstanceForType() {
-      return com.google.apps.card.v1.DecoratedText.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.DecoratedText build() {
-      com.google.apps.card.v1.DecoratedText result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.DecoratedText buildPartial() {
-      com.google.apps.card.v1.DecoratedText result =
-          new com.google.apps.card.v1.DecoratedText(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      buildPartialOneofs(result);
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.apps.card.v1.DecoratedText result) {
-      int from_bitField0_ = bitField0_;
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.icon_ = iconBuilder_ == null ? icon_ : iconBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.startIcon_ = startIconBuilder_ == null ? startIcon_ : startIconBuilder_.build();
-        to_bitField0_ |= 0x00000002;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.topLabel_ = topLabel_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.text_ = text_;
-      }
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.wrapText_ = wrapText_;
-      }
-      if (((from_bitField0_ & 0x00000020) != 0)) {
-        result.bottomLabel_ = bottomLabel_;
-      }
-      if (((from_bitField0_ & 0x00000040) != 0)) {
-        result.onClick_ = onClickBuilder_ == null ? onClick_ : onClickBuilder_.build();
-        to_bitField0_ |= 0x00000004;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    private void buildPartialOneofs(com.google.apps.card.v1.DecoratedText result) {
-      result.controlCase_ = controlCase_;
-      result.control_ = this.control_;
-      if (controlCase_ == 8 && buttonBuilder_ != null) {
-        result.control_ = buttonBuilder_.build();
-      }
-      if (controlCase_ == 9 && switchControlBuilder_ != null) {
-        result.control_ = switchControlBuilder_.build();
-      }
-      if (controlCase_ == 11 && endIconBuilder_ != null) {
-        result.control_ = endIconBuilder_.build();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.apps.card.v1.DecoratedText) {
-        return mergeFrom((com.google.apps.card.v1.DecoratedText) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.apps.card.v1.DecoratedText other) {
-      if (other == com.google.apps.card.v1.DecoratedText.getDefaultInstance()) return this;
-      if (other.hasIcon()) {
-        mergeIcon(other.getIcon());
-      }
-      if (other.hasStartIcon()) {
-        mergeStartIcon(other.getStartIcon());
-      }
-      if (!other.getTopLabel().isEmpty()) {
-        topLabel_ = other.topLabel_;
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
-      if (!other.getText().isEmpty()) {
-        text_ = other.text_;
-        bitField0_ |= 0x00000008;
-        onChanged();
-      }
-      if (other.getWrapText() != false) {
-        setWrapText(other.getWrapText());
-      }
-      if (!other.getBottomLabel().isEmpty()) {
-        bottomLabel_ = other.bottomLabel_;
-        bitField0_ |= 0x00000020;
-        onChanged();
-      }
-      if (other.hasOnClick()) {
-        mergeOnClick(other.getOnClick());
-      }
-      switch (other.getControlCase()) {
-        case BUTTON:
-          {
-            mergeButton(other.getButton());
-            break;
-          }
-        case SWITCH_CONTROL:
-          {
-            mergeSwitchControl(other.getSwitchControl());
-            break;
-          }
-        case END_ICON:
-          {
-            mergeEndIcon(other.getEndIcon());
-            break;
-          }
-        case CONTROL_NOT_SET:
-          {
-            break;
-          }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                input.readMessage(getIconFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 26:
-              {
-                topLabel_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 26
-            case 34:
-              {
-                text_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 34
-            case 40:
-              {
-                wrapText_ = input.readBool();
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 40
-            case 50:
-              {
-                bottomLabel_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000020;
-                break;
-              } // case 50
-            case 58:
-              {
-                input.readMessage(getOnClickFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000040;
-                break;
-              } // case 58
-            case 66:
-              {
-                input.readMessage(getButtonFieldBuilder().getBuilder(), extensionRegistry);
-                controlCase_ = 8;
-                break;
-              } // case 66
-            case 74:
-              {
-                input.readMessage(getSwitchControlFieldBuilder().getBuilder(), extensionRegistry);
-                controlCase_ = 9;
-                break;
-              } // case 74
-            case 90:
-              {
-                input.readMessage(getEndIconFieldBuilder().getBuilder(), extensionRegistry);
-                controlCase_ = 11;
-                break;
-              } // case 90
-            case 98:
-              {
-                input.readMessage(getStartIconFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 98
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int controlCase_ = 0;
-    private java.lang.Object control_;
-
     public ControlCase getControlCase() {
-      return ControlCase.forNumber(controlCase_);
+      return instance.getControlCase();
     }
 
     public Builder clearControl() {
-      controlCase_ = 0;
-      control_ = null;
-      onChanged();
+      copyOnWrite();
+      instance.clearControl();
       return this;
     }
 
-    private int bitField0_;
-
-    private com.google.apps.card.v1.Icon icon_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Icon,
-            com.google.apps.card.v1.Icon.Builder,
-            com.google.apps.card.v1.IconOrBuilder>
-        iconBuilder_;
     /**
      *
      *
@@ -3027,14 +2400,11 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Icon icon = 1 [deprecated = true];</code>
-     *
-     * @deprecated google.apps.card.v1.DecoratedText.icon is deprecated. See
-     *     google/apps/card/v1/card.proto;l=796
-     * @return Whether the icon field is set.
      */
+    @java.lang.Override
     @java.lang.Deprecated
     public boolean hasIcon() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return instance.hasIcon();
     }
     /**
      *
@@ -3044,18 +2414,11 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Icon icon = 1 [deprecated = true];</code>
-     *
-     * @deprecated google.apps.card.v1.DecoratedText.icon is deprecated. See
-     *     google/apps/card/v1/card.proto;l=796
-     * @return The icon.
      */
+    @java.lang.Override
     @java.lang.Deprecated
     public com.google.apps.card.v1.Icon getIcon() {
-      if (iconBuilder_ == null) {
-        return icon_ == null ? com.google.apps.card.v1.Icon.getDefaultInstance() : icon_;
-      } else {
-        return iconBuilder_.getMessage();
-      }
+      return instance.getIcon();
     }
     /**
      *
@@ -3068,16 +2431,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Deprecated
     public Builder setIcon(com.google.apps.card.v1.Icon value) {
-      if (iconBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        icon_ = value;
-      } else {
-        iconBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setIcon(value);
       return this;
     }
     /**
@@ -3091,13 +2446,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Deprecated
     public Builder setIcon(com.google.apps.card.v1.Icon.Builder builderForValue) {
-      if (iconBuilder_ == null) {
-        icon_ = builderForValue.build();
-      } else {
-        iconBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setIcon(builderForValue.build());
       return this;
     }
     /**
@@ -3111,21 +2461,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Deprecated
     public Builder mergeIcon(com.google.apps.card.v1.Icon value) {
-      if (iconBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)
-            && icon_ != null
-            && icon_ != com.google.apps.card.v1.Icon.getDefaultInstance()) {
-          getIconBuilder().mergeFrom(value);
-        } else {
-          icon_ = value;
-        }
-      } else {
-        iconBuilder_.mergeFrom(value);
-      }
-      if (icon_ != null) {
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeIcon(value);
       return this;
     }
     /**
@@ -3139,79 +2476,11 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Deprecated
     public Builder clearIcon() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      icon_ = null;
-      if (iconBuilder_ != null) {
-        iconBuilder_.dispose();
-        iconBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearIcon();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Deprecated in favor of `startIcon`.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Icon icon = 1 [deprecated = true];</code>
-     */
-    @java.lang.Deprecated
-    public com.google.apps.card.v1.Icon.Builder getIconBuilder() {
-      bitField0_ |= 0x00000001;
-      onChanged();
-      return getIconFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Deprecated in favor of `startIcon`.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Icon icon = 1 [deprecated = true];</code>
-     */
-    @java.lang.Deprecated
-    public com.google.apps.card.v1.IconOrBuilder getIconOrBuilder() {
-      if (iconBuilder_ != null) {
-        return iconBuilder_.getMessageOrBuilder();
-      } else {
-        return icon_ == null ? com.google.apps.card.v1.Icon.getDefaultInstance() : icon_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Deprecated in favor of `startIcon`.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Icon icon = 1 [deprecated = true];</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Icon,
-            com.google.apps.card.v1.Icon.Builder,
-            com.google.apps.card.v1.IconOrBuilder>
-        getIconFieldBuilder() {
-      if (iconBuilder_ == null) {
-        iconBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.Icon,
-                com.google.apps.card.v1.Icon.Builder,
-                com.google.apps.card.v1.IconOrBuilder>(
-                getIcon(), getParentForChildren(), isClean());
-        icon_ = null;
-      }
-      return iconBuilder_;
-    }
 
-    private com.google.apps.card.v1.Icon startIcon_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Icon,
-            com.google.apps.card.v1.Icon.Builder,
-            com.google.apps.card.v1.IconOrBuilder>
-        startIconBuilder_;
     /**
      *
      *
@@ -3220,11 +2489,10 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Icon start_icon = 12;</code>
-     *
-     * @return Whether the startIcon field is set.
      */
+    @java.lang.Override
     public boolean hasStartIcon() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return instance.hasStartIcon();
     }
     /**
      *
@@ -3234,15 +2502,10 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Icon start_icon = 12;</code>
-     *
-     * @return The startIcon.
      */
+    @java.lang.Override
     public com.google.apps.card.v1.Icon getStartIcon() {
-      if (startIconBuilder_ == null) {
-        return startIcon_ == null ? com.google.apps.card.v1.Icon.getDefaultInstance() : startIcon_;
-      } else {
-        return startIconBuilder_.getMessage();
-      }
+      return instance.getStartIcon();
     }
     /**
      *
@@ -3254,16 +2517,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Icon start_icon = 12;</code>
      */
     public Builder setStartIcon(com.google.apps.card.v1.Icon value) {
-      if (startIconBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        startIcon_ = value;
-      } else {
-        startIconBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setStartIcon(value);
       return this;
     }
     /**
@@ -3276,13 +2531,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Icon start_icon = 12;</code>
      */
     public Builder setStartIcon(com.google.apps.card.v1.Icon.Builder builderForValue) {
-      if (startIconBuilder_ == null) {
-        startIcon_ = builderForValue.build();
-      } else {
-        startIconBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setStartIcon(builderForValue.build());
       return this;
     }
     /**
@@ -3295,21 +2545,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Icon start_icon = 12;</code>
      */
     public Builder mergeStartIcon(com.google.apps.card.v1.Icon value) {
-      if (startIconBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)
-            && startIcon_ != null
-            && startIcon_ != com.google.apps.card.v1.Icon.getDefaultInstance()) {
-          getStartIconBuilder().mergeFrom(value);
-        } else {
-          startIcon_ = value;
-        }
-      } else {
-        startIconBuilder_.mergeFrom(value);
-      }
-      if (startIcon_ != null) {
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeStartIcon(value);
       return this;
     }
     /**
@@ -3322,72 +2559,11 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Icon start_icon = 12;</code>
      */
     public Builder clearStartIcon() {
-      bitField0_ = (bitField0_ & ~0x00000002);
-      startIcon_ = null;
-      if (startIconBuilder_ != null) {
-        startIconBuilder_.dispose();
-        startIconBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearStartIcon();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * The icon displayed in front of the text.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Icon start_icon = 12;</code>
-     */
-    public com.google.apps.card.v1.Icon.Builder getStartIconBuilder() {
-      bitField0_ |= 0x00000002;
-      onChanged();
-      return getStartIconFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The icon displayed in front of the text.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Icon start_icon = 12;</code>
-     */
-    public com.google.apps.card.v1.IconOrBuilder getStartIconOrBuilder() {
-      if (startIconBuilder_ != null) {
-        return startIconBuilder_.getMessageOrBuilder();
-      } else {
-        return startIcon_ == null ? com.google.apps.card.v1.Icon.getDefaultInstance() : startIcon_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The icon displayed in front of the text.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Icon start_icon = 12;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Icon,
-            com.google.apps.card.v1.Icon.Builder,
-            com.google.apps.card.v1.IconOrBuilder>
-        getStartIconFieldBuilder() {
-      if (startIconBuilder_ == null) {
-        startIconBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.Icon,
-                com.google.apps.card.v1.Icon.Builder,
-                com.google.apps.card.v1.IconOrBuilder>(
-                getStartIcon(), getParentForChildren(), isClean());
-        startIcon_ = null;
-      }
-      return startIconBuilder_;
-    }
 
-    private java.lang.Object topLabel_ = "";
     /**
      *
      *
@@ -3399,16 +2575,9 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The topLabel.
      */
+    @java.lang.Override
     public java.lang.String getTopLabel() {
-      java.lang.Object ref = topLabel_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        topLabel_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getTopLabel();
     }
     /**
      *
@@ -3421,16 +2590,9 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for topLabel.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getTopLabelBytes() {
-      java.lang.Object ref = topLabel_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        topLabel_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getTopLabelBytes();
     }
     /**
      *
@@ -3445,12 +2607,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setTopLabel(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      topLabel_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setTopLabel(value);
       return this;
     }
     /**
@@ -3465,9 +2623,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearTopLabel() {
-      topLabel_ = getDefaultInstance().getTopLabel();
-      bitField0_ = (bitField0_ & ~0x00000004);
-      onChanged();
+      copyOnWrite();
+      instance.clearTopLabel();
       return this;
     }
     /**
@@ -3483,17 +2640,11 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setTopLabelBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      topLabel_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setTopLabelBytes(value);
       return this;
     }
 
-    private java.lang.Object text_ = "";
     /**
      *
      *
@@ -3514,16 +2665,9 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The text.
      */
+    @java.lang.Override
     public java.lang.String getText() {
-      java.lang.Object ref = text_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        text_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getText();
     }
     /**
      *
@@ -3545,16 +2689,9 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for text.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getTextBytes() {
-      java.lang.Object ref = text_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        text_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getTextBytes();
     }
     /**
      *
@@ -3578,12 +2715,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setText(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      text_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setText(value);
       return this;
     }
     /**
@@ -3607,9 +2740,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearText() {
-      text_ = getDefaultInstance().getText();
-      bitField0_ = (bitField0_ & ~0x00000008);
-      onChanged();
+      copyOnWrite();
+      instance.clearText();
       return this;
     }
     /**
@@ -3634,17 +2766,11 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setTextBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      text_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setTextBytes(value);
       return this;
     }
 
-    private boolean wrapText_;
     /**
      *
      *
@@ -3661,7 +2787,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean getWrapText() {
-      return wrapText_;
+      return instance.getWrapText();
     }
     /**
      *
@@ -3679,10 +2805,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setWrapText(boolean value) {
-
-      wrapText_ = value;
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setWrapText(value);
       return this;
     }
     /**
@@ -3700,13 +2824,11 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearWrapText() {
-      bitField0_ = (bitField0_ & ~0x00000010);
-      wrapText_ = false;
-      onChanged();
+      copyOnWrite();
+      instance.clearWrapText();
       return this;
     }
 
-    private java.lang.Object bottomLabel_ = "";
     /**
      *
      *
@@ -3718,16 +2840,9 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bottomLabel.
      */
+    @java.lang.Override
     public java.lang.String getBottomLabel() {
-      java.lang.Object ref = bottomLabel_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        bottomLabel_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getBottomLabel();
     }
     /**
      *
@@ -3740,16 +2855,9 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for bottomLabel.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getBottomLabelBytes() {
-      java.lang.Object ref = bottomLabel_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        bottomLabel_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getBottomLabelBytes();
     }
     /**
      *
@@ -3764,12 +2872,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setBottomLabel(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      bottomLabel_ = value;
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setBottomLabel(value);
       return this;
     }
     /**
@@ -3784,9 +2888,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearBottomLabel() {
-      bottomLabel_ = getDefaultInstance().getBottomLabel();
-      bitField0_ = (bitField0_ & ~0x00000020);
-      onChanged();
+      copyOnWrite();
+      instance.clearBottomLabel();
       return this;
     }
     /**
@@ -3802,22 +2905,11 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setBottomLabelBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      bottomLabel_ = value;
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setBottomLabelBytes(value);
       return this;
     }
 
-    private com.google.apps.card.v1.OnClick onClick_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.OnClick,
-            com.google.apps.card.v1.OnClick.Builder,
-            com.google.apps.card.v1.OnClickOrBuilder>
-        onClickBuilder_;
     /**
      *
      *
@@ -3826,11 +2918,10 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.OnClick on_click = 7;</code>
-     *
-     * @return Whether the onClick field is set.
      */
+    @java.lang.Override
     public boolean hasOnClick() {
-      return ((bitField0_ & 0x00000040) != 0);
+      return instance.hasOnClick();
     }
     /**
      *
@@ -3840,15 +2931,10 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.OnClick on_click = 7;</code>
-     *
-     * @return The onClick.
      */
+    @java.lang.Override
     public com.google.apps.card.v1.OnClick getOnClick() {
-      if (onClickBuilder_ == null) {
-        return onClick_ == null ? com.google.apps.card.v1.OnClick.getDefaultInstance() : onClick_;
-      } else {
-        return onClickBuilder_.getMessage();
-      }
+      return instance.getOnClick();
     }
     /**
      *
@@ -3860,16 +2946,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.OnClick on_click = 7;</code>
      */
     public Builder setOnClick(com.google.apps.card.v1.OnClick value) {
-      if (onClickBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        onClick_ = value;
-      } else {
-        onClickBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000040;
-      onChanged();
+      copyOnWrite();
+      instance.setOnClick(value);
       return this;
     }
     /**
@@ -3882,13 +2960,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.OnClick on_click = 7;</code>
      */
     public Builder setOnClick(com.google.apps.card.v1.OnClick.Builder builderForValue) {
-      if (onClickBuilder_ == null) {
-        onClick_ = builderForValue.build();
-      } else {
-        onClickBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000040;
-      onChanged();
+      copyOnWrite();
+      instance.setOnClick(builderForValue.build());
       return this;
     }
     /**
@@ -3901,21 +2974,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.OnClick on_click = 7;</code>
      */
     public Builder mergeOnClick(com.google.apps.card.v1.OnClick value) {
-      if (onClickBuilder_ == null) {
-        if (((bitField0_ & 0x00000040) != 0)
-            && onClick_ != null
-            && onClick_ != com.google.apps.card.v1.OnClick.getDefaultInstance()) {
-          getOnClickBuilder().mergeFrom(value);
-        } else {
-          onClick_ = value;
-        }
-      } else {
-        onClickBuilder_.mergeFrom(value);
-      }
-      if (onClick_ != null) {
-        bitField0_ |= 0x00000040;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeOnClick(value);
       return this;
     }
     /**
@@ -3928,76 +2988,11 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.OnClick on_click = 7;</code>
      */
     public Builder clearOnClick() {
-      bitField0_ = (bitField0_ & ~0x00000040);
-      onClick_ = null;
-      if (onClickBuilder_ != null) {
-        onClickBuilder_.dispose();
-        onClickBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearOnClick();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * This action is triggered when users click `topLabel` or `bottomLabel`.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.OnClick on_click = 7;</code>
-     */
-    public com.google.apps.card.v1.OnClick.Builder getOnClickBuilder() {
-      bitField0_ |= 0x00000040;
-      onChanged();
-      return getOnClickFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * This action is triggered when users click `topLabel` or `bottomLabel`.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.OnClick on_click = 7;</code>
-     */
-    public com.google.apps.card.v1.OnClickOrBuilder getOnClickOrBuilder() {
-      if (onClickBuilder_ != null) {
-        return onClickBuilder_.getMessageOrBuilder();
-      } else {
-        return onClick_ == null ? com.google.apps.card.v1.OnClick.getDefaultInstance() : onClick_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * This action is triggered when users click `topLabel` or `bottomLabel`.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.OnClick on_click = 7;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.OnClick,
-            com.google.apps.card.v1.OnClick.Builder,
-            com.google.apps.card.v1.OnClickOrBuilder>
-        getOnClickFieldBuilder() {
-      if (onClickBuilder_ == null) {
-        onClickBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.OnClick,
-                com.google.apps.card.v1.OnClick.Builder,
-                com.google.apps.card.v1.OnClickOrBuilder>(
-                getOnClick(), getParentForChildren(), isClean());
-        onClick_ = null;
-      }
-      return onClickBuilder_;
-    }
 
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Button,
-            com.google.apps.card.v1.Button.Builder,
-            com.google.apps.card.v1.ButtonOrBuilder>
-        buttonBuilder_;
     /**
      *
      *
@@ -4006,12 +3001,10 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Button button = 8;</code>
-     *
-     * @return Whether the button field is set.
      */
     @java.lang.Override
     public boolean hasButton() {
-      return controlCase_ == 8;
+      return instance.hasButton();
     }
     /**
      *
@@ -4021,22 +3014,10 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Button button = 8;</code>
-     *
-     * @return The button.
      */
     @java.lang.Override
     public com.google.apps.card.v1.Button getButton() {
-      if (buttonBuilder_ == null) {
-        if (controlCase_ == 8) {
-          return (com.google.apps.card.v1.Button) control_;
-        }
-        return com.google.apps.card.v1.Button.getDefaultInstance();
-      } else {
-        if (controlCase_ == 8) {
-          return buttonBuilder_.getMessage();
-        }
-        return com.google.apps.card.v1.Button.getDefaultInstance();
-      }
+      return instance.getButton();
     }
     /**
      *
@@ -4048,16 +3029,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Button button = 8;</code>
      */
     public Builder setButton(com.google.apps.card.v1.Button value) {
-      if (buttonBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        control_ = value;
-        onChanged();
-      } else {
-        buttonBuilder_.setMessage(value);
-      }
-      controlCase_ = 8;
+      copyOnWrite();
+      instance.setButton(value);
       return this;
     }
     /**
@@ -4070,13 +3043,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Button button = 8;</code>
      */
     public Builder setButton(com.google.apps.card.v1.Button.Builder builderForValue) {
-      if (buttonBuilder_ == null) {
-        control_ = builderForValue.build();
-        onChanged();
-      } else {
-        buttonBuilder_.setMessage(builderForValue.build());
-      }
-      controlCase_ = 8;
+      copyOnWrite();
+      instance.setButton(builderForValue.build());
       return this;
     }
     /**
@@ -4089,24 +3057,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Button button = 8;</code>
      */
     public Builder mergeButton(com.google.apps.card.v1.Button value) {
-      if (buttonBuilder_ == null) {
-        if (controlCase_ == 8 && control_ != com.google.apps.card.v1.Button.getDefaultInstance()) {
-          control_ =
-              com.google.apps.card.v1.Button.newBuilder((com.google.apps.card.v1.Button) control_)
-                  .mergeFrom(value)
-                  .buildPartial();
-        } else {
-          control_ = value;
-        }
-        onChanged();
-      } else {
-        if (controlCase_ == 8) {
-          buttonBuilder_.mergeFrom(value);
-        } else {
-          buttonBuilder_.setMessage(value);
-        }
-      }
-      controlCase_ = 8;
+      copyOnWrite();
+      instance.mergeButton(value);
       return this;
     }
     /**
@@ -4119,89 +3071,11 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Button button = 8;</code>
      */
     public Builder clearButton() {
-      if (buttonBuilder_ == null) {
-        if (controlCase_ == 8) {
-          controlCase_ = 0;
-          control_ = null;
-          onChanged();
-        }
-      } else {
-        if (controlCase_ == 8) {
-          controlCase_ = 0;
-          control_ = null;
-        }
-        buttonBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearButton();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * A button that a user can click to trigger an action.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Button button = 8;</code>
-     */
-    public com.google.apps.card.v1.Button.Builder getButtonBuilder() {
-      return getButtonFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A button that a user can click to trigger an action.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Button button = 8;</code>
-     */
-    @java.lang.Override
-    public com.google.apps.card.v1.ButtonOrBuilder getButtonOrBuilder() {
-      if ((controlCase_ == 8) && (buttonBuilder_ != null)) {
-        return buttonBuilder_.getMessageOrBuilder();
-      } else {
-        if (controlCase_ == 8) {
-          return (com.google.apps.card.v1.Button) control_;
-        }
-        return com.google.apps.card.v1.Button.getDefaultInstance();
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A button that a user can click to trigger an action.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Button button = 8;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Button,
-            com.google.apps.card.v1.Button.Builder,
-            com.google.apps.card.v1.ButtonOrBuilder>
-        getButtonFieldBuilder() {
-      if (buttonBuilder_ == null) {
-        if (!(controlCase_ == 8)) {
-          control_ = com.google.apps.card.v1.Button.getDefaultInstance();
-        }
-        buttonBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.Button,
-                com.google.apps.card.v1.Button.Builder,
-                com.google.apps.card.v1.ButtonOrBuilder>(
-                (com.google.apps.card.v1.Button) control_, getParentForChildren(), isClean());
-        control_ = null;
-      }
-      controlCase_ = 8;
-      onChanged();
-      return buttonBuilder_;
-    }
 
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.DecoratedText.SwitchControl,
-            com.google.apps.card.v1.DecoratedText.SwitchControl.Builder,
-            com.google.apps.card.v1.DecoratedText.SwitchControlOrBuilder>
-        switchControlBuilder_;
     /**
      *
      *
@@ -4211,12 +3085,10 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.DecoratedText.SwitchControl switch_control = 9;</code>
-     *
-     * @return Whether the switchControl field is set.
      */
     @java.lang.Override
     public boolean hasSwitchControl() {
-      return controlCase_ == 9;
+      return instance.hasSwitchControl();
     }
     /**
      *
@@ -4227,22 +3099,10 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.DecoratedText.SwitchControl switch_control = 9;</code>
-     *
-     * @return The switchControl.
      */
     @java.lang.Override
     public com.google.apps.card.v1.DecoratedText.SwitchControl getSwitchControl() {
-      if (switchControlBuilder_ == null) {
-        if (controlCase_ == 9) {
-          return (com.google.apps.card.v1.DecoratedText.SwitchControl) control_;
-        }
-        return com.google.apps.card.v1.DecoratedText.SwitchControl.getDefaultInstance();
-      } else {
-        if (controlCase_ == 9) {
-          return switchControlBuilder_.getMessage();
-        }
-        return com.google.apps.card.v1.DecoratedText.SwitchControl.getDefaultInstance();
-      }
+      return instance.getSwitchControl();
     }
     /**
      *
@@ -4255,16 +3115,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.DecoratedText.SwitchControl switch_control = 9;</code>
      */
     public Builder setSwitchControl(com.google.apps.card.v1.DecoratedText.SwitchControl value) {
-      if (switchControlBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        control_ = value;
-        onChanged();
-      } else {
-        switchControlBuilder_.setMessage(value);
-      }
-      controlCase_ = 9;
+      copyOnWrite();
+      instance.setSwitchControl(value);
       return this;
     }
     /**
@@ -4279,13 +3131,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder setSwitchControl(
         com.google.apps.card.v1.DecoratedText.SwitchControl.Builder builderForValue) {
-      if (switchControlBuilder_ == null) {
-        control_ = builderForValue.build();
-        onChanged();
-      } else {
-        switchControlBuilder_.setMessage(builderForValue.build());
-      }
-      controlCase_ = 9;
+      copyOnWrite();
+      instance.setSwitchControl(builderForValue.build());
       return this;
     }
     /**
@@ -4299,27 +3146,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.DecoratedText.SwitchControl switch_control = 9;</code>
      */
     public Builder mergeSwitchControl(com.google.apps.card.v1.DecoratedText.SwitchControl value) {
-      if (switchControlBuilder_ == null) {
-        if (controlCase_ == 9
-            && control_
-                != com.google.apps.card.v1.DecoratedText.SwitchControl.getDefaultInstance()) {
-          control_ =
-              com.google.apps.card.v1.DecoratedText.SwitchControl.newBuilder(
-                      (com.google.apps.card.v1.DecoratedText.SwitchControl) control_)
-                  .mergeFrom(value)
-                  .buildPartial();
-        } else {
-          control_ = value;
-        }
-        onChanged();
-      } else {
-        if (controlCase_ == 9) {
-          switchControlBuilder_.mergeFrom(value);
-        } else {
-          switchControlBuilder_.setMessage(value);
-        }
-      }
-      controlCase_ = 9;
+      copyOnWrite();
+      instance.mergeSwitchControl(value);
       return this;
     }
     /**
@@ -4333,95 +3161,11 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.DecoratedText.SwitchControl switch_control = 9;</code>
      */
     public Builder clearSwitchControl() {
-      if (switchControlBuilder_ == null) {
-        if (controlCase_ == 9) {
-          controlCase_ = 0;
-          control_ = null;
-          onChanged();
-        }
-      } else {
-        if (controlCase_ == 9) {
-          controlCase_ = 0;
-          control_ = null;
-        }
-        switchControlBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearSwitchControl();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * A switch widget that a user can click to change its state and trigger an
-     * action.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.DecoratedText.SwitchControl switch_control = 9;</code>
-     */
-    public com.google.apps.card.v1.DecoratedText.SwitchControl.Builder getSwitchControlBuilder() {
-      return getSwitchControlFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A switch widget that a user can click to change its state and trigger an
-     * action.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.DecoratedText.SwitchControl switch_control = 9;</code>
-     */
-    @java.lang.Override
-    public com.google.apps.card.v1.DecoratedText.SwitchControlOrBuilder
-        getSwitchControlOrBuilder() {
-      if ((controlCase_ == 9) && (switchControlBuilder_ != null)) {
-        return switchControlBuilder_.getMessageOrBuilder();
-      } else {
-        if (controlCase_ == 9) {
-          return (com.google.apps.card.v1.DecoratedText.SwitchControl) control_;
-        }
-        return com.google.apps.card.v1.DecoratedText.SwitchControl.getDefaultInstance();
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A switch widget that a user can click to change its state and trigger an
-     * action.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.DecoratedText.SwitchControl switch_control = 9;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.DecoratedText.SwitchControl,
-            com.google.apps.card.v1.DecoratedText.SwitchControl.Builder,
-            com.google.apps.card.v1.DecoratedText.SwitchControlOrBuilder>
-        getSwitchControlFieldBuilder() {
-      if (switchControlBuilder_ == null) {
-        if (!(controlCase_ == 9)) {
-          control_ = com.google.apps.card.v1.DecoratedText.SwitchControl.getDefaultInstance();
-        }
-        switchControlBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.DecoratedText.SwitchControl,
-                com.google.apps.card.v1.DecoratedText.SwitchControl.Builder,
-                com.google.apps.card.v1.DecoratedText.SwitchControlOrBuilder>(
-                (com.google.apps.card.v1.DecoratedText.SwitchControl) control_,
-                getParentForChildren(),
-                isClean());
-        control_ = null;
-      }
-      controlCase_ = 9;
-      onChanged();
-      return switchControlBuilder_;
-    }
 
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Icon,
-            com.google.apps.card.v1.Icon.Builder,
-            com.google.apps.card.v1.IconOrBuilder>
-        endIconBuilder_;
     /**
      *
      *
@@ -4436,12 +3180,10 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Icon end_icon = 11;</code>
-     *
-     * @return Whether the endIcon field is set.
      */
     @java.lang.Override
     public boolean hasEndIcon() {
-      return controlCase_ == 11;
+      return instance.hasEndIcon();
     }
     /**
      *
@@ -4457,22 +3199,10 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Icon end_icon = 11;</code>
-     *
-     * @return The endIcon.
      */
     @java.lang.Override
     public com.google.apps.card.v1.Icon getEndIcon() {
-      if (endIconBuilder_ == null) {
-        if (controlCase_ == 11) {
-          return (com.google.apps.card.v1.Icon) control_;
-        }
-        return com.google.apps.card.v1.Icon.getDefaultInstance();
-      } else {
-        if (controlCase_ == 11) {
-          return endIconBuilder_.getMessage();
-        }
-        return com.google.apps.card.v1.Icon.getDefaultInstance();
-      }
+      return instance.getEndIcon();
     }
     /**
      *
@@ -4490,16 +3220,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Icon end_icon = 11;</code>
      */
     public Builder setEndIcon(com.google.apps.card.v1.Icon value) {
-      if (endIconBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        control_ = value;
-        onChanged();
-      } else {
-        endIconBuilder_.setMessage(value);
-      }
-      controlCase_ = 11;
+      copyOnWrite();
+      instance.setEndIcon(value);
       return this;
     }
     /**
@@ -4518,13 +3240,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Icon end_icon = 11;</code>
      */
     public Builder setEndIcon(com.google.apps.card.v1.Icon.Builder builderForValue) {
-      if (endIconBuilder_ == null) {
-        control_ = builderForValue.build();
-        onChanged();
-      } else {
-        endIconBuilder_.setMessage(builderForValue.build());
-      }
-      controlCase_ = 11;
+      copyOnWrite();
+      instance.setEndIcon(builderForValue.build());
       return this;
     }
     /**
@@ -4543,24 +3260,8 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Icon end_icon = 11;</code>
      */
     public Builder mergeEndIcon(com.google.apps.card.v1.Icon value) {
-      if (endIconBuilder_ == null) {
-        if (controlCase_ == 11 && control_ != com.google.apps.card.v1.Icon.getDefaultInstance()) {
-          control_ =
-              com.google.apps.card.v1.Icon.newBuilder((com.google.apps.card.v1.Icon) control_)
-                  .mergeFrom(value)
-                  .buildPartial();
-        } else {
-          control_ = value;
-        }
-        onChanged();
-      } else {
-        if (controlCase_ == 11) {
-          endIconBuilder_.mergeFrom(value);
-        } else {
-          endIconBuilder_.setMessage(value);
-        }
-      }
-      controlCase_ = 11;
+      copyOnWrite();
+      instance.mergeEndIcon(value);
       return this;
     }
     /**
@@ -4579,160 +3280,105 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Icon end_icon = 11;</code>
      */
     public Builder clearEndIcon() {
-      if (endIconBuilder_ == null) {
-        if (controlCase_ == 11) {
-          controlCase_ = 0;
-          control_ = null;
-          onChanged();
-        }
-      } else {
-        if (controlCase_ == 11) {
-          controlCase_ = 0;
-          control_ = null;
-        }
-        endIconBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearEndIcon();
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * An icon displayed after the text.
-     *
-     * Supports
-     * [built-in](https://developers.google.com/workspace/chat/format-messages#builtinicons)
-     * and
-     * [custom](https://developers.google.com/workspace/chat/format-messages#customicons)
-     * icons.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Icon end_icon = 11;</code>
-     */
-    public com.google.apps.card.v1.Icon.Builder getEndIconBuilder() {
-      return getEndIconFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * An icon displayed after the text.
-     *
-     * Supports
-     * [built-in](https://developers.google.com/workspace/chat/format-messages#builtinicons)
-     * and
-     * [custom](https://developers.google.com/workspace/chat/format-messages#customicons)
-     * icons.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Icon end_icon = 11;</code>
-     */
-    @java.lang.Override
-    public com.google.apps.card.v1.IconOrBuilder getEndIconOrBuilder() {
-      if ((controlCase_ == 11) && (endIconBuilder_ != null)) {
-        return endIconBuilder_.getMessageOrBuilder();
-      } else {
-        if (controlCase_ == 11) {
-          return (com.google.apps.card.v1.Icon) control_;
-        }
-        return com.google.apps.card.v1.Icon.getDefaultInstance();
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * An icon displayed after the text.
-     *
-     * Supports
-     * [built-in](https://developers.google.com/workspace/chat/format-messages#builtinicons)
-     * and
-     * [custom](https://developers.google.com/workspace/chat/format-messages#customicons)
-     * icons.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Icon end_icon = 11;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Icon,
-            com.google.apps.card.v1.Icon.Builder,
-            com.google.apps.card.v1.IconOrBuilder>
-        getEndIconFieldBuilder() {
-      if (endIconBuilder_ == null) {
-        if (!(controlCase_ == 11)) {
-          control_ = com.google.apps.card.v1.Icon.getDefaultInstance();
-        }
-        endIconBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.Icon,
-                com.google.apps.card.v1.Icon.Builder,
-                com.google.apps.card.v1.IconOrBuilder>(
-                (com.google.apps.card.v1.Icon) control_, getParentForChildren(), isClean());
-        control_ = null;
-      }
-      controlCase_ = 11;
-      onChanged();
-      return endIconBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.apps.card.v1.DecoratedText)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.apps.card.v1.DecoratedText();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "control_",
+                "controlCase_",
+                "bitField0_",
+                "icon_",
+                "topLabel_",
+                "text_",
+                "wrapText_",
+                "bottomLabel_",
+                "onClick_",
+                com.google.apps.card.v1.Button.class,
+                com.google.apps.card.v1.DecoratedText.SwitchControl.class,
+                com.google.apps.card.v1.Icon.class,
+                "startIcon_",
+              };
+          java.lang.String info =
+              "\u0000\n\u0001\u0001\u0001\f\n\u0000\u0000\u0000\u0001\u1009\u0000\u0003\u0208\u0004"
+                  + "\u0208\u0005\u0007\u0006\u0208\u0007\u1009\u0002\b<\u0000\t<\u0000\u000b<\u0000\f"
+                  + "\u1009\u0001";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.apps.card.v1.DecoratedText> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.apps.card.v1.DecoratedText.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.apps.card.v1.DecoratedText>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.apps.card.v1.DecoratedText)
   private static final com.google.apps.card.v1.DecoratedText DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.apps.card.v1.DecoratedText();
+    DecoratedText defaultInstance = new DecoratedText();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        DecoratedText.class, defaultInstance);
   }
 
   public static com.google.apps.card.v1.DecoratedText getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<DecoratedText> PARSER =
-      new com.google.protobuf.AbstractParser<DecoratedText>() {
-        @java.lang.Override
-        public DecoratedText parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<DecoratedText> PARSER;
 
   public static com.google.protobuf.Parser<DecoratedText> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<DecoratedText> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.apps.card.v1.DecoratedText getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

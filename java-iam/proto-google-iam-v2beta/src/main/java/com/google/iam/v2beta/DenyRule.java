@@ -28,49 +28,21 @@ package com.google.iam.v2beta;
  *
  * Protobuf type {@code google.iam.v2beta.DenyRule}
  */
-public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
+public final class DenyRule
+    extends com.google.protobuf.GeneratedMessageLite<DenyRule, DenyRule.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.iam.v2beta.DenyRule)
     DenyRuleOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use DenyRule.newBuilder() to construct.
-  private DenyRule(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private DenyRule() {
-    deniedPrincipals_ = com.google.protobuf.LazyStringArrayList.emptyList();
-    exceptionPrincipals_ = com.google.protobuf.LazyStringArrayList.emptyList();
-    deniedPermissions_ = com.google.protobuf.LazyStringArrayList.emptyList();
-    exceptionPermissions_ = com.google.protobuf.LazyStringArrayList.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new DenyRule();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.iam.v2beta.DenyRuleProto
-        .internal_static_google_iam_v2beta_DenyRule_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.iam.v2beta.DenyRuleProto
-        .internal_static_google_iam_v2beta_DenyRule_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.iam.v2beta.DenyRule.class, com.google.iam.v2beta.DenyRule.Builder.class);
+    deniedPrincipals_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+    exceptionPrincipals_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+    deniedPermissions_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+    exceptionPermissions_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
   }
 
   private int bitField0_;
   public static final int DENIED_PRINCIPALS_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList deniedPrincipals_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.Internal.ProtobufList<java.lang.String> deniedPrincipals_;
   /**
    *
    *
@@ -121,7 +93,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return A list containing the deniedPrincipals.
    */
-  public com.google.protobuf.ProtocolStringList getDeniedPrincipalsList() {
+  @java.lang.Override
+  public java.util.List<java.lang.String> getDeniedPrincipalsList() {
     return deniedPrincipals_;
   }
   /**
@@ -174,6 +147,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The count of deniedPrincipals.
    */
+  @java.lang.Override
   public int getDeniedPrincipalsCount() {
     return deniedPrincipals_.size();
   }
@@ -228,6 +202,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the element to return.
    * @return The deniedPrincipals at the given index.
    */
+  @java.lang.Override
   public java.lang.String getDeniedPrincipals(int index) {
     return deniedPrincipals_.get(index);
   }
@@ -282,15 +257,291 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the value to return.
    * @return The bytes of the deniedPrincipals at the given index.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getDeniedPrincipalsBytes(int index) {
-    return deniedPrincipals_.getByteString(index);
+    return com.google.protobuf.ByteString.copyFromUtf8(deniedPrincipals_.get(index));
+  }
+
+  private void ensureDeniedPrincipalsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = deniedPrincipals_;
+    if (!tmp.isModifiable()) {
+      deniedPrincipals_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The identities that are prevented from using one or more permissions on
+   * Google Cloud resources. This field can contain the following values:
+   *
+   * * `principalSet://goog/public:all`: A special identifier that represents
+   *   any principal that is on the internet, even if they do not have a Google
+   *   Account or are not logged in.
+   *
+   * * `principal://goog/subject/{email_id}`: A specific Google Account.
+   *   Includes Gmail, Cloud Identity, and Google Workspace user accounts. For
+   *   example, `principal://goog/subject/alice&#64;example.com`.
+   *
+   * * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
+   *   Google Account that was deleted recently. For example,
+   *   `deleted:principal://goog/subject/alice&#64;example.com?uid=1234567890`. If
+   *   the Google Account is recovered, this identifier reverts to the standard
+   *   identifier for a Google Account.
+   *
+   * * `principalSet://goog/group/{group_id}`: A Google group. For example,
+   *   `principalSet://goog/group/admins&#64;example.com`.
+   *
+   * * `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google group
+   *   that was deleted recently. For example,
+   *   `deleted:principalSet://goog/group/admins&#64;example.com?uid=1234567890`. If
+   *   the Google group is restored, this identifier reverts to the standard
+   *   identifier for a Google group.
+   *
+   * * `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}`:
+   *   A Google Cloud service account. For example,
+   *   `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com`.
+   *
+   * * `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}?uid={uid}`:
+   *   A Google Cloud service account that was deleted recently. For example,
+   *   `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com?uid=1234567890`.
+   *   If the service account is undeleted, this identifier reverts to the
+   *   standard identifier for a service account.
+   *
+   * * `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of the
+   *   principals associated with the specified Google Workspace or Cloud
+   *   Identity customer ID. For example,
+   *   `principalSet://goog/cloudIdentityCustomerId/C01Abc35`.
+   * </pre>
+   *
+   * <code>repeated string denied_principals = 1;</code>
+   *
+   * @param index The index to set the value at.
+   * @param value The deniedPrincipals to set.
+   */
+  private void setDeniedPrincipals(int index, java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureDeniedPrincipalsIsMutable();
+    deniedPrincipals_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The identities that are prevented from using one or more permissions on
+   * Google Cloud resources. This field can contain the following values:
+   *
+   * * `principalSet://goog/public:all`: A special identifier that represents
+   *   any principal that is on the internet, even if they do not have a Google
+   *   Account or are not logged in.
+   *
+   * * `principal://goog/subject/{email_id}`: A specific Google Account.
+   *   Includes Gmail, Cloud Identity, and Google Workspace user accounts. For
+   *   example, `principal://goog/subject/alice&#64;example.com`.
+   *
+   * * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
+   *   Google Account that was deleted recently. For example,
+   *   `deleted:principal://goog/subject/alice&#64;example.com?uid=1234567890`. If
+   *   the Google Account is recovered, this identifier reverts to the standard
+   *   identifier for a Google Account.
+   *
+   * * `principalSet://goog/group/{group_id}`: A Google group. For example,
+   *   `principalSet://goog/group/admins&#64;example.com`.
+   *
+   * * `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google group
+   *   that was deleted recently. For example,
+   *   `deleted:principalSet://goog/group/admins&#64;example.com?uid=1234567890`. If
+   *   the Google group is restored, this identifier reverts to the standard
+   *   identifier for a Google group.
+   *
+   * * `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}`:
+   *   A Google Cloud service account. For example,
+   *   `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com`.
+   *
+   * * `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}?uid={uid}`:
+   *   A Google Cloud service account that was deleted recently. For example,
+   *   `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com?uid=1234567890`.
+   *   If the service account is undeleted, this identifier reverts to the
+   *   standard identifier for a service account.
+   *
+   * * `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of the
+   *   principals associated with the specified Google Workspace or Cloud
+   *   Identity customer ID. For example,
+   *   `principalSet://goog/cloudIdentityCustomerId/C01Abc35`.
+   * </pre>
+   *
+   * <code>repeated string denied_principals = 1;</code>
+   *
+   * @param value The deniedPrincipals to add.
+   */
+  private void addDeniedPrincipals(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureDeniedPrincipalsIsMutable();
+    deniedPrincipals_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The identities that are prevented from using one or more permissions on
+   * Google Cloud resources. This field can contain the following values:
+   *
+   * * `principalSet://goog/public:all`: A special identifier that represents
+   *   any principal that is on the internet, even if they do not have a Google
+   *   Account or are not logged in.
+   *
+   * * `principal://goog/subject/{email_id}`: A specific Google Account.
+   *   Includes Gmail, Cloud Identity, and Google Workspace user accounts. For
+   *   example, `principal://goog/subject/alice&#64;example.com`.
+   *
+   * * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
+   *   Google Account that was deleted recently. For example,
+   *   `deleted:principal://goog/subject/alice&#64;example.com?uid=1234567890`. If
+   *   the Google Account is recovered, this identifier reverts to the standard
+   *   identifier for a Google Account.
+   *
+   * * `principalSet://goog/group/{group_id}`: A Google group. For example,
+   *   `principalSet://goog/group/admins&#64;example.com`.
+   *
+   * * `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google group
+   *   that was deleted recently. For example,
+   *   `deleted:principalSet://goog/group/admins&#64;example.com?uid=1234567890`. If
+   *   the Google group is restored, this identifier reverts to the standard
+   *   identifier for a Google group.
+   *
+   * * `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}`:
+   *   A Google Cloud service account. For example,
+   *   `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com`.
+   *
+   * * `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}?uid={uid}`:
+   *   A Google Cloud service account that was deleted recently. For example,
+   *   `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com?uid=1234567890`.
+   *   If the service account is undeleted, this identifier reverts to the
+   *   standard identifier for a service account.
+   *
+   * * `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of the
+   *   principals associated with the specified Google Workspace or Cloud
+   *   Identity customer ID. For example,
+   *   `principalSet://goog/cloudIdentityCustomerId/C01Abc35`.
+   * </pre>
+   *
+   * <code>repeated string denied_principals = 1;</code>
+   *
+   * @param values The deniedPrincipals to add.
+   */
+  private void addAllDeniedPrincipals(java.lang.Iterable<java.lang.String> values) {
+    ensureDeniedPrincipalsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, deniedPrincipals_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The identities that are prevented from using one or more permissions on
+   * Google Cloud resources. This field can contain the following values:
+   *
+   * * `principalSet://goog/public:all`: A special identifier that represents
+   *   any principal that is on the internet, even if they do not have a Google
+   *   Account or are not logged in.
+   *
+   * * `principal://goog/subject/{email_id}`: A specific Google Account.
+   *   Includes Gmail, Cloud Identity, and Google Workspace user accounts. For
+   *   example, `principal://goog/subject/alice&#64;example.com`.
+   *
+   * * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
+   *   Google Account that was deleted recently. For example,
+   *   `deleted:principal://goog/subject/alice&#64;example.com?uid=1234567890`. If
+   *   the Google Account is recovered, this identifier reverts to the standard
+   *   identifier for a Google Account.
+   *
+   * * `principalSet://goog/group/{group_id}`: A Google group. For example,
+   *   `principalSet://goog/group/admins&#64;example.com`.
+   *
+   * * `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google group
+   *   that was deleted recently. For example,
+   *   `deleted:principalSet://goog/group/admins&#64;example.com?uid=1234567890`. If
+   *   the Google group is restored, this identifier reverts to the standard
+   *   identifier for a Google group.
+   *
+   * * `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}`:
+   *   A Google Cloud service account. For example,
+   *   `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com`.
+   *
+   * * `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}?uid={uid}`:
+   *   A Google Cloud service account that was deleted recently. For example,
+   *   `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com?uid=1234567890`.
+   *   If the service account is undeleted, this identifier reverts to the
+   *   standard identifier for a service account.
+   *
+   * * `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of the
+   *   principals associated with the specified Google Workspace or Cloud
+   *   Identity customer ID. For example,
+   *   `principalSet://goog/cloudIdentityCustomerId/C01Abc35`.
+   * </pre>
+   *
+   * <code>repeated string denied_principals = 1;</code>
+   */
+  private void clearDeniedPrincipals() {
+    deniedPrincipals_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The identities that are prevented from using one or more permissions on
+   * Google Cloud resources. This field can contain the following values:
+   *
+   * * `principalSet://goog/public:all`: A special identifier that represents
+   *   any principal that is on the internet, even if they do not have a Google
+   *   Account or are not logged in.
+   *
+   * * `principal://goog/subject/{email_id}`: A specific Google Account.
+   *   Includes Gmail, Cloud Identity, and Google Workspace user accounts. For
+   *   example, `principal://goog/subject/alice&#64;example.com`.
+   *
+   * * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
+   *   Google Account that was deleted recently. For example,
+   *   `deleted:principal://goog/subject/alice&#64;example.com?uid=1234567890`. If
+   *   the Google Account is recovered, this identifier reverts to the standard
+   *   identifier for a Google Account.
+   *
+   * * `principalSet://goog/group/{group_id}`: A Google group. For example,
+   *   `principalSet://goog/group/admins&#64;example.com`.
+   *
+   * * `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google group
+   *   that was deleted recently. For example,
+   *   `deleted:principalSet://goog/group/admins&#64;example.com?uid=1234567890`. If
+   *   the Google group is restored, this identifier reverts to the standard
+   *   identifier for a Google group.
+   *
+   * * `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}`:
+   *   A Google Cloud service account. For example,
+   *   `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com`.
+   *
+   * * `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}?uid={uid}`:
+   *   A Google Cloud service account that was deleted recently. For example,
+   *   `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com?uid=1234567890`.
+   *   If the service account is undeleted, this identifier reverts to the
+   *   standard identifier for a service account.
+   *
+   * * `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of the
+   *   principals associated with the specified Google Workspace or Cloud
+   *   Identity customer ID. For example,
+   *   `principalSet://goog/cloudIdentityCustomerId/C01Abc35`.
+   * </pre>
+   *
+   * <code>repeated string denied_principals = 1;</code>
+   *
+   * @param value The bytes of the deniedPrincipals to add.
+   */
+  private void addDeniedPrincipalsBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    ensureDeniedPrincipalsIsMutable();
+    deniedPrincipals_.add(value.toStringUtf8());
   }
 
   public static final int EXCEPTION_PRINCIPALS_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList exceptionPrincipals_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.Internal.ProtobufList<java.lang.String> exceptionPrincipals_;
   /**
    *
    *
@@ -309,7 +560,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return A list containing the exceptionPrincipals.
    */
-  public com.google.protobuf.ProtocolStringList getExceptionPrincipalsList() {
+  @java.lang.Override
+  public java.util.List<java.lang.String> getExceptionPrincipalsList() {
     return exceptionPrincipals_;
   }
   /**
@@ -330,6 +582,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The count of exceptionPrincipals.
    */
+  @java.lang.Override
   public int getExceptionPrincipalsCount() {
     return exceptionPrincipals_.size();
   }
@@ -352,6 +605,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the element to return.
    * @return The exceptionPrincipals at the given index.
    */
+  @java.lang.Override
   public java.lang.String getExceptionPrincipals(int index) {
     return exceptionPrincipals_.get(index);
   }
@@ -374,15 +628,131 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the value to return.
    * @return The bytes of the exceptionPrincipals at the given index.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getExceptionPrincipalsBytes(int index) {
-    return exceptionPrincipals_.getByteString(index);
+    return com.google.protobuf.ByteString.copyFromUtf8(exceptionPrincipals_.get(index));
+  }
+
+  private void ensureExceptionPrincipalsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = exceptionPrincipals_;
+    if (!tmp.isModifiable()) {
+      exceptionPrincipals_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The identities that are excluded from the deny rule, even if they are
+   * listed in the `denied_principals`. For example, you could add a Google
+   * group to the `denied_principals`, then exclude specific users who belong to
+   * that group.
+   *
+   * This field can contain the same values as the `denied_principals` field,
+   * excluding `principalSet://goog/public:all`, which represents all users on
+   * the internet.
+   * </pre>
+   *
+   * <code>repeated string exception_principals = 2;</code>
+   *
+   * @param index The index to set the value at.
+   * @param value The exceptionPrincipals to set.
+   */
+  private void setExceptionPrincipals(int index, java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureExceptionPrincipalsIsMutable();
+    exceptionPrincipals_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The identities that are excluded from the deny rule, even if they are
+   * listed in the `denied_principals`. For example, you could add a Google
+   * group to the `denied_principals`, then exclude specific users who belong to
+   * that group.
+   *
+   * This field can contain the same values as the `denied_principals` field,
+   * excluding `principalSet://goog/public:all`, which represents all users on
+   * the internet.
+   * </pre>
+   *
+   * <code>repeated string exception_principals = 2;</code>
+   *
+   * @param value The exceptionPrincipals to add.
+   */
+  private void addExceptionPrincipals(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureExceptionPrincipalsIsMutable();
+    exceptionPrincipals_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The identities that are excluded from the deny rule, even if they are
+   * listed in the `denied_principals`. For example, you could add a Google
+   * group to the `denied_principals`, then exclude specific users who belong to
+   * that group.
+   *
+   * This field can contain the same values as the `denied_principals` field,
+   * excluding `principalSet://goog/public:all`, which represents all users on
+   * the internet.
+   * </pre>
+   *
+   * <code>repeated string exception_principals = 2;</code>
+   *
+   * @param values The exceptionPrincipals to add.
+   */
+  private void addAllExceptionPrincipals(java.lang.Iterable<java.lang.String> values) {
+    ensureExceptionPrincipalsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, exceptionPrincipals_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The identities that are excluded from the deny rule, even if they are
+   * listed in the `denied_principals`. For example, you could add a Google
+   * group to the `denied_principals`, then exclude specific users who belong to
+   * that group.
+   *
+   * This field can contain the same values as the `denied_principals` field,
+   * excluding `principalSet://goog/public:all`, which represents all users on
+   * the internet.
+   * </pre>
+   *
+   * <code>repeated string exception_principals = 2;</code>
+   */
+  private void clearExceptionPrincipals() {
+    exceptionPrincipals_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The identities that are excluded from the deny rule, even if they are
+   * listed in the `denied_principals`. For example, you could add a Google
+   * group to the `denied_principals`, then exclude specific users who belong to
+   * that group.
+   *
+   * This field can contain the same values as the `denied_principals` field,
+   * excluding `principalSet://goog/public:all`, which represents all users on
+   * the internet.
+   * </pre>
+   *
+   * <code>repeated string exception_principals = 2;</code>
+   *
+   * @param value The bytes of the exceptionPrincipals to add.
+   */
+  private void addExceptionPrincipalsBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    ensureExceptionPrincipalsIsMutable();
+    exceptionPrincipals_.add(value.toStringUtf8());
   }
 
   public static final int DENIED_PERMISSIONS_FIELD_NUMBER = 3;
-
-  @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList deniedPermissions_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.Internal.ProtobufList<java.lang.String> deniedPermissions_;
   /**
    *
    *
@@ -397,7 +767,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return A list containing the deniedPermissions.
    */
-  public com.google.protobuf.ProtocolStringList getDeniedPermissionsList() {
+  @java.lang.Override
+  public java.util.List<java.lang.String> getDeniedPermissionsList() {
     return deniedPermissions_;
   }
   /**
@@ -414,6 +785,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The count of deniedPermissions.
    */
+  @java.lang.Override
   public int getDeniedPermissionsCount() {
     return deniedPermissions_.size();
   }
@@ -432,6 +804,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the element to return.
    * @return The deniedPermissions at the given index.
    */
+  @java.lang.Override
   public java.lang.String getDeniedPermissions(int index) {
     return deniedPermissions_.get(index);
   }
@@ -450,15 +823,111 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the value to return.
    * @return The bytes of the deniedPermissions at the given index.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getDeniedPermissionsBytes(int index) {
-    return deniedPermissions_.getByteString(index);
+    return com.google.protobuf.ByteString.copyFromUtf8(deniedPermissions_.get(index));
+  }
+
+  private void ensureDeniedPermissionsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = deniedPermissions_;
+    if (!tmp.isModifiable()) {
+      deniedPermissions_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The permissions that are explicitly denied by this rule. Each permission
+   * uses the format `{service_fqdn}/{resource}.{verb}`, where `{service_fqdn}`
+   * is the fully qualified domain name for the service. For example,
+   * `iam.googleapis.com/roles.list`.
+   * </pre>
+   *
+   * <code>repeated string denied_permissions = 3;</code>
+   *
+   * @param index The index to set the value at.
+   * @param value The deniedPermissions to set.
+   */
+  private void setDeniedPermissions(int index, java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureDeniedPermissionsIsMutable();
+    deniedPermissions_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The permissions that are explicitly denied by this rule. Each permission
+   * uses the format `{service_fqdn}/{resource}.{verb}`, where `{service_fqdn}`
+   * is the fully qualified domain name for the service. For example,
+   * `iam.googleapis.com/roles.list`.
+   * </pre>
+   *
+   * <code>repeated string denied_permissions = 3;</code>
+   *
+   * @param value The deniedPermissions to add.
+   */
+  private void addDeniedPermissions(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureDeniedPermissionsIsMutable();
+    deniedPermissions_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The permissions that are explicitly denied by this rule. Each permission
+   * uses the format `{service_fqdn}/{resource}.{verb}`, where `{service_fqdn}`
+   * is the fully qualified domain name for the service. For example,
+   * `iam.googleapis.com/roles.list`.
+   * </pre>
+   *
+   * <code>repeated string denied_permissions = 3;</code>
+   *
+   * @param values The deniedPermissions to add.
+   */
+  private void addAllDeniedPermissions(java.lang.Iterable<java.lang.String> values) {
+    ensureDeniedPermissionsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, deniedPermissions_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The permissions that are explicitly denied by this rule. Each permission
+   * uses the format `{service_fqdn}/{resource}.{verb}`, where `{service_fqdn}`
+   * is the fully qualified domain name for the service. For example,
+   * `iam.googleapis.com/roles.list`.
+   * </pre>
+   *
+   * <code>repeated string denied_permissions = 3;</code>
+   */
+  private void clearDeniedPermissions() {
+    deniedPermissions_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The permissions that are explicitly denied by this rule. Each permission
+   * uses the format `{service_fqdn}/{resource}.{verb}`, where `{service_fqdn}`
+   * is the fully qualified domain name for the service. For example,
+   * `iam.googleapis.com/roles.list`.
+   * </pre>
+   *
+   * <code>repeated string denied_permissions = 3;</code>
+   *
+   * @param value The bytes of the deniedPermissions to add.
+   */
+  private void addDeniedPermissionsBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    ensureDeniedPermissionsIsMutable();
+    deniedPermissions_.add(value.toStringUtf8());
   }
 
   public static final int EXCEPTION_PERMISSIONS_FIELD_NUMBER = 4;
-
-  @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList exceptionPermissions_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.Internal.ProtobufList<java.lang.String> exceptionPermissions_;
   /**
    *
    *
@@ -476,7 +945,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return A list containing the exceptionPermissions.
    */
-  public com.google.protobuf.ProtocolStringList getExceptionPermissionsList() {
+  @java.lang.Override
+  public java.util.List<java.lang.String> getExceptionPermissionsList() {
     return exceptionPermissions_;
   }
   /**
@@ -496,6 +966,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The count of exceptionPermissions.
    */
+  @java.lang.Override
   public int getExceptionPermissionsCount() {
     return exceptionPermissions_.size();
   }
@@ -517,6 +988,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the element to return.
    * @return The exceptionPermissions at the given index.
    */
+  @java.lang.Override
   public java.lang.String getExceptionPermissions(int index) {
     return exceptionPermissions_.get(index);
   }
@@ -538,8 +1010,122 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * @param index The index of the value to return.
    * @return The bytes of the exceptionPermissions at the given index.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getExceptionPermissionsBytes(int index) {
-    return exceptionPermissions_.getByteString(index);
+    return com.google.protobuf.ByteString.copyFromUtf8(exceptionPermissions_.get(index));
+  }
+
+  private void ensureExceptionPermissionsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = exceptionPermissions_;
+    if (!tmp.isModifiable()) {
+      exceptionPermissions_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the permissions that this rule excludes from the set of denied
+   * permissions given by `denied_permissions`. If a permission appears in
+   * `denied_permissions` _and_ in `exception_permissions` then it will _not_ be
+   * denied.
+   *
+   * The excluded permissions can be specified using the same syntax as
+   * `denied_permissions`.
+   * </pre>
+   *
+   * <code>repeated string exception_permissions = 4;</code>
+   *
+   * @param index The index to set the value at.
+   * @param value The exceptionPermissions to set.
+   */
+  private void setExceptionPermissions(int index, java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureExceptionPermissionsIsMutable();
+    exceptionPermissions_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the permissions that this rule excludes from the set of denied
+   * permissions given by `denied_permissions`. If a permission appears in
+   * `denied_permissions` _and_ in `exception_permissions` then it will _not_ be
+   * denied.
+   *
+   * The excluded permissions can be specified using the same syntax as
+   * `denied_permissions`.
+   * </pre>
+   *
+   * <code>repeated string exception_permissions = 4;</code>
+   *
+   * @param value The exceptionPermissions to add.
+   */
+  private void addExceptionPermissions(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureExceptionPermissionsIsMutable();
+    exceptionPermissions_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the permissions that this rule excludes from the set of denied
+   * permissions given by `denied_permissions`. If a permission appears in
+   * `denied_permissions` _and_ in `exception_permissions` then it will _not_ be
+   * denied.
+   *
+   * The excluded permissions can be specified using the same syntax as
+   * `denied_permissions`.
+   * </pre>
+   *
+   * <code>repeated string exception_permissions = 4;</code>
+   *
+   * @param values The exceptionPermissions to add.
+   */
+  private void addAllExceptionPermissions(java.lang.Iterable<java.lang.String> values) {
+    ensureExceptionPermissionsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, exceptionPermissions_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the permissions that this rule excludes from the set of denied
+   * permissions given by `denied_permissions`. If a permission appears in
+   * `denied_permissions` _and_ in `exception_permissions` then it will _not_ be
+   * denied.
+   *
+   * The excluded permissions can be specified using the same syntax as
+   * `denied_permissions`.
+   * </pre>
+   *
+   * <code>repeated string exception_permissions = 4;</code>
+   */
+  private void clearExceptionPermissions() {
+    exceptionPermissions_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the permissions that this rule excludes from the set of denied
+   * permissions given by `denied_permissions`. If a permission appears in
+   * `denied_permissions` _and_ in `exception_permissions` then it will _not_ be
+   * denied.
+   *
+   * The excluded permissions can be specified using the same syntax as
+   * `denied_permissions`.
+   * </pre>
+   *
+   * <code>repeated string exception_permissions = 4;</code>
+   *
+   * @param value The bytes of the exceptionPermissions to add.
+   */
+  private void addExceptionPermissionsBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    ensureExceptionPermissionsIsMutable();
+    exceptionPermissions_.add(value.toStringUtf8());
   }
 
   public static final int DENIAL_CONDITION_FIELD_NUMBER = 5;
@@ -562,8 +1148,6 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.type.Expr denial_condition = 5;</code>
-   *
-   * @return Whether the denialCondition field is set.
    */
   @java.lang.Override
   public boolean hasDenialCondition() {
@@ -587,8 +1171,6 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.type.Expr denial_condition = 5;</code>
-   *
-   * @return The denialCondition.
    */
   @java.lang.Override
   public com.google.type.Expr getDenialCondition() {
@@ -613,238 +1195,146 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.type.Expr denial_condition = 5;</code>
    */
-  @java.lang.Override
-  public com.google.type.ExprOrBuilder getDenialConditionOrBuilder() {
-    return denialCondition_ == null ? com.google.type.Expr.getDefaultInstance() : denialCondition_;
+  private void setDenialCondition(com.google.type.Expr value) {
+    value.getClass();
+    denialCondition_ = value;
+    bitField0_ |= 0x00000001;
   }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * The condition that determines whether this deny rule applies to a request.
+   * If the condition expression evaluates to `true`, then the deny rule is
+   * applied; otherwise, the deny rule is not applied.
+   *
+   * Each deny rule is evaluated independently. If this deny rule does not apply
+   * to a request, other deny rules might still apply.
+   *
+   * The condition can use CEL functions that evaluate
+   * [resource
+   * tags](https://cloud.google.com/iam/help/conditions/resource-tags). Other
+   * functions and operators are not supported.
+   * </pre>
+   *
+   * <code>.google.type.Expr denial_condition = 5;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeDenialCondition(com.google.type.Expr value) {
+    value.getClass();
+    if (denialCondition_ != null && denialCondition_ != com.google.type.Expr.getDefaultInstance()) {
+      denialCondition_ =
+          com.google.type.Expr.newBuilder(denialCondition_).mergeFrom(value).buildPartial();
+    } else {
+      denialCondition_ = value;
+    }
+    bitField0_ |= 0x00000001;
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    for (int i = 0; i < deniedPrincipals_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, deniedPrincipals_.getRaw(i));
-    }
-    for (int i = 0; i < exceptionPrincipals_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, exceptionPrincipals_.getRaw(i));
-    }
-    for (int i = 0; i < deniedPermissions_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, deniedPermissions_.getRaw(i));
-    }
-    for (int i = 0; i < exceptionPermissions_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(
-          output, 4, exceptionPermissions_.getRaw(i));
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(5, getDenialCondition());
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    {
-      int dataSize = 0;
-      for (int i = 0; i < deniedPrincipals_.size(); i++) {
-        dataSize += computeStringSizeNoTag(deniedPrincipals_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getDeniedPrincipalsList().size();
-    }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < exceptionPrincipals_.size(); i++) {
-        dataSize += computeStringSizeNoTag(exceptionPrincipals_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getExceptionPrincipalsList().size();
-    }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < deniedPermissions_.size(); i++) {
-        dataSize += computeStringSizeNoTag(deniedPermissions_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getDeniedPermissionsList().size();
-    }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < exceptionPermissions_.size(); i++) {
-        dataSize += computeStringSizeNoTag(exceptionPermissions_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getExceptionPermissionsList().size();
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(5, getDenialCondition());
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.iam.v2beta.DenyRule)) {
-      return super.equals(obj);
-    }
-    com.google.iam.v2beta.DenyRule other = (com.google.iam.v2beta.DenyRule) obj;
-
-    if (!getDeniedPrincipalsList().equals(other.getDeniedPrincipalsList())) return false;
-    if (!getExceptionPrincipalsList().equals(other.getExceptionPrincipalsList())) return false;
-    if (!getDeniedPermissionsList().equals(other.getDeniedPermissionsList())) return false;
-    if (!getExceptionPermissionsList().equals(other.getExceptionPermissionsList())) return false;
-    if (hasDenialCondition() != other.hasDenialCondition()) return false;
-    if (hasDenialCondition()) {
-      if (!getDenialCondition().equals(other.getDenialCondition())) return false;
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (getDeniedPrincipalsCount() > 0) {
-      hash = (37 * hash) + DENIED_PRINCIPALS_FIELD_NUMBER;
-      hash = (53 * hash) + getDeniedPrincipalsList().hashCode();
-    }
-    if (getExceptionPrincipalsCount() > 0) {
-      hash = (37 * hash) + EXCEPTION_PRINCIPALS_FIELD_NUMBER;
-      hash = (53 * hash) + getExceptionPrincipalsList().hashCode();
-    }
-    if (getDeniedPermissionsCount() > 0) {
-      hash = (37 * hash) + DENIED_PERMISSIONS_FIELD_NUMBER;
-      hash = (53 * hash) + getDeniedPermissionsList().hashCode();
-    }
-    if (getExceptionPermissionsCount() > 0) {
-      hash = (37 * hash) + EXCEPTION_PERMISSIONS_FIELD_NUMBER;
-      hash = (53 * hash) + getExceptionPermissionsList().hashCode();
-    }
-    if (hasDenialCondition()) {
-      hash = (37 * hash) + DENIAL_CONDITION_FIELD_NUMBER;
-      hash = (53 * hash) + getDenialCondition().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * The condition that determines whether this deny rule applies to a request.
+   * If the condition expression evaluates to `true`, then the deny rule is
+   * applied; otherwise, the deny rule is not applied.
+   *
+   * Each deny rule is evaluated independently. If this deny rule does not apply
+   * to a request, other deny rules might still apply.
+   *
+   * The condition can use CEL functions that evaluate
+   * [resource
+   * tags](https://cloud.google.com/iam/help/conditions/resource-tags). Other
+   * functions and operators are not supported.
+   * </pre>
+   *
+   * <code>.google.type.Expr denial_condition = 5;</code>
+   */
+  private void clearDenialCondition() {
+    denialCondition_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static com.google.iam.v2beta.DenyRule parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v2beta.DenyRule parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v2beta.DenyRule parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v2beta.DenyRule parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v2beta.DenyRule parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v2beta.DenyRule parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v2beta.DenyRule parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v2beta.DenyRule parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.iam.v2beta.DenyRule parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v2beta.DenyRule parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.iam.v2beta.DenyRule parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v2beta.DenyRule parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.iam.v2beta.DenyRule prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -854,289 +1344,17 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.iam.v2beta.DenyRule}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.iam.v2beta.DenyRule, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.iam.v2beta.DenyRule)
       com.google.iam.v2beta.DenyRuleOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.iam.v2beta.DenyRuleProto
-          .internal_static_google_iam_v2beta_DenyRule_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.iam.v2beta.DenyRuleProto
-          .internal_static_google_iam_v2beta_DenyRule_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.iam.v2beta.DenyRule.class, com.google.iam.v2beta.DenyRule.Builder.class);
-    }
-
     // Construct using com.google.iam.v2beta.DenyRule.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getDenialConditionFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      deniedPrincipals_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      exceptionPrincipals_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      deniedPermissions_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      exceptionPermissions_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      denialCondition_ = null;
-      if (denialConditionBuilder_ != null) {
-        denialConditionBuilder_.dispose();
-        denialConditionBuilder_ = null;
-      }
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.iam.v2beta.DenyRuleProto
-          .internal_static_google_iam_v2beta_DenyRule_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.iam.v2beta.DenyRule getDefaultInstanceForType() {
-      return com.google.iam.v2beta.DenyRule.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.iam.v2beta.DenyRule build() {
-      com.google.iam.v2beta.DenyRule result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.iam.v2beta.DenyRule buildPartial() {
-      com.google.iam.v2beta.DenyRule result = new com.google.iam.v2beta.DenyRule(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.iam.v2beta.DenyRule result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        deniedPrincipals_.makeImmutable();
-        result.deniedPrincipals_ = deniedPrincipals_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        exceptionPrincipals_.makeImmutable();
-        result.exceptionPrincipals_ = exceptionPrincipals_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        deniedPermissions_.makeImmutable();
-        result.deniedPermissions_ = deniedPermissions_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        exceptionPermissions_.makeImmutable();
-        result.exceptionPermissions_ = exceptionPermissions_;
-      }
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.denialCondition_ =
-            denialConditionBuilder_ == null ? denialCondition_ : denialConditionBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.iam.v2beta.DenyRule) {
-        return mergeFrom((com.google.iam.v2beta.DenyRule) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.iam.v2beta.DenyRule other) {
-      if (other == com.google.iam.v2beta.DenyRule.getDefaultInstance()) return this;
-      if (!other.deniedPrincipals_.isEmpty()) {
-        if (deniedPrincipals_.isEmpty()) {
-          deniedPrincipals_ = other.deniedPrincipals_;
-          bitField0_ |= 0x00000001;
-        } else {
-          ensureDeniedPrincipalsIsMutable();
-          deniedPrincipals_.addAll(other.deniedPrincipals_);
-        }
-        onChanged();
-      }
-      if (!other.exceptionPrincipals_.isEmpty()) {
-        if (exceptionPrincipals_.isEmpty()) {
-          exceptionPrincipals_ = other.exceptionPrincipals_;
-          bitField0_ |= 0x00000002;
-        } else {
-          ensureExceptionPrincipalsIsMutable();
-          exceptionPrincipals_.addAll(other.exceptionPrincipals_);
-        }
-        onChanged();
-      }
-      if (!other.deniedPermissions_.isEmpty()) {
-        if (deniedPermissions_.isEmpty()) {
-          deniedPermissions_ = other.deniedPermissions_;
-          bitField0_ |= 0x00000004;
-        } else {
-          ensureDeniedPermissionsIsMutable();
-          deniedPermissions_.addAll(other.deniedPermissions_);
-        }
-        onChanged();
-      }
-      if (!other.exceptionPermissions_.isEmpty()) {
-        if (exceptionPermissions_.isEmpty()) {
-          exceptionPermissions_ = other.exceptionPermissions_;
-          bitField0_ |= 0x00000008;
-        } else {
-          ensureExceptionPermissionsIsMutable();
-          exceptionPermissions_.addAll(other.exceptionPermissions_);
-        }
-        onChanged();
-      }
-      if (other.hasDenialCondition()) {
-        mergeDenialCondition(other.getDenialCondition());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureDeniedPrincipalsIsMutable();
-                deniedPrincipals_.add(s);
-                break;
-              } // case 10
-            case 18:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureExceptionPrincipalsIsMutable();
-                exceptionPrincipals_.add(s);
-                break;
-              } // case 18
-            case 26:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureDeniedPermissionsIsMutable();
-                deniedPermissions_.add(s);
-                break;
-              } // case 26
-            case 34:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureExceptionPermissionsIsMutable();
-                exceptionPermissions_.add(s);
-                break;
-              } // case 34
-            case 42:
-              {
-                input.readMessage(getDenialConditionFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 42
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private com.google.protobuf.LazyStringArrayList deniedPrincipals_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
-
-    private void ensureDeniedPrincipalsIsMutable() {
-      if (!deniedPrincipals_.isModifiable()) {
-        deniedPrincipals_ = new com.google.protobuf.LazyStringArrayList(deniedPrincipals_);
-      }
-      bitField0_ |= 0x00000001;
-    }
     /**
      *
      *
@@ -1187,9 +1405,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return A list containing the deniedPrincipals.
      */
-    public com.google.protobuf.ProtocolStringList getDeniedPrincipalsList() {
-      deniedPrincipals_.makeImmutable();
-      return deniedPrincipals_;
+    @java.lang.Override
+    public java.util.List<java.lang.String> getDeniedPrincipalsList() {
+      return java.util.Collections.unmodifiableList(instance.getDeniedPrincipalsList());
     }
     /**
      *
@@ -1241,8 +1459,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The count of deniedPrincipals.
      */
+    @java.lang.Override
     public int getDeniedPrincipalsCount() {
-      return deniedPrincipals_.size();
+      return instance.getDeniedPrincipalsCount();
     }
     /**
      *
@@ -1295,8 +1514,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the element to return.
      * @return The deniedPrincipals at the given index.
      */
+    @java.lang.Override
     public java.lang.String getDeniedPrincipals(int index) {
-      return deniedPrincipals_.get(index);
+      return instance.getDeniedPrincipals(index);
     }
     /**
      *
@@ -1349,8 +1569,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the value to return.
      * @return The bytes of the deniedPrincipals at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getDeniedPrincipalsBytes(int index) {
-      return deniedPrincipals_.getByteString(index);
+      return instance.getDeniedPrincipalsBytes(index);
     }
     /**
      *
@@ -1405,13 +1626,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDeniedPrincipals(int index, java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureDeniedPrincipalsIsMutable();
-      deniedPrincipals_.set(index, value);
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setDeniedPrincipals(index, value);
       return this;
     }
     /**
@@ -1466,13 +1682,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addDeniedPrincipals(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureDeniedPrincipalsIsMutable();
-      deniedPrincipals_.add(value);
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.addDeniedPrincipals(value);
       return this;
     }
     /**
@@ -1527,10 +1738,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAllDeniedPrincipals(java.lang.Iterable<java.lang.String> values) {
-      ensureDeniedPrincipalsIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, deniedPrincipals_);
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.addAllDeniedPrincipals(values);
       return this;
     }
     /**
@@ -1584,10 +1793,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDeniedPrincipals() {
-      deniedPrincipals_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      ;
-      onChanged();
+      copyOnWrite();
+      instance.clearDeniedPrincipals();
       return this;
     }
     /**
@@ -1642,26 +1849,11 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addDeniedPrincipalsBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      ensureDeniedPrincipalsIsMutable();
-      deniedPrincipals_.add(value);
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.addDeniedPrincipalsBytes(value);
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList exceptionPrincipals_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
-
-    private void ensureExceptionPrincipalsIsMutable() {
-      if (!exceptionPrincipals_.isModifiable()) {
-        exceptionPrincipals_ = new com.google.protobuf.LazyStringArrayList(exceptionPrincipals_);
-      }
-      bitField0_ |= 0x00000002;
-    }
     /**
      *
      *
@@ -1680,9 +1872,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return A list containing the exceptionPrincipals.
      */
-    public com.google.protobuf.ProtocolStringList getExceptionPrincipalsList() {
-      exceptionPrincipals_.makeImmutable();
-      return exceptionPrincipals_;
+    @java.lang.Override
+    public java.util.List<java.lang.String> getExceptionPrincipalsList() {
+      return java.util.Collections.unmodifiableList(instance.getExceptionPrincipalsList());
     }
     /**
      *
@@ -1702,8 +1894,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The count of exceptionPrincipals.
      */
+    @java.lang.Override
     public int getExceptionPrincipalsCount() {
-      return exceptionPrincipals_.size();
+      return instance.getExceptionPrincipalsCount();
     }
     /**
      *
@@ -1724,8 +1917,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the element to return.
      * @return The exceptionPrincipals at the given index.
      */
+    @java.lang.Override
     public java.lang.String getExceptionPrincipals(int index) {
-      return exceptionPrincipals_.get(index);
+      return instance.getExceptionPrincipals(index);
     }
     /**
      *
@@ -1746,8 +1940,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the value to return.
      * @return The bytes of the exceptionPrincipals at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getExceptionPrincipalsBytes(int index) {
-      return exceptionPrincipals_.getByteString(index);
+      return instance.getExceptionPrincipalsBytes(index);
     }
     /**
      *
@@ -1770,13 +1965,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setExceptionPrincipals(int index, java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureExceptionPrincipalsIsMutable();
-      exceptionPrincipals_.set(index, value);
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setExceptionPrincipals(index, value);
       return this;
     }
     /**
@@ -1799,13 +1989,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addExceptionPrincipals(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureExceptionPrincipalsIsMutable();
-      exceptionPrincipals_.add(value);
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.addExceptionPrincipals(value);
       return this;
     }
     /**
@@ -1828,10 +2013,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAllExceptionPrincipals(java.lang.Iterable<java.lang.String> values) {
-      ensureExceptionPrincipalsIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, exceptionPrincipals_);
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.addAllExceptionPrincipals(values);
       return this;
     }
     /**
@@ -1853,10 +2036,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearExceptionPrincipals() {
-      exceptionPrincipals_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      ;
-      onChanged();
+      copyOnWrite();
+      instance.clearExceptionPrincipals();
       return this;
     }
     /**
@@ -1879,26 +2060,11 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addExceptionPrincipalsBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      ensureExceptionPrincipalsIsMutable();
-      exceptionPrincipals_.add(value);
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.addExceptionPrincipalsBytes(value);
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList deniedPermissions_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
-
-    private void ensureDeniedPermissionsIsMutable() {
-      if (!deniedPermissions_.isModifiable()) {
-        deniedPermissions_ = new com.google.protobuf.LazyStringArrayList(deniedPermissions_);
-      }
-      bitField0_ |= 0x00000004;
-    }
     /**
      *
      *
@@ -1913,9 +2079,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return A list containing the deniedPermissions.
      */
-    public com.google.protobuf.ProtocolStringList getDeniedPermissionsList() {
-      deniedPermissions_.makeImmutable();
-      return deniedPermissions_;
+    @java.lang.Override
+    public java.util.List<java.lang.String> getDeniedPermissionsList() {
+      return java.util.Collections.unmodifiableList(instance.getDeniedPermissionsList());
     }
     /**
      *
@@ -1931,8 +2097,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The count of deniedPermissions.
      */
+    @java.lang.Override
     public int getDeniedPermissionsCount() {
-      return deniedPermissions_.size();
+      return instance.getDeniedPermissionsCount();
     }
     /**
      *
@@ -1949,8 +2116,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the element to return.
      * @return The deniedPermissions at the given index.
      */
+    @java.lang.Override
     public java.lang.String getDeniedPermissions(int index) {
-      return deniedPermissions_.get(index);
+      return instance.getDeniedPermissions(index);
     }
     /**
      *
@@ -1967,8 +2135,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the value to return.
      * @return The bytes of the deniedPermissions at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getDeniedPermissionsBytes(int index) {
-      return deniedPermissions_.getByteString(index);
+      return instance.getDeniedPermissionsBytes(index);
     }
     /**
      *
@@ -1987,13 +2156,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDeniedPermissions(int index, java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureDeniedPermissionsIsMutable();
-      deniedPermissions_.set(index, value);
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setDeniedPermissions(index, value);
       return this;
     }
     /**
@@ -2012,13 +2176,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addDeniedPermissions(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureDeniedPermissionsIsMutable();
-      deniedPermissions_.add(value);
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.addDeniedPermissions(value);
       return this;
     }
     /**
@@ -2037,10 +2196,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAllDeniedPermissions(java.lang.Iterable<java.lang.String> values) {
-      ensureDeniedPermissionsIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, deniedPermissions_);
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.addAllDeniedPermissions(values);
       return this;
     }
     /**
@@ -2058,10 +2215,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDeniedPermissions() {
-      deniedPermissions_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000004);
-      ;
-      onChanged();
+      copyOnWrite();
+      instance.clearDeniedPermissions();
       return this;
     }
     /**
@@ -2080,26 +2235,11 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addDeniedPermissionsBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      ensureDeniedPermissionsIsMutable();
-      deniedPermissions_.add(value);
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.addDeniedPermissionsBytes(value);
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList exceptionPermissions_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
-
-    private void ensureExceptionPermissionsIsMutable() {
-      if (!exceptionPermissions_.isModifiable()) {
-        exceptionPermissions_ = new com.google.protobuf.LazyStringArrayList(exceptionPermissions_);
-      }
-      bitField0_ |= 0x00000008;
-    }
     /**
      *
      *
@@ -2117,9 +2257,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return A list containing the exceptionPermissions.
      */
-    public com.google.protobuf.ProtocolStringList getExceptionPermissionsList() {
-      exceptionPermissions_.makeImmutable();
-      return exceptionPermissions_;
+    @java.lang.Override
+    public java.util.List<java.lang.String> getExceptionPermissionsList() {
+      return java.util.Collections.unmodifiableList(instance.getExceptionPermissionsList());
     }
     /**
      *
@@ -2138,8 +2278,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The count of exceptionPermissions.
      */
+    @java.lang.Override
     public int getExceptionPermissionsCount() {
-      return exceptionPermissions_.size();
+      return instance.getExceptionPermissionsCount();
     }
     /**
      *
@@ -2159,8 +2300,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the element to return.
      * @return The exceptionPermissions at the given index.
      */
+    @java.lang.Override
     public java.lang.String getExceptionPermissions(int index) {
-      return exceptionPermissions_.get(index);
+      return instance.getExceptionPermissions(index);
     }
     /**
      *
@@ -2180,8 +2322,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @param index The index of the value to return.
      * @return The bytes of the exceptionPermissions at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getExceptionPermissionsBytes(int index) {
-      return exceptionPermissions_.getByteString(index);
+      return instance.getExceptionPermissionsBytes(index);
     }
     /**
      *
@@ -2203,13 +2346,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setExceptionPermissions(int index, java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureExceptionPermissionsIsMutable();
-      exceptionPermissions_.set(index, value);
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setExceptionPermissions(index, value);
       return this;
     }
     /**
@@ -2231,13 +2369,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addExceptionPermissions(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureExceptionPermissionsIsMutable();
-      exceptionPermissions_.add(value);
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.addExceptionPermissions(value);
       return this;
     }
     /**
@@ -2259,10 +2392,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addAllExceptionPermissions(java.lang.Iterable<java.lang.String> values) {
-      ensureExceptionPermissionsIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, exceptionPermissions_);
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.addAllExceptionPermissions(values);
       return this;
     }
     /**
@@ -2283,10 +2414,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearExceptionPermissions() {
-      exceptionPermissions_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000008);
-      ;
-      onChanged();
+      copyOnWrite();
+      instance.clearExceptionPermissions();
       return this;
     }
     /**
@@ -2308,21 +2437,11 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addExceptionPermissionsBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      ensureExceptionPermissionsIsMutable();
-      exceptionPermissions_.add(value);
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.addExceptionPermissionsBytes(value);
       return this;
     }
 
-    private com.google.type.Expr denialCondition_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.type.Expr, com.google.type.Expr.Builder, com.google.type.ExprOrBuilder>
-        denialConditionBuilder_;
     /**
      *
      *
@@ -2341,11 +2460,10 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.type.Expr denial_condition = 5;</code>
-     *
-     * @return Whether the denialCondition field is set.
      */
+    @java.lang.Override
     public boolean hasDenialCondition() {
-      return ((bitField0_ & 0x00000010) != 0);
+      return instance.hasDenialCondition();
     }
     /**
      *
@@ -2365,17 +2483,10 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.type.Expr denial_condition = 5;</code>
-     *
-     * @return The denialCondition.
      */
+    @java.lang.Override
     public com.google.type.Expr getDenialCondition() {
-      if (denialConditionBuilder_ == null) {
-        return denialCondition_ == null
-            ? com.google.type.Expr.getDefaultInstance()
-            : denialCondition_;
-      } else {
-        return denialConditionBuilder_.getMessage();
-      }
+      return instance.getDenialCondition();
     }
     /**
      *
@@ -2397,16 +2508,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.Expr denial_condition = 5;</code>
      */
     public Builder setDenialCondition(com.google.type.Expr value) {
-      if (denialConditionBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        denialCondition_ = value;
-      } else {
-        denialConditionBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setDenialCondition(value);
       return this;
     }
     /**
@@ -2429,13 +2532,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.Expr denial_condition = 5;</code>
      */
     public Builder setDenialCondition(com.google.type.Expr.Builder builderForValue) {
-      if (denialConditionBuilder_ == null) {
-        denialCondition_ = builderForValue.build();
-      } else {
-        denialConditionBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setDenialCondition(builderForValue.build());
       return this;
     }
     /**
@@ -2458,21 +2556,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.Expr denial_condition = 5;</code>
      */
     public Builder mergeDenialCondition(com.google.type.Expr value) {
-      if (denialConditionBuilder_ == null) {
-        if (((bitField0_ & 0x00000010) != 0)
-            && denialCondition_ != null
-            && denialCondition_ != com.google.type.Expr.getDefaultInstance()) {
-          getDenialConditionBuilder().mergeFrom(value);
-        } else {
-          denialCondition_ = value;
-        }
-      } else {
-        denialConditionBuilder_.mergeFrom(value);
-      }
-      if (denialCondition_ != null) {
-        bitField0_ |= 0x00000010;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeDenialCondition(value);
       return this;
     }
     /**
@@ -2495,157 +2580,97 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.Expr denial_condition = 5;</code>
      */
     public Builder clearDenialCondition() {
-      bitField0_ = (bitField0_ & ~0x00000010);
-      denialCondition_ = null;
-      if (denialConditionBuilder_ != null) {
-        denialConditionBuilder_.dispose();
-        denialConditionBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearDenialCondition();
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The condition that determines whether this deny rule applies to a request.
-     * If the condition expression evaluates to `true`, then the deny rule is
-     * applied; otherwise, the deny rule is not applied.
-     *
-     * Each deny rule is evaluated independently. If this deny rule does not apply
-     * to a request, other deny rules might still apply.
-     *
-     * The condition can use CEL functions that evaluate
-     * [resource
-     * tags](https://cloud.google.com/iam/help/conditions/resource-tags). Other
-     * functions and operators are not supported.
-     * </pre>
-     *
-     * <code>.google.type.Expr denial_condition = 5;</code>
-     */
-    public com.google.type.Expr.Builder getDenialConditionBuilder() {
-      bitField0_ |= 0x00000010;
-      onChanged();
-      return getDenialConditionFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The condition that determines whether this deny rule applies to a request.
-     * If the condition expression evaluates to `true`, then the deny rule is
-     * applied; otherwise, the deny rule is not applied.
-     *
-     * Each deny rule is evaluated independently. If this deny rule does not apply
-     * to a request, other deny rules might still apply.
-     *
-     * The condition can use CEL functions that evaluate
-     * [resource
-     * tags](https://cloud.google.com/iam/help/conditions/resource-tags). Other
-     * functions and operators are not supported.
-     * </pre>
-     *
-     * <code>.google.type.Expr denial_condition = 5;</code>
-     */
-    public com.google.type.ExprOrBuilder getDenialConditionOrBuilder() {
-      if (denialConditionBuilder_ != null) {
-        return denialConditionBuilder_.getMessageOrBuilder();
-      } else {
-        return denialCondition_ == null
-            ? com.google.type.Expr.getDefaultInstance()
-            : denialCondition_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The condition that determines whether this deny rule applies to a request.
-     * If the condition expression evaluates to `true`, then the deny rule is
-     * applied; otherwise, the deny rule is not applied.
-     *
-     * Each deny rule is evaluated independently. If this deny rule does not apply
-     * to a request, other deny rules might still apply.
-     *
-     * The condition can use CEL functions that evaluate
-     * [resource
-     * tags](https://cloud.google.com/iam/help/conditions/resource-tags). Other
-     * functions and operators are not supported.
-     * </pre>
-     *
-     * <code>.google.type.Expr denial_condition = 5;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.type.Expr, com.google.type.Expr.Builder, com.google.type.ExprOrBuilder>
-        getDenialConditionFieldBuilder() {
-      if (denialConditionBuilder_ == null) {
-        denialConditionBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.type.Expr, com.google.type.Expr.Builder, com.google.type.ExprOrBuilder>(
-                getDenialCondition(), getParentForChildren(), isClean());
-        denialCondition_ = null;
-      }
-      return denialConditionBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.iam.v2beta.DenyRule)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.iam.v2beta.DenyRule();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_",
+                "deniedPrincipals_",
+                "exceptionPrincipals_",
+                "deniedPermissions_",
+                "exceptionPermissions_",
+                "denialCondition_",
+              };
+          java.lang.String info =
+              "\u0000\u0005\u0000\u0001\u0001\u0005\u0005\u0000\u0004\u0000\u0001\u021a\u0002\u021a"
+                  + "\u0003\u021a\u0004\u021a\u0005\u1009\u0000";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.iam.v2beta.DenyRule> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.iam.v2beta.DenyRule.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.iam.v2beta.DenyRule>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.iam.v2beta.DenyRule)
   private static final com.google.iam.v2beta.DenyRule DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.iam.v2beta.DenyRule();
+    DenyRule defaultInstance = new DenyRule();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        DenyRule.class, defaultInstance);
   }
 
   public static com.google.iam.v2beta.DenyRule getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<DenyRule> PARSER =
-      new com.google.protobuf.AbstractParser<DenyRule>() {
-        @java.lang.Override
-        public DenyRule parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<DenyRule> PARSER;
 
   public static com.google.protobuf.Parser<DenyRule> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<DenyRule> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.iam.v2beta.DenyRule getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

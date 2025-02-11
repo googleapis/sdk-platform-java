@@ -22,7 +22,7 @@ package com.google.rpc;
 public interface HelpOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.rpc.Help)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -54,24 +54,4 @@ public interface HelpOrBuilder
    * <code>repeated .google.rpc.Help.Link links = 1;</code>
    */
   int getLinksCount();
-  /**
-   *
-   *
-   * <pre>
-   * URL(s) pointing to additional information on handling the current error.
-   * </pre>
-   *
-   * <code>repeated .google.rpc.Help.Link links = 1;</code>
-   */
-  java.util.List<? extends com.google.rpc.Help.LinkOrBuilder> getLinksOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * URL(s) pointing to additional information on handling the current error.
-   * </pre>
-   *
-   * <code>repeated .google.rpc.Help.Link links = 1;</code>
-   */
-  com.google.rpc.Help.LinkOrBuilder getLinksOrBuilder(int index);
 }

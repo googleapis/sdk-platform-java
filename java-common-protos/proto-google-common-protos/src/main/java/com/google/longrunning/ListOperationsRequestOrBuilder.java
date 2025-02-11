@@ -22,7 +22,7 @@ package com.google.longrunning;
 public interface ListOperationsRequestOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.longrunning.ListOperationsRequest)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

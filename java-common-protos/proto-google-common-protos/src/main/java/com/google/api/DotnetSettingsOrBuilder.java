@@ -22,7 +22,7 @@ package com.google.api;
 public interface DotnetSettingsOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.DotnetSettings)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -48,16 +48,6 @@ public interface DotnetSettingsOrBuilder
    * @return The common.
    */
   com.google.api.CommonLanguageSettings getCommon();
-  /**
-   *
-   *
-   * <pre>
-   * Some settings.
-   * </pre>
-   *
-   * <code>.google.api.CommonLanguageSettings common = 1;</code>
-   */
-  com.google.api.CommonLanguageSettingsOrBuilder getCommonOrBuilder();
 
   /**
    *
@@ -117,6 +107,7 @@ public interface DotnetSettingsOrBuilder
    *
    * <code>map&lt;string, string&gt; renamed_services = 2;</code>
    */
+
   /* nullable */
   java.lang.String getRenamedServicesOrDefault(
       java.lang.String key,
@@ -195,6 +186,7 @@ public interface DotnetSettingsOrBuilder
    *
    * <code>map&lt;string, string&gt; renamed_resources = 3;</code>
    */
+
   /* nullable */
   java.lang.String getRenamedResourcesOrDefault(
       java.lang.String key,
@@ -277,8 +269,8 @@ public interface DotnetSettingsOrBuilder
    *
    * <code>repeated string ignored_resources = 4;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the ignoredResources at the given index.
+   * @param index The index of the element to return.
+   * @return The ignoredResources at the given index.
    */
   com.google.protobuf.ByteString getIgnoredResourcesBytes(int index);
 
@@ -332,8 +324,8 @@ public interface DotnetSettingsOrBuilder
    *
    * <code>repeated string forced_namespace_aliases = 5;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the forcedNamespaceAliases at the given index.
+   * @param index The index of the element to return.
+   * @return The forcedNamespaceAliases at the given index.
    */
   com.google.protobuf.ByteString getForcedNamespaceAliasesBytes(int index);
 
@@ -391,8 +383,8 @@ public interface DotnetSettingsOrBuilder
    *
    * <code>repeated string handwritten_signatures = 6;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the handwrittenSignatures at the given index.
+   * @param index The index of the element to return.
+   * @return The handwrittenSignatures at the given index.
    */
   com.google.protobuf.ByteString getHandwrittenSignaturesBytes(int index);
 }

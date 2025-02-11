@@ -22,7 +22,7 @@ package com.google.type;
 public interface LocalizedTextOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.type.LocalizedText)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

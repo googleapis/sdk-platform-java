@@ -22,7 +22,7 @@ package com.google.api;
 public interface AdviceOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.Advice)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

@@ -22,7 +22,7 @@ package com.google.apps.card.v1;
 public interface ButtonOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.apps.card.v1.Button)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -75,17 +75,6 @@ public interface ButtonOrBuilder
    * @return The icon.
    */
   com.google.apps.card.v1.Icon getIcon();
-  /**
-   *
-   *
-   * <pre>
-   * The icon image. If both `icon` and `text` are set, then the icon appears
-   * before the text.
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.Icon icon = 2;</code>
-   */
-  com.google.apps.card.v1.IconOrBuilder getIconOrBuilder();
 
   /**
    *
@@ -173,47 +162,6 @@ public interface ButtonOrBuilder
    * @return The color.
    */
   com.google.type.Color getColor();
-  /**
-   *
-   *
-   * <pre>
-   * If set, the button is filled with a solid background color and the font
-   * color changes to maintain contrast with the background color. For example,
-   * setting a blue background likely results in white text.
-   *
-   * If unset, the image background is white and the font color is blue.
-   *
-   * For red, green, and blue, the value of each field is a `float` number that
-   * you can express in either of two ways: as a number between 0 and 255
-   * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
-   * the absence of a color and 1 or 255/255 represent the full presence of that
-   * color on the RGB scale.
-   *
-   * Optionally set `alpha`, which sets a level of transparency using this
-   * equation:
-   *
-   * ```
-   * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
-   * ```
-   *
-   * For `alpha`, a value of `1` corresponds with a solid color, and a value of
-   * `0` corresponds with a completely transparent color.
-   *
-   * For example, the following color represents a half transparent red:
-   *
-   * ```
-   * "color": {
-   *    "red": 1,
-   *    "green": 0,
-   *    "blue": 0,
-   *    "alpha": 0.5
-   * }
-   * ```
-   * </pre>
-   *
-   * <code>.google.type.Color color = 3;</code>
-   */
-  com.google.type.ColorOrBuilder getColorOrBuilder();
 
   /**
    *
@@ -241,17 +189,6 @@ public interface ButtonOrBuilder
    * @return The onClick.
    */
   com.google.apps.card.v1.OnClick getOnClick();
-  /**
-   *
-   *
-   * <pre>
-   * Required. The action to perform when a user clicks the button, such as
-   * opening a hyperlink or running a custom function.
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.OnClick on_click = 4;</code>
-   */
-  com.google.apps.card.v1.OnClickOrBuilder getOnClickOrBuilder();
 
   /**
    *

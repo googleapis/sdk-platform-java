@@ -22,7 +22,7 @@ package com.google.api;
 public interface RoutingRuleOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.RoutingRule)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -69,35 +69,4 @@ public interface RoutingRuleOrBuilder
    * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
    */
   int getRoutingParametersCount();
-  /**
-   *
-   *
-   * <pre>
-   * A collection of Routing Parameter specifications.
-   * **NOTE:** If multiple Routing Parameters describe the same key
-   * (via the `path_template` field or via the `field` field when
-   * `path_template` is not provided), "last one wins" rule
-   * determines which Parameter gets used.
-   * See the examples for more details.
-   * </pre>
-   *
-   * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
-   */
-  java.util.List<? extends com.google.api.RoutingParameterOrBuilder>
-      getRoutingParametersOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * A collection of Routing Parameter specifications.
-   * **NOTE:** If multiple Routing Parameters describe the same key
-   * (via the `path_template` field or via the `field` field when
-   * `path_template` is not provided), "last one wins" rule
-   * determines which Parameter gets used.
-   * See the examples for more details.
-   * </pre>
-   *
-   * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
-   */
-  com.google.api.RoutingParameterOrBuilder getRoutingParametersOrBuilder(int index);
 }

@@ -22,7 +22,7 @@ package com.google.api;
 public interface BillingOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.Billing)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -63,31 +63,4 @@ public interface BillingOrBuilder
    * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
   int getConsumerDestinationsCount();
-  /**
-   *
-   *
-   * <pre>
-   * Billing configurations for sending metrics to the consumer project.
-   * There can be multiple consumer destinations per service, each one must have
-   * a different monitored resource type. A metric can be used in at most
-   * one consumer destination.
-   * </pre>
-   *
-   * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
-   */
-  java.util.List<? extends com.google.api.Billing.BillingDestinationOrBuilder>
-      getConsumerDestinationsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Billing configurations for sending metrics to the consumer project.
-   * There can be multiple consumer destinations per service, each one must have
-   * a different monitored resource type. A metric can be used in at most
-   * one consumer destination.
-   * </pre>
-   *
-   * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
-   */
-  com.google.api.Billing.BillingDestinationOrBuilder getConsumerDestinationsOrBuilder(int index);
 }

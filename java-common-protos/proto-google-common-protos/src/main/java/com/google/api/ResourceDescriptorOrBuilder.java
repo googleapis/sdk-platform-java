@@ -22,7 +22,7 @@ package com.google.api;
 public interface ResourceDescriptorOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.ResourceDescriptor)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -185,8 +185,8 @@ public interface ResourceDescriptorOrBuilder
    *
    * <code>repeated string pattern = 2;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the pattern at the given index.
+   * @param index The index of the element to return.
+   * @return The pattern at the given index.
    */
   com.google.protobuf.ByteString getPatternBytes(int index);
 

@@ -22,7 +22,7 @@ package com.google.api;
 public interface PhpSettingsOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.PhpSettings)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -48,14 +48,4 @@ public interface PhpSettingsOrBuilder
    * @return The common.
    */
   com.google.api.CommonLanguageSettings getCommon();
-  /**
-   *
-   *
-   * <pre>
-   * Some settings.
-   * </pre>
-   *
-   * <code>.google.api.CommonLanguageSettings common = 1;</code>
-   */
-  com.google.api.CommonLanguageSettingsOrBuilder getCommonOrBuilder();
 }

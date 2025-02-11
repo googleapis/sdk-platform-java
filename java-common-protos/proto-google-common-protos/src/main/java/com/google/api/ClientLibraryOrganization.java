@@ -29,7 +29,7 @@ package com.google.api;
  *
  * Protobuf enum {@code google.api.ClientLibraryOrganization}
  */
-public enum ClientLibraryOrganization implements com.google.protobuf.ProtocolMessageEnum {
+public enum ClientLibraryOrganization implements com.google.protobuf.Internal.EnumLite {
   /**
    *
    *
@@ -194,6 +194,7 @@ public enum ClientLibraryOrganization implements com.google.protobuf.ProtocolMes
    */
   public static final int GENERATIVE_AI_VALUE = 7;
 
+  @java.lang.Override
   public final int getNumber() {
     if (this == UNRECOGNIZED) {
       throw new java.lang.IllegalArgumentException(
@@ -203,8 +204,8 @@ public enum ClientLibraryOrganization implements com.google.protobuf.ProtocolMes
   }
 
   /**
-   * @param value The numeric wire value of the corresponding enum entry.
-   * @return The enum associated with the given numeric wire value.
+   * @param value The number of the enum to look for.
+   * @return The enum associated with the given number.
    * @deprecated Use {@link #forNumber(int)} instead.
    */
   @java.lang.Deprecated
@@ -212,10 +213,6 @@ public enum ClientLibraryOrganization implements com.google.protobuf.ProtocolMes
     return forNumber(value);
   }
 
-  /**
-   * @param value The numeric wire value of the corresponding enum entry.
-   * @return The enum associated with the given numeric wire value.
-   */
   public static ClientLibraryOrganization forNumber(int value) {
     switch (value) {
       case 0:
@@ -247,39 +244,26 @@ public enum ClientLibraryOrganization implements com.google.protobuf.ProtocolMes
   private static final com.google.protobuf.Internal.EnumLiteMap<ClientLibraryOrganization>
       internalValueMap =
           new com.google.protobuf.Internal.EnumLiteMap<ClientLibraryOrganization>() {
+            @java.lang.Override
             public ClientLibraryOrganization findValueByNumber(int number) {
               return ClientLibraryOrganization.forNumber(number);
             }
           };
 
-  public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-    if (this == UNRECOGNIZED) {
-      throw new java.lang.IllegalStateException(
-          "Can't get the descriptor of an unrecognized enum value.");
+  public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+    return ClientLibraryOrganizationVerifier.INSTANCE;
+  }
+
+  private static final class ClientLibraryOrganizationVerifier
+      implements com.google.protobuf.Internal.EnumVerifier {
+    static final com.google.protobuf.Internal.EnumVerifier INSTANCE =
+        new ClientLibraryOrganizationVerifier();
+
+    @java.lang.Override
+    public boolean isInRange(int number) {
+      return ClientLibraryOrganization.forNumber(number) != null;
     }
-    return getDescriptor().getValues().get(ordinal());
-  }
-
-  public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-    return getDescriptor();
-  }
-
-  public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-    return com.google.api.ClientProto.getDescriptor().getEnumTypes().get(0);
-  }
-
-  private static final ClientLibraryOrganization[] VALUES = values();
-
-  public static ClientLibraryOrganization valueOf(
-      com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-    if (desc.getType() != getDescriptor()) {
-      throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-    }
-    if (desc.getIndex() == -1) {
-      return UNRECOGNIZED;
-    }
-    return VALUES[desc.getIndex()];
-  }
+  };
 
   private final int value;
 

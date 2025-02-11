@@ -22,7 +22,7 @@ package com.google.longrunning;
 public interface OperationInfoOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.longrunning.OperationInfo)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

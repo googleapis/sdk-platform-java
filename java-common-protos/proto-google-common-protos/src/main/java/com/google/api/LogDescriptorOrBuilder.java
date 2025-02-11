@@ -22,7 +22,7 @@ package com.google.api;
 public interface LogDescriptorOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.LogDescriptor)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -91,30 +91,6 @@ public interface LogDescriptorOrBuilder
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
   int getLabelsCount();
-  /**
-   *
-   *
-   * <pre>
-   * The set of labels that are available to describe a specific log entry.
-   * Runtime requests that contain labels not specified here are
-   * considered invalid.
-   * </pre>
-   *
-   * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
-   */
-  java.util.List<? extends com.google.api.LabelDescriptorOrBuilder> getLabelsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * The set of labels that are available to describe a specific log entry.
-   * Runtime requests that contain labels not specified here are
-   * considered invalid.
-   * </pre>
-   *
-   * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
-   */
-  com.google.api.LabelDescriptorOrBuilder getLabelsOrBuilder(int index);
 
   /**
    *

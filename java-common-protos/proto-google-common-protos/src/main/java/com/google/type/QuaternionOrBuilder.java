@@ -22,7 +22,7 @@ package com.google.type;
 public interface QuaternionOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.type.Quaternion)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

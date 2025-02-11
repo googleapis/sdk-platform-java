@@ -22,7 +22,7 @@ package com.google.cloud.location;
 public interface GetLocationRequestOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.cloud.location.GetLocationRequest)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

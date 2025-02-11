@@ -35,45 +35,20 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.LogDescriptor}
  */
-public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
+public final class LogDescriptor
+    extends com.google.protobuf.GeneratedMessageLite<LogDescriptor, LogDescriptor.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.LogDescriptor)
     LogDescriptorOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use LogDescriptor.newBuilder() to construct.
-  private LogDescriptor(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private LogDescriptor() {
     name_ = "";
-    labels_ = java.util.Collections.emptyList();
+    labels_ = emptyProtobufList();
     description_ = "";
     displayName_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new LogDescriptor();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.LogProto.internal_static_google_api_LogDescriptor_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.LogProto.internal_static_google_api_LogDescriptor_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.LogDescriptor.class, com.google.api.LogDescriptor.Builder.class);
-  }
-
   public static final int NAME_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object name_ = "";
+  private java.lang.String name_;
   /**
    *
    *
@@ -90,15 +65,7 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getName() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      name_ = s;
-      return s;
-    }
+    return name_;
   }
   /**
    *
@@ -116,21 +83,64 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      name_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(name_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name of the log. It must be less than 512 characters long and can
+   * include the following characters: upper- and lower-case alphanumeric
+   * characters [A-Za-z0-9], and punctuation characters including
+   * slash, underscore, hyphen, period [/_-.].
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The name to set.
+   */
+  private void setName(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    name_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name of the log. It must be less than 512 characters long and can
+   * include the following characters: upper- and lower-case alphanumeric
+   * characters [A-Za-z0-9], and punctuation characters including
+   * slash, underscore, hyphen, period [/_-.].
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   */
+  private void clearName() {
+
+    name_ = getDefaultInstance().getName();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name of the log. It must be less than 512 characters long and can
+   * include the following characters: upper- and lower-case alphanumeric
+   * characters [A-Za-z0-9], and punctuation characters including
+   * slash, underscore, hyphen, period [/_-.].
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The bytes for name to set.
+   */
+  private void setNameBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    name_ = value.toStringUtf8();
   }
 
   public static final int LABELS_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.api.LabelDescriptor> labels_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.api.LabelDescriptor> labels_;
   /**
    *
    *
@@ -157,7 +167,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.api.LabelDescriptorOrBuilder>
       getLabelsOrBuilderList() {
     return labels_;
@@ -203,15 +212,112 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
-  @java.lang.Override
   public com.google.api.LabelDescriptorOrBuilder getLabelsOrBuilder(int index) {
     return labels_.get(index);
   }
 
-  public static final int DESCRIPTION_FIELD_NUMBER = 3;
+  private void ensureLabelsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.api.LabelDescriptor> tmp = labels_;
+    if (!tmp.isModifiable()) {
+      labels_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
 
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object description_ = "";
+  /**
+   *
+   *
+   * <pre>
+   * The set of labels that are available to describe a specific log entry.
+   * Runtime requests that contain labels not specified here are
+   * considered invalid.
+   * </pre>
+   *
+   * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
+   */
+  private void setLabels(int index, com.google.api.LabelDescriptor value) {
+    value.getClass();
+    ensureLabelsIsMutable();
+    labels_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The set of labels that are available to describe a specific log entry.
+   * Runtime requests that contain labels not specified here are
+   * considered invalid.
+   * </pre>
+   *
+   * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
+   */
+  private void addLabels(com.google.api.LabelDescriptor value) {
+    value.getClass();
+    ensureLabelsIsMutable();
+    labels_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The set of labels that are available to describe a specific log entry.
+   * Runtime requests that contain labels not specified here are
+   * considered invalid.
+   * </pre>
+   *
+   * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
+   */
+  private void addLabels(int index, com.google.api.LabelDescriptor value) {
+    value.getClass();
+    ensureLabelsIsMutable();
+    labels_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The set of labels that are available to describe a specific log entry.
+   * Runtime requests that contain labels not specified here are
+   * considered invalid.
+   * </pre>
+   *
+   * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
+   */
+  private void addAllLabels(java.lang.Iterable<? extends com.google.api.LabelDescriptor> values) {
+    ensureLabelsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, labels_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The set of labels that are available to describe a specific log entry.
+   * Runtime requests that contain labels not specified here are
+   * considered invalid.
+   * </pre>
+   *
+   * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
+   */
+  private void clearLabels() {
+    labels_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The set of labels that are available to describe a specific log entry.
+   * Runtime requests that contain labels not specified here are
+   * considered invalid.
+   * </pre>
+   *
+   * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
+   */
+  private void removeLabels(int index) {
+    ensureLabelsIsMutable();
+    labels_.remove(index);
+  }
+
+  public static final int DESCRIPTION_FIELD_NUMBER = 3;
+  private java.lang.String description_;
   /**
    *
    *
@@ -226,15 +332,7 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getDescription() {
-    java.lang.Object ref = description_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      description_ = s;
-      return s;
-    }
+    return description_;
   }
   /**
    *
@@ -250,21 +348,58 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getDescriptionBytes() {
-    java.lang.Object ref = description_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      description_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(description_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A human-readable description of this log. This information appears in
+   * the documentation and can contain details.
+   * </pre>
+   *
+   * <code>string description = 3;</code>
+   *
+   * @param value The description to set.
+   */
+  private void setDescription(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    description_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A human-readable description of this log. This information appears in
+   * the documentation and can contain details.
+   * </pre>
+   *
+   * <code>string description = 3;</code>
+   */
+  private void clearDescription() {
+
+    description_ = getDefaultInstance().getDescription();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A human-readable description of this log. This information appears in
+   * the documentation and can contain details.
+   * </pre>
+   *
+   * <code>string description = 3;</code>
+   *
+   * @param value The bytes for description to set.
+   */
+  private void setDescriptionBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    description_ = value.toStringUtf8();
   }
 
   public static final int DISPLAY_NAME_FIELD_NUMBER = 4;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object displayName_ = "";
+  private java.lang.String displayName_;
   /**
    *
    *
@@ -279,15 +414,7 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getDisplayName() {
-    java.lang.Object ref = displayName_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      displayName_ = s;
-      return s;
-    }
+    return displayName_;
   }
   /**
    *
@@ -303,203 +430,137 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getDisplayNameBytes() {
-    java.lang.Object ref = displayName_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      displayName_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(displayName_);
   }
+  /**
+   *
+   *
+   * <pre>
+   * The human-readable name for this log. This information appears on
+   * the user interface and should be concise.
+   * </pre>
+   *
+   * <code>string display_name = 4;</code>
+   *
+   * @param value The displayName to set.
+   */
+  private void setDisplayName(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    displayName_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The human-readable name for this log. This information appears on
+   * the user interface and should be concise.
+   * </pre>
+   *
+   * <code>string display_name = 4;</code>
+   */
+  private void clearDisplayName() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
-    }
-    for (int i = 0; i < labels_.size(); i++) {
-      output.writeMessage(2, labels_.get(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, description_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(displayName_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, displayName_);
-    }
-    getUnknownFields().writeTo(output);
+    displayName_ = getDefaultInstance().getDisplayName();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
-    }
-    for (int i = 0; i < labels_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, labels_.get(i));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, description_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(displayName_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, displayName_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.LogDescriptor)) {
-      return super.equals(obj);
-    }
-    com.google.api.LogDescriptor other = (com.google.api.LogDescriptor) obj;
-
-    if (!getName().equals(other.getName())) return false;
-    if (!getLabelsList().equals(other.getLabelsList())) return false;
-    if (!getDescription().equals(other.getDescription())) return false;
-    if (!getDisplayName().equals(other.getDisplayName())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getName().hashCode();
-    if (getLabelsCount() > 0) {
-      hash = (37 * hash) + LABELS_FIELD_NUMBER;
-      hash = (53 * hash) + getLabelsList().hashCode();
-    }
-    hash = (37 * hash) + DESCRIPTION_FIELD_NUMBER;
-    hash = (53 * hash) + getDescription().hashCode();
-    hash = (37 * hash) + DISPLAY_NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getDisplayName().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * The human-readable name for this log. This information appears on
+   * the user interface and should be concise.
+   * </pre>
+   *
+   * <code>string display_name = 4;</code>
+   *
+   * @param value The bytes for displayName to set.
+   */
+  private void setDisplayNameBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    displayName_ = value.toStringUtf8();
   }
 
   public static com.google.api.LogDescriptor parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.LogDescriptor parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.LogDescriptor parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.LogDescriptor parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.LogDescriptor parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.LogDescriptor parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.LogDescriptor parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.LogDescriptor parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.LogDescriptor parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.LogDescriptor parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.LogDescriptor parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.LogDescriptor parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.LogDescriptor prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -516,264 +577,17 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.api.LogDescriptor}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.api.LogDescriptor, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.LogDescriptor)
       com.google.api.LogDescriptorOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.LogProto.internal_static_google_api_LogDescriptor_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.LogProto.internal_static_google_api_LogDescriptor_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.LogDescriptor.class, com.google.api.LogDescriptor.Builder.class);
-    }
-
     // Construct using com.google.api.LogDescriptor.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      name_ = "";
-      if (labelsBuilder_ == null) {
-        labels_ = java.util.Collections.emptyList();
-      } else {
-        labels_ = null;
-        labelsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000002);
-      description_ = "";
-      displayName_ = "";
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.LogProto.internal_static_google_api_LogDescriptor_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.LogDescriptor getDefaultInstanceForType() {
-      return com.google.api.LogDescriptor.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.LogDescriptor build() {
-      com.google.api.LogDescriptor result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.LogDescriptor buildPartial() {
-      com.google.api.LogDescriptor result = new com.google.api.LogDescriptor(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.api.LogDescriptor result) {
-      if (labelsBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)) {
-          labels_ = java.util.Collections.unmodifiableList(labels_);
-          bitField0_ = (bitField0_ & ~0x00000002);
-        }
-        result.labels_ = labels_;
-      } else {
-        result.labels_ = labelsBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.api.LogDescriptor result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.name_ = name_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.description_ = description_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.displayName_ = displayName_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.LogDescriptor) {
-        return mergeFrom((com.google.api.LogDescriptor) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.LogDescriptor other) {
-      if (other == com.google.api.LogDescriptor.getDefaultInstance()) return this;
-      if (!other.getName().isEmpty()) {
-        name_ = other.name_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (labelsBuilder_ == null) {
-        if (!other.labels_.isEmpty()) {
-          if (labels_.isEmpty()) {
-            labels_ = other.labels_;
-            bitField0_ = (bitField0_ & ~0x00000002);
-          } else {
-            ensureLabelsIsMutable();
-            labels_.addAll(other.labels_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.labels_.isEmpty()) {
-          if (labelsBuilder_.isEmpty()) {
-            labelsBuilder_.dispose();
-            labelsBuilder_ = null;
-            labels_ = other.labels_;
-            bitField0_ = (bitField0_ & ~0x00000002);
-            labelsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getLabelsFieldBuilder()
-                    : null;
-          } else {
-            labelsBuilder_.addAllMessages(other.labels_);
-          }
-        }
-      }
-      if (!other.getDescription().isEmpty()) {
-        description_ = other.description_;
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
-      if (!other.getDisplayName().isEmpty()) {
-        displayName_ = other.displayName_;
-        bitField0_ |= 0x00000008;
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                name_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                com.google.api.LabelDescriptor m =
-                    input.readMessage(com.google.api.LabelDescriptor.parser(), extensionRegistry);
-                if (labelsBuilder_ == null) {
-                  ensureLabelsIsMutable();
-                  labels_.add(m);
-                } else {
-                  labelsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 18
-            case 26:
-              {
-                description_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 26
-            case 34:
-              {
-                displayName_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 34
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object name_ = "";
     /**
      *
      *
@@ -788,16 +602,9 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        name_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getName();
     }
     /**
      *
@@ -813,16 +620,9 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getNameBytes() {
-      java.lang.Object ref = name_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        name_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getNameBytes();
     }
     /**
      *
@@ -840,12 +640,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setName(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setName(value);
       return this;
     }
     /**
@@ -863,9 +659,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearName() {
-      name_ = getDefaultInstance().getName();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearName();
       return this;
     }
     /**
@@ -884,32 +679,11 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setNameBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setNameBytes(value);
       return this;
     }
 
-    private java.util.List<com.google.api.LabelDescriptor> labels_ =
-        java.util.Collections.emptyList();
-
-    private void ensureLabelsIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
-        labels_ = new java.util.ArrayList<com.google.api.LabelDescriptor>(labels_);
-        bitField0_ |= 0x00000002;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.LabelDescriptor,
-            com.google.api.LabelDescriptor.Builder,
-            com.google.api.LabelDescriptorOrBuilder>
-        labelsBuilder_;
-
     /**
      *
      *
@@ -921,12 +695,9 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.api.LabelDescriptor> getLabelsList() {
-      if (labelsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(labels_);
-      } else {
-        return labelsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getLabelsList());
     }
     /**
      *
@@ -939,12 +710,9 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
+    @java.lang.Override
     public int getLabelsCount() {
-      if (labelsBuilder_ == null) {
-        return labels_.size();
-      } else {
-        return labelsBuilder_.getCount();
-      }
+      return instance.getLabelsCount();
     }
     /**
      *
@@ -957,12 +725,10 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
+
+    @java.lang.Override
     public com.google.api.LabelDescriptor getLabels(int index) {
-      if (labelsBuilder_ == null) {
-        return labels_.get(index);
-      } else {
-        return labelsBuilder_.getMessage(index);
-      }
+      return instance.getLabels(index);
     }
     /**
      *
@@ -976,16 +742,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
     public Builder setLabels(int index, com.google.api.LabelDescriptor value) {
-      if (labelsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureLabelsIsMutable();
-        labels_.set(index, value);
-        onChanged();
-      } else {
-        labelsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setLabels(index, value);
       return this;
     }
     /**
@@ -1000,13 +758,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
     public Builder setLabels(int index, com.google.api.LabelDescriptor.Builder builderForValue) {
-      if (labelsBuilder_ == null) {
-        ensureLabelsIsMutable();
-        labels_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        labelsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setLabels(index, builderForValue.build());
       return this;
     }
     /**
@@ -1021,16 +774,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
     public Builder addLabels(com.google.api.LabelDescriptor value) {
-      if (labelsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureLabelsIsMutable();
-        labels_.add(value);
-        onChanged();
-      } else {
-        labelsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addLabels(value);
       return this;
     }
     /**
@@ -1045,16 +790,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
     public Builder addLabels(int index, com.google.api.LabelDescriptor value) {
-      if (labelsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureLabelsIsMutable();
-        labels_.add(index, value);
-        onChanged();
-      } else {
-        labelsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addLabels(index, value);
       return this;
     }
     /**
@@ -1069,13 +806,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
     public Builder addLabels(com.google.api.LabelDescriptor.Builder builderForValue) {
-      if (labelsBuilder_ == null) {
-        ensureLabelsIsMutable();
-        labels_.add(builderForValue.build());
-        onChanged();
-      } else {
-        labelsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addLabels(builderForValue.build());
       return this;
     }
     /**
@@ -1090,13 +822,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
     public Builder addLabels(int index, com.google.api.LabelDescriptor.Builder builderForValue) {
-      if (labelsBuilder_ == null) {
-        ensureLabelsIsMutable();
-        labels_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        labelsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addLabels(index, builderForValue.build());
       return this;
     }
     /**
@@ -1112,13 +839,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addAllLabels(
         java.lang.Iterable<? extends com.google.api.LabelDescriptor> values) {
-      if (labelsBuilder_ == null) {
-        ensureLabelsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, labels_);
-        onChanged();
-      } else {
-        labelsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllLabels(values);
       return this;
     }
     /**
@@ -1133,13 +855,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
     public Builder clearLabels() {
-      if (labelsBuilder_ == null) {
-        labels_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
-      } else {
-        labelsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearLabels();
       return this;
     }
     /**
@@ -1154,129 +871,11 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
     public Builder removeLabels(int index) {
-      if (labelsBuilder_ == null) {
-        ensureLabelsIsMutable();
-        labels_.remove(index);
-        onChanged();
-      } else {
-        labelsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeLabels(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * The set of labels that are available to describe a specific log entry.
-     * Runtime requests that contain labels not specified here are
-     * considered invalid.
-     * </pre>
-     *
-     * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
-     */
-    public com.google.api.LabelDescriptor.Builder getLabelsBuilder(int index) {
-      return getLabelsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The set of labels that are available to describe a specific log entry.
-     * Runtime requests that contain labels not specified here are
-     * considered invalid.
-     * </pre>
-     *
-     * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
-     */
-    public com.google.api.LabelDescriptorOrBuilder getLabelsOrBuilder(int index) {
-      if (labelsBuilder_ == null) {
-        return labels_.get(index);
-      } else {
-        return labelsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The set of labels that are available to describe a specific log entry.
-     * Runtime requests that contain labels not specified here are
-     * considered invalid.
-     * </pre>
-     *
-     * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
-     */
-    public java.util.List<? extends com.google.api.LabelDescriptorOrBuilder>
-        getLabelsOrBuilderList() {
-      if (labelsBuilder_ != null) {
-        return labelsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(labels_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The set of labels that are available to describe a specific log entry.
-     * Runtime requests that contain labels not specified here are
-     * considered invalid.
-     * </pre>
-     *
-     * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
-     */
-    public com.google.api.LabelDescriptor.Builder addLabelsBuilder() {
-      return getLabelsFieldBuilder()
-          .addBuilder(com.google.api.LabelDescriptor.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The set of labels that are available to describe a specific log entry.
-     * Runtime requests that contain labels not specified here are
-     * considered invalid.
-     * </pre>
-     *
-     * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
-     */
-    public com.google.api.LabelDescriptor.Builder addLabelsBuilder(int index) {
-      return getLabelsFieldBuilder()
-          .addBuilder(index, com.google.api.LabelDescriptor.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The set of labels that are available to describe a specific log entry.
-     * Runtime requests that contain labels not specified here are
-     * considered invalid.
-     * </pre>
-     *
-     * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
-     */
-    public java.util.List<com.google.api.LabelDescriptor.Builder> getLabelsBuilderList() {
-      return getLabelsFieldBuilder().getBuilderList();
-    }
 
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.LabelDescriptor,
-            com.google.api.LabelDescriptor.Builder,
-            com.google.api.LabelDescriptorOrBuilder>
-        getLabelsFieldBuilder() {
-      if (labelsBuilder_ == null) {
-        labelsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.api.LabelDescriptor,
-                com.google.api.LabelDescriptor.Builder,
-                com.google.api.LabelDescriptorOrBuilder>(
-                labels_, ((bitField0_ & 0x00000002) != 0), getParentForChildren(), isClean());
-        labels_ = null;
-      }
-      return labelsBuilder_;
-    }
-
-    private java.lang.Object description_ = "";
     /**
      *
      *
@@ -1289,16 +888,9 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The description.
      */
+    @java.lang.Override
     public java.lang.String getDescription() {
-      java.lang.Object ref = description_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        description_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getDescription();
     }
     /**
      *
@@ -1312,16 +904,9 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for description.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getDescriptionBytes() {
-      java.lang.Object ref = description_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        description_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getDescriptionBytes();
     }
     /**
      *
@@ -1337,12 +922,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDescription(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      description_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setDescription(value);
       return this;
     }
     /**
@@ -1358,9 +939,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDescription() {
-      description_ = getDefaultInstance().getDescription();
-      bitField0_ = (bitField0_ & ~0x00000004);
-      onChanged();
+      copyOnWrite();
+      instance.clearDescription();
       return this;
     }
     /**
@@ -1377,17 +957,11 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDescriptionBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      description_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setDescriptionBytes(value);
       return this;
     }
 
-    private java.lang.Object displayName_ = "";
     /**
      *
      *
@@ -1400,16 +974,9 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The displayName.
      */
+    @java.lang.Override
     public java.lang.String getDisplayName() {
-      java.lang.Object ref = displayName_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        displayName_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getDisplayName();
     }
     /**
      *
@@ -1423,16 +990,9 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for displayName.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getDisplayNameBytes() {
-      java.lang.Object ref = displayName_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        displayName_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getDisplayNameBytes();
     }
     /**
      *
@@ -1448,12 +1008,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDisplayName(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      displayName_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setDisplayName(value);
       return this;
     }
     /**
@@ -1469,9 +1025,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDisplayName() {
-      displayName_ = getDefaultInstance().getDisplayName();
-      bitField0_ = (bitField0_ & ~0x00000008);
-      onChanged();
+      copyOnWrite();
+      instance.clearDisplayName();
       return this;
     }
     /**
@@ -1488,74 +1043,95 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDisplayNameBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      displayName_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setDisplayNameBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.api.LogDescriptor)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.LogDescriptor();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "name_",
+                "labels_",
+                com.google.api.LabelDescriptor.class,
+                "description_",
+                "displayName_",
+              };
+          java.lang.String info =
+              "\u0000\u0004\u0000\u0000\u0001\u0004\u0004\u0000\u0001\u0000\u0001\u0208\u0002\u001b"
+                  + "\u0003\u0208\u0004\u0208";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.LogDescriptor> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.LogDescriptor.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.api.LogDescriptor>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.LogDescriptor)
   private static final com.google.api.LogDescriptor DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.LogDescriptor();
+    LogDescriptor defaultInstance = new LogDescriptor();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        LogDescriptor.class, defaultInstance);
   }
 
   public static com.google.api.LogDescriptor getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<LogDescriptor> PARSER =
-      new com.google.protobuf.AbstractParser<LogDescriptor>() {
-        @java.lang.Override
-        public LogDescriptor parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<LogDescriptor> PARSER;
 
   public static com.google.protobuf.Parser<LogDescriptor> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<LogDescriptor> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.LogDescriptor getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

@@ -22,7 +22,7 @@ package com.google.apps.card.v1;
 public interface WidgetOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.apps.card.v1.Widget)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -76,30 +76,6 @@ public interface WidgetOrBuilder
    * @return The textParagraph.
    */
   com.google.apps.card.v1.TextParagraph getTextParagraph();
-  /**
-   *
-   *
-   * <pre>
-   * Displays a text paragraph. Supports simple HTML formatted text. For more
-   * information about formatting text, see
-   * [Formatting text in Google Chat
-   * apps](https://developers.google.com/workspace/chat/format-messages#card-formatting)
-   * and
-   * [Formatting
-   * text in Google Workspace
-   * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
-   *
-   * For example, the following JSON creates a bolded text:
-   * ```
-   * "textParagraph": {
-   *   "text": "  &lt;b&gt;bold text&lt;/b&gt;"
-   * }
-   * ```
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
-   */
-  com.google.apps.card.v1.TextParagraphOrBuilder getTextParagraphOrBuilder();
 
   /**
    *
@@ -143,25 +119,6 @@ public interface WidgetOrBuilder
    * @return The image.
    */
   com.google.apps.card.v1.Image getImage();
-  /**
-   *
-   *
-   * <pre>
-   * Displays an image.
-   *
-   * For example, the following JSON creates an image with alternative text:
-   * ```
-   * "image": {
-   *   "imageUrl":
-   *   "https://developers.google.com/workspace/chat/images/quickstart-app-avatar.png",
-   *   "altText": "Chat app avatar"
-   * }
-   * ```
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.Image image = 2;</code>
-   */
-  com.google.apps.card.v1.ImageOrBuilder getImageOrBuilder();
 
   /**
    *
@@ -225,35 +182,6 @@ public interface WidgetOrBuilder
    * @return The decoratedText.
    */
   com.google.apps.card.v1.DecoratedText getDecoratedText();
-  /**
-   *
-   *
-   * <pre>
-   * Displays a decorated text item.
-   *
-   * For example, the following JSON creates a decorated text widget showing
-   * email address:
-   *
-   * ```
-   * "decoratedText": {
-   *   "icon": {
-   *     "knownIcon": "EMAIL"
-   *   },
-   *   "topLabel": "Email Address",
-   *   "text": "sasha&#64;example.com",
-   *   "bottomLabel": "This is a new Email address!",
-   *   "switchControl": {
-   *     "name": "has_send_welcome_email_to_sasha",
-   *     "selected": false,
-   *     "controlType": "CHECKBOX"
-   *   }
-   * }
-   * ```
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.DecoratedText decorated_text = 3;</code>
-   */
-  com.google.apps.card.v1.DecoratedTextOrBuilder getDecoratedTextOrBuilder();
 
   /**
    *
@@ -341,47 +269,6 @@ public interface WidgetOrBuilder
    * @return The buttonList.
    */
   com.google.apps.card.v1.ButtonList getButtonList();
-  /**
-   *
-   *
-   * <pre>
-   * A list of buttons.
-   *
-   * For example, the following JSON creates two buttons. The first
-   * is a blue text button and the second is an image button that opens a
-   * link:
-   * ```
-   * "buttonList": {
-   *   "buttons": [
-   *     {
-   *       "text": "Edit",
-   *       "color": {
-   *         "red": 0,
-   *         "green": 0,
-   *         "blue": 1,
-   *         "alpha": 1
-   *       },
-   *       "disabled": true,
-   *     },
-   *     {
-   *       "icon": {
-   *         "knownIcon": "INVITE",
-   *         "altText": "check calendar"
-   *       },
-   *       "onClick": {
-   *         "openLink": {
-   *           "url": "https://example.com/calendar"
-   *         }
-   *       }
-   *     }
-   *   ]
-   * }
-   * ```
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.ButtonList button_list = 4;</code>
-   */
-  com.google.apps.card.v1.ButtonListOrBuilder getButtonListOrBuilder();
 
   /**
    *
@@ -477,51 +364,6 @@ public interface WidgetOrBuilder
    * @return The textInput.
    */
   com.google.apps.card.v1.TextInput getTextInput();
-  /**
-   *
-   *
-   * <pre>
-   * Displays a text box that users can type into.
-   *
-   * For example, the following JSON creates a text input for an email
-   * address:
-   *
-   * ```
-   * "textInput": {
-   *   "name": "mailing_address",
-   *   "label": "Mailing Address"
-   * }
-   * ```
-   *
-   * As another example, the following JSON creates a text input for a
-   * programming language with static suggestions:
-   * ```
-   * "textInput": {
-   *   "name": "preferred_programing_language",
-   *   "label": "Preferred Language",
-   *   "initialSuggestions": {
-   *     "items": [
-   *       {
-   *         "text": "C++"
-   *       },
-   *       {
-   *         "text": "Java"
-   *       },
-   *       {
-   *         "text": "JavaScript"
-   *       },
-   *       {
-   *         "text": "Python"
-   *       }
-   *     ]
-   *   }
-   * }
-   * ```
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.TextInput text_input = 5;</code>
-   */
-  com.google.apps.card.v1.TextInputOrBuilder getTextInputOrBuilder();
 
   /**
    *
@@ -615,50 +457,6 @@ public interface WidgetOrBuilder
    * @return The selectionInput.
    */
   com.google.apps.card.v1.SelectionInput getSelectionInput();
-  /**
-   *
-   *
-   * <pre>
-   * Displays a selection control that lets users select items. Selection
-   * controls can be checkboxes, radio buttons, switches, or dropdown menus.
-   *
-   * For example, the following JSON creates a dropdown menu that lets users
-   * choose a size:
-   *
-   * ```
-   * "selectionInput": {
-   *   "name": "size",
-   *   "label": "Size"
-   *   "type": "DROPDOWN",
-   *   "items": [
-   *     {
-   *       "text": "S",
-   *       "value": "small",
-   *       "selected": false
-   *     },
-   *     {
-   *       "text": "M",
-   *       "value": "medium",
-   *       "selected": true
-   *     },
-   *     {
-   *       "text": "L",
-   *       "value": "large",
-   *       "selected": false
-   *     },
-   *     {
-   *       "text": "XL",
-   *       "value": "extra_large",
-   *       "selected": false
-   *     }
-   *   ]
-   * }
-   * ```
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.SelectionInput selection_input = 6;</code>
-   */
-  com.google.apps.card.v1.SelectionInputOrBuilder getSelectionInputOrBuilder();
 
   /**
    *
@@ -710,29 +508,6 @@ public interface WidgetOrBuilder
    * @return The dateTimePicker.
    */
   com.google.apps.card.v1.DateTimePicker getDateTimePicker();
-  /**
-   *
-   *
-   * <pre>
-   * Displays a widget that lets users input a date, time, or date and time.
-   *
-   * For example, the following JSON creates a date time picker to schedule an
-   * appointment:
-   *
-   *
-   * ```
-   * "dateTimePicker": {
-   *   "name": "appointment_time",
-   *   "label": "Book your appointment at:",
-   *   "type": "DATE_AND_TIME",
-   *   "valueMsEpoch": "796435200000"
-   * }
-   * ```
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.DateTimePicker date_time_picker = 7;</code>
-   */
-  com.google.apps.card.v1.DateTimePickerOrBuilder getDateTimePickerOrBuilder();
 
   /**
    *
@@ -770,22 +545,6 @@ public interface WidgetOrBuilder
    * @return The divider.
    */
   com.google.apps.card.v1.Divider getDivider();
-  /**
-   *
-   *
-   * <pre>
-   * Displays a horizontal line divider between widgets.
-   *
-   * For example, the following JSON creates a divider:
-   * ```
-   * "divider": {
-   * }
-   * ```
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.Divider divider = 9;</code>
-   */
-  com.google.apps.card.v1.DividerOrBuilder getDividerOrBuilder();
 
   /**
    *
@@ -895,58 +654,6 @@ public interface WidgetOrBuilder
    * @return The grid.
    */
   com.google.apps.card.v1.Grid getGrid();
-  /**
-   *
-   *
-   * <pre>
-   * Displays a grid with a collection of items.
-   *
-   * A grid supports any number of columns and items. The number of rows is
-   * determined by the upper bounds of the number items divided by the number
-   * of columns. A grid with 10 items and 2 columns has 5 rows. A grid with 11
-   * items and 2 columns has 6 rows.
-   *
-   * [Google Workspace Add-ons and
-   * Chat apps](https://developers.google.com/workspace/extend):
-   *
-   * For example, the following JSON creates a 2 column grid with a single
-   * item:
-   *
-   * ```
-   * "grid": {
-   *   "title": "A fine collection of items",
-   *   "columnCount": 2,
-   *   "borderStyle": {
-   *     "type": "STROKE",
-   *     "cornerRadius": 4
-   *   },
-   *   "items": [
-   *     {
-   *       "image": {
-   *         "imageUri": "https://www.example.com/image.png",
-   *         "cropStyle": {
-   *           "type": "SQUARE"
-   *         },
-   *         "borderStyle": {
-   *           "type": "STROKE"
-   *         }
-   *       },
-   *       "title": "An item",
-   *       "textAlignment": "CENTER"
-   *     }
-   *   ],
-   *   "onClick": {
-   *     "openLink": {
-   *       "url": "https://www.example.com"
-   *     }
-   *   }
-   * }
-   * ```
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.Grid grid = 10;</code>
-   */
-  com.google.apps.card.v1.GridOrBuilder getGridOrBuilder();
 
   /**
    *
@@ -1044,52 +751,6 @@ public interface WidgetOrBuilder
    * @return The columns.
    */
   com.google.apps.card.v1.Columns getColumns();
-  /**
-   *
-   *
-   * <pre>
-   * Displays up to 2 columns.
-   *
-   * To include more than 2 columns, or to use rows, use the `Grid` widget.
-   *
-   * For example, the following JSON creates 2 columns that each contain
-   * text paragraphs:
-   *
-   * ```
-   * "columns": {
-   *   "columnItems": [
-   *     {
-   *       "horizontalSizeStyle": "FILL_AVAILABLE_SPACE",
-   *       "horizontalAlignment": "CENTER",
-   *       "verticalAlignment": "CENTER",
-   *       "widgets": [
-   *         {
-   *           "textParagraph": {
-   *             "text": "First column text paragraph"
-   *           }
-   *         }
-   *       ]
-   *     },
-   *     {
-   *       "horizontalSizeStyle": "FILL_AVAILABLE_SPACE",
-   *       "horizontalAlignment": "CENTER",
-   *       "verticalAlignment": "CENTER",
-   *       "widgets": [
-   *         {
-   *           "textParagraph": {
-   *             "text": "Second column text paragraph"
-   *           }
-   *         }
-   *       ]
-   *     }
-   *   ]
-   * }
-   * ```
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.Columns columns = 11;</code>
-   */
-  com.google.apps.card.v1.ColumnsOrBuilder getColumnsOrBuilder();
 
   /**
    *
@@ -1116,5 +777,5 @@ public interface WidgetOrBuilder
    */
   com.google.apps.card.v1.Widget.HorizontalAlignment getHorizontalAlignment();
 
-  com.google.apps.card.v1.Widget.DataCase getDataCase();
+  public com.google.apps.card.v1.Widget.DataCase getDataCase();
 }

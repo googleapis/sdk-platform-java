@@ -22,7 +22,7 @@ package com.google.cloud.audit;
 public interface ViolationInfoOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.cloud.audit.ViolationInfo)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

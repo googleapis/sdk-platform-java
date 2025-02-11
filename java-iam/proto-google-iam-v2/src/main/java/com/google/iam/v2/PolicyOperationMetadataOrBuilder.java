@@ -22,7 +22,7 @@ package com.google.iam.v2;
 public interface PolicyOperationMetadataOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.iam.v2.PolicyOperationMetadata)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -48,14 +48,4 @@ public interface PolicyOperationMetadataOrBuilder
    * @return The createTime.
    */
   com.google.protobuf.Timestamp getCreateTime();
-  /**
-   *
-   *
-   * <pre>
-   * Timestamp when the `google.longrunning.Operation` was created.
-   * </pre>
-   *
-   * <code>.google.protobuf.Timestamp create_time = 1;</code>
-   */
-  com.google.protobuf.TimestampOrBuilder getCreateTimeOrBuilder();
 }

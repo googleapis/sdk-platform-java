@@ -22,7 +22,7 @@ package com.google.api;
 public interface QuotaOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.Quota)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -54,26 +54,6 @@ public interface QuotaOrBuilder
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
    */
   int getLimitsCount();
-  /**
-   *
-   *
-   * <pre>
-   * List of QuotaLimit definitions for the service.
-   * </pre>
-   *
-   * <code>repeated .google.api.QuotaLimit limits = 3;</code>
-   */
-  java.util.List<? extends com.google.api.QuotaLimitOrBuilder> getLimitsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * List of QuotaLimit definitions for the service.
-   * </pre>
-   *
-   * <code>repeated .google.api.QuotaLimit limits = 3;</code>
-   */
-  com.google.api.QuotaLimitOrBuilder getLimitsOrBuilder(int index);
 
   /**
    *
@@ -108,26 +88,4 @@ public interface QuotaOrBuilder
    * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
    */
   int getMetricRulesCount();
-  /**
-   *
-   *
-   * <pre>
-   * List of MetricRule definitions, each one mapping a selected method to one
-   * or more metrics.
-   * </pre>
-   *
-   * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
-   */
-  java.util.List<? extends com.google.api.MetricRuleOrBuilder> getMetricRulesOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * List of MetricRule definitions, each one mapping a selected method to one
-   * or more metrics.
-   * </pre>
-   *
-   * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
-   */
-  com.google.api.MetricRuleOrBuilder getMetricRulesOrBuilder(int index);
 }

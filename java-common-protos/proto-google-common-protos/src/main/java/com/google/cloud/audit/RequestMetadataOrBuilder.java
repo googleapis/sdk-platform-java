@@ -22,7 +22,7 @@ package com.google.cloud.audit;
 public interface RequestMetadataOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.cloud.audit.RequestMetadata)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -189,23 +189,6 @@ public interface RequestMetadataOrBuilder
    * @return The requestAttributes.
    */
   com.google.rpc.context.AttributeContext.Request getRequestAttributes();
-  /**
-   *
-   *
-   * <pre>
-   * Request attributes used in IAM condition evaluation. This field contains
-   * request attributes like request time and access levels associated with
-   * the request.
-   *
-   *
-   * To get the whole view of the attributes used in IAM
-   * condition evaluation, the user must also look into
-   * `AuditLog.authentication_info.resource_attributes`.
-   * </pre>
-   *
-   * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
-   */
-  com.google.rpc.context.AttributeContext.RequestOrBuilder getRequestAttributesOrBuilder();
 
   /**
    *
@@ -239,18 +222,4 @@ public interface RequestMetadataOrBuilder
    * @return The destinationAttributes.
    */
   com.google.rpc.context.AttributeContext.Peer getDestinationAttributes();
-  /**
-   *
-   *
-   * <pre>
-   * The destination of a network activity, such as accepting a TCP connection.
-   * In a multi hop network activity, the destination represents the receiver of
-   * the last hop. Only two fields are used in this message, Peer.port and
-   * Peer.ip. These fields are optionally populated by those services utilizing
-   * the IAM condition feature.
-   * </pre>
-   *
-   * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
-   */
-  com.google.rpc.context.AttributeContext.PeerOrBuilder getDestinationAttributesOrBuilder();
 }

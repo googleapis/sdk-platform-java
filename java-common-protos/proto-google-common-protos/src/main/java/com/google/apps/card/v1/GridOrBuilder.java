@@ -22,7 +22,7 @@ package com.google.apps.card.v1;
 public interface GridOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.apps.card.v1.Grid)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -79,26 +79,6 @@ public interface GridOrBuilder
    * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
    */
   int getItemsCount();
-  /**
-   *
-   *
-   * <pre>
-   * The items to display in the grid.
-   * </pre>
-   *
-   * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
-   */
-  java.util.List<? extends com.google.apps.card.v1.Grid.GridItemOrBuilder> getItemsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * The items to display in the grid.
-   * </pre>
-   *
-   * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
-   */
-  com.google.apps.card.v1.Grid.GridItemOrBuilder getItemsOrBuilder(int index);
 
   /**
    *
@@ -124,16 +104,6 @@ public interface GridOrBuilder
    * @return The borderStyle.
    */
   com.google.apps.card.v1.BorderStyle getBorderStyle();
-  /**
-   *
-   *
-   * <pre>
-   * The border style to apply to each grid item.
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.BorderStyle border_style = 3;</code>
-   */
-  com.google.apps.card.v1.BorderStyleOrBuilder getBorderStyleOrBuilder();
 
   /**
    *
@@ -178,16 +148,4 @@ public interface GridOrBuilder
    * @return The onClick.
    */
   com.google.apps.card.v1.OnClick getOnClick();
-  /**
-   *
-   *
-   * <pre>
-   * This callback is reused by each individual grid item, but with the
-   * item's identifier and index in the items list added to the callback's
-   * parameters.
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.OnClick on_click = 5;</code>
-   */
-  com.google.apps.card.v1.OnClickOrBuilder getOnClickOrBuilder();
 }

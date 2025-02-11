@@ -29,48 +29,20 @@ package com.google.shopping.type;
  *
  * Protobuf type {@code google.shopping.type.CustomAttribute}
  */
-public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV3
+public final class CustomAttribute
+    extends com.google.protobuf.GeneratedMessageLite<CustomAttribute, CustomAttribute.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.shopping.type.CustomAttribute)
     CustomAttributeOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use CustomAttribute.newBuilder() to construct.
-  private CustomAttribute(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private CustomAttribute() {
     name_ = "";
     value_ = "";
-    groupValues_ = java.util.Collections.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new CustomAttribute();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.shopping.type.TypesProto
-        .internal_static_google_shopping_type_CustomAttribute_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.shopping.type.TypesProto
-        .internal_static_google_shopping_type_CustomAttribute_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.shopping.type.CustomAttribute.class,
-            com.google.shopping.type.CustomAttribute.Builder.class);
+    groupValues_ = emptyProtobufList();
   }
 
   private int bitField0_;
   public static final int NAME_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object name_ = "";
+  private java.lang.String name_;
   /**
    *
    *
@@ -99,15 +71,7 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
    */
   @java.lang.Override
   public java.lang.String getName() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      name_ = s;
-      return s;
-    }
+    return name_;
   }
   /**
    *
@@ -122,21 +86,56 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      name_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(name_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name of the attribute.
+   * </pre>
+   *
+   * <code>optional string name = 1;</code>
+   *
+   * @param value The name to set.
+   */
+  private void setName(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    bitField0_ |= 0x00000001;
+    name_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name of the attribute.
+   * </pre>
+   *
+   * <code>optional string name = 1;</code>
+   */
+  private void clearName() {
+    bitField0_ = (bitField0_ & ~0x00000001);
+    name_ = getDefaultInstance().getName();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name of the attribute.
+   * </pre>
+   *
+   * <code>optional string name = 1;</code>
+   *
+   * @param value The bytes for name to set.
+   */
+  private void setNameBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    name_ = value.toStringUtf8();
+    bitField0_ |= 0x00000001;
   }
 
   public static final int VALUE_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object value_ = "";
+  private java.lang.String value_;
   /**
    *
    *
@@ -167,15 +166,7 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
    */
   @java.lang.Override
   public java.lang.String getValue() {
-    java.lang.Object ref = value_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      value_ = s;
-      return s;
-    }
+    return value_;
   }
   /**
    *
@@ -191,21 +182,60 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getValueBytes() {
-    java.lang.Object ref = value_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      value_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(value_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The value of the attribute. If `value` is not empty, `group_values` must be
+   * empty.
+   * </pre>
+   *
+   * <code>optional string value = 2;</code>
+   *
+   * @param value The value to set.
+   */
+  private void setValue(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    bitField0_ |= 0x00000002;
+    value_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The value of the attribute. If `value` is not empty, `group_values` must be
+   * empty.
+   * </pre>
+   *
+   * <code>optional string value = 2;</code>
+   */
+  private void clearValue() {
+    bitField0_ = (bitField0_ & ~0x00000002);
+    value_ = getDefaultInstance().getValue();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The value of the attribute. If `value` is not empty, `group_values` must be
+   * empty.
+   * </pre>
+   *
+   * <code>optional string value = 2;</code>
+   *
+   * @param value The bytes for value to set.
+   */
+  private void setValueBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    value_ = value.toStringUtf8();
+    bitField0_ |= 0x00000002;
   }
 
   public static final int GROUP_VALUES_FIELD_NUMBER = 3;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.shopping.type.CustomAttribute> groupValues_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.shopping.type.CustomAttribute>
+      groupValues_;
   /**
    *
    *
@@ -230,7 +260,6 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
    *
    * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.shopping.type.CustomAttributeOrBuilder>
       getGroupValuesOrBuilderList() {
     return groupValues_;
@@ -273,199 +302,188 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
    *
    * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
    */
-  @java.lang.Override
   public com.google.shopping.type.CustomAttributeOrBuilder getGroupValuesOrBuilder(int index) {
     return groupValues_.get(index);
   }
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  private void ensureGroupValuesIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.shopping.type.CustomAttribute> tmp =
+        groupValues_;
+    if (!tmp.isModifiable()) {
+      groupValues_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
   }
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (((bitField0_ & 0x00000001) != 0)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, value_);
-    }
-    for (int i = 0; i < groupValues_.size(); i++) {
-      output.writeMessage(3, groupValues_.get(i));
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * Subattributes within this attribute group.  If
+   * `group_values` is not empty, `value` must be empty.
+   * </pre>
+   *
+   * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
+   */
+  private void setGroupValues(int index, com.google.shopping.type.CustomAttribute value) {
+    value.getClass();
+    ensureGroupValuesIsMutable();
+    groupValues_.set(index, value);
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, value_);
-    }
-    for (int i = 0; i < groupValues_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, groupValues_.get(i));
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
+  /**
+   *
+   *
+   * <pre>
+   * Subattributes within this attribute group.  If
+   * `group_values` is not empty, `value` must be empty.
+   * </pre>
+   *
+   * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
+   */
+  private void addGroupValues(com.google.shopping.type.CustomAttribute value) {
+    value.getClass();
+    ensureGroupValuesIsMutable();
+    groupValues_.add(value);
   }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.shopping.type.CustomAttribute)) {
-      return super.equals(obj);
-    }
-    com.google.shopping.type.CustomAttribute other = (com.google.shopping.type.CustomAttribute) obj;
-
-    if (hasName() != other.hasName()) return false;
-    if (hasName()) {
-      if (!getName().equals(other.getName())) return false;
-    }
-    if (hasValue() != other.hasValue()) return false;
-    if (hasValue()) {
-      if (!getValue().equals(other.getValue())) return false;
-    }
-    if (!getGroupValuesList().equals(other.getGroupValuesList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Subattributes within this attribute group.  If
+   * `group_values` is not empty, `value` must be empty.
+   * </pre>
+   *
+   * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
+   */
+  private void addGroupValues(int index, com.google.shopping.type.CustomAttribute value) {
+    value.getClass();
+    ensureGroupValuesIsMutable();
+    groupValues_.add(index, value);
   }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (hasName()) {
-      hash = (37 * hash) + NAME_FIELD_NUMBER;
-      hash = (53 * hash) + getName().hashCode();
-    }
-    if (hasValue()) {
-      hash = (37 * hash) + VALUE_FIELD_NUMBER;
-      hash = (53 * hash) + getValue().hashCode();
-    }
-    if (getGroupValuesCount() > 0) {
-      hash = (37 * hash) + GROUP_VALUES_FIELD_NUMBER;
-      hash = (53 * hash) + getGroupValuesList().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Subattributes within this attribute group.  If
+   * `group_values` is not empty, `value` must be empty.
+   * </pre>
+   *
+   * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
+   */
+  private void addAllGroupValues(
+      java.lang.Iterable<? extends com.google.shopping.type.CustomAttribute> values) {
+    ensureGroupValuesIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, groupValues_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Subattributes within this attribute group.  If
+   * `group_values` is not empty, `value` must be empty.
+   * </pre>
+   *
+   * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
+   */
+  private void clearGroupValues() {
+    groupValues_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Subattributes within this attribute group.  If
+   * `group_values` is not empty, `value` must be empty.
+   * </pre>
+   *
+   * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
+   */
+  private void removeGroupValues(int index) {
+    ensureGroupValuesIsMutable();
+    groupValues_.remove(index);
   }
 
   public static com.google.shopping.type.CustomAttribute parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.shopping.type.CustomAttribute parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.shopping.type.CustomAttribute parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.shopping.type.CustomAttribute parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.shopping.type.CustomAttribute parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.shopping.type.CustomAttribute parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.shopping.type.CustomAttribute parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.shopping.type.CustomAttribute parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.shopping.type.CustomAttribute parseDelimitedFrom(
       java.io.InputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.shopping.type.CustomAttribute parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.shopping.type.CustomAttribute parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.shopping.type.CustomAttribute parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.shopping.type.CustomAttribute prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -476,259 +494,17 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
    *
    * Protobuf type {@code google.shopping.type.CustomAttribute}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.shopping.type.CustomAttribute, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.shopping.type.CustomAttribute)
       com.google.shopping.type.CustomAttributeOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.shopping.type.TypesProto
-          .internal_static_google_shopping_type_CustomAttribute_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.shopping.type.TypesProto
-          .internal_static_google_shopping_type_CustomAttribute_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.shopping.type.CustomAttribute.class,
-              com.google.shopping.type.CustomAttribute.Builder.class);
-    }
-
     // Construct using com.google.shopping.type.CustomAttribute.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      name_ = "";
-      value_ = "";
-      if (groupValuesBuilder_ == null) {
-        groupValues_ = java.util.Collections.emptyList();
-      } else {
-        groupValues_ = null;
-        groupValuesBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000004);
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.shopping.type.TypesProto
-          .internal_static_google_shopping_type_CustomAttribute_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.shopping.type.CustomAttribute getDefaultInstanceForType() {
-      return com.google.shopping.type.CustomAttribute.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.shopping.type.CustomAttribute build() {
-      com.google.shopping.type.CustomAttribute result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.shopping.type.CustomAttribute buildPartial() {
-      com.google.shopping.type.CustomAttribute result =
-          new com.google.shopping.type.CustomAttribute(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.shopping.type.CustomAttribute result) {
-      if (groupValuesBuilder_ == null) {
-        if (((bitField0_ & 0x00000004) != 0)) {
-          groupValues_ = java.util.Collections.unmodifiableList(groupValues_);
-          bitField0_ = (bitField0_ & ~0x00000004);
-        }
-        result.groupValues_ = groupValues_;
-      } else {
-        result.groupValues_ = groupValuesBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.shopping.type.CustomAttribute result) {
-      int from_bitField0_ = bitField0_;
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.name_ = name_;
-        to_bitField0_ |= 0x00000001;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.value_ = value_;
-        to_bitField0_ |= 0x00000002;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.shopping.type.CustomAttribute) {
-        return mergeFrom((com.google.shopping.type.CustomAttribute) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.shopping.type.CustomAttribute other) {
-      if (other == com.google.shopping.type.CustomAttribute.getDefaultInstance()) return this;
-      if (other.hasName()) {
-        name_ = other.name_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (other.hasValue()) {
-        value_ = other.value_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      if (groupValuesBuilder_ == null) {
-        if (!other.groupValues_.isEmpty()) {
-          if (groupValues_.isEmpty()) {
-            groupValues_ = other.groupValues_;
-            bitField0_ = (bitField0_ & ~0x00000004);
-          } else {
-            ensureGroupValuesIsMutable();
-            groupValues_.addAll(other.groupValues_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.groupValues_.isEmpty()) {
-          if (groupValuesBuilder_.isEmpty()) {
-            groupValuesBuilder_.dispose();
-            groupValuesBuilder_ = null;
-            groupValues_ = other.groupValues_;
-            bitField0_ = (bitField0_ & ~0x00000004);
-            groupValuesBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getGroupValuesFieldBuilder()
-                    : null;
-          } else {
-            groupValuesBuilder_.addAllMessages(other.groupValues_);
-          }
-        }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                name_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                value_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 26:
-              {
-                com.google.shopping.type.CustomAttribute m =
-                    input.readMessage(
-                        com.google.shopping.type.CustomAttribute.parser(), extensionRegistry);
-                if (groupValuesBuilder_ == null) {
-                  ensureGroupValuesIsMutable();
-                  groupValues_.add(m);
-                } else {
-                  groupValuesBuilder_.addMessage(m);
-                }
-                break;
-              } // case 26
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object name_ = "";
     /**
      *
      *
@@ -740,8 +516,9 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      *
      * @return Whether the name field is set.
      */
+    @java.lang.Override
     public boolean hasName() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return instance.hasName();
     }
     /**
      *
@@ -754,16 +531,9 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      *
      * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        name_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getName();
     }
     /**
      *
@@ -776,16 +546,9 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      *
      * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getNameBytes() {
-      java.lang.Object ref = name_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        name_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getNameBytes();
     }
     /**
      *
@@ -800,12 +563,8 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder setName(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setName(value);
       return this;
     }
     /**
@@ -820,9 +579,8 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder clearName() {
-      name_ = getDefaultInstance().getName();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearName();
       return this;
     }
     /**
@@ -838,17 +596,11 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder setNameBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setNameBytes(value);
       return this;
     }
 
-    private java.lang.Object value_ = "";
     /**
      *
      *
@@ -861,8 +613,9 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      *
      * @return Whether the value field is set.
      */
+    @java.lang.Override
     public boolean hasValue() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return instance.hasValue();
     }
     /**
      *
@@ -876,16 +629,9 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      *
      * @return The value.
      */
+    @java.lang.Override
     public java.lang.String getValue() {
-      java.lang.Object ref = value_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        value_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getValue();
     }
     /**
      *
@@ -899,16 +645,9 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      *
      * @return The bytes for value.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getValueBytes() {
-      java.lang.Object ref = value_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        value_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getValueBytes();
     }
     /**
      *
@@ -924,12 +663,8 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder setValue(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      value_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setValue(value);
       return this;
     }
     /**
@@ -945,9 +680,8 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder clearValue() {
-      value_ = getDefaultInstance().getValue();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearValue();
       return this;
     }
     /**
@@ -964,33 +698,11 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder setValueBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      value_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setValueBytes(value);
       return this;
     }
 
-    private java.util.List<com.google.shopping.type.CustomAttribute> groupValues_ =
-        java.util.Collections.emptyList();
-
-    private void ensureGroupValuesIsMutable() {
-      if (!((bitField0_ & 0x00000004) != 0)) {
-        groupValues_ =
-            new java.util.ArrayList<com.google.shopping.type.CustomAttribute>(groupValues_);
-        bitField0_ |= 0x00000004;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.shopping.type.CustomAttribute,
-            com.google.shopping.type.CustomAttribute.Builder,
-            com.google.shopping.type.CustomAttributeOrBuilder>
-        groupValuesBuilder_;
-
     /**
      *
      *
@@ -1001,12 +713,9 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      *
      * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.shopping.type.CustomAttribute> getGroupValuesList() {
-      if (groupValuesBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(groupValues_);
-      } else {
-        return groupValuesBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getGroupValuesList());
     }
     /**
      *
@@ -1018,12 +727,9 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      *
      * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
      */
+    @java.lang.Override
     public int getGroupValuesCount() {
-      if (groupValuesBuilder_ == null) {
-        return groupValues_.size();
-      } else {
-        return groupValuesBuilder_.getCount();
-      }
+      return instance.getGroupValuesCount();
     }
     /**
      *
@@ -1035,12 +741,10 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      *
      * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
      */
+
+    @java.lang.Override
     public com.google.shopping.type.CustomAttribute getGroupValues(int index) {
-      if (groupValuesBuilder_ == null) {
-        return groupValues_.get(index);
-      } else {
-        return groupValuesBuilder_.getMessage(index);
-      }
+      return instance.getGroupValues(index);
     }
     /**
      *
@@ -1053,16 +757,8 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
      */
     public Builder setGroupValues(int index, com.google.shopping.type.CustomAttribute value) {
-      if (groupValuesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureGroupValuesIsMutable();
-        groupValues_.set(index, value);
-        onChanged();
-      } else {
-        groupValuesBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setGroupValues(index, value);
       return this;
     }
     /**
@@ -1077,13 +773,8 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      */
     public Builder setGroupValues(
         int index, com.google.shopping.type.CustomAttribute.Builder builderForValue) {
-      if (groupValuesBuilder_ == null) {
-        ensureGroupValuesIsMutable();
-        groupValues_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        groupValuesBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setGroupValues(index, builderForValue.build());
       return this;
     }
     /**
@@ -1097,16 +788,8 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
      */
     public Builder addGroupValues(com.google.shopping.type.CustomAttribute value) {
-      if (groupValuesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureGroupValuesIsMutable();
-        groupValues_.add(value);
-        onChanged();
-      } else {
-        groupValuesBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addGroupValues(value);
       return this;
     }
     /**
@@ -1120,16 +803,8 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
      */
     public Builder addGroupValues(int index, com.google.shopping.type.CustomAttribute value) {
-      if (groupValuesBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureGroupValuesIsMutable();
-        groupValues_.add(index, value);
-        onChanged();
-      } else {
-        groupValuesBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addGroupValues(index, value);
       return this;
     }
     /**
@@ -1144,13 +819,8 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      */
     public Builder addGroupValues(
         com.google.shopping.type.CustomAttribute.Builder builderForValue) {
-      if (groupValuesBuilder_ == null) {
-        ensureGroupValuesIsMutable();
-        groupValues_.add(builderForValue.build());
-        onChanged();
-      } else {
-        groupValuesBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addGroupValues(builderForValue.build());
       return this;
     }
     /**
@@ -1165,13 +835,8 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      */
     public Builder addGroupValues(
         int index, com.google.shopping.type.CustomAttribute.Builder builderForValue) {
-      if (groupValuesBuilder_ == null) {
-        ensureGroupValuesIsMutable();
-        groupValues_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        groupValuesBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addGroupValues(index, builderForValue.build());
       return this;
     }
     /**
@@ -1186,13 +851,8 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      */
     public Builder addAllGroupValues(
         java.lang.Iterable<? extends com.google.shopping.type.CustomAttribute> values) {
-      if (groupValuesBuilder_ == null) {
-        ensureGroupValuesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, groupValues_);
-        onChanged();
-      } else {
-        groupValuesBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllGroupValues(values);
       return this;
     }
     /**
@@ -1206,13 +866,8 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
      */
     public Builder clearGroupValues() {
-      if (groupValuesBuilder_ == null) {
-        groupValues_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000004);
-        onChanged();
-      } else {
-        groupValuesBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearGroupValues();
       return this;
     }
     /**
@@ -1226,181 +881,96 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
      * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
      */
     public Builder removeGroupValues(int index) {
-      if (groupValuesBuilder_ == null) {
-        ensureGroupValuesIsMutable();
-        groupValues_.remove(index);
-        onChanged();
-      } else {
-        groupValuesBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeGroupValues(index);
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Subattributes within this attribute group.  If
-     * `group_values` is not empty, `value` must be empty.
-     * </pre>
-     *
-     * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
-     */
-    public com.google.shopping.type.CustomAttribute.Builder getGroupValuesBuilder(int index) {
-      return getGroupValuesFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Subattributes within this attribute group.  If
-     * `group_values` is not empty, `value` must be empty.
-     * </pre>
-     *
-     * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
-     */
-    public com.google.shopping.type.CustomAttributeOrBuilder getGroupValuesOrBuilder(int index) {
-      if (groupValuesBuilder_ == null) {
-        return groupValues_.get(index);
-      } else {
-        return groupValuesBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Subattributes within this attribute group.  If
-     * `group_values` is not empty, `value` must be empty.
-     * </pre>
-     *
-     * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
-     */
-    public java.util.List<? extends com.google.shopping.type.CustomAttributeOrBuilder>
-        getGroupValuesOrBuilderList() {
-      if (groupValuesBuilder_ != null) {
-        return groupValuesBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(groupValues_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Subattributes within this attribute group.  If
-     * `group_values` is not empty, `value` must be empty.
-     * </pre>
-     *
-     * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
-     */
-    public com.google.shopping.type.CustomAttribute.Builder addGroupValuesBuilder() {
-      return getGroupValuesFieldBuilder()
-          .addBuilder(com.google.shopping.type.CustomAttribute.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Subattributes within this attribute group.  If
-     * `group_values` is not empty, `value` must be empty.
-     * </pre>
-     *
-     * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
-     */
-    public com.google.shopping.type.CustomAttribute.Builder addGroupValuesBuilder(int index) {
-      return getGroupValuesFieldBuilder()
-          .addBuilder(index, com.google.shopping.type.CustomAttribute.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Subattributes within this attribute group.  If
-     * `group_values` is not empty, `value` must be empty.
-     * </pre>
-     *
-     * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
-     */
-    public java.util.List<com.google.shopping.type.CustomAttribute.Builder>
-        getGroupValuesBuilderList() {
-      return getGroupValuesFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.shopping.type.CustomAttribute,
-            com.google.shopping.type.CustomAttribute.Builder,
-            com.google.shopping.type.CustomAttributeOrBuilder>
-        getGroupValuesFieldBuilder() {
-      if (groupValuesBuilder_ == null) {
-        groupValuesBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.shopping.type.CustomAttribute,
-                com.google.shopping.type.CustomAttribute.Builder,
-                com.google.shopping.type.CustomAttributeOrBuilder>(
-                groupValues_, ((bitField0_ & 0x00000004) != 0), getParentForChildren(), isClean());
-        groupValues_ = null;
-      }
-      return groupValuesBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.shopping.type.CustomAttribute)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.shopping.type.CustomAttribute();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_",
+                "name_",
+                "value_",
+                "groupValues_",
+                com.google.shopping.type.CustomAttribute.class,
+              };
+          java.lang.String info =
+              "\u0000\u0003\u0000\u0001\u0001\u0003\u0003\u0000\u0001\u0000\u0001\u1208\u0000\u0002"
+                  + "\u1208\u0001\u0003\u001b";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.shopping.type.CustomAttribute> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.shopping.type.CustomAttribute.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.shopping.type.CustomAttribute>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.shopping.type.CustomAttribute)
   private static final com.google.shopping.type.CustomAttribute DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.shopping.type.CustomAttribute();
+    CustomAttribute defaultInstance = new CustomAttribute();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        CustomAttribute.class, defaultInstance);
   }
 
   public static com.google.shopping.type.CustomAttribute getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<CustomAttribute> PARSER =
-      new com.google.protobuf.AbstractParser<CustomAttribute>() {
-        @java.lang.Override
-        public CustomAttribute parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<CustomAttribute> PARSER;
 
   public static com.google.protobuf.Parser<CustomAttribute> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<CustomAttribute> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.shopping.type.CustomAttribute getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

@@ -42,44 +42,16 @@ package com.google.apps.card.v1;
  *
  * Protobuf type {@code google.apps.card.v1.SelectionInput}
  */
-public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
+public final class SelectionInput
+    extends com.google.protobuf.GeneratedMessageLite<SelectionInput, SelectionInput.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.SelectionInput)
     SelectionInputOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use SelectionInput.newBuilder() to construct.
-  private SelectionInput(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private SelectionInput() {
     name_ = "";
     label_ = "";
-    type_ = 0;
-    items_ = java.util.Collections.emptyList();
+    items_ = emptyProtobufList();
   }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new SelectionInput();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_SelectionInput_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_SelectionInput_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.apps.card.v1.SelectionInput.class,
-            com.google.apps.card.v1.SelectionInput.Builder.class);
-  }
-
   /**
    *
    *
@@ -97,7 +69,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf enum {@code google.apps.card.v1.SelectionInput.SelectionType}
    */
-  public enum SelectionType implements com.google.protobuf.ProtocolMessageEnum {
+  public enum SelectionType implements com.google.protobuf.Internal.EnumLite {
     /**
      *
      *
@@ -246,6 +218,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      */
     public static final int MULTI_SELECT_VALUE = 4;
 
+    @java.lang.Override
     public final int getNumber() {
       if (this == UNRECOGNIZED) {
         throw new java.lang.IllegalArgumentException(
@@ -255,8 +228,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
     }
 
     /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
+     * @param value The number of the enum to look for.
+     * @return The enum associated with the given number.
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
@@ -264,10 +237,6 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
       return forNumber(value);
     }
 
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
     public static SelectionType forNumber(int value) {
       switch (value) {
         case 0:
@@ -291,38 +260,25 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
 
     private static final com.google.protobuf.Internal.EnumLiteMap<SelectionType> internalValueMap =
         new com.google.protobuf.Internal.EnumLiteMap<SelectionType>() {
+          @java.lang.Override
           public SelectionType findValueByNumber(int number) {
             return SelectionType.forNumber(number);
           }
         };
 
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalStateException(
-            "Can't get the descriptor of an unrecognized enum value.");
+    public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+      return SelectionTypeVerifier.INSTANCE;
+    }
+
+    private static final class SelectionTypeVerifier
+        implements com.google.protobuf.Internal.EnumVerifier {
+      static final com.google.protobuf.Internal.EnumVerifier INSTANCE = new SelectionTypeVerifier();
+
+      @java.lang.Override
+      public boolean isInRange(int number) {
+        return SelectionType.forNumber(number) != null;
       }
-      return getDescriptor().getValues().get(ordinal());
-    }
-
-    public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-      return getDescriptor();
-    }
-
-    public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-      return com.google.apps.card.v1.SelectionInput.getDescriptor().getEnumTypes().get(0);
-    }
-
-    private static final SelectionType[] VALUES = values();
-
-    public static SelectionType valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
+    };
 
     private final int value;
 
@@ -336,7 +292,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
   public interface SelectionItemOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:google.apps.card.v1.SelectionInput.SelectionItem)
-      com.google.protobuf.MessageOrBuilder {
+      com.google.protobuf.MessageLiteOrBuilder {
 
     /**
      *
@@ -482,16 +438,11 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.apps.card.v1.SelectionInput.SelectionItem}
    */
-  public static final class SelectionItem extends com.google.protobuf.GeneratedMessageV3
+  public static final class SelectionItem
+      extends com.google.protobuf.GeneratedMessageLite<SelectionItem, SelectionItem.Builder>
       implements
       // @@protoc_insertion_point(message_implements:google.apps.card.v1.SelectionInput.SelectionItem)
       SelectionItemOrBuilder {
-    private static final long serialVersionUID = 0L;
-    // Use SelectionItem.newBuilder() to construct.
-    private SelectionItem(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-
     private SelectionItem() {
       text_ = "";
       value_ = "";
@@ -499,31 +450,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
       bottomText_ = "";
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-      return new SelectionItem();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_SelectionInput_SelectionItem_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_SelectionInput_SelectionItem_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.apps.card.v1.SelectionInput.SelectionItem.class,
-              com.google.apps.card.v1.SelectionInput.SelectionItem.Builder.class);
-    }
-
     public static final int TEXT_FIELD_NUMBER = 1;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object text_ = "";
+    private java.lang.String text_;
     /**
      *
      *
@@ -537,15 +465,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getText() {
-      java.lang.Object ref = text_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        text_ = s;
-        return s;
-      }
+      return text_;
     }
     /**
      *
@@ -560,21 +480,55 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getTextBytes() {
-      java.lang.Object ref = text_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        text_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(text_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The text that identifies or describes the item to users.
+     * </pre>
+     *
+     * <code>string text = 1;</code>
+     *
+     * @param value The text to set.
+     */
+    private void setText(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      text_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The text that identifies or describes the item to users.
+     * </pre>
+     *
+     * <code>string text = 1;</code>
+     */
+    private void clearText() {
+
+      text_ = getDefaultInstance().getText();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The text that identifies or describes the item to users.
+     * </pre>
+     *
+     * <code>string text = 1;</code>
+     *
+     * @param value The bytes for text to set.
+     */
+    private void setTextBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      text_ = value.toStringUtf8();
     }
 
     public static final int VALUE_FIELD_NUMBER = 2;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object value_ = "";
+    private java.lang.String value_;
     /**
      *
      *
@@ -592,15 +546,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getValue() {
-      java.lang.Object ref = value_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        value_ = s;
-        return s;
-      }
+      return value_;
     }
     /**
      *
@@ -619,19 +565,67 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getValueBytes() {
-      java.lang.Object ref = value_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        value_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(value_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The value associated with this item. The client should use this as a form
+     * input value.
+     *
+     * For details about working with form inputs, see [Receive form
+     * data](https://developers.google.com/workspace/chat/read-form-data).
+     * </pre>
+     *
+     * <code>string value = 2;</code>
+     *
+     * @param value The value to set.
+     */
+    private void setValue(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      value_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The value associated with this item. The client should use this as a form
+     * input value.
+     *
+     * For details about working with form inputs, see [Receive form
+     * data](https://developers.google.com/workspace/chat/read-form-data).
+     * </pre>
+     *
+     * <code>string value = 2;</code>
+     */
+    private void clearValue() {
+
+      value_ = getDefaultInstance().getValue();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The value associated with this item. The client should use this as a form
+     * input value.
+     *
+     * For details about working with form inputs, see [Receive form
+     * data](https://developers.google.com/workspace/chat/read-form-data).
+     * </pre>
+     *
+     * <code>string value = 2;</code>
+     *
+     * @param value The bytes for value to set.
+     */
+    private void setValueBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      value_ = value.toStringUtf8();
     }
 
     public static final int SELECTED_FIELD_NUMBER = 3;
-    private boolean selected_ = false;
+    private boolean selected_;
     /**
      *
      *
@@ -649,11 +643,41 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
     public boolean getSelected() {
       return selected_;
     }
+    /**
+     *
+     *
+     * <pre>
+     * Whether the item is selected by default. If the selection input only
+     * accepts one value (such as for radio buttons or a dropdown menu), only
+     * set this field for one item.
+     * </pre>
+     *
+     * <code>bool selected = 3;</code>
+     *
+     * @param value The selected to set.
+     */
+    private void setSelected(boolean value) {
+
+      selected_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Whether the item is selected by default. If the selection input only
+     * accepts one value (such as for radio buttons or a dropdown menu), only
+     * set this field for one item.
+     * </pre>
+     *
+     * <code>bool selected = 3;</code>
+     */
+    private void clearSelected() {
+
+      selected_ = false;
+    }
 
     public static final int START_ICON_URI_FIELD_NUMBER = 4;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object startIconUri_ = "";
+    private java.lang.String startIconUri_;
     /**
      *
      *
@@ -670,15 +694,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getStartIconUri() {
-      java.lang.Object ref = startIconUri_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        startIconUri_ = s;
-        return s;
-      }
+      return startIconUri_;
     }
     /**
      *
@@ -696,21 +712,64 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getStartIconUriBytes() {
-      java.lang.Object ref = startIconUri_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        startIconUri_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(startIconUri_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * For multiselect menus, the URL for the icon displayed next to
+     * the item's `text` field. Supports PNG and JPEG files. Must be an `HTTPS`
+     * URL. For example,
+     * `https://developers.google.com/workspace/chat/images/quickstart-app-avatar.png`.
+     * </pre>
+     *
+     * <code>string start_icon_uri = 4;</code>
+     *
+     * @param value The startIconUri to set.
+     */
+    private void setStartIconUri(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      startIconUri_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * For multiselect menus, the URL for the icon displayed next to
+     * the item's `text` field. Supports PNG and JPEG files. Must be an `HTTPS`
+     * URL. For example,
+     * `https://developers.google.com/workspace/chat/images/quickstart-app-avatar.png`.
+     * </pre>
+     *
+     * <code>string start_icon_uri = 4;</code>
+     */
+    private void clearStartIconUri() {
+
+      startIconUri_ = getDefaultInstance().getStartIconUri();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * For multiselect menus, the URL for the icon displayed next to
+     * the item's `text` field. Supports PNG and JPEG files. Must be an `HTTPS`
+     * URL. For example,
+     * `https://developers.google.com/workspace/chat/images/quickstart-app-avatar.png`.
+     * </pre>
+     *
+     * <code>string start_icon_uri = 4;</code>
+     *
+     * @param value The bytes for startIconUri to set.
+     */
+    private void setStartIconUriBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      startIconUri_ = value.toStringUtf8();
     }
 
     public static final int BOTTOM_TEXT_FIELD_NUMBER = 5;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object bottomText_ = "";
+    private java.lang.String bottomText_;
     /**
      *
      *
@@ -725,15 +784,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getBottomText() {
-      java.lang.Object ref = bottomText_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        bottomText_ = s;
-        return s;
-      }
+      return bottomText_;
     }
     /**
      *
@@ -749,214 +800,139 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getBottomTextBytes() {
-      java.lang.Object ref = bottomText_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        bottomText_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(bottomText_);
     }
+    /**
+     *
+     *
+     * <pre>
+     * For multiselect menus, a text description or label that's
+     * displayed below the item's `text` field.
+     * </pre>
+     *
+     * <code>string bottom_text = 5;</code>
+     *
+     * @param value The bottomText to set.
+     */
+    private void setBottomText(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
 
-    private byte memoizedIsInitialized = -1;
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
+      bottomText_ = value;
     }
+    /**
+     *
+     *
+     * <pre>
+     * For multiselect menus, a text description or label that's
+     * displayed below the item's `text` field.
+     * </pre>
+     *
+     * <code>string bottom_text = 5;</code>
+     */
+    private void clearBottomText() {
 
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(text_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, text_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(value_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, value_);
-      }
-      if (selected_ != false) {
-        output.writeBool(3, selected_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(startIconUri_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, startIconUri_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(bottomText_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, bottomText_);
-      }
-      getUnknownFields().writeTo(output);
+      bottomText_ = getDefaultInstance().getBottomText();
     }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(text_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, text_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(value_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, value_);
-      }
-      if (selected_ != false) {
-        size += com.google.protobuf.CodedOutputStream.computeBoolSize(3, selected_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(startIconUri_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, startIconUri_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(bottomText_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, bottomText_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-        return true;
-      }
-      if (!(obj instanceof com.google.apps.card.v1.SelectionInput.SelectionItem)) {
-        return super.equals(obj);
-      }
-      com.google.apps.card.v1.SelectionInput.SelectionItem other =
-          (com.google.apps.card.v1.SelectionInput.SelectionItem) obj;
-
-      if (!getText().equals(other.getText())) return false;
-      if (!getValue().equals(other.getValue())) return false;
-      if (getSelected() != other.getSelected()) return false;
-      if (!getStartIconUri().equals(other.getStartIconUri())) return false;
-      if (!getBottomText().equals(other.getBottomText())) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + TEXT_FIELD_NUMBER;
-      hash = (53 * hash) + getText().hashCode();
-      hash = (37 * hash) + VALUE_FIELD_NUMBER;
-      hash = (53 * hash) + getValue().hashCode();
-      hash = (37 * hash) + SELECTED_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getSelected());
-      hash = (37 * hash) + START_ICON_URI_FIELD_NUMBER;
-      hash = (53 * hash) + getStartIconUri().hashCode();
-      hash = (37 * hash) + BOTTOM_TEXT_FIELD_NUMBER;
-      hash = (53 * hash) + getBottomText().hashCode();
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
+    /**
+     *
+     *
+     * <pre>
+     * For multiselect menus, a text description or label that's
+     * displayed below the item's `text` field.
+     * </pre>
+     *
+     * <code>string bottom_text = 5;</code>
+     *
+     * @param value The bytes for bottomText to set.
+     */
+    private void setBottomTextBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      bottomText_ = value.toStringUtf8();
     }
 
     public static com.google.apps.card.v1.SelectionInput.SelectionItem parseFrom(
         java.nio.ByteBuffer data) throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.SelectionInput.SelectionItem parseFrom(
         java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.SelectionInput.SelectionItem parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.SelectionInput.SelectionItem parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.SelectionInput.SelectionItem parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.SelectionInput.SelectionItem parseFrom(
         byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.SelectionInput.SelectionItem parseFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.SelectionInput.SelectionItem parseFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.SelectionInput.SelectionItem parseDelimitedFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.SelectionInput.SelectionItem parseDelimitedFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.SelectionInput.SelectionItem parseFrom(
         com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.SelectionInput.SelectionItem parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
+      return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
 
     public static Builder newBuilder(
         com.google.apps.card.v1.SelectionInput.SelectionItem prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      *
      *
@@ -971,241 +947,16 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * Protobuf type {@code google.apps.card.v1.SelectionInput.SelectionItem}
      */
     public static final class Builder
-        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+        extends com.google.protobuf.GeneratedMessageLite.Builder<
+            com.google.apps.card.v1.SelectionInput.SelectionItem, Builder>
         implements
         // @@protoc_insertion_point(builder_implements:google.apps.card.v1.SelectionInput.SelectionItem)
         com.google.apps.card.v1.SelectionInput.SelectionItemOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_SelectionInput_SelectionItem_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_SelectionInput_SelectionItem_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.google.apps.card.v1.SelectionInput.SelectionItem.class,
-                com.google.apps.card.v1.SelectionInput.SelectionItem.Builder.class);
-      }
-
       // Construct using com.google.apps.card.v1.SelectionInput.SelectionItem.newBuilder()
-      private Builder() {}
-
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
+      private Builder() {
+        super(DEFAULT_INSTANCE);
       }
 
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        text_ = "";
-        value_ = "";
-        selected_ = false;
-        startIconUri_ = "";
-        bottomText_ = "";
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_SelectionInput_SelectionItem_descriptor;
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.SelectionInput.SelectionItem getDefaultInstanceForType() {
-        return com.google.apps.card.v1.SelectionInput.SelectionItem.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.SelectionInput.SelectionItem build() {
-        com.google.apps.card.v1.SelectionInput.SelectionItem result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.SelectionInput.SelectionItem buildPartial() {
-        com.google.apps.card.v1.SelectionInput.SelectionItem result =
-            new com.google.apps.card.v1.SelectionInput.SelectionItem(this);
-        if (bitField0_ != 0) {
-          buildPartial0(result);
-        }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartial0(com.google.apps.card.v1.SelectionInput.SelectionItem result) {
-        int from_bitField0_ = bitField0_;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.text_ = text_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.value_ = value_;
-        }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.selected_ = selected_;
-        }
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.startIconUri_ = startIconUri_;
-        }
-        if (((from_bitField0_ & 0x00000010) != 0)) {
-          result.bottomText_ = bottomText_;
-        }
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.apps.card.v1.SelectionInput.SelectionItem) {
-          return mergeFrom((com.google.apps.card.v1.SelectionInput.SelectionItem) other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.google.apps.card.v1.SelectionInput.SelectionItem other) {
-        if (other == com.google.apps.card.v1.SelectionInput.SelectionItem.getDefaultInstance())
-          return this;
-        if (!other.getText().isEmpty()) {
-          text_ = other.text_;
-          bitField0_ |= 0x00000001;
-          onChanged();
-        }
-        if (!other.getValue().isEmpty()) {
-          value_ = other.value_;
-          bitField0_ |= 0x00000002;
-          onChanged();
-        }
-        if (other.getSelected() != false) {
-          setSelected(other.getSelected());
-        }
-        if (!other.getStartIconUri().isEmpty()) {
-          startIconUri_ = other.startIconUri_;
-          bitField0_ |= 0x00000008;
-          onChanged();
-        }
-        if (!other.getBottomText().isEmpty()) {
-          bottomText_ = other.bottomText_;
-          bitField0_ |= 0x00000010;
-          onChanged();
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10:
-                {
-                  text_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000001;
-                  break;
-                } // case 10
-              case 18:
-                {
-                  value_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000002;
-                  break;
-                } // case 18
-              case 24:
-                {
-                  selected_ = input.readBool();
-                  bitField0_ |= 0x00000004;
-                  break;
-                } // case 24
-              case 34:
-                {
-                  startIconUri_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000008;
-                  break;
-                } // case 34
-              case 42:
-                {
-                  bottomText_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000010;
-                  break;
-                } // case 42
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-
-      private int bitField0_;
-
-      private java.lang.Object text_ = "";
       /**
        *
        *
@@ -1217,16 +968,9 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The text.
        */
+      @java.lang.Override
       public java.lang.String getText() {
-        java.lang.Object ref = text_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          text_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getText();
       }
       /**
        *
@@ -1239,16 +983,9 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The bytes for text.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getTextBytes() {
-        java.lang.Object ref = text_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          text_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getTextBytes();
       }
       /**
        *
@@ -1263,12 +1000,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setText(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        text_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setText(value);
         return this;
       }
       /**
@@ -1283,9 +1016,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearText() {
-        text_ = getDefaultInstance().getText();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
+        copyOnWrite();
+        instance.clearText();
         return this;
       }
       /**
@@ -1301,17 +1033,11 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setTextBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        text_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setTextBytes(value);
         return this;
       }
 
-      private java.lang.Object value_ = "";
       /**
        *
        *
@@ -1327,16 +1053,9 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The value.
        */
+      @java.lang.Override
       public java.lang.String getValue() {
-        java.lang.Object ref = value_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          value_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getValue();
       }
       /**
        *
@@ -1353,16 +1072,9 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The bytes for value.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getValueBytes() {
-        java.lang.Object ref = value_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          value_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getValueBytes();
       }
       /**
        *
@@ -1381,12 +1093,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setValue(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        value_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setValue(value);
         return this;
       }
       /**
@@ -1405,9 +1113,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearValue() {
-        value_ = getDefaultInstance().getValue();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
+        copyOnWrite();
+        instance.clearValue();
         return this;
       }
       /**
@@ -1427,17 +1134,11 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setValueBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        value_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setValueBytes(value);
         return this;
       }
 
-      private boolean selected_;
       /**
        *
        *
@@ -1453,7 +1154,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        */
       @java.lang.Override
       public boolean getSelected() {
-        return selected_;
+        return instance.getSelected();
       }
       /**
        *
@@ -1470,10 +1171,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setSelected(boolean value) {
-
-        selected_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
+        copyOnWrite();
+        instance.setSelected(value);
         return this;
       }
       /**
@@ -1490,13 +1189,11 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearSelected() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        selected_ = false;
-        onChanged();
+        copyOnWrite();
+        instance.clearSelected();
         return this;
       }
 
-      private java.lang.Object startIconUri_ = "";
       /**
        *
        *
@@ -1511,16 +1208,9 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The startIconUri.
        */
+      @java.lang.Override
       public java.lang.String getStartIconUri() {
-        java.lang.Object ref = startIconUri_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          startIconUri_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getStartIconUri();
       }
       /**
        *
@@ -1536,16 +1226,9 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The bytes for startIconUri.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getStartIconUriBytes() {
-        java.lang.Object ref = startIconUri_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          startIconUri_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getStartIconUriBytes();
       }
       /**
        *
@@ -1563,12 +1246,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setStartIconUri(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        startIconUri_ = value;
-        bitField0_ |= 0x00000008;
-        onChanged();
+        copyOnWrite();
+        instance.setStartIconUri(value);
         return this;
       }
       /**
@@ -1586,9 +1265,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearStartIconUri() {
-        startIconUri_ = getDefaultInstance().getStartIconUri();
-        bitField0_ = (bitField0_ & ~0x00000008);
-        onChanged();
+        copyOnWrite();
+        instance.clearStartIconUri();
         return this;
       }
       /**
@@ -1607,17 +1285,11 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setStartIconUriBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        startIconUri_ = value;
-        bitField0_ |= 0x00000008;
-        onChanged();
+        copyOnWrite();
+        instance.setStartIconUriBytes(value);
         return this;
       }
 
-      private java.lang.Object bottomText_ = "";
       /**
        *
        *
@@ -1630,16 +1302,9 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The bottomText.
        */
+      @java.lang.Override
       public java.lang.String getBottomText() {
-        java.lang.Object ref = bottomText_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          bottomText_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getBottomText();
       }
       /**
        *
@@ -1653,16 +1318,9 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The bytes for bottomText.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getBottomTextBytes() {
-        java.lang.Object ref = bottomText_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          bottomText_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getBottomTextBytes();
       }
       /**
        *
@@ -1678,12 +1336,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setBottomText(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bottomText_ = value;
-        bitField0_ |= 0x00000010;
-        onChanged();
+        copyOnWrite();
+        instance.setBottomText(value);
         return this;
       }
       /**
@@ -1699,9 +1353,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearBottomText() {
-        bottomText_ = getDefaultInstance().getBottomText();
-        bitField0_ = (bitField0_ & ~0x00000010);
-        onChanged();
+        copyOnWrite();
+        instance.clearBottomText();
         return this;
       }
       /**
@@ -1718,84 +1371,101 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setBottomTextBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        bottomText_ = value;
-        bitField0_ |= 0x00000010;
-        onChanged();
+        copyOnWrite();
+        instance.setBottomTextBytes(value);
         return this;
       }
 
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
       // @@protoc_insertion_point(builder_scope:google.apps.card.v1.SelectionInput.SelectionItem)
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0,
+        java.lang.Object arg1) {
+      switch (method) {
+        case NEW_MUTABLE_INSTANCE:
+          {
+            return new com.google.apps.card.v1.SelectionInput.SelectionItem();
+          }
+        case NEW_BUILDER:
+          {
+            return new Builder();
+          }
+        case BUILD_MESSAGE_INFO:
+          {
+            java.lang.Object[] objects =
+                new java.lang.Object[] {
+                  "text_", "value_", "selected_", "startIconUri_", "bottomText_",
+                };
+            java.lang.String info =
+                "\u0000\u0005\u0000\u0000\u0001\u0005\u0005\u0000\u0000\u0000\u0001\u0208\u0002\u0208"
+                    + "\u0003\u0007\u0004\u0208\u0005\u0208";
+            return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+          }
+          // fall through
+        case GET_DEFAULT_INSTANCE:
+          {
+            return DEFAULT_INSTANCE;
+          }
+        case GET_PARSER:
+          {
+            com.google.protobuf.Parser<com.google.apps.card.v1.SelectionInput.SelectionItem>
+                parser = PARSER;
+            if (parser == null) {
+              synchronized (com.google.apps.card.v1.SelectionInput.SelectionItem.class) {
+                parser = PARSER;
+                if (parser == null) {
+                  parser =
+                      new DefaultInstanceBasedParser<
+                          com.google.apps.card.v1.SelectionInput.SelectionItem>(DEFAULT_INSTANCE);
+                  PARSER = parser;
+                }
+              }
+            }
+            return parser;
+          }
+        case GET_MEMOIZED_IS_INITIALIZED:
+          {
+            return (byte) 1;
+          }
+        case SET_MEMOIZED_IS_INITIALIZED:
+          {
+            return null;
+          }
+      }
+      throw new UnsupportedOperationException();
     }
 
     // @@protoc_insertion_point(class_scope:google.apps.card.v1.SelectionInput.SelectionItem)
     private static final com.google.apps.card.v1.SelectionInput.SelectionItem DEFAULT_INSTANCE;
 
     static {
-      DEFAULT_INSTANCE = new com.google.apps.card.v1.SelectionInput.SelectionItem();
+      SelectionItem defaultInstance = new SelectionItem();
+      // New instances are implicitly immutable so no need to make
+      // immutable.
+      DEFAULT_INSTANCE = defaultInstance;
+      com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+          SelectionItem.class, defaultInstance);
     }
 
     public static com.google.apps.card.v1.SelectionInput.SelectionItem getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<SelectionItem> PARSER =
-        new com.google.protobuf.AbstractParser<SelectionItem>() {
-          @java.lang.Override
-          public SelectionItem parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-          }
-        };
+    private static volatile com.google.protobuf.Parser<SelectionItem> PARSER;
 
     public static com.google.protobuf.Parser<SelectionItem> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<SelectionItem> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.SelectionInput.SelectionItem getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
+      return DEFAULT_INSTANCE.getParserForType();
     }
   }
 
   public interface PlatformDataSourceOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:google.apps.card.v1.SelectionInput.PlatformDataSource)
-      com.google.protobuf.MessageOrBuilder {
+      com.google.protobuf.MessageLiteOrBuilder {
 
     /**
      *
@@ -1844,7 +1514,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
     com.google.apps.card.v1.SelectionInput.PlatformDataSource.CommonDataSource
         getCommonDataSource();
 
-    com.google.apps.card.v1.SelectionInput.PlatformDataSource.DataSourceCase getDataSourceCase();
+    public com.google.apps.card.v1.SelectionInput.PlatformDataSource.DataSourceCase
+        getDataSourceCase();
   }
   /**
    *
@@ -1860,39 +1531,13 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.apps.card.v1.SelectionInput.PlatformDataSource}
    */
-  public static final class PlatformDataSource extends com.google.protobuf.GeneratedMessageV3
+  public static final class PlatformDataSource
+      extends com.google.protobuf.GeneratedMessageLite<
+          PlatformDataSource, PlatformDataSource.Builder>
       implements
       // @@protoc_insertion_point(message_implements:google.apps.card.v1.SelectionInput.PlatformDataSource)
       PlatformDataSourceOrBuilder {
-    private static final long serialVersionUID = 0L;
-    // Use PlatformDataSource.newBuilder() to construct.
-    private PlatformDataSource(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-
     private PlatformDataSource() {}
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-      return new PlatformDataSource();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_SelectionInput_PlatformDataSource_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_SelectionInput_PlatformDataSource_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.apps.card.v1.SelectionInput.PlatformDataSource.class,
-              com.google.apps.card.v1.SelectionInput.PlatformDataSource.Builder.class);
-    }
-
     /**
      *
      *
@@ -1906,7 +1551,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      * Protobuf enum {@code google.apps.card.v1.SelectionInput.PlatformDataSource.CommonDataSource}
      */
-    public enum CommonDataSource implements com.google.protobuf.ProtocolMessageEnum {
+    public enum CommonDataSource implements com.google.protobuf.Internal.EnumLite {
       /**
        *
        *
@@ -1953,6 +1598,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        */
       public static final int USER_VALUE = 1;
 
+      @java.lang.Override
       public final int getNumber() {
         if (this == UNRECOGNIZED) {
           throw new java.lang.IllegalArgumentException(
@@ -1962,8 +1608,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
       }
 
       /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
+       * @param value The number of the enum to look for.
+       * @return The enum associated with the given number.
        * @deprecated Use {@link #forNumber(int)} instead.
        */
       @java.lang.Deprecated
@@ -1971,10 +1617,6 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
         return forNumber(value);
       }
 
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       */
       public static CommonDataSource forNumber(int value) {
         switch (value) {
           case 0:
@@ -1994,41 +1636,26 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
       private static final com.google.protobuf.Internal.EnumLiteMap<CommonDataSource>
           internalValueMap =
               new com.google.protobuf.Internal.EnumLiteMap<CommonDataSource>() {
+                @java.lang.Override
                 public CommonDataSource findValueByNumber(int number) {
                   return CommonDataSource.forNumber(number);
                 }
               };
 
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-        if (this == UNRECOGNIZED) {
-          throw new java.lang.IllegalStateException(
-              "Can't get the descriptor of an unrecognized enum value.");
+      public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+        return CommonDataSourceVerifier.INSTANCE;
+      }
+
+      private static final class CommonDataSourceVerifier
+          implements com.google.protobuf.Internal.EnumVerifier {
+        static final com.google.protobuf.Internal.EnumVerifier INSTANCE =
+            new CommonDataSourceVerifier();
+
+        @java.lang.Override
+        public boolean isInRange(int number) {
+          return CommonDataSource.forNumber(number) != null;
         }
-        return getDescriptor().getValues().get(ordinal());
-      }
-
-      public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-        return getDescriptor();
-      }
-
-      public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-        return com.google.apps.card.v1.SelectionInput.PlatformDataSource.getDescriptor()
-            .getEnumTypes()
-            .get(0);
-      }
-
-      private static final CommonDataSource[] VALUES = values();
-
-      public static CommonDataSource valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-        }
-        if (desc.getIndex() == -1) {
-          return UNRECOGNIZED;
-        }
-        return VALUES[desc.getIndex()];
-      }
+      };
 
       private final int value;
 
@@ -2040,14 +1667,9 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int dataSourceCase_ = 0;
-
-    @SuppressWarnings("serial")
     private java.lang.Object dataSource_;
 
-    public enum DataSourceCase
-        implements
-            com.google.protobuf.Internal.EnumLite,
-            com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+    public enum DataSourceCase {
       COMMON_DATA_SOURCE(1),
       DATASOURCE_NOT_SET(0);
       private final int value;
@@ -2055,11 +1677,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
       private DataSourceCase(int value) {
         this.value = value;
       }
-      /**
-       * @param value The number of the enum to look for.
-       * @return The enum associated with the given number.
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
+      /** @deprecated Use {@link #forNumber(int)} instead. */
       @java.lang.Deprecated
       public static DataSourceCase valueOf(int value) {
         return forNumber(value);
@@ -2081,8 +1699,14 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
       }
     };
 
+    @java.lang.Override
     public DataSourceCase getDataSourceCase() {
       return DataSourceCase.forNumber(dataSourceCase_);
+    }
+
+    private void clearDataSource() {
+      dataSourceCase_ = 0;
+      dataSource_ = null;
     }
 
     public static final int COMMON_DATA_SOURCE_FIELD_NUMBER = 1;
@@ -2100,6 +1724,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      * @return Whether the commonDataSource field is set.
      */
+    @java.lang.Override
     public boolean hasCommonDataSource() {
       return dataSourceCase_ == 1;
     }
@@ -2117,6 +1742,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The enum numeric value on the wire for commonDataSource.
      */
+    @java.lang.Override
     public int getCommonDataSourceValue() {
       if (dataSourceCase_ == 1) {
         return (java.lang.Integer) dataSource_;
@@ -2137,6 +1763,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The commonDataSource.
      */
+    @java.lang.Override
     public com.google.apps.card.v1.SelectionInput.PlatformDataSource.CommonDataSource
         getCommonDataSource() {
       if (dataSourceCase_ == 1) {
@@ -2150,183 +1777,145 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
       }
       return com.google.apps.card.v1.SelectionInput.PlatformDataSource.CommonDataSource.UNKNOWN;
     }
-
-    private byte memoizedIsInitialized = -1;
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
+    /**
+     *
+     *
+     * <pre>
+     * A data source shared by all Google Workspace applications, such as
+     * users in a Google Workspace organization.
+     * </pre>
+     *
+     * <code>
+     * .google.apps.card.v1.SelectionInput.PlatformDataSource.CommonDataSource common_data_source = 1;
+     * </code>
+     *
+     * @param value The enum numeric value on the wire for commonDataSource to set.
+     */
+    private void setCommonDataSourceValue(int value) {
+      dataSourceCase_ = 1;
+      dataSource_ = value;
     }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
+    /**
+     *
+     *
+     * <pre>
+     * A data source shared by all Google Workspace applications, such as
+     * users in a Google Workspace organization.
+     * </pre>
+     *
+     * <code>
+     * .google.apps.card.v1.SelectionInput.PlatformDataSource.CommonDataSource common_data_source = 1;
+     * </code>
+     *
+     * @param value The commonDataSource to set.
+     */
+    private void setCommonDataSource(
+        com.google.apps.card.v1.SelectionInput.PlatformDataSource.CommonDataSource value) {
+      dataSource_ = value.getNumber();
+      dataSourceCase_ = 1;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * A data source shared by all Google Workspace applications, such as
+     * users in a Google Workspace organization.
+     * </pre>
+     *
+     * <code>
+     * .google.apps.card.v1.SelectionInput.PlatformDataSource.CommonDataSource common_data_source = 1;
+     * </code>
+     */
+    private void clearCommonDataSource() {
       if (dataSourceCase_ == 1) {
-        output.writeEnum(1, ((java.lang.Integer) dataSource_));
+        dataSourceCase_ = 0;
+        dataSource_ = null;
       }
-      getUnknownFields().writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (dataSourceCase_ == 1) {
-        size +=
-            com.google.protobuf.CodedOutputStream.computeEnumSize(
-                1, ((java.lang.Integer) dataSource_));
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-        return true;
-      }
-      if (!(obj instanceof com.google.apps.card.v1.SelectionInput.PlatformDataSource)) {
-        return super.equals(obj);
-      }
-      com.google.apps.card.v1.SelectionInput.PlatformDataSource other =
-          (com.google.apps.card.v1.SelectionInput.PlatformDataSource) obj;
-
-      if (!getDataSourceCase().equals(other.getDataSourceCase())) return false;
-      switch (dataSourceCase_) {
-        case 1:
-          if (getCommonDataSourceValue() != other.getCommonDataSourceValue()) return false;
-          break;
-        case 0:
-        default:
-      }
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      switch (dataSourceCase_) {
-        case 1:
-          hash = (37 * hash) + COMMON_DATA_SOURCE_FIELD_NUMBER;
-          hash = (53 * hash) + getCommonDataSourceValue();
-          break;
-        case 0:
-        default:
-      }
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
     }
 
     public static com.google.apps.card.v1.SelectionInput.PlatformDataSource parseFrom(
         java.nio.ByteBuffer data) throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.SelectionInput.PlatformDataSource parseFrom(
         java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.SelectionInput.PlatformDataSource parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.SelectionInput.PlatformDataSource parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.SelectionInput.PlatformDataSource parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.SelectionInput.PlatformDataSource parseFrom(
         byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.SelectionInput.PlatformDataSource parseFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.SelectionInput.PlatformDataSource parseFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.SelectionInput.PlatformDataSource parseDelimitedFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.SelectionInput.PlatformDataSource parseDelimitedFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.SelectionInput.PlatformDataSource parseFrom(
         com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.SelectionInput.PlatformDataSource parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
+      return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
 
     public static Builder newBuilder(
         com.google.apps.card.v1.SelectionInput.PlatformDataSource prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      *
      *
@@ -2342,207 +1931,26 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * Protobuf type {@code google.apps.card.v1.SelectionInput.PlatformDataSource}
      */
     public static final class Builder
-        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+        extends com.google.protobuf.GeneratedMessageLite.Builder<
+            com.google.apps.card.v1.SelectionInput.PlatformDataSource, Builder>
         implements
         // @@protoc_insertion_point(builder_implements:google.apps.card.v1.SelectionInput.PlatformDataSource)
         com.google.apps.card.v1.SelectionInput.PlatformDataSourceOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_SelectionInput_PlatformDataSource_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_SelectionInput_PlatformDataSource_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.google.apps.card.v1.SelectionInput.PlatformDataSource.class,
-                com.google.apps.card.v1.SelectionInput.PlatformDataSource.Builder.class);
-      }
-
       // Construct using com.google.apps.card.v1.SelectionInput.PlatformDataSource.newBuilder()
-      private Builder() {}
-
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
+      private Builder() {
+        super(DEFAULT_INSTANCE);
       }
 
       @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        dataSourceCase_ = 0;
-        dataSource_ = null;
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_SelectionInput_PlatformDataSource_descriptor;
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.SelectionInput.PlatformDataSource getDefaultInstanceForType() {
-        return com.google.apps.card.v1.SelectionInput.PlatformDataSource.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.SelectionInput.PlatformDataSource build() {
-        com.google.apps.card.v1.SelectionInput.PlatformDataSource result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.SelectionInput.PlatformDataSource buildPartial() {
-        com.google.apps.card.v1.SelectionInput.PlatformDataSource result =
-            new com.google.apps.card.v1.SelectionInput.PlatformDataSource(this);
-        if (bitField0_ != 0) {
-          buildPartial0(result);
-        }
-        buildPartialOneofs(result);
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartial0(com.google.apps.card.v1.SelectionInput.PlatformDataSource result) {
-        int from_bitField0_ = bitField0_;
-      }
-
-      private void buildPartialOneofs(
-          com.google.apps.card.v1.SelectionInput.PlatformDataSource result) {
-        result.dataSourceCase_ = dataSourceCase_;
-        result.dataSource_ = this.dataSource_;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.apps.card.v1.SelectionInput.PlatformDataSource) {
-          return mergeFrom((com.google.apps.card.v1.SelectionInput.PlatformDataSource) other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.google.apps.card.v1.SelectionInput.PlatformDataSource other) {
-        if (other == com.google.apps.card.v1.SelectionInput.PlatformDataSource.getDefaultInstance())
-          return this;
-        switch (other.getDataSourceCase()) {
-          case COMMON_DATA_SOURCE:
-            {
-              setCommonDataSourceValue(other.getCommonDataSourceValue());
-              break;
-            }
-          case DATASOURCE_NOT_SET:
-            {
-              break;
-            }
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 8:
-                {
-                  int rawValue = input.readEnum();
-                  dataSourceCase_ = 1;
-                  dataSource_ = rawValue;
-                  break;
-                } // case 8
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-
-      private int dataSourceCase_ = 0;
-      private java.lang.Object dataSource_;
-
       public DataSourceCase getDataSourceCase() {
-        return DataSourceCase.forNumber(dataSourceCase_);
+        return instance.getDataSourceCase();
       }
 
       public Builder clearDataSource() {
-        dataSourceCase_ = 0;
-        dataSource_ = null;
-        onChanged();
+        copyOnWrite();
+        instance.clearDataSource();
         return this;
       }
-
-      private int bitField0_;
 
       /**
        *
@@ -2560,7 +1968,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        */
       @java.lang.Override
       public boolean hasCommonDataSource() {
-        return dataSourceCase_ == 1;
+        return instance.hasCommonDataSource();
       }
       /**
        *
@@ -2578,10 +1986,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        */
       @java.lang.Override
       public int getCommonDataSourceValue() {
-        if (dataSourceCase_ == 1) {
-          return ((java.lang.Integer) dataSource_).intValue();
-        }
-        return 0;
+        return instance.getCommonDataSourceValue();
       }
       /**
        *
@@ -2599,9 +2004,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setCommonDataSourceValue(int value) {
-        dataSourceCase_ = 1;
-        dataSource_ = value;
-        onChanged();
+        copyOnWrite();
+        instance.setCommonDataSourceValue(value);
         return this;
       }
       /**
@@ -2621,16 +2025,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
       @java.lang.Override
       public com.google.apps.card.v1.SelectionInput.PlatformDataSource.CommonDataSource
           getCommonDataSource() {
-        if (dataSourceCase_ == 1) {
-          com.google.apps.card.v1.SelectionInput.PlatformDataSource.CommonDataSource result =
-              com.google.apps.card.v1.SelectionInput.PlatformDataSource.CommonDataSource.forNumber(
-                  (java.lang.Integer) dataSource_);
-          return result == null
-              ? com.google.apps.card.v1.SelectionInput.PlatformDataSource.CommonDataSource
-                  .UNRECOGNIZED
-              : result;
-        }
-        return com.google.apps.card.v1.SelectionInput.PlatformDataSource.CommonDataSource.UNKNOWN;
+        return instance.getCommonDataSource();
       }
       /**
        *
@@ -2649,12 +2044,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        */
       public Builder setCommonDataSource(
           com.google.apps.card.v1.SelectionInput.PlatformDataSource.CommonDataSource value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        dataSourceCase_ = 1;
-        dataSource_ = value.getNumber();
-        onChanged();
+        copyOnWrite();
+        instance.setCommonDataSource(value);
         return this;
       }
       /**
@@ -2672,88 +2063,102 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearCommonDataSource() {
-        if (dataSourceCase_ == 1) {
-          dataSourceCase_ = 0;
-          dataSource_ = null;
-          onChanged();
-        }
+        copyOnWrite();
+        instance.clearCommonDataSource();
         return this;
       }
 
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
       // @@protoc_insertion_point(builder_scope:google.apps.card.v1.SelectionInput.PlatformDataSource)
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0,
+        java.lang.Object arg1) {
+      switch (method) {
+        case NEW_MUTABLE_INSTANCE:
+          {
+            return new com.google.apps.card.v1.SelectionInput.PlatformDataSource();
+          }
+        case NEW_BUILDER:
+          {
+            return new Builder();
+          }
+        case BUILD_MESSAGE_INFO:
+          {
+            java.lang.Object[] objects =
+                new java.lang.Object[] {
+                  "dataSource_", "dataSourceCase_",
+                };
+            java.lang.String info =
+                "\u0000\u0001\u0001\u0000\u0001\u0001\u0001\u0000\u0000\u0000\u0001?\u0000";
+            return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+          }
+          // fall through
+        case GET_DEFAULT_INSTANCE:
+          {
+            return DEFAULT_INSTANCE;
+          }
+        case GET_PARSER:
+          {
+            com.google.protobuf.Parser<com.google.apps.card.v1.SelectionInput.PlatformDataSource>
+                parser = PARSER;
+            if (parser == null) {
+              synchronized (com.google.apps.card.v1.SelectionInput.PlatformDataSource.class) {
+                parser = PARSER;
+                if (parser == null) {
+                  parser =
+                      new DefaultInstanceBasedParser<
+                          com.google.apps.card.v1.SelectionInput.PlatformDataSource>(
+                          DEFAULT_INSTANCE);
+                  PARSER = parser;
+                }
+              }
+            }
+            return parser;
+          }
+        case GET_MEMOIZED_IS_INITIALIZED:
+          {
+            return (byte) 1;
+          }
+        case SET_MEMOIZED_IS_INITIALIZED:
+          {
+            return null;
+          }
+      }
+      throw new UnsupportedOperationException();
     }
 
     // @@protoc_insertion_point(class_scope:google.apps.card.v1.SelectionInput.PlatformDataSource)
     private static final com.google.apps.card.v1.SelectionInput.PlatformDataSource DEFAULT_INSTANCE;
 
     static {
-      DEFAULT_INSTANCE = new com.google.apps.card.v1.SelectionInput.PlatformDataSource();
+      PlatformDataSource defaultInstance = new PlatformDataSource();
+      // New instances are implicitly immutable so no need to make
+      // immutable.
+      DEFAULT_INSTANCE = defaultInstance;
+      com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+          PlatformDataSource.class, defaultInstance);
     }
 
     public static com.google.apps.card.v1.SelectionInput.PlatformDataSource getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<PlatformDataSource> PARSER =
-        new com.google.protobuf.AbstractParser<PlatformDataSource>() {
-          @java.lang.Override
-          public PlatformDataSource parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-          }
-        };
+    private static volatile com.google.protobuf.Parser<PlatformDataSource> PARSER;
 
     public static com.google.protobuf.Parser<PlatformDataSource> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<PlatformDataSource> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.SelectionInput.PlatformDataSource getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
+      return DEFAULT_INSTANCE.getParserForType();
     }
   }
 
   private int bitField0_;
   private int multiSelectDataSourceCase_ = 0;
-
-  @SuppressWarnings("serial")
   private java.lang.Object multiSelectDataSource_;
 
-  public enum MultiSelectDataSourceCase
-      implements
-          com.google.protobuf.Internal.EnumLite,
-          com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+  public enum MultiSelectDataSourceCase {
     EXTERNAL_DATA_SOURCE(8),
     PLATFORM_DATA_SOURCE(9),
     MULTISELECTDATASOURCE_NOT_SET(0);
@@ -2762,11 +2167,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
     private MultiSelectDataSourceCase(int value) {
       this.value = value;
     }
-    /**
-     * @param value The number of the enum to look for.
-     * @return The enum associated with the given number.
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
+    /** @deprecated Use {@link #forNumber(int)} instead. */
     @java.lang.Deprecated
     public static MultiSelectDataSourceCase valueOf(int value) {
       return forNumber(value);
@@ -2790,14 +2191,18 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
     }
   };
 
+  @java.lang.Override
   public MultiSelectDataSourceCase getMultiSelectDataSourceCase() {
     return MultiSelectDataSourceCase.forNumber(multiSelectDataSourceCase_);
   }
 
-  public static final int NAME_FIELD_NUMBER = 1;
+  private void clearMultiSelectDataSource() {
+    multiSelectDataSourceCase_ = 0;
+    multiSelectDataSource_ = null;
+  }
 
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object name_ = "";
+  public static final int NAME_FIELD_NUMBER = 1;
+  private java.lang.String name_;
   /**
    *
    *
@@ -2814,15 +2219,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getName() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      name_ = s;
-      return s;
-    }
+    return name_;
   }
   /**
    *
@@ -2840,21 +2237,64 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      name_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(name_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name that identifies the selection input in a form input event.
+   *
+   * For details about working with form inputs, see [Receive form
+   * data](https://developers.google.com/workspace/chat/read-form-data).
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The name to set.
+   */
+  private void setName(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    name_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name that identifies the selection input in a form input event.
+   *
+   * For details about working with form inputs, see [Receive form
+   * data](https://developers.google.com/workspace/chat/read-form-data).
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   */
+  private void clearName() {
+
+    name_ = getDefaultInstance().getName();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The name that identifies the selection input in a form input event.
+   *
+   * For details about working with form inputs, see [Receive form
+   * data](https://developers.google.com/workspace/chat/read-form-data).
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The bytes for name to set.
+   */
+  private void setNameBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    name_ = value.toStringUtf8();
   }
 
   public static final int LABEL_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object label_ = "";
+  private java.lang.String label_;
   /**
    *
    *
@@ -2873,15 +2313,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getLabel() {
-    java.lang.Object ref = label_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      label_ = s;
-      return s;
-    }
+    return label_;
   }
   /**
    *
@@ -2901,19 +2333,70 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getLabelBytes() {
-    java.lang.Object ref = label_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      label_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(label_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text that appears above the selection input field in the user
+   * interface.
+   *
+   * Specify text that helps the user enter the information your app needs.
+   * For example, if users are selecting the urgency of a work ticket from a
+   * drop-down menu, the label might be "Urgency" or "Select urgency".
+   * </pre>
+   *
+   * <code>string label = 2;</code>
+   *
+   * @param value The label to set.
+   */
+  private void setLabel(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    label_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text that appears above the selection input field in the user
+   * interface.
+   *
+   * Specify text that helps the user enter the information your app needs.
+   * For example, if users are selecting the urgency of a work ticket from a
+   * drop-down menu, the label might be "Urgency" or "Select urgency".
+   * </pre>
+   *
+   * <code>string label = 2;</code>
+   */
+  private void clearLabel() {
+
+    label_ = getDefaultInstance().getLabel();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The text that appears above the selection input field in the user
+   * interface.
+   *
+   * Specify text that helps the user enter the information your app needs.
+   * For example, if users are selecting the urgency of a work ticket from a
+   * drop-down menu, the label might be "Urgency" or "Select urgency".
+   * </pre>
+   *
+   * <code>string label = 2;</code>
+   *
+   * @param value The bytes for label to set.
+   */
+  private void setLabelBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    label_ = value.toStringUtf8();
   }
 
   public static final int TYPE_FIELD_NUMBER = 3;
-  private int type_ = 0;
+  private int type_;
   /**
    *
    *
@@ -2954,11 +2437,61 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
         ? com.google.apps.card.v1.SelectionInput.SelectionType.UNRECOGNIZED
         : result;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The type of items that are displayed to users in a `SelectionInput` widget.
+   * Selection types support different types of interactions. For example, users
+   * can select one or more checkboxes, but they can only select one value from
+   * a dropdown menu.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.SelectionInput.SelectionType type = 3;</code>
+   *
+   * @param value The enum numeric value on the wire for type to set.
+   */
+  private void setTypeValue(int value) {
+    type_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The type of items that are displayed to users in a `SelectionInput` widget.
+   * Selection types support different types of interactions. For example, users
+   * can select one or more checkboxes, but they can only select one value from
+   * a dropdown menu.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.SelectionInput.SelectionType type = 3;</code>
+   *
+   * @param value The type to set.
+   */
+  private void setType(com.google.apps.card.v1.SelectionInput.SelectionType value) {
+    type_ = value.getNumber();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The type of items that are displayed to users in a `SelectionInput` widget.
+   * Selection types support different types of interactions. For example, users
+   * can select one or more checkboxes, but they can only select one value from
+   * a dropdown menu.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.SelectionInput.SelectionType type = 3;</code>
+   */
+  private void clearType() {
+
+    type_ = 0;
+  }
 
   public static final int ITEMS_FIELD_NUMBER = 4;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.apps.card.v1.SelectionInput.SelectionItem> items_;
+  private com.google.protobuf.Internal.ProtobufList<
+          com.google.apps.card.v1.SelectionInput.SelectionItem>
+      items_;
   /**
    *
    *
@@ -2983,7 +2516,6 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.apps.card.v1.SelectionInput.SelectionItemOrBuilder>
       getItemsOrBuilderList() {
     return items_;
@@ -3026,10 +2558,105 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
    */
-  @java.lang.Override
   public com.google.apps.card.v1.SelectionInput.SelectionItemOrBuilder getItemsOrBuilder(
       int index) {
     return items_.get(index);
+  }
+
+  private void ensureItemsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.apps.card.v1.SelectionInput.SelectionItem>
+        tmp = items_;
+    if (!tmp.isModifiable()) {
+      items_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * An array of selectable items. For example, an array of radio buttons or
+   * checkboxes. Supports up to 100 items.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
+   */
+  private void setItems(int index, com.google.apps.card.v1.SelectionInput.SelectionItem value) {
+    value.getClass();
+    ensureItemsIsMutable();
+    items_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * An array of selectable items. For example, an array of radio buttons or
+   * checkboxes. Supports up to 100 items.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
+   */
+  private void addItems(com.google.apps.card.v1.SelectionInput.SelectionItem value) {
+    value.getClass();
+    ensureItemsIsMutable();
+    items_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * An array of selectable items. For example, an array of radio buttons or
+   * checkboxes. Supports up to 100 items.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
+   */
+  private void addItems(int index, com.google.apps.card.v1.SelectionInput.SelectionItem value) {
+    value.getClass();
+    ensureItemsIsMutable();
+    items_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * An array of selectable items. For example, an array of radio buttons or
+   * checkboxes. Supports up to 100 items.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
+   */
+  private void addAllItems(
+      java.lang.Iterable<? extends com.google.apps.card.v1.SelectionInput.SelectionItem> values) {
+    ensureItemsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, items_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * An array of selectable items. For example, an array of radio buttons or
+   * checkboxes. Supports up to 100 items.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
+   */
+  private void clearItems() {
+    items_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * An array of selectable items. For example, an array of radio buttons or
+   * checkboxes. Supports up to 100 items.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
+   */
+  private void removeItems(int index) {
+    ensureItemsIsMutable();
+    items_.remove(index);
   }
 
   public static final int ON_CHANGE_ACTION_FIELD_NUMBER = 5;
@@ -3046,8 +2673,6 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Action on_change_action = 5;</code>
-   *
-   * @return Whether the onChangeAction field is set.
    */
   @java.lang.Override
   public boolean hasOnChangeAction() {
@@ -3065,8 +2690,6 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Action on_change_action = 5;</code>
-   *
-   * @return The onChangeAction.
    */
   @java.lang.Override
   public com.google.apps.card.v1.Action getOnChangeAction() {
@@ -3087,15 +2710,58 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.apps.card.v1.Action on_change_action = 5;</code>
    */
-  @java.lang.Override
-  public com.google.apps.card.v1.ActionOrBuilder getOnChangeActionOrBuilder() {
-    return onChangeAction_ == null
-        ? com.google.apps.card.v1.Action.getDefaultInstance()
-        : onChangeAction_;
+  private void setOnChangeAction(com.google.apps.card.v1.Action value) {
+    value.getClass();
+    onChangeAction_ = value;
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * If specified, the form is submitted when the selection changes. If not
+   * specified, you must specify a separate button that submits the form.
+   *
+   * For details about working with form inputs, see [Receive form
+   * data](https://developers.google.com/workspace/chat/read-form-data).
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Action on_change_action = 5;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeOnChangeAction(com.google.apps.card.v1.Action value) {
+    value.getClass();
+    if (onChangeAction_ != null
+        && onChangeAction_ != com.google.apps.card.v1.Action.getDefaultInstance()) {
+      onChangeAction_ =
+          com.google.apps.card.v1.Action.newBuilder(onChangeAction_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      onChangeAction_ = value;
+    }
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * If specified, the form is submitted when the selection changes. If not
+   * specified, you must specify a separate button that submits the form.
+   *
+   * For details about working with form inputs, see [Receive form
+   * data](https://developers.google.com/workspace/chat/read-form-data).
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Action on_change_action = 5;</code>
+   */
+  private void clearOnChangeAction() {
+    onChangeAction_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static final int MULTI_SELECT_MAX_SELECTED_ITEMS_FIELD_NUMBER = 6;
-  private int multiSelectMaxSelectedItems_ = 0;
+  private int multiSelectMaxSelectedItems_;
   /**
    *
    *
@@ -3112,9 +2778,39 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
   public int getMultiSelectMaxSelectedItems() {
     return multiSelectMaxSelectedItems_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * For multiselect menus, the maximum number of items that a user can select.
+   * Minimum value is 1 item. If unspecified, defaults to 3 items.
+   * </pre>
+   *
+   * <code>int32 multi_select_max_selected_items = 6;</code>
+   *
+   * @param value The multiSelectMaxSelectedItems to set.
+   */
+  private void setMultiSelectMaxSelectedItems(int value) {
+
+    multiSelectMaxSelectedItems_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * For multiselect menus, the maximum number of items that a user can select.
+   * Minimum value is 1 item. If unspecified, defaults to 3 items.
+   * </pre>
+   *
+   * <code>int32 multi_select_max_selected_items = 6;</code>
+   */
+  private void clearMultiSelectMaxSelectedItems() {
+
+    multiSelectMaxSelectedItems_ = 0;
+  }
 
   public static final int MULTI_SELECT_MIN_QUERY_LENGTH_FIELD_NUMBER = 7;
-  private int multiSelectMinQueryLength_ = 0;
+  private int multiSelectMinQueryLength_;
   /**
    *
    *
@@ -3135,6 +2831,44 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
   public int getMultiSelectMinQueryLength() {
     return multiSelectMinQueryLength_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * For multiselect menus, the number of text characters that a user inputs
+   * before the app queries autocomplete and displays suggested items
+   * in the menu.
+   *
+   * If unspecified, defaults to 0 characters for static data sources and 3
+   * characters for external data sources.
+   * </pre>
+   *
+   * <code>int32 multi_select_min_query_length = 7;</code>
+   *
+   * @param value The multiSelectMinQueryLength to set.
+   */
+  private void setMultiSelectMinQueryLength(int value) {
+
+    multiSelectMinQueryLength_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * For multiselect menus, the number of text characters that a user inputs
+   * before the app queries autocomplete and displays suggested items
+   * in the menu.
+   *
+   * If unspecified, defaults to 0 characters for static data sources and 3
+   * characters for external data sources.
+   * </pre>
+   *
+   * <code>int32 multi_select_min_query_length = 7;</code>
+   */
+  private void clearMultiSelectMinQueryLength() {
+
+    multiSelectMinQueryLength_ = 0;
+  }
 
   public static final int EXTERNAL_DATA_SOURCE_FIELD_NUMBER = 8;
   /**
@@ -3145,8 +2879,6 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
-   *
-   * @return Whether the externalDataSource field is set.
    */
   @java.lang.Override
   public boolean hasExternalDataSource() {
@@ -3160,8 +2892,6 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
-   *
-   * @return The externalDataSource.
    */
   @java.lang.Override
   public com.google.apps.card.v1.Action getExternalDataSource() {
@@ -3179,12 +2909,48 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
    */
-  @java.lang.Override
-  public com.google.apps.card.v1.ActionOrBuilder getExternalDataSourceOrBuilder() {
-    if (multiSelectDataSourceCase_ == 8) {
-      return (com.google.apps.card.v1.Action) multiSelectDataSource_;
+  private void setExternalDataSource(com.google.apps.card.v1.Action value) {
+    value.getClass();
+    multiSelectDataSource_ = value;
+    multiSelectDataSourceCase_ = 8;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * An external data source, such as a relational data base.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
+   */
+  private void mergeExternalDataSource(com.google.apps.card.v1.Action value) {
+    value.getClass();
+    if (multiSelectDataSourceCase_ == 8
+        && multiSelectDataSource_ != com.google.apps.card.v1.Action.getDefaultInstance()) {
+      multiSelectDataSource_ =
+          com.google.apps.card.v1.Action.newBuilder(
+                  (com.google.apps.card.v1.Action) multiSelectDataSource_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      multiSelectDataSource_ = value;
     }
-    return com.google.apps.card.v1.Action.getDefaultInstance();
+    multiSelectDataSourceCase_ = 8;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * An external data source, such as a relational data base.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
+   */
+  private void clearExternalDataSource() {
+    if (multiSelectDataSourceCase_ == 8) {
+      multiSelectDataSourceCase_ = 0;
+      multiSelectDataSource_ = null;
+    }
   }
 
   public static final int PLATFORM_DATA_SOURCE_FIELD_NUMBER = 9;
@@ -3196,8 +2962,6 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.SelectionInput.PlatformDataSource platform_data_source = 9;</code>
-   *
-   * @return Whether the platformDataSource field is set.
    */
   @java.lang.Override
   public boolean hasPlatformDataSource() {
@@ -3211,8 +2975,6 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.apps.card.v1.SelectionInput.PlatformDataSource platform_data_source = 9;</code>
-   *
-   * @return The platformDataSource.
    */
   @java.lang.Override
   public com.google.apps.card.v1.SelectionInput.PlatformDataSource getPlatformDataSource() {
@@ -3230,276 +2992,136 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.apps.card.v1.SelectionInput.PlatformDataSource platform_data_source = 9;</code>
    */
-  @java.lang.Override
-  public com.google.apps.card.v1.SelectionInput.PlatformDataSourceOrBuilder
-      getPlatformDataSourceOrBuilder() {
+  private void setPlatformDataSource(
+      com.google.apps.card.v1.SelectionInput.PlatformDataSource value) {
+    value.getClass();
+    multiSelectDataSource_ = value;
+    multiSelectDataSourceCase_ = 9;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A data source from Google Workspace.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.SelectionInput.PlatformDataSource platform_data_source = 9;</code>
+   */
+  private void mergePlatformDataSource(
+      com.google.apps.card.v1.SelectionInput.PlatformDataSource value) {
+    value.getClass();
+    if (multiSelectDataSourceCase_ == 9
+        && multiSelectDataSource_
+            != com.google.apps.card.v1.SelectionInput.PlatformDataSource.getDefaultInstance()) {
+      multiSelectDataSource_ =
+          com.google.apps.card.v1.SelectionInput.PlatformDataSource.newBuilder(
+                  (com.google.apps.card.v1.SelectionInput.PlatformDataSource)
+                      multiSelectDataSource_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      multiSelectDataSource_ = value;
+    }
+    multiSelectDataSourceCase_ = 9;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A data source from Google Workspace.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.SelectionInput.PlatformDataSource platform_data_source = 9;</code>
+   */
+  private void clearPlatformDataSource() {
     if (multiSelectDataSourceCase_ == 9) {
-      return (com.google.apps.card.v1.SelectionInput.PlatformDataSource) multiSelectDataSource_;
+      multiSelectDataSourceCase_ = 0;
+      multiSelectDataSource_ = null;
     }
-    return com.google.apps.card.v1.SelectionInput.PlatformDataSource.getDefaultInstance();
-  }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
-  }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(label_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, label_);
-    }
-    if (type_ != com.google.apps.card.v1.SelectionInput.SelectionType.CHECK_BOX.getNumber()) {
-      output.writeEnum(3, type_);
-    }
-    for (int i = 0; i < items_.size(); i++) {
-      output.writeMessage(4, items_.get(i));
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(5, getOnChangeAction());
-    }
-    if (multiSelectMaxSelectedItems_ != 0) {
-      output.writeInt32(6, multiSelectMaxSelectedItems_);
-    }
-    if (multiSelectMinQueryLength_ != 0) {
-      output.writeInt32(7, multiSelectMinQueryLength_);
-    }
-    if (multiSelectDataSourceCase_ == 8) {
-      output.writeMessage(8, (com.google.apps.card.v1.Action) multiSelectDataSource_);
-    }
-    if (multiSelectDataSourceCase_ == 9) {
-      output.writeMessage(
-          9, (com.google.apps.card.v1.SelectionInput.PlatformDataSource) multiSelectDataSource_);
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(label_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, label_);
-    }
-    if (type_ != com.google.apps.card.v1.SelectionInput.SelectionType.CHECK_BOX.getNumber()) {
-      size += com.google.protobuf.CodedOutputStream.computeEnumSize(3, type_);
-    }
-    for (int i = 0; i < items_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, items_.get(i));
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(5, getOnChangeAction());
-    }
-    if (multiSelectMaxSelectedItems_ != 0) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeInt32Size(6, multiSelectMaxSelectedItems_);
-    }
-    if (multiSelectMinQueryLength_ != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeInt32Size(7, multiSelectMinQueryLength_);
-    }
-    if (multiSelectDataSourceCase_ == 8) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(
-              8, (com.google.apps.card.v1.Action) multiSelectDataSource_);
-    }
-    if (multiSelectDataSourceCase_ == 9) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(
-              9,
-              (com.google.apps.card.v1.SelectionInput.PlatformDataSource) multiSelectDataSource_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.apps.card.v1.SelectionInput)) {
-      return super.equals(obj);
-    }
-    com.google.apps.card.v1.SelectionInput other = (com.google.apps.card.v1.SelectionInput) obj;
-
-    if (!getName().equals(other.getName())) return false;
-    if (!getLabel().equals(other.getLabel())) return false;
-    if (type_ != other.type_) return false;
-    if (!getItemsList().equals(other.getItemsList())) return false;
-    if (hasOnChangeAction() != other.hasOnChangeAction()) return false;
-    if (hasOnChangeAction()) {
-      if (!getOnChangeAction().equals(other.getOnChangeAction())) return false;
-    }
-    if (getMultiSelectMaxSelectedItems() != other.getMultiSelectMaxSelectedItems()) return false;
-    if (getMultiSelectMinQueryLength() != other.getMultiSelectMinQueryLength()) return false;
-    if (!getMultiSelectDataSourceCase().equals(other.getMultiSelectDataSourceCase())) return false;
-    switch (multiSelectDataSourceCase_) {
-      case 8:
-        if (!getExternalDataSource().equals(other.getExternalDataSource())) return false;
-        break;
-      case 9:
-        if (!getPlatformDataSource().equals(other.getPlatformDataSource())) return false;
-        break;
-      case 0:
-      default:
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getName().hashCode();
-    hash = (37 * hash) + LABEL_FIELD_NUMBER;
-    hash = (53 * hash) + getLabel().hashCode();
-    hash = (37 * hash) + TYPE_FIELD_NUMBER;
-    hash = (53 * hash) + type_;
-    if (getItemsCount() > 0) {
-      hash = (37 * hash) + ITEMS_FIELD_NUMBER;
-      hash = (53 * hash) + getItemsList().hashCode();
-    }
-    if (hasOnChangeAction()) {
-      hash = (37 * hash) + ON_CHANGE_ACTION_FIELD_NUMBER;
-      hash = (53 * hash) + getOnChangeAction().hashCode();
-    }
-    hash = (37 * hash) + MULTI_SELECT_MAX_SELECTED_ITEMS_FIELD_NUMBER;
-    hash = (53 * hash) + getMultiSelectMaxSelectedItems();
-    hash = (37 * hash) + MULTI_SELECT_MIN_QUERY_LENGTH_FIELD_NUMBER;
-    hash = (53 * hash) + getMultiSelectMinQueryLength();
-    switch (multiSelectDataSourceCase_) {
-      case 8:
-        hash = (37 * hash) + EXTERNAL_DATA_SOURCE_FIELD_NUMBER;
-        hash = (53 * hash) + getExternalDataSource().hashCode();
-        break;
-      case 9:
-        hash = (37 * hash) + PLATFORM_DATA_SOURCE_FIELD_NUMBER;
-        hash = (53 * hash) + getPlatformDataSource().hashCode();
-        break;
-      case 0:
-      default:
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
   }
 
   public static com.google.apps.card.v1.SelectionInput parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.SelectionInput parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.SelectionInput parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.SelectionInput parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.SelectionInput parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.SelectionInput parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.SelectionInput parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.SelectionInput parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.SelectionInput parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.SelectionInput parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.SelectionInput parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.SelectionInput parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.apps.card.v1.SelectionInput prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -3523,390 +3145,28 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.apps.card.v1.SelectionInput}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.apps.card.v1.SelectionInput, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.apps.card.v1.SelectionInput)
       com.google.apps.card.v1.SelectionInputOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_SelectionInput_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_SelectionInput_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.apps.card.v1.SelectionInput.class,
-              com.google.apps.card.v1.SelectionInput.Builder.class);
-    }
-
     // Construct using com.google.apps.card.v1.SelectionInput.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
-    }
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getItemsFieldBuilder();
-        getOnChangeActionFieldBuilder();
-      }
+      super(DEFAULT_INSTANCE);
     }
 
     @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      name_ = "";
-      label_ = "";
-      type_ = 0;
-      if (itemsBuilder_ == null) {
-        items_ = java.util.Collections.emptyList();
-      } else {
-        items_ = null;
-        itemsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000008);
-      onChangeAction_ = null;
-      if (onChangeActionBuilder_ != null) {
-        onChangeActionBuilder_.dispose();
-        onChangeActionBuilder_ = null;
-      }
-      multiSelectMaxSelectedItems_ = 0;
-      multiSelectMinQueryLength_ = 0;
-      if (externalDataSourceBuilder_ != null) {
-        externalDataSourceBuilder_.clear();
-      }
-      if (platformDataSourceBuilder_ != null) {
-        platformDataSourceBuilder_.clear();
-      }
-      multiSelectDataSourceCase_ = 0;
-      multiSelectDataSource_ = null;
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_SelectionInput_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.SelectionInput getDefaultInstanceForType() {
-      return com.google.apps.card.v1.SelectionInput.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.SelectionInput build() {
-      com.google.apps.card.v1.SelectionInput result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.SelectionInput buildPartial() {
-      com.google.apps.card.v1.SelectionInput result =
-          new com.google.apps.card.v1.SelectionInput(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      buildPartialOneofs(result);
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.apps.card.v1.SelectionInput result) {
-      if (itemsBuilder_ == null) {
-        if (((bitField0_ & 0x00000008) != 0)) {
-          items_ = java.util.Collections.unmodifiableList(items_);
-          bitField0_ = (bitField0_ & ~0x00000008);
-        }
-        result.items_ = items_;
-      } else {
-        result.items_ = itemsBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.apps.card.v1.SelectionInput result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.name_ = name_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.label_ = label_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.type_ = type_;
-      }
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.onChangeAction_ =
-            onChangeActionBuilder_ == null ? onChangeAction_ : onChangeActionBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      if (((from_bitField0_ & 0x00000020) != 0)) {
-        result.multiSelectMaxSelectedItems_ = multiSelectMaxSelectedItems_;
-      }
-      if (((from_bitField0_ & 0x00000040) != 0)) {
-        result.multiSelectMinQueryLength_ = multiSelectMinQueryLength_;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    private void buildPartialOneofs(com.google.apps.card.v1.SelectionInput result) {
-      result.multiSelectDataSourceCase_ = multiSelectDataSourceCase_;
-      result.multiSelectDataSource_ = this.multiSelectDataSource_;
-      if (multiSelectDataSourceCase_ == 8 && externalDataSourceBuilder_ != null) {
-        result.multiSelectDataSource_ = externalDataSourceBuilder_.build();
-      }
-      if (multiSelectDataSourceCase_ == 9 && platformDataSourceBuilder_ != null) {
-        result.multiSelectDataSource_ = platformDataSourceBuilder_.build();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.apps.card.v1.SelectionInput) {
-        return mergeFrom((com.google.apps.card.v1.SelectionInput) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.apps.card.v1.SelectionInput other) {
-      if (other == com.google.apps.card.v1.SelectionInput.getDefaultInstance()) return this;
-      if (!other.getName().isEmpty()) {
-        name_ = other.name_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getLabel().isEmpty()) {
-        label_ = other.label_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      if (other.type_ != 0) {
-        setTypeValue(other.getTypeValue());
-      }
-      if (itemsBuilder_ == null) {
-        if (!other.items_.isEmpty()) {
-          if (items_.isEmpty()) {
-            items_ = other.items_;
-            bitField0_ = (bitField0_ & ~0x00000008);
-          } else {
-            ensureItemsIsMutable();
-            items_.addAll(other.items_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.items_.isEmpty()) {
-          if (itemsBuilder_.isEmpty()) {
-            itemsBuilder_.dispose();
-            itemsBuilder_ = null;
-            items_ = other.items_;
-            bitField0_ = (bitField0_ & ~0x00000008);
-            itemsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getItemsFieldBuilder()
-                    : null;
-          } else {
-            itemsBuilder_.addAllMessages(other.items_);
-          }
-        }
-      }
-      if (other.hasOnChangeAction()) {
-        mergeOnChangeAction(other.getOnChangeAction());
-      }
-      if (other.getMultiSelectMaxSelectedItems() != 0) {
-        setMultiSelectMaxSelectedItems(other.getMultiSelectMaxSelectedItems());
-      }
-      if (other.getMultiSelectMinQueryLength() != 0) {
-        setMultiSelectMinQueryLength(other.getMultiSelectMinQueryLength());
-      }
-      switch (other.getMultiSelectDataSourceCase()) {
-        case EXTERNAL_DATA_SOURCE:
-          {
-            mergeExternalDataSource(other.getExternalDataSource());
-            break;
-          }
-        case PLATFORM_DATA_SOURCE:
-          {
-            mergePlatformDataSource(other.getPlatformDataSource());
-            break;
-          }
-        case MULTISELECTDATASOURCE_NOT_SET:
-          {
-            break;
-          }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                name_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                label_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 24:
-              {
-                type_ = input.readEnum();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 24
-            case 34:
-              {
-                com.google.apps.card.v1.SelectionInput.SelectionItem m =
-                    input.readMessage(
-                        com.google.apps.card.v1.SelectionInput.SelectionItem.parser(),
-                        extensionRegistry);
-                if (itemsBuilder_ == null) {
-                  ensureItemsIsMutable();
-                  items_.add(m);
-                } else {
-                  itemsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 34
-            case 42:
-              {
-                input.readMessage(getOnChangeActionFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 42
-            case 48:
-              {
-                multiSelectMaxSelectedItems_ = input.readInt32();
-                bitField0_ |= 0x00000020;
-                break;
-              } // case 48
-            case 56:
-              {
-                multiSelectMinQueryLength_ = input.readInt32();
-                bitField0_ |= 0x00000040;
-                break;
-              } // case 56
-            case 66:
-              {
-                input.readMessage(
-                    getExternalDataSourceFieldBuilder().getBuilder(), extensionRegistry);
-                multiSelectDataSourceCase_ = 8;
-                break;
-              } // case 66
-            case 74:
-              {
-                input.readMessage(
-                    getPlatformDataSourceFieldBuilder().getBuilder(), extensionRegistry);
-                multiSelectDataSourceCase_ = 9;
-                break;
-              } // case 74
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int multiSelectDataSourceCase_ = 0;
-    private java.lang.Object multiSelectDataSource_;
-
     public MultiSelectDataSourceCase getMultiSelectDataSourceCase() {
-      return MultiSelectDataSourceCase.forNumber(multiSelectDataSourceCase_);
+      return instance.getMultiSelectDataSourceCase();
     }
 
     public Builder clearMultiSelectDataSource() {
-      multiSelectDataSourceCase_ = 0;
-      multiSelectDataSource_ = null;
-      onChanged();
+      copyOnWrite();
+      instance.clearMultiSelectDataSource();
       return this;
     }
 
-    private int bitField0_;
-
-    private java.lang.Object name_ = "";
     /**
      *
      *
@@ -3921,16 +3181,9 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        name_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getName();
     }
     /**
      *
@@ -3946,16 +3199,9 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getNameBytes() {
-      java.lang.Object ref = name_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        name_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getNameBytes();
     }
     /**
      *
@@ -3973,12 +3219,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setName(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setName(value);
       return this;
     }
     /**
@@ -3996,9 +3238,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearName() {
-      name_ = getDefaultInstance().getName();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearName();
       return this;
     }
     /**
@@ -4017,17 +3258,11 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setNameBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setNameBytes(value);
       return this;
     }
 
-    private java.lang.Object label_ = "";
     /**
      *
      *
@@ -4044,16 +3279,9 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The label.
      */
+    @java.lang.Override
     public java.lang.String getLabel() {
-      java.lang.Object ref = label_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        label_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getLabel();
     }
     /**
      *
@@ -4071,16 +3299,9 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for label.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getLabelBytes() {
-      java.lang.Object ref = label_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        label_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getLabelBytes();
     }
     /**
      *
@@ -4100,12 +3321,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setLabel(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      label_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setLabel(value);
       return this;
     }
     /**
@@ -4125,9 +3342,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearLabel() {
-      label_ = getDefaultInstance().getLabel();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearLabel();
       return this;
     }
     /**
@@ -4148,17 +3364,11 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setLabelBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      label_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setLabelBytes(value);
       return this;
     }
 
-    private int type_ = 0;
     /**
      *
      *
@@ -4175,7 +3385,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getTypeValue() {
-      return type_;
+      return instance.getTypeValue();
     }
     /**
      *
@@ -4189,13 +3399,12 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.apps.card.v1.SelectionInput.SelectionType type = 3;</code>
      *
-     * @param value The enum numeric value on the wire for type to set.
+     * @param value The type to set.
      * @return This builder for chaining.
      */
     public Builder setTypeValue(int value) {
-      type_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setTypeValue(value);
       return this;
     }
     /**
@@ -4214,11 +3423,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.apps.card.v1.SelectionInput.SelectionType getType() {
-      com.google.apps.card.v1.SelectionInput.SelectionType result =
-          com.google.apps.card.v1.SelectionInput.SelectionType.forNumber(type_);
-      return result == null
-          ? com.google.apps.card.v1.SelectionInput.SelectionType.UNRECOGNIZED
-          : result;
+      return instance.getType();
     }
     /**
      *
@@ -4232,16 +3437,12 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.apps.card.v1.SelectionInput.SelectionType type = 3;</code>
      *
-     * @param value The type to set.
+     * @param value The enum numeric value on the wire for type to set.
      * @return This builder for chaining.
      */
     public Builder setType(com.google.apps.card.v1.SelectionInput.SelectionType value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      bitField0_ |= 0x00000004;
-      type_ = value.getNumber();
-      onChanged();
+      copyOnWrite();
+      instance.setType(value);
       return this;
     }
     /**
@@ -4259,29 +3460,11 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearType() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      type_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearType();
       return this;
     }
 
-    private java.util.List<com.google.apps.card.v1.SelectionInput.SelectionItem> items_ =
-        java.util.Collections.emptyList();
-
-    private void ensureItemsIsMutable() {
-      if (!((bitField0_ & 0x00000008) != 0)) {
-        items_ =
-            new java.util.ArrayList<com.google.apps.card.v1.SelectionInput.SelectionItem>(items_);
-        bitField0_ |= 0x00000008;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.apps.card.v1.SelectionInput.SelectionItem,
-            com.google.apps.card.v1.SelectionInput.SelectionItem.Builder,
-            com.google.apps.card.v1.SelectionInput.SelectionItemOrBuilder>
-        itemsBuilder_;
-
     /**
      *
      *
@@ -4292,12 +3475,9 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.apps.card.v1.SelectionInput.SelectionItem> getItemsList() {
-      if (itemsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(items_);
-      } else {
-        return itemsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getItemsList());
     }
     /**
      *
@@ -4309,12 +3489,9 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
      */
+    @java.lang.Override
     public int getItemsCount() {
-      if (itemsBuilder_ == null) {
-        return items_.size();
-      } else {
-        return itemsBuilder_.getCount();
-      }
+      return instance.getItemsCount();
     }
     /**
      *
@@ -4326,12 +3503,10 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
      */
+
+    @java.lang.Override
     public com.google.apps.card.v1.SelectionInput.SelectionItem getItems(int index) {
-      if (itemsBuilder_ == null) {
-        return items_.get(index);
-      } else {
-        return itemsBuilder_.getMessage(index);
-      }
+      return instance.getItems(index);
     }
     /**
      *
@@ -4344,16 +3519,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
      */
     public Builder setItems(int index, com.google.apps.card.v1.SelectionInput.SelectionItem value) {
-      if (itemsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureItemsIsMutable();
-        items_.set(index, value);
-        onChanged();
-      } else {
-        itemsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setItems(index, value);
       return this;
     }
     /**
@@ -4368,13 +3535,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder setItems(
         int index, com.google.apps.card.v1.SelectionInput.SelectionItem.Builder builderForValue) {
-      if (itemsBuilder_ == null) {
-        ensureItemsIsMutable();
-        items_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        itemsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setItems(index, builderForValue.build());
       return this;
     }
     /**
@@ -4388,16 +3550,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
      */
     public Builder addItems(com.google.apps.card.v1.SelectionInput.SelectionItem value) {
-      if (itemsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureItemsIsMutable();
-        items_.add(value);
-        onChanged();
-      } else {
-        itemsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addItems(value);
       return this;
     }
     /**
@@ -4411,16 +3565,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
      */
     public Builder addItems(int index, com.google.apps.card.v1.SelectionInput.SelectionItem value) {
-      if (itemsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureItemsIsMutable();
-        items_.add(index, value);
-        onChanged();
-      } else {
-        itemsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addItems(index, value);
       return this;
     }
     /**
@@ -4435,13 +3581,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addItems(
         com.google.apps.card.v1.SelectionInput.SelectionItem.Builder builderForValue) {
-      if (itemsBuilder_ == null) {
-        ensureItemsIsMutable();
-        items_.add(builderForValue.build());
-        onChanged();
-      } else {
-        itemsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addItems(builderForValue.build());
       return this;
     }
     /**
@@ -4456,13 +3597,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addItems(
         int index, com.google.apps.card.v1.SelectionInput.SelectionItem.Builder builderForValue) {
-      if (itemsBuilder_ == null) {
-        ensureItemsIsMutable();
-        items_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        itemsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addItems(index, builderForValue.build());
       return this;
     }
     /**
@@ -4477,13 +3613,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addAllItems(
         java.lang.Iterable<? extends com.google.apps.card.v1.SelectionInput.SelectionItem> values) {
-      if (itemsBuilder_ == null) {
-        ensureItemsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, items_);
-        onChanged();
-      } else {
-        itemsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllItems(values);
       return this;
     }
     /**
@@ -4497,13 +3628,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
      */
     public Builder clearItems() {
-      if (itemsBuilder_ == null) {
-        items_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000008);
-        onChanged();
-      } else {
-        itemsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearItems();
       return this;
     }
     /**
@@ -4517,131 +3643,11 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
      */
     public Builder removeItems(int index) {
-      if (itemsBuilder_ == null) {
-        ensureItemsIsMutable();
-        items_.remove(index);
-        onChanged();
-      } else {
-        itemsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeItems(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * An array of selectable items. For example, an array of radio buttons or
-     * checkboxes. Supports up to 100 items.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
-     */
-    public com.google.apps.card.v1.SelectionInput.SelectionItem.Builder getItemsBuilder(int index) {
-      return getItemsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * An array of selectable items. For example, an array of radio buttons or
-     * checkboxes. Supports up to 100 items.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
-     */
-    public com.google.apps.card.v1.SelectionInput.SelectionItemOrBuilder getItemsOrBuilder(
-        int index) {
-      if (itemsBuilder_ == null) {
-        return items_.get(index);
-      } else {
-        return itemsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * An array of selectable items. For example, an array of radio buttons or
-     * checkboxes. Supports up to 100 items.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
-     */
-    public java.util.List<? extends com.google.apps.card.v1.SelectionInput.SelectionItemOrBuilder>
-        getItemsOrBuilderList() {
-      if (itemsBuilder_ != null) {
-        return itemsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(items_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * An array of selectable items. For example, an array of radio buttons or
-     * checkboxes. Supports up to 100 items.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
-     */
-    public com.google.apps.card.v1.SelectionInput.SelectionItem.Builder addItemsBuilder() {
-      return getItemsFieldBuilder()
-          .addBuilder(com.google.apps.card.v1.SelectionInput.SelectionItem.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * An array of selectable items. For example, an array of radio buttons or
-     * checkboxes. Supports up to 100 items.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
-     */
-    public com.google.apps.card.v1.SelectionInput.SelectionItem.Builder addItemsBuilder(int index) {
-      return getItemsFieldBuilder()
-          .addBuilder(
-              index, com.google.apps.card.v1.SelectionInput.SelectionItem.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * An array of selectable items. For example, an array of radio buttons or
-     * checkboxes. Supports up to 100 items.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
-     */
-    public java.util.List<com.google.apps.card.v1.SelectionInput.SelectionItem.Builder>
-        getItemsBuilderList() {
-      return getItemsFieldBuilder().getBuilderList();
-    }
 
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.apps.card.v1.SelectionInput.SelectionItem,
-            com.google.apps.card.v1.SelectionInput.SelectionItem.Builder,
-            com.google.apps.card.v1.SelectionInput.SelectionItemOrBuilder>
-        getItemsFieldBuilder() {
-      if (itemsBuilder_ == null) {
-        itemsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.apps.card.v1.SelectionInput.SelectionItem,
-                com.google.apps.card.v1.SelectionInput.SelectionItem.Builder,
-                com.google.apps.card.v1.SelectionInput.SelectionItemOrBuilder>(
-                items_, ((bitField0_ & 0x00000008) != 0), getParentForChildren(), isClean());
-        items_ = null;
-      }
-      return itemsBuilder_;
-    }
-
-    private com.google.apps.card.v1.Action onChangeAction_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Action,
-            com.google.apps.card.v1.Action.Builder,
-            com.google.apps.card.v1.ActionOrBuilder>
-        onChangeActionBuilder_;
     /**
      *
      *
@@ -4654,11 +3660,10 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Action on_change_action = 5;</code>
-     *
-     * @return Whether the onChangeAction field is set.
      */
+    @java.lang.Override
     public boolean hasOnChangeAction() {
-      return ((bitField0_ & 0x00000010) != 0);
+      return instance.hasOnChangeAction();
     }
     /**
      *
@@ -4672,17 +3677,10 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Action on_change_action = 5;</code>
-     *
-     * @return The onChangeAction.
      */
+    @java.lang.Override
     public com.google.apps.card.v1.Action getOnChangeAction() {
-      if (onChangeActionBuilder_ == null) {
-        return onChangeAction_ == null
-            ? com.google.apps.card.v1.Action.getDefaultInstance()
-            : onChangeAction_;
-      } else {
-        return onChangeActionBuilder_.getMessage();
-      }
+      return instance.getOnChangeAction();
     }
     /**
      *
@@ -4698,16 +3696,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Action on_change_action = 5;</code>
      */
     public Builder setOnChangeAction(com.google.apps.card.v1.Action value) {
-      if (onChangeActionBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        onChangeAction_ = value;
-      } else {
-        onChangeActionBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setOnChangeAction(value);
       return this;
     }
     /**
@@ -4724,13 +3714,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Action on_change_action = 5;</code>
      */
     public Builder setOnChangeAction(com.google.apps.card.v1.Action.Builder builderForValue) {
-      if (onChangeActionBuilder_ == null) {
-        onChangeAction_ = builderForValue.build();
-      } else {
-        onChangeActionBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setOnChangeAction(builderForValue.build());
       return this;
     }
     /**
@@ -4747,21 +3732,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Action on_change_action = 5;</code>
      */
     public Builder mergeOnChangeAction(com.google.apps.card.v1.Action value) {
-      if (onChangeActionBuilder_ == null) {
-        if (((bitField0_ & 0x00000010) != 0)
-            && onChangeAction_ != null
-            && onChangeAction_ != com.google.apps.card.v1.Action.getDefaultInstance()) {
-          getOnChangeActionBuilder().mergeFrom(value);
-        } else {
-          onChangeAction_ = value;
-        }
-      } else {
-        onChangeActionBuilder_.mergeFrom(value);
-      }
-      if (onChangeAction_ != null) {
-        bitField0_ |= 0x00000010;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeOnChangeAction(value);
       return this;
     }
     /**
@@ -4778,86 +3750,11 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Action on_change_action = 5;</code>
      */
     public Builder clearOnChangeAction() {
-      bitField0_ = (bitField0_ & ~0x00000010);
-      onChangeAction_ = null;
-      if (onChangeActionBuilder_ != null) {
-        onChangeActionBuilder_.dispose();
-        onChangeActionBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearOnChangeAction();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * If specified, the form is submitted when the selection changes. If not
-     * specified, you must specify a separate button that submits the form.
-     *
-     * For details about working with form inputs, see [Receive form
-     * data](https://developers.google.com/workspace/chat/read-form-data).
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Action on_change_action = 5;</code>
-     */
-    public com.google.apps.card.v1.Action.Builder getOnChangeActionBuilder() {
-      bitField0_ |= 0x00000010;
-      onChanged();
-      return getOnChangeActionFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * If specified, the form is submitted when the selection changes. If not
-     * specified, you must specify a separate button that submits the form.
-     *
-     * For details about working with form inputs, see [Receive form
-     * data](https://developers.google.com/workspace/chat/read-form-data).
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Action on_change_action = 5;</code>
-     */
-    public com.google.apps.card.v1.ActionOrBuilder getOnChangeActionOrBuilder() {
-      if (onChangeActionBuilder_ != null) {
-        return onChangeActionBuilder_.getMessageOrBuilder();
-      } else {
-        return onChangeAction_ == null
-            ? com.google.apps.card.v1.Action.getDefaultInstance()
-            : onChangeAction_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * If specified, the form is submitted when the selection changes. If not
-     * specified, you must specify a separate button that submits the form.
-     *
-     * For details about working with form inputs, see [Receive form
-     * data](https://developers.google.com/workspace/chat/read-form-data).
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Action on_change_action = 5;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Action,
-            com.google.apps.card.v1.Action.Builder,
-            com.google.apps.card.v1.ActionOrBuilder>
-        getOnChangeActionFieldBuilder() {
-      if (onChangeActionBuilder_ == null) {
-        onChangeActionBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.Action,
-                com.google.apps.card.v1.Action.Builder,
-                com.google.apps.card.v1.ActionOrBuilder>(
-                getOnChangeAction(), getParentForChildren(), isClean());
-        onChangeAction_ = null;
-      }
-      return onChangeActionBuilder_;
-    }
 
-    private int multiSelectMaxSelectedItems_;
     /**
      *
      *
@@ -4872,7 +3769,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getMultiSelectMaxSelectedItems() {
-      return multiSelectMaxSelectedItems_;
+      return instance.getMultiSelectMaxSelectedItems();
     }
     /**
      *
@@ -4888,10 +3785,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setMultiSelectMaxSelectedItems(int value) {
-
-      multiSelectMaxSelectedItems_ = value;
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setMultiSelectMaxSelectedItems(value);
       return this;
     }
     /**
@@ -4907,13 +3802,11 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearMultiSelectMaxSelectedItems() {
-      bitField0_ = (bitField0_ & ~0x00000020);
-      multiSelectMaxSelectedItems_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearMultiSelectMaxSelectedItems();
       return this;
     }
 
-    private int multiSelectMinQueryLength_;
     /**
      *
      *
@@ -4932,7 +3825,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getMultiSelectMinQueryLength() {
-      return multiSelectMinQueryLength_;
+      return instance.getMultiSelectMinQueryLength();
     }
     /**
      *
@@ -4952,10 +3845,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setMultiSelectMinQueryLength(int value) {
-
-      multiSelectMinQueryLength_ = value;
-      bitField0_ |= 0x00000040;
-      onChanged();
+      copyOnWrite();
+      instance.setMultiSelectMinQueryLength(value);
       return this;
     }
     /**
@@ -4975,17 +3866,11 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearMultiSelectMinQueryLength() {
-      bitField0_ = (bitField0_ & ~0x00000040);
-      multiSelectMinQueryLength_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearMultiSelectMinQueryLength();
       return this;
     }
 
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Action,
-            com.google.apps.card.v1.Action.Builder,
-            com.google.apps.card.v1.ActionOrBuilder>
-        externalDataSourceBuilder_;
     /**
      *
      *
@@ -4994,12 +3879,10 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
-     *
-     * @return Whether the externalDataSource field is set.
      */
     @java.lang.Override
     public boolean hasExternalDataSource() {
-      return multiSelectDataSourceCase_ == 8;
+      return instance.hasExternalDataSource();
     }
     /**
      *
@@ -5009,22 +3892,10 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
-     *
-     * @return The externalDataSource.
      */
     @java.lang.Override
     public com.google.apps.card.v1.Action getExternalDataSource() {
-      if (externalDataSourceBuilder_ == null) {
-        if (multiSelectDataSourceCase_ == 8) {
-          return (com.google.apps.card.v1.Action) multiSelectDataSource_;
-        }
-        return com.google.apps.card.v1.Action.getDefaultInstance();
-      } else {
-        if (multiSelectDataSourceCase_ == 8) {
-          return externalDataSourceBuilder_.getMessage();
-        }
-        return com.google.apps.card.v1.Action.getDefaultInstance();
-      }
+      return instance.getExternalDataSource();
     }
     /**
      *
@@ -5036,16 +3907,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
      */
     public Builder setExternalDataSource(com.google.apps.card.v1.Action value) {
-      if (externalDataSourceBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        multiSelectDataSource_ = value;
-        onChanged();
-      } else {
-        externalDataSourceBuilder_.setMessage(value);
-      }
-      multiSelectDataSourceCase_ = 8;
+      copyOnWrite();
+      instance.setExternalDataSource(value);
       return this;
     }
     /**
@@ -5058,13 +3921,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
      */
     public Builder setExternalDataSource(com.google.apps.card.v1.Action.Builder builderForValue) {
-      if (externalDataSourceBuilder_ == null) {
-        multiSelectDataSource_ = builderForValue.build();
-        onChanged();
-      } else {
-        externalDataSourceBuilder_.setMessage(builderForValue.build());
-      }
-      multiSelectDataSourceCase_ = 8;
+      copyOnWrite();
+      instance.setExternalDataSource(builderForValue.build());
       return this;
     }
     /**
@@ -5077,26 +3935,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
      */
     public Builder mergeExternalDataSource(com.google.apps.card.v1.Action value) {
-      if (externalDataSourceBuilder_ == null) {
-        if (multiSelectDataSourceCase_ == 8
-            && multiSelectDataSource_ != com.google.apps.card.v1.Action.getDefaultInstance()) {
-          multiSelectDataSource_ =
-              com.google.apps.card.v1.Action.newBuilder(
-                      (com.google.apps.card.v1.Action) multiSelectDataSource_)
-                  .mergeFrom(value)
-                  .buildPartial();
-        } else {
-          multiSelectDataSource_ = value;
-        }
-        onChanged();
-      } else {
-        if (multiSelectDataSourceCase_ == 8) {
-          externalDataSourceBuilder_.mergeFrom(value);
-        } else {
-          externalDataSourceBuilder_.setMessage(value);
-        }
-      }
-      multiSelectDataSourceCase_ = 8;
+      copyOnWrite();
+      instance.mergeExternalDataSource(value);
       return this;
     }
     /**
@@ -5109,91 +3949,11 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
      */
     public Builder clearExternalDataSource() {
-      if (externalDataSourceBuilder_ == null) {
-        if (multiSelectDataSourceCase_ == 8) {
-          multiSelectDataSourceCase_ = 0;
-          multiSelectDataSource_ = null;
-          onChanged();
-        }
-      } else {
-        if (multiSelectDataSourceCase_ == 8) {
-          multiSelectDataSourceCase_ = 0;
-          multiSelectDataSource_ = null;
-        }
-        externalDataSourceBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearExternalDataSource();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * An external data source, such as a relational data base.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
-     */
-    public com.google.apps.card.v1.Action.Builder getExternalDataSourceBuilder() {
-      return getExternalDataSourceFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * An external data source, such as a relational data base.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
-     */
-    @java.lang.Override
-    public com.google.apps.card.v1.ActionOrBuilder getExternalDataSourceOrBuilder() {
-      if ((multiSelectDataSourceCase_ == 8) && (externalDataSourceBuilder_ != null)) {
-        return externalDataSourceBuilder_.getMessageOrBuilder();
-      } else {
-        if (multiSelectDataSourceCase_ == 8) {
-          return (com.google.apps.card.v1.Action) multiSelectDataSource_;
-        }
-        return com.google.apps.card.v1.Action.getDefaultInstance();
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * An external data source, such as a relational data base.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.Action,
-            com.google.apps.card.v1.Action.Builder,
-            com.google.apps.card.v1.ActionOrBuilder>
-        getExternalDataSourceFieldBuilder() {
-      if (externalDataSourceBuilder_ == null) {
-        if (!(multiSelectDataSourceCase_ == 8)) {
-          multiSelectDataSource_ = com.google.apps.card.v1.Action.getDefaultInstance();
-        }
-        externalDataSourceBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.Action,
-                com.google.apps.card.v1.Action.Builder,
-                com.google.apps.card.v1.ActionOrBuilder>(
-                (com.google.apps.card.v1.Action) multiSelectDataSource_,
-                getParentForChildren(),
-                isClean());
-        multiSelectDataSource_ = null;
-      }
-      multiSelectDataSourceCase_ = 8;
-      onChanged();
-      return externalDataSourceBuilder_;
-    }
 
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.SelectionInput.PlatformDataSource,
-            com.google.apps.card.v1.SelectionInput.PlatformDataSource.Builder,
-            com.google.apps.card.v1.SelectionInput.PlatformDataSourceOrBuilder>
-        platformDataSourceBuilder_;
     /**
      *
      *
@@ -5202,12 +3962,10 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.SelectionInput.PlatformDataSource platform_data_source = 9;</code>
-     *
-     * @return Whether the platformDataSource field is set.
      */
     @java.lang.Override
     public boolean hasPlatformDataSource() {
-      return multiSelectDataSourceCase_ == 9;
+      return instance.hasPlatformDataSource();
     }
     /**
      *
@@ -5217,22 +3975,10 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.apps.card.v1.SelectionInput.PlatformDataSource platform_data_source = 9;</code>
-     *
-     * @return The platformDataSource.
      */
     @java.lang.Override
     public com.google.apps.card.v1.SelectionInput.PlatformDataSource getPlatformDataSource() {
-      if (platformDataSourceBuilder_ == null) {
-        if (multiSelectDataSourceCase_ == 9) {
-          return (com.google.apps.card.v1.SelectionInput.PlatformDataSource) multiSelectDataSource_;
-        }
-        return com.google.apps.card.v1.SelectionInput.PlatformDataSource.getDefaultInstance();
-      } else {
-        if (multiSelectDataSourceCase_ == 9) {
-          return platformDataSourceBuilder_.getMessage();
-        }
-        return com.google.apps.card.v1.SelectionInput.PlatformDataSource.getDefaultInstance();
-      }
+      return instance.getPlatformDataSource();
     }
     /**
      *
@@ -5245,16 +3991,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder setPlatformDataSource(
         com.google.apps.card.v1.SelectionInput.PlatformDataSource value) {
-      if (platformDataSourceBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        multiSelectDataSource_ = value;
-        onChanged();
-      } else {
-        platformDataSourceBuilder_.setMessage(value);
-      }
-      multiSelectDataSourceCase_ = 9;
+      copyOnWrite();
+      instance.setPlatformDataSource(value);
       return this;
     }
     /**
@@ -5268,13 +4006,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder setPlatformDataSource(
         com.google.apps.card.v1.SelectionInput.PlatformDataSource.Builder builderForValue) {
-      if (platformDataSourceBuilder_ == null) {
-        multiSelectDataSource_ = builderForValue.build();
-        onChanged();
-      } else {
-        platformDataSourceBuilder_.setMessage(builderForValue.build());
-      }
-      multiSelectDataSourceCase_ = 9;
+      copyOnWrite();
+      instance.setPlatformDataSource(builderForValue.build());
       return this;
     }
     /**
@@ -5288,28 +4021,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder mergePlatformDataSource(
         com.google.apps.card.v1.SelectionInput.PlatformDataSource value) {
-      if (platformDataSourceBuilder_ == null) {
-        if (multiSelectDataSourceCase_ == 9
-            && multiSelectDataSource_
-                != com.google.apps.card.v1.SelectionInput.PlatformDataSource.getDefaultInstance()) {
-          multiSelectDataSource_ =
-              com.google.apps.card.v1.SelectionInput.PlatformDataSource.newBuilder(
-                      (com.google.apps.card.v1.SelectionInput.PlatformDataSource)
-                          multiSelectDataSource_)
-                  .mergeFrom(value)
-                  .buildPartial();
-        } else {
-          multiSelectDataSource_ = value;
-        }
-        onChanged();
-      } else {
-        if (multiSelectDataSourceCase_ == 9) {
-          platformDataSourceBuilder_.mergeFrom(value);
-        } else {
-          platformDataSourceBuilder_.setMessage(value);
-        }
-      }
-      multiSelectDataSourceCase_ = 9;
+      copyOnWrite();
+      instance.mergePlatformDataSource(value);
       return this;
     }
     /**
@@ -5322,147 +4035,104 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.apps.card.v1.SelectionInput.PlatformDataSource platform_data_source = 9;</code>
      */
     public Builder clearPlatformDataSource() {
-      if (platformDataSourceBuilder_ == null) {
-        if (multiSelectDataSourceCase_ == 9) {
-          multiSelectDataSourceCase_ = 0;
-          multiSelectDataSource_ = null;
-          onChanged();
-        }
-      } else {
-        if (multiSelectDataSourceCase_ == 9) {
-          multiSelectDataSourceCase_ = 0;
-          multiSelectDataSource_ = null;
-        }
-        platformDataSourceBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearPlatformDataSource();
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A data source from Google Workspace.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.SelectionInput.PlatformDataSource platform_data_source = 9;</code>
-     */
-    public com.google.apps.card.v1.SelectionInput.PlatformDataSource.Builder
-        getPlatformDataSourceBuilder() {
-      return getPlatformDataSourceFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A data source from Google Workspace.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.SelectionInput.PlatformDataSource platform_data_source = 9;</code>
-     */
-    @java.lang.Override
-    public com.google.apps.card.v1.SelectionInput.PlatformDataSourceOrBuilder
-        getPlatformDataSourceOrBuilder() {
-      if ((multiSelectDataSourceCase_ == 9) && (platformDataSourceBuilder_ != null)) {
-        return platformDataSourceBuilder_.getMessageOrBuilder();
-      } else {
-        if (multiSelectDataSourceCase_ == 9) {
-          return (com.google.apps.card.v1.SelectionInput.PlatformDataSource) multiSelectDataSource_;
-        }
-        return com.google.apps.card.v1.SelectionInput.PlatformDataSource.getDefaultInstance();
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * A data source from Google Workspace.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.SelectionInput.PlatformDataSource platform_data_source = 9;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.apps.card.v1.SelectionInput.PlatformDataSource,
-            com.google.apps.card.v1.SelectionInput.PlatformDataSource.Builder,
-            com.google.apps.card.v1.SelectionInput.PlatformDataSourceOrBuilder>
-        getPlatformDataSourceFieldBuilder() {
-      if (platformDataSourceBuilder_ == null) {
-        if (!(multiSelectDataSourceCase_ == 9)) {
-          multiSelectDataSource_ =
-              com.google.apps.card.v1.SelectionInput.PlatformDataSource.getDefaultInstance();
-        }
-        platformDataSourceBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.SelectionInput.PlatformDataSource,
-                com.google.apps.card.v1.SelectionInput.PlatformDataSource.Builder,
-                com.google.apps.card.v1.SelectionInput.PlatformDataSourceOrBuilder>(
-                (com.google.apps.card.v1.SelectionInput.PlatformDataSource) multiSelectDataSource_,
-                getParentForChildren(),
-                isClean());
-        multiSelectDataSource_ = null;
-      }
-      multiSelectDataSourceCase_ = 9;
-      onChanged();
-      return platformDataSourceBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.apps.card.v1.SelectionInput)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.apps.card.v1.SelectionInput();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "multiSelectDataSource_",
+                "multiSelectDataSourceCase_",
+                "bitField0_",
+                "name_",
+                "label_",
+                "type_",
+                "items_",
+                com.google.apps.card.v1.SelectionInput.SelectionItem.class,
+                "onChangeAction_",
+                "multiSelectMaxSelectedItems_",
+                "multiSelectMinQueryLength_",
+                com.google.apps.card.v1.Action.class,
+                com.google.apps.card.v1.SelectionInput.PlatformDataSource.class,
+              };
+          java.lang.String info =
+              "\u0000\t\u0001\u0001\u0001\t\t\u0000\u0001\u0000\u0001\u0208\u0002\u0208\u0003\f"
+                  + "\u0004\u001b\u0005\u1009\u0000\u0006\u0004\u0007\u0004\b<\u0000\t<\u0000";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.apps.card.v1.SelectionInput> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.apps.card.v1.SelectionInput.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.apps.card.v1.SelectionInput>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.apps.card.v1.SelectionInput)
   private static final com.google.apps.card.v1.SelectionInput DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.apps.card.v1.SelectionInput();
+    SelectionInput defaultInstance = new SelectionInput();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        SelectionInput.class, defaultInstance);
   }
 
   public static com.google.apps.card.v1.SelectionInput getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<SelectionInput> PARSER =
-      new com.google.protobuf.AbstractParser<SelectionInput>() {
-        @java.lang.Override
-        public SelectionInput parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<SelectionInput> PARSER;
 
   public static com.google.protobuf.Parser<SelectionInput> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<SelectionInput> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.apps.card.v1.SelectionInput getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

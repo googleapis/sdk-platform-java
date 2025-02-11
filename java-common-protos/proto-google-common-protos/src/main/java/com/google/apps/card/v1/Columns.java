@@ -57,43 +57,19 @@ package com.google.apps.card.v1;
  *
  * Protobuf type {@code google.apps.card.v1.Columns}
  */
-public final class Columns extends com.google.protobuf.GeneratedMessageV3
+public final class Columns
+    extends com.google.protobuf.GeneratedMessageLite<Columns, Columns.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.Columns)
     ColumnsOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use Columns.newBuilder() to construct.
-  private Columns(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private Columns() {
-    columnItems_ = java.util.Collections.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new Columns();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.apps.card.v1.CardProto.internal_static_google_apps_card_v1_Columns_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_Columns_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.apps.card.v1.Columns.class, com.google.apps.card.v1.Columns.Builder.class);
+    columnItems_ = emptyProtobufList();
   }
 
   public interface ColumnOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:google.apps.card.v1.Columns.Column)
-      com.google.protobuf.MessageOrBuilder {
+      com.google.protobuf.MessageLiteOrBuilder {
 
     /**
      *
@@ -209,29 +185,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
      */
     int getWidgetsCount();
-    /**
-     *
-     *
-     * <pre>
-     * An array of widgets included in a column. Widgets appear in the order
-     * that they are specified.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
-     */
-    java.util.List<? extends com.google.apps.card.v1.Columns.Column.WidgetsOrBuilder>
-        getWidgetsOrBuilderList();
-    /**
-     *
-     *
-     * <pre>
-     * An array of widgets included in a column. Widgets appear in the order
-     * that they are specified.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
-     */
-    com.google.apps.card.v1.Columns.Column.WidgetsOrBuilder getWidgetsOrBuilder(int index);
   }
   /**
    *
@@ -247,44 +200,14 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.apps.card.v1.Columns.Column}
    */
-  public static final class Column extends com.google.protobuf.GeneratedMessageV3
+  public static final class Column
+      extends com.google.protobuf.GeneratedMessageLite<Column, Column.Builder>
       implements
       // @@protoc_insertion_point(message_implements:google.apps.card.v1.Columns.Column)
       ColumnOrBuilder {
-    private static final long serialVersionUID = 0L;
-    // Use Column.newBuilder() to construct.
-    private Column(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-
     private Column() {
-      horizontalSizeStyle_ = 0;
-      horizontalAlignment_ = 0;
-      verticalAlignment_ = 0;
-      widgets_ = java.util.Collections.emptyList();
+      widgets_ = emptyProtobufList();
     }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-      return new Column();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Columns_Column_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Columns_Column_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.apps.card.v1.Columns.Column.class,
-              com.google.apps.card.v1.Columns.Column.Builder.class);
-    }
-
     /**
      *
      *
@@ -301,7 +224,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      *
      * Protobuf enum {@code google.apps.card.v1.Columns.Column.HorizontalSizeStyle}
      */
-    public enum HorizontalSizeStyle implements com.google.protobuf.ProtocolMessageEnum {
+    public enum HorizontalSizeStyle implements com.google.protobuf.Internal.EnumLite {
       /**
        *
        *
@@ -372,6 +295,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        */
       public static final int FILL_MINIMUM_SPACE_VALUE = 2;
 
+      @java.lang.Override
       public final int getNumber() {
         if (this == UNRECOGNIZED) {
           throw new java.lang.IllegalArgumentException(
@@ -381,8 +305,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
 
       /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
+       * @param value The number of the enum to look for.
+       * @return The enum associated with the given number.
        * @deprecated Use {@link #forNumber(int)} instead.
        */
       @java.lang.Deprecated
@@ -390,10 +314,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         return forNumber(value);
       }
 
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       */
       public static HorizontalSizeStyle forNumber(int value) {
         switch (value) {
           case 0:
@@ -415,39 +335,26 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       private static final com.google.protobuf.Internal.EnumLiteMap<HorizontalSizeStyle>
           internalValueMap =
               new com.google.protobuf.Internal.EnumLiteMap<HorizontalSizeStyle>() {
+                @java.lang.Override
                 public HorizontalSizeStyle findValueByNumber(int number) {
                   return HorizontalSizeStyle.forNumber(number);
                 }
               };
 
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-        if (this == UNRECOGNIZED) {
-          throw new java.lang.IllegalStateException(
-              "Can't get the descriptor of an unrecognized enum value.");
+      public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+        return HorizontalSizeStyleVerifier.INSTANCE;
+      }
+
+      private static final class HorizontalSizeStyleVerifier
+          implements com.google.protobuf.Internal.EnumVerifier {
+        static final com.google.protobuf.Internal.EnumVerifier INSTANCE =
+            new HorizontalSizeStyleVerifier();
+
+        @java.lang.Override
+        public boolean isInRange(int number) {
+          return HorizontalSizeStyle.forNumber(number) != null;
         }
-        return getDescriptor().getValues().get(ordinal());
-      }
-
-      public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-        return getDescriptor();
-      }
-
-      public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-        return com.google.apps.card.v1.Columns.Column.getDescriptor().getEnumTypes().get(0);
-      }
-
-      private static final HorizontalSizeStyle[] VALUES = values();
-
-      public static HorizontalSizeStyle valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-        }
-        if (desc.getIndex() == -1) {
-          return UNRECOGNIZED;
-        }
-        return VALUES[desc.getIndex()];
-      }
+      };
 
       private final int value;
 
@@ -473,7 +380,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      *
      * Protobuf enum {@code google.apps.card.v1.Columns.Column.VerticalAlignment}
      */
-    public enum VerticalAlignment implements com.google.protobuf.ProtocolMessageEnum {
+    public enum VerticalAlignment implements com.google.protobuf.Internal.EnumLite {
       /**
        *
        *
@@ -558,6 +465,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        */
       public static final int BOTTOM_VALUE = 3;
 
+      @java.lang.Override
       public final int getNumber() {
         if (this == UNRECOGNIZED) {
           throw new java.lang.IllegalArgumentException(
@@ -567,8 +475,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
 
       /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
+       * @param value The number of the enum to look for.
+       * @return The enum associated with the given number.
        * @deprecated Use {@link #forNumber(int)} instead.
        */
       @java.lang.Deprecated
@@ -576,10 +484,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         return forNumber(value);
       }
 
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       */
       public static VerticalAlignment forNumber(int value) {
         switch (value) {
           case 0:
@@ -603,39 +507,26 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       private static final com.google.protobuf.Internal.EnumLiteMap<VerticalAlignment>
           internalValueMap =
               new com.google.protobuf.Internal.EnumLiteMap<VerticalAlignment>() {
+                @java.lang.Override
                 public VerticalAlignment findValueByNumber(int number) {
                   return VerticalAlignment.forNumber(number);
                 }
               };
 
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-        if (this == UNRECOGNIZED) {
-          throw new java.lang.IllegalStateException(
-              "Can't get the descriptor of an unrecognized enum value.");
+      public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+        return VerticalAlignmentVerifier.INSTANCE;
+      }
+
+      private static final class VerticalAlignmentVerifier
+          implements com.google.protobuf.Internal.EnumVerifier {
+        static final com.google.protobuf.Internal.EnumVerifier INSTANCE =
+            new VerticalAlignmentVerifier();
+
+        @java.lang.Override
+        public boolean isInRange(int number) {
+          return VerticalAlignment.forNumber(number) != null;
         }
-        return getDescriptor().getValues().get(ordinal());
-      }
-
-      public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-        return getDescriptor();
-      }
-
-      public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-        return com.google.apps.card.v1.Columns.Column.getDescriptor().getEnumTypes().get(1);
-      }
-
-      private static final VerticalAlignment[] VALUES = values();
-
-      public static VerticalAlignment valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-        }
-        if (desc.getIndex() == -1) {
-          return UNRECOGNIZED;
-        }
-        return VALUES[desc.getIndex()];
-      }
+      };
 
       private final int value;
 
@@ -649,7 +540,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
     public interface WidgetsOrBuilder
         extends
         // @@protoc_insertion_point(interface_extends:google.apps.card.v1.Columns.Column.Widgets)
-        com.google.protobuf.MessageOrBuilder {
+        com.google.protobuf.MessageLiteOrBuilder {
 
       /**
        *
@@ -675,16 +566,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return The textParagraph.
        */
       com.google.apps.card.v1.TextParagraph getTextParagraph();
-      /**
-       *
-       *
-       * <pre>
-       * [TextParagraph][google.apps.card.v1.TextParagraph] widget.
-       * </pre>
-       *
-       * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
-       */
-      com.google.apps.card.v1.TextParagraphOrBuilder getTextParagraphOrBuilder();
 
       /**
        *
@@ -710,16 +591,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return The image.
        */
       com.google.apps.card.v1.Image getImage();
-      /**
-       *
-       *
-       * <pre>
-       * [Image][google.apps.card.v1.Image] widget.
-       * </pre>
-       *
-       * <code>.google.apps.card.v1.Image image = 2;</code>
-       */
-      com.google.apps.card.v1.ImageOrBuilder getImageOrBuilder();
 
       /**
        *
@@ -745,16 +616,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return The decoratedText.
        */
       com.google.apps.card.v1.DecoratedText getDecoratedText();
-      /**
-       *
-       *
-       * <pre>
-       * [DecoratedText][google.apps.card.v1.DecoratedText] widget.
-       * </pre>
-       *
-       * <code>.google.apps.card.v1.DecoratedText decorated_text = 3;</code>
-       */
-      com.google.apps.card.v1.DecoratedTextOrBuilder getDecoratedTextOrBuilder();
 
       /**
        *
@@ -780,16 +641,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return The buttonList.
        */
       com.google.apps.card.v1.ButtonList getButtonList();
-      /**
-       *
-       *
-       * <pre>
-       * [ButtonList][google.apps.card.v1.ButtonList] widget.
-       * </pre>
-       *
-       * <code>.google.apps.card.v1.ButtonList button_list = 4;</code>
-       */
-      com.google.apps.card.v1.ButtonListOrBuilder getButtonListOrBuilder();
 
       /**
        *
@@ -815,16 +666,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return The textInput.
        */
       com.google.apps.card.v1.TextInput getTextInput();
-      /**
-       *
-       *
-       * <pre>
-       * [TextInput][google.apps.card.v1.TextInput] widget.
-       * </pre>
-       *
-       * <code>.google.apps.card.v1.TextInput text_input = 5;</code>
-       */
-      com.google.apps.card.v1.TextInputOrBuilder getTextInputOrBuilder();
 
       /**
        *
@@ -850,16 +691,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return The selectionInput.
        */
       com.google.apps.card.v1.SelectionInput getSelectionInput();
-      /**
-       *
-       *
-       * <pre>
-       * [SelectionInput][google.apps.card.v1.SelectionInput] widget.
-       * </pre>
-       *
-       * <code>.google.apps.card.v1.SelectionInput selection_input = 6;</code>
-       */
-      com.google.apps.card.v1.SelectionInputOrBuilder getSelectionInputOrBuilder();
 
       /**
        *
@@ -885,18 +716,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return The dateTimePicker.
        */
       com.google.apps.card.v1.DateTimePicker getDateTimePicker();
-      /**
-       *
-       *
-       * <pre>
-       * [DateTimePicker][google.apps.card.v1.DateTimePicker] widget.
-       * </pre>
-       *
-       * <code>.google.apps.card.v1.DateTimePicker date_time_picker = 7;</code>
-       */
-      com.google.apps.card.v1.DateTimePickerOrBuilder getDateTimePickerOrBuilder();
 
-      com.google.apps.card.v1.Columns.Column.Widgets.DataCase getDataCase();
+      public com.google.apps.card.v1.Columns.Column.Widgets.DataCase getDataCase();
     }
     /**
      *
@@ -912,48 +733,17 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      *
      * Protobuf type {@code google.apps.card.v1.Columns.Column.Widgets}
      */
-    public static final class Widgets extends com.google.protobuf.GeneratedMessageV3
+    public static final class Widgets
+        extends com.google.protobuf.GeneratedMessageLite<Widgets, Widgets.Builder>
         implements
         // @@protoc_insertion_point(message_implements:google.apps.card.v1.Columns.Column.Widgets)
         WidgetsOrBuilder {
-      private static final long serialVersionUID = 0L;
-      // Use Widgets.newBuilder() to construct.
-      private Widgets(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-        super(builder);
-      }
-
       private Widgets() {}
 
-      @java.lang.Override
-      @SuppressWarnings({"unused"})
-      protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-        return new Widgets();
-      }
-
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_Columns_Column_Widgets_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_Columns_Column_Widgets_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.google.apps.card.v1.Columns.Column.Widgets.class,
-                com.google.apps.card.v1.Columns.Column.Widgets.Builder.class);
-      }
-
       private int dataCase_ = 0;
-
-      @SuppressWarnings("serial")
       private java.lang.Object data_;
 
-      public enum DataCase
-          implements
-              com.google.protobuf.Internal.EnumLite,
-              com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+      public enum DataCase {
         TEXT_PARAGRAPH(1),
         IMAGE(2),
         DECORATED_TEXT(3),
@@ -967,11 +757,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         private DataCase(int value) {
           this.value = value;
         }
-        /**
-         * @param value The number of the enum to look for.
-         * @return The enum associated with the given number.
-         * @deprecated Use {@link #forNumber(int)} instead.
-         */
+        /** @deprecated Use {@link #forNumber(int)} instead. */
         @java.lang.Deprecated
         public static DataCase valueOf(int value) {
           return forNumber(value);
@@ -1005,8 +791,14 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         }
       };
 
+      @java.lang.Override
       public DataCase getDataCase() {
         return DataCase.forNumber(dataCase_);
+      }
+
+      private void clearData() {
+        dataCase_ = 0;
+        data_ = null;
       }
 
       public static final int TEXT_PARAGRAPH_FIELD_NUMBER = 1;
@@ -1018,8 +810,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * </pre>
        *
        * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
-       *
-       * @return Whether the textParagraph field is set.
        */
       @java.lang.Override
       public boolean hasTextParagraph() {
@@ -1033,8 +823,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * </pre>
        *
        * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
-       *
-       * @return The textParagraph.
        */
       @java.lang.Override
       public com.google.apps.card.v1.TextParagraph getTextParagraph() {
@@ -1052,12 +840,47 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
        */
-      @java.lang.Override
-      public com.google.apps.card.v1.TextParagraphOrBuilder getTextParagraphOrBuilder() {
-        if (dataCase_ == 1) {
-          return (com.google.apps.card.v1.TextParagraph) data_;
+      private void setTextParagraph(com.google.apps.card.v1.TextParagraph value) {
+        value.getClass();
+        data_ = value;
+        dataCase_ = 1;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * [TextParagraph][google.apps.card.v1.TextParagraph] widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
+       */
+      private void mergeTextParagraph(com.google.apps.card.v1.TextParagraph value) {
+        value.getClass();
+        if (dataCase_ == 1 && data_ != com.google.apps.card.v1.TextParagraph.getDefaultInstance()) {
+          data_ =
+              com.google.apps.card.v1.TextParagraph.newBuilder(
+                      (com.google.apps.card.v1.TextParagraph) data_)
+                  .mergeFrom(value)
+                  .buildPartial();
+        } else {
+          data_ = value;
         }
-        return com.google.apps.card.v1.TextParagraph.getDefaultInstance();
+        dataCase_ = 1;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * [TextParagraph][google.apps.card.v1.TextParagraph] widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
+       */
+      private void clearTextParagraph() {
+        if (dataCase_ == 1) {
+          dataCase_ = 0;
+          data_ = null;
+        }
       }
 
       public static final int IMAGE_FIELD_NUMBER = 2;
@@ -1069,8 +892,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * </pre>
        *
        * <code>.google.apps.card.v1.Image image = 2;</code>
-       *
-       * @return Whether the image field is set.
        */
       @java.lang.Override
       public boolean hasImage() {
@@ -1084,8 +905,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * </pre>
        *
        * <code>.google.apps.card.v1.Image image = 2;</code>
-       *
-       * @return The image.
        */
       @java.lang.Override
       public com.google.apps.card.v1.Image getImage() {
@@ -1103,12 +922,46 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>.google.apps.card.v1.Image image = 2;</code>
        */
-      @java.lang.Override
-      public com.google.apps.card.v1.ImageOrBuilder getImageOrBuilder() {
-        if (dataCase_ == 2) {
-          return (com.google.apps.card.v1.Image) data_;
+      private void setImage(com.google.apps.card.v1.Image value) {
+        value.getClass();
+        data_ = value;
+        dataCase_ = 2;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * [Image][google.apps.card.v1.Image] widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.Image image = 2;</code>
+       */
+      private void mergeImage(com.google.apps.card.v1.Image value) {
+        value.getClass();
+        if (dataCase_ == 2 && data_ != com.google.apps.card.v1.Image.getDefaultInstance()) {
+          data_ =
+              com.google.apps.card.v1.Image.newBuilder((com.google.apps.card.v1.Image) data_)
+                  .mergeFrom(value)
+                  .buildPartial();
+        } else {
+          data_ = value;
         }
-        return com.google.apps.card.v1.Image.getDefaultInstance();
+        dataCase_ = 2;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * [Image][google.apps.card.v1.Image] widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.Image image = 2;</code>
+       */
+      private void clearImage() {
+        if (dataCase_ == 2) {
+          dataCase_ = 0;
+          data_ = null;
+        }
       }
 
       public static final int DECORATED_TEXT_FIELD_NUMBER = 3;
@@ -1120,8 +973,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * </pre>
        *
        * <code>.google.apps.card.v1.DecoratedText decorated_text = 3;</code>
-       *
-       * @return Whether the decoratedText field is set.
        */
       @java.lang.Override
       public boolean hasDecoratedText() {
@@ -1135,8 +986,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * </pre>
        *
        * <code>.google.apps.card.v1.DecoratedText decorated_text = 3;</code>
-       *
-       * @return The decoratedText.
        */
       @java.lang.Override
       public com.google.apps.card.v1.DecoratedText getDecoratedText() {
@@ -1154,12 +1003,47 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>.google.apps.card.v1.DecoratedText decorated_text = 3;</code>
        */
-      @java.lang.Override
-      public com.google.apps.card.v1.DecoratedTextOrBuilder getDecoratedTextOrBuilder() {
-        if (dataCase_ == 3) {
-          return (com.google.apps.card.v1.DecoratedText) data_;
+      private void setDecoratedText(com.google.apps.card.v1.DecoratedText value) {
+        value.getClass();
+        data_ = value;
+        dataCase_ = 3;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * [DecoratedText][google.apps.card.v1.DecoratedText] widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.DecoratedText decorated_text = 3;</code>
+       */
+      private void mergeDecoratedText(com.google.apps.card.v1.DecoratedText value) {
+        value.getClass();
+        if (dataCase_ == 3 && data_ != com.google.apps.card.v1.DecoratedText.getDefaultInstance()) {
+          data_ =
+              com.google.apps.card.v1.DecoratedText.newBuilder(
+                      (com.google.apps.card.v1.DecoratedText) data_)
+                  .mergeFrom(value)
+                  .buildPartial();
+        } else {
+          data_ = value;
         }
-        return com.google.apps.card.v1.DecoratedText.getDefaultInstance();
+        dataCase_ = 3;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * [DecoratedText][google.apps.card.v1.DecoratedText] widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.DecoratedText decorated_text = 3;</code>
+       */
+      private void clearDecoratedText() {
+        if (dataCase_ == 3) {
+          dataCase_ = 0;
+          data_ = null;
+        }
       }
 
       public static final int BUTTON_LIST_FIELD_NUMBER = 4;
@@ -1171,8 +1055,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * </pre>
        *
        * <code>.google.apps.card.v1.ButtonList button_list = 4;</code>
-       *
-       * @return Whether the buttonList field is set.
        */
       @java.lang.Override
       public boolean hasButtonList() {
@@ -1186,8 +1068,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * </pre>
        *
        * <code>.google.apps.card.v1.ButtonList button_list = 4;</code>
-       *
-       * @return The buttonList.
        */
       @java.lang.Override
       public com.google.apps.card.v1.ButtonList getButtonList() {
@@ -1205,12 +1085,47 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>.google.apps.card.v1.ButtonList button_list = 4;</code>
        */
-      @java.lang.Override
-      public com.google.apps.card.v1.ButtonListOrBuilder getButtonListOrBuilder() {
-        if (dataCase_ == 4) {
-          return (com.google.apps.card.v1.ButtonList) data_;
+      private void setButtonList(com.google.apps.card.v1.ButtonList value) {
+        value.getClass();
+        data_ = value;
+        dataCase_ = 4;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * [ButtonList][google.apps.card.v1.ButtonList] widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.ButtonList button_list = 4;</code>
+       */
+      private void mergeButtonList(com.google.apps.card.v1.ButtonList value) {
+        value.getClass();
+        if (dataCase_ == 4 && data_ != com.google.apps.card.v1.ButtonList.getDefaultInstance()) {
+          data_ =
+              com.google.apps.card.v1.ButtonList.newBuilder(
+                      (com.google.apps.card.v1.ButtonList) data_)
+                  .mergeFrom(value)
+                  .buildPartial();
+        } else {
+          data_ = value;
         }
-        return com.google.apps.card.v1.ButtonList.getDefaultInstance();
+        dataCase_ = 4;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * [ButtonList][google.apps.card.v1.ButtonList] widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.ButtonList button_list = 4;</code>
+       */
+      private void clearButtonList() {
+        if (dataCase_ == 4) {
+          dataCase_ = 0;
+          data_ = null;
+        }
       }
 
       public static final int TEXT_INPUT_FIELD_NUMBER = 5;
@@ -1222,8 +1137,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * </pre>
        *
        * <code>.google.apps.card.v1.TextInput text_input = 5;</code>
-       *
-       * @return Whether the textInput field is set.
        */
       @java.lang.Override
       public boolean hasTextInput() {
@@ -1237,8 +1150,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * </pre>
        *
        * <code>.google.apps.card.v1.TextInput text_input = 5;</code>
-       *
-       * @return The textInput.
        */
       @java.lang.Override
       public com.google.apps.card.v1.TextInput getTextInput() {
@@ -1256,12 +1167,47 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>.google.apps.card.v1.TextInput text_input = 5;</code>
        */
-      @java.lang.Override
-      public com.google.apps.card.v1.TextInputOrBuilder getTextInputOrBuilder() {
-        if (dataCase_ == 5) {
-          return (com.google.apps.card.v1.TextInput) data_;
+      private void setTextInput(com.google.apps.card.v1.TextInput value) {
+        value.getClass();
+        data_ = value;
+        dataCase_ = 5;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * [TextInput][google.apps.card.v1.TextInput] widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.TextInput text_input = 5;</code>
+       */
+      private void mergeTextInput(com.google.apps.card.v1.TextInput value) {
+        value.getClass();
+        if (dataCase_ == 5 && data_ != com.google.apps.card.v1.TextInput.getDefaultInstance()) {
+          data_ =
+              com.google.apps.card.v1.TextInput.newBuilder(
+                      (com.google.apps.card.v1.TextInput) data_)
+                  .mergeFrom(value)
+                  .buildPartial();
+        } else {
+          data_ = value;
         }
-        return com.google.apps.card.v1.TextInput.getDefaultInstance();
+        dataCase_ = 5;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * [TextInput][google.apps.card.v1.TextInput] widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.TextInput text_input = 5;</code>
+       */
+      private void clearTextInput() {
+        if (dataCase_ == 5) {
+          dataCase_ = 0;
+          data_ = null;
+        }
       }
 
       public static final int SELECTION_INPUT_FIELD_NUMBER = 6;
@@ -1273,8 +1219,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * </pre>
        *
        * <code>.google.apps.card.v1.SelectionInput selection_input = 6;</code>
-       *
-       * @return Whether the selectionInput field is set.
        */
       @java.lang.Override
       public boolean hasSelectionInput() {
@@ -1288,8 +1232,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * </pre>
        *
        * <code>.google.apps.card.v1.SelectionInput selection_input = 6;</code>
-       *
-       * @return The selectionInput.
        */
       @java.lang.Override
       public com.google.apps.card.v1.SelectionInput getSelectionInput() {
@@ -1307,12 +1249,48 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>.google.apps.card.v1.SelectionInput selection_input = 6;</code>
        */
-      @java.lang.Override
-      public com.google.apps.card.v1.SelectionInputOrBuilder getSelectionInputOrBuilder() {
-        if (dataCase_ == 6) {
-          return (com.google.apps.card.v1.SelectionInput) data_;
+      private void setSelectionInput(com.google.apps.card.v1.SelectionInput value) {
+        value.getClass();
+        data_ = value;
+        dataCase_ = 6;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * [SelectionInput][google.apps.card.v1.SelectionInput] widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.SelectionInput selection_input = 6;</code>
+       */
+      private void mergeSelectionInput(com.google.apps.card.v1.SelectionInput value) {
+        value.getClass();
+        if (dataCase_ == 6
+            && data_ != com.google.apps.card.v1.SelectionInput.getDefaultInstance()) {
+          data_ =
+              com.google.apps.card.v1.SelectionInput.newBuilder(
+                      (com.google.apps.card.v1.SelectionInput) data_)
+                  .mergeFrom(value)
+                  .buildPartial();
+        } else {
+          data_ = value;
         }
-        return com.google.apps.card.v1.SelectionInput.getDefaultInstance();
+        dataCase_ = 6;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * [SelectionInput][google.apps.card.v1.SelectionInput] widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.SelectionInput selection_input = 6;</code>
+       */
+      private void clearSelectionInput() {
+        if (dataCase_ == 6) {
+          dataCase_ = 0;
+          data_ = null;
+        }
       }
 
       public static final int DATE_TIME_PICKER_FIELD_NUMBER = 7;
@@ -1324,8 +1302,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * </pre>
        *
        * <code>.google.apps.card.v1.DateTimePicker date_time_picker = 7;</code>
-       *
-       * @return Whether the dateTimePicker field is set.
        */
       @java.lang.Override
       public boolean hasDateTimePicker() {
@@ -1339,8 +1315,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * </pre>
        *
        * <code>.google.apps.card.v1.DateTimePicker date_time_picker = 7;</code>
-       *
-       * @return The dateTimePicker.
        */
       @java.lang.Override
       public com.google.apps.card.v1.DateTimePicker getDateTimePicker() {
@@ -1358,279 +1332,132 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>.google.apps.card.v1.DateTimePicker date_time_picker = 7;</code>
        */
-      @java.lang.Override
-      public com.google.apps.card.v1.DateTimePickerOrBuilder getDateTimePickerOrBuilder() {
+      private void setDateTimePicker(com.google.apps.card.v1.DateTimePicker value) {
+        value.getClass();
+        data_ = value;
+        dataCase_ = 7;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * [DateTimePicker][google.apps.card.v1.DateTimePicker] widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.DateTimePicker date_time_picker = 7;</code>
+       */
+      private void mergeDateTimePicker(com.google.apps.card.v1.DateTimePicker value) {
+        value.getClass();
+        if (dataCase_ == 7
+            && data_ != com.google.apps.card.v1.DateTimePicker.getDefaultInstance()) {
+          data_ =
+              com.google.apps.card.v1.DateTimePicker.newBuilder(
+                      (com.google.apps.card.v1.DateTimePicker) data_)
+                  .mergeFrom(value)
+                  .buildPartial();
+        } else {
+          data_ = value;
+        }
+        dataCase_ = 7;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * [DateTimePicker][google.apps.card.v1.DateTimePicker] widget.
+       * </pre>
+       *
+       * <code>.google.apps.card.v1.DateTimePicker date_time_picker = 7;</code>
+       */
+      private void clearDateTimePicker() {
         if (dataCase_ == 7) {
-          return (com.google.apps.card.v1.DateTimePicker) data_;
+          dataCase_ = 0;
+          data_ = null;
         }
-        return com.google.apps.card.v1.DateTimePicker.getDefaultInstance();
-      }
-
-      private byte memoizedIsInitialized = -1;
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
-
-        memoizedIsInitialized = 1;
-        return true;
-      }
-
-      @java.lang.Override
-      public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-        if (dataCase_ == 1) {
-          output.writeMessage(1, (com.google.apps.card.v1.TextParagraph) data_);
-        }
-        if (dataCase_ == 2) {
-          output.writeMessage(2, (com.google.apps.card.v1.Image) data_);
-        }
-        if (dataCase_ == 3) {
-          output.writeMessage(3, (com.google.apps.card.v1.DecoratedText) data_);
-        }
-        if (dataCase_ == 4) {
-          output.writeMessage(4, (com.google.apps.card.v1.ButtonList) data_);
-        }
-        if (dataCase_ == 5) {
-          output.writeMessage(5, (com.google.apps.card.v1.TextInput) data_);
-        }
-        if (dataCase_ == 6) {
-          output.writeMessage(6, (com.google.apps.card.v1.SelectionInput) data_);
-        }
-        if (dataCase_ == 7) {
-          output.writeMessage(7, (com.google.apps.card.v1.DateTimePicker) data_);
-        }
-        getUnknownFields().writeTo(output);
-      }
-
-      @java.lang.Override
-      public int getSerializedSize() {
-        int size = memoizedSize;
-        if (size != -1) return size;
-
-        size = 0;
-        if (dataCase_ == 1) {
-          size +=
-              com.google.protobuf.CodedOutputStream.computeMessageSize(
-                  1, (com.google.apps.card.v1.TextParagraph) data_);
-        }
-        if (dataCase_ == 2) {
-          size +=
-              com.google.protobuf.CodedOutputStream.computeMessageSize(
-                  2, (com.google.apps.card.v1.Image) data_);
-        }
-        if (dataCase_ == 3) {
-          size +=
-              com.google.protobuf.CodedOutputStream.computeMessageSize(
-                  3, (com.google.apps.card.v1.DecoratedText) data_);
-        }
-        if (dataCase_ == 4) {
-          size +=
-              com.google.protobuf.CodedOutputStream.computeMessageSize(
-                  4, (com.google.apps.card.v1.ButtonList) data_);
-        }
-        if (dataCase_ == 5) {
-          size +=
-              com.google.protobuf.CodedOutputStream.computeMessageSize(
-                  5, (com.google.apps.card.v1.TextInput) data_);
-        }
-        if (dataCase_ == 6) {
-          size +=
-              com.google.protobuf.CodedOutputStream.computeMessageSize(
-                  6, (com.google.apps.card.v1.SelectionInput) data_);
-        }
-        if (dataCase_ == 7) {
-          size +=
-              com.google.protobuf.CodedOutputStream.computeMessageSize(
-                  7, (com.google.apps.card.v1.DateTimePicker) data_);
-        }
-        size += getUnknownFields().getSerializedSize();
-        memoizedSize = size;
-        return size;
-      }
-
-      @java.lang.Override
-      public boolean equals(final java.lang.Object obj) {
-        if (obj == this) {
-          return true;
-        }
-        if (!(obj instanceof com.google.apps.card.v1.Columns.Column.Widgets)) {
-          return super.equals(obj);
-        }
-        com.google.apps.card.v1.Columns.Column.Widgets other =
-            (com.google.apps.card.v1.Columns.Column.Widgets) obj;
-
-        if (!getDataCase().equals(other.getDataCase())) return false;
-        switch (dataCase_) {
-          case 1:
-            if (!getTextParagraph().equals(other.getTextParagraph())) return false;
-            break;
-          case 2:
-            if (!getImage().equals(other.getImage())) return false;
-            break;
-          case 3:
-            if (!getDecoratedText().equals(other.getDecoratedText())) return false;
-            break;
-          case 4:
-            if (!getButtonList().equals(other.getButtonList())) return false;
-            break;
-          case 5:
-            if (!getTextInput().equals(other.getTextInput())) return false;
-            break;
-          case 6:
-            if (!getSelectionInput().equals(other.getSelectionInput())) return false;
-            break;
-          case 7:
-            if (!getDateTimePicker().equals(other.getDateTimePicker())) return false;
-            break;
-          case 0:
-          default:
-        }
-        if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-        return true;
-      }
-
-      @java.lang.Override
-      public int hashCode() {
-        if (memoizedHashCode != 0) {
-          return memoizedHashCode;
-        }
-        int hash = 41;
-        hash = (19 * hash) + getDescriptor().hashCode();
-        switch (dataCase_) {
-          case 1:
-            hash = (37 * hash) + TEXT_PARAGRAPH_FIELD_NUMBER;
-            hash = (53 * hash) + getTextParagraph().hashCode();
-            break;
-          case 2:
-            hash = (37 * hash) + IMAGE_FIELD_NUMBER;
-            hash = (53 * hash) + getImage().hashCode();
-            break;
-          case 3:
-            hash = (37 * hash) + DECORATED_TEXT_FIELD_NUMBER;
-            hash = (53 * hash) + getDecoratedText().hashCode();
-            break;
-          case 4:
-            hash = (37 * hash) + BUTTON_LIST_FIELD_NUMBER;
-            hash = (53 * hash) + getButtonList().hashCode();
-            break;
-          case 5:
-            hash = (37 * hash) + TEXT_INPUT_FIELD_NUMBER;
-            hash = (53 * hash) + getTextInput().hashCode();
-            break;
-          case 6:
-            hash = (37 * hash) + SELECTION_INPUT_FIELD_NUMBER;
-            hash = (53 * hash) + getSelectionInput().hashCode();
-            break;
-          case 7:
-            hash = (37 * hash) + DATE_TIME_PICKER_FIELD_NUMBER;
-            hash = (53 * hash) + getDateTimePicker().hashCode();
-            break;
-          case 0:
-          default:
-        }
-        hash = (29 * hash) + getUnknownFields().hashCode();
-        memoizedHashCode = hash;
-        return hash;
       }
 
       public static com.google.apps.card.v1.Columns.Column.Widgets parseFrom(
           java.nio.ByteBuffer data) throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
+        return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
       }
 
       public static com.google.apps.card.v1.Columns.Column.Widgets parseFrom(
           java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
+        return com.google.protobuf.GeneratedMessageLite.parseFrom(
+            DEFAULT_INSTANCE, data, extensionRegistry);
       }
 
       public static com.google.apps.card.v1.Columns.Column.Widgets parseFrom(
           com.google.protobuf.ByteString data)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
+        return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
       }
 
       public static com.google.apps.card.v1.Columns.Column.Widgets parseFrom(
           com.google.protobuf.ByteString data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
+        return com.google.protobuf.GeneratedMessageLite.parseFrom(
+            DEFAULT_INSTANCE, data, extensionRegistry);
       }
 
       public static com.google.apps.card.v1.Columns.Column.Widgets parseFrom(byte[] data)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
+        return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
       }
 
       public static com.google.apps.card.v1.Columns.Column.Widgets parseFrom(
           byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
+        return com.google.protobuf.GeneratedMessageLite.parseFrom(
+            DEFAULT_INSTANCE, data, extensionRegistry);
       }
 
       public static com.google.apps.card.v1.Columns.Column.Widgets parseFrom(
           java.io.InputStream input) throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+        return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
       }
 
       public static com.google.apps.card.v1.Columns.Column.Widgets parseFrom(
           java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-            PARSER, input, extensionRegistry);
+        return com.google.protobuf.GeneratedMessageLite.parseFrom(
+            DEFAULT_INSTANCE, input, extensionRegistry);
       }
 
       public static com.google.apps.card.v1.Columns.Column.Widgets parseDelimitedFrom(
           java.io.InputStream input) throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+        return parseDelimitedFrom(DEFAULT_INSTANCE, input);
       }
 
       public static com.google.apps.card.v1.Columns.Column.Widgets parseDelimitedFrom(
           java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-            PARSER, input, extensionRegistry);
+        return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
       }
 
       public static com.google.apps.card.v1.Columns.Column.Widgets parseFrom(
           com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+        return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
       }
 
       public static com.google.apps.card.v1.Columns.Column.Widgets parseFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-            PARSER, input, extensionRegistry);
-      }
-
-      @java.lang.Override
-      public Builder newBuilderForType() {
-        return newBuilder();
+        return com.google.protobuf.GeneratedMessageLite.parseFrom(
+            DEFAULT_INSTANCE, input, extensionRegistry);
       }
 
       public static Builder newBuilder() {
-        return DEFAULT_INSTANCE.toBuilder();
+        return (Builder) DEFAULT_INSTANCE.createBuilder();
       }
 
       public static Builder newBuilder(com.google.apps.card.v1.Columns.Column.Widgets prototype) {
-        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+        return DEFAULT_INSTANCE.createBuilder(prototype);
       }
 
-      @java.lang.Override
-      public Builder toBuilder() {
-        return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-      }
-
-      @java.lang.Override
-      protected Builder newBuilderForType(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        Builder builder = new Builder(parent);
-        return builder;
-      }
       /**
        *
        *
@@ -1646,323 +1473,27 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * Protobuf type {@code google.apps.card.v1.Columns.Column.Widgets}
        */
       public static final class Builder
-          extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+          extends com.google.protobuf.GeneratedMessageLite.Builder<
+              com.google.apps.card.v1.Columns.Column.Widgets, Builder>
           implements
           // @@protoc_insertion_point(builder_implements:google.apps.card.v1.Columns.Column.Widgets)
           com.google.apps.card.v1.Columns.Column.WidgetsOrBuilder {
-        public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return com.google.apps.card.v1.CardProto
-              .internal_static_google_apps_card_v1_Columns_Column_Widgets_descriptor;
-        }
-
-        @java.lang.Override
-        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-            internalGetFieldAccessorTable() {
-          return com.google.apps.card.v1.CardProto
-              .internal_static_google_apps_card_v1_Columns_Column_Widgets_fieldAccessorTable
-              .ensureFieldAccessorsInitialized(
-                  com.google.apps.card.v1.Columns.Column.Widgets.class,
-                  com.google.apps.card.v1.Columns.Column.Widgets.Builder.class);
-        }
-
         // Construct using com.google.apps.card.v1.Columns.Column.Widgets.newBuilder()
-        private Builder() {}
-
-        private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-          super(parent);
+        private Builder() {
+          super(DEFAULT_INSTANCE);
         }
 
         @java.lang.Override
-        public Builder clear() {
-          super.clear();
-          bitField0_ = 0;
-          if (textParagraphBuilder_ != null) {
-            textParagraphBuilder_.clear();
-          }
-          if (imageBuilder_ != null) {
-            imageBuilder_.clear();
-          }
-          if (decoratedTextBuilder_ != null) {
-            decoratedTextBuilder_.clear();
-          }
-          if (buttonListBuilder_ != null) {
-            buttonListBuilder_.clear();
-          }
-          if (textInputBuilder_ != null) {
-            textInputBuilder_.clear();
-          }
-          if (selectionInputBuilder_ != null) {
-            selectionInputBuilder_.clear();
-          }
-          if (dateTimePickerBuilder_ != null) {
-            dateTimePickerBuilder_.clear();
-          }
-          dataCase_ = 0;
-          data_ = null;
-          return this;
-        }
-
-        @java.lang.Override
-        public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return com.google.apps.card.v1.CardProto
-              .internal_static_google_apps_card_v1_Columns_Column_Widgets_descriptor;
-        }
-
-        @java.lang.Override
-        public com.google.apps.card.v1.Columns.Column.Widgets getDefaultInstanceForType() {
-          return com.google.apps.card.v1.Columns.Column.Widgets.getDefaultInstance();
-        }
-
-        @java.lang.Override
-        public com.google.apps.card.v1.Columns.Column.Widgets build() {
-          com.google.apps.card.v1.Columns.Column.Widgets result = buildPartial();
-          if (!result.isInitialized()) {
-            throw newUninitializedMessageException(result);
-          }
-          return result;
-        }
-
-        @java.lang.Override
-        public com.google.apps.card.v1.Columns.Column.Widgets buildPartial() {
-          com.google.apps.card.v1.Columns.Column.Widgets result =
-              new com.google.apps.card.v1.Columns.Column.Widgets(this);
-          if (bitField0_ != 0) {
-            buildPartial0(result);
-          }
-          buildPartialOneofs(result);
-          onBuilt();
-          return result;
-        }
-
-        private void buildPartial0(com.google.apps.card.v1.Columns.Column.Widgets result) {
-          int from_bitField0_ = bitField0_;
-        }
-
-        private void buildPartialOneofs(com.google.apps.card.v1.Columns.Column.Widgets result) {
-          result.dataCase_ = dataCase_;
-          result.data_ = this.data_;
-          if (dataCase_ == 1 && textParagraphBuilder_ != null) {
-            result.data_ = textParagraphBuilder_.build();
-          }
-          if (dataCase_ == 2 && imageBuilder_ != null) {
-            result.data_ = imageBuilder_.build();
-          }
-          if (dataCase_ == 3 && decoratedTextBuilder_ != null) {
-            result.data_ = decoratedTextBuilder_.build();
-          }
-          if (dataCase_ == 4 && buttonListBuilder_ != null) {
-            result.data_ = buttonListBuilder_.build();
-          }
-          if (dataCase_ == 5 && textInputBuilder_ != null) {
-            result.data_ = textInputBuilder_.build();
-          }
-          if (dataCase_ == 6 && selectionInputBuilder_ != null) {
-            result.data_ = selectionInputBuilder_.build();
-          }
-          if (dataCase_ == 7 && dateTimePickerBuilder_ != null) {
-            result.data_ = dateTimePickerBuilder_.build();
-          }
-        }
-
-        @java.lang.Override
-        public Builder clone() {
-          return super.clone();
-        }
-
-        @java.lang.Override
-        public Builder setField(
-            com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-          return super.setField(field, value);
-        }
-
-        @java.lang.Override
-        public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-          return super.clearField(field);
-        }
-
-        @java.lang.Override
-        public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-          return super.clearOneof(oneof);
-        }
-
-        @java.lang.Override
-        public Builder setRepeatedField(
-            com.google.protobuf.Descriptors.FieldDescriptor field,
-            int index,
-            java.lang.Object value) {
-          return super.setRepeatedField(field, index, value);
-        }
-
-        @java.lang.Override
-        public Builder addRepeatedField(
-            com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-          return super.addRepeatedField(field, value);
-        }
-
-        @java.lang.Override
-        public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof com.google.apps.card.v1.Columns.Column.Widgets) {
-            return mergeFrom((com.google.apps.card.v1.Columns.Column.Widgets) other);
-          } else {
-            super.mergeFrom(other);
-            return this;
-          }
-        }
-
-        public Builder mergeFrom(com.google.apps.card.v1.Columns.Column.Widgets other) {
-          if (other == com.google.apps.card.v1.Columns.Column.Widgets.getDefaultInstance())
-            return this;
-          switch (other.getDataCase()) {
-            case TEXT_PARAGRAPH:
-              {
-                mergeTextParagraph(other.getTextParagraph());
-                break;
-              }
-            case IMAGE:
-              {
-                mergeImage(other.getImage());
-                break;
-              }
-            case DECORATED_TEXT:
-              {
-                mergeDecoratedText(other.getDecoratedText());
-                break;
-              }
-            case BUTTON_LIST:
-              {
-                mergeButtonList(other.getButtonList());
-                break;
-              }
-            case TEXT_INPUT:
-              {
-                mergeTextInput(other.getTextInput());
-                break;
-              }
-            case SELECTION_INPUT:
-              {
-                mergeSelectionInput(other.getSelectionInput());
-                break;
-              }
-            case DATE_TIME_PICKER:
-              {
-                mergeDateTimePicker(other.getDateTimePicker());
-                break;
-              }
-            case DATA_NOT_SET:
-              {
-                break;
-              }
-          }
-          this.mergeUnknownFields(other.getUnknownFields());
-          onChanged();
-          return this;
-        }
-
-        @java.lang.Override
-        public final boolean isInitialized() {
-          return true;
-        }
-
-        @java.lang.Override
-        public Builder mergeFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
-          if (extensionRegistry == null) {
-            throw new java.lang.NullPointerException();
-          }
-          try {
-            boolean done = false;
-            while (!done) {
-              int tag = input.readTag();
-              switch (tag) {
-                case 0:
-                  done = true;
-                  break;
-                case 10:
-                  {
-                    input.readMessage(
-                        getTextParagraphFieldBuilder().getBuilder(), extensionRegistry);
-                    dataCase_ = 1;
-                    break;
-                  } // case 10
-                case 18:
-                  {
-                    input.readMessage(getImageFieldBuilder().getBuilder(), extensionRegistry);
-                    dataCase_ = 2;
-                    break;
-                  } // case 18
-                case 26:
-                  {
-                    input.readMessage(
-                        getDecoratedTextFieldBuilder().getBuilder(), extensionRegistry);
-                    dataCase_ = 3;
-                    break;
-                  } // case 26
-                case 34:
-                  {
-                    input.readMessage(getButtonListFieldBuilder().getBuilder(), extensionRegistry);
-                    dataCase_ = 4;
-                    break;
-                  } // case 34
-                case 42:
-                  {
-                    input.readMessage(getTextInputFieldBuilder().getBuilder(), extensionRegistry);
-                    dataCase_ = 5;
-                    break;
-                  } // case 42
-                case 50:
-                  {
-                    input.readMessage(
-                        getSelectionInputFieldBuilder().getBuilder(), extensionRegistry);
-                    dataCase_ = 6;
-                    break;
-                  } // case 50
-                case 58:
-                  {
-                    input.readMessage(
-                        getDateTimePickerFieldBuilder().getBuilder(), extensionRegistry);
-                    dataCase_ = 7;
-                    break;
-                  } // case 58
-                default:
-                  {
-                    if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                      done = true; // was an endgroup tag
-                    }
-                    break;
-                  } // default:
-              } // switch (tag)
-            } // while (!done)
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.unwrapIOException();
-          } finally {
-            onChanged();
-          } // finally
-          return this;
-        }
-
-        private int dataCase_ = 0;
-        private java.lang.Object data_;
-
         public DataCase getDataCase() {
-          return DataCase.forNumber(dataCase_);
+          return instance.getDataCase();
         }
 
         public Builder clearData() {
-          dataCase_ = 0;
-          data_ = null;
-          onChanged();
+          copyOnWrite();
+          instance.clearData();
           return this;
         }
 
-        private int bitField0_;
-
-        private com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.TextParagraph,
-                com.google.apps.card.v1.TextParagraph.Builder,
-                com.google.apps.card.v1.TextParagraphOrBuilder>
-            textParagraphBuilder_;
         /**
          *
          *
@@ -1971,12 +1502,10 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * </pre>
          *
          * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
-         *
-         * @return Whether the textParagraph field is set.
          */
         @java.lang.Override
         public boolean hasTextParagraph() {
-          return dataCase_ == 1;
+          return instance.hasTextParagraph();
         }
         /**
          *
@@ -1986,22 +1515,10 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * </pre>
          *
          * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
-         *
-         * @return The textParagraph.
          */
         @java.lang.Override
         public com.google.apps.card.v1.TextParagraph getTextParagraph() {
-          if (textParagraphBuilder_ == null) {
-            if (dataCase_ == 1) {
-              return (com.google.apps.card.v1.TextParagraph) data_;
-            }
-            return com.google.apps.card.v1.TextParagraph.getDefaultInstance();
-          } else {
-            if (dataCase_ == 1) {
-              return textParagraphBuilder_.getMessage();
-            }
-            return com.google.apps.card.v1.TextParagraph.getDefaultInstance();
-          }
+          return instance.getTextParagraph();
         }
         /**
          *
@@ -2013,16 +1530,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
          */
         public Builder setTextParagraph(com.google.apps.card.v1.TextParagraph value) {
-          if (textParagraphBuilder_ == null) {
-            if (value == null) {
-              throw new NullPointerException();
-            }
-            data_ = value;
-            onChanged();
-          } else {
-            textParagraphBuilder_.setMessage(value);
-          }
-          dataCase_ = 1;
+          copyOnWrite();
+          instance.setTextParagraph(value);
           return this;
         }
         /**
@@ -2036,13 +1545,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          */
         public Builder setTextParagraph(
             com.google.apps.card.v1.TextParagraph.Builder builderForValue) {
-          if (textParagraphBuilder_ == null) {
-            data_ = builderForValue.build();
-            onChanged();
-          } else {
-            textParagraphBuilder_.setMessage(builderForValue.build());
-          }
-          dataCase_ = 1;
+          copyOnWrite();
+          instance.setTextParagraph(builderForValue.build());
           return this;
         }
         /**
@@ -2055,26 +1559,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
          */
         public Builder mergeTextParagraph(com.google.apps.card.v1.TextParagraph value) {
-          if (textParagraphBuilder_ == null) {
-            if (dataCase_ == 1
-                && data_ != com.google.apps.card.v1.TextParagraph.getDefaultInstance()) {
-              data_ =
-                  com.google.apps.card.v1.TextParagraph.newBuilder(
-                          (com.google.apps.card.v1.TextParagraph) data_)
-                      .mergeFrom(value)
-                      .buildPartial();
-            } else {
-              data_ = value;
-            }
-            onChanged();
-          } else {
-            if (dataCase_ == 1) {
-              textParagraphBuilder_.mergeFrom(value);
-            } else {
-              textParagraphBuilder_.setMessage(value);
-            }
-          }
-          dataCase_ = 1;
+          copyOnWrite();
+          instance.mergeTextParagraph(value);
           return this;
         }
         /**
@@ -2087,91 +1573,11 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
          */
         public Builder clearTextParagraph() {
-          if (textParagraphBuilder_ == null) {
-            if (dataCase_ == 1) {
-              dataCase_ = 0;
-              data_ = null;
-              onChanged();
-            }
-          } else {
-            if (dataCase_ == 1) {
-              dataCase_ = 0;
-              data_ = null;
-            }
-            textParagraphBuilder_.clear();
-          }
+          copyOnWrite();
+          instance.clearTextParagraph();
           return this;
         }
-        /**
-         *
-         *
-         * <pre>
-         * [TextParagraph][google.apps.card.v1.TextParagraph] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
-         */
-        public com.google.apps.card.v1.TextParagraph.Builder getTextParagraphBuilder() {
-          return getTextParagraphFieldBuilder().getBuilder();
-        }
-        /**
-         *
-         *
-         * <pre>
-         * [TextParagraph][google.apps.card.v1.TextParagraph] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
-         */
-        @java.lang.Override
-        public com.google.apps.card.v1.TextParagraphOrBuilder getTextParagraphOrBuilder() {
-          if ((dataCase_ == 1) && (textParagraphBuilder_ != null)) {
-            return textParagraphBuilder_.getMessageOrBuilder();
-          } else {
-            if (dataCase_ == 1) {
-              return (com.google.apps.card.v1.TextParagraph) data_;
-            }
-            return com.google.apps.card.v1.TextParagraph.getDefaultInstance();
-          }
-        }
-        /**
-         *
-         *
-         * <pre>
-         * [TextParagraph][google.apps.card.v1.TextParagraph] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.TextParagraph text_paragraph = 1;</code>
-         */
-        private com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.TextParagraph,
-                com.google.apps.card.v1.TextParagraph.Builder,
-                com.google.apps.card.v1.TextParagraphOrBuilder>
-            getTextParagraphFieldBuilder() {
-          if (textParagraphBuilder_ == null) {
-            if (!(dataCase_ == 1)) {
-              data_ = com.google.apps.card.v1.TextParagraph.getDefaultInstance();
-            }
-            textParagraphBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<
-                    com.google.apps.card.v1.TextParagraph,
-                    com.google.apps.card.v1.TextParagraph.Builder,
-                    com.google.apps.card.v1.TextParagraphOrBuilder>(
-                    (com.google.apps.card.v1.TextParagraph) data_,
-                    getParentForChildren(),
-                    isClean());
-            data_ = null;
-          }
-          dataCase_ = 1;
-          onChanged();
-          return textParagraphBuilder_;
-        }
 
-        private com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.Image,
-                com.google.apps.card.v1.Image.Builder,
-                com.google.apps.card.v1.ImageOrBuilder>
-            imageBuilder_;
         /**
          *
          *
@@ -2180,12 +1586,10 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * </pre>
          *
          * <code>.google.apps.card.v1.Image image = 2;</code>
-         *
-         * @return Whether the image field is set.
          */
         @java.lang.Override
         public boolean hasImage() {
-          return dataCase_ == 2;
+          return instance.hasImage();
         }
         /**
          *
@@ -2195,22 +1599,10 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * </pre>
          *
          * <code>.google.apps.card.v1.Image image = 2;</code>
-         *
-         * @return The image.
          */
         @java.lang.Override
         public com.google.apps.card.v1.Image getImage() {
-          if (imageBuilder_ == null) {
-            if (dataCase_ == 2) {
-              return (com.google.apps.card.v1.Image) data_;
-            }
-            return com.google.apps.card.v1.Image.getDefaultInstance();
-          } else {
-            if (dataCase_ == 2) {
-              return imageBuilder_.getMessage();
-            }
-            return com.google.apps.card.v1.Image.getDefaultInstance();
-          }
+          return instance.getImage();
         }
         /**
          *
@@ -2222,16 +1614,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.Image image = 2;</code>
          */
         public Builder setImage(com.google.apps.card.v1.Image value) {
-          if (imageBuilder_ == null) {
-            if (value == null) {
-              throw new NullPointerException();
-            }
-            data_ = value;
-            onChanged();
-          } else {
-            imageBuilder_.setMessage(value);
-          }
-          dataCase_ = 2;
+          copyOnWrite();
+          instance.setImage(value);
           return this;
         }
         /**
@@ -2244,13 +1628,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.Image image = 2;</code>
          */
         public Builder setImage(com.google.apps.card.v1.Image.Builder builderForValue) {
-          if (imageBuilder_ == null) {
-            data_ = builderForValue.build();
-            onChanged();
-          } else {
-            imageBuilder_.setMessage(builderForValue.build());
-          }
-          dataCase_ = 2;
+          copyOnWrite();
+          instance.setImage(builderForValue.build());
           return this;
         }
         /**
@@ -2263,24 +1642,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.Image image = 2;</code>
          */
         public Builder mergeImage(com.google.apps.card.v1.Image value) {
-          if (imageBuilder_ == null) {
-            if (dataCase_ == 2 && data_ != com.google.apps.card.v1.Image.getDefaultInstance()) {
-              data_ =
-                  com.google.apps.card.v1.Image.newBuilder((com.google.apps.card.v1.Image) data_)
-                      .mergeFrom(value)
-                      .buildPartial();
-            } else {
-              data_ = value;
-            }
-            onChanged();
-          } else {
-            if (dataCase_ == 2) {
-              imageBuilder_.mergeFrom(value);
-            } else {
-              imageBuilder_.setMessage(value);
-            }
-          }
-          dataCase_ = 2;
+          copyOnWrite();
+          instance.mergeImage(value);
           return this;
         }
         /**
@@ -2293,89 +1656,11 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.Image image = 2;</code>
          */
         public Builder clearImage() {
-          if (imageBuilder_ == null) {
-            if (dataCase_ == 2) {
-              dataCase_ = 0;
-              data_ = null;
-              onChanged();
-            }
-          } else {
-            if (dataCase_ == 2) {
-              dataCase_ = 0;
-              data_ = null;
-            }
-            imageBuilder_.clear();
-          }
+          copyOnWrite();
+          instance.clearImage();
           return this;
         }
-        /**
-         *
-         *
-         * <pre>
-         * [Image][google.apps.card.v1.Image] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.Image image = 2;</code>
-         */
-        public com.google.apps.card.v1.Image.Builder getImageBuilder() {
-          return getImageFieldBuilder().getBuilder();
-        }
-        /**
-         *
-         *
-         * <pre>
-         * [Image][google.apps.card.v1.Image] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.Image image = 2;</code>
-         */
-        @java.lang.Override
-        public com.google.apps.card.v1.ImageOrBuilder getImageOrBuilder() {
-          if ((dataCase_ == 2) && (imageBuilder_ != null)) {
-            return imageBuilder_.getMessageOrBuilder();
-          } else {
-            if (dataCase_ == 2) {
-              return (com.google.apps.card.v1.Image) data_;
-            }
-            return com.google.apps.card.v1.Image.getDefaultInstance();
-          }
-        }
-        /**
-         *
-         *
-         * <pre>
-         * [Image][google.apps.card.v1.Image] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.Image image = 2;</code>
-         */
-        private com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.Image,
-                com.google.apps.card.v1.Image.Builder,
-                com.google.apps.card.v1.ImageOrBuilder>
-            getImageFieldBuilder() {
-          if (imageBuilder_ == null) {
-            if (!(dataCase_ == 2)) {
-              data_ = com.google.apps.card.v1.Image.getDefaultInstance();
-            }
-            imageBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<
-                    com.google.apps.card.v1.Image,
-                    com.google.apps.card.v1.Image.Builder,
-                    com.google.apps.card.v1.ImageOrBuilder>(
-                    (com.google.apps.card.v1.Image) data_, getParentForChildren(), isClean());
-            data_ = null;
-          }
-          dataCase_ = 2;
-          onChanged();
-          return imageBuilder_;
-        }
 
-        private com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.DecoratedText,
-                com.google.apps.card.v1.DecoratedText.Builder,
-                com.google.apps.card.v1.DecoratedTextOrBuilder>
-            decoratedTextBuilder_;
         /**
          *
          *
@@ -2384,12 +1669,10 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * </pre>
          *
          * <code>.google.apps.card.v1.DecoratedText decorated_text = 3;</code>
-         *
-         * @return Whether the decoratedText field is set.
          */
         @java.lang.Override
         public boolean hasDecoratedText() {
-          return dataCase_ == 3;
+          return instance.hasDecoratedText();
         }
         /**
          *
@@ -2399,22 +1682,10 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * </pre>
          *
          * <code>.google.apps.card.v1.DecoratedText decorated_text = 3;</code>
-         *
-         * @return The decoratedText.
          */
         @java.lang.Override
         public com.google.apps.card.v1.DecoratedText getDecoratedText() {
-          if (decoratedTextBuilder_ == null) {
-            if (dataCase_ == 3) {
-              return (com.google.apps.card.v1.DecoratedText) data_;
-            }
-            return com.google.apps.card.v1.DecoratedText.getDefaultInstance();
-          } else {
-            if (dataCase_ == 3) {
-              return decoratedTextBuilder_.getMessage();
-            }
-            return com.google.apps.card.v1.DecoratedText.getDefaultInstance();
-          }
+          return instance.getDecoratedText();
         }
         /**
          *
@@ -2426,16 +1697,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.DecoratedText decorated_text = 3;</code>
          */
         public Builder setDecoratedText(com.google.apps.card.v1.DecoratedText value) {
-          if (decoratedTextBuilder_ == null) {
-            if (value == null) {
-              throw new NullPointerException();
-            }
-            data_ = value;
-            onChanged();
-          } else {
-            decoratedTextBuilder_.setMessage(value);
-          }
-          dataCase_ = 3;
+          copyOnWrite();
+          instance.setDecoratedText(value);
           return this;
         }
         /**
@@ -2449,13 +1712,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          */
         public Builder setDecoratedText(
             com.google.apps.card.v1.DecoratedText.Builder builderForValue) {
-          if (decoratedTextBuilder_ == null) {
-            data_ = builderForValue.build();
-            onChanged();
-          } else {
-            decoratedTextBuilder_.setMessage(builderForValue.build());
-          }
-          dataCase_ = 3;
+          copyOnWrite();
+          instance.setDecoratedText(builderForValue.build());
           return this;
         }
         /**
@@ -2468,26 +1726,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.DecoratedText decorated_text = 3;</code>
          */
         public Builder mergeDecoratedText(com.google.apps.card.v1.DecoratedText value) {
-          if (decoratedTextBuilder_ == null) {
-            if (dataCase_ == 3
-                && data_ != com.google.apps.card.v1.DecoratedText.getDefaultInstance()) {
-              data_ =
-                  com.google.apps.card.v1.DecoratedText.newBuilder(
-                          (com.google.apps.card.v1.DecoratedText) data_)
-                      .mergeFrom(value)
-                      .buildPartial();
-            } else {
-              data_ = value;
-            }
-            onChanged();
-          } else {
-            if (dataCase_ == 3) {
-              decoratedTextBuilder_.mergeFrom(value);
-            } else {
-              decoratedTextBuilder_.setMessage(value);
-            }
-          }
-          dataCase_ = 3;
+          copyOnWrite();
+          instance.mergeDecoratedText(value);
           return this;
         }
         /**
@@ -2500,91 +1740,11 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.DecoratedText decorated_text = 3;</code>
          */
         public Builder clearDecoratedText() {
-          if (decoratedTextBuilder_ == null) {
-            if (dataCase_ == 3) {
-              dataCase_ = 0;
-              data_ = null;
-              onChanged();
-            }
-          } else {
-            if (dataCase_ == 3) {
-              dataCase_ = 0;
-              data_ = null;
-            }
-            decoratedTextBuilder_.clear();
-          }
+          copyOnWrite();
+          instance.clearDecoratedText();
           return this;
         }
-        /**
-         *
-         *
-         * <pre>
-         * [DecoratedText][google.apps.card.v1.DecoratedText] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.DecoratedText decorated_text = 3;</code>
-         */
-        public com.google.apps.card.v1.DecoratedText.Builder getDecoratedTextBuilder() {
-          return getDecoratedTextFieldBuilder().getBuilder();
-        }
-        /**
-         *
-         *
-         * <pre>
-         * [DecoratedText][google.apps.card.v1.DecoratedText] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.DecoratedText decorated_text = 3;</code>
-         */
-        @java.lang.Override
-        public com.google.apps.card.v1.DecoratedTextOrBuilder getDecoratedTextOrBuilder() {
-          if ((dataCase_ == 3) && (decoratedTextBuilder_ != null)) {
-            return decoratedTextBuilder_.getMessageOrBuilder();
-          } else {
-            if (dataCase_ == 3) {
-              return (com.google.apps.card.v1.DecoratedText) data_;
-            }
-            return com.google.apps.card.v1.DecoratedText.getDefaultInstance();
-          }
-        }
-        /**
-         *
-         *
-         * <pre>
-         * [DecoratedText][google.apps.card.v1.DecoratedText] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.DecoratedText decorated_text = 3;</code>
-         */
-        private com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.DecoratedText,
-                com.google.apps.card.v1.DecoratedText.Builder,
-                com.google.apps.card.v1.DecoratedTextOrBuilder>
-            getDecoratedTextFieldBuilder() {
-          if (decoratedTextBuilder_ == null) {
-            if (!(dataCase_ == 3)) {
-              data_ = com.google.apps.card.v1.DecoratedText.getDefaultInstance();
-            }
-            decoratedTextBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<
-                    com.google.apps.card.v1.DecoratedText,
-                    com.google.apps.card.v1.DecoratedText.Builder,
-                    com.google.apps.card.v1.DecoratedTextOrBuilder>(
-                    (com.google.apps.card.v1.DecoratedText) data_,
-                    getParentForChildren(),
-                    isClean());
-            data_ = null;
-          }
-          dataCase_ = 3;
-          onChanged();
-          return decoratedTextBuilder_;
-        }
 
-        private com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.ButtonList,
-                com.google.apps.card.v1.ButtonList.Builder,
-                com.google.apps.card.v1.ButtonListOrBuilder>
-            buttonListBuilder_;
         /**
          *
          *
@@ -2593,12 +1753,10 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * </pre>
          *
          * <code>.google.apps.card.v1.ButtonList button_list = 4;</code>
-         *
-         * @return Whether the buttonList field is set.
          */
         @java.lang.Override
         public boolean hasButtonList() {
-          return dataCase_ == 4;
+          return instance.hasButtonList();
         }
         /**
          *
@@ -2608,22 +1766,10 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * </pre>
          *
          * <code>.google.apps.card.v1.ButtonList button_list = 4;</code>
-         *
-         * @return The buttonList.
          */
         @java.lang.Override
         public com.google.apps.card.v1.ButtonList getButtonList() {
-          if (buttonListBuilder_ == null) {
-            if (dataCase_ == 4) {
-              return (com.google.apps.card.v1.ButtonList) data_;
-            }
-            return com.google.apps.card.v1.ButtonList.getDefaultInstance();
-          } else {
-            if (dataCase_ == 4) {
-              return buttonListBuilder_.getMessage();
-            }
-            return com.google.apps.card.v1.ButtonList.getDefaultInstance();
-          }
+          return instance.getButtonList();
         }
         /**
          *
@@ -2635,16 +1781,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.ButtonList button_list = 4;</code>
          */
         public Builder setButtonList(com.google.apps.card.v1.ButtonList value) {
-          if (buttonListBuilder_ == null) {
-            if (value == null) {
-              throw new NullPointerException();
-            }
-            data_ = value;
-            onChanged();
-          } else {
-            buttonListBuilder_.setMessage(value);
-          }
-          dataCase_ = 4;
+          copyOnWrite();
+          instance.setButtonList(value);
           return this;
         }
         /**
@@ -2657,13 +1795,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.ButtonList button_list = 4;</code>
          */
         public Builder setButtonList(com.google.apps.card.v1.ButtonList.Builder builderForValue) {
-          if (buttonListBuilder_ == null) {
-            data_ = builderForValue.build();
-            onChanged();
-          } else {
-            buttonListBuilder_.setMessage(builderForValue.build());
-          }
-          dataCase_ = 4;
+          copyOnWrite();
+          instance.setButtonList(builderForValue.build());
           return this;
         }
         /**
@@ -2676,26 +1809,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.ButtonList button_list = 4;</code>
          */
         public Builder mergeButtonList(com.google.apps.card.v1.ButtonList value) {
-          if (buttonListBuilder_ == null) {
-            if (dataCase_ == 4
-                && data_ != com.google.apps.card.v1.ButtonList.getDefaultInstance()) {
-              data_ =
-                  com.google.apps.card.v1.ButtonList.newBuilder(
-                          (com.google.apps.card.v1.ButtonList) data_)
-                      .mergeFrom(value)
-                      .buildPartial();
-            } else {
-              data_ = value;
-            }
-            onChanged();
-          } else {
-            if (dataCase_ == 4) {
-              buttonListBuilder_.mergeFrom(value);
-            } else {
-              buttonListBuilder_.setMessage(value);
-            }
-          }
-          dataCase_ = 4;
+          copyOnWrite();
+          instance.mergeButtonList(value);
           return this;
         }
         /**
@@ -2708,89 +1823,11 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.ButtonList button_list = 4;</code>
          */
         public Builder clearButtonList() {
-          if (buttonListBuilder_ == null) {
-            if (dataCase_ == 4) {
-              dataCase_ = 0;
-              data_ = null;
-              onChanged();
-            }
-          } else {
-            if (dataCase_ == 4) {
-              dataCase_ = 0;
-              data_ = null;
-            }
-            buttonListBuilder_.clear();
-          }
+          copyOnWrite();
+          instance.clearButtonList();
           return this;
         }
-        /**
-         *
-         *
-         * <pre>
-         * [ButtonList][google.apps.card.v1.ButtonList] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.ButtonList button_list = 4;</code>
-         */
-        public com.google.apps.card.v1.ButtonList.Builder getButtonListBuilder() {
-          return getButtonListFieldBuilder().getBuilder();
-        }
-        /**
-         *
-         *
-         * <pre>
-         * [ButtonList][google.apps.card.v1.ButtonList] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.ButtonList button_list = 4;</code>
-         */
-        @java.lang.Override
-        public com.google.apps.card.v1.ButtonListOrBuilder getButtonListOrBuilder() {
-          if ((dataCase_ == 4) && (buttonListBuilder_ != null)) {
-            return buttonListBuilder_.getMessageOrBuilder();
-          } else {
-            if (dataCase_ == 4) {
-              return (com.google.apps.card.v1.ButtonList) data_;
-            }
-            return com.google.apps.card.v1.ButtonList.getDefaultInstance();
-          }
-        }
-        /**
-         *
-         *
-         * <pre>
-         * [ButtonList][google.apps.card.v1.ButtonList] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.ButtonList button_list = 4;</code>
-         */
-        private com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.ButtonList,
-                com.google.apps.card.v1.ButtonList.Builder,
-                com.google.apps.card.v1.ButtonListOrBuilder>
-            getButtonListFieldBuilder() {
-          if (buttonListBuilder_ == null) {
-            if (!(dataCase_ == 4)) {
-              data_ = com.google.apps.card.v1.ButtonList.getDefaultInstance();
-            }
-            buttonListBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<
-                    com.google.apps.card.v1.ButtonList,
-                    com.google.apps.card.v1.ButtonList.Builder,
-                    com.google.apps.card.v1.ButtonListOrBuilder>(
-                    (com.google.apps.card.v1.ButtonList) data_, getParentForChildren(), isClean());
-            data_ = null;
-          }
-          dataCase_ = 4;
-          onChanged();
-          return buttonListBuilder_;
-        }
 
-        private com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.TextInput,
-                com.google.apps.card.v1.TextInput.Builder,
-                com.google.apps.card.v1.TextInputOrBuilder>
-            textInputBuilder_;
         /**
          *
          *
@@ -2799,12 +1836,10 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * </pre>
          *
          * <code>.google.apps.card.v1.TextInput text_input = 5;</code>
-         *
-         * @return Whether the textInput field is set.
          */
         @java.lang.Override
         public boolean hasTextInput() {
-          return dataCase_ == 5;
+          return instance.hasTextInput();
         }
         /**
          *
@@ -2814,22 +1849,10 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * </pre>
          *
          * <code>.google.apps.card.v1.TextInput text_input = 5;</code>
-         *
-         * @return The textInput.
          */
         @java.lang.Override
         public com.google.apps.card.v1.TextInput getTextInput() {
-          if (textInputBuilder_ == null) {
-            if (dataCase_ == 5) {
-              return (com.google.apps.card.v1.TextInput) data_;
-            }
-            return com.google.apps.card.v1.TextInput.getDefaultInstance();
-          } else {
-            if (dataCase_ == 5) {
-              return textInputBuilder_.getMessage();
-            }
-            return com.google.apps.card.v1.TextInput.getDefaultInstance();
-          }
+          return instance.getTextInput();
         }
         /**
          *
@@ -2841,16 +1864,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.TextInput text_input = 5;</code>
          */
         public Builder setTextInput(com.google.apps.card.v1.TextInput value) {
-          if (textInputBuilder_ == null) {
-            if (value == null) {
-              throw new NullPointerException();
-            }
-            data_ = value;
-            onChanged();
-          } else {
-            textInputBuilder_.setMessage(value);
-          }
-          dataCase_ = 5;
+          copyOnWrite();
+          instance.setTextInput(value);
           return this;
         }
         /**
@@ -2863,13 +1878,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.TextInput text_input = 5;</code>
          */
         public Builder setTextInput(com.google.apps.card.v1.TextInput.Builder builderForValue) {
-          if (textInputBuilder_ == null) {
-            data_ = builderForValue.build();
-            onChanged();
-          } else {
-            textInputBuilder_.setMessage(builderForValue.build());
-          }
-          dataCase_ = 5;
+          copyOnWrite();
+          instance.setTextInput(builderForValue.build());
           return this;
         }
         /**
@@ -2882,25 +1892,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.TextInput text_input = 5;</code>
          */
         public Builder mergeTextInput(com.google.apps.card.v1.TextInput value) {
-          if (textInputBuilder_ == null) {
-            if (dataCase_ == 5 && data_ != com.google.apps.card.v1.TextInput.getDefaultInstance()) {
-              data_ =
-                  com.google.apps.card.v1.TextInput.newBuilder(
-                          (com.google.apps.card.v1.TextInput) data_)
-                      .mergeFrom(value)
-                      .buildPartial();
-            } else {
-              data_ = value;
-            }
-            onChanged();
-          } else {
-            if (dataCase_ == 5) {
-              textInputBuilder_.mergeFrom(value);
-            } else {
-              textInputBuilder_.setMessage(value);
-            }
-          }
-          dataCase_ = 5;
+          copyOnWrite();
+          instance.mergeTextInput(value);
           return this;
         }
         /**
@@ -2913,89 +1906,11 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.TextInput text_input = 5;</code>
          */
         public Builder clearTextInput() {
-          if (textInputBuilder_ == null) {
-            if (dataCase_ == 5) {
-              dataCase_ = 0;
-              data_ = null;
-              onChanged();
-            }
-          } else {
-            if (dataCase_ == 5) {
-              dataCase_ = 0;
-              data_ = null;
-            }
-            textInputBuilder_.clear();
-          }
+          copyOnWrite();
+          instance.clearTextInput();
           return this;
         }
-        /**
-         *
-         *
-         * <pre>
-         * [TextInput][google.apps.card.v1.TextInput] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.TextInput text_input = 5;</code>
-         */
-        public com.google.apps.card.v1.TextInput.Builder getTextInputBuilder() {
-          return getTextInputFieldBuilder().getBuilder();
-        }
-        /**
-         *
-         *
-         * <pre>
-         * [TextInput][google.apps.card.v1.TextInput] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.TextInput text_input = 5;</code>
-         */
-        @java.lang.Override
-        public com.google.apps.card.v1.TextInputOrBuilder getTextInputOrBuilder() {
-          if ((dataCase_ == 5) && (textInputBuilder_ != null)) {
-            return textInputBuilder_.getMessageOrBuilder();
-          } else {
-            if (dataCase_ == 5) {
-              return (com.google.apps.card.v1.TextInput) data_;
-            }
-            return com.google.apps.card.v1.TextInput.getDefaultInstance();
-          }
-        }
-        /**
-         *
-         *
-         * <pre>
-         * [TextInput][google.apps.card.v1.TextInput] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.TextInput text_input = 5;</code>
-         */
-        private com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.TextInput,
-                com.google.apps.card.v1.TextInput.Builder,
-                com.google.apps.card.v1.TextInputOrBuilder>
-            getTextInputFieldBuilder() {
-          if (textInputBuilder_ == null) {
-            if (!(dataCase_ == 5)) {
-              data_ = com.google.apps.card.v1.TextInput.getDefaultInstance();
-            }
-            textInputBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<
-                    com.google.apps.card.v1.TextInput,
-                    com.google.apps.card.v1.TextInput.Builder,
-                    com.google.apps.card.v1.TextInputOrBuilder>(
-                    (com.google.apps.card.v1.TextInput) data_, getParentForChildren(), isClean());
-            data_ = null;
-          }
-          dataCase_ = 5;
-          onChanged();
-          return textInputBuilder_;
-        }
 
-        private com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.SelectionInput,
-                com.google.apps.card.v1.SelectionInput.Builder,
-                com.google.apps.card.v1.SelectionInputOrBuilder>
-            selectionInputBuilder_;
         /**
          *
          *
@@ -3004,12 +1919,10 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * </pre>
          *
          * <code>.google.apps.card.v1.SelectionInput selection_input = 6;</code>
-         *
-         * @return Whether the selectionInput field is set.
          */
         @java.lang.Override
         public boolean hasSelectionInput() {
-          return dataCase_ == 6;
+          return instance.hasSelectionInput();
         }
         /**
          *
@@ -3019,22 +1932,10 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * </pre>
          *
          * <code>.google.apps.card.v1.SelectionInput selection_input = 6;</code>
-         *
-         * @return The selectionInput.
          */
         @java.lang.Override
         public com.google.apps.card.v1.SelectionInput getSelectionInput() {
-          if (selectionInputBuilder_ == null) {
-            if (dataCase_ == 6) {
-              return (com.google.apps.card.v1.SelectionInput) data_;
-            }
-            return com.google.apps.card.v1.SelectionInput.getDefaultInstance();
-          } else {
-            if (dataCase_ == 6) {
-              return selectionInputBuilder_.getMessage();
-            }
-            return com.google.apps.card.v1.SelectionInput.getDefaultInstance();
-          }
+          return instance.getSelectionInput();
         }
         /**
          *
@@ -3046,16 +1947,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.SelectionInput selection_input = 6;</code>
          */
         public Builder setSelectionInput(com.google.apps.card.v1.SelectionInput value) {
-          if (selectionInputBuilder_ == null) {
-            if (value == null) {
-              throw new NullPointerException();
-            }
-            data_ = value;
-            onChanged();
-          } else {
-            selectionInputBuilder_.setMessage(value);
-          }
-          dataCase_ = 6;
+          copyOnWrite();
+          instance.setSelectionInput(value);
           return this;
         }
         /**
@@ -3069,13 +1962,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          */
         public Builder setSelectionInput(
             com.google.apps.card.v1.SelectionInput.Builder builderForValue) {
-          if (selectionInputBuilder_ == null) {
-            data_ = builderForValue.build();
-            onChanged();
-          } else {
-            selectionInputBuilder_.setMessage(builderForValue.build());
-          }
-          dataCase_ = 6;
+          copyOnWrite();
+          instance.setSelectionInput(builderForValue.build());
           return this;
         }
         /**
@@ -3088,26 +1976,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.SelectionInput selection_input = 6;</code>
          */
         public Builder mergeSelectionInput(com.google.apps.card.v1.SelectionInput value) {
-          if (selectionInputBuilder_ == null) {
-            if (dataCase_ == 6
-                && data_ != com.google.apps.card.v1.SelectionInput.getDefaultInstance()) {
-              data_ =
-                  com.google.apps.card.v1.SelectionInput.newBuilder(
-                          (com.google.apps.card.v1.SelectionInput) data_)
-                      .mergeFrom(value)
-                      .buildPartial();
-            } else {
-              data_ = value;
-            }
-            onChanged();
-          } else {
-            if (dataCase_ == 6) {
-              selectionInputBuilder_.mergeFrom(value);
-            } else {
-              selectionInputBuilder_.setMessage(value);
-            }
-          }
-          dataCase_ = 6;
+          copyOnWrite();
+          instance.mergeSelectionInput(value);
           return this;
         }
         /**
@@ -3120,91 +1990,11 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.SelectionInput selection_input = 6;</code>
          */
         public Builder clearSelectionInput() {
-          if (selectionInputBuilder_ == null) {
-            if (dataCase_ == 6) {
-              dataCase_ = 0;
-              data_ = null;
-              onChanged();
-            }
-          } else {
-            if (dataCase_ == 6) {
-              dataCase_ = 0;
-              data_ = null;
-            }
-            selectionInputBuilder_.clear();
-          }
+          copyOnWrite();
+          instance.clearSelectionInput();
           return this;
         }
-        /**
-         *
-         *
-         * <pre>
-         * [SelectionInput][google.apps.card.v1.SelectionInput] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.SelectionInput selection_input = 6;</code>
-         */
-        public com.google.apps.card.v1.SelectionInput.Builder getSelectionInputBuilder() {
-          return getSelectionInputFieldBuilder().getBuilder();
-        }
-        /**
-         *
-         *
-         * <pre>
-         * [SelectionInput][google.apps.card.v1.SelectionInput] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.SelectionInput selection_input = 6;</code>
-         */
-        @java.lang.Override
-        public com.google.apps.card.v1.SelectionInputOrBuilder getSelectionInputOrBuilder() {
-          if ((dataCase_ == 6) && (selectionInputBuilder_ != null)) {
-            return selectionInputBuilder_.getMessageOrBuilder();
-          } else {
-            if (dataCase_ == 6) {
-              return (com.google.apps.card.v1.SelectionInput) data_;
-            }
-            return com.google.apps.card.v1.SelectionInput.getDefaultInstance();
-          }
-        }
-        /**
-         *
-         *
-         * <pre>
-         * [SelectionInput][google.apps.card.v1.SelectionInput] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.SelectionInput selection_input = 6;</code>
-         */
-        private com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.SelectionInput,
-                com.google.apps.card.v1.SelectionInput.Builder,
-                com.google.apps.card.v1.SelectionInputOrBuilder>
-            getSelectionInputFieldBuilder() {
-          if (selectionInputBuilder_ == null) {
-            if (!(dataCase_ == 6)) {
-              data_ = com.google.apps.card.v1.SelectionInput.getDefaultInstance();
-            }
-            selectionInputBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<
-                    com.google.apps.card.v1.SelectionInput,
-                    com.google.apps.card.v1.SelectionInput.Builder,
-                    com.google.apps.card.v1.SelectionInputOrBuilder>(
-                    (com.google.apps.card.v1.SelectionInput) data_,
-                    getParentForChildren(),
-                    isClean());
-            data_ = null;
-          }
-          dataCase_ = 6;
-          onChanged();
-          return selectionInputBuilder_;
-        }
 
-        private com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.DateTimePicker,
-                com.google.apps.card.v1.DateTimePicker.Builder,
-                com.google.apps.card.v1.DateTimePickerOrBuilder>
-            dateTimePickerBuilder_;
         /**
          *
          *
@@ -3213,12 +2003,10 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * </pre>
          *
          * <code>.google.apps.card.v1.DateTimePicker date_time_picker = 7;</code>
-         *
-         * @return Whether the dateTimePicker field is set.
          */
         @java.lang.Override
         public boolean hasDateTimePicker() {
-          return dataCase_ == 7;
+          return instance.hasDateTimePicker();
         }
         /**
          *
@@ -3228,22 +2016,10 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * </pre>
          *
          * <code>.google.apps.card.v1.DateTimePicker date_time_picker = 7;</code>
-         *
-         * @return The dateTimePicker.
          */
         @java.lang.Override
         public com.google.apps.card.v1.DateTimePicker getDateTimePicker() {
-          if (dateTimePickerBuilder_ == null) {
-            if (dataCase_ == 7) {
-              return (com.google.apps.card.v1.DateTimePicker) data_;
-            }
-            return com.google.apps.card.v1.DateTimePicker.getDefaultInstance();
-          } else {
-            if (dataCase_ == 7) {
-              return dateTimePickerBuilder_.getMessage();
-            }
-            return com.google.apps.card.v1.DateTimePicker.getDefaultInstance();
-          }
+          return instance.getDateTimePicker();
         }
         /**
          *
@@ -3255,16 +2031,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.DateTimePicker date_time_picker = 7;</code>
          */
         public Builder setDateTimePicker(com.google.apps.card.v1.DateTimePicker value) {
-          if (dateTimePickerBuilder_ == null) {
-            if (value == null) {
-              throw new NullPointerException();
-            }
-            data_ = value;
-            onChanged();
-          } else {
-            dateTimePickerBuilder_.setMessage(value);
-          }
-          dataCase_ = 7;
+          copyOnWrite();
+          instance.setDateTimePicker(value);
           return this;
         }
         /**
@@ -3278,13 +2046,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          */
         public Builder setDateTimePicker(
             com.google.apps.card.v1.DateTimePicker.Builder builderForValue) {
-          if (dateTimePickerBuilder_ == null) {
-            data_ = builderForValue.build();
-            onChanged();
-          } else {
-            dateTimePickerBuilder_.setMessage(builderForValue.build());
-          }
-          dataCase_ = 7;
+          copyOnWrite();
+          instance.setDateTimePicker(builderForValue.build());
           return this;
         }
         /**
@@ -3297,26 +2060,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.DateTimePicker date_time_picker = 7;</code>
          */
         public Builder mergeDateTimePicker(com.google.apps.card.v1.DateTimePicker value) {
-          if (dateTimePickerBuilder_ == null) {
-            if (dataCase_ == 7
-                && data_ != com.google.apps.card.v1.DateTimePicker.getDefaultInstance()) {
-              data_ =
-                  com.google.apps.card.v1.DateTimePicker.newBuilder(
-                          (com.google.apps.card.v1.DateTimePicker) data_)
-                      .mergeFrom(value)
-                      .buildPartial();
-            } else {
-              data_ = value;
-            }
-            onChanged();
-          } else {
-            if (dataCase_ == 7) {
-              dateTimePickerBuilder_.mergeFrom(value);
-            } else {
-              dateTimePickerBuilder_.setMessage(value);
-            }
-          }
-          dataCase_ = 7;
+          copyOnWrite();
+          instance.mergeDateTimePicker(value);
           return this;
         }
         /**
@@ -3329,152 +2074,107 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
          * <code>.google.apps.card.v1.DateTimePicker date_time_picker = 7;</code>
          */
         public Builder clearDateTimePicker() {
-          if (dateTimePickerBuilder_ == null) {
-            if (dataCase_ == 7) {
-              dataCase_ = 0;
-              data_ = null;
-              onChanged();
-            }
-          } else {
-            if (dataCase_ == 7) {
-              dataCase_ = 0;
-              data_ = null;
-            }
-            dateTimePickerBuilder_.clear();
-          }
+          copyOnWrite();
+          instance.clearDateTimePicker();
           return this;
-        }
-        /**
-         *
-         *
-         * <pre>
-         * [DateTimePicker][google.apps.card.v1.DateTimePicker] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.DateTimePicker date_time_picker = 7;</code>
-         */
-        public com.google.apps.card.v1.DateTimePicker.Builder getDateTimePickerBuilder() {
-          return getDateTimePickerFieldBuilder().getBuilder();
-        }
-        /**
-         *
-         *
-         * <pre>
-         * [DateTimePicker][google.apps.card.v1.DateTimePicker] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.DateTimePicker date_time_picker = 7;</code>
-         */
-        @java.lang.Override
-        public com.google.apps.card.v1.DateTimePickerOrBuilder getDateTimePickerOrBuilder() {
-          if ((dataCase_ == 7) && (dateTimePickerBuilder_ != null)) {
-            return dateTimePickerBuilder_.getMessageOrBuilder();
-          } else {
-            if (dataCase_ == 7) {
-              return (com.google.apps.card.v1.DateTimePicker) data_;
-            }
-            return com.google.apps.card.v1.DateTimePicker.getDefaultInstance();
-          }
-        }
-        /**
-         *
-         *
-         * <pre>
-         * [DateTimePicker][google.apps.card.v1.DateTimePicker] widget.
-         * </pre>
-         *
-         * <code>.google.apps.card.v1.DateTimePicker date_time_picker = 7;</code>
-         */
-        private com.google.protobuf.SingleFieldBuilderV3<
-                com.google.apps.card.v1.DateTimePicker,
-                com.google.apps.card.v1.DateTimePicker.Builder,
-                com.google.apps.card.v1.DateTimePickerOrBuilder>
-            getDateTimePickerFieldBuilder() {
-          if (dateTimePickerBuilder_ == null) {
-            if (!(dataCase_ == 7)) {
-              data_ = com.google.apps.card.v1.DateTimePicker.getDefaultInstance();
-            }
-            dateTimePickerBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<
-                    com.google.apps.card.v1.DateTimePicker,
-                    com.google.apps.card.v1.DateTimePicker.Builder,
-                    com.google.apps.card.v1.DateTimePickerOrBuilder>(
-                    (com.google.apps.card.v1.DateTimePicker) data_,
-                    getParentForChildren(),
-                    isClean());
-            data_ = null;
-          }
-          dataCase_ = 7;
-          onChanged();
-          return dateTimePickerBuilder_;
-        }
-
-        @java.lang.Override
-        public final Builder setUnknownFields(
-            final com.google.protobuf.UnknownFieldSet unknownFields) {
-          return super.setUnknownFields(unknownFields);
-        }
-
-        @java.lang.Override
-        public final Builder mergeUnknownFields(
-            final com.google.protobuf.UnknownFieldSet unknownFields) {
-          return super.mergeUnknownFields(unknownFields);
         }
 
         // @@protoc_insertion_point(builder_scope:google.apps.card.v1.Columns.Column.Widgets)
+      }
+
+      @java.lang.Override
+      @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+      protected final java.lang.Object dynamicMethod(
+          com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+          java.lang.Object arg0,
+          java.lang.Object arg1) {
+        switch (method) {
+          case NEW_MUTABLE_INSTANCE:
+            {
+              return new com.google.apps.card.v1.Columns.Column.Widgets();
+            }
+          case NEW_BUILDER:
+            {
+              return new Builder();
+            }
+          case BUILD_MESSAGE_INFO:
+            {
+              java.lang.Object[] objects =
+                  new java.lang.Object[] {
+                    "data_",
+                    "dataCase_",
+                    com.google.apps.card.v1.TextParagraph.class,
+                    com.google.apps.card.v1.Image.class,
+                    com.google.apps.card.v1.DecoratedText.class,
+                    com.google.apps.card.v1.ButtonList.class,
+                    com.google.apps.card.v1.TextInput.class,
+                    com.google.apps.card.v1.SelectionInput.class,
+                    com.google.apps.card.v1.DateTimePicker.class,
+                  };
+              java.lang.String info =
+                  "\u0000\u0007\u0001\u0000\u0001\u0007\u0007\u0000\u0000\u0000\u0001<\u0000\u0002<"
+                      + "\u0000\u0003<\u0000\u0004<\u0000\u0005<\u0000\u0006<\u0000\u0007<\u0000";
+              return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+            }
+            // fall through
+          case GET_DEFAULT_INSTANCE:
+            {
+              return DEFAULT_INSTANCE;
+            }
+          case GET_PARSER:
+            {
+              com.google.protobuf.Parser<com.google.apps.card.v1.Columns.Column.Widgets> parser =
+                  PARSER;
+              if (parser == null) {
+                synchronized (com.google.apps.card.v1.Columns.Column.Widgets.class) {
+                  parser = PARSER;
+                  if (parser == null) {
+                    parser =
+                        new DefaultInstanceBasedParser<
+                            com.google.apps.card.v1.Columns.Column.Widgets>(DEFAULT_INSTANCE);
+                    PARSER = parser;
+                  }
+                }
+              }
+              return parser;
+            }
+          case GET_MEMOIZED_IS_INITIALIZED:
+            {
+              return (byte) 1;
+            }
+          case SET_MEMOIZED_IS_INITIALIZED:
+            {
+              return null;
+            }
+        }
+        throw new UnsupportedOperationException();
       }
 
       // @@protoc_insertion_point(class_scope:google.apps.card.v1.Columns.Column.Widgets)
       private static final com.google.apps.card.v1.Columns.Column.Widgets DEFAULT_INSTANCE;
 
       static {
-        DEFAULT_INSTANCE = new com.google.apps.card.v1.Columns.Column.Widgets();
+        Widgets defaultInstance = new Widgets();
+        // New instances are implicitly immutable so no need to make
+        // immutable.
+        DEFAULT_INSTANCE = defaultInstance;
+        com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+            Widgets.class, defaultInstance);
       }
 
       public static com.google.apps.card.v1.Columns.Column.Widgets getDefaultInstance() {
         return DEFAULT_INSTANCE;
       }
 
-      private static final com.google.protobuf.Parser<Widgets> PARSER =
-          new com.google.protobuf.AbstractParser<Widgets>() {
-            @java.lang.Override
-            public Widgets parsePartialFrom(
-                com.google.protobuf.CodedInputStream input,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-                throws com.google.protobuf.InvalidProtocolBufferException {
-              Builder builder = newBuilder();
-              try {
-                builder.mergeFrom(input, extensionRegistry);
-              } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-                throw e.setUnfinishedMessage(builder.buildPartial());
-              } catch (com.google.protobuf.UninitializedMessageException e) {
-                throw e.asInvalidProtocolBufferException()
-                    .setUnfinishedMessage(builder.buildPartial());
-              } catch (java.io.IOException e) {
-                throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                    .setUnfinishedMessage(builder.buildPartial());
-              }
-              return builder.buildPartial();
-            }
-          };
+      private static volatile com.google.protobuf.Parser<Widgets> PARSER;
 
       public static com.google.protobuf.Parser<Widgets> parser() {
-        return PARSER;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Parser<Widgets> getParserForType() {
-        return PARSER;
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.Columns.Column.Widgets getDefaultInstanceForType() {
-        return DEFAULT_INSTANCE;
+        return DEFAULT_INSTANCE.getParserForType();
       }
     }
 
     public static final int HORIZONTAL_SIZE_STYLE_FIELD_NUMBER = 1;
-    private int horizontalSizeStyle_ = 0;
+    private int horizontalSizeStyle_;
     /**
      *
      *
@@ -3512,9 +2212,54 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           ? com.google.apps.card.v1.Columns.Column.HorizontalSizeStyle.UNRECOGNIZED
           : result;
     }
+    /**
+     *
+     *
+     * <pre>
+     * Specifies how a column fills the width of the card.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Columns.Column.HorizontalSizeStyle horizontal_size_style = 1;
+     * </code>
+     *
+     * @param value The enum numeric value on the wire for horizontalSizeStyle to set.
+     */
+    private void setHorizontalSizeStyleValue(int value) {
+      horizontalSizeStyle_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Specifies how a column fills the width of the card.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Columns.Column.HorizontalSizeStyle horizontal_size_style = 1;
+     * </code>
+     *
+     * @param value The horizontalSizeStyle to set.
+     */
+    private void setHorizontalSizeStyle(
+        com.google.apps.card.v1.Columns.Column.HorizontalSizeStyle value) {
+      horizontalSizeStyle_ = value.getNumber();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Specifies how a column fills the width of the card.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Columns.Column.HorizontalSizeStyle horizontal_size_style = 1;
+     * </code>
+     */
+    private void clearHorizontalSizeStyle() {
+
+      horizontalSizeStyle_ = 0;
+    }
 
     public static final int HORIZONTAL_ALIGNMENT_FIELD_NUMBER = 2;
-    private int horizontalAlignment_ = 0;
+    private int horizontalAlignment_;
     /**
      *
      *
@@ -3551,9 +2296,53 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           ? com.google.apps.card.v1.Widget.HorizontalAlignment.UNRECOGNIZED
           : result;
     }
+    /**
+     *
+     *
+     * <pre>
+     * Specifies whether widgets align to the left, right, or center of a
+     * column.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Widget.HorizontalAlignment horizontal_alignment = 2;</code>
+     *
+     * @param value The enum numeric value on the wire for horizontalAlignment to set.
+     */
+    private void setHorizontalAlignmentValue(int value) {
+      horizontalAlignment_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Specifies whether widgets align to the left, right, or center of a
+     * column.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Widget.HorizontalAlignment horizontal_alignment = 2;</code>
+     *
+     * @param value The horizontalAlignment to set.
+     */
+    private void setHorizontalAlignment(com.google.apps.card.v1.Widget.HorizontalAlignment value) {
+      horizontalAlignment_ = value.getNumber();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Specifies whether widgets align to the left, right, or center of a
+     * column.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Widget.HorizontalAlignment horizontal_alignment = 2;</code>
+     */
+    private void clearHorizontalAlignment() {
+
+      horizontalAlignment_ = 0;
+    }
 
     public static final int VERTICAL_ALIGNMENT_FIELD_NUMBER = 3;
-    private int verticalAlignment_ = 0;
+    private int verticalAlignment_;
     /**
      *
      *
@@ -3590,11 +2379,56 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           ? com.google.apps.card.v1.Columns.Column.VerticalAlignment.UNRECOGNIZED
           : result;
     }
+    /**
+     *
+     *
+     * <pre>
+     * Specifies whether widgets align to the top, bottom, or center of a
+     * column.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Columns.Column.VerticalAlignment vertical_alignment = 3;</code>
+     *
+     * @param value The enum numeric value on the wire for verticalAlignment to set.
+     */
+    private void setVerticalAlignmentValue(int value) {
+      verticalAlignment_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Specifies whether widgets align to the top, bottom, or center of a
+     * column.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Columns.Column.VerticalAlignment vertical_alignment = 3;</code>
+     *
+     * @param value The verticalAlignment to set.
+     */
+    private void setVerticalAlignment(
+        com.google.apps.card.v1.Columns.Column.VerticalAlignment value) {
+      verticalAlignment_ = value.getNumber();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Specifies whether widgets align to the top, bottom, or center of a
+     * column.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Columns.Column.VerticalAlignment vertical_alignment = 3;</code>
+     */
+    private void clearVerticalAlignment() {
+
+      verticalAlignment_ = 0;
+    }
 
     public static final int WIDGETS_FIELD_NUMBER = 4;
-
-    @SuppressWarnings("serial")
-    private java.util.List<com.google.apps.card.v1.Columns.Column.Widgets> widgets_;
+    private com.google.protobuf.Internal.ProtobufList<
+            com.google.apps.card.v1.Columns.Column.Widgets>
+        widgets_;
     /**
      *
      *
@@ -3619,7 +2453,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
      */
-    @java.lang.Override
     public java.util.List<? extends com.google.apps.card.v1.Columns.Column.WidgetsOrBuilder>
         getWidgetsOrBuilderList() {
       return widgets_;
@@ -3662,213 +2495,188 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
      */
-    @java.lang.Override
     public com.google.apps.card.v1.Columns.Column.WidgetsOrBuilder getWidgetsOrBuilder(int index) {
       return widgets_.get(index);
     }
 
-    private byte memoizedIsInitialized = -1;
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
+    private void ensureWidgetsIsMutable() {
+      com.google.protobuf.Internal.ProtobufList<com.google.apps.card.v1.Columns.Column.Widgets>
+          tmp = widgets_;
+      if (!tmp.isModifiable()) {
+        widgets_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+      }
     }
 
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-      if (horizontalSizeStyle_
-          != com.google.apps.card.v1.Columns.Column.HorizontalSizeStyle
-              .HORIZONTAL_SIZE_STYLE_UNSPECIFIED
-              .getNumber()) {
-        output.writeEnum(1, horizontalSizeStyle_);
-      }
-      if (horizontalAlignment_
-          != com.google.apps.card.v1.Widget.HorizontalAlignment.HORIZONTAL_ALIGNMENT_UNSPECIFIED
-              .getNumber()) {
-        output.writeEnum(2, horizontalAlignment_);
-      }
-      if (verticalAlignment_
-          != com.google.apps.card.v1.Columns.Column.VerticalAlignment.VERTICAL_ALIGNMENT_UNSPECIFIED
-              .getNumber()) {
-        output.writeEnum(3, verticalAlignment_);
-      }
-      for (int i = 0; i < widgets_.size(); i++) {
-        output.writeMessage(4, widgets_.get(i));
-      }
-      getUnknownFields().writeTo(output);
+    /**
+     *
+     *
+     * <pre>
+     * An array of widgets included in a column. Widgets appear in the order
+     * that they are specified.
+     * </pre>
+     *
+     * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
+     */
+    private void setWidgets(int index, com.google.apps.card.v1.Columns.Column.Widgets value) {
+      value.getClass();
+      ensureWidgetsIsMutable();
+      widgets_.set(index, value);
     }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (horizontalSizeStyle_
-          != com.google.apps.card.v1.Columns.Column.HorizontalSizeStyle
-              .HORIZONTAL_SIZE_STYLE_UNSPECIFIED
-              .getNumber()) {
-        size += com.google.protobuf.CodedOutputStream.computeEnumSize(1, horizontalSizeStyle_);
-      }
-      if (horizontalAlignment_
-          != com.google.apps.card.v1.Widget.HorizontalAlignment.HORIZONTAL_ALIGNMENT_UNSPECIFIED
-              .getNumber()) {
-        size += com.google.protobuf.CodedOutputStream.computeEnumSize(2, horizontalAlignment_);
-      }
-      if (verticalAlignment_
-          != com.google.apps.card.v1.Columns.Column.VerticalAlignment.VERTICAL_ALIGNMENT_UNSPECIFIED
-              .getNumber()) {
-        size += com.google.protobuf.CodedOutputStream.computeEnumSize(3, verticalAlignment_);
-      }
-      for (int i = 0; i < widgets_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, widgets_.get(i));
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
+    /**
+     *
+     *
+     * <pre>
+     * An array of widgets included in a column. Widgets appear in the order
+     * that they are specified.
+     * </pre>
+     *
+     * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
+     */
+    private void addWidgets(com.google.apps.card.v1.Columns.Column.Widgets value) {
+      value.getClass();
+      ensureWidgetsIsMutable();
+      widgets_.add(value);
     }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-        return true;
-      }
-      if (!(obj instanceof com.google.apps.card.v1.Columns.Column)) {
-        return super.equals(obj);
-      }
-      com.google.apps.card.v1.Columns.Column other = (com.google.apps.card.v1.Columns.Column) obj;
-
-      if (horizontalSizeStyle_ != other.horizontalSizeStyle_) return false;
-      if (horizontalAlignment_ != other.horizontalAlignment_) return false;
-      if (verticalAlignment_ != other.verticalAlignment_) return false;
-      if (!getWidgetsList().equals(other.getWidgetsList())) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
+    /**
+     *
+     *
+     * <pre>
+     * An array of widgets included in a column. Widgets appear in the order
+     * that they are specified.
+     * </pre>
+     *
+     * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
+     */
+    private void addWidgets(int index, com.google.apps.card.v1.Columns.Column.Widgets value) {
+      value.getClass();
+      ensureWidgetsIsMutable();
+      widgets_.add(index, value);
     }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + HORIZONTAL_SIZE_STYLE_FIELD_NUMBER;
-      hash = (53 * hash) + horizontalSizeStyle_;
-      hash = (37 * hash) + HORIZONTAL_ALIGNMENT_FIELD_NUMBER;
-      hash = (53 * hash) + horizontalAlignment_;
-      hash = (37 * hash) + VERTICAL_ALIGNMENT_FIELD_NUMBER;
-      hash = (53 * hash) + verticalAlignment_;
-      if (getWidgetsCount() > 0) {
-        hash = (37 * hash) + WIDGETS_FIELD_NUMBER;
-        hash = (53 * hash) + getWidgetsList().hashCode();
-      }
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
+    /**
+     *
+     *
+     * <pre>
+     * An array of widgets included in a column. Widgets appear in the order
+     * that they are specified.
+     * </pre>
+     *
+     * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
+     */
+    private void addAllWidgets(
+        java.lang.Iterable<? extends com.google.apps.card.v1.Columns.Column.Widgets> values) {
+      ensureWidgetsIsMutable();
+      com.google.protobuf.AbstractMessageLite.addAll(values, widgets_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * An array of widgets included in a column. Widgets appear in the order
+     * that they are specified.
+     * </pre>
+     *
+     * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
+     */
+    private void clearWidgets() {
+      widgets_ = emptyProtobufList();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * An array of widgets included in a column. Widgets appear in the order
+     * that they are specified.
+     * </pre>
+     *
+     * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
+     */
+    private void removeWidgets(int index) {
+      ensureWidgetsIsMutable();
+      widgets_.remove(index);
     }
 
     public static com.google.apps.card.v1.Columns.Column parseFrom(java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.Columns.Column parseFrom(
         java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.Columns.Column parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.Columns.Column parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.Columns.Column parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.Columns.Column parseFrom(
         byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.Columns.Column parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.Columns.Column parseFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.Columns.Column parseDelimitedFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.Columns.Column parseDelimitedFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.Columns.Column parseFrom(
         com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.Columns.Column parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
+      return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
 
     public static Builder newBuilder(com.google.apps.card.v1.Columns.Column prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      *
      *
@@ -3884,267 +2692,16 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      * Protobuf type {@code google.apps.card.v1.Columns.Column}
      */
     public static final class Builder
-        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+        extends com.google.protobuf.GeneratedMessageLite.Builder<
+            com.google.apps.card.v1.Columns.Column, Builder>
         implements
         // @@protoc_insertion_point(builder_implements:google.apps.card.v1.Columns.Column)
         com.google.apps.card.v1.Columns.ColumnOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_Columns_Column_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_Columns_Column_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.google.apps.card.v1.Columns.Column.class,
-                com.google.apps.card.v1.Columns.Column.Builder.class);
-      }
-
       // Construct using com.google.apps.card.v1.Columns.Column.newBuilder()
-      private Builder() {}
-
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
+      private Builder() {
+        super(DEFAULT_INSTANCE);
       }
 
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        horizontalSizeStyle_ = 0;
-        horizontalAlignment_ = 0;
-        verticalAlignment_ = 0;
-        if (widgetsBuilder_ == null) {
-          widgets_ = java.util.Collections.emptyList();
-        } else {
-          widgets_ = null;
-          widgetsBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000008);
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_Columns_Column_descriptor;
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.Columns.Column getDefaultInstanceForType() {
-        return com.google.apps.card.v1.Columns.Column.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.Columns.Column build() {
-        com.google.apps.card.v1.Columns.Column result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.Columns.Column buildPartial() {
-        com.google.apps.card.v1.Columns.Column result =
-            new com.google.apps.card.v1.Columns.Column(this);
-        buildPartialRepeatedFields(result);
-        if (bitField0_ != 0) {
-          buildPartial0(result);
-        }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartialRepeatedFields(com.google.apps.card.v1.Columns.Column result) {
-        if (widgetsBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) != 0)) {
-            widgets_ = java.util.Collections.unmodifiableList(widgets_);
-            bitField0_ = (bitField0_ & ~0x00000008);
-          }
-          result.widgets_ = widgets_;
-        } else {
-          result.widgets_ = widgetsBuilder_.build();
-        }
-      }
-
-      private void buildPartial0(com.google.apps.card.v1.Columns.Column result) {
-        int from_bitField0_ = bitField0_;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.horizontalSizeStyle_ = horizontalSizeStyle_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.horizontalAlignment_ = horizontalAlignment_;
-        }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.verticalAlignment_ = verticalAlignment_;
-        }
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.apps.card.v1.Columns.Column) {
-          return mergeFrom((com.google.apps.card.v1.Columns.Column) other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.google.apps.card.v1.Columns.Column other) {
-        if (other == com.google.apps.card.v1.Columns.Column.getDefaultInstance()) return this;
-        if (other.horizontalSizeStyle_ != 0) {
-          setHorizontalSizeStyleValue(other.getHorizontalSizeStyleValue());
-        }
-        if (other.horizontalAlignment_ != 0) {
-          setHorizontalAlignmentValue(other.getHorizontalAlignmentValue());
-        }
-        if (other.verticalAlignment_ != 0) {
-          setVerticalAlignmentValue(other.getVerticalAlignmentValue());
-        }
-        if (widgetsBuilder_ == null) {
-          if (!other.widgets_.isEmpty()) {
-            if (widgets_.isEmpty()) {
-              widgets_ = other.widgets_;
-              bitField0_ = (bitField0_ & ~0x00000008);
-            } else {
-              ensureWidgetsIsMutable();
-              widgets_.addAll(other.widgets_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.widgets_.isEmpty()) {
-            if (widgetsBuilder_.isEmpty()) {
-              widgetsBuilder_.dispose();
-              widgetsBuilder_ = null;
-              widgets_ = other.widgets_;
-              bitField0_ = (bitField0_ & ~0x00000008);
-              widgetsBuilder_ =
-                  com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                      ? getWidgetsFieldBuilder()
-                      : null;
-            } else {
-              widgetsBuilder_.addAllMessages(other.widgets_);
-            }
-          }
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 8:
-                {
-                  horizontalSizeStyle_ = input.readEnum();
-                  bitField0_ |= 0x00000001;
-                  break;
-                } // case 8
-              case 16:
-                {
-                  horizontalAlignment_ = input.readEnum();
-                  bitField0_ |= 0x00000002;
-                  break;
-                } // case 16
-              case 24:
-                {
-                  verticalAlignment_ = input.readEnum();
-                  bitField0_ |= 0x00000004;
-                  break;
-                } // case 24
-              case 34:
-                {
-                  com.google.apps.card.v1.Columns.Column.Widgets m =
-                      input.readMessage(
-                          com.google.apps.card.v1.Columns.Column.Widgets.parser(),
-                          extensionRegistry);
-                  if (widgetsBuilder_ == null) {
-                    ensureWidgetsIsMutable();
-                    widgets_.add(m);
-                  } else {
-                    widgetsBuilder_.addMessage(m);
-                  }
-                  break;
-                } // case 34
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-
-      private int bitField0_;
-
-      private int horizontalSizeStyle_ = 0;
       /**
        *
        *
@@ -4159,7 +2716,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        */
       @java.lang.Override
       public int getHorizontalSizeStyleValue() {
-        return horizontalSizeStyle_;
+        return instance.getHorizontalSizeStyleValue();
       }
       /**
        *
@@ -4171,13 +2728,12 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * <code>.google.apps.card.v1.Columns.Column.HorizontalSizeStyle horizontal_size_style = 1;
        * </code>
        *
-       * @param value The enum numeric value on the wire for horizontalSizeStyle to set.
+       * @param value The horizontalSizeStyle to set.
        * @return This builder for chaining.
        */
       public Builder setHorizontalSizeStyleValue(int value) {
-        horizontalSizeStyle_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setHorizontalSizeStyleValue(value);
         return this;
       }
       /**
@@ -4194,12 +2750,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        */
       @java.lang.Override
       public com.google.apps.card.v1.Columns.Column.HorizontalSizeStyle getHorizontalSizeStyle() {
-        com.google.apps.card.v1.Columns.Column.HorizontalSizeStyle result =
-            com.google.apps.card.v1.Columns.Column.HorizontalSizeStyle.forNumber(
-                horizontalSizeStyle_);
-        return result == null
-            ? com.google.apps.card.v1.Columns.Column.HorizontalSizeStyle.UNRECOGNIZED
-            : result;
+        return instance.getHorizontalSizeStyle();
       }
       /**
        *
@@ -4211,17 +2762,13 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * <code>.google.apps.card.v1.Columns.Column.HorizontalSizeStyle horizontal_size_style = 1;
        * </code>
        *
-       * @param value The horizontalSizeStyle to set.
+       * @param value The enum numeric value on the wire for horizontalSizeStyle to set.
        * @return This builder for chaining.
        */
       public Builder setHorizontalSizeStyle(
           com.google.apps.card.v1.Columns.Column.HorizontalSizeStyle value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000001;
-        horizontalSizeStyle_ = value.getNumber();
-        onChanged();
+        copyOnWrite();
+        instance.setHorizontalSizeStyle(value);
         return this;
       }
       /**
@@ -4237,13 +2784,11 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearHorizontalSizeStyle() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        horizontalSizeStyle_ = 0;
-        onChanged();
+        copyOnWrite();
+        instance.clearHorizontalSizeStyle();
         return this;
       }
 
-      private int horizontalAlignment_ = 0;
       /**
        *
        *
@@ -4258,7 +2803,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        */
       @java.lang.Override
       public int getHorizontalAlignmentValue() {
-        return horizontalAlignment_;
+        return instance.getHorizontalAlignmentValue();
       }
       /**
        *
@@ -4270,13 +2815,12 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>.google.apps.card.v1.Widget.HorizontalAlignment horizontal_alignment = 2;</code>
        *
-       * @param value The enum numeric value on the wire for horizontalAlignment to set.
+       * @param value The horizontalAlignment to set.
        * @return This builder for chaining.
        */
       public Builder setHorizontalAlignmentValue(int value) {
-        horizontalAlignment_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setHorizontalAlignmentValue(value);
         return this;
       }
       /**
@@ -4293,11 +2837,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        */
       @java.lang.Override
       public com.google.apps.card.v1.Widget.HorizontalAlignment getHorizontalAlignment() {
-        com.google.apps.card.v1.Widget.HorizontalAlignment result =
-            com.google.apps.card.v1.Widget.HorizontalAlignment.forNumber(horizontalAlignment_);
-        return result == null
-            ? com.google.apps.card.v1.Widget.HorizontalAlignment.UNRECOGNIZED
-            : result;
+        return instance.getHorizontalAlignment();
       }
       /**
        *
@@ -4309,17 +2849,13 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>.google.apps.card.v1.Widget.HorizontalAlignment horizontal_alignment = 2;</code>
        *
-       * @param value The horizontalAlignment to set.
+       * @param value The enum numeric value on the wire for horizontalAlignment to set.
        * @return This builder for chaining.
        */
       public Builder setHorizontalAlignment(
           com.google.apps.card.v1.Widget.HorizontalAlignment value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000002;
-        horizontalAlignment_ = value.getNumber();
-        onChanged();
+        copyOnWrite();
+        instance.setHorizontalAlignment(value);
         return this;
       }
       /**
@@ -4335,13 +2871,11 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearHorizontalAlignment() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        horizontalAlignment_ = 0;
-        onChanged();
+        copyOnWrite();
+        instance.clearHorizontalAlignment();
         return this;
       }
 
-      private int verticalAlignment_ = 0;
       /**
        *
        *
@@ -4356,7 +2890,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        */
       @java.lang.Override
       public int getVerticalAlignmentValue() {
-        return verticalAlignment_;
+        return instance.getVerticalAlignmentValue();
       }
       /**
        *
@@ -4368,13 +2902,12 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>.google.apps.card.v1.Columns.Column.VerticalAlignment vertical_alignment = 3;</code>
        *
-       * @param value The enum numeric value on the wire for verticalAlignment to set.
+       * @param value The verticalAlignment to set.
        * @return This builder for chaining.
        */
       public Builder setVerticalAlignmentValue(int value) {
-        verticalAlignment_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
+        copyOnWrite();
+        instance.setVerticalAlignmentValue(value);
         return this;
       }
       /**
@@ -4391,11 +2924,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        */
       @java.lang.Override
       public com.google.apps.card.v1.Columns.Column.VerticalAlignment getVerticalAlignment() {
-        com.google.apps.card.v1.Columns.Column.VerticalAlignment result =
-            com.google.apps.card.v1.Columns.Column.VerticalAlignment.forNumber(verticalAlignment_);
-        return result == null
-            ? com.google.apps.card.v1.Columns.Column.VerticalAlignment.UNRECOGNIZED
-            : result;
+        return instance.getVerticalAlignment();
       }
       /**
        *
@@ -4407,17 +2936,13 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>.google.apps.card.v1.Columns.Column.VerticalAlignment vertical_alignment = 3;</code>
        *
-       * @param value The verticalAlignment to set.
+       * @param value The enum numeric value on the wire for verticalAlignment to set.
        * @return This builder for chaining.
        */
       public Builder setVerticalAlignment(
           com.google.apps.card.v1.Columns.Column.VerticalAlignment value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000004;
-        verticalAlignment_ = value.getNumber();
-        onChanged();
+        copyOnWrite();
+        instance.setVerticalAlignment(value);
         return this;
       }
       /**
@@ -4433,29 +2958,11 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearVerticalAlignment() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        verticalAlignment_ = 0;
-        onChanged();
+        copyOnWrite();
+        instance.clearVerticalAlignment();
         return this;
       }
 
-      private java.util.List<com.google.apps.card.v1.Columns.Column.Widgets> widgets_ =
-          java.util.Collections.emptyList();
-
-      private void ensureWidgetsIsMutable() {
-        if (!((bitField0_ & 0x00000008) != 0)) {
-          widgets_ =
-              new java.util.ArrayList<com.google.apps.card.v1.Columns.Column.Widgets>(widgets_);
-          bitField0_ |= 0x00000008;
-        }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-              com.google.apps.card.v1.Columns.Column.Widgets,
-              com.google.apps.card.v1.Columns.Column.Widgets.Builder,
-              com.google.apps.card.v1.Columns.Column.WidgetsOrBuilder>
-          widgetsBuilder_;
-
       /**
        *
        *
@@ -4466,12 +2973,9 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
        */
+      @java.lang.Override
       public java.util.List<com.google.apps.card.v1.Columns.Column.Widgets> getWidgetsList() {
-        if (widgetsBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(widgets_);
-        } else {
-          return widgetsBuilder_.getMessageList();
-        }
+        return java.util.Collections.unmodifiableList(instance.getWidgetsList());
       }
       /**
        *
@@ -4483,12 +2987,9 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
        */
+      @java.lang.Override
       public int getWidgetsCount() {
-        if (widgetsBuilder_ == null) {
-          return widgets_.size();
-        } else {
-          return widgetsBuilder_.getCount();
-        }
+        return instance.getWidgetsCount();
       }
       /**
        *
@@ -4500,12 +3001,10 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
        */
+
+      @java.lang.Override
       public com.google.apps.card.v1.Columns.Column.Widgets getWidgets(int index) {
-        if (widgetsBuilder_ == null) {
-          return widgets_.get(index);
-        } else {
-          return widgetsBuilder_.getMessage(index);
-        }
+        return instance.getWidgets(index);
       }
       /**
        *
@@ -4518,16 +3017,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
        */
       public Builder setWidgets(int index, com.google.apps.card.v1.Columns.Column.Widgets value) {
-        if (widgetsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureWidgetsIsMutable();
-          widgets_.set(index, value);
-          onChanged();
-        } else {
-          widgetsBuilder_.setMessage(index, value);
-        }
+        copyOnWrite();
+        instance.setWidgets(index, value);
         return this;
       }
       /**
@@ -4542,13 +3033,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        */
       public Builder setWidgets(
           int index, com.google.apps.card.v1.Columns.Column.Widgets.Builder builderForValue) {
-        if (widgetsBuilder_ == null) {
-          ensureWidgetsIsMutable();
-          widgets_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          widgetsBuilder_.setMessage(index, builderForValue.build());
-        }
+        copyOnWrite();
+        instance.setWidgets(index, builderForValue.build());
         return this;
       }
       /**
@@ -4562,16 +3048,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
        */
       public Builder addWidgets(com.google.apps.card.v1.Columns.Column.Widgets value) {
-        if (widgetsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureWidgetsIsMutable();
-          widgets_.add(value);
-          onChanged();
-        } else {
-          widgetsBuilder_.addMessage(value);
-        }
+        copyOnWrite();
+        instance.addWidgets(value);
         return this;
       }
       /**
@@ -4585,16 +3063,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
        */
       public Builder addWidgets(int index, com.google.apps.card.v1.Columns.Column.Widgets value) {
-        if (widgetsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureWidgetsIsMutable();
-          widgets_.add(index, value);
-          onChanged();
-        } else {
-          widgetsBuilder_.addMessage(index, value);
-        }
+        copyOnWrite();
+        instance.addWidgets(index, value);
         return this;
       }
       /**
@@ -4609,13 +3079,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        */
       public Builder addWidgets(
           com.google.apps.card.v1.Columns.Column.Widgets.Builder builderForValue) {
-        if (widgetsBuilder_ == null) {
-          ensureWidgetsIsMutable();
-          widgets_.add(builderForValue.build());
-          onChanged();
-        } else {
-          widgetsBuilder_.addMessage(builderForValue.build());
-        }
+        copyOnWrite();
+        instance.addWidgets(builderForValue.build());
         return this;
       }
       /**
@@ -4630,13 +3095,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        */
       public Builder addWidgets(
           int index, com.google.apps.card.v1.Columns.Column.Widgets.Builder builderForValue) {
-        if (widgetsBuilder_ == null) {
-          ensureWidgetsIsMutable();
-          widgets_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          widgetsBuilder_.addMessage(index, builderForValue.build());
-        }
+        copyOnWrite();
+        instance.addWidgets(index, builderForValue.build());
         return this;
       }
       /**
@@ -4651,13 +3111,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        */
       public Builder addAllWidgets(
           java.lang.Iterable<? extends com.google.apps.card.v1.Columns.Column.Widgets> values) {
-        if (widgetsBuilder_ == null) {
-          ensureWidgetsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(values, widgets_);
-          onChanged();
-        } else {
-          widgetsBuilder_.addAllMessages(values);
-        }
+        copyOnWrite();
+        instance.addAllWidgets(values);
         return this;
       }
       /**
@@ -4671,13 +3126,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
        */
       public Builder clearWidgets() {
-        if (widgetsBuilder_ == null) {
-          widgets_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
-          onChanged();
-        } else {
-          widgetsBuilder_.clear();
-        }
+        copyOnWrite();
+        instance.clearWidgets();
         return this;
       }
       /**
@@ -4691,192 +3141,103 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
        */
       public Builder removeWidgets(int index) {
-        if (widgetsBuilder_ == null) {
-          ensureWidgetsIsMutable();
-          widgets_.remove(index);
-          onChanged();
-        } else {
-          widgetsBuilder_.remove(index);
-        }
+        copyOnWrite();
+        instance.removeWidgets(index);
         return this;
-      }
-      /**
-       *
-       *
-       * <pre>
-       * An array of widgets included in a column. Widgets appear in the order
-       * that they are specified.
-       * </pre>
-       *
-       * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
-       */
-      public com.google.apps.card.v1.Columns.Column.Widgets.Builder getWidgetsBuilder(int index) {
-        return getWidgetsFieldBuilder().getBuilder(index);
-      }
-      /**
-       *
-       *
-       * <pre>
-       * An array of widgets included in a column. Widgets appear in the order
-       * that they are specified.
-       * </pre>
-       *
-       * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
-       */
-      public com.google.apps.card.v1.Columns.Column.WidgetsOrBuilder getWidgetsOrBuilder(
-          int index) {
-        if (widgetsBuilder_ == null) {
-          return widgets_.get(index);
-        } else {
-          return widgetsBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       *
-       *
-       * <pre>
-       * An array of widgets included in a column. Widgets appear in the order
-       * that they are specified.
-       * </pre>
-       *
-       * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
-       */
-      public java.util.List<? extends com.google.apps.card.v1.Columns.Column.WidgetsOrBuilder>
-          getWidgetsOrBuilderList() {
-        if (widgetsBuilder_ != null) {
-          return widgetsBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(widgets_);
-        }
-      }
-      /**
-       *
-       *
-       * <pre>
-       * An array of widgets included in a column. Widgets appear in the order
-       * that they are specified.
-       * </pre>
-       *
-       * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
-       */
-      public com.google.apps.card.v1.Columns.Column.Widgets.Builder addWidgetsBuilder() {
-        return getWidgetsFieldBuilder()
-            .addBuilder(com.google.apps.card.v1.Columns.Column.Widgets.getDefaultInstance());
-      }
-      /**
-       *
-       *
-       * <pre>
-       * An array of widgets included in a column. Widgets appear in the order
-       * that they are specified.
-       * </pre>
-       *
-       * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
-       */
-      public com.google.apps.card.v1.Columns.Column.Widgets.Builder addWidgetsBuilder(int index) {
-        return getWidgetsFieldBuilder()
-            .addBuilder(index, com.google.apps.card.v1.Columns.Column.Widgets.getDefaultInstance());
-      }
-      /**
-       *
-       *
-       * <pre>
-       * An array of widgets included in a column. Widgets appear in the order
-       * that they are specified.
-       * </pre>
-       *
-       * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
-       */
-      public java.util.List<com.google.apps.card.v1.Columns.Column.Widgets.Builder>
-          getWidgetsBuilderList() {
-        return getWidgetsFieldBuilder().getBuilderList();
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-              com.google.apps.card.v1.Columns.Column.Widgets,
-              com.google.apps.card.v1.Columns.Column.Widgets.Builder,
-              com.google.apps.card.v1.Columns.Column.WidgetsOrBuilder>
-          getWidgetsFieldBuilder() {
-        if (widgetsBuilder_ == null) {
-          widgetsBuilder_ =
-              new com.google.protobuf.RepeatedFieldBuilderV3<
-                  com.google.apps.card.v1.Columns.Column.Widgets,
-                  com.google.apps.card.v1.Columns.Column.Widgets.Builder,
-                  com.google.apps.card.v1.Columns.Column.WidgetsOrBuilder>(
-                  widgets_, ((bitField0_ & 0x00000008) != 0), getParentForChildren(), isClean());
-          widgets_ = null;
-        }
-        return widgetsBuilder_;
-      }
-
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
       }
 
       // @@protoc_insertion_point(builder_scope:google.apps.card.v1.Columns.Column)
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0,
+        java.lang.Object arg1) {
+      switch (method) {
+        case NEW_MUTABLE_INSTANCE:
+          {
+            return new com.google.apps.card.v1.Columns.Column();
+          }
+        case NEW_BUILDER:
+          {
+            return new Builder();
+          }
+        case BUILD_MESSAGE_INFO:
+          {
+            java.lang.Object[] objects =
+                new java.lang.Object[] {
+                  "horizontalSizeStyle_",
+                  "horizontalAlignment_",
+                  "verticalAlignment_",
+                  "widgets_",
+                  com.google.apps.card.v1.Columns.Column.Widgets.class,
+                };
+            java.lang.String info =
+                "\u0000\u0004\u0000\u0000\u0001\u0004\u0004\u0000\u0001\u0000\u0001\f\u0002\f\u0003"
+                    + "\f\u0004\u001b";
+            return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+          }
+          // fall through
+        case GET_DEFAULT_INSTANCE:
+          {
+            return DEFAULT_INSTANCE;
+          }
+        case GET_PARSER:
+          {
+            com.google.protobuf.Parser<com.google.apps.card.v1.Columns.Column> parser = PARSER;
+            if (parser == null) {
+              synchronized (com.google.apps.card.v1.Columns.Column.class) {
+                parser = PARSER;
+                if (parser == null) {
+                  parser =
+                      new DefaultInstanceBasedParser<com.google.apps.card.v1.Columns.Column>(
+                          DEFAULT_INSTANCE);
+                  PARSER = parser;
+                }
+              }
+            }
+            return parser;
+          }
+        case GET_MEMOIZED_IS_INITIALIZED:
+          {
+            return (byte) 1;
+          }
+        case SET_MEMOIZED_IS_INITIALIZED:
+          {
+            return null;
+          }
+      }
+      throw new UnsupportedOperationException();
     }
 
     // @@protoc_insertion_point(class_scope:google.apps.card.v1.Columns.Column)
     private static final com.google.apps.card.v1.Columns.Column DEFAULT_INSTANCE;
 
     static {
-      DEFAULT_INSTANCE = new com.google.apps.card.v1.Columns.Column();
+      Column defaultInstance = new Column();
+      // New instances are implicitly immutable so no need to make
+      // immutable.
+      DEFAULT_INSTANCE = defaultInstance;
+      com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+          Column.class, defaultInstance);
     }
 
     public static com.google.apps.card.v1.Columns.Column getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<Column> PARSER =
-        new com.google.protobuf.AbstractParser<Column>() {
-          @java.lang.Override
-          public Column parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-          }
-        };
+    private static volatile com.google.protobuf.Parser<Column> PARSER;
 
     public static com.google.protobuf.Parser<Column> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<Column> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.Columns.Column getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
+      return DEFAULT_INSTANCE.getParserForType();
     }
   }
 
   public static final int COLUMN_ITEMS_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.apps.card.v1.Columns.Column> columnItems_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.apps.card.v1.Columns.Column>
+      columnItems_;
   /**
    *
    *
@@ -4899,7 +3260,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.apps.card.v1.Columns.ColumnOrBuilder>
       getColumnItemsOrBuilderList() {
     return columnItems_;
@@ -4939,170 +3299,181 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
    */
-  @java.lang.Override
   public com.google.apps.card.v1.Columns.ColumnOrBuilder getColumnItemsOrBuilder(int index) {
     return columnItems_.get(index);
   }
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  private void ensureColumnItemsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.apps.card.v1.Columns.Column> tmp =
+        columnItems_;
+    if (!tmp.isModifiable()) {
+      columnItems_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
   }
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    for (int i = 0; i < columnItems_.size(); i++) {
-      output.writeMessage(2, columnItems_.get(i));
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * An array of columns. You can include up to 2 columns in a card or dialog.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
+   */
+  private void setColumnItems(int index, com.google.apps.card.v1.Columns.Column value) {
+    value.getClass();
+    ensureColumnItemsIsMutable();
+    columnItems_.set(index, value);
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    for (int i = 0; i < columnItems_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, columnItems_.get(i));
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
+  /**
+   *
+   *
+   * <pre>
+   * An array of columns. You can include up to 2 columns in a card or dialog.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
+   */
+  private void addColumnItems(com.google.apps.card.v1.Columns.Column value) {
+    value.getClass();
+    ensureColumnItemsIsMutable();
+    columnItems_.add(value);
   }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.apps.card.v1.Columns)) {
-      return super.equals(obj);
-    }
-    com.google.apps.card.v1.Columns other = (com.google.apps.card.v1.Columns) obj;
-
-    if (!getColumnItemsList().equals(other.getColumnItemsList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * An array of columns. You can include up to 2 columns in a card or dialog.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
+   */
+  private void addColumnItems(int index, com.google.apps.card.v1.Columns.Column value) {
+    value.getClass();
+    ensureColumnItemsIsMutable();
+    columnItems_.add(index, value);
   }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (getColumnItemsCount() > 0) {
-      hash = (37 * hash) + COLUMN_ITEMS_FIELD_NUMBER;
-      hash = (53 * hash) + getColumnItemsList().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * An array of columns. You can include up to 2 columns in a card or dialog.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
+   */
+  private void addAllColumnItems(
+      java.lang.Iterable<? extends com.google.apps.card.v1.Columns.Column> values) {
+    ensureColumnItemsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, columnItems_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * An array of columns. You can include up to 2 columns in a card or dialog.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
+   */
+  private void clearColumnItems() {
+    columnItems_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * An array of columns. You can include up to 2 columns in a card or dialog.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
+   */
+  private void removeColumnItems(int index) {
+    ensureColumnItemsIsMutable();
+    columnItems_.remove(index);
   }
 
   public static com.google.apps.card.v1.Columns parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.Columns parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Columns parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.Columns parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Columns parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.Columns parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Columns parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.Columns parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Columns parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.Columns parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Columns parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.Columns parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.apps.card.v1.Columns prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -5141,238 +3512,16 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.apps.card.v1.Columns}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.apps.card.v1.Columns, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.apps.card.v1.Columns)
       com.google.apps.card.v1.ColumnsOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Columns_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Columns_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.apps.card.v1.Columns.class, com.google.apps.card.v1.Columns.Builder.class);
-    }
-
     // Construct using com.google.apps.card.v1.Columns.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      if (columnItemsBuilder_ == null) {
-        columnItems_ = java.util.Collections.emptyList();
-      } else {
-        columnItems_ = null;
-        columnItemsBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000001);
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Columns_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.Columns getDefaultInstanceForType() {
-      return com.google.apps.card.v1.Columns.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.Columns build() {
-      com.google.apps.card.v1.Columns result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.Columns buildPartial() {
-      com.google.apps.card.v1.Columns result = new com.google.apps.card.v1.Columns(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.apps.card.v1.Columns result) {
-      if (columnItemsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
-          columnItems_ = java.util.Collections.unmodifiableList(columnItems_);
-          bitField0_ = (bitField0_ & ~0x00000001);
-        }
-        result.columnItems_ = columnItems_;
-      } else {
-        result.columnItems_ = columnItemsBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.apps.card.v1.Columns result) {
-      int from_bitField0_ = bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.apps.card.v1.Columns) {
-        return mergeFrom((com.google.apps.card.v1.Columns) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.apps.card.v1.Columns other) {
-      if (other == com.google.apps.card.v1.Columns.getDefaultInstance()) return this;
-      if (columnItemsBuilder_ == null) {
-        if (!other.columnItems_.isEmpty()) {
-          if (columnItems_.isEmpty()) {
-            columnItems_ = other.columnItems_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensureColumnItemsIsMutable();
-            columnItems_.addAll(other.columnItems_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.columnItems_.isEmpty()) {
-          if (columnItemsBuilder_.isEmpty()) {
-            columnItemsBuilder_.dispose();
-            columnItemsBuilder_ = null;
-            columnItems_ = other.columnItems_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-            columnItemsBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getColumnItemsFieldBuilder()
-                    : null;
-          } else {
-            columnItemsBuilder_.addAllMessages(other.columnItems_);
-          }
-        }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 18:
-              {
-                com.google.apps.card.v1.Columns.Column m =
-                    input.readMessage(
-                        com.google.apps.card.v1.Columns.Column.parser(), extensionRegistry);
-                if (columnItemsBuilder_ == null) {
-                  ensureColumnItemsIsMutable();
-                  columnItems_.add(m);
-                } else {
-                  columnItemsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 18
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.util.List<com.google.apps.card.v1.Columns.Column> columnItems_ =
-        java.util.Collections.emptyList();
-
-    private void ensureColumnItemsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
-        columnItems_ =
-            new java.util.ArrayList<com.google.apps.card.v1.Columns.Column>(columnItems_);
-        bitField0_ |= 0x00000001;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.apps.card.v1.Columns.Column,
-            com.google.apps.card.v1.Columns.Column.Builder,
-            com.google.apps.card.v1.Columns.ColumnOrBuilder>
-        columnItemsBuilder_;
 
     /**
      *
@@ -5383,12 +3532,9 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.apps.card.v1.Columns.Column> getColumnItemsList() {
-      if (columnItemsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(columnItems_);
-      } else {
-        return columnItemsBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getColumnItemsList());
     }
     /**
      *
@@ -5399,12 +3545,9 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
      */
+    @java.lang.Override
     public int getColumnItemsCount() {
-      if (columnItemsBuilder_ == null) {
-        return columnItems_.size();
-      } else {
-        return columnItemsBuilder_.getCount();
-      }
+      return instance.getColumnItemsCount();
     }
     /**
      *
@@ -5415,12 +3558,10 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
      */
+
+    @java.lang.Override
     public com.google.apps.card.v1.Columns.Column getColumnItems(int index) {
-      if (columnItemsBuilder_ == null) {
-        return columnItems_.get(index);
-      } else {
-        return columnItemsBuilder_.getMessage(index);
-      }
+      return instance.getColumnItems(index);
     }
     /**
      *
@@ -5432,16 +3573,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
      */
     public Builder setColumnItems(int index, com.google.apps.card.v1.Columns.Column value) {
-      if (columnItemsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureColumnItemsIsMutable();
-        columnItems_.set(index, value);
-        onChanged();
-      } else {
-        columnItemsBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setColumnItems(index, value);
       return this;
     }
     /**
@@ -5455,13 +3588,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder setColumnItems(
         int index, com.google.apps.card.v1.Columns.Column.Builder builderForValue) {
-      if (columnItemsBuilder_ == null) {
-        ensureColumnItemsIsMutable();
-        columnItems_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        columnItemsBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setColumnItems(index, builderForValue.build());
       return this;
     }
     /**
@@ -5474,16 +3602,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
      */
     public Builder addColumnItems(com.google.apps.card.v1.Columns.Column value) {
-      if (columnItemsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureColumnItemsIsMutable();
-        columnItems_.add(value);
-        onChanged();
-      } else {
-        columnItemsBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addColumnItems(value);
       return this;
     }
     /**
@@ -5496,16 +3616,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
      */
     public Builder addColumnItems(int index, com.google.apps.card.v1.Columns.Column value) {
-      if (columnItemsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureColumnItemsIsMutable();
-        columnItems_.add(index, value);
-        onChanged();
-      } else {
-        columnItemsBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addColumnItems(index, value);
       return this;
     }
     /**
@@ -5518,13 +3630,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
      */
     public Builder addColumnItems(com.google.apps.card.v1.Columns.Column.Builder builderForValue) {
-      if (columnItemsBuilder_ == null) {
-        ensureColumnItemsIsMutable();
-        columnItems_.add(builderForValue.build());
-        onChanged();
-      } else {
-        columnItemsBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addColumnItems(builderForValue.build());
       return this;
     }
     /**
@@ -5538,13 +3645,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addColumnItems(
         int index, com.google.apps.card.v1.Columns.Column.Builder builderForValue) {
-      if (columnItemsBuilder_ == null) {
-        ensureColumnItemsIsMutable();
-        columnItems_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        columnItemsBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addColumnItems(index, builderForValue.build());
       return this;
     }
     /**
@@ -5558,13 +3660,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addAllColumnItems(
         java.lang.Iterable<? extends com.google.apps.card.v1.Columns.Column> values) {
-      if (columnItemsBuilder_ == null) {
-        ensureColumnItemsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, columnItems_);
-        onChanged();
-      } else {
-        columnItemsBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllColumnItems(values);
       return this;
     }
     /**
@@ -5577,13 +3674,8 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
      */
     public Builder clearColumnItems() {
-      if (columnItemsBuilder_ == null) {
-        columnItems_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-      } else {
-        columnItemsBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearColumnItems();
       return this;
     }
     /**
@@ -5596,175 +3688,91 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
      */
     public Builder removeColumnItems(int index) {
-      if (columnItemsBuilder_ == null) {
-        ensureColumnItemsIsMutable();
-        columnItems_.remove(index);
-        onChanged();
-      } else {
-        columnItemsBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeColumnItems(index);
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * An array of columns. You can include up to 2 columns in a card or dialog.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
-     */
-    public com.google.apps.card.v1.Columns.Column.Builder getColumnItemsBuilder(int index) {
-      return getColumnItemsFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * An array of columns. You can include up to 2 columns in a card or dialog.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
-     */
-    public com.google.apps.card.v1.Columns.ColumnOrBuilder getColumnItemsOrBuilder(int index) {
-      if (columnItemsBuilder_ == null) {
-        return columnItems_.get(index);
-      } else {
-        return columnItemsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * An array of columns. You can include up to 2 columns in a card or dialog.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
-     */
-    public java.util.List<? extends com.google.apps.card.v1.Columns.ColumnOrBuilder>
-        getColumnItemsOrBuilderList() {
-      if (columnItemsBuilder_ != null) {
-        return columnItemsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(columnItems_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * An array of columns. You can include up to 2 columns in a card or dialog.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
-     */
-    public com.google.apps.card.v1.Columns.Column.Builder addColumnItemsBuilder() {
-      return getColumnItemsFieldBuilder()
-          .addBuilder(com.google.apps.card.v1.Columns.Column.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * An array of columns. You can include up to 2 columns in a card or dialog.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
-     */
-    public com.google.apps.card.v1.Columns.Column.Builder addColumnItemsBuilder(int index) {
-      return getColumnItemsFieldBuilder()
-          .addBuilder(index, com.google.apps.card.v1.Columns.Column.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * An array of columns. You can include up to 2 columns in a card or dialog.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
-     */
-    public java.util.List<com.google.apps.card.v1.Columns.Column.Builder>
-        getColumnItemsBuilderList() {
-      return getColumnItemsFieldBuilder().getBuilderList();
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.apps.card.v1.Columns.Column,
-            com.google.apps.card.v1.Columns.Column.Builder,
-            com.google.apps.card.v1.Columns.ColumnOrBuilder>
-        getColumnItemsFieldBuilder() {
-      if (columnItemsBuilder_ == null) {
-        columnItemsBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.apps.card.v1.Columns.Column,
-                com.google.apps.card.v1.Columns.Column.Builder,
-                com.google.apps.card.v1.Columns.ColumnOrBuilder>(
-                columnItems_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
-        columnItems_ = null;
-      }
-      return columnItemsBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.apps.card.v1.Columns)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.apps.card.v1.Columns();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "columnItems_", com.google.apps.card.v1.Columns.Column.class,
+              };
+          java.lang.String info =
+              "\u0000\u0001\u0000\u0000\u0002\u0002\u0001\u0000\u0001\u0000\u0002\u001b";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.apps.card.v1.Columns> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.apps.card.v1.Columns.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.apps.card.v1.Columns>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.apps.card.v1.Columns)
   private static final com.google.apps.card.v1.Columns DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.apps.card.v1.Columns();
+    Columns defaultInstance = new Columns();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        Columns.class, defaultInstance);
   }
 
   public static com.google.apps.card.v1.Columns getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Columns> PARSER =
-      new com.google.protobuf.AbstractParser<Columns>() {
-        @java.lang.Override
-        public Columns parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<Columns> PARSER;
 
   public static com.google.protobuf.Parser<Columns> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<Columns> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.apps.card.v1.Columns getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

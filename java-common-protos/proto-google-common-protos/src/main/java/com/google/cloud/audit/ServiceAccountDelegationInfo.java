@@ -28,45 +28,20 @@ package com.google.cloud.audit;
  *
  * Protobuf type {@code google.cloud.audit.ServiceAccountDelegationInfo}
  */
-public final class ServiceAccountDelegationInfo extends com.google.protobuf.GeneratedMessageV3
+public final class ServiceAccountDelegationInfo
+    extends com.google.protobuf.GeneratedMessageLite<
+        ServiceAccountDelegationInfo, ServiceAccountDelegationInfo.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.cloud.audit.ServiceAccountDelegationInfo)
     ServiceAccountDelegationInfoOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use ServiceAccountDelegationInfo.newBuilder() to construct.
-  private ServiceAccountDelegationInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private ServiceAccountDelegationInfo() {
     principalSubject_ = "";
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new ServiceAccountDelegationInfo();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.cloud.audit.AuditLogProto
-        .internal_static_google_cloud_audit_ServiceAccountDelegationInfo_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.cloud.audit.AuditLogProto
-        .internal_static_google_cloud_audit_ServiceAccountDelegationInfo_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.cloud.audit.ServiceAccountDelegationInfo.class,
-            com.google.cloud.audit.ServiceAccountDelegationInfo.Builder.class);
   }
 
   public interface FirstPartyPrincipalOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal)
-      com.google.protobuf.MessageOrBuilder {
+      com.google.protobuf.MessageLiteOrBuilder {
 
     /**
      *
@@ -117,16 +92,6 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * @return The serviceMetadata.
      */
     com.google.protobuf.Struct getServiceMetadata();
-    /**
-     *
-     *
-     * <pre>
-     * Metadata about the service that uses the service account.
-     * </pre>
-     *
-     * <code>.google.protobuf.Struct service_metadata = 2;</code>
-     */
-    com.google.protobuf.StructOrBuilder getServiceMetadataOrBuilder();
   }
   /**
    *
@@ -137,47 +102,19 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
    *
    * Protobuf type {@code google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal}
    */
-  public static final class FirstPartyPrincipal extends com.google.protobuf.GeneratedMessageV3
+  public static final class FirstPartyPrincipal
+      extends com.google.protobuf.GeneratedMessageLite<
+          FirstPartyPrincipal, FirstPartyPrincipal.Builder>
       implements
       // @@protoc_insertion_point(message_implements:google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal)
       FirstPartyPrincipalOrBuilder {
-    private static final long serialVersionUID = 0L;
-    // Use FirstPartyPrincipal.newBuilder() to construct.
-    private FirstPartyPrincipal(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-
     private FirstPartyPrincipal() {
       principalEmail_ = "";
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-      return new FirstPartyPrincipal();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_ServiceAccountDelegationInfo_FirstPartyPrincipal_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_ServiceAccountDelegationInfo_FirstPartyPrincipal_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal.class,
-              com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal.Builder
-                  .class);
-    }
-
     private int bitField0_;
     public static final int PRINCIPAL_EMAIL_FIELD_NUMBER = 1;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object principalEmail_ = "";
+    private java.lang.String principalEmail_;
     /**
      *
      *
@@ -191,15 +128,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      */
     @java.lang.Override
     public java.lang.String getPrincipalEmail() {
-      java.lang.Object ref = principalEmail_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        principalEmail_ = s;
-        return s;
-      }
+      return principalEmail_;
     }
     /**
      *
@@ -214,15 +143,51 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getPrincipalEmailBytes() {
-      java.lang.Object ref = principalEmail_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        principalEmail_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(principalEmail_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The email address of a Google account.
+     * </pre>
+     *
+     * <code>string principal_email = 1;</code>
+     *
+     * @param value The principalEmail to set.
+     */
+    private void setPrincipalEmail(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      principalEmail_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The email address of a Google account.
+     * </pre>
+     *
+     * <code>string principal_email = 1;</code>
+     */
+    private void clearPrincipalEmail() {
+
+      principalEmail_ = getDefaultInstance().getPrincipalEmail();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The email address of a Google account.
+     * </pre>
+     *
+     * <code>string principal_email = 1;</code>
+     *
+     * @param value The bytes for principalEmail to set.
+     */
+    private void setPrincipalEmailBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      principalEmail_ = value.toStringUtf8();
     }
 
     public static final int SERVICE_METADATA_FIELD_NUMBER = 2;
@@ -235,8 +200,6 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * </pre>
      *
      * <code>.google.protobuf.Struct service_metadata = 2;</code>
-     *
-     * @return Whether the serviceMetadata field is set.
      */
     @java.lang.Override
     public boolean hasServiceMetadata() {
@@ -250,8 +213,6 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * </pre>
      *
      * <code>.google.protobuf.Struct service_metadata = 2;</code>
-     *
-     * @return The serviceMetadata.
      */
     @java.lang.Override
     public com.google.protobuf.Struct getServiceMetadata() {
@@ -268,190 +229,130 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      *
      * <code>.google.protobuf.Struct service_metadata = 2;</code>
      */
-    @java.lang.Override
-    public com.google.protobuf.StructOrBuilder getServiceMetadataOrBuilder() {
-      return serviceMetadata_ == null
-          ? com.google.protobuf.Struct.getDefaultInstance()
-          : serviceMetadata_;
+    private void setServiceMetadata(com.google.protobuf.Struct value) {
+      value.getClass();
+      serviceMetadata_ = value;
+      bitField0_ |= 0x00000001;
     }
-
-    private byte memoizedIsInitialized = -1;
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
+    /**
+     *
+     *
+     * <pre>
+     * Metadata about the service that uses the service account.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct service_metadata = 2;</code>
+     */
+    @java.lang.SuppressWarnings({"ReferenceEquality"})
+    private void mergeServiceMetadata(com.google.protobuf.Struct value) {
+      value.getClass();
+      if (serviceMetadata_ != null
+          && serviceMetadata_ != com.google.protobuf.Struct.getDefaultInstance()) {
+        serviceMetadata_ =
+            com.google.protobuf.Struct.newBuilder(serviceMetadata_).mergeFrom(value).buildPartial();
+      } else {
+        serviceMetadata_ = value;
+      }
+      bitField0_ |= 0x00000001;
     }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principalEmail_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, principalEmail_);
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeMessage(2, getServiceMetadata());
-      }
-      getUnknownFields().writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principalEmail_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, principalEmail_);
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, getServiceMetadata());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-        return true;
-      }
-      if (!(obj
-          instanceof com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal)) {
-        return super.equals(obj);
-      }
-      com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal other =
-          (com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal) obj;
-
-      if (!getPrincipalEmail().equals(other.getPrincipalEmail())) return false;
-      if (hasServiceMetadata() != other.hasServiceMetadata()) return false;
-      if (hasServiceMetadata()) {
-        if (!getServiceMetadata().equals(other.getServiceMetadata())) return false;
-      }
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + PRINCIPAL_EMAIL_FIELD_NUMBER;
-      hash = (53 * hash) + getPrincipalEmail().hashCode();
-      if (hasServiceMetadata()) {
-        hash = (37 * hash) + SERVICE_METADATA_FIELD_NUMBER;
-        hash = (53 * hash) + getServiceMetadata().hashCode();
-      }
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
+    /**
+     *
+     *
+     * <pre>
+     * Metadata about the service that uses the service account.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct service_metadata = 2;</code>
+     */
+    private void clearServiceMetadata() {
+      serviceMetadata_ = null;
+      bitField0_ = (bitField0_ & ~0x00000001);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal parseFrom(
         java.nio.ByteBuffer data) throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal parseFrom(
         java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal parseFrom(
         byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal parseFrom(
         byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal parseFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal parseFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal
         parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal
         parseDelimitedFrom(
             java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal parseFrom(
         com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
+      return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
 
     public static Builder newBuilder(
         com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      *
      *
@@ -462,225 +363,17 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * Protobuf type {@code google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal}
      */
     public static final class Builder
-        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+        extends com.google.protobuf.GeneratedMessageLite.Builder<
+            com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal, Builder>
         implements
         // @@protoc_insertion_point(builder_implements:google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal)
         com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipalOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return com.google.cloud.audit.AuditLogProto
-            .internal_static_google_cloud_audit_ServiceAccountDelegationInfo_FirstPartyPrincipal_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.google.cloud.audit.AuditLogProto
-            .internal_static_google_cloud_audit_ServiceAccountDelegationInfo_FirstPartyPrincipal_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal.class,
-                com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal.Builder
-                    .class);
-      }
-
       // Construct using
       // com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+        super(DEFAULT_INSTANCE);
       }
 
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-          getServiceMetadataFieldBuilder();
-        }
-      }
-
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        principalEmail_ = "";
-        serviceMetadata_ = null;
-        if (serviceMetadataBuilder_ != null) {
-          serviceMetadataBuilder_.dispose();
-          serviceMetadataBuilder_ = null;
-        }
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return com.google.cloud.audit.AuditLogProto
-            .internal_static_google_cloud_audit_ServiceAccountDelegationInfo_FirstPartyPrincipal_descriptor;
-      }
-
-      @java.lang.Override
-      public com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal
-          getDefaultInstanceForType() {
-        return com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal
-            .getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal build() {
-        com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal result =
-            buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal
-          buildPartial() {
-        com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal result =
-            new com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal(this);
-        if (bitField0_ != 0) {
-          buildPartial0(result);
-        }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartial0(
-          com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal result) {
-        int from_bitField0_ = bitField0_;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.principalEmail_ = principalEmail_;
-        }
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.serviceMetadata_ =
-              serviceMetadataBuilder_ == null ? serviceMetadata_ : serviceMetadataBuilder_.build();
-          to_bitField0_ |= 0x00000001;
-        }
-        result.bitField0_ |= to_bitField0_;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other
-            instanceof com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal) {
-          return mergeFrom(
-              (com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal) other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(
-          com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal other) {
-        if (other
-            == com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal
-                .getDefaultInstance()) return this;
-        if (!other.getPrincipalEmail().isEmpty()) {
-          principalEmail_ = other.principalEmail_;
-          bitField0_ |= 0x00000001;
-          onChanged();
-        }
-        if (other.hasServiceMetadata()) {
-          mergeServiceMetadata(other.getServiceMetadata());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10:
-                {
-                  principalEmail_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000001;
-                  break;
-                } // case 10
-              case 18:
-                {
-                  input.readMessage(
-                      getServiceMetadataFieldBuilder().getBuilder(), extensionRegistry);
-                  bitField0_ |= 0x00000002;
-                  break;
-                } // case 18
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-
-      private int bitField0_;
-
-      private java.lang.Object principalEmail_ = "";
       /**
        *
        *
@@ -692,16 +385,9 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
        *
        * @return The principalEmail.
        */
+      @java.lang.Override
       public java.lang.String getPrincipalEmail() {
-        java.lang.Object ref = principalEmail_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          principalEmail_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getPrincipalEmail();
       }
       /**
        *
@@ -714,16 +400,9 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
        *
        * @return The bytes for principalEmail.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getPrincipalEmailBytes() {
-        java.lang.Object ref = principalEmail_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          principalEmail_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getPrincipalEmailBytes();
       }
       /**
        *
@@ -738,12 +417,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
        * @return This builder for chaining.
        */
       public Builder setPrincipalEmail(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        principalEmail_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setPrincipalEmail(value);
         return this;
       }
       /**
@@ -758,9 +433,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
        * @return This builder for chaining.
        */
       public Builder clearPrincipalEmail() {
-        principalEmail_ = getDefaultInstance().getPrincipalEmail();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
+        copyOnWrite();
+        instance.clearPrincipalEmail();
         return this;
       }
       /**
@@ -776,22 +450,11 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
        * @return This builder for chaining.
        */
       public Builder setPrincipalEmailBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        principalEmail_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setPrincipalEmailBytes(value);
         return this;
       }
 
-      private com.google.protobuf.Struct serviceMetadata_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Struct,
-              com.google.protobuf.Struct.Builder,
-              com.google.protobuf.StructOrBuilder>
-          serviceMetadataBuilder_;
       /**
        *
        *
@@ -800,11 +463,10 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
        * </pre>
        *
        * <code>.google.protobuf.Struct service_metadata = 2;</code>
-       *
-       * @return Whether the serviceMetadata field is set.
        */
+      @java.lang.Override
       public boolean hasServiceMetadata() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return instance.hasServiceMetadata();
       }
       /**
        *
@@ -814,17 +476,10 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
        * </pre>
        *
        * <code>.google.protobuf.Struct service_metadata = 2;</code>
-       *
-       * @return The serviceMetadata.
        */
+      @java.lang.Override
       public com.google.protobuf.Struct getServiceMetadata() {
-        if (serviceMetadataBuilder_ == null) {
-          return serviceMetadata_ == null
-              ? com.google.protobuf.Struct.getDefaultInstance()
-              : serviceMetadata_;
-        } else {
-          return serviceMetadataBuilder_.getMessage();
-        }
+        return instance.getServiceMetadata();
       }
       /**
        *
@@ -836,16 +491,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
        * <code>.google.protobuf.Struct service_metadata = 2;</code>
        */
       public Builder setServiceMetadata(com.google.protobuf.Struct value) {
-        if (serviceMetadataBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          serviceMetadata_ = value;
-        } else {
-          serviceMetadataBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setServiceMetadata(value);
         return this;
       }
       /**
@@ -858,13 +505,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
        * <code>.google.protobuf.Struct service_metadata = 2;</code>
        */
       public Builder setServiceMetadata(com.google.protobuf.Struct.Builder builderForValue) {
-        if (serviceMetadataBuilder_ == null) {
-          serviceMetadata_ = builderForValue.build();
-        } else {
-          serviceMetadataBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setServiceMetadata(builderForValue.build());
         return this;
       }
       /**
@@ -877,21 +519,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
        * <code>.google.protobuf.Struct service_metadata = 2;</code>
        */
       public Builder mergeServiceMetadata(com.google.protobuf.Struct value) {
-        if (serviceMetadataBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) != 0)
-              && serviceMetadata_ != null
-              && serviceMetadata_ != com.google.protobuf.Struct.getDefaultInstance()) {
-            getServiceMetadataBuilder().mergeFrom(value);
-          } else {
-            serviceMetadata_ = value;
-          }
-        } else {
-          serviceMetadataBuilder_.mergeFrom(value);
-        }
-        if (serviceMetadata_ != null) {
-          bitField0_ |= 0x00000002;
-          onChanged();
-        }
+        copyOnWrite();
+        instance.mergeServiceMetadata(value);
         return this;
       }
       /**
@@ -904,86 +533,75 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
        * <code>.google.protobuf.Struct service_metadata = 2;</code>
        */
       public Builder clearServiceMetadata() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        serviceMetadata_ = null;
-        if (serviceMetadataBuilder_ != null) {
-          serviceMetadataBuilder_.dispose();
-          serviceMetadataBuilder_ = null;
-        }
-        onChanged();
+        copyOnWrite();
+        instance.clearServiceMetadata();
         return this;
-      }
-      /**
-       *
-       *
-       * <pre>
-       * Metadata about the service that uses the service account.
-       * </pre>
-       *
-       * <code>.google.protobuf.Struct service_metadata = 2;</code>
-       */
-      public com.google.protobuf.Struct.Builder getServiceMetadataBuilder() {
-        bitField0_ |= 0x00000002;
-        onChanged();
-        return getServiceMetadataFieldBuilder().getBuilder();
-      }
-      /**
-       *
-       *
-       * <pre>
-       * Metadata about the service that uses the service account.
-       * </pre>
-       *
-       * <code>.google.protobuf.Struct service_metadata = 2;</code>
-       */
-      public com.google.protobuf.StructOrBuilder getServiceMetadataOrBuilder() {
-        if (serviceMetadataBuilder_ != null) {
-          return serviceMetadataBuilder_.getMessageOrBuilder();
-        } else {
-          return serviceMetadata_ == null
-              ? com.google.protobuf.Struct.getDefaultInstance()
-              : serviceMetadata_;
-        }
-      }
-      /**
-       *
-       *
-       * <pre>
-       * Metadata about the service that uses the service account.
-       * </pre>
-       *
-       * <code>.google.protobuf.Struct service_metadata = 2;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Struct,
-              com.google.protobuf.Struct.Builder,
-              com.google.protobuf.StructOrBuilder>
-          getServiceMetadataFieldBuilder() {
-        if (serviceMetadataBuilder_ == null) {
-          serviceMetadataBuilder_ =
-              new com.google.protobuf.SingleFieldBuilderV3<
-                  com.google.protobuf.Struct,
-                  com.google.protobuf.Struct.Builder,
-                  com.google.protobuf.StructOrBuilder>(
-                  getServiceMetadata(), getParentForChildren(), isClean());
-          serviceMetadata_ = null;
-        }
-        return serviceMetadataBuilder_;
-      }
-
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
       }
 
       // @@protoc_insertion_point(builder_scope:google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal)
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0,
+        java.lang.Object arg1) {
+      switch (method) {
+        case NEW_MUTABLE_INSTANCE:
+          {
+            return new com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal();
+          }
+        case NEW_BUILDER:
+          {
+            return new Builder();
+          }
+        case BUILD_MESSAGE_INFO:
+          {
+            java.lang.Object[] objects =
+                new java.lang.Object[] {
+                  "bitField0_", "principalEmail_", "serviceMetadata_",
+                };
+            java.lang.String info =
+                "\u0000\u0002\u0000\u0001\u0001\u0002\u0002\u0000\u0000\u0000\u0001\u0208\u0002\u1009"
+                    + "\u0000";
+            return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+          }
+          // fall through
+        case GET_DEFAULT_INSTANCE:
+          {
+            return DEFAULT_INSTANCE;
+          }
+        case GET_PARSER:
+          {
+            com.google.protobuf.Parser<
+                    com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal>
+                parser = PARSER;
+            if (parser == null) {
+              synchronized (
+                  com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal.class) {
+                parser = PARSER;
+                if (parser == null) {
+                  parser =
+                      new DefaultInstanceBasedParser<
+                          com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal>(
+                          DEFAULT_INSTANCE);
+                  PARSER = parser;
+                }
+              }
+            }
+            return parser;
+          }
+        case GET_MEMOIZED_IS_INITIALIZED:
+          {
+            return (byte) 1;
+          }
+        case SET_MEMOIZED_IS_INITIALIZED:
+          {
+            return null;
+          }
+      }
+      throw new UnsupportedOperationException();
     }
 
     // @@protoc_insertion_point(class_scope:google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal)
@@ -991,8 +609,12 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         DEFAULT_INSTANCE;
 
     static {
-      DEFAULT_INSTANCE =
-          new com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal();
+      FirstPartyPrincipal defaultInstance = new FirstPartyPrincipal();
+      // New instances are implicitly immutable so no need to make
+      // immutable.
+      DEFAULT_INSTANCE = defaultInstance;
+      com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+          FirstPartyPrincipal.class, defaultInstance);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal
@@ -1000,49 +622,17 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<FirstPartyPrincipal> PARSER =
-        new com.google.protobuf.AbstractParser<FirstPartyPrincipal>() {
-          @java.lang.Override
-          public FirstPartyPrincipal parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-          }
-        };
+    private static volatile com.google.protobuf.Parser<FirstPartyPrincipal> PARSER;
 
     public static com.google.protobuf.Parser<FirstPartyPrincipal> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<FirstPartyPrincipal> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal
-        getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
+      return DEFAULT_INSTANCE.getParserForType();
     }
   }
 
   public interface ThirdPartyPrincipalOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal)
-      com.google.protobuf.MessageOrBuilder {
+      com.google.protobuf.MessageLiteOrBuilder {
 
     /**
      *
@@ -1068,16 +658,6 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * @return The thirdPartyClaims.
      */
     com.google.protobuf.Struct getThirdPartyClaims();
-    /**
-     *
-     *
-     * <pre>
-     * Metadata about third party identity.
-     * </pre>
-     *
-     * <code>.google.protobuf.Struct third_party_claims = 1;</code>
-     */
-    com.google.protobuf.StructOrBuilder getThirdPartyClaimsOrBuilder();
   }
   /**
    *
@@ -1088,39 +668,13 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
    *
    * Protobuf type {@code google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal}
    */
-  public static final class ThirdPartyPrincipal extends com.google.protobuf.GeneratedMessageV3
+  public static final class ThirdPartyPrincipal
+      extends com.google.protobuf.GeneratedMessageLite<
+          ThirdPartyPrincipal, ThirdPartyPrincipal.Builder>
       implements
       // @@protoc_insertion_point(message_implements:google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal)
       ThirdPartyPrincipalOrBuilder {
-    private static final long serialVersionUID = 0L;
-    // Use ThirdPartyPrincipal.newBuilder() to construct.
-    private ThirdPartyPrincipal(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-
     private ThirdPartyPrincipal() {}
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-      return new ThirdPartyPrincipal();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_ServiceAccountDelegationInfo_ThirdPartyPrincipal_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_ServiceAccountDelegationInfo_ThirdPartyPrincipal_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal.class,
-              com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal.Builder
-                  .class);
-    }
 
     private int bitField0_;
     public static final int THIRD_PARTY_CLAIMS_FIELD_NUMBER = 1;
@@ -1133,8 +687,6 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * </pre>
      *
      * <code>.google.protobuf.Struct third_party_claims = 1;</code>
-     *
-     * @return Whether the thirdPartyClaims field is set.
      */
     @java.lang.Override
     public boolean hasThirdPartyClaims() {
@@ -1148,8 +700,6 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * </pre>
      *
      * <code>.google.protobuf.Struct third_party_claims = 1;</code>
-     *
-     * @return The thirdPartyClaims.
      */
     @java.lang.Override
     public com.google.protobuf.Struct getThirdPartyClaims() {
@@ -1166,181 +716,132 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      *
      * <code>.google.protobuf.Struct third_party_claims = 1;</code>
      */
-    @java.lang.Override
-    public com.google.protobuf.StructOrBuilder getThirdPartyClaimsOrBuilder() {
-      return thirdPartyClaims_ == null
-          ? com.google.protobuf.Struct.getDefaultInstance()
-          : thirdPartyClaims_;
+    private void setThirdPartyClaims(com.google.protobuf.Struct value) {
+      value.getClass();
+      thirdPartyClaims_ = value;
+      bitField0_ |= 0x00000001;
     }
-
-    private byte memoizedIsInitialized = -1;
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
+    /**
+     *
+     *
+     * <pre>
+     * Metadata about third party identity.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct third_party_claims = 1;</code>
+     */
+    @java.lang.SuppressWarnings({"ReferenceEquality"})
+    private void mergeThirdPartyClaims(com.google.protobuf.Struct value) {
+      value.getClass();
+      if (thirdPartyClaims_ != null
+          && thirdPartyClaims_ != com.google.protobuf.Struct.getDefaultInstance()) {
+        thirdPartyClaims_ =
+            com.google.protobuf.Struct.newBuilder(thirdPartyClaims_)
+                .mergeFrom(value)
+                .buildPartial();
+      } else {
+        thirdPartyClaims_ = value;
+      }
+      bitField0_ |= 0x00000001;
     }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeMessage(1, getThirdPartyClaims());
-      }
-      getUnknownFields().writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getThirdPartyClaims());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-        return true;
-      }
-      if (!(obj
-          instanceof com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal)) {
-        return super.equals(obj);
-      }
-      com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal other =
-          (com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal) obj;
-
-      if (hasThirdPartyClaims() != other.hasThirdPartyClaims()) return false;
-      if (hasThirdPartyClaims()) {
-        if (!getThirdPartyClaims().equals(other.getThirdPartyClaims())) return false;
-      }
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasThirdPartyClaims()) {
-        hash = (37 * hash) + THIRD_PARTY_CLAIMS_FIELD_NUMBER;
-        hash = (53 * hash) + getThirdPartyClaims().hashCode();
-      }
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
+    /**
+     *
+     *
+     * <pre>
+     * Metadata about third party identity.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct third_party_claims = 1;</code>
+     */
+    private void clearThirdPartyClaims() {
+      thirdPartyClaims_ = null;
+      bitField0_ = (bitField0_ & ~0x00000001);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal parseFrom(
         java.nio.ByteBuffer data) throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal parseFrom(
         java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal parseFrom(
         byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal parseFrom(
         byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal parseFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal parseFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal
         parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal
         parseDelimitedFrom(
             java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal parseFrom(
         com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
+      return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
 
     public static Builder newBuilder(
         com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      *
      *
@@ -1351,217 +852,17 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * Protobuf type {@code google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal}
      */
     public static final class Builder
-        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+        extends com.google.protobuf.GeneratedMessageLite.Builder<
+            com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal, Builder>
         implements
         // @@protoc_insertion_point(builder_implements:google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal)
         com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipalOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return com.google.cloud.audit.AuditLogProto
-            .internal_static_google_cloud_audit_ServiceAccountDelegationInfo_ThirdPartyPrincipal_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.google.cloud.audit.AuditLogProto
-            .internal_static_google_cloud_audit_ServiceAccountDelegationInfo_ThirdPartyPrincipal_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal.class,
-                com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal.Builder
-                    .class);
-      }
-
       // Construct using
       // com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+        super(DEFAULT_INSTANCE);
       }
 
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-          getThirdPartyClaimsFieldBuilder();
-        }
-      }
-
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        thirdPartyClaims_ = null;
-        if (thirdPartyClaimsBuilder_ != null) {
-          thirdPartyClaimsBuilder_.dispose();
-          thirdPartyClaimsBuilder_ = null;
-        }
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return com.google.cloud.audit.AuditLogProto
-            .internal_static_google_cloud_audit_ServiceAccountDelegationInfo_ThirdPartyPrincipal_descriptor;
-      }
-
-      @java.lang.Override
-      public com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal
-          getDefaultInstanceForType() {
-        return com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal
-            .getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal build() {
-        com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal result =
-            buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal
-          buildPartial() {
-        com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal result =
-            new com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal(this);
-        if (bitField0_ != 0) {
-          buildPartial0(result);
-        }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartial0(
-          com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal result) {
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.thirdPartyClaims_ =
-              thirdPartyClaimsBuilder_ == null
-                  ? thirdPartyClaims_
-                  : thirdPartyClaimsBuilder_.build();
-          to_bitField0_ |= 0x00000001;
-        }
-        result.bitField0_ |= to_bitField0_;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other
-            instanceof com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal) {
-          return mergeFrom(
-              (com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal) other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(
-          com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal other) {
-        if (other
-            == com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal
-                .getDefaultInstance()) return this;
-        if (other.hasThirdPartyClaims()) {
-          mergeThirdPartyClaims(other.getThirdPartyClaims());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10:
-                {
-                  input.readMessage(
-                      getThirdPartyClaimsFieldBuilder().getBuilder(), extensionRegistry);
-                  bitField0_ |= 0x00000001;
-                  break;
-                } // case 10
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-
-      private int bitField0_;
-
-      private com.google.protobuf.Struct thirdPartyClaims_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Struct,
-              com.google.protobuf.Struct.Builder,
-              com.google.protobuf.StructOrBuilder>
-          thirdPartyClaimsBuilder_;
       /**
        *
        *
@@ -1570,11 +871,10 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
        * </pre>
        *
        * <code>.google.protobuf.Struct third_party_claims = 1;</code>
-       *
-       * @return Whether the thirdPartyClaims field is set.
        */
+      @java.lang.Override
       public boolean hasThirdPartyClaims() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return instance.hasThirdPartyClaims();
       }
       /**
        *
@@ -1584,17 +884,10 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
        * </pre>
        *
        * <code>.google.protobuf.Struct third_party_claims = 1;</code>
-       *
-       * @return The thirdPartyClaims.
        */
+      @java.lang.Override
       public com.google.protobuf.Struct getThirdPartyClaims() {
-        if (thirdPartyClaimsBuilder_ == null) {
-          return thirdPartyClaims_ == null
-              ? com.google.protobuf.Struct.getDefaultInstance()
-              : thirdPartyClaims_;
-        } else {
-          return thirdPartyClaimsBuilder_.getMessage();
-        }
+        return instance.getThirdPartyClaims();
       }
       /**
        *
@@ -1606,16 +899,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
        * <code>.google.protobuf.Struct third_party_claims = 1;</code>
        */
       public Builder setThirdPartyClaims(com.google.protobuf.Struct value) {
-        if (thirdPartyClaimsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          thirdPartyClaims_ = value;
-        } else {
-          thirdPartyClaimsBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setThirdPartyClaims(value);
         return this;
       }
       /**
@@ -1628,13 +913,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
        * <code>.google.protobuf.Struct third_party_claims = 1;</code>
        */
       public Builder setThirdPartyClaims(com.google.protobuf.Struct.Builder builderForValue) {
-        if (thirdPartyClaimsBuilder_ == null) {
-          thirdPartyClaims_ = builderForValue.build();
-        } else {
-          thirdPartyClaimsBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setThirdPartyClaims(builderForValue.build());
         return this;
       }
       /**
@@ -1647,21 +927,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
        * <code>.google.protobuf.Struct third_party_claims = 1;</code>
        */
       public Builder mergeThirdPartyClaims(com.google.protobuf.Struct value) {
-        if (thirdPartyClaimsBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) != 0)
-              && thirdPartyClaims_ != null
-              && thirdPartyClaims_ != com.google.protobuf.Struct.getDefaultInstance()) {
-            getThirdPartyClaimsBuilder().mergeFrom(value);
-          } else {
-            thirdPartyClaims_ = value;
-          }
-        } else {
-          thirdPartyClaimsBuilder_.mergeFrom(value);
-        }
-        if (thirdPartyClaims_ != null) {
-          bitField0_ |= 0x00000001;
-          onChanged();
-        }
+        copyOnWrite();
+        instance.mergeThirdPartyClaims(value);
         return this;
       }
       /**
@@ -1674,86 +941,74 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
        * <code>.google.protobuf.Struct third_party_claims = 1;</code>
        */
       public Builder clearThirdPartyClaims() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        thirdPartyClaims_ = null;
-        if (thirdPartyClaimsBuilder_ != null) {
-          thirdPartyClaimsBuilder_.dispose();
-          thirdPartyClaimsBuilder_ = null;
-        }
-        onChanged();
+        copyOnWrite();
+        instance.clearThirdPartyClaims();
         return this;
-      }
-      /**
-       *
-       *
-       * <pre>
-       * Metadata about third party identity.
-       * </pre>
-       *
-       * <code>.google.protobuf.Struct third_party_claims = 1;</code>
-       */
-      public com.google.protobuf.Struct.Builder getThirdPartyClaimsBuilder() {
-        bitField0_ |= 0x00000001;
-        onChanged();
-        return getThirdPartyClaimsFieldBuilder().getBuilder();
-      }
-      /**
-       *
-       *
-       * <pre>
-       * Metadata about third party identity.
-       * </pre>
-       *
-       * <code>.google.protobuf.Struct third_party_claims = 1;</code>
-       */
-      public com.google.protobuf.StructOrBuilder getThirdPartyClaimsOrBuilder() {
-        if (thirdPartyClaimsBuilder_ != null) {
-          return thirdPartyClaimsBuilder_.getMessageOrBuilder();
-        } else {
-          return thirdPartyClaims_ == null
-              ? com.google.protobuf.Struct.getDefaultInstance()
-              : thirdPartyClaims_;
-        }
-      }
-      /**
-       *
-       *
-       * <pre>
-       * Metadata about third party identity.
-       * </pre>
-       *
-       * <code>.google.protobuf.Struct third_party_claims = 1;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-              com.google.protobuf.Struct,
-              com.google.protobuf.Struct.Builder,
-              com.google.protobuf.StructOrBuilder>
-          getThirdPartyClaimsFieldBuilder() {
-        if (thirdPartyClaimsBuilder_ == null) {
-          thirdPartyClaimsBuilder_ =
-              new com.google.protobuf.SingleFieldBuilderV3<
-                  com.google.protobuf.Struct,
-                  com.google.protobuf.Struct.Builder,
-                  com.google.protobuf.StructOrBuilder>(
-                  getThirdPartyClaims(), getParentForChildren(), isClean());
-          thirdPartyClaims_ = null;
-        }
-        return thirdPartyClaimsBuilder_;
-      }
-
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
       }
 
       // @@protoc_insertion_point(builder_scope:google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal)
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0,
+        java.lang.Object arg1) {
+      switch (method) {
+        case NEW_MUTABLE_INSTANCE:
+          {
+            return new com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal();
+          }
+        case NEW_BUILDER:
+          {
+            return new Builder();
+          }
+        case BUILD_MESSAGE_INFO:
+          {
+            java.lang.Object[] objects =
+                new java.lang.Object[] {
+                  "bitField0_", "thirdPartyClaims_",
+                };
+            java.lang.String info =
+                "\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0000\u0000\u0000\u0001\u1009\u0000";
+            return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+          }
+          // fall through
+        case GET_DEFAULT_INSTANCE:
+          {
+            return DEFAULT_INSTANCE;
+          }
+        case GET_PARSER:
+          {
+            com.google.protobuf.Parser<
+                    com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal>
+                parser = PARSER;
+            if (parser == null) {
+              synchronized (
+                  com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal.class) {
+                parser = PARSER;
+                if (parser == null) {
+                  parser =
+                      new DefaultInstanceBasedParser<
+                          com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal>(
+                          DEFAULT_INSTANCE);
+                  PARSER = parser;
+                }
+              }
+            }
+            return parser;
+          }
+        case GET_MEMOIZED_IS_INITIALIZED:
+          {
+            return (byte) 1;
+          }
+        case SET_MEMOIZED_IS_INITIALIZED:
+          {
+            return null;
+          }
+      }
+      throw new UnsupportedOperationException();
     }
 
     // @@protoc_insertion_point(class_scope:google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal)
@@ -1761,8 +1016,12 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         DEFAULT_INSTANCE;
 
     static {
-      DEFAULT_INSTANCE =
-          new com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal();
+      ThirdPartyPrincipal defaultInstance = new ThirdPartyPrincipal();
+      // New instances are implicitly immutable so no need to make
+      // immutable.
+      DEFAULT_INSTANCE = defaultInstance;
+      com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+          ThirdPartyPrincipal.class, defaultInstance);
     }
 
     public static com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal
@@ -1770,54 +1029,17 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<ThirdPartyPrincipal> PARSER =
-        new com.google.protobuf.AbstractParser<ThirdPartyPrincipal>() {
-          @java.lang.Override
-          public ThirdPartyPrincipal parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-          }
-        };
+    private static volatile com.google.protobuf.Parser<ThirdPartyPrincipal> PARSER;
 
     public static com.google.protobuf.Parser<ThirdPartyPrincipal> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ThirdPartyPrincipal> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal
-        getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
+      return DEFAULT_INSTANCE.getParserForType();
     }
   }
 
   private int authorityCase_ = 0;
-
-  @SuppressWarnings("serial")
   private java.lang.Object authority_;
 
-  public enum AuthorityCase
-      implements
-          com.google.protobuf.Internal.EnumLite,
-          com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+  public enum AuthorityCase {
     FIRST_PARTY_PRINCIPAL(1),
     THIRD_PARTY_PRINCIPAL(2),
     AUTHORITY_NOT_SET(0);
@@ -1826,11 +1048,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     private AuthorityCase(int value) {
       this.value = value;
     }
-    /**
-     * @param value The number of the enum to look for.
-     * @return The enum associated with the given number.
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
+    /** @deprecated Use {@link #forNumber(int)} instead. */
     @java.lang.Deprecated
     public static AuthorityCase valueOf(int value) {
       return forNumber(value);
@@ -1854,14 +1072,18 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     }
   };
 
+  @java.lang.Override
   public AuthorityCase getAuthorityCase() {
     return AuthorityCase.forNumber(authorityCase_);
   }
 
-  public static final int PRINCIPAL_SUBJECT_FIELD_NUMBER = 3;
+  private void clearAuthority() {
+    authorityCase_ = 0;
+    authority_ = null;
+  }
 
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object principalSubject_ = "";
+  public static final int PRINCIPAL_SUBJECT_FIELD_NUMBER = 3;
+  private java.lang.String principalSubject_;
   /**
    *
    *
@@ -1880,15 +1102,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
    */
   @java.lang.Override
   public java.lang.String getPrincipalSubject() {
-    java.lang.Object ref = principalSubject_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      principalSubject_ = s;
-      return s;
-    }
+    return principalSubject_;
   }
   /**
    *
@@ -1908,15 +1122,66 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getPrincipalSubjectBytes() {
-    java.lang.Object ref = principalSubject_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      principalSubject_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(principalSubject_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A string representing the principal_subject associated with the identity.
+   * For most identities, the format will be
+   * `principal://iam.googleapis.com/{identity pool name}/subject/{subject)`
+   * except for some GKE identities (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD)
+   * that are still in the legacy format `serviceAccount:{identity pool
+   * name}[{subject}]`
+   * </pre>
+   *
+   * <code>string principal_subject = 3;</code>
+   *
+   * @param value The principalSubject to set.
+   */
+  private void setPrincipalSubject(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    principalSubject_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A string representing the principal_subject associated with the identity.
+   * For most identities, the format will be
+   * `principal://iam.googleapis.com/{identity pool name}/subject/{subject)`
+   * except for some GKE identities (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD)
+   * that are still in the legacy format `serviceAccount:{identity pool
+   * name}[{subject}]`
+   * </pre>
+   *
+   * <code>string principal_subject = 3;</code>
+   */
+  private void clearPrincipalSubject() {
+
+    principalSubject_ = getDefaultInstance().getPrincipalSubject();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A string representing the principal_subject associated with the identity.
+   * For most identities, the format will be
+   * `principal://iam.googleapis.com/{identity pool name}/subject/{subject)`
+   * except for some GKE identities (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD)
+   * that are still in the legacy format `serviceAccount:{identity pool
+   * name}[{subject}]`
+   * </pre>
+   *
+   * <code>string principal_subject = 3;</code>
+   *
+   * @param value The bytes for principalSubject to set.
+   */
+  private void setPrincipalSubjectBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    principalSubject_ = value.toStringUtf8();
   }
 
   public static final int FIRST_PARTY_PRINCIPAL_FIELD_NUMBER = 1;
@@ -1930,8 +1195,6 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
    * <code>
    * .google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal first_party_principal = 1;
    * </code>
-   *
-   * @return Whether the firstPartyPrincipal field is set.
    */
   @java.lang.Override
   public boolean hasFirstPartyPrincipal() {
@@ -1947,8 +1210,6 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
    * <code>
    * .google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal first_party_principal = 1;
    * </code>
-   *
-   * @return The firstPartyPrincipal.
    */
   @java.lang.Override
   public com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal
@@ -1970,14 +1231,57 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
    * .google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal first_party_principal = 1;
    * </code>
    */
-  @java.lang.Override
-  public com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipalOrBuilder
-      getFirstPartyPrincipalOrBuilder() {
-    if (authorityCase_ == 1) {
-      return (com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal) authority_;
+  private void setFirstPartyPrincipal(
+      com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal value) {
+    value.getClass();
+    authority_ = value;
+    authorityCase_ = 1;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * First party (Google) identity as the real authority.
+   * </pre>
+   *
+   * <code>
+   * .google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal first_party_principal = 1;
+   * </code>
+   */
+  private void mergeFirstPartyPrincipal(
+      com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal value) {
+    value.getClass();
+    if (authorityCase_ == 1
+        && authority_
+            != com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal
+                .getDefaultInstance()) {
+      authority_ =
+          com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal.newBuilder(
+                  (com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal)
+                      authority_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      authority_ = value;
     }
-    return com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal
-        .getDefaultInstance();
+    authorityCase_ = 1;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * First party (Google) identity as the real authority.
+   * </pre>
+   *
+   * <code>
+   * .google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal first_party_principal = 1;
+   * </code>
+   */
+  private void clearFirstPartyPrincipal() {
+    if (authorityCase_ == 1) {
+      authorityCase_ = 0;
+      authority_ = null;
+    }
   }
 
   public static final int THIRD_PARTY_PRINCIPAL_FIELD_NUMBER = 2;
@@ -1991,8 +1295,6 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
    * <code>
    * .google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal third_party_principal = 2;
    * </code>
-   *
-   * @return Whether the thirdPartyPrincipal field is set.
    */
   @java.lang.Override
   public boolean hasThirdPartyPrincipal() {
@@ -2008,8 +1310,6 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
    * <code>
    * .google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal third_party_principal = 2;
    * </code>
-   *
-   * @return The thirdPartyPrincipal.
    */
   @java.lang.Override
   public com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal
@@ -2031,218 +1331,141 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
    * .google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal third_party_principal = 2;
    * </code>
    */
-  @java.lang.Override
-  public com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipalOrBuilder
-      getThirdPartyPrincipalOrBuilder() {
+  private void setThirdPartyPrincipal(
+      com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal value) {
+    value.getClass();
+    authority_ = value;
+    authorityCase_ = 2;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Third party identity as the real authority.
+   * </pre>
+   *
+   * <code>
+   * .google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal third_party_principal = 2;
+   * </code>
+   */
+  private void mergeThirdPartyPrincipal(
+      com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal value) {
+    value.getClass();
+    if (authorityCase_ == 2
+        && authority_
+            != com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal
+                .getDefaultInstance()) {
+      authority_ =
+          com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal.newBuilder(
+                  (com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal)
+                      authority_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      authority_ = value;
+    }
+    authorityCase_ = 2;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Third party identity as the real authority.
+   * </pre>
+   *
+   * <code>
+   * .google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal third_party_principal = 2;
+   * </code>
+   */
+  private void clearThirdPartyPrincipal() {
     if (authorityCase_ == 2) {
-      return (com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal) authority_;
+      authorityCase_ = 0;
+      authority_ = null;
     }
-    return com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal
-        .getDefaultInstance();
-  }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
-  }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (authorityCase_ == 1) {
-      output.writeMessage(
-          1, (com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal) authority_);
-    }
-    if (authorityCase_ == 2) {
-      output.writeMessage(
-          2, (com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal) authority_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principalSubject_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, principalSubject_);
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (authorityCase_ == 1) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(
-              1,
-              (com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal) authority_);
-    }
-    if (authorityCase_ == 2) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(
-              2,
-              (com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal) authority_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principalSubject_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, principalSubject_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.cloud.audit.ServiceAccountDelegationInfo)) {
-      return super.equals(obj);
-    }
-    com.google.cloud.audit.ServiceAccountDelegationInfo other =
-        (com.google.cloud.audit.ServiceAccountDelegationInfo) obj;
-
-    if (!getPrincipalSubject().equals(other.getPrincipalSubject())) return false;
-    if (!getAuthorityCase().equals(other.getAuthorityCase())) return false;
-    switch (authorityCase_) {
-      case 1:
-        if (!getFirstPartyPrincipal().equals(other.getFirstPartyPrincipal())) return false;
-        break;
-      case 2:
-        if (!getThirdPartyPrincipal().equals(other.getThirdPartyPrincipal())) return false;
-        break;
-      case 0:
-      default:
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + PRINCIPAL_SUBJECT_FIELD_NUMBER;
-    hash = (53 * hash) + getPrincipalSubject().hashCode();
-    switch (authorityCase_) {
-      case 1:
-        hash = (37 * hash) + FIRST_PARTY_PRINCIPAL_FIELD_NUMBER;
-        hash = (53 * hash) + getFirstPartyPrincipal().hashCode();
-        break;
-      case 2:
-        hash = (37 * hash) + THIRD_PARTY_PRINCIPAL_FIELD_NUMBER;
-        hash = (53 * hash) + getThirdPartyPrincipal().hashCode();
-        break;
-      case 0:
-      default:
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
   }
 
   public static com.google.cloud.audit.ServiceAccountDelegationInfo parseFrom(
       java.nio.ByteBuffer data) throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.ServiceAccountDelegationInfo parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.ServiceAccountDelegationInfo parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.ServiceAccountDelegationInfo parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.ServiceAccountDelegationInfo parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.ServiceAccountDelegationInfo parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.ServiceAccountDelegationInfo parseFrom(
       java.io.InputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.ServiceAccountDelegationInfo parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.cloud.audit.ServiceAccountDelegationInfo parseDelimitedFrom(
       java.io.InputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.ServiceAccountDelegationInfo parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.cloud.audit.ServiceAccountDelegationInfo parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.ServiceAccountDelegationInfo parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.cloud.audit.ServiceAccountDelegationInfo prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -2252,245 +1475,28 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
    *
    * Protobuf type {@code google.cloud.audit.ServiceAccountDelegationInfo}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.cloud.audit.ServiceAccountDelegationInfo, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.cloud.audit.ServiceAccountDelegationInfo)
       com.google.cloud.audit.ServiceAccountDelegationInfoOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_ServiceAccountDelegationInfo_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_ServiceAccountDelegationInfo_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.cloud.audit.ServiceAccountDelegationInfo.class,
-              com.google.cloud.audit.ServiceAccountDelegationInfo.Builder.class);
-    }
-
     // Construct using com.google.cloud.audit.ServiceAccountDelegationInfo.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
     @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      principalSubject_ = "";
-      if (firstPartyPrincipalBuilder_ != null) {
-        firstPartyPrincipalBuilder_.clear();
-      }
-      if (thirdPartyPrincipalBuilder_ != null) {
-        thirdPartyPrincipalBuilder_.clear();
-      }
-      authorityCase_ = 0;
-      authority_ = null;
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_ServiceAccountDelegationInfo_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.ServiceAccountDelegationInfo getDefaultInstanceForType() {
-      return com.google.cloud.audit.ServiceAccountDelegationInfo.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.ServiceAccountDelegationInfo build() {
-      com.google.cloud.audit.ServiceAccountDelegationInfo result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.ServiceAccountDelegationInfo buildPartial() {
-      com.google.cloud.audit.ServiceAccountDelegationInfo result =
-          new com.google.cloud.audit.ServiceAccountDelegationInfo(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      buildPartialOneofs(result);
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.cloud.audit.ServiceAccountDelegationInfo result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.principalSubject_ = principalSubject_;
-      }
-    }
-
-    private void buildPartialOneofs(com.google.cloud.audit.ServiceAccountDelegationInfo result) {
-      result.authorityCase_ = authorityCase_;
-      result.authority_ = this.authority_;
-      if (authorityCase_ == 1 && firstPartyPrincipalBuilder_ != null) {
-        result.authority_ = firstPartyPrincipalBuilder_.build();
-      }
-      if (authorityCase_ == 2 && thirdPartyPrincipalBuilder_ != null) {
-        result.authority_ = thirdPartyPrincipalBuilder_.build();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.cloud.audit.ServiceAccountDelegationInfo) {
-        return mergeFrom((com.google.cloud.audit.ServiceAccountDelegationInfo) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.cloud.audit.ServiceAccountDelegationInfo other) {
-      if (other == com.google.cloud.audit.ServiceAccountDelegationInfo.getDefaultInstance())
-        return this;
-      if (!other.getPrincipalSubject().isEmpty()) {
-        principalSubject_ = other.principalSubject_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      switch (other.getAuthorityCase()) {
-        case FIRST_PARTY_PRINCIPAL:
-          {
-            mergeFirstPartyPrincipal(other.getFirstPartyPrincipal());
-            break;
-          }
-        case THIRD_PARTY_PRINCIPAL:
-          {
-            mergeThirdPartyPrincipal(other.getThirdPartyPrincipal());
-            break;
-          }
-        case AUTHORITY_NOT_SET:
-          {
-            break;
-          }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                input.readMessage(
-                    getFirstPartyPrincipalFieldBuilder().getBuilder(), extensionRegistry);
-                authorityCase_ = 1;
-                break;
-              } // case 10
-            case 18:
-              {
-                input.readMessage(
-                    getThirdPartyPrincipalFieldBuilder().getBuilder(), extensionRegistry);
-                authorityCase_ = 2;
-                break;
-              } // case 18
-            case 26:
-              {
-                principalSubject_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 26
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int authorityCase_ = 0;
-    private java.lang.Object authority_;
-
     public AuthorityCase getAuthorityCase() {
-      return AuthorityCase.forNumber(authorityCase_);
+      return instance.getAuthorityCase();
     }
 
     public Builder clearAuthority() {
-      authorityCase_ = 0;
-      authority_ = null;
-      onChanged();
+      copyOnWrite();
+      instance.clearAuthority();
       return this;
     }
 
-    private int bitField0_;
-
-    private java.lang.Object principalSubject_ = "";
     /**
      *
      *
@@ -2507,16 +1513,9 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      *
      * @return The principalSubject.
      */
+    @java.lang.Override
     public java.lang.String getPrincipalSubject() {
-      java.lang.Object ref = principalSubject_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        principalSubject_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getPrincipalSubject();
     }
     /**
      *
@@ -2534,16 +1533,9 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      *
      * @return The bytes for principalSubject.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getPrincipalSubjectBytes() {
-      java.lang.Object ref = principalSubject_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        principalSubject_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getPrincipalSubjectBytes();
     }
     /**
      *
@@ -2563,12 +1555,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * @return This builder for chaining.
      */
     public Builder setPrincipalSubject(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      principalSubject_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setPrincipalSubject(value);
       return this;
     }
     /**
@@ -2588,9 +1576,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * @return This builder for chaining.
      */
     public Builder clearPrincipalSubject() {
-      principalSubject_ = getDefaultInstance().getPrincipalSubject();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearPrincipalSubject();
       return this;
     }
     /**
@@ -2611,21 +1598,11 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * @return This builder for chaining.
      */
     public Builder setPrincipalSubjectBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      principalSubject_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setPrincipalSubjectBytes(value);
       return this;
     }
 
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal,
-            com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal.Builder,
-            com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipalOrBuilder>
-        firstPartyPrincipalBuilder_;
     /**
      *
      *
@@ -2636,12 +1613,10 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * <code>
      * .google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal first_party_principal = 1;
      * </code>
-     *
-     * @return Whether the firstPartyPrincipal field is set.
      */
     @java.lang.Override
     public boolean hasFirstPartyPrincipal() {
-      return authorityCase_ == 1;
+      return instance.hasFirstPartyPrincipal();
     }
     /**
      *
@@ -2653,26 +1628,11 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * <code>
      * .google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal first_party_principal = 1;
      * </code>
-     *
-     * @return The firstPartyPrincipal.
      */
     @java.lang.Override
     public com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal
         getFirstPartyPrincipal() {
-      if (firstPartyPrincipalBuilder_ == null) {
-        if (authorityCase_ == 1) {
-          return (com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal)
-              authority_;
-        }
-        return com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal
-            .getDefaultInstance();
-      } else {
-        if (authorityCase_ == 1) {
-          return firstPartyPrincipalBuilder_.getMessage();
-        }
-        return com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal
-            .getDefaultInstance();
-      }
+      return instance.getFirstPartyPrincipal();
     }
     /**
      *
@@ -2687,16 +1647,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      */
     public Builder setFirstPartyPrincipal(
         com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal value) {
-      if (firstPartyPrincipalBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        authority_ = value;
-        onChanged();
-      } else {
-        firstPartyPrincipalBuilder_.setMessage(value);
-      }
-      authorityCase_ = 1;
+      copyOnWrite();
+      instance.setFirstPartyPrincipal(value);
       return this;
     }
     /**
@@ -2713,13 +1665,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     public Builder setFirstPartyPrincipal(
         com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal.Builder
             builderForValue) {
-      if (firstPartyPrincipalBuilder_ == null) {
-        authority_ = builderForValue.build();
-        onChanged();
-      } else {
-        firstPartyPrincipalBuilder_.setMessage(builderForValue.build());
-      }
-      authorityCase_ = 1;
+      copyOnWrite();
+      instance.setFirstPartyPrincipal(builderForValue.build());
       return this;
     }
     /**
@@ -2735,29 +1682,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      */
     public Builder mergeFirstPartyPrincipal(
         com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal value) {
-      if (firstPartyPrincipalBuilder_ == null) {
-        if (authorityCase_ == 1
-            && authority_
-                != com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal
-                    .getDefaultInstance()) {
-          authority_ =
-              com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal.newBuilder(
-                      (com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal)
-                          authority_)
-                  .mergeFrom(value)
-                  .buildPartial();
-        } else {
-          authority_ = value;
-        }
-        onChanged();
-      } else {
-        if (authorityCase_ == 1) {
-          firstPartyPrincipalBuilder_.mergeFrom(value);
-        } else {
-          firstPartyPrincipalBuilder_.setMessage(value);
-        }
-      }
-      authorityCase_ = 1;
+      copyOnWrite();
+      instance.mergeFirstPartyPrincipal(value);
       return this;
     }
     /**
@@ -2772,104 +1698,11 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * </code>
      */
     public Builder clearFirstPartyPrincipal() {
-      if (firstPartyPrincipalBuilder_ == null) {
-        if (authorityCase_ == 1) {
-          authorityCase_ = 0;
-          authority_ = null;
-          onChanged();
-        }
-      } else {
-        if (authorityCase_ == 1) {
-          authorityCase_ = 0;
-          authority_ = null;
-        }
-        firstPartyPrincipalBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearFirstPartyPrincipal();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * First party (Google) identity as the real authority.
-     * </pre>
-     *
-     * <code>
-     * .google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal first_party_principal = 1;
-     * </code>
-     */
-    public com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal.Builder
-        getFirstPartyPrincipalBuilder() {
-      return getFirstPartyPrincipalFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * First party (Google) identity as the real authority.
-     * </pre>
-     *
-     * <code>
-     * .google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal first_party_principal = 1;
-     * </code>
-     */
-    @java.lang.Override
-    public com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipalOrBuilder
-        getFirstPartyPrincipalOrBuilder() {
-      if ((authorityCase_ == 1) && (firstPartyPrincipalBuilder_ != null)) {
-        return firstPartyPrincipalBuilder_.getMessageOrBuilder();
-      } else {
-        if (authorityCase_ == 1) {
-          return (com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal)
-              authority_;
-        }
-        return com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal
-            .getDefaultInstance();
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * First party (Google) identity as the real authority.
-     * </pre>
-     *
-     * <code>
-     * .google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal first_party_principal = 1;
-     * </code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal,
-            com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal.Builder,
-            com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipalOrBuilder>
-        getFirstPartyPrincipalFieldBuilder() {
-      if (firstPartyPrincipalBuilder_ == null) {
-        if (!(authorityCase_ == 1)) {
-          authority_ =
-              com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal
-                  .getDefaultInstance();
-        }
-        firstPartyPrincipalBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal,
-                com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal.Builder,
-                com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipalOrBuilder>(
-                (com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal)
-                    authority_,
-                getParentForChildren(),
-                isClean());
-        authority_ = null;
-      }
-      authorityCase_ = 1;
-      onChanged();
-      return firstPartyPrincipalBuilder_;
-    }
 
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal,
-            com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal.Builder,
-            com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipalOrBuilder>
-        thirdPartyPrincipalBuilder_;
     /**
      *
      *
@@ -2880,12 +1713,10 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * <code>
      * .google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal third_party_principal = 2;
      * </code>
-     *
-     * @return Whether the thirdPartyPrincipal field is set.
      */
     @java.lang.Override
     public boolean hasThirdPartyPrincipal() {
-      return authorityCase_ == 2;
+      return instance.hasThirdPartyPrincipal();
     }
     /**
      *
@@ -2897,26 +1728,11 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * <code>
      * .google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal third_party_principal = 2;
      * </code>
-     *
-     * @return The thirdPartyPrincipal.
      */
     @java.lang.Override
     public com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal
         getThirdPartyPrincipal() {
-      if (thirdPartyPrincipalBuilder_ == null) {
-        if (authorityCase_ == 2) {
-          return (com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal)
-              authority_;
-        }
-        return com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal
-            .getDefaultInstance();
-      } else {
-        if (authorityCase_ == 2) {
-          return thirdPartyPrincipalBuilder_.getMessage();
-        }
-        return com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal
-            .getDefaultInstance();
-      }
+      return instance.getThirdPartyPrincipal();
     }
     /**
      *
@@ -2931,16 +1747,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      */
     public Builder setThirdPartyPrincipal(
         com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal value) {
-      if (thirdPartyPrincipalBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        authority_ = value;
-        onChanged();
-      } else {
-        thirdPartyPrincipalBuilder_.setMessage(value);
-      }
-      authorityCase_ = 2;
+      copyOnWrite();
+      instance.setThirdPartyPrincipal(value);
       return this;
     }
     /**
@@ -2957,13 +1765,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     public Builder setThirdPartyPrincipal(
         com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal.Builder
             builderForValue) {
-      if (thirdPartyPrincipalBuilder_ == null) {
-        authority_ = builderForValue.build();
-        onChanged();
-      } else {
-        thirdPartyPrincipalBuilder_.setMessage(builderForValue.build());
-      }
-      authorityCase_ = 2;
+      copyOnWrite();
+      instance.setThirdPartyPrincipal(builderForValue.build());
       return this;
     }
     /**
@@ -2979,29 +1782,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      */
     public Builder mergeThirdPartyPrincipal(
         com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal value) {
-      if (thirdPartyPrincipalBuilder_ == null) {
-        if (authorityCase_ == 2
-            && authority_
-                != com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal
-                    .getDefaultInstance()) {
-          authority_ =
-              com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal.newBuilder(
-                      (com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal)
-                          authority_)
-                  .mergeFrom(value)
-                  .buildPartial();
-        } else {
-          authority_ = value;
-        }
-        onChanged();
-      } else {
-        if (authorityCase_ == 2) {
-          thirdPartyPrincipalBuilder_.mergeFrom(value);
-        } else {
-          thirdPartyPrincipalBuilder_.setMessage(value);
-        }
-      }
-      authorityCase_ = 2;
+      copyOnWrite();
+      instance.mergeThirdPartyPrincipal(value);
       return this;
     }
     /**
@@ -3016,157 +1798,97 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * </code>
      */
     public Builder clearThirdPartyPrincipal() {
-      if (thirdPartyPrincipalBuilder_ == null) {
-        if (authorityCase_ == 2) {
-          authorityCase_ = 0;
-          authority_ = null;
-          onChanged();
-        }
-      } else {
-        if (authorityCase_ == 2) {
-          authorityCase_ = 0;
-          authority_ = null;
-        }
-        thirdPartyPrincipalBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearThirdPartyPrincipal();
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Third party identity as the real authority.
-     * </pre>
-     *
-     * <code>
-     * .google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal third_party_principal = 2;
-     * </code>
-     */
-    public com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal.Builder
-        getThirdPartyPrincipalBuilder() {
-      return getThirdPartyPrincipalFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Third party identity as the real authority.
-     * </pre>
-     *
-     * <code>
-     * .google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal third_party_principal = 2;
-     * </code>
-     */
-    @java.lang.Override
-    public com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipalOrBuilder
-        getThirdPartyPrincipalOrBuilder() {
-      if ((authorityCase_ == 2) && (thirdPartyPrincipalBuilder_ != null)) {
-        return thirdPartyPrincipalBuilder_.getMessageOrBuilder();
-      } else {
-        if (authorityCase_ == 2) {
-          return (com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal)
-              authority_;
-        }
-        return com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal
-            .getDefaultInstance();
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Third party identity as the real authority.
-     * </pre>
-     *
-     * <code>
-     * .google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal third_party_principal = 2;
-     * </code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal,
-            com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal.Builder,
-            com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipalOrBuilder>
-        getThirdPartyPrincipalFieldBuilder() {
-      if (thirdPartyPrincipalBuilder_ == null) {
-        if (!(authorityCase_ == 2)) {
-          authority_ =
-              com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal
-                  .getDefaultInstance();
-        }
-        thirdPartyPrincipalBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal,
-                com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal.Builder,
-                com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipalOrBuilder>(
-                (com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal)
-                    authority_,
-                getParentForChildren(),
-                isClean());
-        authority_ = null;
-      }
-      authorityCase_ = 2;
-      onChanged();
-      return thirdPartyPrincipalBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.cloud.audit.ServiceAccountDelegationInfo)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.cloud.audit.ServiceAccountDelegationInfo();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "authority_",
+                "authorityCase_",
+                com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal.class,
+                com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal.class,
+                "principalSubject_",
+              };
+          java.lang.String info =
+              "\u0000\u0003\u0001\u0000\u0001\u0003\u0003\u0000\u0000\u0000\u0001<\u0000\u0002<"
+                  + "\u0000\u0003\u0208";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.cloud.audit.ServiceAccountDelegationInfo> parser =
+              PARSER;
+          if (parser == null) {
+            synchronized (com.google.cloud.audit.ServiceAccountDelegationInfo.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<
+                        com.google.cloud.audit.ServiceAccountDelegationInfo>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.cloud.audit.ServiceAccountDelegationInfo)
   private static final com.google.cloud.audit.ServiceAccountDelegationInfo DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.cloud.audit.ServiceAccountDelegationInfo();
+    ServiceAccountDelegationInfo defaultInstance = new ServiceAccountDelegationInfo();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        ServiceAccountDelegationInfo.class, defaultInstance);
   }
 
   public static com.google.cloud.audit.ServiceAccountDelegationInfo getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<ServiceAccountDelegationInfo> PARSER =
-      new com.google.protobuf.AbstractParser<ServiceAccountDelegationInfo>() {
-        @java.lang.Override
-        public ServiceAccountDelegationInfo parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<ServiceAccountDelegationInfo> PARSER;
 
   public static com.google.protobuf.Parser<ServiceAccountDelegationInfo> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<ServiceAccountDelegationInfo> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.cloud.audit.ServiceAccountDelegationInfo getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

@@ -22,7 +22,7 @@ package com.google.apps.card.v1;
 public interface IconOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.apps.card.v1.Icon)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -191,28 +191,6 @@ public interface IconOrBuilder
    * @return The materialIcon.
    */
   com.google.apps.card.v1.MaterialIcon getMaterialIcon();
-  /**
-   *
-   *
-   * <pre>
-   * Display one of the [Google Material
-   * Icons](https://fonts.google.com/icons).
-   *
-   * For example, to display a [checkbox
-   * icon](https://fonts.google.com/icons?selected=Material%20Symbols%20Outlined%3Acheck_box%3AFILL%400%3Bwght%40400%3BGRAD%400%3Bopsz%4048),
-   * use
-   * ```
-   * "material_icon": {
-   *   "name": "check_box"
-   * }
-   * ```
-   *
-   * [Google Chat apps](https://developers.google.com/workspace/chat):
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.MaterialIcon material_icon = 5;</code>
-   */
-  com.google.apps.card.v1.MaterialIconOrBuilder getMaterialIconOrBuilder();
 
   /**
    *
@@ -286,5 +264,5 @@ public interface IconOrBuilder
    */
   com.google.apps.card.v1.Widget.ImageType getImageType();
 
-  com.google.apps.card.v1.Icon.IconsCase getIconsCase();
+  public com.google.apps.card.v1.Icon.IconsCase getIconsCase();
 }

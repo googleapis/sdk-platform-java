@@ -22,7 +22,7 @@ package com.google.longrunning;
 public interface WaitOperationRequestOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.longrunning.WaitOperationRequest)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -77,16 +77,4 @@ public interface WaitOperationRequestOrBuilder
    * @return The timeout.
    */
   com.google.protobuf.Duration getTimeout();
-  /**
-   *
-   *
-   * <pre>
-   * The maximum duration to wait before timing out. If left blank, the wait
-   * will be at most the time permitted by the underlying HTTP/RPC protocol.
-   * If RPC context deadline is also specified, the shorter one will be used.
-   * </pre>
-   *
-   * <code>.google.protobuf.Duration timeout = 2;</code>
-   */
-  com.google.protobuf.DurationOrBuilder getTimeoutOrBuilder();
 }

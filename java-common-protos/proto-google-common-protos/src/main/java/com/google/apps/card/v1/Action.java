@@ -33,42 +33,14 @@ package com.google.apps.card.v1;
  *
  * Protobuf type {@code google.apps.card.v1.Action}
  */
-public final class Action extends com.google.protobuf.GeneratedMessageV3
+public final class Action extends com.google.protobuf.GeneratedMessageLite<Action, Action.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.Action)
     ActionOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use Action.newBuilder() to construct.
-  private Action(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private Action() {
     function_ = "";
-    parameters_ = java.util.Collections.emptyList();
-    loadIndicator_ = 0;
-    interaction_ = 0;
+    parameters_ = emptyProtobufList();
   }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new Action();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.apps.card.v1.CardProto.internal_static_google_apps_card_v1_Action_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_Action_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.apps.card.v1.Action.class, com.google.apps.card.v1.Action.Builder.class);
-  }
-
   /**
    *
    *
@@ -82,7 +54,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf enum {@code google.apps.card.v1.Action.LoadIndicator}
    */
-  public enum LoadIndicator implements com.google.protobuf.ProtocolMessageEnum {
+  public enum LoadIndicator implements com.google.protobuf.Internal.EnumLite {
     /**
      *
      *
@@ -127,6 +99,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      */
     public static final int NONE_VALUE = 1;
 
+    @java.lang.Override
     public final int getNumber() {
       if (this == UNRECOGNIZED) {
         throw new java.lang.IllegalArgumentException(
@@ -136,8 +109,8 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
     }
 
     /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
+     * @param value The number of the enum to look for.
+     * @return The enum associated with the given number.
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
@@ -145,10 +118,6 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
       return forNumber(value);
     }
 
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
     public static LoadIndicator forNumber(int value) {
       switch (value) {
         case 0:
@@ -166,38 +135,25 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
 
     private static final com.google.protobuf.Internal.EnumLiteMap<LoadIndicator> internalValueMap =
         new com.google.protobuf.Internal.EnumLiteMap<LoadIndicator>() {
+          @java.lang.Override
           public LoadIndicator findValueByNumber(int number) {
             return LoadIndicator.forNumber(number);
           }
         };
 
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalStateException(
-            "Can't get the descriptor of an unrecognized enum value.");
+    public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+      return LoadIndicatorVerifier.INSTANCE;
+    }
+
+    private static final class LoadIndicatorVerifier
+        implements com.google.protobuf.Internal.EnumVerifier {
+      static final com.google.protobuf.Internal.EnumVerifier INSTANCE = new LoadIndicatorVerifier();
+
+      @java.lang.Override
+      public boolean isInRange(int number) {
+        return LoadIndicator.forNumber(number) != null;
       }
-      return getDescriptor().getValues().get(ordinal());
-    }
-
-    public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-      return getDescriptor();
-    }
-
-    public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-      return com.google.apps.card.v1.Action.getDescriptor().getEnumTypes().get(0);
-    }
-
-    private static final LoadIndicator[] VALUES = values();
-
-    public static LoadIndicator valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
+    };
 
     private final int value;
 
@@ -233,7 +189,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf enum {@code google.apps.card.v1.Action.Interaction}
    */
-  public enum Interaction implements com.google.protobuf.ProtocolMessageEnum {
+  public enum Interaction implements com.google.protobuf.Internal.EnumLite {
     /**
      *
      *
@@ -294,6 +250,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      */
     public static final int OPEN_DIALOG_VALUE = 1;
 
+    @java.lang.Override
     public final int getNumber() {
       if (this == UNRECOGNIZED) {
         throw new java.lang.IllegalArgumentException(
@@ -303,8 +260,8 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
     }
 
     /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
+     * @param value The number of the enum to look for.
+     * @return The enum associated with the given number.
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
@@ -312,10 +269,6 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
       return forNumber(value);
     }
 
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
     public static Interaction forNumber(int value) {
       switch (value) {
         case 0:
@@ -333,38 +286,25 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
 
     private static final com.google.protobuf.Internal.EnumLiteMap<Interaction> internalValueMap =
         new com.google.protobuf.Internal.EnumLiteMap<Interaction>() {
+          @java.lang.Override
           public Interaction findValueByNumber(int number) {
             return Interaction.forNumber(number);
           }
         };
 
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalStateException(
-            "Can't get the descriptor of an unrecognized enum value.");
+    public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+      return InteractionVerifier.INSTANCE;
+    }
+
+    private static final class InteractionVerifier
+        implements com.google.protobuf.Internal.EnumVerifier {
+      static final com.google.protobuf.Internal.EnumVerifier INSTANCE = new InteractionVerifier();
+
+      @java.lang.Override
+      public boolean isInRange(int number) {
+        return Interaction.forNumber(number) != null;
       }
-      return getDescriptor().getValues().get(ordinal());
-    }
-
-    public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-      return getDescriptor();
-    }
-
-    public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-      return com.google.apps.card.v1.Action.getDescriptor().getEnumTypes().get(1);
-    }
-
-    private static final Interaction[] VALUES = values();
-
-    public static Interaction valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
+    };
 
     private final int value;
 
@@ -378,7 +318,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
   public interface ActionParameterOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:google.apps.card.v1.Action.ActionParameter)
-      com.google.protobuf.MessageOrBuilder {
+      com.google.protobuf.MessageLiteOrBuilder {
 
     /**
      *
@@ -448,46 +388,18 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.apps.card.v1.Action.ActionParameter}
    */
-  public static final class ActionParameter extends com.google.protobuf.GeneratedMessageV3
+  public static final class ActionParameter
+      extends com.google.protobuf.GeneratedMessageLite<ActionParameter, ActionParameter.Builder>
       implements
       // @@protoc_insertion_point(message_implements:google.apps.card.v1.Action.ActionParameter)
       ActionParameterOrBuilder {
-    private static final long serialVersionUID = 0L;
-    // Use ActionParameter.newBuilder() to construct.
-    private ActionParameter(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-
     private ActionParameter() {
       key_ = "";
       value_ = "";
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-      return new ActionParameter();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Action_ActionParameter_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Action_ActionParameter_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.apps.card.v1.Action.ActionParameter.class,
-              com.google.apps.card.v1.Action.ActionParameter.Builder.class);
-    }
-
     public static final int KEY_FIELD_NUMBER = 1;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object key_ = "";
+    private java.lang.String key_;
     /**
      *
      *
@@ -501,15 +413,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getKey() {
-      java.lang.Object ref = key_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        key_ = s;
-        return s;
-      }
+      return key_;
     }
     /**
      *
@@ -524,21 +428,55 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getKeyBytes() {
-      java.lang.Object ref = key_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        key_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(key_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The name of the parameter for the action script.
+     * </pre>
+     *
+     * <code>string key = 1;</code>
+     *
+     * @param value The key to set.
+     */
+    private void setKey(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
+
+      key_ = value;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The name of the parameter for the action script.
+     * </pre>
+     *
+     * <code>string key = 1;</code>
+     */
+    private void clearKey() {
+
+      key_ = getDefaultInstance().getKey();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The name of the parameter for the action script.
+     * </pre>
+     *
+     * <code>string key = 1;</code>
+     *
+     * @param value The bytes for key to set.
+     */
+    private void setKeyBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      key_ = value.toStringUtf8();
     }
 
     public static final int VALUE_FIELD_NUMBER = 2;
-
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object value_ = "";
+    private java.lang.String value_;
     /**
      *
      *
@@ -552,15 +490,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getValue() {
-      java.lang.Object ref = value_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        value_ = s;
-        return s;
-      }
+      return value_;
     }
     /**
      *
@@ -575,186 +505,135 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getValueBytes() {
-      java.lang.Object ref = value_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        value_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return com.google.protobuf.ByteString.copyFromUtf8(value_);
     }
+    /**
+     *
+     *
+     * <pre>
+     * The value of the parameter.
+     * </pre>
+     *
+     * <code>string value = 2;</code>
+     *
+     * @param value The value to set.
+     */
+    private void setValue(java.lang.String value) {
+      java.lang.Class<?> valueClass = value.getClass();
 
-    private byte memoizedIsInitialized = -1;
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
+      value_ = value;
     }
+    /**
+     *
+     *
+     * <pre>
+     * The value of the parameter.
+     * </pre>
+     *
+     * <code>string value = 2;</code>
+     */
+    private void clearValue() {
 
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(key_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, key_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(value_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, value_);
-      }
-      getUnknownFields().writeTo(output);
+      value_ = getDefaultInstance().getValue();
     }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(key_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, key_);
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(value_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, value_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-        return true;
-      }
-      if (!(obj instanceof com.google.apps.card.v1.Action.ActionParameter)) {
-        return super.equals(obj);
-      }
-      com.google.apps.card.v1.Action.ActionParameter other =
-          (com.google.apps.card.v1.Action.ActionParameter) obj;
-
-      if (!getKey().equals(other.getKey())) return false;
-      if (!getValue().equals(other.getValue())) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + KEY_FIELD_NUMBER;
-      hash = (53 * hash) + getKey().hashCode();
-      hash = (37 * hash) + VALUE_FIELD_NUMBER;
-      hash = (53 * hash) + getValue().hashCode();
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
+    /**
+     *
+     *
+     * <pre>
+     * The value of the parameter.
+     * </pre>
+     *
+     * <code>string value = 2;</code>
+     *
+     * @param value The bytes for value to set.
+     */
+    private void setValueBytes(com.google.protobuf.ByteString value) {
+      checkByteStringIsUtf8(value);
+      value_ = value.toStringUtf8();
     }
 
     public static com.google.apps.card.v1.Action.ActionParameter parseFrom(java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.Action.ActionParameter parseFrom(
         java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.Action.ActionParameter parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.Action.ActionParameter parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.Action.ActionParameter parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
     }
 
     public static com.google.apps.card.v1.Action.ActionParameter parseFrom(
         byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, data, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.Action.ActionParameter parseFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.Action.ActionParameter parseFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.Action.ActionParameter parseDelimitedFrom(
         java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.Action.ActionParameter parseDelimitedFrom(
         java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
+      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static com.google.apps.card.v1.Action.ActionParameter parseFrom(
         com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
     }
 
     public static com.google.apps.card.v1.Action.ActionParameter parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
+      return com.google.protobuf.GeneratedMessageLite.parseFrom(
+          DEFAULT_INSTANCE, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
+      return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
 
     public static Builder newBuilder(com.google.apps.card.v1.Action.ActionParameter prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
      *
      *
@@ -774,198 +653,16 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      * Protobuf type {@code google.apps.card.v1.Action.ActionParameter}
      */
     public static final class Builder
-        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+        extends com.google.protobuf.GeneratedMessageLite.Builder<
+            com.google.apps.card.v1.Action.ActionParameter, Builder>
         implements
         // @@protoc_insertion_point(builder_implements:google.apps.card.v1.Action.ActionParameter)
         com.google.apps.card.v1.Action.ActionParameterOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_Action_ActionParameter_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_Action_ActionParameter_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.google.apps.card.v1.Action.ActionParameter.class,
-                com.google.apps.card.v1.Action.ActionParameter.Builder.class);
-      }
-
       // Construct using com.google.apps.card.v1.Action.ActionParameter.newBuilder()
-      private Builder() {}
-
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
+      private Builder() {
+        super(DEFAULT_INSTANCE);
       }
 
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        key_ = "";
-        value_ = "";
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return com.google.apps.card.v1.CardProto
-            .internal_static_google_apps_card_v1_Action_ActionParameter_descriptor;
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.Action.ActionParameter getDefaultInstanceForType() {
-        return com.google.apps.card.v1.Action.ActionParameter.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.Action.ActionParameter build() {
-        com.google.apps.card.v1.Action.ActionParameter result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.google.apps.card.v1.Action.ActionParameter buildPartial() {
-        com.google.apps.card.v1.Action.ActionParameter result =
-            new com.google.apps.card.v1.Action.ActionParameter(this);
-        if (bitField0_ != 0) {
-          buildPartial0(result);
-        }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartial0(com.google.apps.card.v1.Action.ActionParameter result) {
-        int from_bitField0_ = bitField0_;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.key_ = key_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.value_ = value_;
-        }
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.apps.card.v1.Action.ActionParameter) {
-          return mergeFrom((com.google.apps.card.v1.Action.ActionParameter) other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.google.apps.card.v1.Action.ActionParameter other) {
-        if (other == com.google.apps.card.v1.Action.ActionParameter.getDefaultInstance())
-          return this;
-        if (!other.getKey().isEmpty()) {
-          key_ = other.key_;
-          bitField0_ |= 0x00000001;
-          onChanged();
-        }
-        if (!other.getValue().isEmpty()) {
-          value_ = other.value_;
-          bitField0_ |= 0x00000002;
-          onChanged();
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10:
-                {
-                  key_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000001;
-                  break;
-                } // case 10
-              case 18:
-                {
-                  value_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000002;
-                  break;
-                } // case 18
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-
-      private int bitField0_;
-
-      private java.lang.Object key_ = "";
       /**
        *
        *
@@ -977,16 +674,9 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The key.
        */
+      @java.lang.Override
       public java.lang.String getKey() {
-        java.lang.Object ref = key_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          key_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getKey();
       }
       /**
        *
@@ -999,16 +689,9 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The bytes for key.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getKeyBytes() {
-        java.lang.Object ref = key_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          key_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getKeyBytes();
       }
       /**
        *
@@ -1023,12 +706,8 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setKey(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        key_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setKey(value);
         return this;
       }
       /**
@@ -1043,9 +722,8 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearKey() {
-        key_ = getDefaultInstance().getKey();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
+        copyOnWrite();
+        instance.clearKey();
         return this;
       }
       /**
@@ -1061,17 +739,11 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setKeyBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        key_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
+        copyOnWrite();
+        instance.setKeyBytes(value);
         return this;
       }
 
-      private java.lang.Object value_ = "";
       /**
        *
        *
@@ -1083,16 +755,9 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The value.
        */
+      @java.lang.Override
       public java.lang.String getValue() {
-        java.lang.Object ref = value_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          value_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+        return instance.getValue();
       }
       /**
        *
@@ -1105,16 +770,9 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The bytes for value.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getValueBytes() {
-        java.lang.Object ref = value_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          value_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+        return instance.getValueBytes();
       }
       /**
        *
@@ -1129,12 +787,8 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setValue(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        value_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setValue(value);
         return this;
       }
       /**
@@ -1149,9 +803,8 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearValue() {
-        value_ = getDefaultInstance().getValue();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
+        copyOnWrite();
+        instance.clearValue();
         return this;
       }
       /**
@@ -1167,84 +820,99 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder setValueBytes(com.google.protobuf.ByteString value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-        value_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
+        copyOnWrite();
+        instance.setValueBytes(value);
         return this;
       }
 
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
       // @@protoc_insertion_point(builder_scope:google.apps.card.v1.Action.ActionParameter)
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0,
+        java.lang.Object arg1) {
+      switch (method) {
+        case NEW_MUTABLE_INSTANCE:
+          {
+            return new com.google.apps.card.v1.Action.ActionParameter();
+          }
+        case NEW_BUILDER:
+          {
+            return new Builder();
+          }
+        case BUILD_MESSAGE_INFO:
+          {
+            java.lang.Object[] objects =
+                new java.lang.Object[] {
+                  "key_", "value_",
+                };
+            java.lang.String info =
+                "\u0000\u0002\u0000\u0000\u0001\u0002\u0002\u0000\u0000\u0000\u0001\u0208\u0002\u0208"
+                    + "";
+            return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+          }
+          // fall through
+        case GET_DEFAULT_INSTANCE:
+          {
+            return DEFAULT_INSTANCE;
+          }
+        case GET_PARSER:
+          {
+            com.google.protobuf.Parser<com.google.apps.card.v1.Action.ActionParameter> parser =
+                PARSER;
+            if (parser == null) {
+              synchronized (com.google.apps.card.v1.Action.ActionParameter.class) {
+                parser = PARSER;
+                if (parser == null) {
+                  parser =
+                      new DefaultInstanceBasedParser<
+                          com.google.apps.card.v1.Action.ActionParameter>(DEFAULT_INSTANCE);
+                  PARSER = parser;
+                }
+              }
+            }
+            return parser;
+          }
+        case GET_MEMOIZED_IS_INITIALIZED:
+          {
+            return (byte) 1;
+          }
+        case SET_MEMOIZED_IS_INITIALIZED:
+          {
+            return null;
+          }
+      }
+      throw new UnsupportedOperationException();
     }
 
     // @@protoc_insertion_point(class_scope:google.apps.card.v1.Action.ActionParameter)
     private static final com.google.apps.card.v1.Action.ActionParameter DEFAULT_INSTANCE;
 
     static {
-      DEFAULT_INSTANCE = new com.google.apps.card.v1.Action.ActionParameter();
+      ActionParameter defaultInstance = new ActionParameter();
+      // New instances are implicitly immutable so no need to make
+      // immutable.
+      DEFAULT_INSTANCE = defaultInstance;
+      com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+          ActionParameter.class, defaultInstance);
     }
 
     public static com.google.apps.card.v1.Action.ActionParameter getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<ActionParameter> PARSER =
-        new com.google.protobuf.AbstractParser<ActionParameter>() {
-          @java.lang.Override
-          public ActionParameter parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-          }
-        };
+    private static volatile com.google.protobuf.Parser<ActionParameter> PARSER;
 
     public static com.google.protobuf.Parser<ActionParameter> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ActionParameter> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.Action.ActionParameter getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
+      return DEFAULT_INSTANCE.getParserForType();
     }
   }
 
   public static final int FUNCTION_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object function_ = "";
+  private java.lang.String function_;
   /**
    *
    *
@@ -1262,15 +930,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getFunction() {
-    java.lang.Object ref = function_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      function_ = s;
-      return s;
-    }
+    return function_;
   }
   /**
    *
@@ -1289,21 +949,68 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getFunctionBytes() {
-    java.lang.Object ref = function_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      function_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(function_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A custom function to invoke when the containing element is
+   * clicked or othrwise activated.
+   *
+   * For example usage, see [Read form
+   * data](https://developers.google.com/workspace/chat/read-form-data).
+   * </pre>
+   *
+   * <code>string function = 1;</code>
+   *
+   * @param value The function to set.
+   */
+  private void setFunction(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    function_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A custom function to invoke when the containing element is
+   * clicked or othrwise activated.
+   *
+   * For example usage, see [Read form
+   * data](https://developers.google.com/workspace/chat/read-form-data).
+   * </pre>
+   *
+   * <code>string function = 1;</code>
+   */
+  private void clearFunction() {
+
+    function_ = getDefaultInstance().getFunction();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A custom function to invoke when the containing element is
+   * clicked or othrwise activated.
+   *
+   * For example usage, see [Read form
+   * data](https://developers.google.com/workspace/chat/read-form-data).
+   * </pre>
+   *
+   * <code>string function = 1;</code>
+   *
+   * @param value The bytes for function to set.
+   */
+  private void setFunctionBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    function_ = value.toStringUtf8();
   }
 
   public static final int PARAMETERS_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private java.util.List<com.google.apps.card.v1.Action.ActionParameter> parameters_;
+  private com.google.protobuf.Internal.ProtobufList<com.google.apps.card.v1.Action.ActionParameter>
+      parameters_;
   /**
    *
    *
@@ -1326,7 +1033,6 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
    */
-  @java.lang.Override
   public java.util.List<? extends com.google.apps.card.v1.Action.ActionParameterOrBuilder>
       getParametersOrBuilderList() {
     return parameters_;
@@ -1366,13 +1072,102 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
    */
-  @java.lang.Override
   public com.google.apps.card.v1.Action.ActionParameterOrBuilder getParametersOrBuilder(int index) {
     return parameters_.get(index);
   }
 
+  private void ensureParametersIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<com.google.apps.card.v1.Action.ActionParameter> tmp =
+        parameters_;
+    if (!tmp.isModifiable()) {
+      parameters_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * List of action parameters.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
+   */
+  private void setParameters(int index, com.google.apps.card.v1.Action.ActionParameter value) {
+    value.getClass();
+    ensureParametersIsMutable();
+    parameters_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of action parameters.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
+   */
+  private void addParameters(com.google.apps.card.v1.Action.ActionParameter value) {
+    value.getClass();
+    ensureParametersIsMutable();
+    parameters_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of action parameters.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
+   */
+  private void addParameters(int index, com.google.apps.card.v1.Action.ActionParameter value) {
+    value.getClass();
+    ensureParametersIsMutable();
+    parameters_.add(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of action parameters.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
+   */
+  private void addAllParameters(
+      java.lang.Iterable<? extends com.google.apps.card.v1.Action.ActionParameter> values) {
+    ensureParametersIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, parameters_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of action parameters.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
+   */
+  private void clearParameters() {
+    parameters_ = emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of action parameters.
+   * </pre>
+   *
+   * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
+   */
+  private void removeParameters(int index) {
+    ensureParametersIsMutable();
+    parameters_.remove(index);
+  }
+
   public static final int LOAD_INDICATOR_FIELD_NUMBER = 3;
-  private int loadIndicator_ = 0;
+  private int loadIndicator_;
   /**
    *
    *
@@ -1407,9 +1202,53 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
         com.google.apps.card.v1.Action.LoadIndicator.forNumber(loadIndicator_);
     return result == null ? com.google.apps.card.v1.Action.LoadIndicator.UNRECOGNIZED : result;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the loading indicator that the action displays while
+   * making the call to the action.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Action.LoadIndicator load_indicator = 3;</code>
+   *
+   * @param value The enum numeric value on the wire for loadIndicator to set.
+   */
+  private void setLoadIndicatorValue(int value) {
+    loadIndicator_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the loading indicator that the action displays while
+   * making the call to the action.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Action.LoadIndicator load_indicator = 3;</code>
+   *
+   * @param value The loadIndicator to set.
+   */
+  private void setLoadIndicator(com.google.apps.card.v1.Action.LoadIndicator value) {
+    loadIndicator_ = value.getNumber();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the loading indicator that the action displays while
+   * making the call to the action.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Action.LoadIndicator load_indicator = 3;</code>
+   */
+  private void clearLoadIndicator() {
+
+    loadIndicator_ = 0;
+  }
 
   public static final int PERSIST_VALUES_FIELD_NUMBER = 4;
-  private boolean persistValues_ = false;
+  private boolean persistValues_;
   /**
    *
    *
@@ -1443,9 +1282,73 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
   public boolean getPersistValues() {
     return persistValues_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Indicates whether form values persist after the action. The default value
+   * is `false`.
+   *
+   * If `true`, form values remain after the action is triggered. To let the
+   * user make changes while the action is being processed, set
+   * [`LoadIndicator`](https://developers.google.com/workspace/add-ons/reference/rpc/google.apps.card.v1#loadindicator)
+   * to `NONE`. For [card
+   * messages](https://developers.google.com/workspace/chat/api/guides/v1/messages/create#create)
+   * in Chat apps, you must also set the action's
+   * [`ResponseType`](https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages#responsetype)
+   * to `UPDATE_MESSAGE` and use the same
+   * [`card_id`](https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages#CardWithId)
+   * from the card that contained the action.
+   *
+   * If `false`, the form values are cleared when the action is triggered.
+   * To prevent the user from making changes while the action is being
+   * processed, set
+   * [`LoadIndicator`](https://developers.google.com/workspace/add-ons/reference/rpc/google.apps.card.v1#loadindicator)
+   * to `SPINNER`.
+   * </pre>
+   *
+   * <code>bool persist_values = 4;</code>
+   *
+   * @param value The persistValues to set.
+   */
+  private void setPersistValues(boolean value) {
+
+    persistValues_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Indicates whether form values persist after the action. The default value
+   * is `false`.
+   *
+   * If `true`, form values remain after the action is triggered. To let the
+   * user make changes while the action is being processed, set
+   * [`LoadIndicator`](https://developers.google.com/workspace/add-ons/reference/rpc/google.apps.card.v1#loadindicator)
+   * to `NONE`. For [card
+   * messages](https://developers.google.com/workspace/chat/api/guides/v1/messages/create#create)
+   * in Chat apps, you must also set the action's
+   * [`ResponseType`](https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages#responsetype)
+   * to `UPDATE_MESSAGE` and use the same
+   * [`card_id`](https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages#CardWithId)
+   * from the card that contained the action.
+   *
+   * If `false`, the form values are cleared when the action is triggered.
+   * To prevent the user from making changes while the action is being
+   * processed, set
+   * [`LoadIndicator`](https://developers.google.com/workspace/add-ons/reference/rpc/google.apps.card.v1#loadindicator)
+   * to `SPINNER`.
+   * </pre>
+   *
+   * <code>bool persist_values = 4;</code>
+   */
+  private void clearPersistValues() {
+
+    persistValues_ = false;
+  }
 
   public static final int INTERACTION_FIELD_NUMBER = 5;
-  private int interaction_ = 0;
+  private int interaction_;
   /**
    *
    *
@@ -1508,204 +1411,174 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
         com.google.apps.card.v1.Action.Interaction.forNumber(interaction_);
     return result == null ? com.google.apps.card.v1.Action.Interaction.UNRECOGNIZED : result;
   }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Required when opening a
+   * [dialog](https://developers.google.com/workspace/chat/dialogs).
+   *
+   * What to do in response to an interaction with a user, such as a user
+   * clicking a button in a card message.
+   *
+   * If unspecified, the app responds by executing an `action`—like opening a
+   * link or running a function—as normal.
+   *
+   * By specifying an `interaction`, the app can respond in special interactive
+   * ways. For example, by setting `interaction` to `OPEN_DIALOG`, the app can
+   * open a [dialog](https://developers.google.com/workspace/chat/dialogs). When
+   * specified, a loading indicator isn't shown. If specified for
+   * an add-on, the entire card is stripped and nothing is shown in the client.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Action.Interaction interaction = 5;</code>
+   *
+   * @param value The enum numeric value on the wire for interaction to set.
+   */
+  private void setInteractionValue(int value) {
+    interaction_ = value;
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(function_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, function_);
-    }
-    for (int i = 0; i < parameters_.size(); i++) {
-      output.writeMessage(2, parameters_.get(i));
-    }
-    if (loadIndicator_ != com.google.apps.card.v1.Action.LoadIndicator.SPINNER.getNumber()) {
-      output.writeEnum(3, loadIndicator_);
-    }
-    if (persistValues_ != false) {
-      output.writeBool(4, persistValues_);
-    }
-    if (interaction_
-        != com.google.apps.card.v1.Action.Interaction.INTERACTION_UNSPECIFIED.getNumber()) {
-      output.writeEnum(5, interaction_);
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Required when opening a
+   * [dialog](https://developers.google.com/workspace/chat/dialogs).
+   *
+   * What to do in response to an interaction with a user, such as a user
+   * clicking a button in a card message.
+   *
+   * If unspecified, the app responds by executing an `action`—like opening a
+   * link or running a function—as normal.
+   *
+   * By specifying an `interaction`, the app can respond in special interactive
+   * ways. For example, by setting `interaction` to `OPEN_DIALOG`, the app can
+   * open a [dialog](https://developers.google.com/workspace/chat/dialogs). When
+   * specified, a loading indicator isn't shown. If specified for
+   * an add-on, the entire card is stripped and nothing is shown in the client.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Action.Interaction interaction = 5;</code>
+   *
+   * @param value The interaction to set.
+   */
+  private void setInteraction(com.google.apps.card.v1.Action.Interaction value) {
+    interaction_ = value.getNumber();
   }
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Required when opening a
+   * [dialog](https://developers.google.com/workspace/chat/dialogs).
+   *
+   * What to do in response to an interaction with a user, such as a user
+   * clicking a button in a card message.
+   *
+   * If unspecified, the app responds by executing an `action`—like opening a
+   * link or running a function—as normal.
+   *
+   * By specifying an `interaction`, the app can respond in special interactive
+   * ways. For example, by setting `interaction` to `OPEN_DIALOG`, the app can
+   * open a [dialog](https://developers.google.com/workspace/chat/dialogs). When
+   * specified, a loading indicator isn't shown. If specified for
+   * an add-on, the entire card is stripped and nothing is shown in the client.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Action.Interaction interaction = 5;</code>
+   */
+  private void clearInteraction() {
 
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(function_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, function_);
-    }
-    for (int i = 0; i < parameters_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, parameters_.get(i));
-    }
-    if (loadIndicator_ != com.google.apps.card.v1.Action.LoadIndicator.SPINNER.getNumber()) {
-      size += com.google.protobuf.CodedOutputStream.computeEnumSize(3, loadIndicator_);
-    }
-    if (persistValues_ != false) {
-      size += com.google.protobuf.CodedOutputStream.computeBoolSize(4, persistValues_);
-    }
-    if (interaction_
-        != com.google.apps.card.v1.Action.Interaction.INTERACTION_UNSPECIFIED.getNumber()) {
-      size += com.google.protobuf.CodedOutputStream.computeEnumSize(5, interaction_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.apps.card.v1.Action)) {
-      return super.equals(obj);
-    }
-    com.google.apps.card.v1.Action other = (com.google.apps.card.v1.Action) obj;
-
-    if (!getFunction().equals(other.getFunction())) return false;
-    if (!getParametersList().equals(other.getParametersList())) return false;
-    if (loadIndicator_ != other.loadIndicator_) return false;
-    if (getPersistValues() != other.getPersistValues()) return false;
-    if (interaction_ != other.interaction_) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + FUNCTION_FIELD_NUMBER;
-    hash = (53 * hash) + getFunction().hashCode();
-    if (getParametersCount() > 0) {
-      hash = (37 * hash) + PARAMETERS_FIELD_NUMBER;
-      hash = (53 * hash) + getParametersList().hashCode();
-    }
-    hash = (37 * hash) + LOAD_INDICATOR_FIELD_NUMBER;
-    hash = (53 * hash) + loadIndicator_;
-    hash = (37 * hash) + PERSIST_VALUES_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getPersistValues());
-    hash = (37 * hash) + INTERACTION_FIELD_NUMBER;
-    hash = (53 * hash) + interaction_;
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+    interaction_ = 0;
   }
 
   public static com.google.apps.card.v1.Action parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.Action parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Action parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.Action parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Action parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.apps.card.v1.Action parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Action parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.Action parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Action parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.Action parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.apps.card.v1.Action parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.apps.card.v1.Action parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.apps.card.v1.Action prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -1720,277 +1593,17 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.apps.card.v1.Action}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.apps.card.v1.Action, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.apps.card.v1.Action)
       com.google.apps.card.v1.ActionOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Action_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Action_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.apps.card.v1.Action.class, com.google.apps.card.v1.Action.Builder.class);
-    }
-
     // Construct using com.google.apps.card.v1.Action.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      function_ = "";
-      if (parametersBuilder_ == null) {
-        parameters_ = java.util.Collections.emptyList();
-      } else {
-        parameters_ = null;
-        parametersBuilder_.clear();
-      }
-      bitField0_ = (bitField0_ & ~0x00000002);
-      loadIndicator_ = 0;
-      persistValues_ = false;
-      interaction_ = 0;
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_Action_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.Action getDefaultInstanceForType() {
-      return com.google.apps.card.v1.Action.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.Action build() {
-      com.google.apps.card.v1.Action result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.apps.card.v1.Action buildPartial() {
-      com.google.apps.card.v1.Action result = new com.google.apps.card.v1.Action(this);
-      buildPartialRepeatedFields(result);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.apps.card.v1.Action result) {
-      if (parametersBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)) {
-          parameters_ = java.util.Collections.unmodifiableList(parameters_);
-          bitField0_ = (bitField0_ & ~0x00000002);
-        }
-        result.parameters_ = parameters_;
-      } else {
-        result.parameters_ = parametersBuilder_.build();
-      }
-    }
-
-    private void buildPartial0(com.google.apps.card.v1.Action result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.function_ = function_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.loadIndicator_ = loadIndicator_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.persistValues_ = persistValues_;
-      }
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.interaction_ = interaction_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.apps.card.v1.Action) {
-        return mergeFrom((com.google.apps.card.v1.Action) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.apps.card.v1.Action other) {
-      if (other == com.google.apps.card.v1.Action.getDefaultInstance()) return this;
-      if (!other.getFunction().isEmpty()) {
-        function_ = other.function_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (parametersBuilder_ == null) {
-        if (!other.parameters_.isEmpty()) {
-          if (parameters_.isEmpty()) {
-            parameters_ = other.parameters_;
-            bitField0_ = (bitField0_ & ~0x00000002);
-          } else {
-            ensureParametersIsMutable();
-            parameters_.addAll(other.parameters_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.parameters_.isEmpty()) {
-          if (parametersBuilder_.isEmpty()) {
-            parametersBuilder_.dispose();
-            parametersBuilder_ = null;
-            parameters_ = other.parameters_;
-            bitField0_ = (bitField0_ & ~0x00000002);
-            parametersBuilder_ =
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
-                    ? getParametersFieldBuilder()
-                    : null;
-          } else {
-            parametersBuilder_.addAllMessages(other.parameters_);
-          }
-        }
-      }
-      if (other.loadIndicator_ != 0) {
-        setLoadIndicatorValue(other.getLoadIndicatorValue());
-      }
-      if (other.getPersistValues() != false) {
-        setPersistValues(other.getPersistValues());
-      }
-      if (other.interaction_ != 0) {
-        setInteractionValue(other.getInteractionValue());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                function_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                com.google.apps.card.v1.Action.ActionParameter m =
-                    input.readMessage(
-                        com.google.apps.card.v1.Action.ActionParameter.parser(), extensionRegistry);
-                if (parametersBuilder_ == null) {
-                  ensureParametersIsMutable();
-                  parameters_.add(m);
-                } else {
-                  parametersBuilder_.addMessage(m);
-                }
-                break;
-              } // case 18
-            case 24:
-              {
-                loadIndicator_ = input.readEnum();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 24
-            case 32:
-              {
-                persistValues_ = input.readBool();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 32
-            case 40:
-              {
-                interaction_ = input.readEnum();
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 40
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private java.lang.Object function_ = "";
     /**
      *
      *
@@ -2006,16 +1619,9 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The function.
      */
+    @java.lang.Override
     public java.lang.String getFunction() {
-      java.lang.Object ref = function_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        function_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getFunction();
     }
     /**
      *
@@ -2032,16 +1638,9 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for function.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getFunctionBytes() {
-      java.lang.Object ref = function_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        function_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getFunctionBytes();
     }
     /**
      *
@@ -2060,12 +1659,8 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setFunction(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      function_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setFunction(value);
       return this;
     }
     /**
@@ -2084,9 +1679,8 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearFunction() {
-      function_ = getDefaultInstance().getFunction();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearFunction();
       return this;
     }
     /**
@@ -2106,33 +1700,11 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setFunctionBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      function_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setFunctionBytes(value);
       return this;
     }
 
-    private java.util.List<com.google.apps.card.v1.Action.ActionParameter> parameters_ =
-        java.util.Collections.emptyList();
-
-    private void ensureParametersIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
-        parameters_ =
-            new java.util.ArrayList<com.google.apps.card.v1.Action.ActionParameter>(parameters_);
-        bitField0_ |= 0x00000002;
-      }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.apps.card.v1.Action.ActionParameter,
-            com.google.apps.card.v1.Action.ActionParameter.Builder,
-            com.google.apps.card.v1.Action.ActionParameterOrBuilder>
-        parametersBuilder_;
-
     /**
      *
      *
@@ -2142,12 +1714,9 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.apps.card.v1.Action.ActionParameter> getParametersList() {
-      if (parametersBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(parameters_);
-      } else {
-        return parametersBuilder_.getMessageList();
-      }
+      return java.util.Collections.unmodifiableList(instance.getParametersList());
     }
     /**
      *
@@ -2158,12 +1727,9 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
      */
+    @java.lang.Override
     public int getParametersCount() {
-      if (parametersBuilder_ == null) {
-        return parameters_.size();
-      } else {
-        return parametersBuilder_.getCount();
-      }
+      return instance.getParametersCount();
     }
     /**
      *
@@ -2174,12 +1740,10 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
      */
+
+    @java.lang.Override
     public com.google.apps.card.v1.Action.ActionParameter getParameters(int index) {
-      if (parametersBuilder_ == null) {
-        return parameters_.get(index);
-      } else {
-        return parametersBuilder_.getMessage(index);
-      }
+      return instance.getParameters(index);
     }
     /**
      *
@@ -2191,16 +1755,8 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
      */
     public Builder setParameters(int index, com.google.apps.card.v1.Action.ActionParameter value) {
-      if (parametersBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureParametersIsMutable();
-        parameters_.set(index, value);
-        onChanged();
-      } else {
-        parametersBuilder_.setMessage(index, value);
-      }
+      copyOnWrite();
+      instance.setParameters(index, value);
       return this;
     }
     /**
@@ -2214,13 +1770,8 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder setParameters(
         int index, com.google.apps.card.v1.Action.ActionParameter.Builder builderForValue) {
-      if (parametersBuilder_ == null) {
-        ensureParametersIsMutable();
-        parameters_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        parametersBuilder_.setMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.setParameters(index, builderForValue.build());
       return this;
     }
     /**
@@ -2233,16 +1784,8 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
      */
     public Builder addParameters(com.google.apps.card.v1.Action.ActionParameter value) {
-      if (parametersBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureParametersIsMutable();
-        parameters_.add(value);
-        onChanged();
-      } else {
-        parametersBuilder_.addMessage(value);
-      }
+      copyOnWrite();
+      instance.addParameters(value);
       return this;
     }
     /**
@@ -2255,16 +1798,8 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
      */
     public Builder addParameters(int index, com.google.apps.card.v1.Action.ActionParameter value) {
-      if (parametersBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureParametersIsMutable();
-        parameters_.add(index, value);
-        onChanged();
-      } else {
-        parametersBuilder_.addMessage(index, value);
-      }
+      copyOnWrite();
+      instance.addParameters(index, value);
       return this;
     }
     /**
@@ -2278,13 +1813,8 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addParameters(
         com.google.apps.card.v1.Action.ActionParameter.Builder builderForValue) {
-      if (parametersBuilder_ == null) {
-        ensureParametersIsMutable();
-        parameters_.add(builderForValue.build());
-        onChanged();
-      } else {
-        parametersBuilder_.addMessage(builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addParameters(builderForValue.build());
       return this;
     }
     /**
@@ -2298,13 +1828,8 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addParameters(
         int index, com.google.apps.card.v1.Action.ActionParameter.Builder builderForValue) {
-      if (parametersBuilder_ == null) {
-        ensureParametersIsMutable();
-        parameters_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        parametersBuilder_.addMessage(index, builderForValue.build());
-      }
+      copyOnWrite();
+      instance.addParameters(index, builderForValue.build());
       return this;
     }
     /**
@@ -2318,13 +1843,8 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder addAllParameters(
         java.lang.Iterable<? extends com.google.apps.card.v1.Action.ActionParameter> values) {
-      if (parametersBuilder_ == null) {
-        ensureParametersIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, parameters_);
-        onChanged();
-      } else {
-        parametersBuilder_.addAllMessages(values);
-      }
+      copyOnWrite();
+      instance.addAllParameters(values);
       return this;
     }
     /**
@@ -2337,13 +1857,8 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
      */
     public Builder clearParameters() {
-      if (parametersBuilder_ == null) {
-        parameters_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
-      } else {
-        parametersBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearParameters();
       return this;
     }
     /**
@@ -2356,119 +1871,11 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
      */
     public Builder removeParameters(int index) {
-      if (parametersBuilder_ == null) {
-        ensureParametersIsMutable();
-        parameters_.remove(index);
-        onChanged();
-      } else {
-        parametersBuilder_.remove(index);
-      }
+      copyOnWrite();
+      instance.removeParameters(index);
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * List of action parameters.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
-     */
-    public com.google.apps.card.v1.Action.ActionParameter.Builder getParametersBuilder(int index) {
-      return getParametersFieldBuilder().getBuilder(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of action parameters.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
-     */
-    public com.google.apps.card.v1.Action.ActionParameterOrBuilder getParametersOrBuilder(
-        int index) {
-      if (parametersBuilder_ == null) {
-        return parameters_.get(index);
-      } else {
-        return parametersBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of action parameters.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
-     */
-    public java.util.List<? extends com.google.apps.card.v1.Action.ActionParameterOrBuilder>
-        getParametersOrBuilderList() {
-      if (parametersBuilder_ != null) {
-        return parametersBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(parameters_);
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of action parameters.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
-     */
-    public com.google.apps.card.v1.Action.ActionParameter.Builder addParametersBuilder() {
-      return getParametersFieldBuilder()
-          .addBuilder(com.google.apps.card.v1.Action.ActionParameter.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of action parameters.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
-     */
-    public com.google.apps.card.v1.Action.ActionParameter.Builder addParametersBuilder(int index) {
-      return getParametersFieldBuilder()
-          .addBuilder(index, com.google.apps.card.v1.Action.ActionParameter.getDefaultInstance());
-    }
-    /**
-     *
-     *
-     * <pre>
-     * List of action parameters.
-     * </pre>
-     *
-     * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
-     */
-    public java.util.List<com.google.apps.card.v1.Action.ActionParameter.Builder>
-        getParametersBuilderList() {
-      return getParametersFieldBuilder().getBuilderList();
-    }
 
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.apps.card.v1.Action.ActionParameter,
-            com.google.apps.card.v1.Action.ActionParameter.Builder,
-            com.google.apps.card.v1.Action.ActionParameterOrBuilder>
-        getParametersFieldBuilder() {
-      if (parametersBuilder_ == null) {
-        parametersBuilder_ =
-            new com.google.protobuf.RepeatedFieldBuilderV3<
-                com.google.apps.card.v1.Action.ActionParameter,
-                com.google.apps.card.v1.Action.ActionParameter.Builder,
-                com.google.apps.card.v1.Action.ActionParameterOrBuilder>(
-                parameters_, ((bitField0_ & 0x00000002) != 0), getParentForChildren(), isClean());
-        parameters_ = null;
-      }
-      return parametersBuilder_;
-    }
-
-    private int loadIndicator_ = 0;
     /**
      *
      *
@@ -2483,7 +1890,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getLoadIndicatorValue() {
-      return loadIndicator_;
+      return instance.getLoadIndicatorValue();
     }
     /**
      *
@@ -2495,13 +1902,12 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.apps.card.v1.Action.LoadIndicator load_indicator = 3;</code>
      *
-     * @param value The enum numeric value on the wire for loadIndicator to set.
+     * @param value The loadIndicator to set.
      * @return This builder for chaining.
      */
     public Builder setLoadIndicatorValue(int value) {
-      loadIndicator_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setLoadIndicatorValue(value);
       return this;
     }
     /**
@@ -2518,9 +1924,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.apps.card.v1.Action.LoadIndicator getLoadIndicator() {
-      com.google.apps.card.v1.Action.LoadIndicator result =
-          com.google.apps.card.v1.Action.LoadIndicator.forNumber(loadIndicator_);
-      return result == null ? com.google.apps.card.v1.Action.LoadIndicator.UNRECOGNIZED : result;
+      return instance.getLoadIndicator();
     }
     /**
      *
@@ -2532,16 +1936,12 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.apps.card.v1.Action.LoadIndicator load_indicator = 3;</code>
      *
-     * @param value The loadIndicator to set.
+     * @param value The enum numeric value on the wire for loadIndicator to set.
      * @return This builder for chaining.
      */
     public Builder setLoadIndicator(com.google.apps.card.v1.Action.LoadIndicator value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      bitField0_ |= 0x00000004;
-      loadIndicator_ = value.getNumber();
-      onChanged();
+      copyOnWrite();
+      instance.setLoadIndicator(value);
       return this;
     }
     /**
@@ -2557,13 +1957,11 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearLoadIndicator() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      loadIndicator_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearLoadIndicator();
       return this;
     }
 
-    private boolean persistValues_;
     /**
      *
      *
@@ -2595,7 +1993,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean getPersistValues() {
-      return persistValues_;
+      return instance.getPersistValues();
     }
     /**
      *
@@ -2628,10 +2026,8 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setPersistValues(boolean value) {
-
-      persistValues_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setPersistValues(value);
       return this;
     }
     /**
@@ -2664,13 +2060,11 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearPersistValues() {
-      bitField0_ = (bitField0_ & ~0x00000008);
-      persistValues_ = false;
-      onChanged();
+      copyOnWrite();
+      instance.clearPersistValues();
       return this;
     }
 
-    private int interaction_ = 0;
     /**
      *
      *
@@ -2699,7 +2093,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getInteractionValue() {
-      return interaction_;
+      return instance.getInteractionValue();
     }
     /**
      *
@@ -2725,13 +2119,12 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.apps.card.v1.Action.Interaction interaction = 5;</code>
      *
-     * @param value The enum numeric value on the wire for interaction to set.
+     * @param value The interaction to set.
      * @return This builder for chaining.
      */
     public Builder setInteractionValue(int value) {
-      interaction_ = value;
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setInteractionValue(value);
       return this;
     }
     /**
@@ -2762,9 +2155,7 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.apps.card.v1.Action.Interaction getInteraction() {
-      com.google.apps.card.v1.Action.Interaction result =
-          com.google.apps.card.v1.Action.Interaction.forNumber(interaction_);
-      return result == null ? com.google.apps.card.v1.Action.Interaction.UNRECOGNIZED : result;
+      return instance.getInteraction();
     }
     /**
      *
@@ -2790,16 +2181,12 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.apps.card.v1.Action.Interaction interaction = 5;</code>
      *
-     * @param value The interaction to set.
+     * @param value The enum numeric value on the wire for interaction to set.
      * @return This builder for chaining.
      */
     public Builder setInteraction(com.google.apps.card.v1.Action.Interaction value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      bitField0_ |= 0x00000010;
-      interaction_ = value.getNumber();
-      onChanged();
+      copyOnWrite();
+      instance.setInteraction(value);
       return this;
     }
     /**
@@ -2829,70 +2216,96 @@ public final class Action extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearInteraction() {
-      bitField0_ = (bitField0_ & ~0x00000010);
-      interaction_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearInteraction();
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.apps.card.v1.Action)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.apps.card.v1.Action();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "function_",
+                "parameters_",
+                com.google.apps.card.v1.Action.ActionParameter.class,
+                "loadIndicator_",
+                "persistValues_",
+                "interaction_",
+              };
+          java.lang.String info =
+              "\u0000\u0005\u0000\u0000\u0001\u0005\u0005\u0000\u0001\u0000\u0001\u0208\u0002\u001b"
+                  + "\u0003\f\u0004\u0007\u0005\f";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.apps.card.v1.Action> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.apps.card.v1.Action.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.apps.card.v1.Action>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.apps.card.v1.Action)
   private static final com.google.apps.card.v1.Action DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.apps.card.v1.Action();
+    Action defaultInstance = new Action();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(Action.class, defaultInstance);
   }
 
   public static com.google.apps.card.v1.Action getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Action> PARSER =
-      new com.google.protobuf.AbstractParser<Action>() {
-        @java.lang.Override
-        public Action parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<Action> PARSER;
 
   public static com.google.protobuf.Parser<Action> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<Action> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.apps.card.v1.Action getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

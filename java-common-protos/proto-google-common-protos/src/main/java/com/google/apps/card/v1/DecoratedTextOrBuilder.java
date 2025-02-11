@@ -22,7 +22,7 @@ package com.google.apps.card.v1;
 public interface DecoratedTextOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.apps.card.v1.DecoratedText)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -54,17 +54,6 @@ public interface DecoratedTextOrBuilder
    */
   @java.lang.Deprecated
   com.google.apps.card.v1.Icon getIcon();
-  /**
-   *
-   *
-   * <pre>
-   * Deprecated in favor of `startIcon`.
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.Icon icon = 1 [deprecated = true];</code>
-   */
-  @java.lang.Deprecated
-  com.google.apps.card.v1.IconOrBuilder getIconOrBuilder();
 
   /**
    *
@@ -90,16 +79,6 @@ public interface DecoratedTextOrBuilder
    * @return The startIcon.
    */
   com.google.apps.card.v1.Icon getStartIcon();
-  /**
-   *
-   *
-   * <pre>
-   * The icon displayed in front of the text.
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.Icon start_icon = 12;</code>
-   */
-  com.google.apps.card.v1.IconOrBuilder getStartIconOrBuilder();
 
   /**
    *
@@ -234,16 +213,6 @@ public interface DecoratedTextOrBuilder
    * @return The onClick.
    */
   com.google.apps.card.v1.OnClick getOnClick();
-  /**
-   *
-   *
-   * <pre>
-   * This action is triggered when users click `topLabel` or `bottomLabel`.
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.OnClick on_click = 7;</code>
-   */
-  com.google.apps.card.v1.OnClickOrBuilder getOnClickOrBuilder();
 
   /**
    *
@@ -269,16 +238,6 @@ public interface DecoratedTextOrBuilder
    * @return The button.
    */
   com.google.apps.card.v1.Button getButton();
-  /**
-   *
-   *
-   * <pre>
-   * A button that a user can click to trigger an action.
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.Button button = 8;</code>
-   */
-  com.google.apps.card.v1.ButtonOrBuilder getButtonOrBuilder();
 
   /**
    *
@@ -306,17 +265,6 @@ public interface DecoratedTextOrBuilder
    * @return The switchControl.
    */
   com.google.apps.card.v1.DecoratedText.SwitchControl getSwitchControl();
-  /**
-   *
-   *
-   * <pre>
-   * A switch widget that a user can click to change its state and trigger an
-   * action.
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.DecoratedText.SwitchControl switch_control = 9;</code>
-   */
-  com.google.apps.card.v1.DecoratedText.SwitchControlOrBuilder getSwitchControlOrBuilder();
 
   /**
    *
@@ -354,22 +302,6 @@ public interface DecoratedTextOrBuilder
    * @return The endIcon.
    */
   com.google.apps.card.v1.Icon getEndIcon();
-  /**
-   *
-   *
-   * <pre>
-   * An icon displayed after the text.
-   *
-   * Supports
-   * [built-in](https://developers.google.com/workspace/chat/format-messages#builtinicons)
-   * and
-   * [custom](https://developers.google.com/workspace/chat/format-messages#customicons)
-   * icons.
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.Icon end_icon = 11;</code>
-   */
-  com.google.apps.card.v1.IconOrBuilder getEndIconOrBuilder();
 
-  com.google.apps.card.v1.DecoratedText.ControlCase getControlCase();
+  public com.google.apps.card.v1.DecoratedText.ControlCase getControlCase();
 }

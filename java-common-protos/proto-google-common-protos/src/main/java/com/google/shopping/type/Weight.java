@@ -28,40 +28,11 @@ package com.google.shopping.type;
  *
  * Protobuf type {@code google.shopping.type.Weight}
  */
-public final class Weight extends com.google.protobuf.GeneratedMessageV3
+public final class Weight extends com.google.protobuf.GeneratedMessageLite<Weight, Weight.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.shopping.type.Weight)
     WeightOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use Weight.newBuilder() to construct.
-  private Weight(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
-  private Weight() {
-    unit_ = 0;
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new Weight();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.shopping.type.TypesProto
-        .internal_static_google_shopping_type_Weight_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.shopping.type.TypesProto
-        .internal_static_google_shopping_type_Weight_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.shopping.type.Weight.class, com.google.shopping.type.Weight.Builder.class);
-  }
-
+  private Weight() {}
   /**
    *
    *
@@ -71,7 +42,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf enum {@code google.shopping.type.Weight.WeightUnit}
    */
-  public enum WeightUnit implements com.google.protobuf.ProtocolMessageEnum {
+  public enum WeightUnit implements com.google.protobuf.Internal.EnumLite {
     /**
      *
      *
@@ -136,6 +107,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
      */
     public static final int KILOGRAM_VALUE = 2;
 
+    @java.lang.Override
     public final int getNumber() {
       if (this == UNRECOGNIZED) {
         throw new java.lang.IllegalArgumentException(
@@ -145,8 +117,8 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
     }
 
     /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
+     * @param value The number of the enum to look for.
+     * @return The enum associated with the given number.
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
@@ -154,10 +126,6 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
       return forNumber(value);
     }
 
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
     public static WeightUnit forNumber(int value) {
       switch (value) {
         case 0:
@@ -177,38 +145,25 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
 
     private static final com.google.protobuf.Internal.EnumLiteMap<WeightUnit> internalValueMap =
         new com.google.protobuf.Internal.EnumLiteMap<WeightUnit>() {
+          @java.lang.Override
           public WeightUnit findValueByNumber(int number) {
             return WeightUnit.forNumber(number);
           }
         };
 
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalStateException(
-            "Can't get the descriptor of an unrecognized enum value.");
+    public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+      return WeightUnitVerifier.INSTANCE;
+    }
+
+    private static final class WeightUnitVerifier
+        implements com.google.protobuf.Internal.EnumVerifier {
+      static final com.google.protobuf.Internal.EnumVerifier INSTANCE = new WeightUnitVerifier();
+
+      @java.lang.Override
+      public boolean isInRange(int number) {
+        return WeightUnit.forNumber(number) != null;
       }
-      return getDescriptor().getValues().get(ordinal());
-    }
-
-    public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-      return getDescriptor();
-    }
-
-    public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-      return com.google.shopping.type.Weight.getDescriptor().getEnumTypes().get(0);
-    }
-
-    private static final WeightUnit[] VALUES = values();
-
-    public static WeightUnit valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
+    };
 
     private final int value;
 
@@ -221,7 +176,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
 
   private int bitField0_;
   public static final int AMOUNT_MICROS_FIELD_NUMBER = 1;
-  private long amountMicros_ = 0L;
+  private long amountMicros_;
   /**
    *
    *
@@ -260,9 +215,45 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
   public long getAmountMicros() {
     return amountMicros_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Required. The weight represented as a number in micros (1 million micros is
+   * an equivalent to one's currency standard unit, for example, 1 kg = 1000000
+   * micros).
+   * This field can also be set as infinity by setting to -1.
+   * This field only support -1 and positive value.
+   * </pre>
+   *
+   * <code>optional int64 amount_micros = 1;</code>
+   *
+   * @param value The amountMicros to set.
+   */
+  private void setAmountMicros(long value) {
+    bitField0_ |= 0x00000001;
+    amountMicros_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. The weight represented as a number in micros (1 million micros is
+   * an equivalent to one's currency standard unit, for example, 1 kg = 1000000
+   * micros).
+   * This field can also be set as infinity by setting to -1.
+   * This field only support -1 and positive value.
+   * </pre>
+   *
+   * <code>optional int64 amount_micros = 1;</code>
+   */
+  private void clearAmountMicros() {
+    bitField0_ = (bitField0_ & ~0x00000001);
+    amountMicros_ = 0L;
+  }
 
   public static final int UNIT_FIELD_NUMBER = 2;
-  private int unit_ = 0;
+  private int unit_;
   /**
    *
    *
@@ -297,178 +288,132 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
         com.google.shopping.type.Weight.WeightUnit.forNumber(unit_);
     return result == null ? com.google.shopping.type.Weight.WeightUnit.UNRECOGNIZED : result;
   }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Required. The weight unit.
+   * Acceptable values are: kg and lb
+   * </pre>
+   *
+   * <code>.google.shopping.type.Weight.WeightUnit unit = 2;</code>
+   *
+   * @param value The enum numeric value on the wire for unit to set.
+   */
+  private void setUnitValue(int value) {
+    unit_ = value;
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeInt64(1, amountMicros_);
-    }
-    if (unit_ != com.google.shopping.type.Weight.WeightUnit.WEIGHT_UNIT_UNSPECIFIED.getNumber()) {
-      output.writeEnum(2, unit_);
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * Required. The weight unit.
+   * Acceptable values are: kg and lb
+   * </pre>
+   *
+   * <code>.google.shopping.type.Weight.WeightUnit unit = 2;</code>
+   *
+   * @param value The unit to set.
+   */
+  private void setUnit(com.google.shopping.type.Weight.WeightUnit value) {
+    unit_ = value.getNumber();
   }
+  /**
+   *
+   *
+   * <pre>
+   * Required. The weight unit.
+   * Acceptable values are: kg and lb
+   * </pre>
+   *
+   * <code>.google.shopping.type.Weight.WeightUnit unit = 2;</code>
+   */
+  private void clearUnit() {
 
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeInt64Size(1, amountMicros_);
-    }
-    if (unit_ != com.google.shopping.type.Weight.WeightUnit.WEIGHT_UNIT_UNSPECIFIED.getNumber()) {
-      size += com.google.protobuf.CodedOutputStream.computeEnumSize(2, unit_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.shopping.type.Weight)) {
-      return super.equals(obj);
-    }
-    com.google.shopping.type.Weight other = (com.google.shopping.type.Weight) obj;
-
-    if (hasAmountMicros() != other.hasAmountMicros()) return false;
-    if (hasAmountMicros()) {
-      if (getAmountMicros() != other.getAmountMicros()) return false;
-    }
-    if (unit_ != other.unit_) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (hasAmountMicros()) {
-      hash = (37 * hash) + AMOUNT_MICROS_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(getAmountMicros());
-    }
-    hash = (37 * hash) + UNIT_FIELD_NUMBER;
-    hash = (53 * hash) + unit_;
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+    unit_ = 0;
   }
 
   public static com.google.shopping.type.Weight parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.shopping.type.Weight parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.shopping.type.Weight parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.shopping.type.Weight parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.shopping.type.Weight parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.shopping.type.Weight parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.shopping.type.Weight parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.shopping.type.Weight parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.shopping.type.Weight parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.shopping.type.Weight parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.shopping.type.Weight parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.shopping.type.Weight parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.shopping.type.Weight prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -478,192 +423,17 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.shopping.type.Weight}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.shopping.type.Weight, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.shopping.type.Weight)
       com.google.shopping.type.WeightOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.shopping.type.TypesProto
-          .internal_static_google_shopping_type_Weight_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.shopping.type.TypesProto
-          .internal_static_google_shopping_type_Weight_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.shopping.type.Weight.class, com.google.shopping.type.Weight.Builder.class);
-    }
-
     // Construct using com.google.shopping.type.Weight.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      amountMicros_ = 0L;
-      unit_ = 0;
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.shopping.type.TypesProto
-          .internal_static_google_shopping_type_Weight_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.shopping.type.Weight getDefaultInstanceForType() {
-      return com.google.shopping.type.Weight.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.shopping.type.Weight build() {
-      com.google.shopping.type.Weight result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.shopping.type.Weight buildPartial() {
-      com.google.shopping.type.Weight result = new com.google.shopping.type.Weight(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.shopping.type.Weight result) {
-      int from_bitField0_ = bitField0_;
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.amountMicros_ = amountMicros_;
-        to_bitField0_ |= 0x00000001;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.unit_ = unit_;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.shopping.type.Weight) {
-        return mergeFrom((com.google.shopping.type.Weight) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.shopping.type.Weight other) {
-      if (other == com.google.shopping.type.Weight.getDefaultInstance()) return this;
-      if (other.hasAmountMicros()) {
-        setAmountMicros(other.getAmountMicros());
-      }
-      if (other.unit_ != 0) {
-        setUnitValue(other.getUnitValue());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 8:
-              {
-                amountMicros_ = input.readInt64();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 8
-            case 16:
-              {
-                unit_ = input.readEnum();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 16
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private long amountMicros_;
     /**
      *
      *
@@ -681,7 +451,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean hasAmountMicros() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return instance.hasAmountMicros();
     }
     /**
      *
@@ -700,7 +470,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public long getAmountMicros() {
-      return amountMicros_;
+      return instance.getAmountMicros();
     }
     /**
      *
@@ -719,10 +489,8 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAmountMicros(long value) {
-
-      amountMicros_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setAmountMicros(value);
       return this;
     }
     /**
@@ -741,13 +509,11 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAmountMicros() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      amountMicros_ = 0L;
-      onChanged();
+      copyOnWrite();
+      instance.clearAmountMicros();
       return this;
     }
 
-    private int unit_ = 0;
     /**
      *
      *
@@ -762,7 +528,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getUnitValue() {
-      return unit_;
+      return instance.getUnitValue();
     }
     /**
      *
@@ -774,13 +540,12 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.shopping.type.Weight.WeightUnit unit = 2;</code>
      *
-     * @param value The enum numeric value on the wire for unit to set.
+     * @param value The unit to set.
      * @return This builder for chaining.
      */
     public Builder setUnitValue(int value) {
-      unit_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setUnitValue(value);
       return this;
     }
     /**
@@ -797,9 +562,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.shopping.type.Weight.WeightUnit getUnit() {
-      com.google.shopping.type.Weight.WeightUnit result =
-          com.google.shopping.type.Weight.WeightUnit.forNumber(unit_);
-      return result == null ? com.google.shopping.type.Weight.WeightUnit.UNRECOGNIZED : result;
+      return instance.getUnit();
     }
     /**
      *
@@ -811,16 +574,12 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.shopping.type.Weight.WeightUnit unit = 2;</code>
      *
-     * @param value The unit to set.
+     * @param value The enum numeric value on the wire for unit to set.
      * @return This builder for chaining.
      */
     public Builder setUnit(com.google.shopping.type.Weight.WeightUnit value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      bitField0_ |= 0x00000002;
-      unit_ = value.getNumber();
-      onChanged();
+      copyOnWrite();
+      instance.setUnit(value);
       return this;
     }
     /**
@@ -836,70 +595,91 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearUnit() {
-      bitField0_ = (bitField0_ & ~0x00000002);
-      unit_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearUnit();
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.shopping.type.Weight)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.shopping.type.Weight();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_", "amountMicros_", "unit_",
+              };
+          java.lang.String info =
+              "\u0000\u0002\u0000\u0001\u0001\u0002\u0002\u0000\u0000\u0000\u0001\u1002\u0000\u0002"
+                  + "\f";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.shopping.type.Weight> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.shopping.type.Weight.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.shopping.type.Weight>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.shopping.type.Weight)
   private static final com.google.shopping.type.Weight DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.shopping.type.Weight();
+    Weight defaultInstance = new Weight();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(Weight.class, defaultInstance);
   }
 
   public static com.google.shopping.type.Weight getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Weight> PARSER =
-      new com.google.protobuf.AbstractParser<Weight>() {
-        @java.lang.Override
-        public Weight parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<Weight> PARSER;
 
   public static com.google.protobuf.Parser<Weight> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<Weight> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.shopping.type.Weight getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

@@ -29,43 +29,16 @@ package com.google.iam.v1;
  *
  * Protobuf type {@code google.iam.v1.AuditConfigDelta}
  */
-public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessageV3
+public final class AuditConfigDelta
+    extends com.google.protobuf.GeneratedMessageLite<AuditConfigDelta, AuditConfigDelta.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.iam.v1.AuditConfigDelta)
     AuditConfigDeltaOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use AuditConfigDelta.newBuilder() to construct.
-  private AuditConfigDelta(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private AuditConfigDelta() {
-    action_ = 0;
     service_ = "";
     exemptedMember_ = "";
     logType_ = "";
   }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new AuditConfigDelta();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.iam.v1.PolicyProto.internal_static_google_iam_v1_AuditConfigDelta_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.iam.v1.PolicyProto
-        .internal_static_google_iam_v1_AuditConfigDelta_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.iam.v1.AuditConfigDelta.class,
-            com.google.iam.v1.AuditConfigDelta.Builder.class);
-  }
-
   /**
    *
    *
@@ -75,7 +48,7 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
    *
    * Protobuf enum {@code google.iam.v1.AuditConfigDelta.Action}
    */
-  public enum Action implements com.google.protobuf.ProtocolMessageEnum {
+  public enum Action implements com.google.protobuf.Internal.EnumLite {
     /**
      *
      *
@@ -140,6 +113,7 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      */
     public static final int REMOVE_VALUE = 2;
 
+    @java.lang.Override
     public final int getNumber() {
       if (this == UNRECOGNIZED) {
         throw new java.lang.IllegalArgumentException(
@@ -149,8 +123,8 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
     }
 
     /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
+     * @param value The number of the enum to look for.
+     * @return The enum associated with the given number.
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
@@ -158,10 +132,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
       return forNumber(value);
     }
 
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
     public static Action forNumber(int value) {
       switch (value) {
         case 0:
@@ -181,38 +151,24 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
 
     private static final com.google.protobuf.Internal.EnumLiteMap<Action> internalValueMap =
         new com.google.protobuf.Internal.EnumLiteMap<Action>() {
+          @java.lang.Override
           public Action findValueByNumber(int number) {
             return Action.forNumber(number);
           }
         };
 
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalStateException(
-            "Can't get the descriptor of an unrecognized enum value.");
+    public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+      return ActionVerifier.INSTANCE;
+    }
+
+    private static final class ActionVerifier implements com.google.protobuf.Internal.EnumVerifier {
+      static final com.google.protobuf.Internal.EnumVerifier INSTANCE = new ActionVerifier();
+
+      @java.lang.Override
+      public boolean isInRange(int number) {
+        return Action.forNumber(number) != null;
       }
-      return getDescriptor().getValues().get(ordinal());
-    }
-
-    public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-      return getDescriptor();
-    }
-
-    public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-      return com.google.iam.v1.AuditConfigDelta.getDescriptor().getEnumTypes().get(0);
-    }
-
-    private static final Action[] VALUES = values();
-
-    public static Action valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
+    };
 
     private final int value;
 
@@ -224,7 +180,7 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
   }
 
   public static final int ACTION_FIELD_NUMBER = 1;
-  private int action_ = 0;
+  private int action_;
   /**
    *
    *
@@ -259,11 +215,53 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
         com.google.iam.v1.AuditConfigDelta.Action.forNumber(action_);
     return result == null ? com.google.iam.v1.AuditConfigDelta.Action.UNRECOGNIZED : result;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The action that was performed on an audit configuration in a policy.
+   * Required
+   * </pre>
+   *
+   * <code>.google.iam.v1.AuditConfigDelta.Action action = 1;</code>
+   *
+   * @param value The enum numeric value on the wire for action to set.
+   */
+  private void setActionValue(int value) {
+    action_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The action that was performed on an audit configuration in a policy.
+   * Required
+   * </pre>
+   *
+   * <code>.google.iam.v1.AuditConfigDelta.Action action = 1;</code>
+   *
+   * @param value The action to set.
+   */
+  private void setAction(com.google.iam.v1.AuditConfigDelta.Action value) {
+    action_ = value.getNumber();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The action that was performed on an audit configuration in a policy.
+   * Required
+   * </pre>
+   *
+   * <code>.google.iam.v1.AuditConfigDelta.Action action = 1;</code>
+   */
+  private void clearAction() {
+
+    action_ = 0;
+  }
 
   public static final int SERVICE_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object service_ = "";
+  private java.lang.String service_;
   /**
    *
    *
@@ -280,15 +278,7 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
    */
   @java.lang.Override
   public java.lang.String getService() {
-    java.lang.Object ref = service_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      service_ = s;
-      return s;
-    }
+    return service_;
   }
   /**
    *
@@ -306,21 +296,64 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getServiceBytes() {
-    java.lang.Object ref = service_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      service_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(service_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies a service that was configured for Cloud Audit Logging.
+   * For example, `storage.googleapis.com`, `cloudsql.googleapis.com`.
+   * `allServices` is a special value that covers all services.
+   * Required
+   * </pre>
+   *
+   * <code>string service = 2;</code>
+   *
+   * @param value The service to set.
+   */
+  private void setService(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    service_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies a service that was configured for Cloud Audit Logging.
+   * For example, `storage.googleapis.com`, `cloudsql.googleapis.com`.
+   * `allServices` is a special value that covers all services.
+   * Required
+   * </pre>
+   *
+   * <code>string service = 2;</code>
+   */
+  private void clearService() {
+
+    service_ = getDefaultInstance().getService();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies a service that was configured for Cloud Audit Logging.
+   * For example, `storage.googleapis.com`, `cloudsql.googleapis.com`.
+   * `allServices` is a special value that covers all services.
+   * Required
+   * </pre>
+   *
+   * <code>string service = 2;</code>
+   *
+   * @param value The bytes for service to set.
+   */
+  private void setServiceBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    service_ = value.toStringUtf8();
   }
 
   public static final int EXEMPTED_MEMBER_FIELD_NUMBER = 3;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object exemptedMember_ = "";
+  private java.lang.String exemptedMember_;
   /**
    *
    *
@@ -336,15 +369,7 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
    */
   @java.lang.Override
   public java.lang.String getExemptedMember() {
-    java.lang.Object ref = exemptedMember_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      exemptedMember_ = s;
-      return s;
-    }
+    return exemptedMember_;
   }
   /**
    *
@@ -361,21 +386,61 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getExemptedMemberBytes() {
-    java.lang.Object ref = exemptedMember_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      exemptedMember_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(exemptedMember_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A single identity that is exempted from "data access" audit
+   * logging for the `service` specified above.
+   * Follows the same format of Binding.members.
+   * </pre>
+   *
+   * <code>string exempted_member = 3;</code>
+   *
+   * @param value The exemptedMember to set.
+   */
+  private void setExemptedMember(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    exemptedMember_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A single identity that is exempted from "data access" audit
+   * logging for the `service` specified above.
+   * Follows the same format of Binding.members.
+   * </pre>
+   *
+   * <code>string exempted_member = 3;</code>
+   */
+  private void clearExemptedMember() {
+
+    exemptedMember_ = getDefaultInstance().getExemptedMember();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * A single identity that is exempted from "data access" audit
+   * logging for the `service` specified above.
+   * Follows the same format of Binding.members.
+   * </pre>
+   *
+   * <code>string exempted_member = 3;</code>
+   *
+   * @param value The bytes for exemptedMember to set.
+   */
+  private void setExemptedMemberBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    exemptedMember_ = value.toStringUtf8();
   }
 
   public static final int LOG_TYPE_FIELD_NUMBER = 4;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object logType_ = "";
+  private java.lang.String logType_;
   /**
    *
    *
@@ -391,15 +456,7 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
    */
   @java.lang.Override
   public java.lang.String getLogType() {
-    java.lang.Object ref = logType_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      logType_ = s;
-      return s;
-    }
+    return logType_;
   }
   /**
    *
@@ -416,201 +473,140 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getLogTypeBytes() {
-    java.lang.Object ref = logType_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      logType_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(logType_);
   }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the log_type that was be enabled. ADMIN_ACTIVITY is always
+   * enabled, and cannot be configured.
+   * Required
+   * </pre>
+   *
+   * <code>string log_type = 4;</code>
+   *
+   * @param value The logType to set.
+   */
+  private void setLogType(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+    logType_ = value;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the log_type that was be enabled. ADMIN_ACTIVITY is always
+   * enabled, and cannot be configured.
+   * Required
+   * </pre>
+   *
+   * <code>string log_type = 4;</code>
+   */
+  private void clearLogType() {
 
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (action_ != com.google.iam.v1.AuditConfigDelta.Action.ACTION_UNSPECIFIED.getNumber()) {
-      output.writeEnum(1, action_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(service_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, service_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(exemptedMember_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, exemptedMember_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(logType_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, logType_);
-    }
-    getUnknownFields().writeTo(output);
+    logType_ = getDefaultInstance().getLogType();
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (action_ != com.google.iam.v1.AuditConfigDelta.Action.ACTION_UNSPECIFIED.getNumber()) {
-      size += com.google.protobuf.CodedOutputStream.computeEnumSize(1, action_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(service_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, service_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(exemptedMember_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, exemptedMember_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(logType_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, logType_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.iam.v1.AuditConfigDelta)) {
-      return super.equals(obj);
-    }
-    com.google.iam.v1.AuditConfigDelta other = (com.google.iam.v1.AuditConfigDelta) obj;
-
-    if (action_ != other.action_) return false;
-    if (!getService().equals(other.getService())) return false;
-    if (!getExemptedMember().equals(other.getExemptedMember())) return false;
-    if (!getLogType().equals(other.getLogType())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + ACTION_FIELD_NUMBER;
-    hash = (53 * hash) + action_;
-    hash = (37 * hash) + SERVICE_FIELD_NUMBER;
-    hash = (53 * hash) + getService().hashCode();
-    hash = (37 * hash) + EXEMPTED_MEMBER_FIELD_NUMBER;
-    hash = (53 * hash) + getExemptedMember().hashCode();
-    hash = (37 * hash) + LOG_TYPE_FIELD_NUMBER;
-    hash = (53 * hash) + getLogType().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the log_type that was be enabled. ADMIN_ACTIVITY is always
+   * enabled, and cannot be configured.
+   * Required
+   * </pre>
+   *
+   * <code>string log_type = 4;</code>
+   *
+   * @param value The bytes for logType to set.
+   */
+  private void setLogTypeBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    logType_ = value.toStringUtf8();
   }
 
   public static com.google.iam.v1.AuditConfigDelta parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v1.AuditConfigDelta parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v1.AuditConfigDelta parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v1.AuditConfigDelta parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v1.AuditConfigDelta parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.iam.v1.AuditConfigDelta parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.iam.v1.AuditConfigDelta parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v1.AuditConfigDelta parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.iam.v1.AuditConfigDelta parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v1.AuditConfigDelta parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.iam.v1.AuditConfigDelta parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.iam.v1.AuditConfigDelta parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.iam.v1.AuditConfigDelta prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -621,222 +617,17 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
    *
    * Protobuf type {@code google.iam.v1.AuditConfigDelta}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.iam.v1.AuditConfigDelta, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.iam.v1.AuditConfigDelta)
       com.google.iam.v1.AuditConfigDeltaOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.iam.v1.PolicyProto
-          .internal_static_google_iam_v1_AuditConfigDelta_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.iam.v1.PolicyProto
-          .internal_static_google_iam_v1_AuditConfigDelta_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.iam.v1.AuditConfigDelta.class,
-              com.google.iam.v1.AuditConfigDelta.Builder.class);
-    }
-
     // Construct using com.google.iam.v1.AuditConfigDelta.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      action_ = 0;
-      service_ = "";
-      exemptedMember_ = "";
-      logType_ = "";
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.iam.v1.PolicyProto
-          .internal_static_google_iam_v1_AuditConfigDelta_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.iam.v1.AuditConfigDelta getDefaultInstanceForType() {
-      return com.google.iam.v1.AuditConfigDelta.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.iam.v1.AuditConfigDelta build() {
-      com.google.iam.v1.AuditConfigDelta result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.iam.v1.AuditConfigDelta buildPartial() {
-      com.google.iam.v1.AuditConfigDelta result = new com.google.iam.v1.AuditConfigDelta(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.iam.v1.AuditConfigDelta result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.action_ = action_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.service_ = service_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.exemptedMember_ = exemptedMember_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.logType_ = logType_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.iam.v1.AuditConfigDelta) {
-        return mergeFrom((com.google.iam.v1.AuditConfigDelta) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.iam.v1.AuditConfigDelta other) {
-      if (other == com.google.iam.v1.AuditConfigDelta.getDefaultInstance()) return this;
-      if (other.action_ != 0) {
-        setActionValue(other.getActionValue());
-      }
-      if (!other.getService().isEmpty()) {
-        service_ = other.service_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      if (!other.getExemptedMember().isEmpty()) {
-        exemptedMember_ = other.exemptedMember_;
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
-      if (!other.getLogType().isEmpty()) {
-        logType_ = other.logType_;
-        bitField0_ |= 0x00000008;
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 8:
-              {
-                action_ = input.readEnum();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 8
-            case 18:
-              {
-                service_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 26:
-              {
-                exemptedMember_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 26
-            case 34:
-              {
-                logType_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 34
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private int action_ = 0;
     /**
      *
      *
@@ -851,7 +642,7 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public int getActionValue() {
-      return action_;
+      return instance.getActionValue();
     }
     /**
      *
@@ -863,13 +654,12 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      *
      * <code>.google.iam.v1.AuditConfigDelta.Action action = 1;</code>
      *
-     * @param value The enum numeric value on the wire for action to set.
+     * @param value The action to set.
      * @return This builder for chaining.
      */
     public Builder setActionValue(int value) {
-      action_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setActionValue(value);
       return this;
     }
     /**
@@ -886,9 +676,7 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Override
     public com.google.iam.v1.AuditConfigDelta.Action getAction() {
-      com.google.iam.v1.AuditConfigDelta.Action result =
-          com.google.iam.v1.AuditConfigDelta.Action.forNumber(action_);
-      return result == null ? com.google.iam.v1.AuditConfigDelta.Action.UNRECOGNIZED : result;
+      return instance.getAction();
     }
     /**
      *
@@ -900,16 +688,12 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      *
      * <code>.google.iam.v1.AuditConfigDelta.Action action = 1;</code>
      *
-     * @param value The action to set.
+     * @param value The enum numeric value on the wire for action to set.
      * @return This builder for chaining.
      */
     public Builder setAction(com.google.iam.v1.AuditConfigDelta.Action value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      bitField0_ |= 0x00000001;
-      action_ = value.getNumber();
-      onChanged();
+      copyOnWrite();
+      instance.setAction(value);
       return this;
     }
     /**
@@ -925,13 +709,11 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearAction() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      action_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearAction();
       return this;
     }
 
-    private java.lang.Object service_ = "";
     /**
      *
      *
@@ -946,16 +728,9 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      *
      * @return The service.
      */
+    @java.lang.Override
     public java.lang.String getService() {
-      java.lang.Object ref = service_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        service_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getService();
     }
     /**
      *
@@ -971,16 +746,9 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for service.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getServiceBytes() {
-      java.lang.Object ref = service_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        service_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getServiceBytes();
     }
     /**
      *
@@ -998,12 +766,8 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder setService(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      service_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setService(value);
       return this;
     }
     /**
@@ -1021,9 +785,8 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearService() {
-      service_ = getDefaultInstance().getService();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearService();
       return this;
     }
     /**
@@ -1042,17 +805,11 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder setServiceBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      service_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setServiceBytes(value);
       return this;
     }
 
-    private java.lang.Object exemptedMember_ = "";
     /**
      *
      *
@@ -1066,16 +823,9 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      *
      * @return The exemptedMember.
      */
+    @java.lang.Override
     public java.lang.String getExemptedMember() {
-      java.lang.Object ref = exemptedMember_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        exemptedMember_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getExemptedMember();
     }
     /**
      *
@@ -1090,16 +840,9 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for exemptedMember.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getExemptedMemberBytes() {
-      java.lang.Object ref = exemptedMember_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        exemptedMember_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getExemptedMemberBytes();
     }
     /**
      *
@@ -1116,12 +859,8 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder setExemptedMember(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      exemptedMember_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setExemptedMember(value);
       return this;
     }
     /**
@@ -1138,9 +877,8 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearExemptedMember() {
-      exemptedMember_ = getDefaultInstance().getExemptedMember();
-      bitField0_ = (bitField0_ & ~0x00000004);
-      onChanged();
+      copyOnWrite();
+      instance.clearExemptedMember();
       return this;
     }
     /**
@@ -1158,17 +896,11 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder setExemptedMemberBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      exemptedMember_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setExemptedMemberBytes(value);
       return this;
     }
 
-    private java.lang.Object logType_ = "";
     /**
      *
      *
@@ -1182,16 +914,9 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      *
      * @return The logType.
      */
+    @java.lang.Override
     public java.lang.String getLogType() {
-      java.lang.Object ref = logType_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        logType_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getLogType();
     }
     /**
      *
@@ -1206,16 +931,9 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for logType.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getLogTypeBytes() {
-      java.lang.Object ref = logType_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        logType_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getLogTypeBytes();
     }
     /**
      *
@@ -1232,12 +950,8 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder setLogType(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      logType_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setLogType(value);
       return this;
     }
     /**
@@ -1254,9 +968,8 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearLogType() {
-      logType_ = getDefaultInstance().getLogType();
-      bitField0_ = (bitField0_ & ~0x00000008);
-      onChanged();
+      copyOnWrite();
+      instance.clearLogType();
       return this;
     }
     /**
@@ -1274,74 +987,92 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder setLogTypeBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      logType_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setLogTypeBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.iam.v1.AuditConfigDelta)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.iam.v1.AuditConfigDelta();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "action_", "service_", "exemptedMember_", "logType_",
+              };
+          java.lang.String info =
+              "\u0000\u0004\u0000\u0000\u0001\u0004\u0004\u0000\u0000\u0000\u0001\f\u0002\u0208"
+                  + "\u0003\u0208\u0004\u0208";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.iam.v1.AuditConfigDelta> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.iam.v1.AuditConfigDelta.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.iam.v1.AuditConfigDelta>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.iam.v1.AuditConfigDelta)
   private static final com.google.iam.v1.AuditConfigDelta DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.iam.v1.AuditConfigDelta();
+    AuditConfigDelta defaultInstance = new AuditConfigDelta();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        AuditConfigDelta.class, defaultInstance);
   }
 
   public static com.google.iam.v1.AuditConfigDelta getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<AuditConfigDelta> PARSER =
-      new com.google.protobuf.AbstractParser<AuditConfigDelta>() {
-        @java.lang.Override
-        public AuditConfigDelta parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<AuditConfigDelta> PARSER;
 
   public static com.google.protobuf.Parser<AuditConfigDelta> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<AuditConfigDelta> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.iam.v1.AuditConfigDelta getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

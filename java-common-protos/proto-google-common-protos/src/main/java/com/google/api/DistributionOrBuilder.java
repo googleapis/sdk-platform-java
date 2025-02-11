@@ -22,7 +22,7 @@ package com.google.api;
 public interface DistributionOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.Distribution)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -100,17 +100,6 @@ public interface DistributionOrBuilder
    * @return The range.
    */
   com.google.api.Distribution.Range getRange();
-  /**
-   *
-   *
-   * <pre>
-   * If specified, contains the range of the population values. The field
-   * must not be present if the `count` is zero.
-   * </pre>
-   *
-   * <code>.google.api.Distribution.Range range = 4;</code>
-   */
-  com.google.api.Distribution.RangeOrBuilder getRangeOrBuilder();
 
   /**
    *
@@ -138,17 +127,6 @@ public interface DistributionOrBuilder
    * @return The bucketOptions.
    */
   com.google.api.Distribution.BucketOptions getBucketOptions();
-  /**
-   *
-   *
-   * <pre>
-   * Defines the histogram bucket boundaries. If the distribution does not
-   * contain a histogram, then omit this field.
-   * </pre>
-   *
-   * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
-   */
-  com.google.api.Distribution.BucketOptionsOrBuilder getBucketOptionsOrBuilder();
 
   /**
    *
@@ -260,25 +238,4 @@ public interface DistributionOrBuilder
    * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
    */
   int getExemplarsCount();
-  /**
-   *
-   *
-   * <pre>
-   * Must be in increasing order of `value` field.
-   * </pre>
-   *
-   * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
-   */
-  java.util.List<? extends com.google.api.Distribution.ExemplarOrBuilder>
-      getExemplarsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Must be in increasing order of `value` field.
-   * </pre>
-   *
-   * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
-   */
-  com.google.api.Distribution.ExemplarOrBuilder getExemplarsOrBuilder(int index);
 }

@@ -28,53 +28,16 @@ package com.google.api;
  *
  * Protobuf type {@code google.api.BackendRule}
  */
-public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
+public final class BackendRule
+    extends com.google.protobuf.GeneratedMessageLite<BackendRule, BackendRule.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.api.BackendRule)
     BackendRuleOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use BackendRule.newBuilder() to construct.
-  private BackendRule(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private BackendRule() {
     selector_ = "";
     address_ = "";
-    pathTranslation_ = 0;
     protocol_ = "";
   }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new BackendRule();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.api.BackendProto.internal_static_google_api_BackendRule_descriptor;
-  }
-
-  @SuppressWarnings({"rawtypes"})
-  @java.lang.Override
-  protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-      int number) {
-    switch (number) {
-      case 10:
-        return internalGetOverridesByRequestProtocol();
-      default:
-        throw new RuntimeException("Invalid map field number: " + number);
-    }
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.api.BackendProto.internal_static_google_api_BackendRule_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.api.BackendRule.class, com.google.api.BackendRule.Builder.class);
-  }
-
   /**
    *
    *
@@ -90,7 +53,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf enum {@code google.api.BackendRule.PathTranslation}
    */
-  public enum PathTranslation implements com.google.protobuf.ProtocolMessageEnum {
+  public enum PathTranslation implements com.google.protobuf.Internal.EnumLite {
     /** <code>PATH_TRANSLATION_UNSPECIFIED = 0;</code> */
     PATH_TRANSLATION_UNSPECIFIED(0),
     /**
@@ -219,6 +182,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      */
     public static final int APPEND_PATH_TO_ADDRESS_VALUE = 2;
 
+    @java.lang.Override
     public final int getNumber() {
       if (this == UNRECOGNIZED) {
         throw new java.lang.IllegalArgumentException(
@@ -228,8 +192,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     }
 
     /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
+     * @param value The number of the enum to look for.
+     * @return The enum associated with the given number.
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
@@ -237,10 +201,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       return forNumber(value);
     }
 
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
     public static PathTranslation forNumber(int value) {
       switch (value) {
         case 0:
@@ -261,39 +221,26 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     private static final com.google.protobuf.Internal.EnumLiteMap<PathTranslation>
         internalValueMap =
             new com.google.protobuf.Internal.EnumLiteMap<PathTranslation>() {
+              @java.lang.Override
               public PathTranslation findValueByNumber(int number) {
                 return PathTranslation.forNumber(number);
               }
             };
 
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalStateException(
-            "Can't get the descriptor of an unrecognized enum value.");
+    public static com.google.protobuf.Internal.EnumVerifier internalGetVerifier() {
+      return PathTranslationVerifier.INSTANCE;
+    }
+
+    private static final class PathTranslationVerifier
+        implements com.google.protobuf.Internal.EnumVerifier {
+      static final com.google.protobuf.Internal.EnumVerifier INSTANCE =
+          new PathTranslationVerifier();
+
+      @java.lang.Override
+      public boolean isInRange(int number) {
+        return PathTranslation.forNumber(number) != null;
       }
-      return getDescriptor().getValues().get(ordinal());
-    }
-
-    public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
-      return getDescriptor();
-    }
-
-    public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-      return com.google.api.BackendRule.getDescriptor().getEnumTypes().get(0);
-    }
-
-    private static final PathTranslation[] VALUES = values();
-
-    public static PathTranslation valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
+    };
 
     private final int value;
 
@@ -305,14 +252,9 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   private int authenticationCase_ = 0;
-
-  @SuppressWarnings("serial")
   private java.lang.Object authentication_;
 
-  public enum AuthenticationCase
-      implements
-          com.google.protobuf.Internal.EnumLite,
-          com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+  public enum AuthenticationCase {
     JWT_AUDIENCE(7),
     DISABLE_AUTH(8),
     AUTHENTICATION_NOT_SET(0);
@@ -321,11 +263,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     private AuthenticationCase(int value) {
       this.value = value;
     }
-    /**
-     * @param value The number of the enum to look for.
-     * @return The enum associated with the given number.
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
+    /** @deprecated Use {@link #forNumber(int)} instead. */
     @java.lang.Deprecated
     public static AuthenticationCase valueOf(int value) {
       return forNumber(value);
@@ -349,14 +287,18 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     }
   };
 
+  @java.lang.Override
   public AuthenticationCase getAuthenticationCase() {
     return AuthenticationCase.forNumber(authenticationCase_);
   }
 
-  public static final int SELECTOR_FIELD_NUMBER = 1;
+  private void clearAuthentication() {
+    authenticationCase_ = 0;
+    authentication_ = null;
+  }
 
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object selector_ = "";
+  public static final int SELECTOR_FIELD_NUMBER = 1;
+  private java.lang.String selector_;
   /**
    *
    *
@@ -373,15 +315,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getSelector() {
-    java.lang.Object ref = selector_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      selector_ = s;
-      return s;
-    }
+    return selector_;
   }
   /**
    *
@@ -399,21 +333,64 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getSelectorBytes() {
-    java.lang.Object ref = selector_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      selector_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(selector_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Selects the methods to which this rule applies.
+   *
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
+   * </pre>
+   *
+   * <code>string selector = 1;</code>
+   *
+   * @param value The selector to set.
+   */
+  private void setSelector(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    selector_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Selects the methods to which this rule applies.
+   *
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
+   * </pre>
+   *
+   * <code>string selector = 1;</code>
+   */
+  private void clearSelector() {
+
+    selector_ = getDefaultInstance().getSelector();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Selects the methods to which this rule applies.
+   *
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
+   * </pre>
+   *
+   * <code>string selector = 1;</code>
+   *
+   * @param value The bytes for selector to set.
+   */
+  private void setSelectorBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    selector_ = value.toStringUtf8();
   }
 
   public static final int ADDRESS_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object address_ = "";
+  private java.lang.String address_;
   /**
    *
    *
@@ -446,15 +423,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getAddress() {
-    java.lang.Object ref = address_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      address_ = s;
-      return s;
-    }
+    return address_;
   }
   /**
    *
@@ -488,19 +457,112 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getAddressBytes() {
-    java.lang.Object ref = address_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      address_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(address_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The address of the API backend.
+   *
+   * The scheme is used to determine the backend protocol and security.
+   * The following schemes are accepted:
+   *
+   *    SCHEME        PROTOCOL    SECURITY
+   *    http://       HTTP        None
+   *    https://      HTTP        TLS
+   *    grpc://       gRPC        None
+   *    grpcs://      gRPC        TLS
+   *
+   * It is recommended to explicitly include a scheme. Leaving out the scheme
+   * may cause constrasting behaviors across platforms.
+   *
+   * If the port is unspecified, the default is:
+   * - 80 for schemes without TLS
+   * - 443 for schemes with TLS
+   *
+   * For HTTP backends, use [protocol][google.api.BackendRule.protocol]
+   * to specify the protocol version.
+   * </pre>
+   *
+   * <code>string address = 2;</code>
+   *
+   * @param value The address to set.
+   */
+  private void setAddress(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    address_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The address of the API backend.
+   *
+   * The scheme is used to determine the backend protocol and security.
+   * The following schemes are accepted:
+   *
+   *    SCHEME        PROTOCOL    SECURITY
+   *    http://       HTTP        None
+   *    https://      HTTP        TLS
+   *    grpc://       gRPC        None
+   *    grpcs://      gRPC        TLS
+   *
+   * It is recommended to explicitly include a scheme. Leaving out the scheme
+   * may cause constrasting behaviors across platforms.
+   *
+   * If the port is unspecified, the default is:
+   * - 80 for schemes without TLS
+   * - 443 for schemes with TLS
+   *
+   * For HTTP backends, use [protocol][google.api.BackendRule.protocol]
+   * to specify the protocol version.
+   * </pre>
+   *
+   * <code>string address = 2;</code>
+   */
+  private void clearAddress() {
+
+    address_ = getDefaultInstance().getAddress();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The address of the API backend.
+   *
+   * The scheme is used to determine the backend protocol and security.
+   * The following schemes are accepted:
+   *
+   *    SCHEME        PROTOCOL    SECURITY
+   *    http://       HTTP        None
+   *    https://      HTTP        TLS
+   *    grpc://       gRPC        None
+   *    grpcs://      gRPC        TLS
+   *
+   * It is recommended to explicitly include a scheme. Leaving out the scheme
+   * may cause constrasting behaviors across platforms.
+   *
+   * If the port is unspecified, the default is:
+   * - 80 for schemes without TLS
+   * - 443 for schemes with TLS
+   *
+   * For HTTP backends, use [protocol][google.api.BackendRule.protocol]
+   * to specify the protocol version.
+   * </pre>
+   *
+   * <code>string address = 2;</code>
+   *
+   * @param value The bytes for address to set.
+   */
+  private void setAddressBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    address_ = value.toStringUtf8();
   }
 
   public static final int DEADLINE_FIELD_NUMBER = 3;
-  private double deadline_ = 0D;
+  private double deadline_;
   /**
    *
    *
@@ -517,9 +579,39 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   public double getDeadline() {
     return deadline_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The number of seconds to wait for a response from a request. The default
+   * varies based on the request protocol and deployment environment.
+   * </pre>
+   *
+   * <code>double deadline = 3;</code>
+   *
+   * @param value The deadline to set.
+   */
+  private void setDeadline(double value) {
+
+    deadline_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The number of seconds to wait for a response from a request. The default
+   * varies based on the request protocol and deployment environment.
+   * </pre>
+   *
+   * <code>double deadline = 3;</code>
+   */
+  private void clearDeadline() {
+
+    deadline_ = 0D;
+  }
 
   public static final int MIN_DEADLINE_FIELD_NUMBER = 4;
-  private double minDeadline_ = 0D;
+  private double minDeadline_;
   /**
    *
    *
@@ -538,9 +630,42 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   public double getMinDeadline() {
     return minDeadline_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * Deprecated, do not use.
+   * </pre>
+   *
+   * <code>double min_deadline = 4 [deprecated = true];</code>
+   *
+   * @deprecated google.api.BackendRule.min_deadline is deprecated. See
+   *     google/api/backend.proto;l=124
+   * @param value The minDeadline to set.
+   */
+  private void setMinDeadline(double value) {
+
+    minDeadline_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Deprecated, do not use.
+   * </pre>
+   *
+   * <code>double min_deadline = 4 [deprecated = true];</code>
+   *
+   * @deprecated google.api.BackendRule.min_deadline is deprecated. See
+   *     google/api/backend.proto;l=124
+   */
+  private void clearMinDeadline() {
+
+    minDeadline_ = 0D;
+  }
 
   public static final int OPERATION_DEADLINE_FIELD_NUMBER = 5;
-  private double operationDeadline_ = 0D;
+  private double operationDeadline_;
   /**
    *
    *
@@ -557,9 +682,39 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   public double getOperationDeadline() {
     return operationDeadline_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * The number of seconds to wait for the completion of a long running
+   * operation. The default is no deadline.
+   * </pre>
+   *
+   * <code>double operation_deadline = 5;</code>
+   *
+   * @param value The operationDeadline to set.
+   */
+  private void setOperationDeadline(double value) {
+
+    operationDeadline_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The number of seconds to wait for the completion of a long running
+   * operation. The default is no deadline.
+   * </pre>
+   *
+   * <code>double operation_deadline = 5;</code>
+   */
+  private void clearOperationDeadline() {
+
+    operationDeadline_ = 0D;
+  }
 
   public static final int PATH_TRANSLATION_FIELD_NUMBER = 6;
-  private int pathTranslation_ = 0;
+  private int pathTranslation_;
   /**
    * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
    *
@@ -580,6 +735,27 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         com.google.api.BackendRule.PathTranslation.forNumber(pathTranslation_);
     return result == null ? com.google.api.BackendRule.PathTranslation.UNRECOGNIZED : result;
   }
+  /**
+   * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
+   *
+   * @param value The enum numeric value on the wire for pathTranslation to set.
+   */
+  private void setPathTranslationValue(int value) {
+    pathTranslation_ = value;
+  }
+  /**
+   * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
+   *
+   * @param value The pathTranslation to set.
+   */
+  private void setPathTranslation(com.google.api.BackendRule.PathTranslation value) {
+    pathTranslation_ = value.getNumber();
+  }
+  /** <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code> */
+  private void clearPathTranslation() {
+
+    pathTranslation_ = 0;
+  }
 
   public static final int JWT_AUDIENCE_FIELD_NUMBER = 7;
   /**
@@ -595,6 +771,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the jwtAudience field is set.
    */
+  @java.lang.Override
   public boolean hasJwtAudience() {
     return authenticationCase_ == 7;
   }
@@ -611,21 +788,13 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The jwtAudience.
    */
+  @java.lang.Override
   public java.lang.String getJwtAudience() {
-    java.lang.Object ref = "";
+    java.lang.String ref = "";
     if (authenticationCase_ == 7) {
-      ref = authentication_;
+      ref = (java.lang.String) authentication_;
     }
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      if (authenticationCase_ == 7) {
-        authentication_ = s;
-      }
-      return s;
-    }
+    return ref;
   }
   /**
    *
@@ -640,21 +809,66 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for jwtAudience.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getJwtAudienceBytes() {
-    java.lang.Object ref = "";
+    java.lang.String ref = "";
     if (authenticationCase_ == 7) {
-      ref = authentication_;
+      ref = (java.lang.String) authentication_;
     }
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      if (authenticationCase_ == 7) {
-        authentication_ = b;
-      }
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
+    return com.google.protobuf.ByteString.copyFromUtf8(ref);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The JWT audience is used when generating a JWT ID token for the backend.
+   * This ID token will be added in the HTTP "authorization" header, and sent
+   * to the backend.
+   * </pre>
+   *
+   * <code>string jwt_audience = 7;</code>
+   *
+   * @param value The jwtAudience to set.
+   */
+  private void setJwtAudience(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    authenticationCase_ = 7;
+    authentication_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The JWT audience is used when generating a JWT ID token for the backend.
+   * This ID token will be added in the HTTP "authorization" header, and sent
+   * to the backend.
+   * </pre>
+   *
+   * <code>string jwt_audience = 7;</code>
+   */
+  private void clearJwtAudience() {
+    if (authenticationCase_ == 7) {
+      authenticationCase_ = 0;
+      authentication_ = null;
     }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The JWT audience is used when generating a JWT ID token for the backend.
+   * This ID token will be added in the HTTP "authorization" header, and sent
+   * to the backend.
+   * </pre>
+   *
+   * <code>string jwt_audience = 7;</code>
+   *
+   * @param value The bytes for jwtAudience to set.
+   */
+  private void setJwtAudienceBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    authentication_ = value.toStringUtf8();
+    authenticationCase_ = 7;
   }
 
   public static final int DISABLE_AUTH_FIELD_NUMBER = 8;
@@ -697,11 +911,45 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     }
     return false;
   }
+  /**
+   *
+   *
+   * <pre>
+   * When disable_auth is true, a JWT ID token won't be generated and the
+   * original "Authorization" HTTP header will be preserved. If the header is
+   * used to carry the original token and is expected by the backend, this
+   * field must be set to true to preserve the header.
+   * </pre>
+   *
+   * <code>bool disable_auth = 8;</code>
+   *
+   * @param value The disableAuth to set.
+   */
+  private void setDisableAuth(boolean value) {
+    authenticationCase_ = 8;
+    authentication_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * When disable_auth is true, a JWT ID token won't be generated and the
+   * original "Authorization" HTTP header will be preserved. If the header is
+   * used to carry the original token and is expected by the backend, this
+   * field must be set to true to preserve the header.
+   * </pre>
+   *
+   * <code>bool disable_auth = 8;</code>
+   */
+  private void clearDisableAuth() {
+    if (authenticationCase_ == 8) {
+      authenticationCase_ = 0;
+      authentication_ = null;
+    }
+  }
 
   public static final int PROTOCOL_FIELD_NUMBER = 9;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object protocol_ = "";
+  private java.lang.String protocol_;
   /**
    *
    *
@@ -735,15 +983,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getProtocol() {
-    java.lang.Object ref = protocol_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      protocol_ = s;
-      return s;
-    }
+    return protocol_;
   }
   /**
    *
@@ -778,47 +1018,145 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getProtocolBytes() {
-    java.lang.Object ref = protocol_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      protocol_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(protocol_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The protocol used for sending a request to the backend.
+   * The supported values are "http/1.1" and "h2".
+   *
+   * The default value is inferred from the scheme in the
+   * [address][google.api.BackendRule.address] field:
+   *
+   *    SCHEME        PROTOCOL
+   *    http://       http/1.1
+   *    https://      http/1.1
+   *    grpc://       h2
+   *    grpcs://      h2
+   *
+   * For secure HTTP backends (https://) that support HTTP/2, set this field
+   * to "h2" for improved performance.
+   *
+   * Configuring this field to non-default values is only supported for secure
+   * HTTP backends. This field will be ignored for all other backends.
+   *
+   * See
+   * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
+   * for more details on the supported values.
+   * </pre>
+   *
+   * <code>string protocol = 9;</code>
+   *
+   * @param value The protocol to set.
+   */
+  private void setProtocol(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    protocol_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The protocol used for sending a request to the backend.
+   * The supported values are "http/1.1" and "h2".
+   *
+   * The default value is inferred from the scheme in the
+   * [address][google.api.BackendRule.address] field:
+   *
+   *    SCHEME        PROTOCOL
+   *    http://       http/1.1
+   *    https://      http/1.1
+   *    grpc://       h2
+   *    grpcs://      h2
+   *
+   * For secure HTTP backends (https://) that support HTTP/2, set this field
+   * to "h2" for improved performance.
+   *
+   * Configuring this field to non-default values is only supported for secure
+   * HTTP backends. This field will be ignored for all other backends.
+   *
+   * See
+   * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
+   * for more details on the supported values.
+   * </pre>
+   *
+   * <code>string protocol = 9;</code>
+   */
+  private void clearProtocol() {
+
+    protocol_ = getDefaultInstance().getProtocol();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The protocol used for sending a request to the backend.
+   * The supported values are "http/1.1" and "h2".
+   *
+   * The default value is inferred from the scheme in the
+   * [address][google.api.BackendRule.address] field:
+   *
+   *    SCHEME        PROTOCOL
+   *    http://       http/1.1
+   *    https://      http/1.1
+   *    grpc://       h2
+   *    grpcs://      h2
+   *
+   * For secure HTTP backends (https://) that support HTTP/2, set this field
+   * to "h2" for improved performance.
+   *
+   * Configuring this field to non-default values is only supported for secure
+   * HTTP backends. This field will be ignored for all other backends.
+   *
+   * See
+   * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
+   * for more details on the supported values.
+   * </pre>
+   *
+   * <code>string protocol = 9;</code>
+   *
+   * @param value The bytes for protocol to set.
+   */
+  private void setProtocolBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    protocol_ = value.toStringUtf8();
   }
 
   public static final int OVERRIDES_BY_REQUEST_PROTOCOL_FIELD_NUMBER = 10;
 
   private static final class OverridesByRequestProtocolDefaultEntryHolder {
-    static final com.google.protobuf.MapEntry<java.lang.String, com.google.api.BackendRule>
+    static final com.google.protobuf.MapEntryLite<java.lang.String, com.google.api.BackendRule>
         defaultEntry =
-            com.google.protobuf.MapEntry
+            com.google.protobuf.MapEntryLite
                 .<java.lang.String, com.google.api.BackendRule>newDefaultInstance(
-                    com.google.api.BackendProto
-                        .internal_static_google_api_BackendRule_OverridesByRequestProtocolEntry_descriptor,
                     com.google.protobuf.WireFormat.FieldType.STRING,
                     "",
                     com.google.protobuf.WireFormat.FieldType.MESSAGE,
                     com.google.api.BackendRule.getDefaultInstance());
   }
 
-  @SuppressWarnings("serial")
-  private com.google.protobuf.MapField<java.lang.String, com.google.api.BackendRule>
-      overridesByRequestProtocol_;
+  private com.google.protobuf.MapFieldLite<java.lang.String, com.google.api.BackendRule>
+      overridesByRequestProtocol_ = com.google.protobuf.MapFieldLite.emptyMapField();
 
-  private com.google.protobuf.MapField<java.lang.String, com.google.api.BackendRule>
+  private com.google.protobuf.MapFieldLite<java.lang.String, com.google.api.BackendRule>
       internalGetOverridesByRequestProtocol() {
-    if (overridesByRequestProtocol_ == null) {
-      return com.google.protobuf.MapField.emptyMapField(
-          OverridesByRequestProtocolDefaultEntryHolder.defaultEntry);
+    return overridesByRequestProtocol_;
+  }
+
+  private com.google.protobuf.MapFieldLite<java.lang.String, com.google.api.BackendRule>
+      internalGetMutableOverridesByRequestProtocol() {
+    if (!overridesByRequestProtocol_.isMutable()) {
+      overridesByRequestProtocol_ = overridesByRequestProtocol_.mutableCopy();
     }
     return overridesByRequestProtocol_;
   }
 
+  @java.lang.Override
   public int getOverridesByRequestProtocolCount() {
-    return internalGetOverridesByRequestProtocol().getMap().size();
+    return internalGetOverridesByRequestProtocol().size();
   }
   /**
    *
@@ -831,10 +1169,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public boolean containsOverridesByRequestProtocol(java.lang.String key) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
-    return internalGetOverridesByRequestProtocol().getMap().containsKey(key);
+    java.lang.Class<?> keyClass = key.getClass();
+    return internalGetOverridesByRequestProtocol().containsKey(key);
   }
   /** Use {@link #getOverridesByRequestProtocolMap()} instead. */
   @java.lang.Override
@@ -855,7 +1191,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   @java.lang.Override
   public java.util.Map<java.lang.String, com.google.api.BackendRule>
       getOverridesByRequestProtocolMap() {
-    return internalGetOverridesByRequestProtocol().getMap();
+    return java.util.Collections.unmodifiableMap(internalGetOverridesByRequestProtocol());
   }
   /**
    *
@@ -871,11 +1207,9 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       java.lang.String key,
       /* nullable */
       com.google.api.BackendRule defaultValue) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
+    java.lang.Class<?> keyClass = key.getClass();
     java.util.Map<java.lang.String, com.google.api.BackendRule> map =
-        internalGetOverridesByRequestProtocol().getMap();
+        internalGetOverridesByRequestProtocol();
     return map.containsKey(key) ? map.get(key) : defaultValue;
   }
   /**
@@ -889,303 +1223,109 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.api.BackendRule getOverridesByRequestProtocolOrThrow(java.lang.String key) {
-    if (key == null) {
-      throw new NullPointerException("map key");
-    }
+    java.lang.Class<?> keyClass = key.getClass();
     java.util.Map<java.lang.String, com.google.api.BackendRule> map =
-        internalGetOverridesByRequestProtocol().getMap();
+        internalGetOverridesByRequestProtocol();
     if (!map.containsKey(key)) {
       throw new java.lang.IllegalArgumentException();
     }
     return map.get(key);
   }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
-  }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(selector_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, selector_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(address_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, address_);
-    }
-    if (java.lang.Double.doubleToRawLongBits(deadline_) != 0) {
-      output.writeDouble(3, deadline_);
-    }
-    if (java.lang.Double.doubleToRawLongBits(minDeadline_) != 0) {
-      output.writeDouble(4, minDeadline_);
-    }
-    if (java.lang.Double.doubleToRawLongBits(operationDeadline_) != 0) {
-      output.writeDouble(5, operationDeadline_);
-    }
-    if (pathTranslation_
-        != com.google.api.BackendRule.PathTranslation.PATH_TRANSLATION_UNSPECIFIED.getNumber()) {
-      output.writeEnum(6, pathTranslation_);
-    }
-    if (authenticationCase_ == 7) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 7, authentication_);
-    }
-    if (authenticationCase_ == 8) {
-      output.writeBool(8, (boolean) ((java.lang.Boolean) authentication_));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(protocol_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 9, protocol_);
-    }
-    com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
-        output,
-        internalGetOverridesByRequestProtocol(),
-        OverridesByRequestProtocolDefaultEntryHolder.defaultEntry,
-        10);
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(selector_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, selector_);
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(address_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, address_);
-    }
-    if (java.lang.Double.doubleToRawLongBits(deadline_) != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeDoubleSize(3, deadline_);
-    }
-    if (java.lang.Double.doubleToRawLongBits(minDeadline_) != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeDoubleSize(4, minDeadline_);
-    }
-    if (java.lang.Double.doubleToRawLongBits(operationDeadline_) != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeDoubleSize(5, operationDeadline_);
-    }
-    if (pathTranslation_
-        != com.google.api.BackendRule.PathTranslation.PATH_TRANSLATION_UNSPECIFIED.getNumber()) {
-      size += com.google.protobuf.CodedOutputStream.computeEnumSize(6, pathTranslation_);
-    }
-    if (authenticationCase_ == 7) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, authentication_);
-    }
-    if (authenticationCase_ == 8) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeBoolSize(
-              8, (boolean) ((java.lang.Boolean) authentication_));
-    }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(protocol_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(9, protocol_);
-    }
-    for (java.util.Map.Entry<java.lang.String, com.google.api.BackendRule> entry :
-        internalGetOverridesByRequestProtocol().getMap().entrySet()) {
-      com.google.protobuf.MapEntry<java.lang.String, com.google.api.BackendRule>
-          overridesByRequestProtocol__ =
-              OverridesByRequestProtocolDefaultEntryHolder.defaultEntry
-                  .newBuilderForType()
-                  .setKey(entry.getKey())
-                  .setValue(entry.getValue())
-                  .build();
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(
-              10, overridesByRequestProtocol__);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.api.BackendRule)) {
-      return super.equals(obj);
-    }
-    com.google.api.BackendRule other = (com.google.api.BackendRule) obj;
-
-    if (!getSelector().equals(other.getSelector())) return false;
-    if (!getAddress().equals(other.getAddress())) return false;
-    if (java.lang.Double.doubleToLongBits(getDeadline())
-        != java.lang.Double.doubleToLongBits(other.getDeadline())) return false;
-    if (java.lang.Double.doubleToLongBits(getMinDeadline())
-        != java.lang.Double.doubleToLongBits(other.getMinDeadline())) return false;
-    if (java.lang.Double.doubleToLongBits(getOperationDeadline())
-        != java.lang.Double.doubleToLongBits(other.getOperationDeadline())) return false;
-    if (pathTranslation_ != other.pathTranslation_) return false;
-    if (!getProtocol().equals(other.getProtocol())) return false;
-    if (!internalGetOverridesByRequestProtocol()
-        .equals(other.internalGetOverridesByRequestProtocol())) return false;
-    if (!getAuthenticationCase().equals(other.getAuthenticationCase())) return false;
-    switch (authenticationCase_) {
-      case 7:
-        if (!getJwtAudience().equals(other.getJwtAudience())) return false;
-        break;
-      case 8:
-        if (getDisableAuth() != other.getDisableAuth()) return false;
-        break;
-      case 0:
-      default:
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + SELECTOR_FIELD_NUMBER;
-    hash = (53 * hash) + getSelector().hashCode();
-    hash = (37 * hash) + ADDRESS_FIELD_NUMBER;
-    hash = (53 * hash) + getAddress().hashCode();
-    hash = (37 * hash) + DEADLINE_FIELD_NUMBER;
-    hash =
-        (53 * hash)
-            + com.google.protobuf.Internal.hashLong(
-                java.lang.Double.doubleToLongBits(getDeadline()));
-    hash = (37 * hash) + MIN_DEADLINE_FIELD_NUMBER;
-    hash =
-        (53 * hash)
-            + com.google.protobuf.Internal.hashLong(
-                java.lang.Double.doubleToLongBits(getMinDeadline()));
-    hash = (37 * hash) + OPERATION_DEADLINE_FIELD_NUMBER;
-    hash =
-        (53 * hash)
-            + com.google.protobuf.Internal.hashLong(
-                java.lang.Double.doubleToLongBits(getOperationDeadline()));
-    hash = (37 * hash) + PATH_TRANSLATION_FIELD_NUMBER;
-    hash = (53 * hash) + pathTranslation_;
-    hash = (37 * hash) + PROTOCOL_FIELD_NUMBER;
-    hash = (53 * hash) + getProtocol().hashCode();
-    if (!internalGetOverridesByRequestProtocol().getMap().isEmpty()) {
-      hash = (37 * hash) + OVERRIDES_BY_REQUEST_PROTOCOL_FIELD_NUMBER;
-      hash = (53 * hash) + internalGetOverridesByRequestProtocol().hashCode();
-    }
-    switch (authenticationCase_) {
-      case 7:
-        hash = (37 * hash) + JWT_AUDIENCE_FIELD_NUMBER;
-        hash = (53 * hash) + getJwtAudience().hashCode();
-        break;
-      case 8:
-        hash = (37 * hash) + DISABLE_AUTH_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getDisableAuth());
-        break;
-      case 0:
-      default:
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * The map between request protocol and the backend address.
+   * </pre>
+   *
+   * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+   */
+  private java.util.Map<java.lang.String, com.google.api.BackendRule>
+      getMutableOverridesByRequestProtocolMap() {
+    return internalGetMutableOverridesByRequestProtocol();
   }
 
   public static com.google.api.BackendRule parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.BackendRule parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.BackendRule parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.BackendRule parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.BackendRule parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.api.BackendRule parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.api.BackendRule parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.BackendRule parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.BackendRule parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.BackendRule parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.api.BackendRule parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.api.BackendRule parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.api.BackendRule prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -1195,357 +1335,27 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.api.BackendRule}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<com.google.api.BackendRule, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.api.BackendRule)
       com.google.api.BackendRuleOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.api.BackendProto.internal_static_google_api_BackendRule_descriptor;
-    }
-
-    @SuppressWarnings({"rawtypes"})
-    protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-        int number) {
-      switch (number) {
-        case 10:
-          return internalGetOverridesByRequestProtocol();
-        default:
-          throw new RuntimeException("Invalid map field number: " + number);
-      }
-    }
-
-    @SuppressWarnings({"rawtypes"})
-    protected com.google.protobuf.MapFieldReflectionAccessor internalGetMutableMapFieldReflection(
-        int number) {
-      switch (number) {
-        case 10:
-          return internalGetMutableOverridesByRequestProtocol();
-        default:
-          throw new RuntimeException("Invalid map field number: " + number);
-      }
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.api.BackendProto.internal_static_google_api_BackendRule_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.api.BackendRule.class, com.google.api.BackendRule.Builder.class);
-    }
-
     // Construct using com.google.api.BackendRule.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
     @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      selector_ = "";
-      address_ = "";
-      deadline_ = 0D;
-      minDeadline_ = 0D;
-      operationDeadline_ = 0D;
-      pathTranslation_ = 0;
-      protocol_ = "";
-      internalGetMutableOverridesByRequestProtocol().clear();
-      authenticationCase_ = 0;
-      authentication_ = null;
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.api.BackendProto.internal_static_google_api_BackendRule_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.api.BackendRule getDefaultInstanceForType() {
-      return com.google.api.BackendRule.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.api.BackendRule build() {
-      com.google.api.BackendRule result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.api.BackendRule buildPartial() {
-      com.google.api.BackendRule result = new com.google.api.BackendRule(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      buildPartialOneofs(result);
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.api.BackendRule result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.selector_ = selector_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.address_ = address_;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.deadline_ = deadline_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.minDeadline_ = minDeadline_;
-      }
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.operationDeadline_ = operationDeadline_;
-      }
-      if (((from_bitField0_ & 0x00000020) != 0)) {
-        result.pathTranslation_ = pathTranslation_;
-      }
-      if (((from_bitField0_ & 0x00000100) != 0)) {
-        result.protocol_ = protocol_;
-      }
-      if (((from_bitField0_ & 0x00000200) != 0)) {
-        result.overridesByRequestProtocol_ =
-            internalGetOverridesByRequestProtocol()
-                .build(OverridesByRequestProtocolDefaultEntryHolder.defaultEntry);
-      }
-    }
-
-    private void buildPartialOneofs(com.google.api.BackendRule result) {
-      result.authenticationCase_ = authenticationCase_;
-      result.authentication_ = this.authentication_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.BackendRule) {
-        return mergeFrom((com.google.api.BackendRule) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.api.BackendRule other) {
-      if (other == com.google.api.BackendRule.getDefaultInstance()) return this;
-      if (!other.getSelector().isEmpty()) {
-        selector_ = other.selector_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (!other.getAddress().isEmpty()) {
-        address_ = other.address_;
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
-      if (other.getDeadline() != 0D) {
-        setDeadline(other.getDeadline());
-      }
-      if (other.getMinDeadline() != 0D) {
-        setMinDeadline(other.getMinDeadline());
-      }
-      if (other.getOperationDeadline() != 0D) {
-        setOperationDeadline(other.getOperationDeadline());
-      }
-      if (other.pathTranslation_ != 0) {
-        setPathTranslationValue(other.getPathTranslationValue());
-      }
-      if (!other.getProtocol().isEmpty()) {
-        protocol_ = other.protocol_;
-        bitField0_ |= 0x00000100;
-        onChanged();
-      }
-      internalGetMutableOverridesByRequestProtocol()
-          .mergeFrom(other.internalGetOverridesByRequestProtocol());
-      bitField0_ |= 0x00000200;
-      switch (other.getAuthenticationCase()) {
-        case JWT_AUDIENCE:
-          {
-            authenticationCase_ = 7;
-            authentication_ = other.authentication_;
-            onChanged();
-            break;
-          }
-        case DISABLE_AUTH:
-          {
-            setDisableAuth(other.getDisableAuth());
-            break;
-          }
-        case AUTHENTICATION_NOT_SET:
-          {
-            break;
-          }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                selector_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                address_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 25:
-              {
-                deadline_ = input.readDouble();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 25
-            case 33:
-              {
-                minDeadline_ = input.readDouble();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 33
-            case 41:
-              {
-                operationDeadline_ = input.readDouble();
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 41
-            case 48:
-              {
-                pathTranslation_ = input.readEnum();
-                bitField0_ |= 0x00000020;
-                break;
-              } // case 48
-            case 58:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                authenticationCase_ = 7;
-                authentication_ = s;
-                break;
-              } // case 58
-            case 64:
-              {
-                authentication_ = input.readBool();
-                authenticationCase_ = 8;
-                break;
-              } // case 64
-            case 74:
-              {
-                protocol_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000100;
-                break;
-              } // case 74
-            case 82:
-              {
-                com.google.protobuf.MapEntry<java.lang.String, com.google.api.BackendRule>
-                    overridesByRequestProtocol__ =
-                        input.readMessage(
-                            OverridesByRequestProtocolDefaultEntryHolder.defaultEntry
-                                .getParserForType(),
-                            extensionRegistry);
-                internalGetMutableOverridesByRequestProtocol()
-                    .ensureBuilderMap()
-                    .put(
-                        overridesByRequestProtocol__.getKey(),
-                        overridesByRequestProtocol__.getValue());
-                bitField0_ |= 0x00000200;
-                break;
-              } // case 82
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int authenticationCase_ = 0;
-    private java.lang.Object authentication_;
-
     public AuthenticationCase getAuthenticationCase() {
-      return AuthenticationCase.forNumber(authenticationCase_);
+      return instance.getAuthenticationCase();
     }
 
     public Builder clearAuthentication() {
-      authenticationCase_ = 0;
-      authentication_ = null;
-      onChanged();
+      copyOnWrite();
+      instance.clearAuthentication();
       return this;
     }
 
-    private int bitField0_;
-
-    private java.lang.Object selector_ = "";
     /**
      *
      *
@@ -1560,16 +1370,9 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The selector.
      */
+    @java.lang.Override
     public java.lang.String getSelector() {
-      java.lang.Object ref = selector_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        selector_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getSelector();
     }
     /**
      *
@@ -1585,16 +1388,9 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for selector.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getSelectorBytes() {
-      java.lang.Object ref = selector_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        selector_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getSelectorBytes();
     }
     /**
      *
@@ -1612,12 +1408,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setSelector(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      selector_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setSelector(value);
       return this;
     }
     /**
@@ -1635,9 +1427,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearSelector() {
-      selector_ = getDefaultInstance().getSelector();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearSelector();
       return this;
     }
     /**
@@ -1656,17 +1447,11 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setSelectorBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      selector_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setSelectorBytes(value);
       return this;
     }
 
-    private java.lang.Object address_ = "";
     /**
      *
      *
@@ -1697,16 +1482,9 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The address.
      */
+    @java.lang.Override
     public java.lang.String getAddress() {
-      java.lang.Object ref = address_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        address_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getAddress();
     }
     /**
      *
@@ -1738,16 +1516,9 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for address.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getAddressBytes() {
-      java.lang.Object ref = address_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        address_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getAddressBytes();
     }
     /**
      *
@@ -1781,12 +1552,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAddress(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      address_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setAddress(value);
       return this;
     }
     /**
@@ -1820,9 +1587,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAddress() {
-      address_ = getDefaultInstance().getAddress();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+      copyOnWrite();
+      instance.clearAddress();
       return this;
     }
     /**
@@ -1857,17 +1623,11 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setAddressBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      address_ = value;
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setAddressBytes(value);
       return this;
     }
 
-    private double deadline_;
     /**
      *
      *
@@ -1882,7 +1642,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public double getDeadline() {
-      return deadline_;
+      return instance.getDeadline();
     }
     /**
      *
@@ -1898,10 +1658,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDeadline(double value) {
-
-      deadline_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setDeadline(value);
       return this;
     }
     /**
@@ -1917,13 +1675,11 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDeadline() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      deadline_ = 0D;
-      onChanged();
+      copyOnWrite();
+      instance.clearDeadline();
       return this;
     }
 
-    private double minDeadline_;
     /**
      *
      *
@@ -1940,7 +1696,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     @java.lang.Deprecated
     public double getMinDeadline() {
-      return minDeadline_;
+      return instance.getMinDeadline();
     }
     /**
      *
@@ -1958,10 +1714,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Deprecated
     public Builder setMinDeadline(double value) {
-
-      minDeadline_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
+      copyOnWrite();
+      instance.setMinDeadline(value);
       return this;
     }
     /**
@@ -1979,13 +1733,11 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Deprecated
     public Builder clearMinDeadline() {
-      bitField0_ = (bitField0_ & ~0x00000008);
-      minDeadline_ = 0D;
-      onChanged();
+      copyOnWrite();
+      instance.clearMinDeadline();
       return this;
     }
 
-    private double operationDeadline_;
     /**
      *
      *
@@ -2000,7 +1752,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public double getOperationDeadline() {
-      return operationDeadline_;
+      return instance.getOperationDeadline();
     }
     /**
      *
@@ -2016,10 +1768,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setOperationDeadline(double value) {
-
-      operationDeadline_ = value;
-      bitField0_ |= 0x00000010;
-      onChanged();
+      copyOnWrite();
+      instance.setOperationDeadline(value);
       return this;
     }
     /**
@@ -2035,13 +1785,11 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearOperationDeadline() {
-      bitField0_ = (bitField0_ & ~0x00000010);
-      operationDeadline_ = 0D;
-      onChanged();
+      copyOnWrite();
+      instance.clearOperationDeadline();
       return this;
     }
 
-    private int pathTranslation_ = 0;
     /**
      * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
      *
@@ -2049,18 +1797,17 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public int getPathTranslationValue() {
-      return pathTranslation_;
+      return instance.getPathTranslationValue();
     }
     /**
      * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
      *
-     * @param value The enum numeric value on the wire for pathTranslation to set.
+     * @param value The pathTranslation to set.
      * @return This builder for chaining.
      */
     public Builder setPathTranslationValue(int value) {
-      pathTranslation_ = value;
-      bitField0_ |= 0x00000020;
-      onChanged();
+      copyOnWrite();
+      instance.setPathTranslationValue(value);
       return this;
     }
     /**
@@ -2070,23 +1817,17 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.api.BackendRule.PathTranslation getPathTranslation() {
-      com.google.api.BackendRule.PathTranslation result =
-          com.google.api.BackendRule.PathTranslation.forNumber(pathTranslation_);
-      return result == null ? com.google.api.BackendRule.PathTranslation.UNRECOGNIZED : result;
+      return instance.getPathTranslation();
     }
     /**
      * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
      *
-     * @param value The pathTranslation to set.
+     * @param value The enum numeric value on the wire for pathTranslation to set.
      * @return This builder for chaining.
      */
     public Builder setPathTranslation(com.google.api.BackendRule.PathTranslation value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      bitField0_ |= 0x00000020;
-      pathTranslation_ = value.getNumber();
-      onChanged();
+      copyOnWrite();
+      instance.setPathTranslation(value);
       return this;
     }
     /**
@@ -2095,9 +1836,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearPathTranslation() {
-      bitField0_ = (bitField0_ & ~0x00000020);
-      pathTranslation_ = 0;
-      onChanged();
+      copyOnWrite();
+      instance.clearPathTranslation();
       return this;
     }
 
@@ -2116,7 +1856,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean hasJwtAudience() {
-      return authenticationCase_ == 7;
+      return instance.hasJwtAudience();
     }
     /**
      *
@@ -2133,20 +1873,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public java.lang.String getJwtAudience() {
-      java.lang.Object ref = "";
-      if (authenticationCase_ == 7) {
-        ref = authentication_;
-      }
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (authenticationCase_ == 7) {
-          authentication_ = s;
-        }
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getJwtAudience();
     }
     /**
      *
@@ -2163,20 +1890,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.ByteString getJwtAudienceBytes() {
-      java.lang.Object ref = "";
-      if (authenticationCase_ == 7) {
-        ref = authentication_;
-      }
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        if (authenticationCase_ == 7) {
-          authentication_ = b;
-        }
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getJwtAudienceBytes();
     }
     /**
      *
@@ -2193,12 +1907,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setJwtAudience(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      authenticationCase_ = 7;
-      authentication_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setJwtAudience(value);
       return this;
     }
     /**
@@ -2215,11 +1925,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearJwtAudience() {
-      if (authenticationCase_ == 7) {
-        authenticationCase_ = 0;
-        authentication_ = null;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.clearJwtAudience();
       return this;
     }
     /**
@@ -2237,13 +1944,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setJwtAudienceBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      authenticationCase_ = 7;
-      authentication_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setJwtAudienceBytes(value);
       return this;
     }
 
@@ -2261,8 +1963,9 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return Whether the disableAuth field is set.
      */
+    @java.lang.Override
     public boolean hasDisableAuth() {
-      return authenticationCase_ == 8;
+      return instance.hasDisableAuth();
     }
     /**
      *
@@ -2278,11 +1981,9 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The disableAuth.
      */
+    @java.lang.Override
     public boolean getDisableAuth() {
-      if (authenticationCase_ == 8) {
-        return (java.lang.Boolean) authentication_;
-      }
-      return false;
+      return instance.getDisableAuth();
     }
     /**
      *
@@ -2300,10 +2001,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDisableAuth(boolean value) {
-
-      authenticationCase_ = 8;
-      authentication_ = value;
-      onChanged();
+      copyOnWrite();
+      instance.setDisableAuth(value);
       return this;
     }
     /**
@@ -2321,15 +2020,11 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDisableAuth() {
-      if (authenticationCase_ == 8) {
-        authenticationCase_ = 0;
-        authentication_ = null;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.clearDisableAuth();
       return this;
     }
 
-    private java.lang.Object protocol_ = "";
     /**
      *
      *
@@ -2361,16 +2056,9 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The protocol.
      */
+    @java.lang.Override
     public java.lang.String getProtocol() {
-      java.lang.Object ref = protocol_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        protocol_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getProtocol();
     }
     /**
      *
@@ -2403,16 +2091,9 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for protocol.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getProtocolBytes() {
-      java.lang.Object ref = protocol_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        protocol_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getProtocolBytes();
     }
     /**
      *
@@ -2447,12 +2128,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setProtocol(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      protocol_ = value;
-      bitField0_ |= 0x00000100;
-      onChanged();
+      copyOnWrite();
+      instance.setProtocol(value);
       return this;
     }
     /**
@@ -2487,9 +2164,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearProtocol() {
-      protocol_ = getDefaultInstance().getProtocol();
-      bitField0_ = (bitField0_ & ~0x00000100);
-      onChanged();
+      copyOnWrite();
+      instance.clearProtocol();
       return this;
     }
     /**
@@ -2525,73 +2201,14 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setProtocolBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      protocol_ = value;
-      bitField0_ |= 0x00000100;
-      onChanged();
+      copyOnWrite();
+      instance.setProtocolBytes(value);
       return this;
     }
 
-    private static final class OverridesByRequestProtocolConverter
-        implements com.google.protobuf.MapFieldBuilder.Converter<
-            java.lang.String, com.google.api.BackendRuleOrBuilder, com.google.api.BackendRule> {
-      @java.lang.Override
-      public com.google.api.BackendRule build(com.google.api.BackendRuleOrBuilder val) {
-        if (val instanceof com.google.api.BackendRule) {
-          return (com.google.api.BackendRule) val;
-        }
-        return ((com.google.api.BackendRule.Builder) val).build();
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.MapEntry<java.lang.String, com.google.api.BackendRule>
-          defaultEntry() {
-        return OverridesByRequestProtocolDefaultEntryHolder.defaultEntry;
-      }
-    };
-
-    private static final OverridesByRequestProtocolConverter overridesByRequestProtocolConverter =
-        new OverridesByRequestProtocolConverter();
-
-    private com.google.protobuf.MapFieldBuilder<
-            java.lang.String,
-            com.google.api.BackendRuleOrBuilder,
-            com.google.api.BackendRule,
-            com.google.api.BackendRule.Builder>
-        overridesByRequestProtocol_;
-
-    private com.google.protobuf.MapFieldBuilder<
-            java.lang.String,
-            com.google.api.BackendRuleOrBuilder,
-            com.google.api.BackendRule,
-            com.google.api.BackendRule.Builder>
-        internalGetOverridesByRequestProtocol() {
-      if (overridesByRequestProtocol_ == null) {
-        return new com.google.protobuf.MapFieldBuilder<>(overridesByRequestProtocolConverter);
-      }
-      return overridesByRequestProtocol_;
-    }
-
-    private com.google.protobuf.MapFieldBuilder<
-            java.lang.String,
-            com.google.api.BackendRuleOrBuilder,
-            com.google.api.BackendRule,
-            com.google.api.BackendRule.Builder>
-        internalGetMutableOverridesByRequestProtocol() {
-      if (overridesByRequestProtocol_ == null) {
-        overridesByRequestProtocol_ =
-            new com.google.protobuf.MapFieldBuilder<>(overridesByRequestProtocolConverter);
-      }
-      bitField0_ |= 0x00000200;
-      onChanged();
-      return overridesByRequestProtocol_;
-    }
-
+    @java.lang.Override
     public int getOverridesByRequestProtocolCount() {
-      return internalGetOverridesByRequestProtocol().ensureBuilderMap().size();
+      return instance.getOverridesByRequestProtocolMap().size();
     }
     /**
      *
@@ -2604,10 +2221,29 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean containsOverridesByRequestProtocol(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      return internalGetOverridesByRequestProtocol().ensureBuilderMap().containsKey(key);
+      java.lang.Class<?> keyClass = key.getClass();
+      return instance.getOverridesByRequestProtocolMap().containsKey(key);
+    }
+
+    public Builder clearOverridesByRequestProtocol() {
+      copyOnWrite();
+      instance.getMutableOverridesByRequestProtocolMap().clear();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The map between request protocol and the backend address.
+     * </pre>
+     *
+     * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+     */
+    public Builder removeOverridesByRequestProtocol(java.lang.String key) {
+      java.lang.Class<?> keyClass = key.getClass();
+      copyOnWrite();
+      instance.getMutableOverridesByRequestProtocolMap().remove(key);
+      return this;
     }
     /** Use {@link #getOverridesByRequestProtocolMap()} instead. */
     @java.lang.Override
@@ -2628,7 +2264,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public java.util.Map<java.lang.String, com.google.api.BackendRule>
         getOverridesByRequestProtocolMap() {
-      return internalGetOverridesByRequestProtocol().getImmutableMap();
+      return java.util.Collections.unmodifiableMap(instance.getOverridesByRequestProtocolMap());
     }
     /**
      *
@@ -2644,14 +2280,10 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         java.lang.String key,
         /* nullable */
         com.google.api.BackendRule defaultValue) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, com.google.api.BackendRuleOrBuilder> map =
-          internalGetMutableOverridesByRequestProtocol().ensureBuilderMap();
-      return map.containsKey(key)
-          ? overridesByRequestProtocolConverter.build(map.get(key))
-          : defaultValue;
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, com.google.api.BackendRule> map =
+          instance.getOverridesByRequestProtocolMap();
+      return map.containsKey(key) ? map.get(key) : defaultValue;
     }
     /**
      *
@@ -2664,44 +2296,13 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.api.BackendRule getOverridesByRequestProtocolOrThrow(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      java.util.Map<java.lang.String, com.google.api.BackendRuleOrBuilder> map =
-          internalGetMutableOverridesByRequestProtocol().ensureBuilderMap();
+      java.lang.Class<?> keyClass = key.getClass();
+      java.util.Map<java.lang.String, com.google.api.BackendRule> map =
+          instance.getOverridesByRequestProtocolMap();
       if (!map.containsKey(key)) {
         throw new java.lang.IllegalArgumentException();
       }
-      return overridesByRequestProtocolConverter.build(map.get(key));
-    }
-
-    public Builder clearOverridesByRequestProtocol() {
-      bitField0_ = (bitField0_ & ~0x00000200);
-      internalGetMutableOverridesByRequestProtocol().clear();
-      return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The map between request protocol and the backend address.
-     * </pre>
-     *
-     * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
-     */
-    public Builder removeOverridesByRequestProtocol(java.lang.String key) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      internalGetMutableOverridesByRequestProtocol().ensureBuilderMap().remove(key);
-      return this;
-    }
-    /** Use alternate mutation accessors instead. */
-    @java.lang.Deprecated
-    public java.util.Map<java.lang.String, com.google.api.BackendRule>
-        getMutableOverridesByRequestProtocol() {
-      bitField0_ |= 0x00000200;
-      return internalGetMutableOverridesByRequestProtocol().ensureMessageMap();
+      return map.get(key);
     }
     /**
      *
@@ -2714,14 +2315,10 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder putOverridesByRequestProtocol(
         java.lang.String key, com.google.api.BackendRule value) {
-      if (key == null) {
-        throw new NullPointerException("map key");
-      }
-      if (value == null) {
-        throw new NullPointerException("map value");
-      }
-      internalGetMutableOverridesByRequestProtocol().ensureBuilderMap().put(key, value);
-      bitField0_ |= 0x00000200;
+      java.lang.Class<?> keyClass = key.getClass();
+      java.lang.Class<?> valueClass = value.getClass();
+      copyOnWrite();
+      instance.getMutableOverridesByRequestProtocolMap().put(key, value);
       return this;
     }
     /**
@@ -2735,99 +2332,101 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder putAllOverridesByRequestProtocol(
         java.util.Map<java.lang.String, com.google.api.BackendRule> values) {
-      for (java.util.Map.Entry<java.lang.String, com.google.api.BackendRule> e :
-          values.entrySet()) {
-        if (e.getKey() == null || e.getValue() == null) {
-          throw new NullPointerException();
-        }
-      }
-      internalGetMutableOverridesByRequestProtocol().ensureBuilderMap().putAll(values);
-      bitField0_ |= 0x00000200;
+      copyOnWrite();
+      instance.getMutableOverridesByRequestProtocolMap().putAll(values);
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The map between request protocol and the backend address.
-     * </pre>
-     *
-     * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
-     */
-    public com.google.api.BackendRule.Builder putOverridesByRequestProtocolBuilderIfAbsent(
-        java.lang.String key) {
-      java.util.Map<java.lang.String, com.google.api.BackendRuleOrBuilder> builderMap =
-          internalGetMutableOverridesByRequestProtocol().ensureBuilderMap();
-      com.google.api.BackendRuleOrBuilder entry = builderMap.get(key);
-      if (entry == null) {
-        entry = com.google.api.BackendRule.newBuilder();
-        builderMap.put(key, entry);
-      }
-      if (entry instanceof com.google.api.BackendRule) {
-        entry = ((com.google.api.BackendRule) entry).toBuilder();
-        builderMap.put(key, entry);
-      }
-      return (com.google.api.BackendRule.Builder) entry;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.api.BackendRule)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.api.BackendRule();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "authentication_",
+                "authenticationCase_",
+                "selector_",
+                "address_",
+                "deadline_",
+                "minDeadline_",
+                "operationDeadline_",
+                "pathTranslation_",
+                "protocol_",
+                "overridesByRequestProtocol_",
+                OverridesByRequestProtocolDefaultEntryHolder.defaultEntry,
+              };
+          java.lang.String info =
+              "\u0000\n\u0001\u0000\u0001\n\n\u0001\u0000\u0000\u0001\u0208\u0002\u0208\u0003\u0000"
+                  + "\u0004\u0000\u0005\u0000\u0006\f\u0007\u023b\u0000\b:\u0000\t\u0208\n2";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.api.BackendRule> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.api.BackendRule.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.api.BackendRule>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.api.BackendRule)
   private static final com.google.api.BackendRule DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.api.BackendRule();
+    BackendRule defaultInstance = new BackendRule();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        BackendRule.class, defaultInstance);
   }
 
   public static com.google.api.BackendRule getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<BackendRule> PARSER =
-      new com.google.protobuf.AbstractParser<BackendRule>() {
-        @java.lang.Override
-        public BackendRule parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<BackendRule> PARSER;
 
   public static com.google.protobuf.Parser<BackendRule> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<BackendRule> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.api.BackendRule getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

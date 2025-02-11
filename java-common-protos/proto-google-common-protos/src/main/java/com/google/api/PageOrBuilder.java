@@ -22,7 +22,7 @@ package com.google.api;
 public interface PageOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.Page)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -137,26 +137,4 @@ public interface PageOrBuilder
    * <code>repeated .google.api.Page subpages = 3;</code>
    */
   int getSubpagesCount();
-  /**
-   *
-   *
-   * <pre>
-   * Subpages of this page. The order of subpages specified here will be
-   * honored in the generated docset.
-   * </pre>
-   *
-   * <code>repeated .google.api.Page subpages = 3;</code>
-   */
-  java.util.List<? extends com.google.api.PageOrBuilder> getSubpagesOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * Subpages of this page. The order of subpages specified here will be
-   * honored in the generated docset.
-   * </pre>
-   *
-   * <code>repeated .google.api.Page subpages = 3;</code>
-   */
-  com.google.api.PageOrBuilder getSubpagesOrBuilder(int index);
 }

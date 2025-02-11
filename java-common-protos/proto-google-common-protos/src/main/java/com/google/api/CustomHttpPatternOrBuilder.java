@@ -22,7 +22,7 @@ package com.google.api;
 public interface CustomHttpPatternOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.CustomHttpPattern)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *

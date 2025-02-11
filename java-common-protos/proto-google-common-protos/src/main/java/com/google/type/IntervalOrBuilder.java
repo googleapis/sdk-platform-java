@@ -22,7 +22,7 @@ package com.google.type;
 public interface IntervalOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.type.Interval)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -54,19 +54,6 @@ public interface IntervalOrBuilder
    * @return The startTime.
    */
   com.google.protobuf.Timestamp getStartTime();
-  /**
-   *
-   *
-   * <pre>
-   * Optional. Inclusive start of the interval.
-   *
-   * If specified, a Timestamp matching this interval will have to be the same
-   * or after the start.
-   * </pre>
-   *
-   * <code>.google.protobuf.Timestamp start_time = 1;</code>
-   */
-  com.google.protobuf.TimestampOrBuilder getStartTimeOrBuilder();
 
   /**
    *
@@ -98,17 +85,4 @@ public interface IntervalOrBuilder
    * @return The endTime.
    */
   com.google.protobuf.Timestamp getEndTime();
-  /**
-   *
-   *
-   * <pre>
-   * Optional. Exclusive end of the interval.
-   *
-   * If specified, a Timestamp matching this interval will have to be before the
-   * end.
-   * </pre>
-   *
-   * <code>.google.protobuf.Timestamp end_time = 2;</code>
-   */
-  com.google.protobuf.TimestampOrBuilder getEndTimeOrBuilder();
 }

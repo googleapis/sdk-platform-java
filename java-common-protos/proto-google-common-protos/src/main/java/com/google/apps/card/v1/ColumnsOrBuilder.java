@@ -22,7 +22,7 @@ package com.google.apps.card.v1;
 public interface ColumnsOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.apps.card.v1.Columns)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -54,25 +54,4 @@ public interface ColumnsOrBuilder
    * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
    */
   int getColumnItemsCount();
-  /**
-   *
-   *
-   * <pre>
-   * An array of columns. You can include up to 2 columns in a card or dialog.
-   * </pre>
-   *
-   * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
-   */
-  java.util.List<? extends com.google.apps.card.v1.Columns.ColumnOrBuilder>
-      getColumnItemsOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * An array of columns. You can include up to 2 columns in a card or dialog.
-   * </pre>
-   *
-   * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
-   */
-  com.google.apps.card.v1.Columns.ColumnOrBuilder getColumnItemsOrBuilder(int index);
 }

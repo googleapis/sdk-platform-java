@@ -28,47 +28,18 @@ package com.google.cloud.audit;
  *
  * Protobuf type {@code google.cloud.audit.ResourceLocation}
  */
-public final class ResourceLocation extends com.google.protobuf.GeneratedMessageV3
+public final class ResourceLocation
+    extends com.google.protobuf.GeneratedMessageLite<ResourceLocation, ResourceLocation.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.cloud.audit.ResourceLocation)
     ResourceLocationOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use ResourceLocation.newBuilder() to construct.
-  private ResourceLocation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private ResourceLocation() {
-    currentLocations_ = com.google.protobuf.LazyStringArrayList.emptyList();
-    originalLocations_ = com.google.protobuf.LazyStringArrayList.emptyList();
-  }
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new ResourceLocation();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.cloud.audit.AuditLogProto
-        .internal_static_google_cloud_audit_ResourceLocation_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.cloud.audit.AuditLogProto
-        .internal_static_google_cloud_audit_ResourceLocation_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.cloud.audit.ResourceLocation.class,
-            com.google.cloud.audit.ResourceLocation.Builder.class);
+    currentLocations_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+    originalLocations_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
   }
 
   public static final int CURRENT_LOCATIONS_FIELD_NUMBER = 1;
-
-  @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList currentLocations_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.Internal.ProtobufList<java.lang.String> currentLocations_;
   /**
    *
    *
@@ -87,7 +58,8 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
    *
    * @return A list containing the currentLocations.
    */
-  public com.google.protobuf.ProtocolStringList getCurrentLocationsList() {
+  @java.lang.Override
+  public java.util.List<java.lang.String> getCurrentLocationsList() {
     return currentLocations_;
   }
   /**
@@ -108,6 +80,7 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
    *
    * @return The count of currentLocations.
    */
+  @java.lang.Override
   public int getCurrentLocationsCount() {
     return currentLocations_.size();
   }
@@ -130,6 +103,7 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
    * @param index The index of the element to return.
    * @return The currentLocations at the given index.
    */
+  @java.lang.Override
   public java.lang.String getCurrentLocations(int index) {
     return currentLocations_.get(index);
   }
@@ -152,15 +126,131 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
    * @param index The index of the value to return.
    * @return The bytes of the currentLocations at the given index.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getCurrentLocationsBytes(int index) {
-    return currentLocations_.getByteString(index);
+    return com.google.protobuf.ByteString.copyFromUtf8(currentLocations_.get(index));
+  }
+
+  private void ensureCurrentLocationsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = currentLocations_;
+    if (!tmp.isModifiable()) {
+      currentLocations_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The locations of a resource after the execution of the operation.
+   * Requests to create or delete a location based resource must populate
+   * the 'current_locations' field and not the 'original_locations' field.
+   * For example:
+   *
+   *     "europe-west1-a"
+   *     "us-east1"
+   *     "nam3"
+   * </pre>
+   *
+   * <code>repeated string current_locations = 1;</code>
+   *
+   * @param index The index to set the value at.
+   * @param value The currentLocations to set.
+   */
+  private void setCurrentLocations(int index, java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureCurrentLocationsIsMutable();
+    currentLocations_.set(index, value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The locations of a resource after the execution of the operation.
+   * Requests to create or delete a location based resource must populate
+   * the 'current_locations' field and not the 'original_locations' field.
+   * For example:
+   *
+   *     "europe-west1-a"
+   *     "us-east1"
+   *     "nam3"
+   * </pre>
+   *
+   * <code>repeated string current_locations = 1;</code>
+   *
+   * @param value The currentLocations to add.
+   */
+  private void addCurrentLocations(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureCurrentLocationsIsMutable();
+    currentLocations_.add(value);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The locations of a resource after the execution of the operation.
+   * Requests to create or delete a location based resource must populate
+   * the 'current_locations' field and not the 'original_locations' field.
+   * For example:
+   *
+   *     "europe-west1-a"
+   *     "us-east1"
+   *     "nam3"
+   * </pre>
+   *
+   * <code>repeated string current_locations = 1;</code>
+   *
+   * @param values The currentLocations to add.
+   */
+  private void addAllCurrentLocations(java.lang.Iterable<java.lang.String> values) {
+    ensureCurrentLocationsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, currentLocations_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The locations of a resource after the execution of the operation.
+   * Requests to create or delete a location based resource must populate
+   * the 'current_locations' field and not the 'original_locations' field.
+   * For example:
+   *
+   *     "europe-west1-a"
+   *     "us-east1"
+   *     "nam3"
+   * </pre>
+   *
+   * <code>repeated string current_locations = 1;</code>
+   */
+  private void clearCurrentLocations() {
+    currentLocations_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The locations of a resource after the execution of the operation.
+   * Requests to create or delete a location based resource must populate
+   * the 'current_locations' field and not the 'original_locations' field.
+   * For example:
+   *
+   *     "europe-west1-a"
+   *     "us-east1"
+   *     "nam3"
+   * </pre>
+   *
+   * <code>repeated string current_locations = 1;</code>
+   *
+   * @param value The bytes of the currentLocations to add.
+   */
+  private void addCurrentLocationsBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    ensureCurrentLocationsIsMutable();
+    currentLocations_.add(value.toStringUtf8());
   }
 
   public static final int ORIGINAL_LOCATIONS_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList originalLocations_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.Internal.ProtobufList<java.lang.String> originalLocations_;
   /**
    *
    *
@@ -179,7 +269,8 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
    *
    * @return A list containing the originalLocations.
    */
-  public com.google.protobuf.ProtocolStringList getOriginalLocationsList() {
+  @java.lang.Override
+  public java.util.List<java.lang.String> getOriginalLocationsList() {
     return originalLocations_;
   }
   /**
@@ -200,6 +291,7 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
    *
    * @return The count of originalLocations.
    */
+  @java.lang.Override
   public int getOriginalLocationsCount() {
     return originalLocations_.size();
   }
@@ -222,6 +314,7 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
    * @param index The index of the element to return.
    * @return The originalLocations at the given index.
    */
+  @java.lang.Override
   public java.lang.String getOriginalLocations(int index) {
     return originalLocations_.get(index);
   }
@@ -244,191 +337,211 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
    * @param index The index of the value to return.
    * @return The bytes of the originalLocations at the given index.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getOriginalLocationsBytes(int index) {
-    return originalLocations_.getByteString(index);
+    return com.google.protobuf.ByteString.copyFromUtf8(originalLocations_.get(index));
   }
 
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  private void ensureOriginalLocationsIsMutable() {
+    com.google.protobuf.Internal.ProtobufList<java.lang.String> tmp = originalLocations_;
+    if (!tmp.isModifiable()) {
+      originalLocations_ = com.google.protobuf.GeneratedMessageLite.mutableCopy(tmp);
+    }
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    for (int i = 0; i < currentLocations_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, currentLocations_.getRaw(i));
-    }
-    for (int i = 0; i < originalLocations_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, originalLocations_.getRaw(i));
-    }
-    getUnknownFields().writeTo(output);
+  /**
+   *
+   *
+   * <pre>
+   * The locations of a resource prior to the execution of the operation.
+   * Requests that mutate the resource's location must populate both the
+   * 'original_locations' as well as the 'current_locations' fields.
+   * For example:
+   *
+   *     "europe-west1-a"
+   *     "us-east1"
+   *     "nam3"
+   * </pre>
+   *
+   * <code>repeated string original_locations = 2;</code>
+   *
+   * @param index The index to set the value at.
+   * @param value The originalLocations to set.
+   */
+  private void setOriginalLocations(int index, java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureOriginalLocationsIsMutable();
+    originalLocations_.set(index, value);
   }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    {
-      int dataSize = 0;
-      for (int i = 0; i < currentLocations_.size(); i++) {
-        dataSize += computeStringSizeNoTag(currentLocations_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getCurrentLocationsList().size();
-    }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < originalLocations_.size(); i++) {
-        dataSize += computeStringSizeNoTag(originalLocations_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getOriginalLocationsList().size();
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
+  /**
+   *
+   *
+   * <pre>
+   * The locations of a resource prior to the execution of the operation.
+   * Requests that mutate the resource's location must populate both the
+   * 'original_locations' as well as the 'current_locations' fields.
+   * For example:
+   *
+   *     "europe-west1-a"
+   *     "us-east1"
+   *     "nam3"
+   * </pre>
+   *
+   * <code>repeated string original_locations = 2;</code>
+   *
+   * @param value The originalLocations to add.
+   */
+  private void addOriginalLocations(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+    ensureOriginalLocationsIsMutable();
+    originalLocations_.add(value);
   }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.cloud.audit.ResourceLocation)) {
-      return super.equals(obj);
-    }
-    com.google.cloud.audit.ResourceLocation other = (com.google.cloud.audit.ResourceLocation) obj;
-
-    if (!getCurrentLocationsList().equals(other.getCurrentLocationsList())) return false;
-    if (!getOriginalLocationsList().equals(other.getOriginalLocationsList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * The locations of a resource prior to the execution of the operation.
+   * Requests that mutate the resource's location must populate both the
+   * 'original_locations' as well as the 'current_locations' fields.
+   * For example:
+   *
+   *     "europe-west1-a"
+   *     "us-east1"
+   *     "nam3"
+   * </pre>
+   *
+   * <code>repeated string original_locations = 2;</code>
+   *
+   * @param values The originalLocations to add.
+   */
+  private void addAllOriginalLocations(java.lang.Iterable<java.lang.String> values) {
+    ensureOriginalLocationsIsMutable();
+    com.google.protobuf.AbstractMessageLite.addAll(values, originalLocations_);
   }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (getCurrentLocationsCount() > 0) {
-      hash = (37 * hash) + CURRENT_LOCATIONS_FIELD_NUMBER;
-      hash = (53 * hash) + getCurrentLocationsList().hashCode();
-    }
-    if (getOriginalLocationsCount() > 0) {
-      hash = (37 * hash) + ORIGINAL_LOCATIONS_FIELD_NUMBER;
-      hash = (53 * hash) + getOriginalLocationsList().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * The locations of a resource prior to the execution of the operation.
+   * Requests that mutate the resource's location must populate both the
+   * 'original_locations' as well as the 'current_locations' fields.
+   * For example:
+   *
+   *     "europe-west1-a"
+   *     "us-east1"
+   *     "nam3"
+   * </pre>
+   *
+   * <code>repeated string original_locations = 2;</code>
+   */
+  private void clearOriginalLocations() {
+    originalLocations_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The locations of a resource prior to the execution of the operation.
+   * Requests that mutate the resource's location must populate both the
+   * 'original_locations' as well as the 'current_locations' fields.
+   * For example:
+   *
+   *     "europe-west1-a"
+   *     "us-east1"
+   *     "nam3"
+   * </pre>
+   *
+   * <code>repeated string original_locations = 2;</code>
+   *
+   * @param value The bytes of the originalLocations to add.
+   */
+  private void addOriginalLocationsBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    ensureOriginalLocationsIsMutable();
+    originalLocations_.add(value.toStringUtf8());
   }
 
   public static com.google.cloud.audit.ResourceLocation parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.ResourceLocation parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.ResourceLocation parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.ResourceLocation parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.ResourceLocation parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.cloud.audit.ResourceLocation parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.cloud.audit.ResourceLocation parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.ResourceLocation parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.cloud.audit.ResourceLocation parseDelimitedFrom(
       java.io.InputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.ResourceLocation parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.cloud.audit.ResourceLocation parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.cloud.audit.ResourceLocation parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.cloud.audit.ResourceLocation prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -438,217 +551,17 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
    *
    * Protobuf type {@code google.cloud.audit.ResourceLocation}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.cloud.audit.ResourceLocation, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.cloud.audit.ResourceLocation)
       com.google.cloud.audit.ResourceLocationOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_ResourceLocation_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_ResourceLocation_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.cloud.audit.ResourceLocation.class,
-              com.google.cloud.audit.ResourceLocation.Builder.class);
-    }
-
     // Construct using com.google.cloud.audit.ResourceLocation.newBuilder()
-    private Builder() {}
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
+    private Builder() {
+      super(DEFAULT_INSTANCE);
     }
 
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      currentLocations_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      originalLocations_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.cloud.audit.AuditLogProto
-          .internal_static_google_cloud_audit_ResourceLocation_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.ResourceLocation getDefaultInstanceForType() {
-      return com.google.cloud.audit.ResourceLocation.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.ResourceLocation build() {
-      com.google.cloud.audit.ResourceLocation result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.cloud.audit.ResourceLocation buildPartial() {
-      com.google.cloud.audit.ResourceLocation result =
-          new com.google.cloud.audit.ResourceLocation(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.cloud.audit.ResourceLocation result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        currentLocations_.makeImmutable();
-        result.currentLocations_ = currentLocations_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        originalLocations_.makeImmutable();
-        result.originalLocations_ = originalLocations_;
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.cloud.audit.ResourceLocation) {
-        return mergeFrom((com.google.cloud.audit.ResourceLocation) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.cloud.audit.ResourceLocation other) {
-      if (other == com.google.cloud.audit.ResourceLocation.getDefaultInstance()) return this;
-      if (!other.currentLocations_.isEmpty()) {
-        if (currentLocations_.isEmpty()) {
-          currentLocations_ = other.currentLocations_;
-          bitField0_ |= 0x00000001;
-        } else {
-          ensureCurrentLocationsIsMutable();
-          currentLocations_.addAll(other.currentLocations_);
-        }
-        onChanged();
-      }
-      if (!other.originalLocations_.isEmpty()) {
-        if (originalLocations_.isEmpty()) {
-          originalLocations_ = other.originalLocations_;
-          bitField0_ |= 0x00000002;
-        } else {
-          ensureOriginalLocationsIsMutable();
-          originalLocations_.addAll(other.originalLocations_);
-        }
-        onChanged();
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureCurrentLocationsIsMutable();
-                currentLocations_.add(s);
-                break;
-              } // case 10
-            case 18:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureOriginalLocationsIsMutable();
-                originalLocations_.add(s);
-                break;
-              } // case 18
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private com.google.protobuf.LazyStringArrayList currentLocations_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
-
-    private void ensureCurrentLocationsIsMutable() {
-      if (!currentLocations_.isModifiable()) {
-        currentLocations_ = new com.google.protobuf.LazyStringArrayList(currentLocations_);
-      }
-      bitField0_ |= 0x00000001;
-    }
     /**
      *
      *
@@ -667,9 +580,9 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      *
      * @return A list containing the currentLocations.
      */
-    public com.google.protobuf.ProtocolStringList getCurrentLocationsList() {
-      currentLocations_.makeImmutable();
-      return currentLocations_;
+    @java.lang.Override
+    public java.util.List<java.lang.String> getCurrentLocationsList() {
+      return java.util.Collections.unmodifiableList(instance.getCurrentLocationsList());
     }
     /**
      *
@@ -689,8 +602,9 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      *
      * @return The count of currentLocations.
      */
+    @java.lang.Override
     public int getCurrentLocationsCount() {
-      return currentLocations_.size();
+      return instance.getCurrentLocationsCount();
     }
     /**
      *
@@ -711,8 +625,9 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * @param index The index of the element to return.
      * @return The currentLocations at the given index.
      */
+    @java.lang.Override
     public java.lang.String getCurrentLocations(int index) {
-      return currentLocations_.get(index);
+      return instance.getCurrentLocations(index);
     }
     /**
      *
@@ -733,8 +648,9 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * @param index The index of the value to return.
      * @return The bytes of the currentLocations at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getCurrentLocationsBytes(int index) {
-      return currentLocations_.getByteString(index);
+      return instance.getCurrentLocationsBytes(index);
     }
     /**
      *
@@ -757,13 +673,8 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder setCurrentLocations(int index, java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureCurrentLocationsIsMutable();
-      currentLocations_.set(index, value);
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setCurrentLocations(index, value);
       return this;
     }
     /**
@@ -786,13 +697,8 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder addCurrentLocations(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureCurrentLocationsIsMutable();
-      currentLocations_.add(value);
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.addCurrentLocations(value);
       return this;
     }
     /**
@@ -815,10 +721,8 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder addAllCurrentLocations(java.lang.Iterable<java.lang.String> values) {
-      ensureCurrentLocationsIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, currentLocations_);
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.addAllCurrentLocations(values);
       return this;
     }
     /**
@@ -840,10 +744,8 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearCurrentLocations() {
-      currentLocations_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      ;
-      onChanged();
+      copyOnWrite();
+      instance.clearCurrentLocations();
       return this;
     }
     /**
@@ -866,26 +768,11 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder addCurrentLocationsBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      ensureCurrentLocationsIsMutable();
-      currentLocations_.add(value);
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.addCurrentLocationsBytes(value);
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList originalLocations_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
-
-    private void ensureOriginalLocationsIsMutable() {
-      if (!originalLocations_.isModifiable()) {
-        originalLocations_ = new com.google.protobuf.LazyStringArrayList(originalLocations_);
-      }
-      bitField0_ |= 0x00000002;
-    }
     /**
      *
      *
@@ -904,9 +791,9 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      *
      * @return A list containing the originalLocations.
      */
-    public com.google.protobuf.ProtocolStringList getOriginalLocationsList() {
-      originalLocations_.makeImmutable();
-      return originalLocations_;
+    @java.lang.Override
+    public java.util.List<java.lang.String> getOriginalLocationsList() {
+      return java.util.Collections.unmodifiableList(instance.getOriginalLocationsList());
     }
     /**
      *
@@ -926,8 +813,9 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      *
      * @return The count of originalLocations.
      */
+    @java.lang.Override
     public int getOriginalLocationsCount() {
-      return originalLocations_.size();
+      return instance.getOriginalLocationsCount();
     }
     /**
      *
@@ -948,8 +836,9 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * @param index The index of the element to return.
      * @return The originalLocations at the given index.
      */
+    @java.lang.Override
     public java.lang.String getOriginalLocations(int index) {
-      return originalLocations_.get(index);
+      return instance.getOriginalLocations(index);
     }
     /**
      *
@@ -970,8 +859,9 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * @param index The index of the value to return.
      * @return The bytes of the originalLocations at the given index.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getOriginalLocationsBytes(int index) {
-      return originalLocations_.getByteString(index);
+      return instance.getOriginalLocationsBytes(index);
     }
     /**
      *
@@ -994,13 +884,8 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder setOriginalLocations(int index, java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureOriginalLocationsIsMutable();
-      originalLocations_.set(index, value);
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setOriginalLocations(index, value);
       return this;
     }
     /**
@@ -1023,13 +908,8 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder addOriginalLocations(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureOriginalLocationsIsMutable();
-      originalLocations_.add(value);
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.addOriginalLocations(value);
       return this;
     }
     /**
@@ -1052,10 +932,8 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder addAllOriginalLocations(java.lang.Iterable<java.lang.String> values) {
-      ensureOriginalLocationsIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, originalLocations_);
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.addAllOriginalLocations(values);
       return this;
     }
     /**
@@ -1077,10 +955,8 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearOriginalLocations() {
-      originalLocations_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      ;
-      onChanged();
+      copyOnWrite();
+      instance.clearOriginalLocations();
       return this;
     }
     /**
@@ -1103,75 +979,92 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder addOriginalLocationsBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      ensureOriginalLocationsIsMutable();
-      originalLocations_.add(value);
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.addOriginalLocationsBytes(value);
       return this;
     }
 
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
-    }
-
     // @@protoc_insertion_point(builder_scope:google.cloud.audit.ResourceLocation)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.cloud.audit.ResourceLocation();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "currentLocations_", "originalLocations_",
+              };
+          java.lang.String info =
+              "\u0000\u0002\u0000\u0000\u0001\u0002\u0002\u0000\u0002\u0000\u0001\u021a\u0002\u021a"
+                  + "";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.cloud.audit.ResourceLocation> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.cloud.audit.ResourceLocation.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.cloud.audit.ResourceLocation>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.cloud.audit.ResourceLocation)
   private static final com.google.cloud.audit.ResourceLocation DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.cloud.audit.ResourceLocation();
+    ResourceLocation defaultInstance = new ResourceLocation();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        ResourceLocation.class, defaultInstance);
   }
 
   public static com.google.cloud.audit.ResourceLocation getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<ResourceLocation> PARSER =
-      new com.google.protobuf.AbstractParser<ResourceLocation>() {
-        @java.lang.Override
-        public ResourceLocation parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<ResourceLocation> PARSER;
 
   public static com.google.protobuf.Parser<ResourceLocation> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<ResourceLocation> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.cloud.audit.ResourceLocation getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

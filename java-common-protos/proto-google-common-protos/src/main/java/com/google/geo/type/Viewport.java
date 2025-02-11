@@ -62,36 +62,12 @@ package com.google.geo.type;
  *
  * Protobuf type {@code google.geo.type.Viewport}
  */
-public final class Viewport extends com.google.protobuf.GeneratedMessageV3
+public final class Viewport
+    extends com.google.protobuf.GeneratedMessageLite<Viewport, Viewport.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.geo.type.Viewport)
     ViewportOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use Viewport.newBuilder() to construct.
-  private Viewport(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private Viewport() {}
-
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new Viewport();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.geo.type.ViewportProto.internal_static_google_geo_type_Viewport_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.geo.type.ViewportProto
-        .internal_static_google_geo_type_Viewport_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.geo.type.Viewport.class, com.google.geo.type.Viewport.Builder.class);
-  }
 
   private int bitField0_;
   public static final int LOW_FIELD_NUMBER = 1;
@@ -104,8 +80,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.type.LatLng low = 1;</code>
-   *
-   * @return Whether the low field is set.
    */
   @java.lang.Override
   public boolean hasLow() {
@@ -119,8 +93,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.type.LatLng low = 1;</code>
-   *
-   * @return The low.
    */
   @java.lang.Override
   public com.google.type.LatLng getLow() {
@@ -135,9 +107,42 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.type.LatLng low = 1;</code>
    */
-  @java.lang.Override
-  public com.google.type.LatLngOrBuilder getLowOrBuilder() {
-    return low_ == null ? com.google.type.LatLng.getDefaultInstance() : low_;
+  private void setLow(com.google.type.LatLng value) {
+    value.getClass();
+    low_ = value;
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. The low point of the viewport.
+   * </pre>
+   *
+   * <code>.google.type.LatLng low = 1;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeLow(com.google.type.LatLng value) {
+    value.getClass();
+    if (low_ != null && low_ != com.google.type.LatLng.getDefaultInstance()) {
+      low_ = com.google.type.LatLng.newBuilder(low_).mergeFrom(value).buildPartial();
+    } else {
+      low_ = value;
+    }
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Required. The low point of the viewport.
+   * </pre>
+   *
+   * <code>.google.type.LatLng low = 1;</code>
+   */
+  private void clearLow() {
+    low_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static final int HIGH_FIELD_NUMBER = 2;
@@ -150,8 +155,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.type.LatLng high = 2;</code>
-   *
-   * @return Whether the high field is set.
    */
   @java.lang.Override
   public boolean hasHigh() {
@@ -165,8 +168,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.type.LatLng high = 2;</code>
-   *
-   * @return The high.
    */
   @java.lang.Override
   public com.google.type.LatLng getHigh() {
@@ -181,187 +182,125 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.type.LatLng high = 2;</code>
    */
-  @java.lang.Override
-  public com.google.type.LatLngOrBuilder getHighOrBuilder() {
-    return high_ == null ? com.google.type.LatLng.getDefaultInstance() : high_;
+  private void setHigh(com.google.type.LatLng value) {
+    value.getClass();
+    high_ = value;
+    bitField0_ |= 0x00000002;
   }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
+  /**
+   *
+   *
+   * <pre>
+   * Required. The high point of the viewport.
+   * </pre>
+   *
+   * <code>.google.type.LatLng high = 2;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeHigh(com.google.type.LatLng value) {
+    value.getClass();
+    if (high_ != null && high_ != com.google.type.LatLng.getDefaultInstance()) {
+      high_ = com.google.type.LatLng.newBuilder(high_).mergeFrom(value).buildPartial();
+    } else {
+      high_ = value;
+    }
+    bitField0_ |= 0x00000002;
   }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(1, getLow());
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      output.writeMessage(2, getHigh());
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getLow());
-    }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, getHigh());
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.geo.type.Viewport)) {
-      return super.equals(obj);
-    }
-    com.google.geo.type.Viewport other = (com.google.geo.type.Viewport) obj;
-
-    if (hasLow() != other.hasLow()) return false;
-    if (hasLow()) {
-      if (!getLow().equals(other.getLow())) return false;
-    }
-    if (hasHigh() != other.hasHigh()) return false;
-    if (hasHigh()) {
-      if (!getHigh().equals(other.getHigh())) return false;
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (hasLow()) {
-      hash = (37 * hash) + LOW_FIELD_NUMBER;
-      hash = (53 * hash) + getLow().hashCode();
-    }
-    if (hasHigh()) {
-      hash = (37 * hash) + HIGH_FIELD_NUMBER;
-      hash = (53 * hash) + getHigh().hashCode();
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
+  /**
+   *
+   *
+   * <pre>
+   * Required. The high point of the viewport.
+   * </pre>
+   *
+   * <code>.google.type.LatLng high = 2;</code>
+   */
+  private void clearHigh() {
+    high_ = null;
+    bitField0_ = (bitField0_ & ~0x00000002);
   }
 
   public static com.google.geo.type.Viewport parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.geo.type.Viewport parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.geo.type.Viewport parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.geo.type.Viewport parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.geo.type.Viewport parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.geo.type.Viewport parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.geo.type.Viewport parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.geo.type.Viewport parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.geo.type.Viewport parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.geo.type.Viewport parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.geo.type.Viewport parseFrom(com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.geo.type.Viewport parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.geo.type.Viewport prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -405,212 +344,17 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.geo.type.Viewport}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.geo.type.Viewport, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.geo.type.Viewport)
       com.google.geo.type.ViewportOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.geo.type.ViewportProto.internal_static_google_geo_type_Viewport_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.geo.type.ViewportProto
-          .internal_static_google_geo_type_Viewport_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.geo.type.Viewport.class, com.google.geo.type.Viewport.Builder.class);
-    }
-
     // Construct using com.google.geo.type.Viewport.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+      super(DEFAULT_INSTANCE);
     }
 
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getLowFieldBuilder();
-        getHighFieldBuilder();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      low_ = null;
-      if (lowBuilder_ != null) {
-        lowBuilder_.dispose();
-        lowBuilder_ = null;
-      }
-      high_ = null;
-      if (highBuilder_ != null) {
-        highBuilder_.dispose();
-        highBuilder_ = null;
-      }
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.geo.type.ViewportProto.internal_static_google_geo_type_Viewport_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.geo.type.Viewport getDefaultInstanceForType() {
-      return com.google.geo.type.Viewport.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.geo.type.Viewport build() {
-      com.google.geo.type.Viewport result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.geo.type.Viewport buildPartial() {
-      com.google.geo.type.Viewport result = new com.google.geo.type.Viewport(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.geo.type.Viewport result) {
-      int from_bitField0_ = bitField0_;
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.low_ = lowBuilder_ == null ? low_ : lowBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.high_ = highBuilder_ == null ? high_ : highBuilder_.build();
-        to_bitField0_ |= 0x00000002;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.geo.type.Viewport) {
-        return mergeFrom((com.google.geo.type.Viewport) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.geo.type.Viewport other) {
-      if (other == com.google.geo.type.Viewport.getDefaultInstance()) return this;
-      if (other.hasLow()) {
-        mergeLow(other.getLow());
-      }
-      if (other.hasHigh()) {
-        mergeHigh(other.getHigh());
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                input.readMessage(getLowFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                input.readMessage(getHighFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int bitField0_;
-
-    private com.google.type.LatLng low_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.type.LatLng, com.google.type.LatLng.Builder, com.google.type.LatLngOrBuilder>
-        lowBuilder_;
     /**
      *
      *
@@ -619,11 +363,10 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.type.LatLng low = 1;</code>
-     *
-     * @return Whether the low field is set.
      */
+    @java.lang.Override
     public boolean hasLow() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return instance.hasLow();
     }
     /**
      *
@@ -633,15 +376,10 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.type.LatLng low = 1;</code>
-     *
-     * @return The low.
      */
+    @java.lang.Override
     public com.google.type.LatLng getLow() {
-      if (lowBuilder_ == null) {
-        return low_ == null ? com.google.type.LatLng.getDefaultInstance() : low_;
-      } else {
-        return lowBuilder_.getMessage();
-      }
+      return instance.getLow();
     }
     /**
      *
@@ -653,16 +391,8 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.LatLng low = 1;</code>
      */
     public Builder setLow(com.google.type.LatLng value) {
-      if (lowBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        low_ = value;
-      } else {
-        lowBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setLow(value);
       return this;
     }
     /**
@@ -675,13 +405,8 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.LatLng low = 1;</code>
      */
     public Builder setLow(com.google.type.LatLng.Builder builderForValue) {
-      if (lowBuilder_ == null) {
-        low_ = builderForValue.build();
-      } else {
-        lowBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setLow(builderForValue.build());
       return this;
     }
     /**
@@ -694,21 +419,8 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.LatLng low = 1;</code>
      */
     public Builder mergeLow(com.google.type.LatLng value) {
-      if (lowBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)
-            && low_ != null
-            && low_ != com.google.type.LatLng.getDefaultInstance()) {
-          getLowBuilder().mergeFrom(value);
-        } else {
-          low_ = value;
-        }
-      } else {
-        lowBuilder_.mergeFrom(value);
-      }
-      if (low_ != null) {
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeLow(value);
       return this;
     }
     /**
@@ -721,72 +433,11 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.LatLng low = 1;</code>
      */
     public Builder clearLow() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      low_ = null;
-      if (lowBuilder_ != null) {
-        lowBuilder_.dispose();
-        lowBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearLow();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Required. The low point of the viewport.
-     * </pre>
-     *
-     * <code>.google.type.LatLng low = 1;</code>
-     */
-    public com.google.type.LatLng.Builder getLowBuilder() {
-      bitField0_ |= 0x00000001;
-      onChanged();
-      return getLowFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Required. The low point of the viewport.
-     * </pre>
-     *
-     * <code>.google.type.LatLng low = 1;</code>
-     */
-    public com.google.type.LatLngOrBuilder getLowOrBuilder() {
-      if (lowBuilder_ != null) {
-        return lowBuilder_.getMessageOrBuilder();
-      } else {
-        return low_ == null ? com.google.type.LatLng.getDefaultInstance() : low_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Required. The low point of the viewport.
-     * </pre>
-     *
-     * <code>.google.type.LatLng low = 1;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.type.LatLng, com.google.type.LatLng.Builder, com.google.type.LatLngOrBuilder>
-        getLowFieldBuilder() {
-      if (lowBuilder_ == null) {
-        lowBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.type.LatLng,
-                com.google.type.LatLng.Builder,
-                com.google.type.LatLngOrBuilder>(getLow(), getParentForChildren(), isClean());
-        low_ = null;
-      }
-      return lowBuilder_;
-    }
 
-    private com.google.type.LatLng high_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.type.LatLng, com.google.type.LatLng.Builder, com.google.type.LatLngOrBuilder>
-        highBuilder_;
     /**
      *
      *
@@ -795,11 +446,10 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.type.LatLng high = 2;</code>
-     *
-     * @return Whether the high field is set.
      */
+    @java.lang.Override
     public boolean hasHigh() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return instance.hasHigh();
     }
     /**
      *
@@ -809,15 +459,10 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.type.LatLng high = 2;</code>
-     *
-     * @return The high.
      */
+    @java.lang.Override
     public com.google.type.LatLng getHigh() {
-      if (highBuilder_ == null) {
-        return high_ == null ? com.google.type.LatLng.getDefaultInstance() : high_;
-      } else {
-        return highBuilder_.getMessage();
-      }
+      return instance.getHigh();
     }
     /**
      *
@@ -829,16 +474,8 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.LatLng high = 2;</code>
      */
     public Builder setHigh(com.google.type.LatLng value) {
-      if (highBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        high_ = value;
-      } else {
-        highBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setHigh(value);
       return this;
     }
     /**
@@ -851,13 +488,8 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.LatLng high = 2;</code>
      */
     public Builder setHigh(com.google.type.LatLng.Builder builderForValue) {
-      if (highBuilder_ == null) {
-        high_ = builderForValue.build();
-      } else {
-        highBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setHigh(builderForValue.build());
       return this;
     }
     /**
@@ -870,21 +502,8 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.LatLng high = 2;</code>
      */
     public Builder mergeHigh(com.google.type.LatLng value) {
-      if (highBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)
-            && high_ != null
-            && high_ != com.google.type.LatLng.getDefaultInstance()) {
-          getHighBuilder().mergeFrom(value);
-        } else {
-          high_ = value;
-        }
-      } else {
-        highBuilder_.mergeFrom(value);
-      }
-      if (high_ != null) {
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeHigh(value);
       return this;
     }
     /**
@@ -897,126 +516,91 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.LatLng high = 2;</code>
      */
     public Builder clearHigh() {
-      bitField0_ = (bitField0_ & ~0x00000002);
-      high_ = null;
-      if (highBuilder_ != null) {
-        highBuilder_.dispose();
-        highBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearHigh();
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Required. The high point of the viewport.
-     * </pre>
-     *
-     * <code>.google.type.LatLng high = 2;</code>
-     */
-    public com.google.type.LatLng.Builder getHighBuilder() {
-      bitField0_ |= 0x00000002;
-      onChanged();
-      return getHighFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Required. The high point of the viewport.
-     * </pre>
-     *
-     * <code>.google.type.LatLng high = 2;</code>
-     */
-    public com.google.type.LatLngOrBuilder getHighOrBuilder() {
-      if (highBuilder_ != null) {
-        return highBuilder_.getMessageOrBuilder();
-      } else {
-        return high_ == null ? com.google.type.LatLng.getDefaultInstance() : high_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Required. The high point of the viewport.
-     * </pre>
-     *
-     * <code>.google.type.LatLng high = 2;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.type.LatLng, com.google.type.LatLng.Builder, com.google.type.LatLngOrBuilder>
-        getHighFieldBuilder() {
-      if (highBuilder_ == null) {
-        highBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.type.LatLng,
-                com.google.type.LatLng.Builder,
-                com.google.type.LatLngOrBuilder>(getHigh(), getParentForChildren(), isClean());
-        high_ = null;
-      }
-      return highBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.geo.type.Viewport)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.geo.type.Viewport();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "bitField0_", "low_", "high_",
+              };
+          java.lang.String info =
+              "\u0000\u0002\u0000\u0001\u0001\u0002\u0002\u0000\u0000\u0000\u0001\u1009\u0000\u0002"
+                  + "\u1009\u0001";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.geo.type.Viewport> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.geo.type.Viewport.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.geo.type.Viewport>(DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.geo.type.Viewport)
   private static final com.google.geo.type.Viewport DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.geo.type.Viewport();
+    Viewport defaultInstance = new Viewport();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        Viewport.class, defaultInstance);
   }
 
   public static com.google.geo.type.Viewport getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Viewport> PARSER =
-      new com.google.protobuf.AbstractParser<Viewport>() {
-        @java.lang.Override
-        public Viewport parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<Viewport> PARSER;
 
   public static com.google.protobuf.Parser<Viewport> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<Viewport> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.geo.type.Viewport getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

@@ -22,7 +22,7 @@ package com.google.api;
 public interface PythonSettingsOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.PythonSettings)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -48,16 +48,6 @@ public interface PythonSettingsOrBuilder
    * @return The common.
    */
   com.google.api.CommonLanguageSettings getCommon();
-  /**
-   *
-   *
-   * <pre>
-   * Some settings.
-   * </pre>
-   *
-   * <code>.google.api.CommonLanguageSettings common = 1;</code>
-   */
-  com.google.api.CommonLanguageSettingsOrBuilder getCommonOrBuilder();
 
   /**
    *
@@ -83,14 +73,4 @@ public interface PythonSettingsOrBuilder
    * @return The experimentalFeatures.
    */
   com.google.api.PythonSettings.ExperimentalFeatures getExperimentalFeatures();
-  /**
-   *
-   *
-   * <pre>
-   * Experimental features to be included during client library generation.
-   * </pre>
-   *
-   * <code>.google.api.PythonSettings.ExperimentalFeatures experimental_features = 2;</code>
-   */
-  com.google.api.PythonSettings.ExperimentalFeaturesOrBuilder getExperimentalFeaturesOrBuilder();
 }

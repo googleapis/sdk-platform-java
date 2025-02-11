@@ -22,7 +22,7 @@ package com.google.api;
 public interface BackendOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.api.Backend)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -60,28 +60,4 @@ public interface BackendOrBuilder
    * <code>repeated .google.api.BackendRule rules = 1;</code>
    */
   int getRulesCount();
-  /**
-   *
-   *
-   * <pre>
-   * A list of API backend rules that apply to individual API methods.
-   *
-   * **NOTE:** All service configuration rules follow "last one wins" order.
-   * </pre>
-   *
-   * <code>repeated .google.api.BackendRule rules = 1;</code>
-   */
-  java.util.List<? extends com.google.api.BackendRuleOrBuilder> getRulesOrBuilderList();
-  /**
-   *
-   *
-   * <pre>
-   * A list of API backend rules that apply to individual API methods.
-   *
-   * **NOTE:** All service configuration rules follow "last one wins" order.
-   * </pre>
-   *
-   * <code>repeated .google.api.BackendRule rules = 1;</code>
-   */
-  com.google.api.BackendRuleOrBuilder getRulesOrBuilder(int index);
 }

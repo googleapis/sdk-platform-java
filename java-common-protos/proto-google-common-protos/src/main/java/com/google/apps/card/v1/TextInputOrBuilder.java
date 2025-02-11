@@ -22,7 +22,7 @@ package com.google.apps.card.v1;
 public interface TextInputOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.apps.card.v1.TextInput)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -215,21 +215,6 @@ public interface TextInputOrBuilder
    * @return The onChangeAction.
    */
   com.google.apps.card.v1.Action getOnChangeAction();
-  /**
-   *
-   *
-   * <pre>
-   * What to do when a change occurs in the text input field. For example, a
-   * user adding to the field or deleting text.
-   *
-   * Examples of actions to take include running a custom function or opening
-   * a [dialog](https://developers.google.com/workspace/chat/dialogs)
-   * in Google Chat.
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.Action on_change_action = 6;</code>
-   */
-  com.google.apps.card.v1.ActionOrBuilder getOnChangeActionOrBuilder();
 
   /**
    *
@@ -289,33 +274,6 @@ public interface TextInputOrBuilder
    * @return The initialSuggestions.
    */
   com.google.apps.card.v1.Suggestions getInitialSuggestions();
-  /**
-   *
-   *
-   * <pre>
-   * Suggested values that users can enter. These values appear when users click
-   * inside the text input field. As users type, the suggested values
-   * dynamically filter to match what the users have typed.
-   *
-   * For example, a text input field for programming language might suggest
-   * Java, JavaScript, Python, and C++. When users start typing `Jav`, the list
-   * of suggestions filters to show just `Java` and `JavaScript`.
-   *
-   * Suggested values help guide users to enter values that your app can make
-   * sense of. When referring to JavaScript, some users might enter `javascript`
-   * and others `java script`. Suggesting `JavaScript` can standardize how users
-   * interact with your app.
-   *
-   * When specified, `TextInput.type` is always `SINGLE_LINE`, even if it's set
-   * to `MULTIPLE_LINE`.
-   *
-   * [Google Workspace
-   * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
-   */
-  com.google.apps.card.v1.SuggestionsOrBuilder getInitialSuggestionsOrBuilder();
 
   /**
    *
@@ -361,26 +319,6 @@ public interface TextInputOrBuilder
    * @return The autoCompleteAction.
    */
   com.google.apps.card.v1.Action getAutoCompleteAction();
-  /**
-   *
-   *
-   * <pre>
-   * Optional. Specify what action to take when the text input field provides
-   * suggestions to users who interact with it.
-   *
-   * If unspecified, the suggestions are set by `initialSuggestions` and
-   * are processed by the client.
-   *
-   * If specified, the app takes the action specified here, such as running
-   * a custom function.
-   *
-   * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
-   * </pre>
-   *
-   * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
-   */
-  com.google.apps.card.v1.ActionOrBuilder getAutoCompleteActionOrBuilder();
 
   /**
    *

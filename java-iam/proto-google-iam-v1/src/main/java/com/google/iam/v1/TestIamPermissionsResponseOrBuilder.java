@@ -22,7 +22,7 @@ package com.google.iam.v1;
 public interface TestIamPermissionsResponseOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.iam.v1.TestIamPermissionsResponse)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -74,8 +74,8 @@ public interface TestIamPermissionsResponseOrBuilder
    *
    * <code>repeated string permissions = 1;</code>
    *
-   * @param index The index of the value to return.
-   * @return The bytes of the permissions at the given index.
+   * @param index The index of the element to return.
+   * @return The permissions at the given index.
    */
   com.google.protobuf.ByteString getPermissionsBytes(int index);
 }

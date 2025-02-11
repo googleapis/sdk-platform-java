@@ -22,7 +22,7 @@ package com.google.cloud.audit;
 public interface ServiceAccountDelegationInfoOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.cloud.audit.ServiceAccountDelegationInfo)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -87,19 +87,6 @@ public interface ServiceAccountDelegationInfoOrBuilder
    * @return The firstPartyPrincipal.
    */
   com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal getFirstPartyPrincipal();
-  /**
-   *
-   *
-   * <pre>
-   * First party (Google) identity as the real authority.
-   * </pre>
-   *
-   * <code>
-   * .google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal first_party_principal = 1;
-   * </code>
-   */
-  com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipalOrBuilder
-      getFirstPartyPrincipalOrBuilder();
 
   /**
    *
@@ -129,19 +116,6 @@ public interface ServiceAccountDelegationInfoOrBuilder
    * @return The thirdPartyPrincipal.
    */
   com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal getThirdPartyPrincipal();
-  /**
-   *
-   *
-   * <pre>
-   * Third party identity as the real authority.
-   * </pre>
-   *
-   * <code>
-   * .google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal third_party_principal = 2;
-   * </code>
-   */
-  com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipalOrBuilder
-      getThirdPartyPrincipalOrBuilder();
 
-  com.google.cloud.audit.ServiceAccountDelegationInfo.AuthorityCase getAuthorityCase();
+  public com.google.cloud.audit.ServiceAccountDelegationInfo.AuthorityCase getAuthorityCase();
 }

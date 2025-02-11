@@ -29,50 +29,20 @@ package com.google.longrunning;
  *
  * Protobuf type {@code google.longrunning.Operation}
  */
-public final class Operation extends com.google.protobuf.GeneratedMessageV3
+public final class Operation
+    extends com.google.protobuf.GeneratedMessageLite<Operation, Operation.Builder>
     implements
     // @@protoc_insertion_point(message_implements:google.longrunning.Operation)
     OperationOrBuilder {
-  private static final long serialVersionUID = 0L;
-  // Use Operation.newBuilder() to construct.
-  private Operation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-
   private Operation() {
     name_ = "";
   }
 
-  @java.lang.Override
-  @SuppressWarnings({"unused"})
-  protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new Operation();
-  }
-
-  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-    return com.google.longrunning.OperationsProto
-        .internal_static_google_longrunning_Operation_descriptor;
-  }
-
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return com.google.longrunning.OperationsProto
-        .internal_static_google_longrunning_Operation_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            com.google.longrunning.Operation.class, com.google.longrunning.Operation.Builder.class);
-  }
-
   private int bitField0_;
   private int resultCase_ = 0;
-
-  @SuppressWarnings("serial")
   private java.lang.Object result_;
 
-  public enum ResultCase
-      implements
-          com.google.protobuf.Internal.EnumLite,
-          com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+  public enum ResultCase {
     ERROR(4),
     RESPONSE(5),
     RESULT_NOT_SET(0);
@@ -81,11 +51,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
     private ResultCase(int value) {
       this.value = value;
     }
-    /**
-     * @param value The number of the enum to look for.
-     * @return The enum associated with the given number.
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
+    /** @deprecated Use {@link #forNumber(int)} instead. */
     @java.lang.Deprecated
     public static ResultCase valueOf(int value) {
       return forNumber(value);
@@ -109,14 +75,18 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
     }
   };
 
+  @java.lang.Override
   public ResultCase getResultCase() {
     return ResultCase.forNumber(resultCase_);
   }
 
-  public static final int NAME_FIELD_NUMBER = 1;
+  private void clearResult() {
+    resultCase_ = 0;
+    result_ = null;
+  }
 
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object name_ = "";
+  public static final int NAME_FIELD_NUMBER = 1;
+  private java.lang.String name_;
   /**
    *
    *
@@ -132,15 +102,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public java.lang.String getName() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      name_ = s;
-      return s;
-    }
+    return name_;
   }
   /**
    *
@@ -157,15 +119,57 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      name_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+    return com.google.protobuf.ByteString.copyFromUtf8(name_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The server-assigned name, which is only unique within the same service that
+   * originally returns it. If you use the default HTTP mapping, the
+   * `name` should be a resource name ending with `operations/{unique_id}`.
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The name to set.
+   */
+  private void setName(java.lang.String value) {
+    java.lang.Class<?> valueClass = value.getClass();
+
+    name_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The server-assigned name, which is only unique within the same service that
+   * originally returns it. If you use the default HTTP mapping, the
+   * `name` should be a resource name ending with `operations/{unique_id}`.
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   */
+  private void clearName() {
+
+    name_ = getDefaultInstance().getName();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The server-assigned name, which is only unique within the same service that
+   * originally returns it. If you use the default HTTP mapping, the
+   * `name` should be a resource name ending with `operations/{unique_id}`.
+   * </pre>
+   *
+   * <code>string name = 1;</code>
+   *
+   * @param value The bytes for name to set.
+   */
+  private void setNameBytes(com.google.protobuf.ByteString value) {
+    checkByteStringIsUtf8(value);
+    name_ = value.toStringUtf8();
   }
 
   public static final int METADATA_FIELD_NUMBER = 2;
@@ -181,8 +185,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.protobuf.Any metadata = 2;</code>
-   *
-   * @return Whether the metadata field is set.
    */
   @java.lang.Override
   public boolean hasMetadata() {
@@ -199,8 +201,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.protobuf.Any metadata = 2;</code>
-   *
-   * @return The metadata.
    */
   @java.lang.Override
   public com.google.protobuf.Any getMetadata() {
@@ -218,13 +218,52 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.protobuf.Any metadata = 2;</code>
    */
-  @java.lang.Override
-  public com.google.protobuf.AnyOrBuilder getMetadataOrBuilder() {
-    return metadata_ == null ? com.google.protobuf.Any.getDefaultInstance() : metadata_;
+  private void setMetadata(com.google.protobuf.Any value) {
+    value.getClass();
+    metadata_ = value;
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Service-specific metadata associated with the operation.  It typically
+   * contains progress information and common metadata such as create time.
+   * Some services might not provide such metadata.  Any method that returns a
+   * long-running operation should document the metadata type, if any.
+   * </pre>
+   *
+   * <code>.google.protobuf.Any metadata = 2;</code>
+   */
+  @java.lang.SuppressWarnings({"ReferenceEquality"})
+  private void mergeMetadata(com.google.protobuf.Any value) {
+    value.getClass();
+    if (metadata_ != null && metadata_ != com.google.protobuf.Any.getDefaultInstance()) {
+      metadata_ = com.google.protobuf.Any.newBuilder(metadata_).mergeFrom(value).buildPartial();
+    } else {
+      metadata_ = value;
+    }
+    bitField0_ |= 0x00000001;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Service-specific metadata associated with the operation.  It typically
+   * contains progress information and common metadata such as create time.
+   * Some services might not provide such metadata.  Any method that returns a
+   * long-running operation should document the metadata type, if any.
+   * </pre>
+   *
+   * <code>.google.protobuf.Any metadata = 2;</code>
+   */
+  private void clearMetadata() {
+    metadata_ = null;
+    bitField0_ = (bitField0_ & ~0x00000001);
   }
 
   public static final int DONE_FIELD_NUMBER = 3;
-  private boolean done_ = false;
+  private boolean done_;
   /**
    *
    *
@@ -242,6 +281,38 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
   public boolean getDone() {
     return done_;
   }
+  /**
+   *
+   *
+   * <pre>
+   * If the value is `false`, it means the operation is still in progress.
+   * If `true`, the operation is completed, and either `error` or `response` is
+   * available.
+   * </pre>
+   *
+   * <code>bool done = 3;</code>
+   *
+   * @param value The done to set.
+   */
+  private void setDone(boolean value) {
+
+    done_ = value;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * If the value is `false`, it means the operation is still in progress.
+   * If `true`, the operation is completed, and either `error` or `response` is
+   * available.
+   * </pre>
+   *
+   * <code>bool done = 3;</code>
+   */
+  private void clearDone() {
+
+    done_ = false;
+  }
 
   public static final int ERROR_FIELD_NUMBER = 4;
   /**
@@ -252,8 +323,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.rpc.Status error = 4;</code>
-   *
-   * @return Whether the error field is set.
    */
   @java.lang.Override
   public boolean hasError() {
@@ -267,8 +336,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.rpc.Status error = 4;</code>
-   *
-   * @return The error.
    */
   @java.lang.Override
   public com.google.rpc.Status getError() {
@@ -286,12 +353,46 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.rpc.Status error = 4;</code>
    */
-  @java.lang.Override
-  public com.google.rpc.StatusOrBuilder getErrorOrBuilder() {
-    if (resultCase_ == 4) {
-      return (com.google.rpc.Status) result_;
+  private void setError(com.google.rpc.Status value) {
+    value.getClass();
+    result_ = value;
+    resultCase_ = 4;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The error result of the operation in case of failure or cancellation.
+   * </pre>
+   *
+   * <code>.google.rpc.Status error = 4;</code>
+   */
+  private void mergeError(com.google.rpc.Status value) {
+    value.getClass();
+    if (resultCase_ == 4 && result_ != com.google.rpc.Status.getDefaultInstance()) {
+      result_ =
+          com.google.rpc.Status.newBuilder((com.google.rpc.Status) result_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      result_ = value;
     }
-    return com.google.rpc.Status.getDefaultInstance();
+    resultCase_ = 4;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The error result of the operation in case of failure or cancellation.
+   * </pre>
+   *
+   * <code>.google.rpc.Status error = 4;</code>
+   */
+  private void clearError() {
+    if (resultCase_ == 4) {
+      resultCase_ = 0;
+      result_ = null;
+    }
   }
 
   public static final int RESPONSE_FIELD_NUMBER = 5;
@@ -310,8 +411,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.protobuf.Any response = 5;</code>
-   *
-   * @return Whether the response field is set.
    */
   @java.lang.Override
   public boolean hasResponse() {
@@ -332,8 +431,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    * </pre>
    *
    * <code>.google.protobuf.Any response = 5;</code>
-   *
-   * @return The response.
    */
   @java.lang.Override
   public com.google.protobuf.Any getResponse() {
@@ -358,233 +455,143 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.protobuf.Any response = 5;</code>
    */
-  @java.lang.Override
-  public com.google.protobuf.AnyOrBuilder getResponseOrBuilder() {
+  private void setResponse(com.google.protobuf.Any value) {
+    value.getClass();
+    result_ = value;
+    resultCase_ = 5;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The normal, successful response of the operation.  If the original
+   * method returns no data on success, such as `Delete`, the response is
+   * `google.protobuf.Empty`.  If the original method is standard
+   * `Get`/`Create`/`Update`, the response should be the resource.  For other
+   * methods, the response should have the type `XxxResponse`, where `Xxx`
+   * is the original method name.  For example, if the original method name
+   * is `TakeSnapshot()`, the inferred response type is
+   * `TakeSnapshotResponse`.
+   * </pre>
+   *
+   * <code>.google.protobuf.Any response = 5;</code>
+   */
+  private void mergeResponse(com.google.protobuf.Any value) {
+    value.getClass();
+    if (resultCase_ == 5 && result_ != com.google.protobuf.Any.getDefaultInstance()) {
+      result_ =
+          com.google.protobuf.Any.newBuilder((com.google.protobuf.Any) result_)
+              .mergeFrom(value)
+              .buildPartial();
+    } else {
+      result_ = value;
+    }
+    resultCase_ = 5;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The normal, successful response of the operation.  If the original
+   * method returns no data on success, such as `Delete`, the response is
+   * `google.protobuf.Empty`.  If the original method is standard
+   * `Get`/`Create`/`Update`, the response should be the resource.  For other
+   * methods, the response should have the type `XxxResponse`, where `Xxx`
+   * is the original method name.  For example, if the original method name
+   * is `TakeSnapshot()`, the inferred response type is
+   * `TakeSnapshotResponse`.
+   * </pre>
+   *
+   * <code>.google.protobuf.Any response = 5;</code>
+   */
+  private void clearResponse() {
     if (resultCase_ == 5) {
-      return (com.google.protobuf.Any) result_;
+      resultCase_ = 0;
+      result_ = null;
     }
-    return com.google.protobuf.Any.getDefaultInstance();
-  }
-
-  private byte memoizedIsInitialized = -1;
-
-  @java.lang.Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
-  }
-
-  @java.lang.Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(2, getMetadata());
-    }
-    if (done_ != false) {
-      output.writeBool(3, done_);
-    }
-    if (resultCase_ == 4) {
-      output.writeMessage(4, (com.google.rpc.Status) result_);
-    }
-    if (resultCase_ == 5) {
-      output.writeMessage(5, (com.google.protobuf.Any) result_);
-    }
-    getUnknownFields().writeTo(output);
-  }
-
-  @java.lang.Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
-    }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, getMetadata());
-    }
-    if (done_ != false) {
-      size += com.google.protobuf.CodedOutputStream.computeBoolSize(3, done_);
-    }
-    if (resultCase_ == 4) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(
-              4, (com.google.rpc.Status) result_);
-    }
-    if (resultCase_ == 5) {
-      size +=
-          com.google.protobuf.CodedOutputStream.computeMessageSize(
-              5, (com.google.protobuf.Any) result_);
-    }
-    size += getUnknownFields().getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof com.google.longrunning.Operation)) {
-      return super.equals(obj);
-    }
-    com.google.longrunning.Operation other = (com.google.longrunning.Operation) obj;
-
-    if (!getName().equals(other.getName())) return false;
-    if (hasMetadata() != other.hasMetadata()) return false;
-    if (hasMetadata()) {
-      if (!getMetadata().equals(other.getMetadata())) return false;
-    }
-    if (getDone() != other.getDone()) return false;
-    if (!getResultCase().equals(other.getResultCase())) return false;
-    switch (resultCase_) {
-      case 4:
-        if (!getError().equals(other.getError())) return false;
-        break;
-      case 5:
-        if (!getResponse().equals(other.getResponse())) return false;
-        break;
-      case 0:
-      default:
-    }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-    return true;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getName().hashCode();
-    if (hasMetadata()) {
-      hash = (37 * hash) + METADATA_FIELD_NUMBER;
-      hash = (53 * hash) + getMetadata().hashCode();
-    }
-    hash = (37 * hash) + DONE_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getDone());
-    switch (resultCase_) {
-      case 4:
-        hash = (37 * hash) + ERROR_FIELD_NUMBER;
-        hash = (53 * hash) + getError().hashCode();
-        break;
-      case 5:
-        hash = (37 * hash) + RESPONSE_FIELD_NUMBER;
-        hash = (53 * hash) + getResponse().hashCode();
-        break;
-      case 0:
-      default:
-    }
-    hash = (29 * hash) + getUnknownFields().hashCode();
-    memoizedHashCode = hash;
-    return hash;
   }
 
   public static com.google.longrunning.Operation parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.longrunning.Operation parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.longrunning.Operation parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.longrunning.Operation parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.longrunning.Operation parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, data);
   }
 
   public static com.google.longrunning.Operation parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, data, extensionRegistry);
   }
 
   public static com.google.longrunning.Operation parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.longrunning.Operation parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.longrunning.Operation parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.longrunning.Operation parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-        PARSER, input, extensionRegistry);
+    return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static com.google.longrunning.Operation parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(DEFAULT_INSTANCE, input);
   }
 
   public static com.google.longrunning.Operation parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-        PARSER, input, extensionRegistry);
-  }
-
-  @java.lang.Override
-  public Builder newBuilderForType() {
-    return newBuilder();
+    return com.google.protobuf.GeneratedMessageLite.parseFrom(
+        DEFAULT_INSTANCE, input, extensionRegistry);
   }
 
   public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+    return (Builder) DEFAULT_INSTANCE.createBuilder();
   }
 
   public static Builder newBuilder(com.google.longrunning.Operation prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    return DEFAULT_INSTANCE.createBuilder(prototype);
   }
 
-  @java.lang.Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
   /**
    *
    *
@@ -595,283 +602,28 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    *
    * Protobuf type {@code google.longrunning.Operation}
    */
-  public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
+  public static final class Builder
+      extends com.google.protobuf.GeneratedMessageLite.Builder<
+          com.google.longrunning.Operation, Builder>
       implements
       // @@protoc_insertion_point(builder_implements:google.longrunning.Operation)
       com.google.longrunning.OperationOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return com.google.longrunning.OperationsProto
-          .internal_static_google_longrunning_Operation_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.google.longrunning.OperationsProto
-          .internal_static_google_longrunning_Operation_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.google.longrunning.Operation.class,
-              com.google.longrunning.Operation.Builder.class);
-    }
-
     // Construct using com.google.longrunning.Operation.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
-    }
-
-    private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getMetadataFieldBuilder();
-      }
+      super(DEFAULT_INSTANCE);
     }
 
     @java.lang.Override
-    public Builder clear() {
-      super.clear();
-      bitField0_ = 0;
-      name_ = "";
-      metadata_ = null;
-      if (metadataBuilder_ != null) {
-        metadataBuilder_.dispose();
-        metadataBuilder_ = null;
-      }
-      done_ = false;
-      if (errorBuilder_ != null) {
-        errorBuilder_.clear();
-      }
-      if (responseBuilder_ != null) {
-        responseBuilder_.clear();
-      }
-      resultCase_ = 0;
-      result_ = null;
-      return this;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.google.longrunning.OperationsProto
-          .internal_static_google_longrunning_Operation_descriptor;
-    }
-
-    @java.lang.Override
-    public com.google.longrunning.Operation getDefaultInstanceForType() {
-      return com.google.longrunning.Operation.getDefaultInstance();
-    }
-
-    @java.lang.Override
-    public com.google.longrunning.Operation build() {
-      com.google.longrunning.Operation result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @java.lang.Override
-    public com.google.longrunning.Operation buildPartial() {
-      com.google.longrunning.Operation result = new com.google.longrunning.Operation(this);
-      if (bitField0_ != 0) {
-        buildPartial0(result);
-      }
-      buildPartialOneofs(result);
-      onBuilt();
-      return result;
-    }
-
-    private void buildPartial0(com.google.longrunning.Operation result) {
-      int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.name_ = name_;
-      }
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.metadata_ = metadataBuilder_ == null ? metadata_ : metadataBuilder_.build();
-        to_bitField0_ |= 0x00000001;
-      }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.done_ = done_;
-      }
-      result.bitField0_ |= to_bitField0_;
-    }
-
-    private void buildPartialOneofs(com.google.longrunning.Operation result) {
-      result.resultCase_ = resultCase_;
-      result.result_ = this.result_;
-      if (resultCase_ == 4 && errorBuilder_ != null) {
-        result.result_ = errorBuilder_.build();
-      }
-      if (resultCase_ == 5 && responseBuilder_ != null) {
-        result.result_ = responseBuilder_.build();
-      }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.longrunning.Operation) {
-        return mergeFrom((com.google.longrunning.Operation) other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(com.google.longrunning.Operation other) {
-      if (other == com.google.longrunning.Operation.getDefaultInstance()) return this;
-      if (!other.getName().isEmpty()) {
-        name_ = other.name_;
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      if (other.hasMetadata()) {
-        mergeMetadata(other.getMetadata());
-      }
-      if (other.getDone() != false) {
-        setDone(other.getDone());
-      }
-      switch (other.getResultCase()) {
-        case ERROR:
-          {
-            mergeError(other.getError());
-            break;
-          }
-        case RESPONSE:
-          {
-            mergeResponse(other.getResponse());
-            break;
-          }
-        case RESULT_NOT_SET:
-          {
-            break;
-          }
-      }
-      this.mergeUnknownFields(other.getUnknownFields());
-      onChanged();
-      return this;
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @java.lang.Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                name_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                input.readMessage(getMetadataFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 24:
-              {
-                done_ = input.readBool();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 24
-            case 34:
-              {
-                input.readMessage(getErrorFieldBuilder().getBuilder(), extensionRegistry);
-                resultCase_ = 4;
-                break;
-              } // case 34
-            case 42:
-              {
-                input.readMessage(getResponseFieldBuilder().getBuilder(), extensionRegistry);
-                resultCase_ = 5;
-                break;
-              } // case 42
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.unwrapIOException();
-      } finally {
-        onChanged();
-      } // finally
-      return this;
-    }
-
-    private int resultCase_ = 0;
-    private java.lang.Object result_;
-
     public ResultCase getResultCase() {
-      return ResultCase.forNumber(resultCase_);
+      return instance.getResultCase();
     }
 
     public Builder clearResult() {
-      resultCase_ = 0;
-      result_ = null;
-      onChanged();
+      copyOnWrite();
+      instance.clearResult();
       return this;
     }
 
-    private int bitField0_;
-
-    private java.lang.Object name_ = "";
     /**
      *
      *
@@ -885,16 +637,9 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        name_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+      return instance.getName();
     }
     /**
      *
@@ -909,16 +654,9 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getNameBytes() {
-      java.lang.Object ref = name_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        name_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+      return instance.getNameBytes();
     }
     /**
      *
@@ -935,12 +673,8 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setName(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setName(value);
       return this;
     }
     /**
@@ -957,9 +691,8 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearName() {
-      name_ = getDefaultInstance().getName();
-      bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
+      copyOnWrite();
+      instance.clearName();
       return this;
     }
     /**
@@ -977,22 +710,11 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setNameBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      name_ = value;
-      bitField0_ |= 0x00000001;
-      onChanged();
+      copyOnWrite();
+      instance.setNameBytes(value);
       return this;
     }
 
-    private com.google.protobuf.Any metadata_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Any,
-            com.google.protobuf.Any.Builder,
-            com.google.protobuf.AnyOrBuilder>
-        metadataBuilder_;
     /**
      *
      *
@@ -1004,11 +726,10 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.protobuf.Any metadata = 2;</code>
-     *
-     * @return Whether the metadata field is set.
      */
+    @java.lang.Override
     public boolean hasMetadata() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return instance.hasMetadata();
     }
     /**
      *
@@ -1021,15 +742,10 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.protobuf.Any metadata = 2;</code>
-     *
-     * @return The metadata.
      */
+    @java.lang.Override
     public com.google.protobuf.Any getMetadata() {
-      if (metadataBuilder_ == null) {
-        return metadata_ == null ? com.google.protobuf.Any.getDefaultInstance() : metadata_;
-      } else {
-        return metadataBuilder_.getMessage();
-      }
+      return instance.getMetadata();
     }
     /**
      *
@@ -1044,16 +760,8 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Any metadata = 2;</code>
      */
     public Builder setMetadata(com.google.protobuf.Any value) {
-      if (metadataBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        metadata_ = value;
-      } else {
-        metadataBuilder_.setMessage(value);
-      }
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setMetadata(value);
       return this;
     }
     /**
@@ -1069,13 +777,8 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Any metadata = 2;</code>
      */
     public Builder setMetadata(com.google.protobuf.Any.Builder builderForValue) {
-      if (metadataBuilder_ == null) {
-        metadata_ = builderForValue.build();
-      } else {
-        metadataBuilder_.setMessage(builderForValue.build());
-      }
-      bitField0_ |= 0x00000002;
-      onChanged();
+      copyOnWrite();
+      instance.setMetadata(builderForValue.build());
       return this;
     }
     /**
@@ -1091,21 +794,8 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Any metadata = 2;</code>
      */
     public Builder mergeMetadata(com.google.protobuf.Any value) {
-      if (metadataBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)
-            && metadata_ != null
-            && metadata_ != com.google.protobuf.Any.getDefaultInstance()) {
-          getMetadataBuilder().mergeFrom(value);
-        } else {
-          metadata_ = value;
-        }
-      } else {
-        metadataBuilder_.mergeFrom(value);
-      }
-      if (metadata_ != null) {
-        bitField0_ |= 0x00000002;
-        onChanged();
-      }
+      copyOnWrite();
+      instance.mergeMetadata(value);
       return this;
     }
     /**
@@ -1121,80 +811,11 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Any metadata = 2;</code>
      */
     public Builder clearMetadata() {
-      bitField0_ = (bitField0_ & ~0x00000002);
-      metadata_ = null;
-      if (metadataBuilder_ != null) {
-        metadataBuilder_.dispose();
-        metadataBuilder_ = null;
-      }
-      onChanged();
+      copyOnWrite();
+      instance.clearMetadata();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * Service-specific metadata associated with the operation.  It typically
-     * contains progress information and common metadata such as create time.
-     * Some services might not provide such metadata.  Any method that returns a
-     * long-running operation should document the metadata type, if any.
-     * </pre>
-     *
-     * <code>.google.protobuf.Any metadata = 2;</code>
-     */
-    public com.google.protobuf.Any.Builder getMetadataBuilder() {
-      bitField0_ |= 0x00000002;
-      onChanged();
-      return getMetadataFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Service-specific metadata associated with the operation.  It typically
-     * contains progress information and common metadata such as create time.
-     * Some services might not provide such metadata.  Any method that returns a
-     * long-running operation should document the metadata type, if any.
-     * </pre>
-     *
-     * <code>.google.protobuf.Any metadata = 2;</code>
-     */
-    public com.google.protobuf.AnyOrBuilder getMetadataOrBuilder() {
-      if (metadataBuilder_ != null) {
-        return metadataBuilder_.getMessageOrBuilder();
-      } else {
-        return metadata_ == null ? com.google.protobuf.Any.getDefaultInstance() : metadata_;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * Service-specific metadata associated with the operation.  It typically
-     * contains progress information and common metadata such as create time.
-     * Some services might not provide such metadata.  Any method that returns a
-     * long-running operation should document the metadata type, if any.
-     * </pre>
-     *
-     * <code>.google.protobuf.Any metadata = 2;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Any,
-            com.google.protobuf.Any.Builder,
-            com.google.protobuf.AnyOrBuilder>
-        getMetadataFieldBuilder() {
-      if (metadataBuilder_ == null) {
-        metadataBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.protobuf.Any,
-                com.google.protobuf.Any.Builder,
-                com.google.protobuf.AnyOrBuilder>(getMetadata(), getParentForChildren(), isClean());
-        metadata_ = null;
-      }
-      return metadataBuilder_;
-    }
 
-    private boolean done_;
     /**
      *
      *
@@ -1210,7 +831,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public boolean getDone() {
-      return done_;
+      return instance.getDone();
     }
     /**
      *
@@ -1227,10 +848,8 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDone(boolean value) {
-
-      done_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
+      copyOnWrite();
+      instance.setDone(value);
       return this;
     }
     /**
@@ -1247,15 +866,11 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDone() {
-      bitField0_ = (bitField0_ & ~0x00000004);
-      done_ = false;
-      onChanged();
+      copyOnWrite();
+      instance.clearDone();
       return this;
     }
 
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.Status, com.google.rpc.Status.Builder, com.google.rpc.StatusOrBuilder>
-        errorBuilder_;
     /**
      *
      *
@@ -1264,12 +879,10 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.rpc.Status error = 4;</code>
-     *
-     * @return Whether the error field is set.
      */
     @java.lang.Override
     public boolean hasError() {
-      return resultCase_ == 4;
+      return instance.hasError();
     }
     /**
      *
@@ -1279,22 +892,10 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.rpc.Status error = 4;</code>
-     *
-     * @return The error.
      */
     @java.lang.Override
     public com.google.rpc.Status getError() {
-      if (errorBuilder_ == null) {
-        if (resultCase_ == 4) {
-          return (com.google.rpc.Status) result_;
-        }
-        return com.google.rpc.Status.getDefaultInstance();
-      } else {
-        if (resultCase_ == 4) {
-          return errorBuilder_.getMessage();
-        }
-        return com.google.rpc.Status.getDefaultInstance();
-      }
+      return instance.getError();
     }
     /**
      *
@@ -1306,16 +907,8 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.rpc.Status error = 4;</code>
      */
     public Builder setError(com.google.rpc.Status value) {
-      if (errorBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        result_ = value;
-        onChanged();
-      } else {
-        errorBuilder_.setMessage(value);
-      }
-      resultCase_ = 4;
+      copyOnWrite();
+      instance.setError(value);
       return this;
     }
     /**
@@ -1328,13 +921,8 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.rpc.Status error = 4;</code>
      */
     public Builder setError(com.google.rpc.Status.Builder builderForValue) {
-      if (errorBuilder_ == null) {
-        result_ = builderForValue.build();
-        onChanged();
-      } else {
-        errorBuilder_.setMessage(builderForValue.build());
-      }
-      resultCase_ = 4;
+      copyOnWrite();
+      instance.setError(builderForValue.build());
       return this;
     }
     /**
@@ -1347,24 +935,8 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.rpc.Status error = 4;</code>
      */
     public Builder mergeError(com.google.rpc.Status value) {
-      if (errorBuilder_ == null) {
-        if (resultCase_ == 4 && result_ != com.google.rpc.Status.getDefaultInstance()) {
-          result_ =
-              com.google.rpc.Status.newBuilder((com.google.rpc.Status) result_)
-                  .mergeFrom(value)
-                  .buildPartial();
-        } else {
-          result_ = value;
-        }
-        onChanged();
-      } else {
-        if (resultCase_ == 4) {
-          errorBuilder_.mergeFrom(value);
-        } else {
-          errorBuilder_.setMessage(value);
-        }
-      }
-      resultCase_ = 4;
+      copyOnWrite();
+      instance.mergeError(value);
       return this;
     }
     /**
@@ -1377,87 +949,11 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.rpc.Status error = 4;</code>
      */
     public Builder clearError() {
-      if (errorBuilder_ == null) {
-        if (resultCase_ == 4) {
-          resultCase_ = 0;
-          result_ = null;
-          onChanged();
-        }
-      } else {
-        if (resultCase_ == 4) {
-          resultCase_ = 0;
-          result_ = null;
-        }
-        errorBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearError();
       return this;
     }
-    /**
-     *
-     *
-     * <pre>
-     * The error result of the operation in case of failure or cancellation.
-     * </pre>
-     *
-     * <code>.google.rpc.Status error = 4;</code>
-     */
-    public com.google.rpc.Status.Builder getErrorBuilder() {
-      return getErrorFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The error result of the operation in case of failure or cancellation.
-     * </pre>
-     *
-     * <code>.google.rpc.Status error = 4;</code>
-     */
-    @java.lang.Override
-    public com.google.rpc.StatusOrBuilder getErrorOrBuilder() {
-      if ((resultCase_ == 4) && (errorBuilder_ != null)) {
-        return errorBuilder_.getMessageOrBuilder();
-      } else {
-        if (resultCase_ == 4) {
-          return (com.google.rpc.Status) result_;
-        }
-        return com.google.rpc.Status.getDefaultInstance();
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The error result of the operation in case of failure or cancellation.
-     * </pre>
-     *
-     * <code>.google.rpc.Status error = 4;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.rpc.Status, com.google.rpc.Status.Builder, com.google.rpc.StatusOrBuilder>
-        getErrorFieldBuilder() {
-      if (errorBuilder_ == null) {
-        if (!(resultCase_ == 4)) {
-          result_ = com.google.rpc.Status.getDefaultInstance();
-        }
-        errorBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.rpc.Status,
-                com.google.rpc.Status.Builder,
-                com.google.rpc.StatusOrBuilder>(
-                (com.google.rpc.Status) result_, getParentForChildren(), isClean());
-        result_ = null;
-      }
-      resultCase_ = 4;
-      onChanged();
-      return errorBuilder_;
-    }
 
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Any,
-            com.google.protobuf.Any.Builder,
-            com.google.protobuf.AnyOrBuilder>
-        responseBuilder_;
     /**
      *
      *
@@ -1473,12 +969,10 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.protobuf.Any response = 5;</code>
-     *
-     * @return Whether the response field is set.
      */
     @java.lang.Override
     public boolean hasResponse() {
-      return resultCase_ == 5;
+      return instance.hasResponse();
     }
     /**
      *
@@ -1495,22 +989,10 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * </pre>
      *
      * <code>.google.protobuf.Any response = 5;</code>
-     *
-     * @return The response.
      */
     @java.lang.Override
     public com.google.protobuf.Any getResponse() {
-      if (responseBuilder_ == null) {
-        if (resultCase_ == 5) {
-          return (com.google.protobuf.Any) result_;
-        }
-        return com.google.protobuf.Any.getDefaultInstance();
-      } else {
-        if (resultCase_ == 5) {
-          return responseBuilder_.getMessage();
-        }
-        return com.google.protobuf.Any.getDefaultInstance();
-      }
+      return instance.getResponse();
     }
     /**
      *
@@ -1529,16 +1011,8 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Any response = 5;</code>
      */
     public Builder setResponse(com.google.protobuf.Any value) {
-      if (responseBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        result_ = value;
-        onChanged();
-      } else {
-        responseBuilder_.setMessage(value);
-      }
-      resultCase_ = 5;
+      copyOnWrite();
+      instance.setResponse(value);
       return this;
     }
     /**
@@ -1558,13 +1032,8 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Any response = 5;</code>
      */
     public Builder setResponse(com.google.protobuf.Any.Builder builderForValue) {
-      if (responseBuilder_ == null) {
-        result_ = builderForValue.build();
-        onChanged();
-      } else {
-        responseBuilder_.setMessage(builderForValue.build());
-      }
-      resultCase_ = 5;
+      copyOnWrite();
+      instance.setResponse(builderForValue.build());
       return this;
     }
     /**
@@ -1584,24 +1053,8 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Any response = 5;</code>
      */
     public Builder mergeResponse(com.google.protobuf.Any value) {
-      if (responseBuilder_ == null) {
-        if (resultCase_ == 5 && result_ != com.google.protobuf.Any.getDefaultInstance()) {
-          result_ =
-              com.google.protobuf.Any.newBuilder((com.google.protobuf.Any) result_)
-                  .mergeFrom(value)
-                  .buildPartial();
-        } else {
-          result_ = value;
-        }
-        onChanged();
-      } else {
-        if (resultCase_ == 5) {
-          responseBuilder_.mergeFrom(value);
-        } else {
-          responseBuilder_.setMessage(value);
-        }
-      }
-      resultCase_ = 5;
+      copyOnWrite();
+      instance.mergeResponse(value);
       return this;
     }
     /**
@@ -1621,163 +1074,99 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.Any response = 5;</code>
      */
     public Builder clearResponse() {
-      if (responseBuilder_ == null) {
-        if (resultCase_ == 5) {
-          resultCase_ = 0;
-          result_ = null;
-          onChanged();
-        }
-      } else {
-        if (resultCase_ == 5) {
-          resultCase_ = 0;
-          result_ = null;
-        }
-        responseBuilder_.clear();
-      }
+      copyOnWrite();
+      instance.clearResponse();
       return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The normal, successful response of the operation.  If the original
-     * method returns no data on success, such as `Delete`, the response is
-     * `google.protobuf.Empty`.  If the original method is standard
-     * `Get`/`Create`/`Update`, the response should be the resource.  For other
-     * methods, the response should have the type `XxxResponse`, where `Xxx`
-     * is the original method name.  For example, if the original method name
-     * is `TakeSnapshot()`, the inferred response type is
-     * `TakeSnapshotResponse`.
-     * </pre>
-     *
-     * <code>.google.protobuf.Any response = 5;</code>
-     */
-    public com.google.protobuf.Any.Builder getResponseBuilder() {
-      return getResponseFieldBuilder().getBuilder();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The normal, successful response of the operation.  If the original
-     * method returns no data on success, such as `Delete`, the response is
-     * `google.protobuf.Empty`.  If the original method is standard
-     * `Get`/`Create`/`Update`, the response should be the resource.  For other
-     * methods, the response should have the type `XxxResponse`, where `Xxx`
-     * is the original method name.  For example, if the original method name
-     * is `TakeSnapshot()`, the inferred response type is
-     * `TakeSnapshotResponse`.
-     * </pre>
-     *
-     * <code>.google.protobuf.Any response = 5;</code>
-     */
-    @java.lang.Override
-    public com.google.protobuf.AnyOrBuilder getResponseOrBuilder() {
-      if ((resultCase_ == 5) && (responseBuilder_ != null)) {
-        return responseBuilder_.getMessageOrBuilder();
-      } else {
-        if (resultCase_ == 5) {
-          return (com.google.protobuf.Any) result_;
-        }
-        return com.google.protobuf.Any.getDefaultInstance();
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The normal, successful response of the operation.  If the original
-     * method returns no data on success, such as `Delete`, the response is
-     * `google.protobuf.Empty`.  If the original method is standard
-     * `Get`/`Create`/`Update`, the response should be the resource.  For other
-     * methods, the response should have the type `XxxResponse`, where `Xxx`
-     * is the original method name.  For example, if the original method name
-     * is `TakeSnapshot()`, the inferred response type is
-     * `TakeSnapshotResponse`.
-     * </pre>
-     *
-     * <code>.google.protobuf.Any response = 5;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Any,
-            com.google.protobuf.Any.Builder,
-            com.google.protobuf.AnyOrBuilder>
-        getResponseFieldBuilder() {
-      if (responseBuilder_ == null) {
-        if (!(resultCase_ == 5)) {
-          result_ = com.google.protobuf.Any.getDefaultInstance();
-        }
-        responseBuilder_ =
-            new com.google.protobuf.SingleFieldBuilderV3<
-                com.google.protobuf.Any,
-                com.google.protobuf.Any.Builder,
-                com.google.protobuf.AnyOrBuilder>(
-                (com.google.protobuf.Any) result_, getParentForChildren(), isClean());
-        result_ = null;
-      }
-      resultCase_ = 5;
-      onChanged();
-      return responseBuilder_;
-    }
-
-    @java.lang.Override
-    public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
-    }
-
-    @java.lang.Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
     }
 
     // @@protoc_insertion_point(builder_scope:google.longrunning.Operation)
+  }
+
+  @java.lang.Override
+  @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+  protected final java.lang.Object dynamicMethod(
+      com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+      java.lang.Object arg0,
+      java.lang.Object arg1) {
+    switch (method) {
+      case NEW_MUTABLE_INSTANCE:
+        {
+          return new com.google.longrunning.Operation();
+        }
+      case NEW_BUILDER:
+        {
+          return new Builder();
+        }
+      case BUILD_MESSAGE_INFO:
+        {
+          java.lang.Object[] objects =
+              new java.lang.Object[] {
+                "result_",
+                "resultCase_",
+                "bitField0_",
+                "name_",
+                "metadata_",
+                "done_",
+                com.google.rpc.Status.class,
+                com.google.protobuf.Any.class,
+              };
+          java.lang.String info =
+              "\u0000\u0005\u0001\u0001\u0001\u0005\u0005\u0000\u0000\u0000\u0001\u0208\u0002\u1009"
+                  + "\u0000\u0003\u0007\u0004<\u0000\u0005<\u0000";
+          return newMessageInfo(DEFAULT_INSTANCE, info, objects);
+        }
+        // fall through
+      case GET_DEFAULT_INSTANCE:
+        {
+          return DEFAULT_INSTANCE;
+        }
+      case GET_PARSER:
+        {
+          com.google.protobuf.Parser<com.google.longrunning.Operation> parser = PARSER;
+          if (parser == null) {
+            synchronized (com.google.longrunning.Operation.class) {
+              parser = PARSER;
+              if (parser == null) {
+                parser =
+                    new DefaultInstanceBasedParser<com.google.longrunning.Operation>(
+                        DEFAULT_INSTANCE);
+                PARSER = parser;
+              }
+            }
+          }
+          return parser;
+        }
+      case GET_MEMOIZED_IS_INITIALIZED:
+        {
+          return (byte) 1;
+        }
+      case SET_MEMOIZED_IS_INITIALIZED:
+        {
+          return null;
+        }
+    }
+    throw new UnsupportedOperationException();
   }
 
   // @@protoc_insertion_point(class_scope:google.longrunning.Operation)
   private static final com.google.longrunning.Operation DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.longrunning.Operation();
+    Operation defaultInstance = new Operation();
+    // New instances are implicitly immutable so no need to make
+    // immutable.
+    DEFAULT_INSTANCE = defaultInstance;
+    com.google.protobuf.GeneratedMessageLite.registerDefaultInstance(
+        Operation.class, defaultInstance);
   }
 
   public static com.google.longrunning.Operation getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Operation> PARSER =
-      new com.google.protobuf.AbstractParser<Operation>() {
-        @java.lang.Override
-        public Operation parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
+  private static volatile com.google.protobuf.Parser<Operation> PARSER;
 
   public static com.google.protobuf.Parser<Operation> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<Operation> getParserForType() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.longrunning.Operation getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
+    return DEFAULT_INSTANCE.getParserForType();
   }
 }

@@ -22,7 +22,7 @@ package com.google.rpc.context;
 public interface AuditContextOrBuilder
     extends
     // @@protoc_insertion_point(interface_extends:google.rpc.context.AuditContext)
-    com.google.protobuf.MessageOrBuilder {
+    com.google.protobuf.MessageLiteOrBuilder {
 
   /**
    *
@@ -67,19 +67,6 @@ public interface AuditContextOrBuilder
    * @return The scrubbedRequest.
    */
   com.google.protobuf.Struct getScrubbedRequest();
-  /**
-   *
-   *
-   * <pre>
-   * An API request message that is scrubbed based on the method annotation.
-   * This field should only be filled if audit_log field is present.
-   * Service Control will use this to assemble a complete log for Cloud Audit
-   * Logs and Google internal audit logs.
-   * </pre>
-   *
-   * <code>.google.protobuf.Struct scrubbed_request = 2;</code>
-   */
-  com.google.protobuf.StructOrBuilder getScrubbedRequestOrBuilder();
 
   /**
    *
@@ -111,19 +98,6 @@ public interface AuditContextOrBuilder
    * @return The scrubbedResponse.
    */
   com.google.protobuf.Struct getScrubbedResponse();
-  /**
-   *
-   *
-   * <pre>
-   * An API response message that is scrubbed based on the method annotation.
-   * This field should only be filled if audit_log field is present.
-   * Service Control will use this to assemble a complete log for Cloud Audit
-   * Logs and Google internal audit logs.
-   * </pre>
-   *
-   * <code>.google.protobuf.Struct scrubbed_response = 3;</code>
-   */
-  com.google.protobuf.StructOrBuilder getScrubbedResponseOrBuilder();
 
   /**
    *
