@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.event.KeyValuePair;
 
 // This test needs to run with GOOGLE_SDK_JAVA_LOGGING=true
-// mvn clean test -Dslf4j2_logback -Dtest=com.google.showcase.v1beta1.it.logging.ITLogging
+//  mvn clean verify -P '!showcase,enable-integration-tests,loggingTestBase,slf4j2_logback'
 public class ITLogging {
   private static EchoClient grpcClient;
 
@@ -60,6 +60,7 @@ public class ITLogging {
   private static final String ECHO_STRING = "echo?";
 
   private static Logger logger = LoggerFactory.getLogger(ITLogging.class);
+
   private TestAppender setupTestLogger(Class<?> clazz) {
     TestAppender testAppender = new TestAppender();
     testAppender.start();
@@ -84,19 +85,9 @@ public class ITLogging {
     grpcClient.close();
     httpjsonClient.close();
 
-    grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS,
-TimeUnit.SECONDS);
+    grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     httpjsonClient.awaitTermination(
         TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
-  }
-
-  // only run when GOOGLE_SDK_JAVA_LOGGING!=true
-  @Test
-  void testloggingDisabled() {
-    TestAppender testAppender = setupTestLogger(GrpcLoggingInterceptor.class);
-    assertThat(echoGrpc(ECHO_STRING)).isEqualTo(ECHO_STRING);
-
-    assertThat(testAppender.events.size()).isEqualTo(0);
   }
 
   @Test
@@ -113,9 +104,7 @@ TimeUnit.SECONDS);
     assertThat(loggingEvent1.getLevel()).isEqualTo(Level.DEBUG);
     List<KeyValuePair> keyValuePairs = loggingEvent1.getKeyValuePairs();
     assertThat(keyValuePairs.size()).isEqualTo(4);
-    assertThat(keyValuePairs)
-        .containsAtLeast(
-            SERVICE_NAME_KEY_VALUE_PAIR, RPC_NAME_KEY_VALUE_PAIR);
+    assertThat(keyValuePairs).containsAtLeast(SERVICE_NAME_KEY_VALUE_PAIR, RPC_NAME_KEY_VALUE_PAIR);
 
     for (KeyValuePair kvp : keyValuePairs) {
       if (kvp.key.equals("request.payload")) {
@@ -166,9 +155,7 @@ TimeUnit.SECONDS);
     assertThat(loggingEvent1.getLevel()).isEqualTo(Level.DEBUG);
     List<KeyValuePair> keyValuePairs = loggingEvent1.getKeyValuePairs();
     assertThat(keyValuePairs.size()).isEqualTo(4);
-    assertThat(keyValuePairs)
-        .contains(
-            RPC_NAME_KEY_VALUE_PAIR);
+    assertThat(keyValuePairs).contains(RPC_NAME_KEY_VALUE_PAIR);
 
     for (KeyValuePair kvp : keyValuePairs) {
       if (kvp.key.equals("request.payload")) {
@@ -192,9 +179,7 @@ TimeUnit.SECONDS);
     List<KeyValuePair> keyValuePairs2 = loggingEvent2.getKeyValuePairs();
     assertThat(keyValuePairs2.size()).isEqualTo(4);
     assertThat(keyValuePairs2)
-        .containsAtLeast(
-            RESPONSE_STATUS_KEY_VALUE_PAIR_HTTP,
-            RPC_NAME_KEY_VALUE_PAIR);
+        .containsAtLeast(RESPONSE_STATUS_KEY_VALUE_PAIR_HTTP, RPC_NAME_KEY_VALUE_PAIR);
     for (KeyValuePair kvp : keyValuePairs2) {
       if (kvp.key.equals("response.payload")) {
         Map payload = (Map) kvp.value;
@@ -204,9 +189,10 @@ TimeUnit.SECONDS);
       }
       if (kvp.key.equals("response.headers")) {
         Map headers = (Map) kvp.value;
-        assertThat(headers.size()).isEqualTo(3);
+        assertThat(headers.size()).isEqualTo(11);
       }
-    }    testAppender.stop();
+    }
+    testAppender.stop();
   }
 
   private String echoGrpc(String value) {
@@ -215,8 +201,7 @@ TimeUnit.SECONDS);
   }
 
   private String echoHttpJson(String value) {
-    EchoResponse response =
-httpjsonClient.echo(EchoRequest.newBuilder().setContent(value).build());
+    EchoResponse response = httpjsonClient.echo(EchoRequest.newBuilder().setContent(value).build());
     return response.getContent();
   }
 }

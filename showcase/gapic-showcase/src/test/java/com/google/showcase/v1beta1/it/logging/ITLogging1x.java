@@ -39,6 +39,8 @@ import org.slf4j.LoggerFactory;
 // import org.slf4j.event.KeyValuePair;
 
 // This test needs to run with GOOGLE_SDK_JAVA_LOGGING=true
+// mvn verify -P
+// '!showcase,enable-integration-tests,loggingTestBase,envVarLoggingTest1x,slf4j1_logback '
 public class ITLogging1x {
   private static EchoClient grpcClient;
 
@@ -54,7 +56,7 @@ public class ITLogging1x {
   //     new KeyValuePair("response.status", "200");
   //
   // private static final KeyValuePair RESPONSE_HEADERS_KEY_VALUE_PAIR =
-  //     new KeyValuePair("response.headers", ImmutableMap.of("content-type", "application/grpc"));
+  //     new KeyValuePair("response.headers", ImmutableMap.of("content-type","application/grpc"));
 
   private static final String ECHO_STRING = "echo?";
 

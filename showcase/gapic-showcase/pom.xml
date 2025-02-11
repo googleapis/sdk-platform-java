@@ -73,23 +73,14 @@
           </execution>
         </executions>
       </plugin>
-<!--      <plugin>-->
-<!--        <groupId>org.apache.maven.plugins</groupId>-->
-<!--        <artifactId>maven-compiler-plugin</artifactId>-->
-<!--        <configuration>-->
-<!--          <testExcludes>-->
-<!--            <testExclude>**/ITLogging.java</testExclude>-->
-<!--          </testExcludes>-->
 
-<!--        </configuration>-->
-<!--      </plugin>-->
 
 <!--      <plugin>-->
 <!--        <groupId>org.apache.maven.plugins</groupId>-->
 <!--        <artifactId>maven-surefire-plugin</artifactId>-->
 <!--        <configuration>-->
 <!--          <excludes>-->
-<!--            <exclude>**/ITLogging.java</exclude>-->
+<!--            <exclude>com/google/showcase/v1beta1/it/logging/**/IT*</exclude>-->
 <!--          </excludes>-->
 <!--        </configuration>-->
 <!--      </plugin>-->
@@ -252,9 +243,7 @@
     </profile>
     <profile>
       <id>slf4j2_logback</id>
-<!--      <activation>-->
-<!--        <activeByDefault>true</activeByDefault>-->
-<!--      </activation>-->
+      <!--slf4j2, logback dependencies, and only compile logging test for 2.x-->
       <activation>
         <property>
           <name>slf4j2_logback</name>
@@ -296,9 +285,11 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
-              <testIncludes>
-                <testInclude>**/ITLogging.java</testInclude>
-              </testIncludes>
+              <testExcludes>
+                <testExclude>**/com/google/showcase/v1beta1/it/*.java</testExclude>
+                <testExclude>**/com/google/showcase/v1beta1/it/logging/ITLoggingDisabled.java</testExclude>
+                <testExclude>**/com/google/showcase/v1beta1/it/logging/ITLogging1x.java</testExclude>
+              </testExcludes>
             </configuration>
           </plugin>
         </plugins>
@@ -306,10 +297,7 @@
     </profile>
     <profile>
       <id>slf4j1_logback</id>
-<!--      <activation>-->
-<!--        <activeByDefault>true</activeByDefault>-->
-<!--      </activation>-->
-
+      <!--slf4j1, logback dependencies, and only compile logging test for 1.x-->
       <activation>
         <property>
           <name>slf4j1_logback</name>
@@ -344,7 +332,6 @@
           <version>2.14.2</version>
         </dependency>
       </dependencies>
-
       <build>
         <plugins>
           <plugin>
@@ -352,7 +339,62 @@
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
               <testExcludes>
-                <testExclude>**/ITLogging.java</testExclude>
+                <testExclude>**/com/google/showcase/v1beta1/it/*.java</testExclude>
+                <testExclude>**/com/google/showcase/v1beta1/it/logging/ITLoggingDisabled.java</testExclude>
+                <testExclude>**/com/google/showcase/v1beta1/it/logging/ITLogging.java</testExclude>
+              </testExcludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>disabledLogging</id>
+      <!--   Only compile test to run when   GOOGLE_SDK_JAVA_LOGGING=!true -->
+      <activation>
+        <property>
+          <name>disable_logging</name>
+        </property>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+          <version>1.7.36</version>
+        </dependency>
+        <dependency>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-classic</artifactId>
+          <version>1.2.13</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-core</artifactId>
+          <version>1.2.13</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>net.logstash.logback</groupId>
+          <artifactId>logstash-logback-encoder</artifactId>
+          <version>7.3</version>
+        </dependency>
+        <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+          <version>2.14.2</version>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+              <testExcludes>
+                <testExclude>**/com/google/showcase/v1beta1/it/*.java</testExclude>
+                <testExclude>**/com/google/showcase/v1beta1/it/logging/ITLogging1x.java</testExclude>
+                <testExclude>**/com/google/showcase/v1beta1/it/logging/ITLogging.java</testExclude>
               </testExcludes>
             </configuration>
           </plugin>
