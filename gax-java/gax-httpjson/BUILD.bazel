@@ -34,7 +34,6 @@ _TEST_COMPILE_DEPS = [
     "@com_google_truth_truth//jar",
     "//gax:gax_testlib",
     "@com_googlecode_java_diff_utils_diffutils//jar",
-    "@org_slf4j_slf4j_api//jar",
 ]
 
 java_library(

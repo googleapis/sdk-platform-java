@@ -42,7 +42,7 @@ import org.slf4j.helpers.NOPLogger;
 import org.slf4j.helpers.NOPLoggerFactory;
 
 // This test class should only run when env GOOGLE_SDK_JAVA_LOGGING = true
-// it is excluded by default
+// it is excluded by default and only included for `envVarTest` profile
 class LoggingEnabledTest {
 
   @Test
@@ -68,10 +68,8 @@ class LoggingEnabledTest {
     ILoggerFactory nopLoggerFactory = new NOPLoggerFactory();
     when(mockLoggerFactoryProvider.getLoggerFactory()).thenReturn(nopLoggerFactory);
 
-    // Use the mock LoggerFactoryProvider in getLogger()
     Logger logger = Slf4jUtils.getLogger(Slf4jUtilsTest.class, mockLoggerFactoryProvider);
 
-    // Assert that the returned logger is a NOPLogger
     Assertions.assertInstanceOf(NOPLogger.class, logger);
   }
 }

@@ -80,7 +80,7 @@ class Slf4jUtilsTest {
 
   @Test
   void testLogWithMDC_InfoLevel_VerifyMDC() {
-    // this test replies on TestMDCApapter and TestServiceProvider
+    // this test relies on TestMDCApapter and TestServiceProvider
     TestLogger testLogger = new TestLogger("test-logger");
     Map<String, Object> contextMap = new HashMap<>();
     contextMap.put("key1", "value1");

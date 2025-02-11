@@ -42,7 +42,6 @@ class LoggingUtilsTest {
 
   @Test
   void testIsLoggingEnabled_defaultToFalse() {
-    // LoggingUtils.setEnvironmentProvider(envProvider);
     assertFalse(LoggingUtils.isLoggingEnabled());
   }
 

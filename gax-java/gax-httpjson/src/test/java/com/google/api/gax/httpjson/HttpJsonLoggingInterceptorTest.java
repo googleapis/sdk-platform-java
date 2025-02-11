@@ -33,13 +33,8 @@ package com.google.api.gax.httpjson;
 import static org.mockito.Mockito.mock;
 
 import com.google.api.gax.httpjson.ApiMethodDescriptor.MethodType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 class HttpJsonLoggingInterceptorTest {
-
-  private static final Logger LOGGER =
-      LoggerFactory.getLogger(HttpJsonLoggingInterceptorTest.class);
 
   @SuppressWarnings("unchecked")
   private static final ApiMethodDescriptor<String, Integer> method =

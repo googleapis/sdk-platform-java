@@ -102,7 +102,6 @@ public abstract class LogData {
   }
 
   // helper functions to convert to map for logging
-  // todo: error handling?
   public Map<String, Object> toMapRequest() {
     Map<String, Object> map = new HashMap<>();
     if (serviceName() != null) {

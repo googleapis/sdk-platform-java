@@ -49,8 +49,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @ExtendWith(MockitoExtension.class)
 class GrpcLoggingInterceptorTest {
@@ -59,8 +57,6 @@ class GrpcLoggingInterceptorTest {
   @Mock private ClientCall<String, Integer> call;
 
   private static final MethodDescriptor<String, Integer> method = FakeMethodDescriptor.create();
-
-  private static final Logger LOGGER = LoggerFactory.getLogger(GrpcLoggingInterceptorTest.class);
 
   @Test
   void testInterceptor_basic() {
@@ -104,13 +100,5 @@ class GrpcLoggingInterceptorTest {
 
     Status status = Status.OK;
     interceptor.currentListener.onClose(status, new Metadata());
-
-    // --- Verify that the response listener's methods were called ---
-    // verify(interceptor)
-    //     .recordResponseHeaders(eq(responseHeaders), any(LogData.Builder.class),
-    // any(Logger.class));
-    // // verify(interceptor).recordResponsePayload(any(), any(LogData.Builder.class),
-    // // any(Logger.class));
-    // verify(interceptor).logResponse(eq(status), any(LogData.Builder.class), any(Logger.class));
   }
 }
