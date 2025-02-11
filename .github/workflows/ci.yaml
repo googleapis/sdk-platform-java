@@ -31,6 +31,7 @@ jobs:
         env:
           GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
           GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS: true
+          GOOGLE_SDK_JAVA_LOGGING: true
       - run: bazelisk version
       - name: Install Maven modules
         run: |
@@ -82,6 +83,7 @@ jobs:
         env:
           GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
           GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS: true
+          GOOGLE_SDK_JAVA_LOGGING: true
       - run: bazelisk version
       - name: Install Maven modules
         run: |
