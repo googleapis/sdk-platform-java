@@ -1,19 +1,19 @@
 # Format:
 # module:released-version:current-version
 
-gapic-generator-java:2.52.0:2.52.1-SNAPSHOT
-api-common:2.43.0:2.43.1-SNAPSHOT
-gax:2.60.0:2.60.1-SNAPSHOT
-gax-grpc:2.60.0:2.60.1-SNAPSHOT
-gax-httpjson:0.145.0:0.145.1-SNAPSHOT
-proto-google-common-protos:2.51.0:2.51.1-SNAPSHOT
-grpc-google-common-protos:2.51.0:2.51.1-SNAPSHOT
-proto-google-iam-v1:1.46.0:1.46.1-SNAPSHOT
-grpc-google-iam-v1:1.46.0:1.46.1-SNAPSHOT
-proto-google-iam-v2beta:1.46.0:1.46.1-SNAPSHOT
-grpc-google-iam-v2beta:1.46.0:1.46.1-SNAPSHOT
-google-iam-policy:1.46.0:1.46.1-SNAPSHOT
-proto-google-iam-v2:1.46.0:1.46.1-SNAPSHOT
-grpc-google-iam-v2:1.46.0:1.46.1-SNAPSHOT
-google-cloud-core:2.50.0:2.50.1-SNAPSHOT
-google-cloud-shared-dependencies:3.42.0:3.42.1-SNAPSHOT
+gapic-generator-java:2.53.0:2.53.1-SNAPSHOT
+api-common:2.44.0:2.44.1-SNAPSHOT
+gax:2.61.0:2.61.1-SNAPSHOT
+gax-grpc:2.61.0:2.61.1-SNAPSHOT
+gax-httpjson:0.146.0:0.146.1-SNAPSHOT
+proto-google-common-protos:2.52.0:2.52.1-SNAPSHOT
+grpc-google-common-protos:2.52.0:2.52.1-SNAPSHOT
+proto-google-iam-v1:1.47.0:1.47.1-SNAPSHOT
+grpc-google-iam-v1:1.47.0:1.47.1-SNAPSHOT
+proto-google-iam-v2beta:1.47.0:1.47.1-SNAPSHOT
+grpc-google-iam-v2beta:1.47.0:1.47.1-SNAPSHOT
+google-iam-policy:1.47.0:1.47.1-SNAPSHOT
+proto-google-iam-v2:1.47.0:1.47.1-SNAPSHOT
+grpc-google-iam-v2:1.47.0:1.47.1-SNAPSHOT
+google-cloud-core:2.51.0:2.51.1-SNAPSHOT
+google-cloud-shared-dependencies:3.43.0:3.43.1-SNAPSHOT

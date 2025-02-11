@@ -20,7 +20,7 @@ FROM docker.io/library/maven:3.9.9-eclipse-temurin-11-alpine@sha256:456f60c1643c
 WORKDIR /sdk-platform-java
 COPY . .
 # {x-version-update-start:gapic-generator-java:current}
-ENV DOCKER_GAPIC_GENERATOR_VERSION="2.52.1-SNAPSHOT"
+ENV DOCKER_GAPIC_GENERATOR_VERSION="2.53.1-SNAPSHOT"
 # {x-version-update-end}
 
 RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
@@ -47,9 +47,9 @@ RUN git checkout "${GLIB_MUS_SHA}"
 RUN chmod a+x compile-x86_64-alpine-linux.sh
 RUN sh compile-x86_64-alpine-linux.sh
 
-FROM docker.io/library/python:3.13.1-alpine3.20@sha256:7788ec80bdacc4736a50adce4c3711581e83650a8895c6dbf202caf4af7a3270 as final
+FROM docker.io/library/python:3.13.2-alpine3.20@sha256:816feb29731cdee64b15b0ae91dd9f1cbc36765984ff8ea85a3d90f064417237 as final
 
-ARG OWLBOT_CLI_COMMITTISH=35eff2ce0e72dba6df7fd785779350f33c36692d
+ARG OWLBOT_CLI_COMMITTISH=3a68a9c0de318784b3aefadcc502a6521b3f1bc5
 ARG PROTOC_VERSION=25.5
 ARG GRPC_VERSION=1.69.0
 ARG JAVA_FORMAT_VERSION=1.7

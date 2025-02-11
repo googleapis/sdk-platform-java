@@ -59,10 +59,10 @@ public final class HttpProto {
           + "H\000\022\014\n\004body\030\007 \001(\t\022\025\n\rresponse_body\030\014 \001(\t\022"
           + "1\n\023additional_bindings\030\013 \003(\0132\024.google.ap"
           + "i.HttpRuleB\t\n\007pattern\"/\n\021CustomHttpPatte"
-          + "rn\022\014\n\004kind\030\001 \001(\t\022\014\n\004path\030\002 \001(\tBj\n\016com.go"
+          + "rn\022\014\n\004kind\030\001 \001(\t\022\014\n\004path\030\002 \001(\tBg\n\016com.go"
           + "ogle.apiB\tHttpProtoP\001ZAgoogle.golang.org"
           + "/genproto/googleapis/api/annotations;ann"
-          + "otations\370\001\001\242\002\004GAPIb\006proto3"
+          + "otations\242\002\004GAPIb\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
