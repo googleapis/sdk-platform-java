@@ -260,6 +260,7 @@ jobs:
             --no-transfer-progress
       # The `slf4j2_logback` profile brings logging dependency and compiles logging tests, require env var to be set
       - name: Showcase integration tests - Logging 2x
+        working-directory: showcase
         run: |
           mvn clean verify -P '!showcase,enable-integration-tests,loggingTestBase,slf4j2_logback' \
             --batch-mode \
@@ -269,6 +270,7 @@ jobs:
           GOOGLE_SDK_JAVA_LOGGING: true
     # The `slf4j1_logback` profile brings logging dependency and compiles logging tests, require env var to be set
       - name: Showcase integration tests - Logging 1x
+        working-directory: showcase
         run: |
           mvn clean verify -P '!showcase,enable-integration-tests,loggingTestBase,slf4j1_logback' \
             --batch-mode \
@@ -279,6 +281,7 @@ jobs:
     # The `disabledLogging` profile tests logging disabled when logging dependency present,
     # do not set env var for this step
       - name: Showcase integration tests - Logging disabed
+        working-directory: showcase
         run: |
           mvn clean verify -P '!showcase,enable-integration-tests,loggingTestBase,disabledLogging'  \
             --batch-mode \
