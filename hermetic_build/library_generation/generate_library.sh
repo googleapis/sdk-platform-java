@@ -220,7 +220,7 @@ case "${proto_path}" in
     done
     ;;
 esac
-"$protoc_path"/protoc "--java_out=${temp_destination_path}/java_proto.jar" ${proto_files}
+"$protoc_path"/protoc "--java_out=lite:${temp_destination_path}/java_proto.jar" ${proto_files}
 if [[ "${proto_only}" == "false" ]]; then
   # move java_gapic_srcjar/proto/src/main/java (generated resource name helper class)
   # to proto-*/src/main
