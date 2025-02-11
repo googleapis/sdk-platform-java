@@ -30,51 +30,33 @@
 
 package com.google.api.gax.logging;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
-import com.google.api.gax.logging.LoggingUtils.ThrowingRunnable;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.slf4j.Logger;
 
-class LoggingUtilsTest {
+class LoggerProviderTest {
 
   @Test
-  void testIsLoggingEnabled_defaultToFalse() {
-    // LoggingUtils.setEnvironmentProvider(envProvider);
-    assertFalse(LoggingUtils.isLoggingEnabled());
+  void testGetLogger_CreatesLoggerOnce() {
+    Class<?> testClass = this.getClass();
+    LoggerProvider provider = LoggerProvider.setLogger(testClass);
+    Logger logger1 = provider.getLogger();
+    Logger logger2 = provider.getLogger();
+
+    assertNotNull(logger1);
+    assertSame(logger1, logger2);
   }
 
   @Test
-  void testExecuteWithTryCatch_noException() {
-    assertDoesNotThrow(
-        () ->
-            LoggingUtils.executeWithTryCatch(
-                () -> {
-                  // Some code that should not throw an exception
-                  int x = 5;
-                  int y = 10;
-                  int z = x + y;
-                  assertEquals(15, z);
-                }));
-  }
+  void testSetLogger_ReturnsNewInstance() {
+    Class<?> testClass1 = this.getClass();
+    Class<?> testClass2 = String.class;
+    LoggerProvider provider1 = LoggerProvider.setLogger(testClass1);
+    LoggerProvider provider2 = LoggerProvider.setLogger(testClass2);
 
-  @Test
-  void testExecuteWithTryCatch_WithException() throws Throwable {
-    ThrowingRunnable action = Mockito.mock(ThrowingRunnable.class);
-    Mockito.doThrow(new RuntimeException("Test Exception")).when(action).run();
-    assertDoesNotThrow(() -> LoggingUtils.executeWithTryCatch(action));
-    // Verify that the action was executed (despite the exception)
-    Mockito.verify(action).run();
-  }
-
-  @Test
-  void testExecuteWithTryCatch_WithNoSuchMethodError() throws Throwable {
-    ThrowingRunnable action = Mockito.mock(ThrowingRunnable.class);
-    Mockito.doThrow(new NoSuchMethodError("Test Error")).when(action).run();
-    assertDoesNotThrow(() -> LoggingUtils.executeWithTryCatch(action));
-    // Verify that the action was executed (despite the error)
-    Mockito.verify(action).run();
+    assertNotSame(provider1, provider2);
   }
 }
