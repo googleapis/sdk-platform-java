@@ -40,23 +40,11 @@ import org.slf4j.LoggerFactory;
 
 // This test needs to run with GOOGLE_SDK_JAVA_LOGGING=true
 // mvn verify -P
-// '!showcase,enable-integration-tests,loggingTestBase,envVarLoggingTest1x,slf4j1_logback '
+// '!showcase,enable-integration-tests,loggingTestBase,slf4j1_logback '
 public class ITLogging1x {
   private static EchoClient grpcClient;
 
   private static EchoClient httpjsonClient;
-
-  // private static final KeyValuePair SERVICE_NAME_KEY_VALUE_PAIR =
-  //     new KeyValuePair("serviceName", "google.showcase.v1beta1.Echo");
-  // private static final KeyValuePair RPC_NAME_KEY_VALUE_PAIR =
-  //     new KeyValuePair("rpcName", "google.showcase.v1beta1.Echo/Echo");
-  // private static final KeyValuePair RESPONSE_STATUS_KEY_VALUE_PAIR =
-  //     new KeyValuePair("response.status", "OK");
-  // private static final KeyValuePair RESPONSE_STATUS_KEY_VALUE_PAIR_HTTP =
-  //     new KeyValuePair("response.status", "200");
-  //
-  // private static final KeyValuePair RESPONSE_HEADERS_KEY_VALUE_PAIR =
-  //     new KeyValuePair("response.headers", ImmutableMap.of("content-type","application/grpc"));
 
   private static final String ECHO_STRING = "echo?";
 
@@ -96,15 +84,6 @@ public class ITLogging1x {
     assertThat(logger.isInfoEnabled()).isTrue();
     assertThat(logger.isDebugEnabled()).isTrue();
   }
-
-  // // only run when GOOGLE_SDK_JAVA_LOGGING!=true
-  // @Test
-  // void testloggingDisabled() {
-  //   TestAppender testAppender = setupTestLogger(GrpcLoggingInterceptor.class);
-  //   assertThat(echoGrpc(ECHO_STRING)).isEqualTo(ECHO_STRING);
-  //
-  //   assertThat(testAppender.events.size()).isEqualTo(0);
-  //   }
 
   @Test
   void testGrpc_receiveContent_logDebug() {

@@ -32,11 +32,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.slf4j.LoggerFactory;
 
-// mvn verify -P '!showcase,enable-integration-tests,loggingTestBase,disableLogging,slf4j2_logback '
+// mvn verify -P '!showcase,enable-integration-tests,loggingTestBase,disabledLogging'
 public class ITLoggingDisabled {
 
   private static EchoClient grpcClient;
-  private static EchoClient httpjsonClient;
   private static final String ECHO_STRING = "echo?";
 
   private TestAppender setupTestLogger(Class<?> clazz) {
@@ -54,18 +53,13 @@ public class ITLoggingDisabled {
   static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
-    // Create Http JSON Echo Client
-    httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
   }
 
   @AfterAll
   static void destroyClients() throws InterruptedException {
     grpcClient.close();
-    httpjsonClient.close();
 
     grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
-    httpjsonClient.awaitTermination(
-        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   // only run when GOOGLE_SDK_JAVA_LOGGING!=true
