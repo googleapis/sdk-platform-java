@@ -54,7 +54,7 @@ import org.slf4j.helpers.NOPLogger;
 
 class Slf4jUtilsTest {
 
-  // GOOGLE_SDK_JAVA_LOGGING = false
+  // This test should only run GOOGLE_SDK_JAVA_LOGGING != true
   @Test
   void testGetLogger_loggingDisabled_shouldGetNOPLogger() {
     Logger logger = Slf4jUtils.getLogger(Slf4jUtilsTest.class);
@@ -63,6 +63,7 @@ class Slf4jUtilsTest {
     assertFalse(logger.isDebugEnabled());
   }
 
+  // These tests does not require GOOGLE_SDK_JAVA_LOGGING
   @Test
   void testLog_slf4J2xLogger() {
     Map<String, Object> contextMap = new HashMap<>();

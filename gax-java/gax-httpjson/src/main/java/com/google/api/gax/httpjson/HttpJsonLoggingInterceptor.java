@@ -47,8 +47,6 @@ import java.util.Map;
 @InternalApi
 public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
 
-  // private static final Logger LOGGER = LoggingUtils.getLogger(HttpJsonLoggingInterceptor.class);
-
   private static final LoggerProvider LOGGER_PROVIDER =
       LoggerProvider.setLogger(HttpJsonLoggingInterceptor.class);
 

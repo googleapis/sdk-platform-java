@@ -29,6 +29,7 @@ public class TestAppender extends AppenderBase<ILoggingEvent> {
   @Override
   protected void append(ILoggingEvent eventObject) {
     // triggering Logback to capture the current MDC context and store it with the log event
+    // the default ListAppender does not capture MDC contents
     eventObject.getMDCPropertyMap();
 
     events.add(eventObject);
