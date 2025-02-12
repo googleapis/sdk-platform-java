@@ -33,6 +33,7 @@ package com.google.api.gax.logging;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.Mockito.verify;
 
 import com.google.api.gax.logging.LoggingUtils.ThrowingRunnable;
 import org.junit.jupiter.api.Test;
@@ -65,7 +66,7 @@ class LoggingUtilsTest {
     Mockito.doThrow(new RuntimeException("Test Exception")).when(action).run();
     assertDoesNotThrow(() -> LoggingUtils.executeWithTryCatch(action));
     // Verify that the action was executed (despite the exception)
-    Mockito.verify(action).run();
+    verify(action).run();
   }
 
   @Test
@@ -74,6 +75,6 @@ class LoggingUtilsTest {
     Mockito.doThrow(new NoSuchMethodError("Test Error")).when(action).run();
     assertDoesNotThrow(() -> LoggingUtils.executeWithTryCatch(action));
     // Verify that the action was executed (despite the error)
-    Mockito.verify(action).run();
+    verify(action).run();
   }
 }

@@ -238,14 +238,13 @@
         <dependency>
           <groupId>ch.qos.logback</groupId>
           <artifactId>logback-classic</artifactId>
-          <!--   Latest version with java8 support   -->
-          <version>1.3.14</version>
+          <version>1.5.16</version>
           <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>ch.qos.logback</groupId>
           <artifactId>logback-core</artifactId>
-          <version>1.3.14</version>
+          <version>1.5.16</version>
           <scope>test</scope>
         </dependency>
       </dependencies>

@@ -59,8 +59,6 @@ public class ITLogging {
 
   private static final String ECHO_STRING = "echo?";
 
-  private static Logger logger = LoggerFactory.getLogger(ITLogging.class);
-
   private TestAppender setupTestLogger(Class<?> clazz) {
     TestAppender testAppender = new TestAppender();
     testAppender.start();
@@ -95,7 +93,6 @@ public class ITLogging {
     TestAppender testAppender = setupTestLogger(GrpcLoggingInterceptor.class);
     assertThat(echoGrpc(ECHO_STRING)).isEqualTo(ECHO_STRING);
 
-    assertThat(true).isTrue();
 
     assertThat(testAppender.events.size()).isEqualTo(2);
     // logging event for request

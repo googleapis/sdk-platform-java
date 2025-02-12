@@ -44,6 +44,17 @@ public class LoggingUtils {
     return "true".equalsIgnoreCase(enableLogging);
   }
 
+  /**
+   * Sets logDataBuilder with service name, rpc name, endpoint and request headers based on logging
+   * level
+   *
+   * @param serviceName
+   * @param rpcName
+   * @param endpoint
+   * @param requestHeaders
+   * @param logDataBuilder
+   * @param loggerProvider
+   */
   public static void recordServiceRpcAndRequestHeaders(
       String serviceName,
       String rpcName,
@@ -57,6 +68,13 @@ public class LoggingUtils {
     }
   }
 
+  /**
+   * Sets logDataBuilder with response headers based on logging level
+   *
+   * @param headers
+   * @param logDataBuilder
+   * @param loggerProvider
+   */
   public static void recordResponseHeaders(
       Map<String, String> headers, LogData.Builder logDataBuilder, LoggerProvider loggerProvider) {
     if (loggingEnabled) {
@@ -64,6 +82,14 @@ public class LoggingUtils {
     }
   }
 
+  /**
+   * Sets logDataBuilder with respond payload based on logging level
+   *
+   * @param message
+   * @param logDataBuilder
+   * @param loggerProvider
+   * @param <RespT>
+   */
   public static <RespT> void recordResponsePayload(
       RespT message, LogData.Builder logDataBuilder, LoggerProvider loggerProvider) {
     if (loggingEnabled) {
@@ -71,6 +97,13 @@ public class LoggingUtils {
     }
   }
 
+  /**
+   * Log response based on logging level configured
+   *
+   * @param status
+   * @param logDataBuilder
+   * @param loggerProvider
+   */
   public static void logResponse(
       String status, LogData.Builder logDataBuilder, LoggerProvider loggerProvider) {
     if (loggingEnabled) {
@@ -78,6 +111,14 @@ public class LoggingUtils {
     }
   }
 
+  /**
+   * Log request based on logging level configured
+   *
+   * @param message
+   * @param logDataBuilder
+   * @param loggerProvider
+   * @param <RespT>
+   */
   public static <RespT> void logRequest(
       RespT message, LogData.Builder logDataBuilder, LoggerProvider loggerProvider) {
     if (loggingEnabled) {
