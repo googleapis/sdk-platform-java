@@ -57,6 +57,8 @@ public class ITLogging {
   private static final KeyValuePair RESPONSE_HEADERS_KEY_VALUE_PAIR =
       new KeyValuePair("response.headers", ImmutableMap.of("content-type", "application/grpc"));
 
+  private static final String SENDING_REQUEST_MESSAGE = "Sending gRPC request";
+  private static final String RECEIVING_RESPONSE_MESSAGE = "Received Grpc response";
   private static final String ECHO_STRING = "echo?";
 
   private TestAppender setupTestLogger(Class<?> clazz, Level level) {
@@ -94,7 +96,7 @@ public class ITLogging {
     assertThat(testAppender.events.size()).isEqualTo(2);
     // logging event for request
     ILoggingEvent loggingEvent1 = testAppender.events.get(0);
-    assertThat(loggingEvent1.getMessage()).isEqualTo("Sending gRPC request");
+    assertThat(loggingEvent1.getMessage()).isEqualTo(SENDING_REQUEST_MESSAGE);
     assertThat(loggingEvent1.getLevel()).isEqualTo(Level.DEBUG);
     List<KeyValuePair> keyValuePairs = loggingEvent1.getKeyValuePairs();
     assertThat(keyValuePairs.size()).isEqualTo(4);
@@ -116,7 +118,7 @@ public class ITLogging {
 
     // logging event for response
     ILoggingEvent loggingEvent2 = testAppender.events.get(1);
-    assertThat(loggingEvent2.getMessage()).isEqualTo("Received Grpc response");
+    assertThat(loggingEvent2.getMessage()).isEqualTo(RECEIVING_RESPONSE_MESSAGE);
 
     assertThat(loggingEvent2.getLevel()).isEqualTo(Level.DEBUG);
     List<KeyValuePair> keyValuePairs2 = loggingEvent2.getKeyValuePairs();
@@ -146,7 +148,7 @@ public class ITLogging {
     assertThat(testAppender.events.size()).isEqualTo(2);
     // logging event for request
     ILoggingEvent loggingEvent1 = testAppender.events.get(0);
-    assertThat(loggingEvent1.getMessage()).isEqualTo("Sending gRPC request");
+    assertThat(loggingEvent1.getMessage()).isEqualTo(SENDING_REQUEST_MESSAGE);
     assertThat(loggingEvent1.getLevel()).isEqualTo(Level.INFO);
     List<KeyValuePair> keyValuePairs = loggingEvent1.getKeyValuePairs();
     assertThat(keyValuePairs.size()).isEqualTo(2);
@@ -154,7 +156,7 @@ public class ITLogging {
 
     // logging event for response
     ILoggingEvent loggingEvent2 = testAppender.events.get(1);
-    assertThat(loggingEvent2.getMessage()).isEqualTo("Received Grpc response");
+    assertThat(loggingEvent2.getMessage()).isEqualTo(RECEIVING_RESPONSE_MESSAGE);
 
     assertThat(loggingEvent2.getLevel()).isEqualTo(Level.INFO);
     List<KeyValuePair> keyValuePairs2 = loggingEvent2.getKeyValuePairs();
@@ -172,7 +174,7 @@ public class ITLogging {
     assertThat(testAppender.events.size()).isEqualTo(2);
     // logging event for request
     ILoggingEvent loggingEvent1 = testAppender.events.get(0);
-    assertThat(loggingEvent1.getMessage()).isEqualTo("Sending gRPC request");
+    assertThat(loggingEvent1.getMessage()).isEqualTo(SENDING_REQUEST_MESSAGE);
     assertThat(loggingEvent1.getLevel()).isEqualTo(Level.DEBUG);
     List<KeyValuePair> keyValuePairs = loggingEvent1.getKeyValuePairs();
     assertThat(keyValuePairs.size()).isEqualTo(4);
@@ -195,7 +197,7 @@ public class ITLogging {
 
     // logging event for response
     ILoggingEvent loggingEvent2 = testAppender.events.get(1);
-    assertThat(loggingEvent2.getMessage()).isEqualTo("Received Grpc response");
+    assertThat(loggingEvent2.getMessage()).isEqualTo(RECEIVING_RESPONSE_MESSAGE);
 
     assertThat(loggingEvent2.getLevel()).isEqualTo(Level.DEBUG);
     List<KeyValuePair> keyValuePairs2 = loggingEvent2.getKeyValuePairs();
@@ -224,7 +226,7 @@ public class ITLogging {
     assertThat(testAppender.events.size()).isEqualTo(2);
     // logging event for request
     ILoggingEvent loggingEvent1 = testAppender.events.get(0);
-    assertThat(loggingEvent1.getMessage()).isEqualTo("Sending gRPC request");
+    assertThat(loggingEvent1.getMessage()).isEqualTo(SENDING_REQUEST_MESSAGE);
     assertThat(loggingEvent1.getLevel()).isEqualTo(Level.INFO);
     List<KeyValuePair> keyValuePairs = loggingEvent1.getKeyValuePairs();
     assertThat(keyValuePairs.size()).isEqualTo(2);
@@ -233,7 +235,7 @@ public class ITLogging {
 
     // logging event for response
     ILoggingEvent loggingEvent2 = testAppender.events.get(1);
-    assertThat(loggingEvent2.getMessage()).isEqualTo("Received Grpc response");
+    assertThat(loggingEvent2.getMessage()).isEqualTo(RECEIVING_RESPONSE_MESSAGE);
 
     assertThat(loggingEvent2.getLevel()).isEqualTo(Level.INFO);
     List<KeyValuePair> keyValuePairs2 = loggingEvent2.getKeyValuePairs();
