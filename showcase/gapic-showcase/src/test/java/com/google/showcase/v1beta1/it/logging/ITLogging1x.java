@@ -20,7 +20,6 @@ import static com.google.common.truth.Truth.assertThat;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.core.read.ListAppender;
 import com.google.api.gax.grpc.GrpcLoggingInterceptor;
 import com.google.api.gax.httpjson.HttpJsonLoggingInterceptor;
 import com.google.common.collect.ImmutableMap;
@@ -53,8 +52,6 @@ public class ITLogging1x {
   private TestAppender setupTestLogger(Class<?> clazz) {
     TestAppender testAppender = new TestAppender();
     testAppender.start();
-    ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
-    listAppender.start();
     Logger logger = LoggerFactory.getLogger(clazz);
     ((ch.qos.logback.classic.Logger) logger).setLevel(Level.DEBUG);
     ((ch.qos.logback.classic.Logger) logger).addAppender(testAppender);

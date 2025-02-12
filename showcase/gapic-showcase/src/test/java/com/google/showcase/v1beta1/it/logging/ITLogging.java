@@ -20,7 +20,6 @@ import static com.google.common.truth.Truth.assertThat;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.core.read.ListAppender;
 import com.google.api.gax.grpc.GrpcLoggingInterceptor;
 import com.google.api.gax.httpjson.HttpJsonLoggingInterceptor;
 import com.google.common.collect.ImmutableMap;
@@ -34,7 +33,6 @@ import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.KeyValuePair;
 
@@ -62,8 +60,6 @@ public class ITLogging {
   private TestAppender setupTestLogger(Class<?> clazz) {
     TestAppender testAppender = new TestAppender();
     testAppender.start();
-    ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
-    listAppender.start();
     org.slf4j.Logger logger = LoggerFactory.getLogger(clazz);
     ((ch.qos.logback.classic.Logger) logger).setLevel(Level.DEBUG);
     ((ch.qos.logback.classic.Logger) logger).addAppender(testAppender);
@@ -92,7 +88,6 @@ public class ITLogging {
   void testGrpc_receiveContent_logDebug() {
     TestAppender testAppender = setupTestLogger(GrpcLoggingInterceptor.class);
     assertThat(echoGrpc(ECHO_STRING)).isEqualTo(ECHO_STRING);
-
 
     assertThat(testAppender.events.size()).isEqualTo(2);
     // logging event for request
