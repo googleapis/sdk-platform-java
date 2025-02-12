@@ -56,7 +56,7 @@ import java.util.Map;
 public class GrpcLoggingInterceptor implements ClientInterceptor {
 
   private static final LoggerProvider LOGGER_PROVIDER =
-      LoggerProvider.setLogger(GrpcLoggingInterceptor.class);
+      LoggerProvider.forClazz(GrpcLoggingInterceptor.class);
 
   ClientCall.Listener<?> currentListener; // expose for test setup
 

@@ -42,7 +42,7 @@ class LoggerProviderTest {
   @Test
   void testGetLogger_CreatesLoggerOnce() {
     Class<?> testClass = this.getClass();
-    LoggerProvider provider = LoggerProvider.setLogger(testClass);
+    LoggerProvider provider = LoggerProvider.forClazz(testClass);
     Logger logger1 = provider.getLogger();
     Logger logger2 = provider.getLogger();
 
@@ -51,11 +51,11 @@ class LoggerProviderTest {
   }
 
   @Test
-  void testSetLogger_ReturnsNewInstance() {
+  void testForClazz_ReturnsNewInstance() {
     Class<?> testClass1 = this.getClass();
     Class<?> testClass2 = String.class;
-    LoggerProvider provider1 = LoggerProvider.setLogger(testClass1);
-    LoggerProvider provider2 = LoggerProvider.setLogger(testClass2);
+    LoggerProvider provider1 = LoggerProvider.forClazz(testClass1);
+    LoggerProvider provider2 = LoggerProvider.forClazz(testClass2);
 
     assertNotSame(provider1, provider2);
   }

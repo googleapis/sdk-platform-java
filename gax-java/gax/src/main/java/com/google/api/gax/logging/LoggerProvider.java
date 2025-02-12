@@ -43,7 +43,7 @@ public class LoggerProvider {
     this.clazz = clazz;
   }
 
-  public static LoggerProvider setLogger(Class<?> clazz) {
+  public static LoggerProvider forClazz(Class<?> clazz) {
     return new LoggerProvider(clazz);
   }
 
