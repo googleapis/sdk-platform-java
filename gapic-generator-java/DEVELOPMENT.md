@@ -142,7 +142,6 @@ To generate a production GAPIC API:
           ] + PROTOBUF_MAVEN_ARTIFACTS +
           IO_GRPC_GRPC_JAVA_ARTIFACTS,
         generate_compat_repositories = True,
-        override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
         #Update this False for local development
         fail_on_missing_checksum = True,
         repositories = [
