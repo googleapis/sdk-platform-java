@@ -77,7 +77,9 @@ public class TestLogger implements Logger, LoggingEventAware {
   }
 
   @Override
-  public void trace(String msg) {}
+  public void trace(String msg) {
+    level = Level.TRACE;
+  }
 
   @Override
   public void trace(String format, Object arg) {}
@@ -121,6 +123,7 @@ public class TestLogger implements Logger, LoggingEventAware {
     Map<String, String> currentMDC = MDC.getCopyOfContextMap();
     MDCMap.putAll(currentMDC);
     messageList.add(msg);
+    level = Level.DEBUG;
   }
 
   @Override
@@ -208,7 +211,9 @@ public class TestLogger implements Logger, LoggingEventAware {
   }
 
   @Override
-  public void warn(String msg) {}
+  public void warn(String msg) {
+    level = Level.WARN;
+  }
 
   @Override
   public void warn(String format, Object arg) {}
@@ -248,7 +253,9 @@ public class TestLogger implements Logger, LoggingEventAware {
   }
 
   @Override
-  public void error(String msg) {}
+  public void error(String msg) {
+    level = Level.ERROR;
+  }
 
   @Override
   public void error(String format, Object arg) {}

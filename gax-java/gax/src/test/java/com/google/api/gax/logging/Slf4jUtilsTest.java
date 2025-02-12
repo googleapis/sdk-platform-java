@@ -101,6 +101,38 @@ class Slf4jUtilsTest {
   }
 
   @Test
+  void testLogWithMDC_DEBUG() {
+    TestLogger testLogger = new TestLogger("test-logger");
+    Slf4jUtils.logWithMDC(testLogger, Level.DEBUG, new HashMap<>(), "test message");
+
+    assertEquals(Level.DEBUG, testLogger.level);
+  }
+
+  @Test
+  void testLogWithMDC_TRACE() {
+    TestLogger testLogger = new TestLogger("test-logger");
+    Slf4jUtils.logWithMDC(testLogger, Level.TRACE, new HashMap<>(), "test message");
+
+    assertEquals(Level.TRACE, testLogger.level);
+  }
+
+  @Test
+  void testLogWithMDC_WARN() {
+    TestLogger testLogger = new TestLogger("test-logger");
+    Slf4jUtils.logWithMDC(testLogger, Level.WARN, new HashMap<>(), "test message");
+
+    assertEquals(Level.WARN, testLogger.level);
+  }
+
+  @Test
+  void testLogWithMDC_ERROR() {
+    TestLogger testLogger = new TestLogger("test-logger");
+    Slf4jUtils.logWithMDC(testLogger, Level.ERROR, new HashMap<>(), "test message");
+
+    assertEquals(Level.ERROR, testLogger.level);
+  }
+
+  @Test
   void testMessageToMap_ValidMessage() throws InvalidProtocolBufferException {
     Field field =
         Field.newBuilder()

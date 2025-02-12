@@ -102,7 +102,6 @@ class Slf4jUtils {
       for (Entry<String, Object> entry : contextMap.entrySet()) {
         String key = entry.getKey();
         Object value = entry.getValue();
-        // MDC.put(key, value.toString());
         MDC.put(key, value instanceof String ? (String) value : gson.toJson(value));
       }
     }
