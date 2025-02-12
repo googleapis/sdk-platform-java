@@ -49,11 +49,11 @@ public class ITLogging1x {
 
   private static Logger logger = LoggerFactory.getLogger(ITLogging1x.class);
 
-  private TestAppender setupTestLogger(Class<?> clazz) {
+  private TestAppender setupTestLogger(Class<?> clazz, Level level) {
     TestAppender testAppender = new TestAppender();
     testAppender.start();
     Logger logger = LoggerFactory.getLogger(clazz);
-    ((ch.qos.logback.classic.Logger) logger).setLevel(Level.DEBUG);
+    ((ch.qos.logback.classic.Logger) logger).setLevel(level);
     ((ch.qos.logback.classic.Logger) logger).addAppender(testAppender);
     return testAppender;
   }
@@ -84,7 +84,7 @@ public class ITLogging1x {
 
   @Test
   void testGrpc_receiveContent_logDebug() {
-    TestAppender testAppender = setupTestLogger(GrpcLoggingInterceptor.class);
+    TestAppender testAppender = setupTestLogger(GrpcLoggingInterceptor.class, Level.DEBUG);
     assertThat(echoGrpc(ECHO_STRING)).isEqualTo(ECHO_STRING);
 
     assertThat(testAppender.events.size()).isEqualTo(2);
@@ -128,8 +128,45 @@ public class ITLogging1x {
   }
 
   @Test
+  void testGrpc_receiveContent_logInfo() {
+    TestAppender testAppender = setupTestLogger(GrpcLoggingInterceptor.class, Level.INFO);
+    assertThat(echoGrpc(ECHO_STRING)).isEqualTo(ECHO_STRING);
+
+    assertThat(testAppender.events.size()).isEqualTo(2);
+    // logging event for request
+    ILoggingEvent loggingEvent1 = testAppender.events.get(0);
+    assertThat(loggingEvent1.getMessage()).isEqualTo("Sending gRPC request");
+    assertThat(loggingEvent1.getLevel()).isEqualTo(Level.INFO);
+    Map<String, String> mdcPropertyMap = loggingEvent1.getMDCPropertyMap();
+    assertThat(mdcPropertyMap)
+        .containsExactlyEntriesIn(
+            ImmutableMap.of(
+                "serviceName",
+                "google.showcase.v1beta1.Echo",
+                "rpcName",
+                "google.showcase.v1beta1.Echo/Echo"));
+
+    // logging event for response
+    ILoggingEvent loggingEvent2 = testAppender.events.get(1);
+    assertThat(loggingEvent2.getMessage()).isEqualTo("Received Grpc response");
+    assertThat(loggingEvent2.getLevel()).isEqualTo(Level.INFO);
+    Map<String, String> responseMdcPropertyMap = loggingEvent2.getMDCPropertyMap();
+    assertThat(responseMdcPropertyMap)
+        .containsExactlyEntriesIn(
+            ImmutableMap.of(
+                "serviceName",
+                "google.showcase.v1beta1.Echo",
+                "rpcName",
+                "google.showcase.v1beta1.Echo/Echo",
+                "response.status",
+                "OK"));
+
+    testAppender.stop();
+  }
+
+  @Test
   void testHttpJson_receiveContent_logDebug() {
-    TestAppender testAppender = setupTestLogger(HttpJsonLoggingInterceptor.class);
+    TestAppender testAppender = setupTestLogger(HttpJsonLoggingInterceptor.class, Level.DEBUG);
     assertThat(echoHttpJson(ECHO_STRING)).isEqualTo(ECHO_STRING);
     assertThat(testAppender.events.size()).isEqualTo(2);
     // logging event for request
@@ -157,6 +194,35 @@ public class ITLogging1x {
                 "response.status", "200"));
     assertThat(responseMdcPropertyMap).containsKey("response.payload");
     assertThat(responseMdcPropertyMap).containsKey("response.headers");
+    testAppender.stop();
+  }
+
+  @Test
+  void testHttpJson_receiveContent_logInfo() {
+    TestAppender testAppender = setupTestLogger(HttpJsonLoggingInterceptor.class, Level.INFO);
+    assertThat(echoHttpJson(ECHO_STRING)).isEqualTo(ECHO_STRING);
+    assertThat(testAppender.events.size()).isEqualTo(2);
+    // logging event for request
+    ILoggingEvent loggingEvent1 = testAppender.events.get(0);
+    assertThat(loggingEvent1.getMessage()).isEqualTo("Sending gRPC request");
+    assertThat(loggingEvent1.getLevel()).isEqualTo(Level.INFO);
+    Map<String, String> mdcPropertyMap = loggingEvent1.getMDCPropertyMap();
+    assertThat(mdcPropertyMap)
+        .containsExactlyEntriesIn(
+            ImmutableMap.of(
+                "rpcName", "google.showcase.v1beta1.Echo/Echo",
+                "request.url", "http://localhost:7469"));
+
+    // logging event for response
+    ILoggingEvent loggingEvent2 = testAppender.events.get(1);
+    assertThat(loggingEvent2.getMessage()).isEqualTo("Received Grpc response");
+    assertThat(loggingEvent2.getLevel()).isEqualTo(Level.INFO);
+    Map<String, String> responseMdcPropertyMap = loggingEvent2.getMDCPropertyMap();
+    assertThat(responseMdcPropertyMap)
+        .containsExactlyEntriesIn(
+            ImmutableMap.of(
+                "rpcName", "google.showcase.v1beta1.Echo/Echo",
+                "response.status", "200"));
     testAppender.stop();
   }
 

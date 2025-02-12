@@ -51,17 +51,19 @@ public class ITLogging {
       new KeyValuePair("response.status", "OK");
   private static final KeyValuePair RESPONSE_STATUS_KEY_VALUE_PAIR_HTTP =
       new KeyValuePair("response.status", "200");
+  private static final KeyValuePair REQUEST_URL_KEY_VALUE_PAIR =
+      new KeyValuePair("request.url", "http://localhost:7469");
 
   private static final KeyValuePair RESPONSE_HEADERS_KEY_VALUE_PAIR =
       new KeyValuePair("response.headers", ImmutableMap.of("content-type", "application/grpc"));
 
   private static final String ECHO_STRING = "echo?";
 
-  private TestAppender setupTestLogger(Class<?> clazz) {
+  private TestAppender setupTestLogger(Class<?> clazz, Level level) {
     TestAppender testAppender = new TestAppender();
     testAppender.start();
     org.slf4j.Logger logger = LoggerFactory.getLogger(clazz);
-    ((ch.qos.logback.classic.Logger) logger).setLevel(Level.DEBUG);
+    ((ch.qos.logback.classic.Logger) logger).setLevel(level);
     ((ch.qos.logback.classic.Logger) logger).addAppender(testAppender);
     return testAppender;
   }
@@ -86,7 +88,7 @@ public class ITLogging {
 
   @Test
   void testGrpc_receiveContent_logDebug() {
-    TestAppender testAppender = setupTestLogger(GrpcLoggingInterceptor.class);
+    TestAppender testAppender = setupTestLogger(GrpcLoggingInterceptor.class, Level.DEBUG);
     assertThat(echoGrpc(ECHO_STRING)).isEqualTo(ECHO_STRING);
 
     assertThat(testAppender.events.size()).isEqualTo(2);
@@ -137,8 +139,35 @@ public class ITLogging {
   }
 
   @Test
+  void testGrpc_receiveContent_logInfo() {
+    TestAppender testAppender = setupTestLogger(GrpcLoggingInterceptor.class, Level.INFO);
+    assertThat(echoGrpc(ECHO_STRING)).isEqualTo(ECHO_STRING);
+
+    assertThat(testAppender.events.size()).isEqualTo(2);
+    // logging event for request
+    ILoggingEvent loggingEvent1 = testAppender.events.get(0);
+    assertThat(loggingEvent1.getMessage()).isEqualTo("Sending gRPC request");
+    assertThat(loggingEvent1.getLevel()).isEqualTo(Level.INFO);
+    List<KeyValuePair> keyValuePairs = loggingEvent1.getKeyValuePairs();
+    assertThat(keyValuePairs.size()).isEqualTo(2);
+    assertThat(keyValuePairs).containsAtLeast(SERVICE_NAME_KEY_VALUE_PAIR, RPC_NAME_KEY_VALUE_PAIR);
+
+    // logging event for response
+    ILoggingEvent loggingEvent2 = testAppender.events.get(1);
+    assertThat(loggingEvent2.getMessage()).isEqualTo("Received Grpc response");
+
+    assertThat(loggingEvent2.getLevel()).isEqualTo(Level.INFO);
+    List<KeyValuePair> keyValuePairs2 = loggingEvent2.getKeyValuePairs();
+    assertThat(keyValuePairs2.size()).isEqualTo(3);
+    assertThat(keyValuePairs2)
+        .containsAtLeast(
+            RESPONSE_STATUS_KEY_VALUE_PAIR, SERVICE_NAME_KEY_VALUE_PAIR, RPC_NAME_KEY_VALUE_PAIR);
+    testAppender.stop();
+  }
+
+  @Test
   void testHttpJson_receiveContent_logDebug() {
-    TestAppender testAppender = setupTestLogger(HttpJsonLoggingInterceptor.class);
+    TestAppender testAppender = setupTestLogger(HttpJsonLoggingInterceptor.class, Level.DEBUG);
     assertThat(echoHttpJson(ECHO_STRING)).isEqualTo(ECHO_STRING);
     assertThat(testAppender.events.size()).isEqualTo(2);
     // logging event for request
@@ -148,6 +177,7 @@ public class ITLogging {
     List<KeyValuePair> keyValuePairs = loggingEvent1.getKeyValuePairs();
     assertThat(keyValuePairs.size()).isEqualTo(4);
     assertThat(keyValuePairs).contains(RPC_NAME_KEY_VALUE_PAIR);
+    assertThat(keyValuePairs).contains(REQUEST_URL_KEY_VALUE_PAIR);
 
     for (KeyValuePair kvp : keyValuePairs) {
       if (kvp.key.equals("request.payload")) {
@@ -184,6 +214,32 @@ public class ITLogging {
         assertThat(headers.size()).isEqualTo(11);
       }
     }
+    testAppender.stop();
+  }
+
+  @Test
+  void testHttpJson_receiveContent_logInfo() {
+    TestAppender testAppender = setupTestLogger(HttpJsonLoggingInterceptor.class, Level.INFO);
+    assertThat(echoHttpJson(ECHO_STRING)).isEqualTo(ECHO_STRING);
+    assertThat(testAppender.events.size()).isEqualTo(2);
+    // logging event for request
+    ILoggingEvent loggingEvent1 = testAppender.events.get(0);
+    assertThat(loggingEvent1.getMessage()).isEqualTo("Sending gRPC request");
+    assertThat(loggingEvent1.getLevel()).isEqualTo(Level.INFO);
+    List<KeyValuePair> keyValuePairs = loggingEvent1.getKeyValuePairs();
+    assertThat(keyValuePairs.size()).isEqualTo(2);
+    assertThat(keyValuePairs).contains(RPC_NAME_KEY_VALUE_PAIR);
+    assertThat(keyValuePairs).contains(REQUEST_URL_KEY_VALUE_PAIR);
+
+    // logging event for response
+    ILoggingEvent loggingEvent2 = testAppender.events.get(1);
+    assertThat(loggingEvent2.getMessage()).isEqualTo("Received Grpc response");
+
+    assertThat(loggingEvent2.getLevel()).isEqualTo(Level.INFO);
+    List<KeyValuePair> keyValuePairs2 = loggingEvent2.getKeyValuePairs();
+    assertThat(keyValuePairs2.size()).isEqualTo(2);
+    assertThat(keyValuePairs2)
+        .containsAtLeast(RESPONSE_STATUS_KEY_VALUE_PAIR_HTTP, RPC_NAME_KEY_VALUE_PAIR);
     testAppender.stop();
   }
 
