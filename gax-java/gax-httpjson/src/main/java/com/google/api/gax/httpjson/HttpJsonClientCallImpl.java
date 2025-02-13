@@ -135,6 +135,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       HttpTransport httpTransport,
       Executor executor,
       ScheduledExecutorService deadlineCancellationExecutor) {
+    Preconditions.checkNotNull(callOptions.getTypeRegistry());
     this.methodDescriptor = methodDescriptor;
     this.endpoint = endpoint;
     this.callOptions = callOptions;
