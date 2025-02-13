@@ -45,10 +45,10 @@ public final class LabelProto {
           + "\017LabelDescriptor\022\013\n\003key\030\001 \001(\t\0229\n\nvalue_t"
           + "ype\030\002 \001(\0162%.google.api.LabelDescriptor.V"
           + "alueType\022\023\n\013description\030\003 \001(\t\",\n\tValueTy"
-          + "pe\022\n\n\006STRING\020\000\022\010\n\004BOOL\020\001\022\t\n\005INT64\020\002B_\n\016c"
+          + "pe\022\n\n\006STRING\020\000\022\010\n\004BOOL\020\001\022\t\n\005INT64\020\002B\\\n\016c"
           + "om.google.apiB\nLabelProtoP\001Z5google.gola"
           + "ng.org/genproto/googleapis/api/label;lab"
-          + "el\370\001\001\242\002\004GAPIb\006proto3"
+          + "el\242\002\004GAPIb\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
