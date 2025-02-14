@@ -54,18 +54,18 @@ class Slf4jUtils {
   private static boolean loggingEnabled = LoggingUtils.isLoggingEnabled();
   private static final Gson gson = new Gson();
 
-  private static boolean hasAddKeyValue;
+  private static boolean isSLF4J2x;
 
   static {
-    hasAddKeyValue = checkIfClazzAvailable("org.slf4j.event.KeyValuePair");
+    isSLF4J2x = checkIfClazzAvailable("org.slf4j.event.KeyValuePair");
   }
 
   static boolean checkIfClazzAvailable(String clazzName) {
     try {
       Class.forName(clazzName);
-      return true; // SLF4j 2.x or later
+      return true;
     } catch (ClassNotFoundException e) {
-      return false; // SLF4j 1.x or earlier
+      return false;
     }
   }
 
@@ -88,7 +88,7 @@ class Slf4jUtils {
 
   static void log(
       Logger logger, org.slf4j.event.Level level, Map<String, Object> contextMap, String message) {
-    if (hasAddKeyValue) {
+    if (isSLF4J2x) {
       logWithKeyValuePair(logger, level, contextMap, message);
     } else {
       logWithMDC(logger, level, contextMap, message);
