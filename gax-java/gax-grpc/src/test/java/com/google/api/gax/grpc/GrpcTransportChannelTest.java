@@ -30,7 +30,7 @@
 
 package com.google.api.gax.grpc;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import io.grpc.ManagedChannel;
 import org.junit.jupiter.api.Test;
