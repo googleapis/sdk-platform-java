@@ -27,7 +27,7 @@ RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
 RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "./gapic-generator-java.jar"
 
-FROM docker.io/library/alpine:3.21.2@sha256:56fa17d2a7e7f168a043a2712e63aed1f8543aeafdcee47c58dcffe38ed51099 as glibc-compat
+FROM docker.io/library/alpine:3.21.3@sha256:a8560b36e8b8210634f77d9f7f9efd7ffa463e380b75e2e74aff4511df3ef88c as glibc-compat
 
 RUN apk add git sudo
 # This SHA is the latest known-to-work version of this binary compatibility tool
