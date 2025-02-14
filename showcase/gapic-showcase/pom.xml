@@ -310,7 +310,8 @@
     </profile>
     <profile>
       <id>disabledLogging</id>
-      <!--   Only compile test to run when   GOOGLE_SDK_JAVA_LOGGING=!true -->
+      <!--   Only compile test to run when  GOOGLE_SDK_JAVA_LOGGING=!true -->
+      <!--   To verify logging correctly turned off when logging deps present -->
       <activation>
         <property>
           <name>disable_logging</name>
