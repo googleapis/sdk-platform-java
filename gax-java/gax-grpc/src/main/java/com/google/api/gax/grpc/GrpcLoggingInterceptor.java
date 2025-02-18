@@ -53,7 +53,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @InternalApi
-public final class GrpcLoggingInterceptor implements ClientInterceptor {
+public class GrpcLoggingInterceptor implements ClientInterceptor {
 
   private static final LoggerProvider LOGGER_PROVIDER =
       LoggerProvider.forClazz(GrpcLoggingInterceptor.class);

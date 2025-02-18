@@ -45,7 +45,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @InternalApi
-public final class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
+public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
 
   private static final LoggerProvider LOGGER_PROVIDER =
       LoggerProvider.forClazz(HttpJsonLoggingInterceptor.class);
