@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.53.1](https://github.com/googleapis/sdk-platform-java/compare/v2.53.0...v2.53.1) (2025-02-18)
+
+
+### Dependencies
+
+* update grpc to 1.70.0 ([#3641](https://github.com/googleapis/sdk-platform-java/issues/3641)) ([ad26cf9](https://github.com/googleapis/sdk-platform-java/commit/ad26cf98548e325c99edb263baf8fe1a7696e634))
+* Update opentelemetry-semconv to v1.29.0-alpha ([#3635](https://github.com/googleapis/sdk-platform-java/issues/3635)) ([49ac09d](https://github.com/googleapis/sdk-platform-java/commit/49ac09d263daad8ceb2e14a623db242339880670))
+
 ## [2.53.0](https://github.com/googleapis/sdk-platform-java/compare/v2.52.0...v2.53.0) (2025-02-10)
 
 
