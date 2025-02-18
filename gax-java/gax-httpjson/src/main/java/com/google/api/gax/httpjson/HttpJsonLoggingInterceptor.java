@@ -45,7 +45,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @InternalApi
-public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
+public final class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
 
   private static final LoggerProvider LOGGER_PROVIDER =
       LoggerProvider.forClazz(HttpJsonLoggingInterceptor.class);
@@ -66,7 +66,7 @@ public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
       public void start(
           HttpJsonClientCall.Listener<RespT> responseListener, HttpJsonMetadata headers) {
         recordServiceRpcAndRequestHeaders(
-            null,
+            null, // service name is not available for http requests
             method.getFullMethodName(),
             endpoint,
             httpJsonMetadataToMap(headers),

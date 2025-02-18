@@ -53,7 +53,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @InternalApi
-public class GrpcLoggingInterceptor implements ClientInterceptor {
+public final class GrpcLoggingInterceptor implements ClientInterceptor {
 
   private static final LoggerProvider LOGGER_PROVIDER =
       LoggerProvider.forClazz(GrpcLoggingInterceptor.class);
@@ -73,7 +73,7 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
         recordServiceRpcAndRequestHeaders(
             method.getServiceName(),
             method.getFullMethodName(),
-            null,
+            null, // endpoint is for http request only
             metadataHeadersToMap(headers),
             logDataBuilder,
             LOGGER_PROVIDER);
@@ -117,7 +117,9 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
     executeWithTryCatch(
         () -> {
           for (String key : headers.keys()) {
-
+            // grpc header values can be either ASCII strings or binary
+            // https://grpc.io/docs/guides/metadata/#overview
+            // this condition identified binary headers and skip for logging
             if (key.endsWith(Metadata.BINARY_HEADER_SUFFIX)) {
               continue;
             }
