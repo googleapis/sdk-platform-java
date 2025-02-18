@@ -118,11 +118,11 @@ class Slf4jLoggingHelpers {
           }
           if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
             Map<String, Object> responseData = logDataBuilder.build().toMapResponse();
-            Slf4jUtils.log(logger, Level.INFO, responseData, "Received Grpc response");
+            Slf4jUtils.log(logger, Level.INFO, responseData, "Received response");
           }
           if (logger.isDebugEnabled()) {
             Map<String, Object> responsedDetailsMap = logDataBuilder.build().toMapResponse();
-            Slf4jUtils.log(logger, Level.DEBUG, responsedDetailsMap, "Received Grpc response");
+            Slf4jUtils.log(logger, Level.DEBUG, responsedDetailsMap, "Received response");
           }
         });
   }
@@ -134,7 +134,7 @@ class Slf4jLoggingHelpers {
           Logger logger = loggerProvider.getLogger();
           if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
             Slf4jUtils.log(
-                logger, Level.INFO, logDataBuilder.build().toMapRequest(), "Sending gRPC request");
+                logger, Level.INFO, logDataBuilder.build().toMapRequest(), "Sending request");
           }
           if (logger.isDebugEnabled()) {
             if (!(message instanceof Message)) {
@@ -145,7 +145,7 @@ class Slf4jLoggingHelpers {
 
             logDataBuilder.requestPayload(messageToMapWithGson);
             Map<String, Object> requestDetailsMap = logDataBuilder.build().toMapRequest();
-            Slf4jUtils.log(logger, Level.DEBUG, requestDetailsMap, "Sending gRPC request");
+            Slf4jUtils.log(logger, Level.DEBUG, requestDetailsMap, "Sending request");
           }
         });
   }

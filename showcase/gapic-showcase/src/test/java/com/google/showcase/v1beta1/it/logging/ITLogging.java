@@ -57,8 +57,8 @@ public class ITLogging {
   private static final KeyValuePair RESPONSE_HEADERS_KEY_VALUE_PAIR =
       new KeyValuePair("response.headers", ImmutableMap.of("content-type", "application/grpc"));
 
-  private static final String SENDING_REQUEST_MESSAGE = "Sending gRPC request";
-  private static final String RECEIVING_RESPONSE_MESSAGE = "Received Grpc response";
+  private static final String SENDING_REQUEST_MESSAGE = "Sending request";
+  private static final String RECEIVING_RESPONSE_MESSAGE = "Received response";
   private static final String ECHO_STRING = "echo?";
 
   private TestAppender setupTestLogger(Class<?> clazz, Level level) {

@@ -276,7 +276,7 @@ class Slf4jUtilsTest {
     Slf4jLoggingHelpers.logRequest(message, logDataBuilder, setUpLoggerProviderMock(testLogger));
 
     assertEquals(2, testLogger.keyValuePairsMap.size());
-    assertEquals("Sending gRPC request", testLogger.messageList.get(0));
+    assertEquals("Sending request", testLogger.messageList.get(0));
     verify(logDataBuilder, never()).requestPayload(anyMap()); // Ensure debug path is not taken
 
     assertEquals(Level.INFO, testLogger.level);
@@ -307,7 +307,7 @@ class Slf4jUtilsTest {
 
     assertEquals(3, testLogger.keyValuePairsMap.size());
     assertEquals(2, ((Map) testLogger.keyValuePairsMap.get("request.payload")).size());
-    assertEquals("Sending gRPC request", testLogger.messageList.get(0));
+    assertEquals("Sending request", testLogger.messageList.get(0));
 
     assertEquals(Level.DEBUG, testLogger.level);
   }
