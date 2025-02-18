@@ -64,8 +64,6 @@ class Slf4jUtils {
     }
   }
 
-  private Slf4jUtils() {}
-
   static Logger getLogger(Class<?> clazz) {
     return getLogger(clazz, new DefaultLoggerFactoryProvider());
   }
@@ -152,6 +150,8 @@ class Slf4jUtils {
     contextMap.forEach(loggingEventBuilder::addKeyValue);
     loggingEventBuilder.log(message);
   }
+
+  private Slf4jUtils() {}
 
   interface LoggerFactoryProvider {
     ILoggerFactory getLoggerFactory();

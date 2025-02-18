@@ -97,6 +97,10 @@ class Slf4jLoggingHelpers {
         () -> {
           Logger logger = loggerProvider.getLogger();
           if (logger.isDebugEnabled()) {
+            if (!(message instanceof Message)) {
+              // expect RespT to be Message type, otherwise do nothing and return
+              return;
+            }
             Map<String, Object> messageToMapWithGson = messageToMapWithGson((Message) message);
 
             logDataBuilder.responsePayload(messageToMapWithGson);
@@ -133,6 +137,10 @@ class Slf4jLoggingHelpers {
                 logger, Level.INFO, logDataBuilder.build().toMapRequest(), "Sending gRPC request");
           }
           if (logger.isDebugEnabled()) {
+            if (!(message instanceof Message)) {
+              // expect RespT to be Message type, otherwise do nothing and return
+              return;
+            }
             Map<String, Object> messageToMapWithGson = messageToMapWithGson((Message) message);
 
             logDataBuilder.requestPayload(messageToMapWithGson);
