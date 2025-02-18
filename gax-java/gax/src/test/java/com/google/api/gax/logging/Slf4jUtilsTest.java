@@ -30,7 +30,7 @@
 
 package com.google.api.gax.logging;
 
-import static com.google.api.gax.logging.Slf4jUtils.messageToMapWithGson;
+import static com.google.api.gax.logging.Slf4jLoggingHelpers.messageToMapWithGson;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -162,7 +162,7 @@ class Slf4jUtilsTest {
 
     TestLogger testLogger = new TestLogger("test-logger", true, true);
 
-    Slf4jUtils.recordServiceRpcAndRequestHeaders(
+    Slf4jLoggingHelpers.recordServiceRpcAndRequestHeaders(
         serviceName,
         rpcName,
         endpoint,
@@ -197,7 +197,7 @@ class Slf4jUtilsTest {
     TestLogger testLogger = new TestLogger("test-logger", false, false);
 
     LoggerProvider loggerProvider = setUpLoggerProviderMock(testLogger);
-    Slf4jUtils.recordServiceRpcAndRequestHeaders(
+    Slf4jLoggingHelpers.recordServiceRpcAndRequestHeaders(
         serviceName, rpcName, endpoint, requestHeaders, logDataBuilder, loggerProvider);
 
     LogData logData = logDataBuilder.build();
@@ -216,7 +216,7 @@ class Slf4jUtilsTest {
     LogData.Builder logDataBuilder = LogData.builder();
     TestLogger testLogger = new TestLogger("test-logger", true, true);
 
-    Slf4jUtils.recordResponseHeaders(
+    Slf4jLoggingHelpers.recordResponseHeaders(
         responseHeaders, logDataBuilder, setUpLoggerProviderMock(testLogger));
 
     LogData logData = logDataBuilder.build();
@@ -232,7 +232,7 @@ class Slf4jUtilsTest {
     LogData.Builder logDataBuilder = LogData.builder();
     TestLogger testLogger = new TestLogger("test-logger", true, false);
 
-    Slf4jUtils.recordResponseHeaders(
+    Slf4jLoggingHelpers.recordResponseHeaders(
         responseHeaders, logDataBuilder, setUpLoggerProviderMock(testLogger));
 
     LogData logData = logDataBuilder.build();
@@ -252,7 +252,8 @@ class Slf4jUtilsTest {
     LogData.Builder logDataBuilder = LogData.builder();
     TestLogger testLogger = new TestLogger("test-logger", true, true);
 
-    Slf4jUtils.recordResponsePayload(field, logDataBuilder, setUpLoggerProviderMock(testLogger));
+    Slf4jLoggingHelpers.recordResponsePayload(
+        field, logDataBuilder, setUpLoggerProviderMock(testLogger));
 
     LogData logData = logDataBuilder.build();
     assertEquals(2, logData.responsePayload().size());
@@ -272,7 +273,7 @@ class Slf4jUtilsTest {
     when(logDataBuilder.build()).thenReturn(testLogDataBuilder.build());
 
     TestLogger testLogger = new TestLogger("test", true, false);
-    Slf4jUtils.logRequest(message, logDataBuilder, setUpLoggerProviderMock(testLogger));
+    Slf4jLoggingHelpers.logRequest(message, logDataBuilder, setUpLoggerProviderMock(testLogger));
 
     assertEquals(2, testLogger.keyValuePairsMap.size());
     assertEquals("Sending gRPC request", testLogger.messageList.get(0));
@@ -295,14 +296,14 @@ class Slf4jUtilsTest {
         LogData.builder()
             .serviceName("service-name")
             .rpcName("rpc-name")
-            .requestPayload(Slf4jUtils.messageToMapWithGson(field));
+            .requestPayload(Slf4jLoggingHelpers.messageToMapWithGson(field));
     when(logDataBuilder.build()).thenReturn(testLogDataBuilder.build());
 
     TestLogger testLogger = new TestLogger("test-logger", true, true);
 
-    Slf4jUtils.logRequest(field, logDataBuilder, setUpLoggerProviderMock(testLogger));
+    Slf4jLoggingHelpers.logRequest(field, logDataBuilder, setUpLoggerProviderMock(testLogger));
 
-    verify(logDataBuilder).requestPayload(Slf4jUtils.messageToMapWithGson(field));
+    verify(logDataBuilder).requestPayload(Slf4jLoggingHelpers.messageToMapWithGson(field));
 
     assertEquals(3, testLogger.keyValuePairsMap.size());
     assertEquals(2, ((Map) testLogger.keyValuePairsMap.get("request.payload")).size());
@@ -325,7 +326,7 @@ class Slf4jUtilsTest {
     when(logDataBuilder.build()).thenReturn(testLogDataBuilder.build());
     TestLogger testLogger = new TestLogger("test-logger", true, false);
 
-    Slf4jUtils.logResponse(status, logDataBuilder, setUpLoggerProviderMock(testLogger));
+    Slf4jLoggingHelpers.logResponse(status, logDataBuilder, setUpLoggerProviderMock(testLogger));
 
     verify(logDataBuilder).responseStatus(status);
     assertEquals("Received Grpc response", ((TestLogger) testLogger).messageList.get(0));
@@ -349,7 +350,7 @@ class Slf4jUtilsTest {
     when(logDataBuilder.build()).thenReturn(testLogDataBuilder.build());
     TestLogger testLogger = new TestLogger("test-logger", true, true);
 
-    Slf4jUtils.logResponse(status, logDataBuilder, setUpLoggerProviderMock(testLogger));
+    Slf4jLoggingHelpers.logResponse(status, logDataBuilder, setUpLoggerProviderMock(testLogger));
 
     verify(logDataBuilder).responseStatus(status);
     assertEquals("Received Grpc response", ((TestLogger) testLogger).messageList.get(0));

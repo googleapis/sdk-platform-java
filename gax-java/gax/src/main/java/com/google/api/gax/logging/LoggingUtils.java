@@ -63,7 +63,7 @@ public class LoggingUtils {
       LogData.Builder logDataBuilder,
       LoggerProvider loggerProvider) {
     if (loggingEnabled) {
-      Slf4jUtils.recordServiceRpcAndRequestHeaders(
+      Slf4jLoggingHelpers.recordServiceRpcAndRequestHeaders(
           serviceName, rpcName, endpoint, requestHeaders, logDataBuilder, loggerProvider);
     }
   }
@@ -78,7 +78,7 @@ public class LoggingUtils {
   public static void recordResponseHeaders(
       Map<String, String> headers, LogData.Builder logDataBuilder, LoggerProvider loggerProvider) {
     if (loggingEnabled) {
-      Slf4jUtils.recordResponseHeaders(headers, logDataBuilder, loggerProvider);
+      Slf4jLoggingHelpers.recordResponseHeaders(headers, logDataBuilder, loggerProvider);
     }
   }
 
@@ -93,7 +93,7 @@ public class LoggingUtils {
   public static <RespT> void recordResponsePayload(
       RespT message, LogData.Builder logDataBuilder, LoggerProvider loggerProvider) {
     if (loggingEnabled) {
-      Slf4jUtils.recordResponsePayload(message, logDataBuilder, loggerProvider);
+      Slf4jLoggingHelpers.recordResponsePayload(message, logDataBuilder, loggerProvider);
     }
   }
 
@@ -107,7 +107,7 @@ public class LoggingUtils {
   public static void logResponse(
       String status, LogData.Builder logDataBuilder, LoggerProvider loggerProvider) {
     if (loggingEnabled) {
-      Slf4jUtils.logResponse(status, logDataBuilder, loggerProvider);
+      Slf4jLoggingHelpers.logResponse(status, logDataBuilder, loggerProvider);
     }
   }
 
@@ -122,7 +122,7 @@ public class LoggingUtils {
   public static <RespT> void logRequest(
       RespT message, LogData.Builder logDataBuilder, LoggerProvider loggerProvider) {
     if (loggingEnabled) {
-      Slf4jUtils.logRequest(message, logDataBuilder, loggerProvider);
+      Slf4jLoggingHelpers.logRequest(message, logDataBuilder, loggerProvider);
     }
   }
 

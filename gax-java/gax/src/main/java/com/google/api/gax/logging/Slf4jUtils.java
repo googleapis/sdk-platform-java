@@ -31,30 +31,25 @@
 package com.google.api.gax.logging;
 
 import com.google.api.core.InternalApi;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.google.protobuf.InvalidProtocolBufferException;
-import com.google.protobuf.Message;
-import com.google.protobuf.util.JsonFormat;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.function.Consumer;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-import org.slf4j.event.Level;
 import org.slf4j.spi.LoggingEventBuilder;
 
-// Actual interaction with SLF4J happens only in this class.
+/**
+ * Contains util methods to get SLF4J logger and log conditionally based SLF4J major version Actual
+ * interaction with SLF4J happens only in this class.
+ */
 @InternalApi
 class Slf4jUtils {
 
   private static final Logger NO_OP_LOGGER = org.slf4j.helpers.NOPLogger.NOP_LOGGER;
-  private static boolean loggingEnabled = LoggingUtils.isLoggingEnabled();
-  private static final Gson gson = new Gson();
+  private static final boolean loggingEnabled = LoggingUtils.isLoggingEnabled();
 
-  private static boolean isSLF4J2x;
+  private static final boolean isSLF4J2x;
 
   static {
     isSLF4J2x = checkIfClazzAvailable("org.slf4j.event.KeyValuePair");
@@ -102,7 +97,8 @@ class Slf4jUtils {
       for (Entry<String, Object> entry : contextMap.entrySet()) {
         String key = entry.getKey();
         Object value = entry.getValue();
-        MDC.put(key, value instanceof String ? (String) value : gson.toJson(value));
+        MDC.put(
+            key, value instanceof String ? (String) value : Slf4jLoggingHelpers.gson.toJson(value));
       }
     }
     switch (level) {
@@ -166,103 +162,5 @@ class Slf4jUtils {
     public ILoggerFactory getLoggerFactory() {
       return LoggerFactory.getILoggerFactory();
     }
-  }
-
-  // logging helper methods
-  static Map<String, Object> messageToMapWithGson(Message message)
-      throws InvalidProtocolBufferException {
-    String json = JsonFormat.printer().print(message);
-    return gson.fromJson(json, new TypeToken<Map<String, Object>>() {}.getType());
-  }
-
-  static void recordServiceRpcAndRequestHeaders(
-      String serviceName,
-      String rpcName,
-      String endpoint,
-      Map<String, String> requestHeaders,
-      LogData.Builder logDataBuilder,
-      LoggerProvider loggerProvider) {
-    LoggingUtils.executeWithTryCatch(
-        () -> {
-          Logger logger = loggerProvider.getLogger();
-          if (logger.isInfoEnabled()) {
-            addIfNotEmpty(logDataBuilder::serviceName, serviceName);
-            addIfNotEmpty(logDataBuilder::rpcName, rpcName);
-            addIfNotEmpty(logDataBuilder::httpUrl, endpoint);
-          }
-          if (logger.isDebugEnabled()) {
-            logDataBuilder.requestHeaders(requestHeaders);
-          }
-        });
-  }
-
-  private static void addIfNotEmpty(Consumer<String> setter, String value) {
-    if (value != null && !value.isEmpty()) {
-      setter.accept(value);
-    }
-  }
-
-  static void recordResponseHeaders(
-      Map<String, String> headers, LogData.Builder logDataBuilder, LoggerProvider loggerProvider) {
-    LoggingUtils.executeWithTryCatch(
-        () -> {
-          Logger logger = loggerProvider.getLogger();
-          if (logger.isDebugEnabled()) {
-            logDataBuilder.responseHeaders(headers);
-          }
-        });
-  }
-
-  static <RespT> void recordResponsePayload(
-      RespT message, LogData.Builder logDataBuilder, LoggerProvider loggerProvider) {
-    LoggingUtils.executeWithTryCatch(
-        () -> {
-          Logger logger = loggerProvider.getLogger();
-          if (logger.isDebugEnabled()) {
-            Map<String, Object> messageToMapWithGson =
-                Slf4jUtils.messageToMapWithGson((Message) message);
-
-            logDataBuilder.responsePayload(messageToMapWithGson);
-          }
-        });
-  }
-
-  static void logResponse(
-      String status, LogData.Builder logDataBuilder, LoggerProvider loggerProvider) {
-    LoggingUtils.executeWithTryCatch(
-        () -> {
-          Logger logger = loggerProvider.getLogger();
-          if (logger.isInfoEnabled()) {
-            logDataBuilder.responseStatus(status);
-          }
-          if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
-            Map<String, Object> responseData = logDataBuilder.build().toMapResponse();
-            Slf4jUtils.log(logger, Level.INFO, responseData, "Received Grpc response");
-          }
-          if (logger.isDebugEnabled()) {
-            Map<String, Object> responsedDetailsMap = logDataBuilder.build().toMapResponse();
-            Slf4jUtils.log(logger, Level.DEBUG, responsedDetailsMap, "Received Grpc response");
-          }
-        });
-  }
-
-  static <RespT> void logRequest(
-      RespT message, LogData.Builder logDataBuilder, LoggerProvider loggerProvider) {
-    LoggingUtils.executeWithTryCatch(
-        () -> {
-          Logger logger = loggerProvider.getLogger();
-          if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
-            Slf4jUtils.log(
-                logger, Level.INFO, logDataBuilder.build().toMapRequest(), "Sending gRPC request");
-          }
-          if (logger.isDebugEnabled()) {
-            Map<String, Object> messageToMapWithGson =
-                Slf4jUtils.messageToMapWithGson((Message) message);
-
-            logDataBuilder.requestPayload(messageToMapWithGson);
-            Map<String, Object> requestDetailsMap = logDataBuilder.build().toMapRequest();
-            Slf4jUtils.log(logger, Level.DEBUG, requestDetailsMap, "Sending gRPC request");
-          }
-        });
   }
 }
