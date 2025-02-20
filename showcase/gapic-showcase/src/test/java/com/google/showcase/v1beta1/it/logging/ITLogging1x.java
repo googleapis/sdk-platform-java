@@ -47,8 +47,8 @@ public class ITLogging1x {
   private static final String SERVICE_NAME = "google.showcase.v1beta1.Echo";
   private static final String RPC_NAME = "google.showcase.v1beta1.Echo/Echo";
   private static final String ENDPOINT = "http://localhost:7469";
-  private static final String SENDING_REQUEST_MESSAGE = "Sending gRPC request";
-  private static final String RECEIVING_RESPONSE_MESSAGE = "Received Grpc response";
+  private static final String SENDING_REQUEST_MESSAGE = "Sending request";
+  private static final String RECEIVING_RESPONSE_MESSAGE = "Received response";
 
   private static Logger logger = LoggerFactory.getLogger(ITLogging1x.class);
 

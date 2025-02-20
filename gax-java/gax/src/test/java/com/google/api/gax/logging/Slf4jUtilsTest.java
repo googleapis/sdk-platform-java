@@ -329,11 +329,10 @@ class Slf4jUtilsTest {
     Slf4jLoggingHelpers.logResponse(status, logDataBuilder, setUpLoggerProviderMock(testLogger));
 
     verify(logDataBuilder).responseStatus(status);
-    assertEquals("Received Grpc response", ((TestLogger) testLogger).messageList.get(0));
-    assertEquals(3, ((TestLogger) testLogger).keyValuePairsMap.size());
-    assertTrue(((TestLogger) testLogger).keyValuePairsMap.containsKey("response.payload"));
-    assertEquals(Level.INFO, ((TestLogger) testLogger).level);
-    Map<String, Object> keyValuePairsMap = ((TestLogger) testLogger).keyValuePairsMap;
+    assertEquals("Received response", (testLogger).messageList.get(0));
+    assertEquals(3, (testLogger).keyValuePairsMap.size());
+    assertTrue((testLogger).keyValuePairsMap.containsKey("response.payload"));
+    assertEquals(Level.INFO, (testLogger).level);
   }
 
   @Test
@@ -353,11 +352,11 @@ class Slf4jUtilsTest {
     Slf4jLoggingHelpers.logResponse(status, logDataBuilder, setUpLoggerProviderMock(testLogger));
 
     verify(logDataBuilder).responseStatus(status);
-    assertEquals("Received Grpc response", ((TestLogger) testLogger).messageList.get(0));
-    assertEquals(3, ((TestLogger) testLogger).keyValuePairsMap.size());
-    assertTrue(((TestLogger) testLogger).keyValuePairsMap.containsKey("response.payload"));
+    assertEquals("Received response", (testLogger).messageList.get(0));
+    assertEquals(3, (testLogger).keyValuePairsMap.size());
+    assertTrue((testLogger).keyValuePairsMap.containsKey("response.payload"));
 
-    assertEquals(Level.DEBUG, ((TestLogger) testLogger).level);
+    assertEquals(Level.DEBUG, (testLogger).level);
   }
 
   @Test
