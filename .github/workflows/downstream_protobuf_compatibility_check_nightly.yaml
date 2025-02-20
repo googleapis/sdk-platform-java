@@ -46,9 +46,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          java-version: 17
+          java-version: 11
           distribution: temurin
       - name: Print Protobuf-Java testing version
         run: echo "Testing with Protobuf-Java v${{ matrix.protobuf-version }}"
       - name: Perform downstream source compatibility testing
         run: REPOS_UNDER_TEST="${{ matrix.repo }}" PROTOBUF_RUNTIME_VERSION="${{ matrix.protobuf-version}}" ./.kokoro/nightly/downstream-protobuf-source-compatibility.sh
+      - name: Perform downstream binary compatibility testing
+        run: REPOS_UNDER_TEST="${{ matrix.repo }}" PROTOBUF_RUNTIME_VERSION="${{ matrix.protobuf-version}}" ./.kokoro/nightly/downstream-protobuf-binary-compatibility.sh
+
