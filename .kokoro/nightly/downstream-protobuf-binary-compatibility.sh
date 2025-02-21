@@ -48,37 +48,40 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   # Additionally, exclude any matches to BOM artifacts or emulators
   # The artifact list will look something like "com.google.cloud:google-cloud-accessapproval:2.60.0-SNAPSHOT,com.google.cloud:google-cloud-aiplatform:3.60.0-SNAPSHOT,"
   CLOUD_ARTIFACT_LIST=$(cat "versions.txt" | grep "^google-cloud" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="com.google.cloud:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
-  # Remove the trailing comma after the last entry
-  CLOUD_ARTIFACT_LIST=${CLOUD_ARTIFACT_LIST%,}
   if [ -n "${CLOUD_ARTIFACT_LIST}" ]; then
+    # Remove the trailing comma after the last entry
+    CLOUD_ARTIFACT_LIST=${CLOUD_ARTIFACT_LIST%,}
     ARTIFACT_LIST="${ARTIFACT_LIST},${CLOUD_ARTIFACT_LIST}"
   fi
 
   # This logic is only for google-cloud-java as there are non-cloud APIs included
   # This also excludes any proto, grpc, bom, and emulators included
   GRAFEAS_ARTIFACT_LIST=$(cat "versions.txt" | grep "^grafeas" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="io.grafeas:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
-  GRAFEAS_ARTIFACT_LIST=${GRAFEAS_ARTIFACT_LIST%,}
-  MAPS_ARTIFACT_LIST=$(cat "versions.txt" | grep "^google-maps" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="com.google.maps:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
-  MAPS_ARTIFACT_LIST=${MAPS_ARTIFACT_LIST%,}
-  SHOPPING_ARTIFACT_LIST=$(cat "versions.txt" | grep "^google-shopping" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="com.google.shopping:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
-  SHOPPING_ARTIFACT_LIST=${SHOPPING_ARTIFACT_LIST%,}
   if [ -n "${GRAFEAS_ARTIFACT_LIST}" ]; then
+    GRAFEAS_ARTIFACT_LIST=${GRAFEAS_ARTIFACT_LIST%,}
     ARTIFACT_LIST="${ARTIFACT_LIST},${GRAFEAS_ARTIFACT_LIST}"
   fi
+  MAPS_ARTIFACT_LIST=$(cat "versions.txt" | grep "^google-maps" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="com.google.maps:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
   if [ -n "${MAPS_ARTIFACT_LIST}" ]; then
+    MAPS_ARTIFACT_LIST=${MAPS_ARTIFACT_LIST%,}
     ARTIFACT_LIST="${ARTIFACT_LIST},${MAPS_ARTIFACT_LIST}"
   fi
+  SHOPPING_ARTIFACT_LIST=$(cat "versions.txt" | grep "^google-shopping" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="com.google.shopping:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
   if [ -n "${SHOPPING_ARTIFACT_LIST}" ]; then
+    SHOPPING_ARTIFACT_LIST=${SHOPPING_ARTIFACT_LIST%,}
     ARTIFACT_LIST="${ARTIFACT_LIST},${SHOPPING_ARTIFACT_LIST}"
   fi
 
-  echo "Found artifacts ${ARTIFACT_LIST}"
+  # Linkage Checker /dependencies
   popd
 
-  # The `-s` argument filters the linkage check problems that stem from the artifact
-  program_args="-r --artifacts ${ARTIFACT_LIST},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION},com.google.protobuf:protobuf-java-util:${PROTOBUF_RUNTIME_VERSION} -s ${ARTIFACT_LIST}"
-  echo "Linkage Checker Program Arguments: ${program_args}"
-  mvn -B -ntp exec:java -Dexec.mainClass="com.google.cloud.tools.opensource.classpath.LinkageCheckerMain" -Dexec.args="${program_args}"
+  if [ -n "${ARTIFACT_LIST}" ]; then
+    echo "Found artifacts ${ARTIFACT_LIST}"
+    # The `-s` argument filters the linkage check problems that stem from the artifact
+    program_args="-r --artifacts ${ARTIFACT_LIST},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION},com.google.protobuf:protobuf-java-util:${PROTOBUF_RUNTIME_VERSION} -s ${ARTIFACT_LIST}"
+    echo "Linkage Checker Program Arguments: ${program_args}"
+    mvn -B -ntp exec:java -Dexec.mainClass="com.google.cloud.tools.opensource.classpath.LinkageCheckerMain" -Dexec.args="${program_args}"
+  fi
 done
 popd
 popd
