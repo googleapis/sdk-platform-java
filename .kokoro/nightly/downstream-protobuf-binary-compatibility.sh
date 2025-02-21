@@ -41,35 +41,36 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   git clone "https://github.com/googleapis/$repo.git" --depth=1
   pushd "$repo"
   # Install all modules to ~/.m2 (there can be multiple relevant versions i.e. core, admin, control)
-  mvn -B -ntp clean install -T 1C -DskipTests -Dclirr.skip
+  mvn -B -ntp clean install -T 1C -DskipTests -Dclirr.skip -Denforcer.skip
 
   ARTIFACT_LIST=""
   # Match all artifacts that start with google-cloud to exclude any proto and grpc modules.
   # Additionally, exclude any matches to BOM artifacts or emulators
   # The artifact list will look something like "com.google.cloud:google-cloud-accessapproval:2.60.0-SNAPSHOT,com.google.cloud:google-cloud-aiplatform:3.60.0-SNAPSHOT,"
   CLOUD_ARTIFACT_LIST=$(cat "versions.txt" | grep "^google-cloud" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="com.google.cloud:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
+  CLOUD_ARTIFACT_LIST=${CLOUD_ARTIFACT_LIST%,}
   if [ -n "${CLOUD_ARTIFACT_LIST}" ]; then
     # Remove the trailing comma after the last entry
-    CLOUD_ARTIFACT_LIST=${CLOUD_ARTIFACT_LIST%,}
     ARTIFACT_LIST="${ARTIFACT_LIST},${CLOUD_ARTIFACT_LIST}"
   fi
 
   # This logic is only for google-cloud-java as there are non-cloud APIs included
-  # This also excludes any proto, grpc, bom, and emulators included
-  GRAFEAS_ARTIFACT_LIST=$(cat "versions.txt" | grep "^grafeas" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="io.grafeas:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
-  if [ -n "${GRAFEAS_ARTIFACT_LIST}" ]; then
+  if [ "${repo}" == "google-cloud-java" ]; then
+    GRAFEAS_ARTIFACT_LIST=$(cat "versions.txt" | grep "^grafeas" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="io.grafeas:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
     GRAFEAS_ARTIFACT_LIST=${GRAFEAS_ARTIFACT_LIST%,}
-    ARTIFACT_LIST="${ARTIFACT_LIST},${GRAFEAS_ARTIFACT_LIST}"
-  fi
-  MAPS_ARTIFACT_LIST=$(cat "versions.txt" | grep "^google-maps" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="com.google.maps:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
-  if [ -n "${MAPS_ARTIFACT_LIST}" ]; then
+    if [ -n "${GRAFEAS_ARTIFACT_LIST}" ]; then
+      ARTIFACT_LIST="${ARTIFACT_LIST},${GRAFEAS_ARTIFACT_LIST}"
+    fi
+    MAPS_ARTIFACT_LIST=$(cat "versions.txt" | grep "^google-maps" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="com.google.maps:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
     MAPS_ARTIFACT_LIST=${MAPS_ARTIFACT_LIST%,}
-    ARTIFACT_LIST="${ARTIFACT_LIST},${MAPS_ARTIFACT_LIST}"
-  fi
-  SHOPPING_ARTIFACT_LIST=$(cat "versions.txt" | grep "^google-shopping" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="com.google.shopping:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
-  if [ -n "${SHOPPING_ARTIFACT_LIST}" ]; then
+    if [ -n "${MAPS_ARTIFACT_LIST}" ]; then
+      ARTIFACT_LIST="${ARTIFACT_LIST},${MAPS_ARTIFACT_LIST}"
+    fi
+    SHOPPING_ARTIFACT_LIST=$(cat "versions.txt" | grep "^google-shopping" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="com.google.shopping:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
     SHOPPING_ARTIFACT_LIST=${SHOPPING_ARTIFACT_LIST%,}
-    ARTIFACT_LIST="${ARTIFACT_LIST},${SHOPPING_ARTIFACT_LIST}"
+    if [ -n "${SHOPPING_ARTIFACT_LIST}" ]; then
+      ARTIFACT_LIST="${ARTIFACT_LIST},${SHOPPING_ARTIFACT_LIST}"
+    fi
   fi
 
   # Linkage Checker /dependencies
