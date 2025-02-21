@@ -31,6 +31,7 @@
 package com.google.api.gax.logging;
 
 import com.google.api.core.InternalApi;
+import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -38,7 +39,6 @@ import com.google.protobuf.Message;
 import com.google.protobuf.util.JsonFormat;
 import java.util.Map;
 import java.util.function.Consumer;
-import jdk.internal.joptsimple.internal.Strings;
 import org.slf4j.Logger;
 import org.slf4j.event.Level;
 
