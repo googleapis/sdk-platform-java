@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -40,13 +40,15 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   # Perform source-compatibility testing on main (latest changes)
   git clone "https://github.com/googleapis/$repo.git" --depth=1
   pushd "$repo"
-  # Install all the repo's modules to local ~/.m2
+  # Install all modules to ~/.m2 (there can be multiple relevant versions i.e. core, admin, control)
   mvn -B -ntp clean install -T 1C -DskipTests -Dclirr.skip
 
-  # Match all artifacts that start with google-cloud (rules out proto and grpc modules)
-  # Exclude any matches to BOM artifacts or emulators
-  # The artifact list will look something like "com.google.cloud:google-cloud-accessapproval:2.60.0-SNAPSHOT,com.google.cloud:google-cloud-aiplatform:3.60.0-SNAPSHOT"
+  ARTIFACT_LIST=""
+  # Match all artifacts that start with google-cloud to exclude any proto and grpc modules.
+  # Additionally, exclude any matches to BOM artifacts or emulators
+  # The artifact list will look something like "com.google.cloud:google-cloud-accessapproval:2.60.0-SNAPSHOT,com.google.cloud:google-cloud-aiplatform:3.60.0-SNAPSHOT,"
   CLOUD_ARTIFACT_LIST=$(cat "versions.txt" | grep "^google-cloud" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="com.google.cloud:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
+  # Remove the trailing comma after the last entry
   CLOUD_ARTIFACT_LIST=${CLOUD_ARTIFACT_LIST%,}
   if [ -n "${CLOUD_ARTIFACT_LIST}" ]; then
     ARTIFACT_LIST="${ARTIFACT_LIST},${CLOUD_ARTIFACT_LIST}"
@@ -60,7 +62,6 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   MAPS_ARTIFACT_LIST=${MAPS_ARTIFACT_LIST%,}
   SHOPPING_ARTIFACT_LIST=$(cat "versions.txt" | grep "^google-shopping" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="com.google.shopping:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
   SHOPPING_ARTIFACT_LIST=${SHOPPING_ARTIFACT_LIST%,}
-  ARTIFACT_LIST=""
   if [ -n "${GRAFEAS_ARTIFACT_LIST}" ]; then
     ARTIFACT_LIST="${ARTIFACT_LIST},${GRAFEAS_ARTIFACT_LIST}"
   fi
