@@ -38,6 +38,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.util.JsonFormat;
 import java.util.Map;
 import java.util.function.Consumer;
+import jdk.internal.joptsimple.internal.Strings;
 import org.slf4j.Logger;
 import org.slf4j.event.Level;
 
@@ -75,7 +76,7 @@ class Slf4jLoggingHelpers {
   }
 
   private static void addIfNotEmpty(Consumer<String> setter, String value) {
-    if (value != null && !value.isEmpty()) {
+    if (!Strings.isNullOrEmpty(value)) {
       setter.accept(value);
     }
   }
