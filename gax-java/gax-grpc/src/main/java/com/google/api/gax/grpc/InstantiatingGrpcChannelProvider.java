@@ -1208,8 +1208,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
               ComputeEngineCredentials.newBuilder()
                   .setScopes(credsBuilder.getScopes())
                   .setHttpTransportFactory(credsBuilder.getHttpTransportFactory())
-                  .setGoogleAuthTransport(ComputeEngineCredentials.GoogleAuthTransport.MTLS)
-                  .setBindingEnforcement(ComputeEngineCredentials.BindingEnforcement.ON)
+                  .setGoogleAuthTransport(googleAuthTransport)
+                  .setBindingEnforcement(bindingEnforcement)
                   .build());
     }
 
