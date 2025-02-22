@@ -1203,14 +1203,13 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
           ((ComputeEngineCredentials) credentials).toBuilder();
       // We only set scopes and HTTP transport factory from the original credentials because
       // only those are used in gRPC CallCredentials to fetch request metadata.
-      CallCredentials callCreds =
-          MoreCallCredentials.from(
-              ComputeEngineCredentials.newBuilder()
-                  .setScopes(credsBuilder.getScopes())
-                  .setHttpTransportFactory(credsBuilder.getHttpTransportFactory())
-                  .setGoogleAuthTransport(googleAuthTransport)
-                  .setBindingEnforcement(bindingEnforcement)
-                  .build());
+      return MoreCallCredentials.from(
+          ComputeEngineCredentials.newBuilder()
+              .setScopes(credsBuilder.getScopes())
+              .setHttpTransportFactory(credsBuilder.getHttpTransportFactory())
+              .setGoogleAuthTransport(googleAuthTransport)
+              .setBindingEnforcement(bindingEnforcement)
+              .build());
     }
 
     public InstantiatingGrpcChannelProvider build() {
