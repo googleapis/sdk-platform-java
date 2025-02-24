@@ -29,6 +29,11 @@ if [ -z "${PROTOBUF_RUNTIME_VERSION}" ]; then
   exit 1
 fi
 
+declare -A nonCloudAPIs
+nonCloudAPIs["grafeas"]="com.google.cloud"
+nonCloudAPIs["google-maps"]="com.google.maps"
+nonCloudAPIs["google-shopping"]="com.google.shopping"
+
 # cloud-opensource-java contains the Linkage Checker tool
 git clone https://github.com/GoogleCloudPlatform/cloud-opensource-java.git
 pushd cloud-opensource-java
@@ -56,21 +61,13 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
 
   # This logic is only for google-cloud-java as there are non-cloud APIs included
   if [ "${repo}" == "google-cloud-java" ]; then
-    GRAFEAS_ARTIFACT_LIST=$(cat "versions.txt" | grep "^grafeas" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="io.grafeas:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
-    GRAFEAS_ARTIFACT_LIST=${GRAFEAS_ARTIFACT_LIST%,}
-    if [ -n "${GRAFEAS_ARTIFACT_LIST}" ]; then
-      ARTIFACT_LIST="${ARTIFACT_LIST},${GRAFEAS_ARTIFACT_LIST}"
-    fi
-    MAPS_ARTIFACT_LIST=$(cat "versions.txt" | grep "^google-maps" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="com.google.maps:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
-    MAPS_ARTIFACT_LIST=${MAPS_ARTIFACT_LIST%,}
-    if [ -n "${MAPS_ARTIFACT_LIST}" ]; then
-      ARTIFACT_LIST="${ARTIFACT_LIST},${MAPS_ARTIFACT_LIST}"
-    fi
-    SHOPPING_ARTIFACT_LIST=$(cat "versions.txt" | grep "^google-shopping" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="com.google.shopping:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
-    SHOPPING_ARTIFACT_LIST=${SHOPPING_ARTIFACT_LIST%,}
-    if [ -n "${SHOPPING_ARTIFACT_LIST}" ]; then
-      ARTIFACT_LIST="${ARTIFACT_LIST},${SHOPPING_ARTIFACT_LIST}"
-    fi
+    for key in "${!nonCloudAPIs[@]}"; do
+      value="${nonCloudAPIs[$key]}"
+      echo "Key: $key, Value: $value"
+      NON_CLOUD_ARTIFACT_LIST=$(cat "versions.txt" | grep "^${key}" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="${value}:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
+      NON_CLOUD_ARTIFACT_LIST=${NON_CLOUD_ARTIFACT_LIST%,}
+      ARTIFACT_LIST="${ARTIFACT_LIST},${NON_CLOUD_ARTIFACT_LIST}"
+    done
   fi
 
   # Linkage Checker /dependencies
