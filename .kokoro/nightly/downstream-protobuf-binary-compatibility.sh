@@ -30,6 +30,7 @@ if [ -z "${PROTOBUF_RUNTIME_VERSION}" ]; then
 fi
 
 # Create a Map of possible API names (Key: Maven Artifact ID Prefix, Value: Maven Group ID)
+# Non-Cloud APIs have a different Group ID
 declare -A api_maven_map
 api_maven_map["google-cloud"]="com.google.cloud"
 api_maven_map["grafeas"]="io.grafeas"
@@ -54,17 +55,19 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   for artifact_id_prefix in "${!api_maven_map[@]}"; do
     group_id="${api_maven_map[${artifact_id_prefix}]}"
 
-    # Match all artifacts that start with google-cloud to exclude any proto and grpc modules.
-    # Additionally, exclude any matches to BOM artifacts or emulators
-    # The artifact list will look like "com.google.cloud:google-cloud-accessapproval:2.60.0-SNAPSHOT,com.google.cloud:google-cloud-aiplatform:3.60.0-SNAPSHOT,"
-    repo_artifact_list=$(cat "versions.txt" | grep "^${artifact_id_prefix}" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: "{\$1=\"${group_id}:\"\$1; \$2=\"\"; print}" OFS=: | sed 's/::/:/' | tr '\n' ',')
-
-    # Only google-cloud-java has non-cloud APIs. Only add if there are artifacts to be added
-    if [ -n "${repo_artifact_list}" ]; then
-      # Remove the trailing comma after the last entry
-      repo_artifact_list=${repo_artifact_list%,}
-      artifact_list="${artifact_list},${repo_artifact_list}"
+    # Match all artifacts that start with the artifact_id_prefix to exclude any proto and grpc modules.
+    repo_artifact_list=$(cat "versions.txt" | grep "^${artifact_id_prefix}" || true)
+    # If there are no matching artifacts, then skip. Only google-cloud-java has non-cloud APIs
+    if [ -z "${repo_artifact_list}" ]; then
+      continue
     fi
+
+    # Exclude any matches to BOM artifacts or emulators. The repo artifact list will look like:
+    # "com.google.cloud:google-cloud-accessapproval:2.60.0-SNAPSHOT,com.google.cloud:google-cloud-aiplatform:3.60.0-SNAPSHOT,"
+    repo_artifact_list=$(echo "${repo_artifact_list}" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: "{\$1=\"${group_id}:\"\$1; \$2=\"\"; print}" OFS=: | sed 's/::/:/' | tr '\n' ',')
+    # Remove the trailing comma after the last entry
+    repo_artifact_list=${repo_artifact_list%,}
+    artifact_list="${artifact_list},${repo_artifact_list}"
   done
 
   # Linkage Checker /dependencies
