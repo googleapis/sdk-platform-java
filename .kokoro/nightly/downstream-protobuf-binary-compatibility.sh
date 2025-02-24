@@ -64,7 +64,7 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
     for key in "${!nonCloudAPIs[@]}"; do
       value="${nonCloudAPIs[$key]}"
       echo "Key: $key, Value: $value"
-      NON_CLOUD_ARTIFACT_LIST=$(cat "versions.txt" | grep "^${key}" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="${value}:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
+      NON_CLOUD_ARTIFACT_LIST=$(cat "versions.txt" | grep "^${key}" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: "{\$1=\"${value}:\$1; \$2=\"\"; print}" OFS=: | sed 's/::/:/' | tr '\n' ',')
       NON_CLOUD_ARTIFACT_LIST=${NON_CLOUD_ARTIFACT_LIST%,}
       ARTIFACT_LIST="${ARTIFACT_LIST},${NON_CLOUD_ARTIFACT_LIST}"
     done
