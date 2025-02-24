@@ -29,6 +29,7 @@ if [ -z "${PROTOBUF_RUNTIME_VERSION}" ]; then
   exit 1
 fi
 
+# Create a Map of Non-Cloud APIs (Key: Maven Artifact ID Prefix, Value: Maven Group ID)
 declare -A nonCloudAPIs
 nonCloudAPIs["grafeas"]="com.google.cloud"
 nonCloudAPIs["google-maps"]="com.google.maps"
@@ -45,17 +46,17 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   # Perform source-compatibility testing on main (latest changes)
   git clone "https://github.com/googleapis/$repo.git" --depth=1
   pushd "$repo"
-  # Install all modules to ~/.m2 (there can be multiple relevant versions i.e. core, admin, control)
+  # Install all modules to ~/.m2 (there can be multiple relevant artifacts to test i.e. core, admin, control)
   mvn -B -ntp clean install -T 1C -DskipTests -Dclirr.skip -Denforcer.skip
 
   ARTIFACT_LIST=""
   # Match all artifacts that start with google-cloud to exclude any proto and grpc modules.
   # Additionally, exclude any matches to BOM artifacts or emulators
-  # The artifact list will look something like "com.google.cloud:google-cloud-accessapproval:2.60.0-SNAPSHOT,com.google.cloud:google-cloud-aiplatform:3.60.0-SNAPSHOT,"
-  CLOUD_ARTIFACT_LIST=$(cat "versions.txt" | grep "^google-cloud" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: '{$1="com.google.cloud:"$1; $2=""; print}' OFS=: | sed 's/::/:/' | tr '\n' ',')
+  # The artifact list will look like "com.google.cloud:google-cloud-accessapproval:2.60.0-SNAPSHOT,com.google.cloud:google-cloud-aiplatform:3.60.0-SNAPSHOT,"
+  CLOUD_ARTIFACT_LIST=$(cat "versions.txt" | grep "^google-cloud" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: "{\$1=\"com.google.cloud:\"\$1; \$2=\"\"; print}" OFS=: | sed 's/::/:/' | tr '\n' ',')
+  # Remove the trailing comma after the last entry
   CLOUD_ARTIFACT_LIST=${CLOUD_ARTIFACT_LIST%,}
   if [ -n "${CLOUD_ARTIFACT_LIST}" ]; then
-    # Remove the trailing comma after the last entry
     ARTIFACT_LIST="${ARTIFACT_LIST},${CLOUD_ARTIFACT_LIST}"
   fi
 
@@ -63,10 +64,11 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   if [ "${repo}" == "google-cloud-java" ]; then
     for key in "${!nonCloudAPIs[@]}"; do
       value="${nonCloudAPIs[$key]}"
-      echo "Key: $key, Value: $value"
-      NON_CLOUD_ARTIFACT_LIST=$(cat "versions.txt" | grep "^${key}" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: "{\$1=\"${value}:\$1; \$2=\"\"; print}" OFS=: | sed 's/::/:/' | tr '\n' ',')
+      NON_CLOUD_ARTIFACT_LIST=$(cat "versions.txt" | grep "^${key}" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: "{\$1=\"${value}:\"\$1; \$2=\"\"; print}" OFS=: | sed 's/::/:/' | tr '\n' ',')
       NON_CLOUD_ARTIFACT_LIST=${NON_CLOUD_ARTIFACT_LIST%,}
-      ARTIFACT_LIST="${ARTIFACT_LIST},${NON_CLOUD_ARTIFACT_LIST}"
+      if [ -n "${NON_CLOUD_ARTIFACT_LIST}" ]; then
+        ARTIFACT_LIST="${ARTIFACT_LIST},${NON_CLOUD_ARTIFACT_LIST}"
+      fi
     done
   fi
 
