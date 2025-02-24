@@ -45,19 +45,20 @@ mvn -B -ntp clean compile -T 1C
 pushd dependencies
 
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
-  # Perform binary-compatibility testing on main (latest changes) and do not pull history
+  # Perform testing on main (with latest changes). Shallow copy as history is not important
   git clone "https://github.com/googleapis/$repo.git" --depth=1
   pushd "$repo"
   # Install all repo modules to ~/.m2 (there can be multiple relevant artifacts to test i.e. core, admin, control)
   mvn -B -ntp install -T 1C -DskipTests -Dclirr.skip -Denforcer.skip
 
+  # The artifact_list will be a comma separate list of artifacts
   artifact_list=""
   for artifact_id_prefix in "${!api_maven_map[@]}"; do
     group_id="${api_maven_map[${artifact_id_prefix}]}"
 
     # Match all artifacts that start with the artifact_id_prefix to exclude any proto and grpc modules.
     repo_artifact_list=$(cat "versions.txt" | grep "^${artifact_id_prefix}" || true)
-    # If there are no matching artifacts, then skip. Only google-cloud-java has non-cloud APIs
+    # Only google-cloud-java has non-cloud APIs. If there are no matching artifacts, then skip.
     if [ -z "${repo_artifact_list}" ]; then
       continue
     fi
@@ -67,12 +68,19 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
     repo_artifact_list=$(echo "${repo_artifact_list}" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: "{\$1=\"${group_id}:\"\$1; \$2=\"\"; print}" OFS=: | sed 's/::/:/' | tr '\n' ',')
     # Remove the trailing comma after the last entry
     repo_artifact_list=${repo_artifact_list%,}
-    artifact_list="${artifact_list},${repo_artifact_list}"
+
+    # The first entry added is not separated with a comma. Avoids generating `,{ARTIFACT_LIST}`
+    if [ -z "${artifact_list}" ]; then
+      artifact_list="${repo_artifact_list}"
+    else
+      artifact_list="${artifact_list},${repo_artifact_list}"
+    fi
   done
 
   # Linkage Checker /dependencies
   popd
 
+  # Only run Linkage Checker if the repo has any relevant artifacts to test for
   if [ -n "${artifact_list}" ]; then
     echo "Found artifacts ${artifact_list}"
     # The `-s` argument filters the linkage check problems that stem from the artifact
