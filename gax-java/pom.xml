@@ -135,6 +135,11 @@
         <version>${graal-sdk.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
         <groupId>com.google.http-client</groupId>
         <artifactId>google-http-client-bom</artifactId>
         <version>${google.http-client.version}</version>
@@ -165,8 +170,9 @@
     </dependencies>
   </dependencyManagement>
 
-  <!-- Test Dependencies -->
+
   <dependencies>
+    <!-- Test Dependencies -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>

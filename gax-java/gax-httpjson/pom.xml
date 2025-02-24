@@ -78,6 +78,12 @@
       <artifactId>auto-value-annotations</artifactId>
       <scope>provided</scope>
     </dependency>
+    <!--    Logging dependency    -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <optional>true</optional>
+    </dependency>
 
     <!-- test dependencies -->
     <dependency>
