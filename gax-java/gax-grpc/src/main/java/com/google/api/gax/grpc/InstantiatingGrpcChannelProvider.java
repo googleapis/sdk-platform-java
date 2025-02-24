@@ -1200,11 +1200,20 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     CallCredentials createHardBoundTokensCallCredentials(
         ComputeEngineCredentials.GoogleAuthTransport googleAuthTransport,
         ComputeEngineCredentials.BindingEnforcement bindingEnforcement) {
+      ComputeEngineCredentials.Builder credsBuilder =
+          ((ComputeEngineCredentials) credentials).toBuilder();
       // We only set scopes and HTTP transport factory from the original credentials because
-      // only those are used in gRPC CallCredentials to fetch request metadata.
+      // only those are used in gRPC CallCredentials to fetch request metadata. We create a new
+      // credential
+      // via {@code newBuilder} as opposed to {@code toBuilder} because we don't want a reference to
+      // the
+      // access token held by {@code credentials}; we want this new credential to fetch a new access
+      // token
+      // from MDS using the {@param googleAuthTransport} and {@param bindingEnforcement}.
       return MoreCallCredentials.from(
-          ((ComputeEngineCredentials) this.credentials)
-              .toBuilder()
+          ComputeEngineCredentials.newBuilder()
+              .setScopes(credsBuilder.getScopes())
+              .setHttpTransportFactory(credsBuilder.getHttpTransportFactory())
               .setGoogleAuthTransport(googleAuthTransport)
               .setBindingEnforcement(bindingEnforcement)
               .build());
