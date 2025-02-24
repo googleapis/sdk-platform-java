@@ -45,10 +45,10 @@ mvn -B -ntp clean compile -T 1C
 pushd dependencies
 
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
-  # Perform source-compatibility testing on main (latest changes)
+  # Perform binary-compatibility testing on main (latest changes) and do not pull history
   git clone "https://github.com/googleapis/$repo.git" --depth=1
   pushd "$repo"
-  # Install all modules to ~/.m2 (there can be multiple relevant artifacts to test i.e. core, admin, control)
+  # Install all repo modules to ~/.m2 (there can be multiple relevant artifacts to test i.e. core, admin, control)
   mvn -B -ntp install -T 1C -DskipTests -Dclirr.skip -Denforcer.skip
 
   artifact_list=""
