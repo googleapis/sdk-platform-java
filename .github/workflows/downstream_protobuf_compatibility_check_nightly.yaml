@@ -46,6 +46,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
+          # Use Java 11 for this as Linkage Checker is only compatible with Java 11 or below
           java-version: 11
           distribution: temurin
       - name: Print Protobuf-Java testing version
