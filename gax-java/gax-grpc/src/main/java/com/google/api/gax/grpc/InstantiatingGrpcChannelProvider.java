@@ -675,16 +675,18 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
           }
           builder = Grpc.newChannelBuilder(endpoint, channelCredentials);
         } else {
-          // Use default TLS credentials if we cannot initialize channel credentials via DCA or S2A.
-          // This is the only case we allow the credentials to be null, although it should always
-          // be supplied in general.
-          channelCredentials = TlsChannelCredentials.create();
           if (credentials != null) {
+            // Use default TLS credentials if we cannot initialize channel credentials via DCA or
+            // S2A.
             channelCredentials =
                 CompositeChannelCredentials.create(
-                    channelCredentials, MoreCallCredentials.from(credentials));
+                    TlsChannelCredentials.create(), MoreCallCredentials.from(credentials));
+            builder = Grpc.newChannelBuilderForAddress(serviceAddress, port, channelCredentials);
+          } else {
+            // This is the only case credentials is allowed to be absent, because of backward
+            // compatiblity.
+            builder = ManagedChannelBuilder.forAddress(serviceAddress, port);
           }
-          builder = Grpc.newChannelBuilderForAddress(serviceAddress, port, channelCredentials);
         }
       }
     }
