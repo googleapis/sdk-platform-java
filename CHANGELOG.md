@@ -1,5 +1,33 @@
 # Changelog
 
+## [2.54.0](https://github.com/googleapis/sdk-platform-java/compare/v2.53.0...v2.54.0) (2025-02-25)
+
+
+### Features
+
+* add client side logging with slf4j ([#3403](https://github.com/googleapis/sdk-platform-java/issues/3403)) ([fe002fa](https://github.com/googleapis/sdk-platform-java/commit/fe002fab1ab65b29eeb5510d1ba1ef72fa3441b0))
+
+
+### Bug Fixes
+
+* S2A gRPC flow creates ComputeEngineCredentials via newBuilder. ([#3651](https://github.com/googleapis/sdk-platform-java/issues/3651)) ([29c061e](https://github.com/googleapis/sdk-platform-java/commit/29c061e8a18b9a416262986f11c5148ea6fec9b2))
+
+
+### Dependencies
+
+* update dependency ch.qos.logback:logback-core to v1.3.15 [security] ([#3654](https://github.com/googleapis/sdk-platform-java/issues/3654)) ([093d867](https://github.com/googleapis/sdk-platform-java/commit/093d867eb5dcdcc08ece434598f96a6dff760326))
+* update google api dependencies ([#3631](https://github.com/googleapis/sdk-platform-java/issues/3631)) ([48db2a1](https://github.com/googleapis/sdk-platform-java/commit/48db2a10e3ef46ad9ddf23378613a550172f63af))
+* update google auth library dependencies to v1.33.1 ([#3656](https://github.com/googleapis/sdk-platform-java/issues/3656)) ([f7877a5](https://github.com/googleapis/sdk-platform-java/commit/f7877a5b278d3487cb50a1e942f6ff6268121069))
+* update google http client dependencies to v1.46.3 ([#3657](https://github.com/googleapis/sdk-platform-java/issues/3657)) ([9d5b3b5](https://github.com/googleapis/sdk-platform-java/commit/9d5b3b5ae6a18fbc8445025fa9ec1abe00b7f7cc))
+* update grpc to 1.70.0 ([#3641](https://github.com/googleapis/sdk-platform-java/issues/3641)) ([ad26cf9](https://github.com/googleapis/sdk-platform-java/commit/ad26cf98548e325c99edb263baf8fe1a7696e634))
+* update grpc to 1.70.0 (missed update) ([#3658](https://github.com/googleapis/sdk-platform-java/issues/3658)) ([6ca0599](https://github.com/googleapis/sdk-platform-java/commit/6ca05994f6be40344b21befb8cdabb0766a835d0))
+* Update opentelemetry-semconv to v1.29.0-alpha ([#3635](https://github.com/googleapis/sdk-platform-java/issues/3635)) ([49ac09d](https://github.com/googleapis/sdk-platform-java/commit/49ac09d263daad8ceb2e14a623db242339880670))
+
+
+### Documentation
+
+* update showcase readme ([#3659](https://github.com/googleapis/sdk-platform-java/issues/3659)) ([0ddf073](https://github.com/googleapis/sdk-platform-java/commit/0ddf0738a8ef74f5676a3bf76c306837d14988e0))
+
 ## [2.53.0](https://github.com/googleapis/sdk-platform-java/compare/v2.52.0...v2.53.0) (2025-02-10)
 
 
