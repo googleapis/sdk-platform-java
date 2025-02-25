@@ -81,7 +81,7 @@ Note that the underlying scripts will modify your `$HOME` folder by creating a
 `.library_generation` folder.
 This is the well-known location of the artifacts the generation scripts use.
 For more details see the
-[development guide](https://github.com/googleapis/sdk-platform-java/blob/main/library_generation/DEVELOPMENT.md#the-hermetic-builds-well-known-folder)
+[development guide](https://github.com/googleapis/sdk-platform-java/blob/main/hermetic_build/DEVELOPMENT.md#the-hermetic-builds-well-known-folder)
 
 ```shell
 # In repository's root directory
