@@ -246,6 +246,19 @@ public final class PoliciesGrpc {
     return PoliciesStub.newStub(factory, channel);
   }
 
+  /** Creates a new blocking-style stub that supports all types of calls on the service */
+  public static PoliciesBlockingV2Stub newBlockingV2Stub(io.grpc.Channel channel) {
+    io.grpc.stub.AbstractStub.StubFactory<PoliciesBlockingV2Stub> factory =
+        new io.grpc.stub.AbstractStub.StubFactory<PoliciesBlockingV2Stub>() {
+          @java.lang.Override
+          public PoliciesBlockingV2Stub newStub(
+              io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+            return new PoliciesBlockingV2Stub(channel, callOptions);
+          }
+        };
+    return PoliciesBlockingV2Stub.newStub(factory, channel);
+  }
+
   /**
    * Creates a new blocking-style stub that supports unary and streaming output calls on the service
    */
@@ -484,6 +497,99 @@ public final class PoliciesGrpc {
 
   /**
    * A stub to allow clients to do synchronous rpc calls to service Policies.
+   *
+   * <pre>
+   * An interface for managing Identity and Access Management (IAM) policies.
+   * </pre>
+   */
+  public static final class PoliciesBlockingV2Stub
+      extends io.grpc.stub.AbstractBlockingStub<PoliciesBlockingV2Stub> {
+    private PoliciesBlockingV2Stub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      super(channel, callOptions);
+    }
+
+    @java.lang.Override
+    protected PoliciesBlockingV2Stub build(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      return new PoliciesBlockingV2Stub(channel, callOptions);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Retrieves the policies of the specified kind that are attached to a
+     * resource.
+     * The response lists only policy metadata. In particular, policy rules are
+     * omitted.
+     * </pre>
+     */
+    public com.google.iam.v2.ListPoliciesResponse listPolicies(
+        com.google.iam.v2.ListPoliciesRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getListPoliciesMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Gets a policy.
+     * </pre>
+     */
+    public com.google.iam.v2.Policy getPolicy(com.google.iam.v2.GetPolicyRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGetPolicyMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Creates a policy.
+     * </pre>
+     */
+    public com.google.longrunning.Operation createPolicy(
+        com.google.iam.v2.CreatePolicyRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getCreatePolicyMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Updates the specified policy.
+     * You can update only the rules and the display name for the policy.
+     * To update a policy, you should use a read-modify-write loop:
+     * 1. Use [GetPolicy][google.iam.v2.Policies.GetPolicy] to read the current version of the policy.
+     * 2. Modify the policy as needed.
+     * 3. Use `UpdatePolicy` to write the updated policy.
+     * This pattern helps prevent conflicts between concurrent updates.
+     * </pre>
+     */
+    public com.google.longrunning.Operation updatePolicy(
+        com.google.iam.v2.UpdatePolicyRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getUpdatePolicyMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Deletes a policy. This action is permanent.
+     * </pre>
+     */
+    public com.google.longrunning.Operation deletePolicy(
+        com.google.iam.v2.DeletePolicyRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getDeletePolicyMethod(), getCallOptions(), request);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do limited synchronous rpc calls to service Policies.
    *
    * <pre>
    * An interface for managing Identity and Access Management (IAM) policies.
