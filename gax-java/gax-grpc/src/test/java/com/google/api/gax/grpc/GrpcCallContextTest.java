@@ -72,13 +72,15 @@ class GrpcCallContextTest {
     }
   }
 
+  // For gax-gRPC, `withCredentials()` will no-op as the credentials will be
+  // passed to the Channel as CallCredentials.
   @Test
   void testWithCredentials() {
     Credentials credentials = Mockito.mock(Credentials.class);
     GrpcCallContext emptyContext = GrpcCallContext.createDefault();
     assertNull(emptyContext.getCallOptions().getCredentials());
     GrpcCallContext context = emptyContext.withCredentials(credentials);
-    assertNotNull(context.getCallOptions().getCredentials());
+    assertNull(context.getCallOptions().getCredentials());
   }
 
   @Test

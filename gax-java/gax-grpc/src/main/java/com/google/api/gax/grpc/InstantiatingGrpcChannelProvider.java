@@ -669,7 +669,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
           builder = Grpc.newChannelBuilder(endpoint, channelCredentials);
         } else {
           // Use default if we cannot initialize channel credentials via DCA or S2A.
-          builder = ManagedChannelBuilder.forAddress(serviceAddress, port);
+          builder =
+              Grpc.newChannelBuilderForAddress(
+                  serviceAddress, port, TlsChannelCredentials.create());
         }
       }
     }
