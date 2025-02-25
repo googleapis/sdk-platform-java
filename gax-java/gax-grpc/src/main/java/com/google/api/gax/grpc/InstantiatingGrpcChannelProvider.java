@@ -650,6 +650,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       }
       if (channelCredentials != null) {
         // Create the channel using channel credentials created via DCA.
+        channelCredentials =
+            CompositeChannelCredentials.create(
+                channelCredentials, MoreCallCredentials.from(credentials));
         builder = Grpc.newChannelBuilder(endpoint, channelCredentials);
       } else {
         // Could not create channel credentials via DCA. In accordance with
@@ -665,11 +668,18 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
             // which will be used to fetch MTLS_S2A hard bound tokens from the metdata server.
             channelCredentials =
                 CompositeChannelCredentials.create(channelCredentials, mtlsS2ACallCredentials);
+          } else {
+            channelCredentials =
+                CompositeChannelCredentials.create(
+                    channelCredentials, MoreCallCredentials.from(credentials));
           }
           builder = Grpc.newChannelBuilder(endpoint, channelCredentials);
         } else {
-          // Use default if we cannot initialize channel credentials via DCA or S2A.
-          builder = ManagedChannelBuilder.forAddress(serviceAddress, port);
+          // Use default TLS credentials if we cannot initialize channel credentials via DCA or S2A.
+          channelCredentials =
+              CompositeChannelCredentials.create(
+                  TlsChannelCredentials.create(), MoreCallCredentials.from(credentials));
+          builder = Grpc.newChannelBuilderForAddress(serviceAddress, port, channelCredentials);
         }
       }
     }

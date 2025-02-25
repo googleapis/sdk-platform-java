@@ -78,7 +78,7 @@ class GrpcCallContextTest {
     GrpcCallContext emptyContext = GrpcCallContext.createDefault();
     assertNull(emptyContext.getCallOptions().getCredentials());
     GrpcCallContext context = emptyContext.withCredentials(credentials);
-    assertNotNull(context.getCallOptions().getCredentials());
+    assertNull(context.getCallOptions().getCredentials());
   }
 
   @Test

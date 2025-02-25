@@ -58,7 +58,6 @@ import io.grpc.Channel;
 import io.grpc.Deadline;
 import io.grpc.Metadata;
 import io.grpc.Status;
-import io.grpc.auth.MoreCallCredentials;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -185,21 +184,8 @@ public final class GrpcCallContext implements ApiCallContext {
 
   @Override
   public GrpcCallContext withCredentials(Credentials newCredentials) {
-    Preconditions.checkNotNull(newCredentials);
-    CallCredentials callCredentials = MoreCallCredentials.from(newCredentials);
-    return new GrpcCallContext(
-        channel,
-        newCredentials,
-        callOptions.withCallCredentials(callCredentials),
-        timeout,
-        streamWaitTimeout,
-        streamIdleTimeout,
-        channelAffinity,
-        extraHeaders,
-        options,
-        retrySettings,
-        retryableCodes,
-        endpointContext);
+    // Credentials will be attached to the gRPC transport channels.
+    return this;
   }
 
   @Override

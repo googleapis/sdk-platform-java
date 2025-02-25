@@ -30,14 +30,13 @@
 package com.google.api.gax.grpc;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.verify;
 
 import com.google.api.gax.grpc.testing.FakeChannelFactory;
 import com.google.api.gax.grpc.testing.FakeServiceGrpc;
 import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.UnauthenticatedException;
-import com.google.api.gax.rpc.UnavailableException;
 import com.google.auth.Credentials;
 import com.google.auth.Retryable;
 import com.google.common.collect.ImmutableList;
@@ -310,11 +309,8 @@ class GrpcClientCallsTest {
     CallOptions callOptions = context.getCallOptions();
 
     MethodDescriptor<Color, Money> descriptor = FakeServiceGrpc.METHOD_RECOGNIZE;
-    UnauthenticatedException exception =
-        assertThrows(
-            UnauthenticatedException.class, () -> GrpcClientCalls.newCall(descriptor, context));
-    assertThat(exception.getStatusCode().getCode()).isEqualTo(GrpcStatusCode.Code.UNAUTHENTICATED);
-    Mockito.verify(mockChannel, Mockito.never()).newCall(descriptor, callOptions);
+    assertDoesNotThrow(() -> GrpcClientCalls.newCall(descriptor, context));
+    Mockito.verify(mockChannel, Mockito.times(1)).newCall(descriptor, callOptions);
   }
 
   // This test is when the MDS is unable to return a valid universe domain
@@ -332,11 +328,7 @@ class GrpcClientCallsTest {
     CallOptions callOptions = context.getCallOptions();
 
     MethodDescriptor<Color, Money> descriptor = FakeServiceGrpc.METHOD_RECOGNIZE;
-    UnavailableException exception =
-        assertThrows(
-            UnavailableException.class, () -> GrpcClientCalls.newCall(descriptor, context));
-    assertThat(exception.getStatusCode().getCode()).isEqualTo(GrpcStatusCode.Code.UNAVAILABLE);
-    Truth.assertThat(exception.isRetryable()).isTrue();
-    Mockito.verify(mockChannel, Mockito.never()).newCall(descriptor, callOptions);
+    assertDoesNotThrow(() -> GrpcClientCalls.newCall(descriptor, context));
+    Mockito.verify(mockChannel, Mockito.times(1)).newCall(descriptor, callOptions);
   }
 }

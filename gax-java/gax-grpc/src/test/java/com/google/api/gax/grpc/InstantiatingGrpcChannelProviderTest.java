@@ -206,8 +206,11 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();
 
+    Credentials credentials = Mockito.mock(Credentials.class);
+
     TransportChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
+            .setCredentials(credentials)
             .build()
             .withExecutor((Executor) executor)
             .withHeaders(Collections.<String, String>emptyMap())
@@ -234,6 +237,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         new ArrayList<>();
     hardBoundTokenTypes.add(InstantiatingGrpcChannelProvider.HardBoundTokenTypes.ALTS);
     hardBoundTokenTypes.add(InstantiatingGrpcChannelProvider.HardBoundTokenTypes.MTLS_S2A);
+    Credentials credentials = Mockito.mock(Credentials.class);
 
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
@@ -244,6 +248,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setKeepAliveTimeDuration(keepaliveTime)
             .setKeepAliveTimeoutDuration(keepaliveTimeout)
             .setKeepAliveWithoutCalls(Boolean.TRUE)
+            .setCredentials(credentials)
             .setChannelConfigurator(channelConfigurator)
             .setChannelsPerCpu(2.5)
             .setDirectPathServiceConfig(directPathServiceConfig)
@@ -274,6 +279,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   private void testWithInterceptors(int numChannels) throws Exception {
     final GrpcInterceptorProvider interceptorProvider = Mockito.mock(GrpcInterceptorProvider.class);
+    Credentials credentials = Mockito.mock(Credentials.class);
 
     InstantiatingGrpcChannelProvider channelProvider =
         InstantiatingGrpcChannelProvider.newBuilder()
@@ -282,6 +288,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setHeaderProvider(Mockito.mock(HeaderProvider.class))
             .setExecutor(Mockito.mock(Executor.class))
             .setInterceptorProvider(interceptorProvider)
+            .setCredentials(credentials)
             .build();
 
     Mockito.verify(interceptorProvider, Mockito.never()).getInterceptors();
@@ -303,6 +310,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
     ManagedChannelBuilder<?> swappedBuilder = Mockito.mock(ManagedChannelBuilder.class);
     ManagedChannel fakeChannel = Mockito.mock(ManagedChannel.class);
+    Credentials credentials = Mockito.mock(Credentials.class);
     Mockito.when(swappedBuilder.build()).thenReturn(fakeChannel);
 
     Mockito.when(channelConfigurator.apply(channelBuilderCaptor.capture()))
@@ -315,6 +323,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         .setExecutor(Mockito.mock(Executor.class))
         .setChannelConfigurator(channelConfigurator)
         .setPoolSize(numChannels)
+        .setCredentials(credentials)
         .build()
         .getTransportChannel();
 
@@ -486,8 +495,11 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();
 
+    Credentials credentials = Mockito.mock(Credentials.class);
+
     TransportChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
+            .setCredentials(credentials)
             .build()
             .withExecutor((Executor) executor)
             .withHeaders(Collections.<String, String>emptyMap())
@@ -501,6 +513,8 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   // Test that if ChannelPrimer is provided, it is called during creation
   @Test
   void testWithPrimeChannel() throws IOException {
+    Credentials credentials = Mockito.mock(Credentials.class);
+
     // create channelProvider with different pool sizes to verify ChannelPrimer is called the
     // correct number of times
     for (int poolSize = 1; poolSize < 5; poolSize++) {
@@ -512,6 +526,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
               .setPoolSize(poolSize)
               .setHeaderProvider(Mockito.mock(HeaderProvider.class))
               .setExecutor(Mockito.mock(Executor.class))
+              .setCredentials(credentials)
               .setChannelPrimer(mockChannelPrimer)
               .build();
 
@@ -600,10 +615,14 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   @Override
   protected Object getMtlsObjectFromTransportChannel(MtlsProvider provider)
       throws IOException, GeneralSecurityException {
+
+    Credentials credentials = Mockito.mock(Credentials.class);
+
     InstantiatingGrpcChannelProvider channelProvider =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setEndpoint("localhost:8080")
             .setMtlsProvider(provider)
+            .setCredentials(credentials)
             .setHeaderProvider(Mockito.mock(HeaderProvider.class))
             .setExecutor(Mockito.mock(Executor.class))
             .build();
@@ -630,9 +649,14 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
       testLogDirectPathMisconfig_AttemptDirectPathNotSetAndAttemptDirectPathXdsSetViaBuilder_warns()
           throws Exception {
     FakeLogHandler logHandler = new FakeLogHandler();
+    Credentials credentials = Mockito.mock(Credentials.class);
+
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
     InstantiatingGrpcChannelProvider provider =
-        createChannelProviderBuilderForDirectPathLogTests().setAttemptDirectPathXds().build();
+        createChannelProviderBuilderForDirectPathLogTests()
+            .setAttemptDirectPathXds()
+            .setCredentials(credentials)
+            .build();
     createAndCloseTransportChannel(provider);
     assertThat(logHandler.getAllMessages())
         .contains(
@@ -672,11 +696,14 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   @Test
   void testLogDirectPathMisconfigWrongCredential() throws Exception {
     FakeLogHandler logHandler = new FakeLogHandler();
+    Credentials credentials = Mockito.mock(Credentials.class);
+
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPathXds()
             .setAttemptDirectPath(true)
+            .setCredentials(credentials)
             .setHeaderProvider(Mockito.mock(HeaderProvider.class))
             .setExecutor(Mockito.mock(Executor.class))
             .setEndpoint(DEFAULT_ENDPOINT)
@@ -697,11 +724,14 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   @Test
   void testLogDirectPathMisconfigNotOnGCE() throws Exception {
     FakeLogHandler logHandler = new FakeLogHandler();
+    Credentials credentials = Mockito.mock(Credentials.class);
+
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPathXds()
             .setAttemptDirectPath(true)
+            .setCredentials(credentials)
             .setAllowNonDefaultServiceAccount(true)
             .setHeaderProvider(Mockito.mock(HeaderProvider.class))
             .setExecutor(Mockito.mock(Executor.class))
