@@ -669,9 +669,10 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
       throws Exception {
     FakeLogHandler logHandler = new FakeLogHandler();
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
+    Credentials credentials = Mockito.mock(Credentials.class);
 
     InstantiatingGrpcChannelProvider provider =
-        createChannelProviderBuilderForDirectPathLogTests().build();
+        createChannelProviderBuilderForDirectPathLogTests().setCredentials(credentials).build();
     createAndCloseTransportChannel(provider);
     assertThat(logHandler.getAllMessages())
         .contains(

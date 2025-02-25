@@ -184,8 +184,20 @@ public final class GrpcCallContext implements ApiCallContext {
 
   @Override
   public GrpcCallContext withCredentials(Credentials newCredentials) {
-    // Credentials will be attached to the gRPC transport channels.
-    return this;
+    Preconditions.checkNotNull(newCredentials);
+    return new GrpcCallContext(
+        channel,
+        newCredentials,
+        callOptions,
+        timeout,
+        streamWaitTimeout,
+        streamIdleTimeout,
+        channelAffinity,
+        extraHeaders,
+        options,
+        retrySettings,
+        retryableCodes,
+        endpointContext);
   }
 
   @Override

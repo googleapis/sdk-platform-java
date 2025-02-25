@@ -78,6 +78,8 @@ class GrpcCallContextTest {
     GrpcCallContext emptyContext = GrpcCallContext.createDefault();
     assertNull(emptyContext.getCallOptions().getCredentials());
     GrpcCallContext context = emptyContext.withCredentials(credentials);
+    // The gRPC call credentials will be embedded into the channel credentials
+    // and not attached to call options.
     assertNull(context.getCallOptions().getCredentials());
   }
 
