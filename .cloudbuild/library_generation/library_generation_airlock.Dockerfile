@@ -54,7 +54,7 @@ FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python@sha256:b83
 
 ARG OWLBOT_CLI_COMMITTISH=8b7d94b4a8ad0345aeefd6a7ec9c5afcbeb8e2d7
 ARG PROTOC_VERSION=25.5
-ARG GRPC_VERSION=1.70.0
+ARG GRPC_VERSION=1.69.0
 ARG JAVA_FORMAT_VERSION=1.7
 ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
