@@ -188,6 +188,21 @@ public final class IdentityGrpc {
   }
 
   /**
+   * Creates a new blocking-style stub that supports all types of calls on the service
+   */
+  public static IdentityBlockingV2Stub newBlockingV2Stub(
+      io.grpc.Channel channel) {
+    io.grpc.stub.AbstractStub.StubFactory<IdentityBlockingV2Stub> factory =
+      new io.grpc.stub.AbstractStub.StubFactory<IdentityBlockingV2Stub>() {
+        @java.lang.Override
+        public IdentityBlockingV2Stub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+          return new IdentityBlockingV2Stub(channel, callOptions);
+        }
+      };
+    return IdentityBlockingV2Stub.newStub(factory, channel);
+  }
+
+  /**
    * Creates a new blocking-style stub that supports unary and streaming output calls on the service
    */
   public static IdentityBlockingStub newBlockingStub(
@@ -366,6 +381,76 @@ public final class IdentityGrpc {
 
   /**
    * A stub to allow clients to do synchronous rpc calls to service Identity.
+   * <pre>
+   * A simple identity service.
+   * </pre>
+   */
+  public static final class IdentityBlockingV2Stub
+      extends io.grpc.stub.AbstractBlockingStub<IdentityBlockingV2Stub> {
+    private IdentityBlockingV2Stub(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      super(channel, callOptions);
+    }
+
+    @java.lang.Override
+    protected IdentityBlockingV2Stub build(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      return new IdentityBlockingV2Stub(channel, callOptions);
+    }
+
+    /**
+     * <pre>
+     * Creates a user.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.User createUser(com.google.showcase.v1beta1.CreateUserRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getCreateUserMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * Retrieves the User with the given uri.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.User getUser(com.google.showcase.v1beta1.GetUserRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGetUserMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * Updates a user.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.User updateUser(com.google.showcase.v1beta1.UpdateUserRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getUpdateUserMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * Deletes a user, their profile, and all of their authored messages.
+     * </pre>
+     */
+    public com.google.protobuf.Empty deleteUser(com.google.showcase.v1beta1.DeleteUserRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getDeleteUserMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * Lists all users.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.ListUsersResponse listUsers(com.google.showcase.v1beta1.ListUsersRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getListUsersMethod(), getCallOptions(), request);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do limited synchronous rpc calls to service Identity.
    * <pre>
    * A simple identity service.
    * </pre>

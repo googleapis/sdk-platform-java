@@ -134,6 +134,19 @@ public final class LocationsGrpc {
     return LocationsStub.newStub(factory, channel);
   }
 
+  /** Creates a new blocking-style stub that supports all types of calls on the service */
+  public static LocationsBlockingV2Stub newBlockingV2Stub(io.grpc.Channel channel) {
+    io.grpc.stub.AbstractStub.StubFactory<LocationsBlockingV2Stub> factory =
+        new io.grpc.stub.AbstractStub.StubFactory<LocationsBlockingV2Stub>() {
+          @java.lang.Override
+          public LocationsBlockingV2Stub newStub(
+              io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+            return new LocationsBlockingV2Stub(channel, callOptions);
+          }
+        };
+    return LocationsBlockingV2Stub.newStub(factory, channel);
+  }
+
   /**
    * Creates a new blocking-style stub that supports unary and streaming output calls on the service
    */
@@ -275,6 +288,54 @@ public final class LocationsGrpc {
 
   /**
    * A stub to allow clients to do synchronous rpc calls to service Locations.
+   *
+   * <pre>
+   * An abstract interface that provides location-related information for
+   * a service. Service-specific metadata is provided through the
+   * [Location.metadata][google.cloud.location.Location.metadata] field.
+   * </pre>
+   */
+  public static final class LocationsBlockingV2Stub
+      extends io.grpc.stub.AbstractBlockingStub<LocationsBlockingV2Stub> {
+    private LocationsBlockingV2Stub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      super(channel, callOptions);
+    }
+
+    @java.lang.Override
+    protected LocationsBlockingV2Stub build(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      return new LocationsBlockingV2Stub(channel, callOptions);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Lists information about the supported locations for this service.
+     * </pre>
+     */
+    public com.google.cloud.location.ListLocationsResponse listLocations(
+        com.google.cloud.location.ListLocationsRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getListLocationsMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Gets information about a location.
+     * </pre>
+     */
+    public com.google.cloud.location.Location getLocation(
+        com.google.cloud.location.GetLocationRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGetLocationMethod(), getCallOptions(), request);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do limited synchronous rpc calls to service Locations.
    *
    * <pre>
    * An abstract interface that provides location-related information for

@@ -183,6 +183,19 @@ public final class IAMPolicyGrpc {
     return IAMPolicyStub.newStub(factory, channel);
   }
 
+  /** Creates a new blocking-style stub that supports all types of calls on the service */
+  public static IAMPolicyBlockingV2Stub newBlockingV2Stub(io.grpc.Channel channel) {
+    io.grpc.stub.AbstractStub.StubFactory<IAMPolicyBlockingV2Stub> factory =
+        new io.grpc.stub.AbstractStub.StubFactory<IAMPolicyBlockingV2Stub>() {
+          @java.lang.Override
+          public IAMPolicyBlockingV2Stub newStub(
+              io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+            return new IAMPolicyBlockingV2Stub(channel, callOptions);
+          }
+        };
+    return IAMPolicyBlockingV2Stub.newStub(factory, channel);
+  }
+
   /**
    * Creates a new blocking-style stub that supports unary and streaming output calls on the service
    */
@@ -417,6 +430,89 @@ public final class IAMPolicyGrpc {
 
   /**
    * A stub to allow clients to do synchronous rpc calls to service IAMPolicy.
+   *
+   * <pre>
+   * API Overview
+   * Manages Identity and Access Management (IAM) policies.
+   * Any implementation of an API that offers access control features
+   * implements the google.iam.v1.IAMPolicy interface.
+   * ## Data model
+   * Access control is applied when a principal (user or service account), takes
+   * some action on a resource exposed by a service. Resources, identified by
+   * URI-like names, are the unit of access control specification. Service
+   * implementations can choose the granularity of access control and the
+   * supported permissions for their resources.
+   * For example one database service may allow access control to be
+   * specified only at the Table level, whereas another might allow access control
+   * to also be specified at the Column level.
+   * ## Policy Structure
+   * See google.iam.v1.Policy
+   * This is intentionally not a CRUD style API because access control policies
+   * are created and deleted implicitly with the resources to which they are
+   * attached.
+   * </pre>
+   */
+  public static final class IAMPolicyBlockingV2Stub
+      extends io.grpc.stub.AbstractBlockingStub<IAMPolicyBlockingV2Stub> {
+    private IAMPolicyBlockingV2Stub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      super(channel, callOptions);
+    }
+
+    @java.lang.Override
+    protected IAMPolicyBlockingV2Stub build(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      return new IAMPolicyBlockingV2Stub(channel, callOptions);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Sets the access control policy on the specified resource. Replaces any
+     * existing policy.
+     * Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+     * </pre>
+     */
+    public com.google.iam.v1.Policy setIamPolicy(com.google.iam.v1.SetIamPolicyRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getSetIamPolicyMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Gets the access control policy for a resource.
+     * Returns an empty policy if the resource exists and does not have a policy
+     * set.
+     * </pre>
+     */
+    public com.google.iam.v1.Policy getIamPolicy(com.google.iam.v1.GetIamPolicyRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGetIamPolicyMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Returns permissions that a caller has on the specified resource.
+     * If the resource does not exist, this will return an empty set of
+     * permissions, not a `NOT_FOUND` error.
+     * Note: This operation is designed to be used for building permission-aware
+     * UIs and command-line tools, not for authorization checking. This operation
+     * may "fail open" without warning.
+     * </pre>
+     */
+    public com.google.iam.v1.TestIamPermissionsResponse testIamPermissions(
+        com.google.iam.v1.TestIamPermissionsRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getTestIamPermissionsMethod(), getCallOptions(), request);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do limited synchronous rpc calls to service IAMPolicy.
    *
    * <pre>
    * API Overview
