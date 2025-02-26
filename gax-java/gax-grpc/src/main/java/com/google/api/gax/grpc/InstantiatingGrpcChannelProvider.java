@@ -46,6 +46,7 @@ import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auth.ApiKeyCredentials;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.auth.oauth2.SecureSessionAgent;
 import com.google.auth.oauth2.SecureSessionAgentConfig;
 import com.google.common.annotations.VisibleForTesting;
@@ -614,6 +615,13 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
     ManagedChannelBuilder<?> builder;
 
+    // ChannelCredentials will be attached to newly created channel if there are valid Credentials
+    // provided. Valid Credentials that can be used as ChannelCredentials are non-null instances
+    // of valid GoogleCredentials. There are certain Credentials that cannot be used as
+    // ChannelCredentials
+    // (i.e. ApiKeyCredentials).
+    boolean canAttachChannelCredentials = credentials instanceof GoogleCredentials;
+
     // Check DirectPath traffic.
     boolean useDirectPathXds = false;
     if (canUseDirectPath()) {
@@ -675,7 +683,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
           }
           builder = Grpc.newChannelBuilder(endpoint, channelCredentials);
         } else {
-          if (credentials != null) {
+          if (canAttachChannelCredentials) {
             // Use default TLS credentials if we cannot initialize channel credentials via DCA or
             // S2A.
             channelCredentials =
@@ -694,6 +702,13 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     if (!useDirectPathXds) {
       // See https://github.com/googleapis/gapic-generator/issues/2816
       builder.disableServiceConfigLookUp();
+    }
+
+    // For local testing, NoCredentialsProvider can be provided to the client as null
+    // Credentials. No need to pass null Credentials to the CallCredentials.
+    // This is intercepted first to ensure that CallCredentials is added to CallOptions
+    if (credentials != null && !canAttachChannelCredentials) {
+      builder = builder.intercept(new GrpcCallCredentialsInterceptor(credentials));
     }
     builder =
         builder
