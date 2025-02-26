@@ -615,10 +615,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
     ManagedChannelBuilder<?> builder;
 
-    // ChannelCredentials will be attached to newly created channel if there are valid Credentials
-    // provided. Valid Credentials that can be used as ChannelCredentials are non-null instances
+    // CallCredentials will be attached to newly created channel if there are valid Credentials
+    // provided. Valid Credentials that can be used as CallCredentials are non-null instances
     // of valid GoogleCredentials. There are certain Credentials that cannot be used as
-    // ChannelCredentials
+    // CallCredentials
     // (i.e. ApiKeyCredentials).
     boolean canAttachChannelCredentials = credentials instanceof GoogleCredentials;
 
