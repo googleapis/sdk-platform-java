@@ -620,7 +620,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     // of valid GoogleCredentials. There are certain Credentials that cannot be used as
     // CallCredentials
     // (i.e. ApiKeyCredentials).
-    boolean canAttachChannelCredentials = credentials instanceof GoogleCredentials;
+    boolean canAttachCallCredentials = credentials instanceof GoogleCredentials;
 
     // Check DirectPath traffic.
     boolean useDirectPathXds = false;
@@ -683,7 +683,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
           }
           builder = Grpc.newChannelBuilder(endpoint, channelCredentials);
         } else {
-          if (canAttachChannelCredentials) {
+          if (canAttachCallCredentials) {
             // Use default TLS credentials if we cannot initialize channel credentials via DCA or
             // S2A.
             channelCredentials =
@@ -707,7 +707,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     // For local testing, NoCredentialsProvider can be provided to the client as null
     // Credentials. No need to pass null Credentials to the CallCredentials.
     // This is intercepted first to ensure that CallCredentials is added to CallOptions
-    if (credentials != null && !canAttachChannelCredentials) {
+    if (credentials != null && !canAttachCallCredentials) {
       builder = builder.intercept(new GrpcCallCredentialsInterceptor(credentials));
     }
     builder =
