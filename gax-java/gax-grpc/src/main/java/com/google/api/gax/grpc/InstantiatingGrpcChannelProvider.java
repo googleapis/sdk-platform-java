@@ -46,7 +46,6 @@ import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auth.ApiKeyCredentials;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
-import com.google.auth.oauth2.GoogleCredentials;
 import com.google.auth.oauth2.SecureSessionAgent;
 import com.google.auth.oauth2.SecureSessionAgentConfig;
 import com.google.common.annotations.VisibleForTesting;
@@ -620,11 +619,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     // of valid GoogleCredentials. There are certain Credentials that cannot be used as
     // CallCredentials
     // (i.e. ApiKeyCredentials).
-    boolean canAttachCallCredentials = credentials instanceof GoogleCredentials;
+    boolean needsCallCredentialsInterceptor = credentials != null;
 
     // Check DirectPath traffic.
     boolean useDirectPathXds = false;
     if (canUseDirectPath()) {
+      needsCallCredentialsInterceptor = false;
       CallCredentials callCreds = MoreCallCredentials.from(credentials);
       // altsCallCredentials may be null and GoogleDefaultChannelCredentials
       // will solely use callCreds. Otherwise it uses altsCallCredentials
@@ -658,9 +658,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       }
       if (channelCredentials != null) {
         // Create the channel using channel credentials created via DCA.
-        channelCredentials =
-            CompositeChannelCredentials.create(
-                channelCredentials, MoreCallCredentials.from(credentials));
         builder = Grpc.newChannelBuilder(endpoint, channelCredentials);
       } else {
         // Could not create channel credentials via DCA. In accordance with
@@ -676,25 +673,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
             // which will be used to fetch MTLS_S2A hard bound tokens from the metdata server.
             channelCredentials =
                 CompositeChannelCredentials.create(channelCredentials, mtlsS2ACallCredentials);
-          } else {
-            channelCredentials =
-                CompositeChannelCredentials.create(
-                    channelCredentials, MoreCallCredentials.from(credentials));
+            needsCallCredentialsInterceptor = false;
           }
           builder = Grpc.newChannelBuilder(endpoint, channelCredentials);
         } else {
-          if (canAttachCallCredentials) {
-            // Use default TLS credentials if we cannot initialize channel credentials via DCA or
-            // S2A.
-            channelCredentials =
-                CompositeChannelCredentials.create(
-                    TlsChannelCredentials.create(), MoreCallCredentials.from(credentials));
-            builder = Grpc.newChannelBuilderForAddress(serviceAddress, port, channelCredentials);
-          } else {
-            // This is the only case credentials is allowed to be absent, because of backward
-            // compatiblity.
-            builder = ManagedChannelBuilder.forAddress(serviceAddress, port);
-          }
+          builder = ManagedChannelBuilder.forAddress(serviceAddress, port);
         }
       }
     }
@@ -704,10 +687,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       builder.disableServiceConfigLookUp();
     }
 
-    // For local testing, NoCredentialsProvider can be provided to the client as null
-    // Credentials. No need to pass null Credentials to the CallCredentials.
     // This is intercepted first to ensure that CallCredentials is added to CallOptions
-    if (credentials != null && !canAttachCallCredentials) {
+    if (needsCallCredentialsInterceptor) {
       builder = builder.intercept(new GrpcCallCredentialsInterceptor(credentials));
     }
     builder =
