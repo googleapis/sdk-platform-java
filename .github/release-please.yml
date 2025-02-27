@@ -22,14 +22,12 @@ branches:
   - releaseType: java-backport
     bumpMinorPreMajor: true
     handleGHRelease: true
-    primaryBranch: main
     manifest: true
     extraFiles:
       - WORKSPACE
       - .cloudbuild/graalvm/cloudbuild.yaml
       - .cloudbuild/graalvm/cloudbuild-test-a.yaml
       - .cloudbuild/graalvm/cloudbuild-test-b.yaml
-      - >-
-        .cloudbuild/library_generation/cloudbuild-library-generation-release.yaml
+      - .cloudbuild/library_generation/cloudbuild-library-generation-release.yaml
       - generation_config.yaml
     branch: 2.54.x-LTS8
