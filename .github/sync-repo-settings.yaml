@@ -114,6 +114,7 @@ branchProtectionRules:
       - library-generation-unit-tests
       - lint
       - should-run-library-generation-tests
+      - showcase-native
       - showcase (11)
       - showcase (17)
 permissionRules:
