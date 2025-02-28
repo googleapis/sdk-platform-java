@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.55.0](https://github.com/googleapis/sdk-platform-java/compare/v2.54.0...v2.55.0) (2025-02-28)
+
+
+### Features
+
+* next release from main branch is 2.55.0 ([#3668](https://github.com/googleapis/sdk-platform-java/issues/3668)) ([1eda55f](https://github.com/googleapis/sdk-platform-java/commit/1eda55fc5e4cecedba3f8c163db0ce259d180a66))
+
 ## [2.54.0](https://github.com/googleapis/sdk-platform-java/compare/v2.53.0...v2.54.0) (2025-02-25)
 
 
