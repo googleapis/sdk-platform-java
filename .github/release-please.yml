@@ -22,7 +22,6 @@ branches:
   - releaseType: java-backport
     bumpMinorPreMajor: true
     handleGHRelease: true
-    primaryBranch: main
     manifest: true
     extraFiles:
       - WORKSPACE
