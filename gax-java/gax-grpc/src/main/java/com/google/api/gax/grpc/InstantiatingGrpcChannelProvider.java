@@ -614,9 +614,17 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
     ManagedChannelBuilder<?> builder;
 
+    // CallCredentials will be attached to newly created channel if there are valid Credentials
+    // provided. Valid Credentials that can be used as CallCredentials are non-null instances
+    // of valid GoogleCredentials. There are certain Credentials that cannot be used as
+    // CallCredentials
+    // (i.e. ApiKeyCredentials).
+    boolean needsCallCredentialsInterceptor = credentials != null;
+
     // Check DirectPath traffic.
     boolean useDirectPathXds = false;
     if (canUseDirectPath()) {
+      needsCallCredentialsInterceptor = false;
       CallCredentials callCreds = MoreCallCredentials.from(credentials);
       // altsCallCredentials may be null and GoogleDefaultChannelCredentials
       // will solely use callCreds. Otherwise it uses altsCallCredentials
@@ -665,10 +673,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
             // which will be used to fetch MTLS_S2A hard bound tokens from the metdata server.
             channelCredentials =
                 CompositeChannelCredentials.create(channelCredentials, mtlsS2ACallCredentials);
+            needsCallCredentialsInterceptor = false;
           }
           builder = Grpc.newChannelBuilder(endpoint, channelCredentials);
         } else {
-          // Use default if we cannot initialize channel credentials via DCA or S2A.
           builder = ManagedChannelBuilder.forAddress(serviceAddress, port);
         }
       }
@@ -677,6 +685,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     if (!useDirectPathXds) {
       // See https://github.com/googleapis/gapic-generator/issues/2816
       builder.disableServiceConfigLookUp();
+    }
+
+    // This is intercepted first to ensure that CallCredentials is added to CallOptions
+    if (needsCallCredentialsInterceptor) {
+      builder = builder.intercept(new GrpcCallCredentialsInterceptor(credentials));
     }
     builder =
         builder
