@@ -96,6 +96,7 @@ public final class GrpcCallContext implements ApiCallContext {
   private final ImmutableMap<String, List<String>> extraHeaders;
   private final ApiCallContextOptions options;
   private final EndpointContext endpointContext;
+  private final boolean isDirectPath;
 
   /** Returns an empty instance with a null channel and default {@link CallOptions}. */
   public static GrpcCallContext createDefault() {
@@ -144,6 +145,36 @@ public final class GrpcCallContext implements ApiCallContext {
       @Nullable RetrySettings retrySettings,
       @Nullable Set<StatusCode.Code> retryableCodes,
       @Nullable EndpointContext endpointContext) {
+    this(
+        channel,
+        credentials,
+        callOptions,
+        timeout,
+        streamWaitTimeout,
+        streamIdleTimeout,
+        channelAffinity,
+        extraHeaders,
+        options,
+        retrySettings,
+        retryableCodes,
+        endpointContext,
+        false);
+  }
+
+  private GrpcCallContext(
+      Channel channel,
+      @Nullable Credentials credentials,
+      CallOptions callOptions,
+      @Nullable java.time.Duration timeout,
+      @Nullable java.time.Duration streamWaitTimeout,
+      @Nullable java.time.Duration streamIdleTimeout,
+      @Nullable Integer channelAffinity,
+      ImmutableMap<String, List<String>> extraHeaders,
+      ApiCallContextOptions options,
+      @Nullable RetrySettings retrySettings,
+      @Nullable Set<StatusCode.Code> retryableCodes,
+      @Nullable EndpointContext endpointContext,
+      boolean isDirectPath) {
     this.channel = channel;
     this.credentials = credentials;
     this.callOptions = Preconditions.checkNotNull(callOptions);
@@ -159,6 +190,7 @@ public final class GrpcCallContext implements ApiCallContext {
     // a valid EndpointContext with user configurations after the client has been initialized.
     this.endpointContext =
         endpointContext == null ? EndpointContext.getDefaultInstance() : endpointContext;
+    this.isDirectPath = isDirectPath;
   }
 
   /**
@@ -210,7 +242,20 @@ public final class GrpcCallContext implements ApiCallContext {
           "Expected GrpcTransportChannel, got " + inputChannel.getClass().getName());
     }
     GrpcTransportChannel transportChannel = (GrpcTransportChannel) inputChannel;
-    return withChannel(transportChannel.getChannel());
+    return new GrpcCallContext(
+        transportChannel.getChannel(),
+        credentials,
+        callOptions,
+        timeout,
+        streamWaitTimeout,
+        streamIdleTimeout,
+        channelAffinity,
+        extraHeaders,
+        options,
+        retrySettings,
+        retryableCodes,
+        endpointContext,
+        transportChannel.isDirectPath());
   }
 
   @Override
@@ -535,7 +580,9 @@ public final class GrpcCallContext implements ApiCallContext {
 
   /** The {@link CallOptions} set on this context. */
   public CallOptions getCallOptions() {
-    return callOptions;
+    if (!isDirectPath) return callOptions;
+    // Remove the CallCredentials attached to the callOptions if it's DirectPath.
+    return callOptions.withCallCredentials(null);
   }
 
   /** This method is obsolete. Use {@link #getStreamWaitTimeoutDuration()} instead. */
