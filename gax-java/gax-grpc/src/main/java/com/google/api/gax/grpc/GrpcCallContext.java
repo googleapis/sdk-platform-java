@@ -112,7 +112,8 @@ public final class GrpcCallContext implements ApiCallContext {
         ApiCallContextOptions.getDefaultOptions(),
         null,
         null,
-        null);
+        null,
+        false);
   }
 
   /** Returns an instance with the given channel and {@link CallOptions}. */
@@ -129,35 +130,7 @@ public final class GrpcCallContext implements ApiCallContext {
         ApiCallContextOptions.getDefaultOptions(),
         null,
         null,
-        null);
-  }
-
-  private GrpcCallContext(
-      Channel channel,
-      @Nullable Credentials credentials,
-      CallOptions callOptions,
-      @Nullable java.time.Duration timeout,
-      @Nullable java.time.Duration streamWaitTimeout,
-      @Nullable java.time.Duration streamIdleTimeout,
-      @Nullable Integer channelAffinity,
-      ImmutableMap<String, List<String>> extraHeaders,
-      ApiCallContextOptions options,
-      @Nullable RetrySettings retrySettings,
-      @Nullable Set<StatusCode.Code> retryableCodes,
-      @Nullable EndpointContext endpointContext) {
-    this(
-        channel,
-        credentials,
-        callOptions,
-        timeout,
-        streamWaitTimeout,
-        streamIdleTimeout,
-        channelAffinity,
-        extraHeaders,
-        options,
-        retrySettings,
-        retryableCodes,
-        endpointContext,
+        null,
         false);
   }
 
@@ -231,7 +204,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   @Override
@@ -273,7 +247,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   /** This method is obsolete. Use {@link #withTimeoutDuration(java.time.Duration)} instead. */
@@ -307,7 +282,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   /** This method is obsolete. Use {@link #getTimeoutDuration()} instead. */
@@ -355,7 +331,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   /**
@@ -389,7 +366,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   @BetaApi("The surface for channel affinity is not stable yet and may change in the future.")
@@ -406,7 +384,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   @BetaApi("The surface for extra headers is not stable yet and may change in the future.")
@@ -427,7 +406,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   @Override
@@ -449,7 +429,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   @Override
@@ -471,7 +452,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   @Override
@@ -570,7 +552,8 @@ public final class GrpcCallContext implements ApiCallContext {
         newOptions,
         newRetrySettings,
         newRetryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   /** The {@link Channel} set on this context. */
@@ -649,7 +632,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   /** Returns a new instance with the call options set to the given call options. */
@@ -666,7 +650,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   public GrpcCallContext withRequestParamsDynamicHeaderOption(String requestParams) {
@@ -710,7 +695,8 @@ public final class GrpcCallContext implements ApiCallContext {
         newOptions,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   /** {@inheritDoc} */
