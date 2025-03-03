@@ -104,7 +104,7 @@ class GrpcCallContextTest {
   void testWithTransportChannelIsDirectcPath() {
     ManagedChannel channel = Mockito.mock(ManagedChannel.class);
     Credentials credentials = Mockito.mock(Credentials.class);
-    GrpcCallContext context = GrpcCallContext.createDefault().withCredentials(null);
+    GrpcCallContext context = GrpcCallContext.createDefault().withCredentials(credentials);
     assertNotNull(context.getCallOptions().getCredentials());
     context =
         context.withTransportChannel(
