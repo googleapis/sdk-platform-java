@@ -102,7 +102,7 @@ class GrpcCallContextTest {
   }
 
   @Test
-  void testWithTransportChannelIsDirectcPath() {
+  void testWithTransportChannelIsDirectPath() {
     ManagedChannel channel = Mockito.mock(ManagedChannel.class);
     Credentials credentials = Mockito.mock(GoogleCredentials.class);
     GrpcCallContext context = GrpcCallContext.createDefault().withCredentials(credentials);
@@ -114,6 +114,10 @@ class GrpcCallContextTest {
                 .setManagedChannel(channel)
                 .build());
     assertNull(context.getCallOptions().getCredentials());
+
+    // This should revert isDirectPath to false.
+    context = context.withChannel(channel);
+    assertNotNull(context.getCallOptions().getCredentials());
   }
 
   @Test
