@@ -42,6 +42,7 @@ import com.google.api.gax.rpc.testing.FakeChannel;
 import com.google.api.gax.rpc.testing.FakeTransportChannel;
 import com.google.api.gax.tracing.ApiTracer;
 import com.google.auth.Credentials;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.truth.Truth;
 import io.grpc.CallOptions;
@@ -98,6 +99,25 @@ class GrpcCallContextTest {
     } catch (IllegalArgumentException expected) {
       Truth.assertThat(expected).hasMessageThat().contains("Expected GrpcTransportChannel");
     }
+  }
+
+  @Test
+  void testWithTransportChannelIsDirectPath() {
+    ManagedChannel channel = Mockito.mock(ManagedChannel.class);
+    Credentials credentials = Mockito.mock(GoogleCredentials.class);
+    GrpcCallContext context = GrpcCallContext.createDefault().withCredentials(credentials);
+    assertNotNull(context.getCallOptions().getCredentials());
+    context =
+        context.withTransportChannel(
+            GrpcTransportChannel.newBuilder()
+                .setDirectPath(true)
+                .setManagedChannel(channel)
+                .build());
+    assertNull(context.getCallOptions().getCredentials());
+
+    // This should revert isDirectPath to false.
+    context = context.withChannel(channel);
+    assertNotNull(context.getCallOptions().getCredentials());
   }
 
   @Test
