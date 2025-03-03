@@ -47,6 +47,7 @@ import com.google.api.gax.rpc.internal.ApiCallContextOptions;
 import com.google.api.gax.rpc.internal.Headers;
 import com.google.api.gax.tracing.ApiTracer;
 import com.google.api.gax.tracing.BaseApiTracer;
+import com.google.auth.ApiKeyCredentials;
 import com.google.auth.Credentials;
 import com.google.auth.Retryable;
 import com.google.common.base.Preconditions;
@@ -192,7 +193,9 @@ public final class GrpcCallContext implements ApiCallContext {
   public GrpcCallContext withCredentials(Credentials newCredentials) {
     Preconditions.checkNotNull(newCredentials);
     CallOptions newCallOptions = callOptions;
-    if (channelCredentials == null || !(channelCredentials == newCredentials)) {
+    if (channelCredentials == null
+        || newCredentials instanceof ApiKeyCredentials
+        || !(channelCredentials == newCredentials)) {
       newCallOptions = callOptions.withCallCredentials(MoreCallCredentials.from(newCredentials));
     }
     return new GrpcCallContext(
