@@ -633,7 +633,8 @@ public final class GrpcCallContext implements ApiCallContext {
         retrySettings,
         retryableCodes,
         endpointContext,
-        isDirectPath);
+        // Defaults to false again since we cannot tell whether the channel is DirectPath.
+        false);
   }
 
   /** Returns a new instance with the call options set to the given call options. */

@@ -101,6 +101,21 @@ class GrpcCallContextTest {
   }
 
   @Test
+  void testWithTransportChannelIsDirectcPath() {
+    ManagedChannel channel = Mockito.mock(ManagedChannel.class);
+    Credentials credentials = Mockito.mock(Credentials.class);
+    GrpcCallContext context = GrpcCallContext.createDefault().withCredentials(null);
+    assertNotNull(context.getCallOptions().getCredentials());
+    context =
+        context.withTransportChannel(
+            GrpcTransportChannel.newBuilder()
+                .setDirectPath(true)
+                .setManagedChannel(channel)
+                .build());
+    assertNull(context.getCallOptions().getCredentials());
+  }
+
+  @Test
   void testMergeWrongType() {
     try {
       GrpcCallContext.createDefault().merge(FakeCallContext.createDefault());
