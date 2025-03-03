@@ -156,6 +156,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable
   private final ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator;
 
+  // This is an internal flag to determine if a CallCredential has been passed to a gRPC Channel
+  // This is intended only for internal use cases and determines if the client library should
+  // attach the Credentials to the CallOptions. If this flag is true (i.e. DirectPaht and MTLS_S2A),
+  // the client library will skip attaching the Credentials to the CallOptions
+  private boolean isCallCredentialAttachedToChannel = false;
+
   /*
    * Experimental feature
    *
@@ -325,6 +331,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
             ChannelPool.create(
                 channelPoolSettings, InstantiatingGrpcChannelProvider.this::createSingleChannel))
         .setDirectPath(this.canUseDirectPath())
+        // `createSingleChannel` must be invoked first as `isCallCredentialAttachedToChannel`
+        // is based off the logic in there. The initial channel count for a ChannelPool must be
+        // greater than 0, which means that it will be invoked at least once. Multiple invocations
+        // of `createSingleChannel` does not change the value of
+        // `isCallCredentialAttachedToChannel`.
+        .setIsCallCredentialAttachedToChannel(this.isCallCredentialAttachedToChannel)
         .build();
   }
 
@@ -626,6 +638,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
               .callCredentials(callCreds)
               .altsCallCredentials(altsCallCredentials)
               .build();
+      isCallCredentialAttachedToChannel = true;
       useDirectPathXds = isDirectPathXdsEnabled();
       if (useDirectPathXds) {
         // google-c2p: CloudToProd(C2P) Directpath. This scheme is defined in
@@ -665,6 +678,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
             // which will be used to fetch MTLS_S2A hard bound tokens from the metdata server.
             channelCredentials =
                 CompositeChannelCredentials.create(channelCredentials, mtlsS2ACallCredentials);
+            isCallCredentialAttachedToChannel = true;
           }
           builder = Grpc.newChannelBuilder(endpoint, channelCredentials);
         } else {

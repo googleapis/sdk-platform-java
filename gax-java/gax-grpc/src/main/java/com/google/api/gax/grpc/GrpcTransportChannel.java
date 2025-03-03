@@ -62,6 +62,8 @@ public abstract class GrpcTransportChannel implements TransportChannel {
 
   public abstract boolean isDirectPath();
 
+  abstract boolean getIsCallCredentialAttachedToChannel();
+
   public Channel getChannel() {
     return getManagedChannel();
   }
@@ -102,11 +104,16 @@ public abstract class GrpcTransportChannel implements TransportChannel {
   }
 
   public static Builder newBuilder() {
-    return new AutoValue_GrpcTransportChannel.Builder().setDirectPath(false);
+    return new AutoValue_GrpcTransportChannel.Builder()
+        .setDirectPath(false)
+        .setIsCallCredentialAttachedToChannel(false);
   }
 
   public static GrpcTransportChannel create(ManagedChannel channel) {
-    return newBuilder().setManagedChannel(channel).build();
+    return newBuilder()
+        .setManagedChannel(channel)
+        .setIsCallCredentialAttachedToChannel(false)
+        .build();
   }
 
   @AutoValue.Builder
@@ -114,6 +121,9 @@ public abstract class GrpcTransportChannel implements TransportChannel {
     public abstract Builder setManagedChannel(ManagedChannel value);
 
     abstract Builder setDirectPath(boolean value);
+
+    abstract Builder setIsCallCredentialAttachedToChannel(
+        boolean isCallCredentialAttachedToChannel);
 
     public abstract GrpcTransportChannel build();
   }
