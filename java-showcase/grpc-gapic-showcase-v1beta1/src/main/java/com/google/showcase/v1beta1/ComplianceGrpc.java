@@ -477,18 +477,16 @@ public final class ComplianceGrpc {
     return ComplianceStub.newStub(factory, channel);
   }
 
-  /**
-   * Creates a new blocking-style stub that supports all types of calls on the service
-   */
-  public static ComplianceBlockingV2Stub newBlockingV2Stub(
-      io.grpc.Channel channel) {
+  /** Creates a new blocking-style stub that supports all types of calls on the service */
+  public static ComplianceBlockingV2Stub newBlockingV2Stub(io.grpc.Channel channel) {
     io.grpc.stub.AbstractStub.StubFactory<ComplianceBlockingV2Stub> factory =
-      new io.grpc.stub.AbstractStub.StubFactory<ComplianceBlockingV2Stub>() {
-        @java.lang.Override
-        public ComplianceBlockingV2Stub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
-          return new ComplianceBlockingV2Stub(channel, callOptions);
-        }
-      };
+        new io.grpc.stub.AbstractStub.StubFactory<ComplianceBlockingV2Stub>() {
+          @java.lang.Override
+          public ComplianceBlockingV2Stub newStub(
+              io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+            return new ComplianceBlockingV2Stub(channel, callOptions);
+          }
+        };
     return ComplianceBlockingV2Stub.newStub(factory, channel);
   }
 
@@ -902,8 +900,7 @@ public final class ComplianceGrpc {
    */
   public static final class ComplianceBlockingV2Stub
       extends io.grpc.stub.AbstractBlockingStub<ComplianceBlockingV2Stub> {
-    private ComplianceBlockingV2Stub(
-        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+    private ComplianceBlockingV2Stub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
     }
 
@@ -914,92 +911,118 @@ public final class ComplianceGrpc {
     }
 
     /**
+     *
+     *
      * <pre>
      * This method echoes the ComplianceData request. This method exercises
      * sending the entire request object in the REST body.
      * </pre>
      */
-    public com.google.showcase.v1beta1.RepeatResponse repeatDataBody(com.google.showcase.v1beta1.RepeatRequest request) {
+    public com.google.showcase.v1beta1.RepeatResponse repeatDataBody(
+        com.google.showcase.v1beta1.RepeatRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getRepeatDataBodyMethod(), getCallOptions(), request);
     }
 
     /**
+     *
+     *
      * <pre>
      * This method echoes the ComplianceData request. This method exercises
      * sending the a message-type field in the REST body. Per AIP-127, only
      * top-level, non-repeated fields can be sent this way.
      * </pre>
      */
-    public com.google.showcase.v1beta1.RepeatResponse repeatDataBodyInfo(com.google.showcase.v1beta1.RepeatRequest request) {
+    public com.google.showcase.v1beta1.RepeatResponse repeatDataBodyInfo(
+        com.google.showcase.v1beta1.RepeatRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getRepeatDataBodyInfoMethod(), getCallOptions(), request);
     }
 
     /**
+     *
+     *
      * <pre>
      * This method echoes the ComplianceData request. This method exercises
      * sending all request fields as query parameters.
      * </pre>
      */
-    public com.google.showcase.v1beta1.RepeatResponse repeatDataQuery(com.google.showcase.v1beta1.RepeatRequest request) {
+    public com.google.showcase.v1beta1.RepeatResponse repeatDataQuery(
+        com.google.showcase.v1beta1.RepeatRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getRepeatDataQueryMethod(), getCallOptions(), request);
     }
 
     /**
+     *
+     *
      * <pre>
      * This method echoes the ComplianceData request. This method exercises
      * sending some parameters as "simple" path variables (i.e., of the form
      * "/bar/{foo}" rather than "/{foo=bar/&#42;}"), and the rest as query parameters.
      * </pre>
      */
-    public com.google.showcase.v1beta1.RepeatResponse repeatDataSimplePath(com.google.showcase.v1beta1.RepeatRequest request) {
+    public com.google.showcase.v1beta1.RepeatResponse repeatDataSimplePath(
+        com.google.showcase.v1beta1.RepeatRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getRepeatDataSimplePathMethod(), getCallOptions(), request);
     }
 
     /**
+     *
+     *
      * <pre>
      * Same as RepeatDataSimplePath, but with a path resource.
      * </pre>
      */
-    public com.google.showcase.v1beta1.RepeatResponse repeatDataPathResource(com.google.showcase.v1beta1.RepeatRequest request) {
+    public com.google.showcase.v1beta1.RepeatResponse repeatDataPathResource(
+        com.google.showcase.v1beta1.RepeatRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getRepeatDataPathResourceMethod(), getCallOptions(), request);
     }
 
     /**
+     *
+     *
      * <pre>
      * Same as RepeatDataSimplePath, but with a trailing resource.
      * </pre>
      */
-    public com.google.showcase.v1beta1.RepeatResponse repeatDataPathTrailingResource(com.google.showcase.v1beta1.RepeatRequest request) {
+    public com.google.showcase.v1beta1.RepeatResponse repeatDataPathTrailingResource(
+        com.google.showcase.v1beta1.RepeatRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getRepeatDataPathTrailingResourceMethod(), getCallOptions(), request);
     }
 
     /**
+     *
+     *
      * <pre>
      * This method echoes the ComplianceData request, using the HTTP PUT method.
      * </pre>
      */
-    public com.google.showcase.v1beta1.RepeatResponse repeatDataBodyPut(com.google.showcase.v1beta1.RepeatRequest request) {
+    public com.google.showcase.v1beta1.RepeatResponse repeatDataBodyPut(
+        com.google.showcase.v1beta1.RepeatRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getRepeatDataBodyPutMethod(), getCallOptions(), request);
     }
 
     /**
+     *
+     *
      * <pre>
      * This method echoes the ComplianceData request, using the HTTP PATCH method.
      * </pre>
      */
-    public com.google.showcase.v1beta1.RepeatResponse repeatDataBodyPatch(com.google.showcase.v1beta1.RepeatRequest request) {
+    public com.google.showcase.v1beta1.RepeatResponse repeatDataBodyPatch(
+        com.google.showcase.v1beta1.RepeatRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getRepeatDataBodyPatchMethod(), getCallOptions(), request);
     }
 
     /**
+     *
+     *
      * <pre>
      * This method requests an enum value from the server. Depending on the contents of EnumRequest, the enum value returned will be a known enum declared in the
      * .proto file, or a made-up enum value the is unknown to the client. To verify that clients can round-trip unknown enum vaues they receive, use the
@@ -1008,12 +1031,15 @@ public final class ComplianceGrpc {
      * VerifyEnum() to work) but are not guaranteed to be the same across separate Showcase server runs.
      * </pre>
      */
-    public com.google.showcase.v1beta1.EnumResponse getEnum(com.google.showcase.v1beta1.EnumRequest request) {
+    public com.google.showcase.v1beta1.EnumResponse getEnum(
+        com.google.showcase.v1beta1.EnumRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetEnumMethod(), getCallOptions(), request);
     }
 
     /**
+     *
+     *
      * <pre>
      * This method is used to verify that clients can round-trip enum values, which is particularly important for unknown enum values over REST. VerifyEnum()
      * verifies that its request, which is presumably the response that the client previously got to a GetEnum(), contains the correct data. If so, it responds
@@ -1022,7 +1048,8 @@ public final class ComplianceGrpc {
      * although they are not guaranteed to be the same across separate Showcase server runs.
      * </pre>
      */
-    public com.google.showcase.v1beta1.EnumResponse verifyEnum(com.google.showcase.v1beta1.EnumResponse request) {
+    public com.google.showcase.v1beta1.EnumResponse verifyEnum(
+        com.google.showcase.v1beta1.EnumResponse request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getVerifyEnumMethod(), getCallOptions(), request);
     }
@@ -1030,6 +1057,7 @@ public final class ComplianceGrpc {
 
   /**
    * A stub to allow clients to do limited synchronous rpc calls to service Compliance.
+   *
    * <pre>
    * This service is used to test that GAPICs implement various REST-related features correctly. This mostly means transcoding proto3 requests to REST format
    * correctly for various types of HTTP annotations, but it also includes verifying that unknown (numeric) enums received by clients can be round-tripped

@@ -394,6 +394,19 @@ public final class TestingGrpc {
     return TestingStub.newStub(factory, channel);
   }
 
+  /** Creates a new blocking-style stub that supports all types of calls on the service */
+  public static TestingBlockingV2Stub newBlockingV2Stub(io.grpc.Channel channel) {
+    io.grpc.stub.AbstractStub.StubFactory<TestingBlockingV2Stub> factory =
+        new io.grpc.stub.AbstractStub.StubFactory<TestingBlockingV2Stub>() {
+          @java.lang.Override
+          public TestingBlockingV2Stub newStub(
+              io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+            return new TestingBlockingV2Stub(channel, callOptions);
+          }
+        };
+    return TestingBlockingV2Stub.newStub(factory, channel);
+  }
+
   /**
    * Creates a new blocking-style stub that supports unary and streaming output calls on the service
    */
@@ -735,6 +748,144 @@ public final class TestingGrpc {
 
   /**
    * A stub to allow clients to do synchronous rpc calls to service Testing.
+   *
+   * <pre>
+   * A service to facilitate running discrete sets of tests
+   * against Showcase.
+   * Adding this comment with special characters for comment formatting tests:
+   * 1. (abra-&gt;kadabra-&gt;alakazam)
+   * 2) [Nonsense][]: `pokemon/&#42;&#47;psychic/&#42;`
+   * </pre>
+   */
+  public static final class TestingBlockingV2Stub
+      extends io.grpc.stub.AbstractBlockingStub<TestingBlockingV2Stub> {
+    private TestingBlockingV2Stub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      super(channel, callOptions);
+    }
+
+    @java.lang.Override
+    protected TestingBlockingV2Stub build(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      return new TestingBlockingV2Stub(channel, callOptions);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Creates a new testing session.
+     * Adding this comment with special characters for comment formatting tests:
+     * 1. (abra-&gt;kadabra-&gt;alakazam)
+     * 2) [Nonsense][]: `pokemon/&#42;&#47;psychic/&#42;`
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.Session createSession(
+        com.google.showcase.v1beta1.CreateSessionRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getCreateSessionMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Gets a testing session.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.Session getSession(
+        com.google.showcase.v1beta1.GetSessionRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGetSessionMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Lists the current test sessions.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.ListSessionsResponse listSessions(
+        com.google.showcase.v1beta1.ListSessionsRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getListSessionsMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Delete a test session.
+     * </pre>
+     */
+    public com.google.protobuf.Empty deleteSession(
+        com.google.showcase.v1beta1.DeleteSessionRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getDeleteSessionMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Report on the status of a session.
+     * This generates a report detailing which tests have been completed,
+     * and an overall rollup.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.ReportSessionResponse reportSession(
+        com.google.showcase.v1beta1.ReportSessionRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getReportSessionMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * List the tests of a sessesion.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.ListTestsResponse listTests(
+        com.google.showcase.v1beta1.ListTestsRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getListTestsMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Explicitly decline to implement a test.
+     * This removes the test from subsequent `ListTests` calls, and
+     * attempting to do the test will error.
+     * This method will error if attempting to delete a required test.
+     * </pre>
+     */
+    public com.google.protobuf.Empty deleteTest(
+        com.google.showcase.v1beta1.DeleteTestRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getDeleteTestMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Register a response to a test.
+     * In cases where a test involves registering a final answer at the
+     * end of the test, this method provides the means to do so.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.VerifyTestResponse verifyTest(
+        com.google.showcase.v1beta1.VerifyTestRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getVerifyTestMethod(), getCallOptions(), request);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do limited synchronous rpc calls to service Testing.
    *
    * <pre>
    * A service to facilitate running discrete sets of tests
