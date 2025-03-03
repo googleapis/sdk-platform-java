@@ -4,7 +4,6 @@ googleapis_commitish: 27aa9d542f54ae1ea1277580550dd04aeb5b09f9
 # library.library_name is not defined.
 libraries:
 - api_shortname: showcase
-  folder_name: showcase # prevents java-showcase
   excluded_poms: gapic-showcase-bom
   name_pretty: Showcase
   api_description: Showcase module
