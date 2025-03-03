@@ -1,5 +1,80 @@
 # Changelog
 
+## [2.54.0](https://github.com/googleapis/sdk-platform-java/compare/v2.53.0...v2.54.0) (2025-02-25)
+
+
+### Features
+
+* add client side logging with slf4j ([#3403](https://github.com/googleapis/sdk-platform-java/issues/3403)) ([fe002fa](https://github.com/googleapis/sdk-platform-java/commit/fe002fab1ab65b29eeb5510d1ba1ef72fa3441b0))
+
+
+### Bug Fixes
+
+* S2A gRPC flow creates ComputeEngineCredentials via newBuilder. ([#3651](https://github.com/googleapis/sdk-platform-java/issues/3651)) ([29c061e](https://github.com/googleapis/sdk-platform-java/commit/29c061e8a18b9a416262986f11c5148ea6fec9b2))
+
+
+### Dependencies
+
+* update dependency ch.qos.logback:logback-core to v1.3.15 [security] ([#3654](https://github.com/googleapis/sdk-platform-java/issues/3654)) ([093d867](https://github.com/googleapis/sdk-platform-java/commit/093d867eb5dcdcc08ece434598f96a6dff760326))
+* update google api dependencies ([#3631](https://github.com/googleapis/sdk-platform-java/issues/3631)) ([48db2a1](https://github.com/googleapis/sdk-platform-java/commit/48db2a10e3ef46ad9ddf23378613a550172f63af))
+* update google auth library dependencies to v1.33.1 ([#3656](https://github.com/googleapis/sdk-platform-java/issues/3656)) ([f7877a5](https://github.com/googleapis/sdk-platform-java/commit/f7877a5b278d3487cb50a1e942f6ff6268121069))
+* update google http client dependencies to v1.46.3 ([#3657](https://github.com/googleapis/sdk-platform-java/issues/3657)) ([9d5b3b5](https://github.com/googleapis/sdk-platform-java/commit/9d5b3b5ae6a18fbc8445025fa9ec1abe00b7f7cc))
+* update grpc to 1.70.0 ([#3641](https://github.com/googleapis/sdk-platform-java/issues/3641)) ([ad26cf9](https://github.com/googleapis/sdk-platform-java/commit/ad26cf98548e325c99edb263baf8fe1a7696e634))
+* update grpc to 1.70.0 (missed update) ([#3658](https://github.com/googleapis/sdk-platform-java/issues/3658)) ([6ca0599](https://github.com/googleapis/sdk-platform-java/commit/6ca05994f6be40344b21befb8cdabb0766a835d0))
+* Update opentelemetry-semconv to v1.29.0-alpha ([#3635](https://github.com/googleapis/sdk-platform-java/issues/3635)) ([49ac09d](https://github.com/googleapis/sdk-platform-java/commit/49ac09d263daad8ceb2e14a623db242339880670))
+
+
+### Documentation
+
+* update showcase readme ([#3659](https://github.com/googleapis/sdk-platform-java/issues/3659)) ([0ddf073](https://github.com/googleapis/sdk-platform-java/commit/0ddf0738a8ef74f5676a3bf76c306837d14988e0))
+
+## [2.53.0](https://github.com/googleapis/sdk-platform-java/compare/v2.52.0...v2.53.0) (2025-02-10)
+
+
+### Features
+
+* enable DirectPath bound token in InstantiatingGrpcChannelProvider ([#3572](https://github.com/googleapis/sdk-platform-java/issues/3572)) ([5080495](https://github.com/googleapis/sdk-platform-java/commit/5080495d5aa65e69f67a86ee54e1ee103b42d1ef))
+* Enable MTLS_S2A bound token by default for gRPC S2A enabled flows ([#3591](https://github.com/googleapis/sdk-platform-java/issues/3591)) ([81e21f2](https://github.com/googleapis/sdk-platform-java/commit/81e21f2ef98c9b0776d9bcffb13db667a8a885e6))
+* migrate away from deprecated graal-sdk dependency to use nativeimage ([#2706](https://github.com/googleapis/sdk-platform-java/issues/2706)) ([757801a](https://github.com/googleapis/sdk-platform-java/commit/757801aba582fd6224fc8504a3236568eef8a417))
+
+
+### Bug Fixes
+
+* Avoid creating message string prematurely for streaming calls ([#3622](https://github.com/googleapis/sdk-platform-java/issues/3622)) ([f805e70](https://github.com/googleapis/sdk-platform-java/commit/f805e7009add0d9512c70956569ea00f11fa42f9))
+
+
+### Dependencies
+
+* update dependency com.google.code.gson:gson to v2.12.0 ([#3595](https://github.com/googleapis/sdk-platform-java/issues/3595)) ([1f1b119](https://github.com/googleapis/sdk-platform-java/commit/1f1b119cc5ff13e6821285347da089e1297372b3))
+* update dependency com.google.code.gson:gson to v2.12.0 ([#3596](https://github.com/googleapis/sdk-platform-java/issues/3596)) ([af62f53](https://github.com/googleapis/sdk-platform-java/commit/af62f5317cac2fd163aee305f9347ae3f2fb729f))
+* update dependency com.google.code.gson:gson to v2.12.1 ([#3599](https://github.com/googleapis/sdk-platform-java/issues/3599)) ([18917ee](https://github.com/googleapis/sdk-platform-java/commit/18917ee918763d40603fc307ec0a446561d10601))
+* update dependency com.google.code.gson:gson to v2.12.1 ([#3600](https://github.com/googleapis/sdk-platform-java/issues/3600)) ([3f82836](https://github.com/googleapis/sdk-platform-java/commit/3f828360d32ae9d4a2015b623b5747c407520417))
+* update dependency commons-codec:commons-codec to v1.18.0 ([#3590](https://github.com/googleapis/sdk-platform-java/issues/3590)) ([cd46ba5](https://github.com/googleapis/sdk-platform-java/commit/cd46ba5e2105c5c009e4700a9c8da65f94e7b79a))
+* update dependency io.netty:netty-tcnative-boringssl-static to v2.0.70.final ([#3623](https://github.com/googleapis/sdk-platform-java/issues/3623)) ([a4d1f95](https://github.com/googleapis/sdk-platform-java/commit/a4d1f95e6803966313478f382918c39038a4728b))
+* update dependency lxml to v5.3.1 ([#3624](https://github.com/googleapis/sdk-platform-java/issues/3624)) ([5407646](https://github.com/googleapis/sdk-platform-java/commit/5407646c3010f65ea55941694e3f05d1fef02a53))
+* update dependency net.bytebuddy:byte-buddy to v1.17.0 ([#3582](https://github.com/googleapis/sdk-platform-java/issues/3582)) ([54d99e9](https://github.com/googleapis/sdk-platform-java/commit/54d99e9f2826d372eb305b65be08033baf0f2f16))
+* update dependency org.checkerframework:checker-qual to v3.49.0 ([#3604](https://github.com/googleapis/sdk-platform-java/issues/3604)) ([390cffa](https://github.com/googleapis/sdk-platform-java/commit/390cffa28f39273bc99c9083deb998da8c9d4e83))
+* update dependency org.graalvm.sdk:nativeimage to v24.1.2 ([#3597](https://github.com/googleapis/sdk-platform-java/issues/3597)) ([9d151c4](https://github.com/googleapis/sdk-platform-java/commit/9d151c422557749c5a61fad0ffaa0216b807cbdc))
+* update docker.io/library/maven:3.9.9-eclipse-temurin-11-alpine docker digest to 456f60c ([#3607](https://github.com/googleapis/sdk-platform-java/issues/3607)) ([c2d2768](https://github.com/googleapis/sdk-platform-java/commit/c2d276857f6ca0e86c91e15af5e08a737bd1510b))
+* update docker.io/library/maven:3.9.9-eclipse-temurin-11-alpine docker digest to d323c2b ([#3601](https://github.com/googleapis/sdk-platform-java/issues/3601)) ([ed35c23](https://github.com/googleapis/sdk-platform-java/commit/ed35c23d99bd9ebbd8840bb34a8a023de10e38cc))
+* update docker.io/library/python docker tag to v3.13.2 ([#3615](https://github.com/googleapis/sdk-platform-java/issues/3615)) ([ba007c2](https://github.com/googleapis/sdk-platform-java/commit/ba007c2f9ce63a9837e87f98241cabd7bf94f082))
+* update docker.io/library/python:3.13.1-alpine3.20 docker digest to 7788ec8 ([#3586](https://github.com/googleapis/sdk-platform-java/issues/3586)) ([a24d1ba](https://github.com/googleapis/sdk-platform-java/commit/a24d1bad2a9480b1f4ebdc938f589bfe0306257a))
+* update google api dependencies ([#3584](https://github.com/googleapis/sdk-platform-java/issues/3584)) ([08f2b7b](https://github.com/googleapis/sdk-platform-java/commit/08f2b7b472ad399f61b669a9d1f283211b142cc9))
+* update google auth library dependencies to v1.32.0 ([#3611](https://github.com/googleapis/sdk-platform-java/issues/3611)) ([9436eb0](https://github.com/googleapis/sdk-platform-java/commit/9436eb0c479af55a55ac465410b036887bc13d71))
+* update google auth library dependencies to v1.32.1 ([#3618](https://github.com/googleapis/sdk-platform-java/issues/3618)) ([88c78e2](https://github.com/googleapis/sdk-platform-java/commit/88c78e205888ed792ed0a4a78979534d6bfddf9b))
+* update google http client dependencies to v1.46.1 ([#3616](https://github.com/googleapis/sdk-platform-java/issues/3616)) ([2462105](https://github.com/googleapis/sdk-platform-java/commit/24621051c28eddada2499c6bf9830bbc77c45706))
+* update googleapis/java-cloud-bom digest to 47ad868 ([#3608](https://github.com/googleapis/sdk-platform-java/issues/3608)) ([2bcf9e0](https://github.com/googleapis/sdk-platform-java/commit/2bcf9e0acba526a38b0beae1cfe9f3520cd64552))
+* update googleapis/java-cloud-bom digest to 514a644 ([#3602](https://github.com/googleapis/sdk-platform-java/issues/3602)) ([172d4da](https://github.com/googleapis/sdk-platform-java/commit/172d4da07b7f06494327d9f7406c605ce8e577db))
+* update googleapis/java-cloud-bom digest to 7752ecd ([#3603](https://github.com/googleapis/sdk-platform-java/issues/3603)) ([06be924](https://github.com/googleapis/sdk-platform-java/commit/06be9247e756aa47a90a249232288fd14fafa4b8))
+* update netty dependencies to v4.1.117.final ([#3581](https://github.com/googleapis/sdk-platform-java/issues/3581)) ([2734dc0](https://github.com/googleapis/sdk-platform-java/commit/2734dc01c83cac661f48bf2587184fbadf88281e))
+* update netty dependencies to v4.1.118.final ([#3625](https://github.com/googleapis/sdk-platform-java/issues/3625)) ([16ff6bd](https://github.com/googleapis/sdk-platform-java/commit/16ff6bd68a43646ced530d0abbbc02962917bdfa))
+* update netty dependencies to v4.1.118.final ([#3626](https://github.com/googleapis/sdk-platform-java/issues/3626)) ([316c425](https://github.com/googleapis/sdk-platform-java/commit/316c42546a4aab60aa1ac0fc4eeae22be8d9889f))
+* Update OpenTelemetry semantic convention packages in the shared dependencies ([#3402](https://github.com/googleapis/sdk-platform-java/issues/3402)) ([0e69784](https://github.com/googleapis/sdk-platform-java/commit/0e69784af6825cd55ac6ce1ee74e42af6c9f94f5))
+* update opentelemetry-java monorepo to v1.46.0 ([#3585](https://github.com/googleapis/sdk-platform-java/issues/3585)) ([ac214be](https://github.com/googleapis/sdk-platform-java/commit/ac214bed8fb657142da821d897fbbf2ca7d1fc12))
+* update opentelemetry-java monorepo to v1.47.0 ([#3619](https://github.com/googleapis/sdk-platform-java/issues/3619)) ([66901df](https://github.com/googleapis/sdk-platform-java/commit/66901df3b0bd7cfb8a25d72aa52cd8505f1bfafa))
+* update repo-automation-bots digest to 35eff2c ([#3609](https://github.com/googleapis/sdk-platform-java/issues/3609)) ([b962a01](https://github.com/googleapis/sdk-platform-java/commit/b962a01918e56bfc5ca928aa9a5e29a311e71a38))
+* update repo-automation-bots digest to 3a68a9c ([#3620](https://github.com/googleapis/sdk-platform-java/issues/3620)) ([1d79552](https://github.com/googleapis/sdk-platform-java/commit/1d795525a6a30ae30bcac40dec903cd7cc743711))
+
 ## [2.52.0](https://github.com/googleapis/sdk-platform-java/compare/v2.51.1...v2.52.0) (2025-01-24)
 
 

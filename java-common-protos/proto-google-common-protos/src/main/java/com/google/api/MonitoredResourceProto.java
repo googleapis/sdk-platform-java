@@ -73,11 +73,11 @@ public final class MonitoredResourceProto {
           + " \001(\0132\027.google.protobuf.Struct\022J\n\013user_la"
           + "bels\030\002 \003(\01325.google.api.MonitoredResourc"
           + "eMetadata.UserLabelsEntry\0321\n\017UserLabelsE"
-          + "ntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001By\n\016"
+          + "ntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001Bv\n\016"
           + "com.google.apiB\026MonitoredResourceProtoP\001"
           + "ZCgoogle.golang.org/genproto/googleapis/"
-          + "api/monitoredres;monitoredres\370\001\001\242\002\004GAPIb"
-          + "\006proto3"
+          + "api/monitoredres;monitoredres\242\002\004GAPIb\006pr"
+          + "oto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(

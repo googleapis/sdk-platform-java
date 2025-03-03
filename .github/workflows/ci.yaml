@@ -31,6 +31,7 @@ jobs:
         env:
           GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
           GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS: true
+          GOOGLE_SDK_JAVA_LOGGING: true
       - run: bazelisk version
       - name: Install Maven modules
         run: |
@@ -82,6 +83,7 @@ jobs:
         env:
           GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
           GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS: true
+          GOOGLE_SDK_JAVA_LOGGING: true
       - run: bazelisk version
       - name: Install Maven modules
         run: |
@@ -133,6 +135,7 @@ jobs:
         env:
           GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
           GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS: true
+          GOOGLE_SDK_JAVA_LOGGING: true
 
   build-java8-gapic-generator-java:
     name: "build(8) for gapic-generator-java"
@@ -255,6 +258,34 @@ jobs:
             -P enable-integration-tests \
             --batch-mode \
             --no-transfer-progress
+      # The `slf4j2_logback` profile brings logging dependency and compiles logging tests, require env var to be set
+      - name: Showcase integration tests - Logging SLF4J 2.x
+        working-directory: showcase
+        run: |
+          mvn clean verify -P '!showcase,enable-integration-tests,loggingTestBase,slf4j2_logback' \
+            --batch-mode \
+            --no-transfer-progress
+        # Set the Env Var for this step only
+        env:
+          GOOGLE_SDK_JAVA_LOGGING: true
+    # The `slf4j1_logback` profile brings logging dependency and compiles logging tests, require env var to be set
+      - name: Showcase integration tests - Logging SLF4J 1.x
+        working-directory: showcase
+        run: |
+          mvn clean verify -P '!showcase,enable-integration-tests,loggingTestBase,slf4j1_logback' \
+            --batch-mode \
+            --no-transfer-progress
+        # Set the Env Var for this step only
+        env:
+          GOOGLE_SDK_JAVA_LOGGING: true
+    # The `disabledLogging` profile tests logging disabled when logging dependency present,
+    # do not set env var for this step
+      - name: Showcase integration tests - Logging disabed
+        working-directory: showcase
+        run: |
+          mvn clean verify -P '!showcase,enable-integration-tests,loggingTestBase,disabledLogging'  \
+            --batch-mode \
+            --no-transfer-progress
 
   showcase-clirr:
     if: ${{ github.base_ref != '' }} # Only execute on pull_request trigger event
@@ -300,7 +331,7 @@ jobs:
       run: |
         mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
     - name: Validate gapic-generator-java-bom
-      uses: googleapis/java-cloud-bom/tests/validate-bom@c7c443f45b16046fa52a077194e14dcbd1c3b90e
+      uses: googleapis/java-cloud-bom/tests/validate-bom@47ad868794c5d38ee7eb95d69371a7a79f84d890
       with:
         bom-path: gapic-generator-java-bom/pom.xml
 

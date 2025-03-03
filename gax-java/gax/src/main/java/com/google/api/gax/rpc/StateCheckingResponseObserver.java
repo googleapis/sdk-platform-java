@@ -43,7 +43,7 @@ public abstract class StateCheckingResponseObserver<V> implements ResponseObserv
    * ensuring consistent state.
    */
   public final void onStart(StreamController controller) {
-    Preconditions.checkState(!isStarted, getClass() + " is already started.");
+    Preconditions.checkState(!isStarted, "%s is already started.", getClass());
     isStarted = true;
 
     onStartImpl(controller);
@@ -56,7 +56,7 @@ public abstract class StateCheckingResponseObserver<V> implements ResponseObserv
    * consistent state.
    */
   public final void onResponse(V response) {
-    Preconditions.checkState(!isClosed, getClass() + " received a response after being closed.");
+    Preconditions.checkState(!isClosed, "%s received a response after being closed.", getClass());
     onResponseImpl(response);
   }
 
@@ -67,7 +67,7 @@ public abstract class StateCheckingResponseObserver<V> implements ResponseObserv
    * state.
    */
   public final void onComplete() {
-    Preconditions.checkState(!isClosed, getClass() + " tried to double close.");
+    Preconditions.checkState(!isClosed, "%s tried to double close.", getClass());
     isClosed = true;
     onCompleteImpl();
   }
@@ -79,7 +79,7 @@ public abstract class StateCheckingResponseObserver<V> implements ResponseObserv
    * consistent state.
    */
   public final void onError(Throwable t) {
-    Preconditions.checkState(!isClosed, getClass() + " received error after being closed", t);
+    Preconditions.checkState(!isClosed, "%s received error after being closed", t, getClass());
     isClosed = true;
     onErrorImpl(t);
   }

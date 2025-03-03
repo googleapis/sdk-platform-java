@@ -39,6 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider.Builder;
+import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider.HardBoundTokenTypes;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannel;
@@ -735,6 +736,59 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setEndpoint(DEFAULT_ENDPOINT)
             .setEnvProvider(envProvider)
             .setHeaderProvider(Mockito.mock(HeaderProvider.class));
+    Truth.assertThat(builder.isDirectPathBoundTokenEnabled()).isFalse();
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
+    Truth.assertThat(provider.canUseDirectPath()).isTrue();
+
+    // verify this info is passed correctly to transport channel
+    TransportChannel transportChannel = provider.getTransportChannel();
+    Truth.assertThat(((GrpcTransportChannel) transportChannel).isDirectPath()).isTrue();
+    transportChannel.shutdownNow();
+  }
+
+  @Test
+  public void canUseDirectPath_boundTokenNotEnabledWithNonComputeCredentials() {
+    System.setProperty("os.name", "Linux");
+    Credentials credentials = Mockito.mock(Credentials.class);
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(
+            envProvider.getenv(
+                InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
+        .thenReturn("false");
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPath(true)
+            .setAllowHardBoundTokenTypes(Collections.singletonList(HardBoundTokenTypes.ALTS))
+            .setCredentials(credentials)
+            .setEndpoint(DEFAULT_ENDPOINT)
+            .setEnvProvider(envProvider);
+    Truth.assertThat(builder.isDirectPathBoundTokenEnabled()).isFalse();
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
+    Truth.assertThat(provider.canUseDirectPath()).isFalse();
+  }
+
+  @Test
+  public void canUseDirectPath_happyPathWithBoundToken() throws IOException {
+    System.setProperty("os.name", "Linux");
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(
+            envProvider.getenv(
+                InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
+        .thenReturn("false");
+    // verify the credentials gets called and returns a non-null builder.
+    Mockito.when(computeEngineCredentials.toBuilder())
+        .thenReturn(ComputeEngineCredentials.newBuilder());
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPath(true)
+            .setCredentials(computeEngineCredentials)
+            .setAllowHardBoundTokenTypes(Collections.singletonList(HardBoundTokenTypes.ALTS))
+            .setEndpoint(DEFAULT_ENDPOINT)
+            .setEnvProvider(envProvider)
+            .setHeaderProvider(Mockito.mock(HeaderProvider.class));
+    Truth.assertThat(builder.isDirectPathBoundTokenEnabled()).isTrue();
     InstantiatingGrpcChannelProvider provider =
         new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isTrue();
@@ -1101,6 +1155,79 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         .contains(
             "Cannot establish an mTLS connection to S2A because MTLS to MDS credentials do not exist on filesystem, falling back to plaintext connection to S2A");
     InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
+  }
+
+  @Test
+  void isMtlsS2AHardBoundTokensEnabled_useS2AFalse() {
+    InstantiatingGrpcChannelProvider.Builder providerBuilder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setUseS2A(false)
+            .setAllowHardBoundTokenTypes(
+                Collections.singletonList(
+                    InstantiatingGrpcChannelProvider.HardBoundTokenTypes.MTLS_S2A))
+            .setCredentials(computeEngineCredentials);
+    Truth.assertThat(providerBuilder.isMtlsS2AHardBoundTokensEnabled()).isFalse();
+  }
+
+  @Test
+  void isMtlsS2AHardBoundTokensEnabled_hardBoundTokenTypesEmpty() {
+    InstantiatingGrpcChannelProvider.Builder providerBuilder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setUseS2A(true)
+            .setAllowHardBoundTokenTypes(new ArrayList<>())
+            .setCredentials(computeEngineCredentials);
+    Truth.assertThat(providerBuilder.isMtlsS2AHardBoundTokensEnabled()).isFalse();
+  }
+
+  @Test
+  void isMtlsS2AHardBoundTokensEnabled_nullCreds() {
+    InstantiatingGrpcChannelProvider.Builder providerBuilder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setUseS2A(true)
+            .setAllowHardBoundTokenTypes(
+                Collections.singletonList(
+                    InstantiatingGrpcChannelProvider.HardBoundTokenTypes.MTLS_S2A))
+            .setCredentials(null);
+    Truth.assertThat(providerBuilder.isMtlsS2AHardBoundTokensEnabled()).isFalse();
+  }
+
+  @Test
+  void isMtlsS2AHardBoundTokensEnabled_notComputeEngineCreds() {
+    InstantiatingGrpcChannelProvider.Builder providerBuilder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setUseS2A(true)
+            .setAllowHardBoundTokenTypes(
+                Collections.singletonList(
+                    InstantiatingGrpcChannelProvider.HardBoundTokenTypes.MTLS_S2A))
+            .setCredentials(CloudShellCredentials.create(3000));
+    Truth.assertThat(providerBuilder.isMtlsS2AHardBoundTokensEnabled()).isFalse();
+  }
+
+  @Test
+  void isMtlsS2AHardBoundTokensEnabled_mtlsS2ANotInList() {
+    InstantiatingGrpcChannelProvider.Builder providerBuilder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setUseS2A(true)
+            .setAllowHardBoundTokenTypes(
+                Collections.singletonList(
+                    InstantiatingGrpcChannelProvider.HardBoundTokenTypes.ALTS))
+            .setCredentials(computeEngineCredentials);
+    Truth.assertThat(providerBuilder.isMtlsS2AHardBoundTokensEnabled()).isFalse();
+  }
+
+  @Test
+  void isMtlsS2AHardBoundTokensEnabled_mtlsS2ATokenAllowedInList() {
+    List<InstantiatingGrpcChannelProvider.HardBoundTokenTypes> allowHardBoundTokenTypes =
+        new ArrayList<>();
+    allowHardBoundTokenTypes.add(InstantiatingGrpcChannelProvider.HardBoundTokenTypes.MTLS_S2A);
+    allowHardBoundTokenTypes.add(InstantiatingGrpcChannelProvider.HardBoundTokenTypes.ALTS);
+
+    InstantiatingGrpcChannelProvider.Builder providerBuilder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setUseS2A(true)
+            .setAllowHardBoundTokenTypes(allowHardBoundTokenTypes)
+            .setCredentials(computeEngineCredentials);
+    Truth.assertThat(providerBuilder.isMtlsS2AHardBoundTokensEnabled()).isTrue();
   }
 
   private static class FakeLogHandler extends Handler {

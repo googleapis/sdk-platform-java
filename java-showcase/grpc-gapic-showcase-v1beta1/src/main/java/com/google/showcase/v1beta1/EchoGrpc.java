@@ -482,6 +482,21 @@ public final class EchoGrpc {
   }
 
   /**
+   * Creates a new blocking-style stub that supports all types of calls on the service
+   */
+  public static EchoBlockingV2Stub newBlockingV2Stub(
+      io.grpc.Channel channel) {
+    io.grpc.stub.AbstractStub.StubFactory<EchoBlockingV2Stub> factory =
+      new io.grpc.stub.AbstractStub.StubFactory<EchoBlockingV2Stub>() {
+        @java.lang.Override
+        public EchoBlockingV2Stub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+          return new EchoBlockingV2Stub(channel, callOptions);
+        }
+      };
+    return EchoBlockingV2Stub.newStub(factory, channel);
+  }
+
+  /**
    * Creates a new blocking-style stub that supports unary and streaming output calls on the service
    */
   public static EchoBlockingStub newBlockingStub(io.grpc.Channel channel) {
@@ -900,6 +915,158 @@ public final class EchoGrpc {
   /**
    * A stub to allow clients to do synchronous rpc calls to service Echo.
    *
+   * <pre>
+   * This service is used showcase the four main types of rpcs - unary, server
+   * side streaming, client side streaming, and bidirectional streaming. This
+   * service also exposes methods that explicitly implement server delay, and
+   * paginated calls. Set the 'showcase-trailer' metadata key on any method
+   * to have the values echoed in the response trailers. Set the
+   * 'x-goog-request-params' metadata key on any method to have the values
+   * echoed in the response headers.
+   * </pre>
+   */
+  public static final class EchoBlockingV2Stub
+      extends io.grpc.stub.AbstractBlockingStub<EchoBlockingV2Stub> {
+    private EchoBlockingV2Stub(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      super(channel, callOptions);
+    }
+
+    @java.lang.Override
+    protected EchoBlockingV2Stub build(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      return new EchoBlockingV2Stub(channel, callOptions);
+    }
+
+    /**
+     * <pre>
+     * This method simply echoes the request. This method showcases unary RPCs.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.EchoResponse echo(com.google.showcase.v1beta1.EchoRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getEchoMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * This method returns error details in a repeated "google.protobuf.Any"
+     * field. This method showcases handling errors thus encoded, particularly
+     * over REST transport. Note that GAPICs only allow the type
+     * "google.protobuf.Any" for field paths ending in "error.details", and, at
+     * run-time, the actual types for these fields must be one of the types in
+     * google/rpc/error_details.proto.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.EchoErrorDetailsResponse echoErrorDetails(com.google.showcase.v1beta1.EchoErrorDetailsRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getEchoErrorDetailsMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * This method splits the given content into words and will pass each word back
+     * through the stream. This method showcases server-side streaming RPCs.
+     * </pre>
+     */
+    @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/10918")
+    public io.grpc.stub.BlockingClientCall<?, com.google.showcase.v1beta1.EchoResponse>
+        expand(com.google.showcase.v1beta1.ExpandRequest request) {
+      return io.grpc.stub.ClientCalls.blockingV2ServerStreamingCall(
+          getChannel(), getExpandMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * This method will collect the words given to it. When the stream is closed
+     * by the client, this method will return the a concatenation of the strings
+     * passed to it. This method showcases client-side streaming RPCs.
+     * </pre>
+     */
+    @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/10918")
+    public io.grpc.stub.BlockingClientCall<com.google.showcase.v1beta1.EchoRequest, com.google.showcase.v1beta1.EchoResponse>
+        collect() {
+      return io.grpc.stub.ClientCalls.blockingClientStreamingCall(
+          getChannel(), getCollectMethod(), getCallOptions());
+    }
+
+    /**
+     * <pre>
+     * This method, upon receiving a request on the stream, will pass the same
+     * content back on the stream. This method showcases bidirectional
+     * streaming RPCs.
+     * </pre>
+     */
+    @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/10918")
+    public io.grpc.stub.BlockingClientCall<com.google.showcase.v1beta1.EchoRequest, com.google.showcase.v1beta1.EchoResponse>
+        chat() {
+      return io.grpc.stub.ClientCalls.blockingBidiStreamingCall(
+          getChannel(), getChatMethod(), getCallOptions());
+    }
+
+    /**
+     * <pre>
+     * This is similar to the Expand method but instead of returning a stream of
+     * expanded words, this method returns a paged list of expanded words.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.PagedExpandResponse pagedExpand(com.google.showcase.v1beta1.PagedExpandRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getPagedExpandMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * This is similar to the PagedExpand except that it uses
+     * max_results instead of page_size, as some legacy APIs still
+     * do. New APIs should NOT use this pattern.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.PagedExpandResponse pagedExpandLegacy(com.google.showcase.v1beta1.PagedExpandLegacyRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getPagedExpandLegacyMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * This method returns a map containing lists of words that appear in the input, keyed by their
+     * initial character. The only words returned are the ones included in the current page,
+     * as determined by page_token and page_size, which both refer to the word indices in the
+     * input. This paging result consisting of a map of lists is a pattern used by some legacy
+     * APIs. New APIs should NOT use this pattern.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse pagedExpandLegacyMapped(com.google.showcase.v1beta1.PagedExpandRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getPagedExpandLegacyMappedMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * This method will wait for the requested amount of time and then return.
+     * This method showcases how a client handles a request timeout.
+     * </pre>
+     */
+    public com.google.longrunning.Operation wait(com.google.showcase.v1beta1.WaitRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getWaitMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * This method will block (wait) for the requested amount of time
+     * and then return the response or error.
+     * This method showcases how a client handles delays or retries.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.BlockResponse block(com.google.showcase.v1beta1.BlockRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getBlockMethod(), getCallOptions(), request);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do limited synchronous rpc calls to service Echo.
    * <pre>
    * This service is used showcase the four main types of rpcs - unary, server
    * side streaming, client side streaming, and bidirectional streaming. This
