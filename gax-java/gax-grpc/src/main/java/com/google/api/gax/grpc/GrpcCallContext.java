@@ -47,6 +47,7 @@ import com.google.api.gax.rpc.internal.ApiCallContextOptions;
 import com.google.api.gax.rpc.internal.Headers;
 import com.google.api.gax.tracing.ApiTracer;
 import com.google.api.gax.tracing.BaseApiTracer;
+import com.google.auth.ApiKeyCredentials;
 import com.google.auth.Credentials;
 import com.google.auth.Retryable;
 import com.google.common.base.Preconditions;
@@ -85,6 +86,7 @@ public final class GrpcCallContext implements ApiCallContext {
   public static final CallOptions.Key<ApiTracer> TRACER_KEY = CallOptions.Key.create("gax.tracer");
 
   private final Channel channel;
+  @Nullable private final Credentials channelCredentials;
   @Nullable private final Credentials credentials;
   private final CallOptions callOptions;
   @Nullable private final java.time.Duration timeout;
@@ -100,6 +102,7 @@ public final class GrpcCallContext implements ApiCallContext {
   /** Returns an empty instance with a null channel and default {@link CallOptions}. */
   public static GrpcCallContext createDefault() {
     return new GrpcCallContext(
+        null,
         null,
         null,
         CallOptions.DEFAULT,
@@ -119,6 +122,7 @@ public final class GrpcCallContext implements ApiCallContext {
     return new GrpcCallContext(
         channel,
         null,
+        null,
         callOptions,
         null,
         null,
@@ -133,6 +137,7 @@ public final class GrpcCallContext implements ApiCallContext {
 
   private GrpcCallContext(
       Channel channel,
+      @Nullable Credentials channelCredentials,
       @Nullable Credentials credentials,
       CallOptions callOptions,
       @Nullable java.time.Duration timeout,
@@ -145,6 +150,7 @@ public final class GrpcCallContext implements ApiCallContext {
       @Nullable Set<StatusCode.Code> retryableCodes,
       @Nullable EndpointContext endpointContext) {
     this.channel = channel;
+    this.channelCredentials = channelCredentials;
     this.credentials = credentials;
     this.callOptions = Preconditions.checkNotNull(callOptions);
     this.timeout = timeout;
@@ -186,11 +192,17 @@ public final class GrpcCallContext implements ApiCallContext {
   @Override
   public GrpcCallContext withCredentials(Credentials newCredentials) {
     Preconditions.checkNotNull(newCredentials);
-    CallCredentials callCredentials = MoreCallCredentials.from(newCredentials);
+    CallOptions newCallOptions = callOptions;
+    if (channelCredentials == null
+        || newCredentials instanceof ApiKeyCredentials
+        || !(channelCredentials == newCredentials)) {
+      newCallOptions = callOptions.withCallCredentials(MoreCallCredentials.from(newCredentials));
+    }
     return new GrpcCallContext(
         channel,
+        channelCredentials,
         newCredentials,
-        callOptions.withCallCredentials(callCredentials),
+        newCallOptions,
         timeout,
         streamWaitTimeout,
         streamIdleTimeout,
@@ -210,7 +222,20 @@ public final class GrpcCallContext implements ApiCallContext {
           "Expected GrpcTransportChannel, got " + inputChannel.getClass().getName());
     }
     GrpcTransportChannel transportChannel = (GrpcTransportChannel) inputChannel;
-    return withChannel(transportChannel.getChannel());
+    return new GrpcCallContext(
+        transportChannel.getChannel(),
+        transportChannel.getChannelCredentialsUsed(),
+        credentials,
+        callOptions,
+        timeout,
+        streamWaitTimeout,
+        streamIdleTimeout,
+        channelAffinity,
+        extraHeaders,
+        options,
+        retrySettings,
+        retryableCodes,
+        endpointContext);
   }
 
   @Override
@@ -218,6 +243,7 @@ public final class GrpcCallContext implements ApiCallContext {
     Preconditions.checkNotNull(endpointContext);
     return new GrpcCallContext(
         channel,
+        channelCredentials,
         credentials,
         callOptions,
         timeout,
@@ -252,6 +278,7 @@ public final class GrpcCallContext implements ApiCallContext {
 
     return new GrpcCallContext(
         channel,
+        channelCredentials,
         credentials,
         callOptions,
         timeout,
@@ -300,6 +327,7 @@ public final class GrpcCallContext implements ApiCallContext {
 
     return new GrpcCallContext(
         channel,
+        channelCredentials,
         credentials,
         callOptions,
         timeout,
@@ -334,6 +362,7 @@ public final class GrpcCallContext implements ApiCallContext {
 
     return new GrpcCallContext(
         channel,
+        channelCredentials,
         credentials,
         callOptions,
         timeout,
@@ -351,6 +380,7 @@ public final class GrpcCallContext implements ApiCallContext {
   public GrpcCallContext withChannelAffinity(@Nullable Integer affinity) {
     return new GrpcCallContext(
         channel,
+        channelCredentials,
         credentials,
         callOptions,
         timeout,
@@ -372,6 +402,7 @@ public final class GrpcCallContext implements ApiCallContext {
         Headers.mergeHeaders(this.extraHeaders, extraHeaders);
     return new GrpcCallContext(
         channel,
+        channelCredentials,
         credentials,
         callOptions,
         timeout,
@@ -394,6 +425,7 @@ public final class GrpcCallContext implements ApiCallContext {
   public GrpcCallContext withRetrySettings(RetrySettings retrySettings) {
     return new GrpcCallContext(
         channel,
+        channelCredentials,
         credentials,
         callOptions,
         timeout,
@@ -416,6 +448,7 @@ public final class GrpcCallContext implements ApiCallContext {
   public GrpcCallContext withRetryableCodes(Set<StatusCode.Code> retryableCodes) {
     return new GrpcCallContext(
         channel,
+        channelCredentials,
         credentials,
         callOptions,
         timeout,
@@ -440,6 +473,11 @@ public final class GrpcCallContext implements ApiCallContext {
               + inputCallContext.getClass().getName());
     }
     GrpcCallContext grpcCallContext = (GrpcCallContext) inputCallContext;
+
+    Credentials newChannelCredentials = grpcCallContext.channelCredentials;
+    if (newChannelCredentials == null) {
+      newChannelCredentials = channelCredentials;
+    }
 
     Credentials newCredentials = grpcCallContext.credentials;
     if (newCredentials == null) {
@@ -515,6 +553,7 @@ public final class GrpcCallContext implements ApiCallContext {
     // to update this.
     return new GrpcCallContext(
         newChannel,
+        newChannelCredentials,
         newCredentials,
         newCallOptions,
         newTimeout,
@@ -592,6 +631,7 @@ public final class GrpcCallContext implements ApiCallContext {
   public GrpcCallContext withChannel(Channel newChannel) {
     return new GrpcCallContext(
         newChannel,
+        channelCredentials,
         credentials,
         callOptions,
         timeout,
@@ -609,6 +649,7 @@ public final class GrpcCallContext implements ApiCallContext {
   public GrpcCallContext withCallOptions(CallOptions newCallOptions) {
     return new GrpcCallContext(
         channel,
+        channelCredentials,
         credentials,
         newCallOptions,
         timeout,
@@ -653,6 +694,7 @@ public final class GrpcCallContext implements ApiCallContext {
     ApiCallContextOptions newOptions = options.withOption(key, value);
     return new GrpcCallContext(
         channel,
+        channelCredentials,
         credentials,
         callOptions,
         timeout,

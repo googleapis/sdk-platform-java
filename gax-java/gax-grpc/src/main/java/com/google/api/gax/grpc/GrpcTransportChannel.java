@@ -32,10 +32,12 @@ package com.google.api.gax.grpc;
 import com.google.api.core.InternalExtensionOnly;
 import com.google.api.gax.core.ResourceCloseException;
 import com.google.api.gax.rpc.TransportChannel;
+import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
 import io.grpc.Channel;
 import io.grpc.ManagedChannel;
 import java.util.concurrent.TimeUnit;
+import javax.annotation.Nullable;
 
 /** Implementation of TransportChannel based on gRPC. */
 @AutoValue
@@ -61,6 +63,9 @@ public abstract class GrpcTransportChannel implements TransportChannel {
   abstract ManagedChannel getManagedChannel();
 
   public abstract boolean isDirectPath();
+
+  @Nullable
+  abstract Credentials getChannelCredentialsUsed();
 
   public Channel getChannel() {
     return getManagedChannel();
@@ -114,6 +119,8 @@ public abstract class GrpcTransportChannel implements TransportChannel {
     public abstract Builder setManagedChannel(ManagedChannel value);
 
     abstract Builder setDirectPath(boolean value);
+
+    abstract Builder setChannelCredentialsUsed(Credentials channelCredentialsUsed);
 
     public abstract GrpcTransportChannel build();
   }

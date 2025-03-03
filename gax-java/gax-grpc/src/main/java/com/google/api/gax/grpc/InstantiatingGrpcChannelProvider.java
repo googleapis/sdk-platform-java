@@ -325,6 +325,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
             ChannelPool.create(
                 channelPoolSettings, InstantiatingGrpcChannelProvider.this::createSingleChannel))
         .setDirectPath(this.canUseDirectPath())
+        .setChannelCredentialsUsed(credentials)
         .build();
   }
 
