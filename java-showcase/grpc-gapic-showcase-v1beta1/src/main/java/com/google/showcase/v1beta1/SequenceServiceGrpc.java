@@ -327,6 +327,19 @@ public final class SequenceServiceGrpc {
     return SequenceServiceStub.newStub(factory, channel);
   }
 
+  /** Creates a new blocking-style stub that supports all types of calls on the service */
+  public static SequenceServiceBlockingV2Stub newBlockingV2Stub(io.grpc.Channel channel) {
+    io.grpc.stub.AbstractStub.StubFactory<SequenceServiceBlockingV2Stub> factory =
+        new io.grpc.stub.AbstractStub.StubFactory<SequenceServiceBlockingV2Stub>() {
+          @java.lang.Override
+          public SequenceServiceBlockingV2Stub newStub(
+              io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+            return new SequenceServiceBlockingV2Stub(channel, callOptions);
+          }
+        };
+    return SequenceServiceBlockingV2Stub.newStub(factory, channel);
+  }
+
   /**
    * Creates a new blocking-style stub that supports unary and streaming output calls on the service
    */
@@ -569,6 +582,102 @@ public final class SequenceServiceGrpc {
   }
 
   /** A stub to allow clients to do synchronous rpc calls to service SequenceService. */
+  public static final class SequenceServiceBlockingV2Stub
+      extends io.grpc.stub.AbstractBlockingStub<SequenceServiceBlockingV2Stub> {
+    private SequenceServiceBlockingV2Stub(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      super(channel, callOptions);
+    }
+
+    @java.lang.Override
+    protected SequenceServiceBlockingV2Stub build(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      return new SequenceServiceBlockingV2Stub(channel, callOptions);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Creates a sequence.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.Sequence createSequence(
+        com.google.showcase.v1beta1.CreateSequenceRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getCreateSequenceMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Creates a sequence.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.StreamingSequence createStreamingSequence(
+        com.google.showcase.v1beta1.CreateStreamingSequenceRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getCreateStreamingSequenceMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Retrieves a sequence.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.SequenceReport getSequenceReport(
+        com.google.showcase.v1beta1.GetSequenceReportRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGetSequenceReportMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Retrieves a sequence.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.StreamingSequenceReport getStreamingSequenceReport(
+        com.google.showcase.v1beta1.GetStreamingSequenceReportRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGetStreamingSequenceReportMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Attempts a sequence.
+     * </pre>
+     */
+    public com.google.protobuf.Empty attemptSequence(
+        com.google.showcase.v1beta1.AttemptSequenceRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getAttemptSequenceMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Attempts a streaming sequence.
+     * </pre>
+     */
+    @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/10918")
+    public io.grpc.stub.BlockingClientCall<
+            ?, com.google.showcase.v1beta1.AttemptStreamingSequenceResponse>
+        attemptStreamingSequence(
+            com.google.showcase.v1beta1.AttemptStreamingSequenceRequest request) {
+      return io.grpc.stub.ClientCalls.blockingV2ServerStreamingCall(
+          getChannel(), getAttemptStreamingSequenceMethod(), getCallOptions(), request);
+    }
+  }
+
+  /** A stub to allow clients to do limited synchronous rpc calls to service SequenceService. */
   public static final class SequenceServiceBlockingStub
       extends io.grpc.stub.AbstractBlockingStub<SequenceServiceBlockingStub> {
     private SequenceServiceBlockingStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
