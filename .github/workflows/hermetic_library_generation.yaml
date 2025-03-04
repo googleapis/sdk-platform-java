@@ -62,3 +62,4 @@ jobs:
         head_ref: ${{ github.head_ref }}
         image_tag: ${{ env.GENERATOR_VERSION }}
         token: ${{ secrets.CLOUD_JAVA_BOT_TOKEN }}
+        showcase_mode: true

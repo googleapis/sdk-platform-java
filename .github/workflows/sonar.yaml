@@ -33,10 +33,10 @@ jobs:
       - name: Install modules to local maven
         run: |
           mvn install -T 1C -DskipTests -ntp -B
-          cd showcase
+          cd java-showcase
           mvn install -T 1C -DskipTests -ntp -B
       - name: Parse showcase version
-        working-directory: showcase/gapic-showcase
+        working-directory: java-showcase/gapic-showcase
         run: echo "SHOWCASE_VERSION=$(mvn help:evaluate -Dexpression=gapic-showcase.version -q -DforceStdout)" >> "$GITHUB_ENV"
       - name: Install showcase server
         run: |
