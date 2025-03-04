@@ -16,87 +16,69 @@
 
 package com.google.showcase.v1beta1.it.util;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.google.api.gax.rpc.ApiClientHeaderProvider;
-import com.google.api.gax.rpc.FixedHeaderProvider;
-import com.google.api.gax.rpc.StubSettings;
-import com.google.common.collect.ImmutableList;
-import com.google.showcase.v1beta1.it.util.TestClientInitializer;
-import com.google.showcase.v1beta1.stub.ComplianceStubSettings;
-import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import io.grpc.CallOptions;
-import io.grpc.ClientInterceptor;
 import io.grpc.Channel;
 import io.grpc.ClientCall;
-
+import io.grpc.ClientInterceptor;
+import io.grpc.ForwardingClientCall;
 import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import com.google.api.gax.httpjson.ApiMethodDescriptor;
-import com.google.api.gax.httpjson.HttpJsonMetadata;
-import io.grpc.ForwardingClientCall;
 import io.grpc.Status;
 
 /** Implements a client interceptor to retrieve the metadata from a GRPC client request. */
 public class GrpcCapturingClientInterceptor implements ClientInterceptor {
-    public Metadata metadata;
+  public Metadata metadata;
 
+  @Override
+  public <RequestT, ResponseT> ClientCall<RequestT, ResponseT> interceptCall(
+      MethodDescriptor<RequestT, ResponseT> method, final CallOptions callOptions, Channel next) {
+    ClientCall<RequestT, ResponseT> call = next.newCall(method, callOptions);
+    return new ForwardingClientCall.SimpleForwardingClientCall<RequestT, ResponseT>(call) {
       @Override
-      public <RequestT, ResponseT> ClientCall<RequestT, ResponseT> interceptCall(
-          MethodDescriptor<RequestT, ResponseT> method, final CallOptions callOptions, Channel next) {
-        ClientCall<RequestT, ResponseT> call = next.newCall(method, callOptions);
-        return new ForwardingClientCall.SimpleForwardingClientCall<RequestT, ResponseT>(call) {
-          @Override
-          public void start(Listener<ResponseT> responseListener, Metadata headers) {
-            Listener<ResponseT> wrappedListener =
-                new SimpleForwardingClientCallListener<ResponseT>(responseListener) {
-                  @Override
-                  public void onClose(Status status, Metadata trailers) {
-                    if (status.isOk()) {
-                      metadata = trailers;
-                    }
-                    super.onClose(status, trailers);
-                  }
-                };
+      public void start(Listener<ResponseT> responseListener, Metadata headers) {
+        Listener<ResponseT> wrappedListener =
+            new SimpleForwardingClientCallListener<ResponseT>(responseListener) {
+              @Override
+              public void onClose(Status status, Metadata trailers) {
+                if (status.isOk()) {
+                  metadata = trailers;
+                }
+                super.onClose(status, trailers);
+              }
+            };
 
-            super.start(wrappedListener, headers);
-          }
-        };
+        super.start(wrappedListener, headers);
+      }
+    };
+  }
+
+  private static class SimpleForwardingClientCallListener<RespT>
+      extends ClientCall.Listener<RespT> {
+    private final ClientCall.Listener<RespT> delegate;
+
+    SimpleForwardingClientCallListener(ClientCall.Listener<RespT> delegate) {
+      this.delegate = delegate;
     }
 
-    private static class SimpleForwardingClientCallListener<RespT>
-            extends ClientCall.Listener<RespT> {
-        private final ClientCall.Listener<RespT> delegate;
-
-        SimpleForwardingClientCallListener(ClientCall.Listener<RespT> delegate) {
-            this.delegate = delegate;
-        }
-
-        @Override
-        public void onHeaders(Metadata headers) {
-            delegate.onHeaders(headers);
-        }
-
-        @Override
-        public void onMessage(RespT message) {
-            delegate.onMessage(message);
-        }
-
-        @Override
-        public void onClose(Status status, Metadata trailers) {
-            delegate.onClose(status, trailers);
-        }
-
-        @Override
-        public void onReady() {
-            delegate.onReady();
-        }
+    @Override
+    public void onHeaders(Metadata headers) {
+      delegate.onHeaders(headers);
     }
+
+    @Override
+    public void onMessage(RespT message) {
+      delegate.onMessage(message);
+    }
+
+    @Override
+    public void onClose(Status status, Metadata trailers) {
+      delegate.onClose(status, trailers);
+    }
+
+    @Override
+    public void onReady() {
+      delegate.onReady();
+    }
+  }
 }

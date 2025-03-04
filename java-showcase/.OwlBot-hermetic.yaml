@@ -14,13 +14,13 @@
 
 
 deep-remove-regex:
-- "/showcase/grpc-gapic-showcase-v1beta1/src"
-- "/showcase/proto-gapic-showcase-v1beta1/src"
-- "/showcase/gapic-showcase/src"
-- "/showcase/samples/snippets/generated"
+- "/grpc-gapic-showcase-v1beta1/src"
+- "/proto-gapic-showcase-v1beta1/src"
+- "/gapic-showcase/src"
+- "/samples/snippets/generated"
 
 deep-preserve-regex:
-- "/showcase/gapic-showcase/src/test"
+- "/gapic-showcase/src/test"
 
 deep-copy-regex:
 - source: "/schema/google/showcase/(v.*)/.*-java/proto-.*/src"
