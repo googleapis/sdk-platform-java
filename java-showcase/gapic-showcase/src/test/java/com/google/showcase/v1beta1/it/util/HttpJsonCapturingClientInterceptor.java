@@ -16,7 +16,6 @@
 
 package com.google.showcase.v1beta1.it.util;
 
-
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCall;
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCallListener;
