@@ -97,6 +97,20 @@ public interface TransportChannelProvider {
    */
   TransportChannelProvider withEndpoint(String endpoint);
 
+  /** True for gRPC transport provider which has no mtlsEndpoint set. */
+  default boolean needsMtlsEndpoint() {
+    return false;
+  }
+
+  /**
+   * Sets the mTLS endpoint to use when constructing a new {@link TransportChannel} using S2A.
+   *
+   * <p>This method should only be called if {@link #needsMtlsEndpoint()} returns true.
+   */
+  default TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint) {
+    return this;
+  }
+
   /** Sets whether to use S2A when constructing a new {@link TransportChannel}. */
   @BetaApi(
       "The S2A feature is not stable yet and may change in the future. https://github.com/grpc/grpc-java/issues/11533.")
