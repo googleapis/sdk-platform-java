@@ -688,8 +688,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
             channelCredentials =
                 CompositeChannelCredentials.create(channelCredentials, mtlsS2ACallCredentials);
           }
-          // mtlsEndpoint is non-null + non-empty here, since it must be non-null and non-empty
-          // in order for useS2A to be true.
           builder = Grpc.newChannelBuilder(mtlsEndpoint, channelCredentials);
         } else {
           // Use default if we cannot initialize channel credentials via DCA or S2A.
