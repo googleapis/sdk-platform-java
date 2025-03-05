@@ -219,7 +219,7 @@ public final class GrpcCallContext implements ApiCallContext {
     return new GrpcCallContext(
         transportChannel.getChannel(),
         credentials,
-        callOptions,
+        transportChannel.isDirectPath() ? callOptions.withCallCredentials(null) : callOptions,
         timeout,
         streamWaitTimeout,
         streamIdleTimeout,
