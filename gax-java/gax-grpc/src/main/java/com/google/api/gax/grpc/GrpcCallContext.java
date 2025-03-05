@@ -150,7 +150,10 @@ public final class GrpcCallContext implements ApiCallContext {
       boolean isDirectPath) {
     this.channel = channel;
     this.credentials = credentials;
-    this.callOptions = Preconditions.checkNotNull(callOptions);
+    Preconditions.checkNotNull(callOptions);
+    // CallCredentials is stripped from CallOptions because CallCredentials are attached
+    // to ChannelCredentials in DirectPath flows. Adding it again would duplicate the headers.
+    this.callOptions = isDirectPath ? callOptions.withCallCredentials(null) : callOptions;
     this.timeout = timeout;
     this.streamWaitTimeout = streamWaitTimeout;
     this.streamIdleTimeout = streamIdleTimeout;
@@ -195,7 +198,7 @@ public final class GrpcCallContext implements ApiCallContext {
     return new GrpcCallContext(
         channel,
         newCredentials,
-        isDirectPath ? callOptions : callOptions.withCallCredentials(callCredentials),
+        callOptions.withCallCredentials(callCredentials),
         timeout,
         streamWaitTimeout,
         streamIdleTimeout,
@@ -219,7 +222,7 @@ public final class GrpcCallContext implements ApiCallContext {
     return new GrpcCallContext(
         transportChannel.getChannel(),
         credentials,
-        transportChannel.isDirectPath() ? callOptions.withCallCredentials(null) : callOptions,
+        callOptions,
         timeout,
         streamWaitTimeout,
         streamIdleTimeout,
@@ -624,7 +627,6 @@ public final class GrpcCallContext implements ApiCallContext {
     return new GrpcCallContext(
         newChannel,
         credentials,
-        // Attach back the credentials to callOptions since we default to non-DirectPath.
         credentials != null
             ? callOptions.withCallCredentials(MoreCallCredentials.from(credentials))
             : callOptions,
@@ -646,7 +648,7 @@ public final class GrpcCallContext implements ApiCallContext {
     return new GrpcCallContext(
         channel,
         credentials,
-        isDirectPath ? newCallOptions.withCallCredentials(null) : newCallOptions,
+        newCallOptions,
         timeout,
         streamWaitTimeout,
         streamIdleTimeout,
