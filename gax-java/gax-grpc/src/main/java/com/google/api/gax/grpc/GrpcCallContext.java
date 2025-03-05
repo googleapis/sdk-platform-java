@@ -195,7 +195,7 @@ public final class GrpcCallContext implements ApiCallContext {
     return new GrpcCallContext(
         channel,
         newCredentials,
-        callOptions.withCallCredentials(callCredentials),
+        isDirectPath ? callOptions : callOptions.withCallCredentials(callCredentials),
         timeout,
         streamWaitTimeout,
         streamIdleTimeout,
@@ -483,8 +483,11 @@ public final class GrpcCallContext implements ApiCallContext {
       newDeadline = callOptions.getDeadline();
     }
 
+    boolean newIsDirectPath = grpcCallContext.isDirectPath;
+
     CallCredentials newCallCredentials = grpcCallContext.callOptions.getCredentials();
-    if (newCallCredentials == null) {
+    // If newIsDirectPath is true, then newChannel is guanrateed to be not null.
+    if (newCallCredentials == null && !newIsDirectPath) {
       newCallCredentials = callOptions.getCredentials();
     }
 
@@ -553,7 +556,7 @@ public final class GrpcCallContext implements ApiCallContext {
         newRetrySettings,
         newRetryableCodes,
         endpointContext,
-        isDirectPath);
+        newIsDirectPath);
   }
 
   /** The {@link Channel} set on this context. */
@@ -563,9 +566,7 @@ public final class GrpcCallContext implements ApiCallContext {
 
   /** The {@link CallOptions} set on this context. */
   public CallOptions getCallOptions() {
-    if (!isDirectPath) return callOptions;
-    // Remove the CallCredentials attached to the callOptions if it's DirectPath.
-    return callOptions.withCallCredentials(null);
+    return callOptions;
   }
 
   /** This method is obsolete. Use {@link #getStreamWaitTimeoutDuration()} instead. */
@@ -623,7 +624,10 @@ public final class GrpcCallContext implements ApiCallContext {
     return new GrpcCallContext(
         newChannel,
         credentials,
-        callOptions,
+        // Attach back the credentials to callOptions since we default to non-DirectPath.
+        credentials != null
+            ? callOptions.withCallCredentials(MoreCallCredentials.from(credentials))
+            : callOptions,
         timeout,
         streamWaitTimeout,
         streamIdleTimeout,
@@ -642,7 +646,7 @@ public final class GrpcCallContext implements ApiCallContext {
     return new GrpcCallContext(
         channel,
         credentials,
-        newCallOptions,
+        isDirectPath ? newCallOptions.withCallCredentials(null) : newCallOptions,
         timeout,
         streamWaitTimeout,
         streamIdleTimeout,
