@@ -44,17 +44,15 @@ jobs:
         protobuf-version: ${{ fromJSON(format('[{0}]', inputs.protobuf_runtime_versions || '"3.25.5","4.28.3"')) }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          path: sdk-platform-java
+          repository: "googleapis/${{ matrix.repo }}"
+          path: "${{ matrix.repo }}"
       - uses: actions/setup-java@v4
         with:
           # Use Java 11 for this as Linkage Checker is only compatible with Java 11 or below
           java-version: 11
           distribution: temurin
-      - uses: actions/checkout@v4
-        with:
-          repository: "googleapis/${{ matrix.repo }}"
-          path: "${{ matrix.repo }}"
       - run: |
           pwd
           pushd "${{ matrix.repo }}"
