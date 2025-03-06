@@ -29,13 +29,17 @@ if [ -z "${PROTOBUF_RUNTIME_VERSION}" ]; then
   exit 1
 fi
 
-# Create a Map of possible API names (Key: Maven Artifact ID Prefix, Value: Maven Group ID)
-# Non-Cloud APIs have a different Group ID
-declare -A api_maven_map
-api_maven_map["google-cloud"]="com.google.cloud"
-api_maven_map["grafeas"]="io.grafeas"
-api_maven_map["google-maps"]="com.google.maps"
-api_maven_map["google-shopping"]="com.google.shopping"
+# Create two mappings of possible API names (Key: Maven Artifact ID Prefix, Value: Maven Group ID)
+# for the libraries that should be tested.
+# 1. These are special handwritten libraries in google-cloud-java that should be tested
+declare -A google_cloud_java_handwritten_libraries
+google_cloud_java_handwritten_libraries["grafeas"]="io.grafeas"
+google_cloud_java_handwritten_libraries["vertexai"]="com.google.cloud"
+google_cloud_java_handwritten_libraries["resourcemanager"]="com.google.cloud"
+
+# 2. These are the mappings of all the downstream handwritten libraries
+declare -A gcp_handwritten_libraries
+gcp_handwritten_libraries["google-cloud"]="com.google.cloud"
 
 # cloud-opensource-java contains the Linkage Checker tool
 git clone https://github.com/GoogleCloudPlatform/cloud-opensource-java.git
@@ -53,6 +57,13 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
 
   # The artifact_list will be a comma separate list of artifacts
   artifact_list=""
+
+  if [ "${repo}" == "google-cloud-java" ]; then
+    api_maven_map=google_cloud_java_handwritten_libraries
+  else
+    api_maven_map=gcp_handwritten_libraries
+  fi
+
   for artifact_id_prefix in "${!api_maven_map[@]}"; do
     group_id="${api_maven_map[${artifact_id_prefix}]}"
 
