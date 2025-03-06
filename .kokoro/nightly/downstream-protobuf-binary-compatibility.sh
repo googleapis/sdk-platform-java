@@ -81,7 +81,6 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
     # Install all repo modules to ~/.m2 (there can be multiple relevant artifacts to test i.e. core, admin, control)
     mvn -B -ntp install -T 1C -DskipTests -Dclirr.skip -Denforcer.skip
   else
-    mkdir "${repo}"
     pushd "${repo}"
     curl -O "https://raw.githubusercontent.com/googleapis/${repo}/refs/heads/main/versions.txt"
   fi

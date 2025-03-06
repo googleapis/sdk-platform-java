@@ -55,7 +55,9 @@ jobs:
         with:
           repository: "googleapis/${{ matrix.repo }}"
           path: "${{ matrix.repo }}"
-      - run: mvn -B -ntp install -T 1C -DskipTests -Dclirr.skip -Denforcer.skip
+      - run: |
+          cd "${{ matrix.repo }}"
+          mvn -B -ntp install -T 1C -DskipTests -Dclirr.skip -Denforcer.skip
       - name: Print Protobuf-Java testing version
         run: echo "Testing with Protobuf-Java v${{ matrix.protobuf-version }}"
       - name: Perform downstream source compatibility testing

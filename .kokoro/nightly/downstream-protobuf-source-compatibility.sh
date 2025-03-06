@@ -35,8 +35,9 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   if [ "${REPOS_INSTALLED}" != "true" ]; then
     # Perform source-compatibility testing on main (latest changes)
     git clone "https://github.com/googleapis/$repo.git" --depth=1
-    pushd "$repo"
   fi
+
+  pushd "$repo"
 
   # Compile the Handwritten Library with the Protobuf-Java version to test source compatibility
   # Run unit tests to help check for any behavior differences (dependant on coverage)
