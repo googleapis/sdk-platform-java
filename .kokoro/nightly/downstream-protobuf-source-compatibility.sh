@@ -32,7 +32,7 @@ if [ -z "${PROTOBUF_RUNTIME_VERSION}" ]; then
 fi
 
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
-  if [ "${REPOS_INSTALLED}" != "true" ]; then
+  if [ "${REPOS_INSTALLED_LOCALLY}" != "true" ]; then
     # Perform source-compatibility testing on main (latest changes)
     git clone "https://github.com/googleapis/$repo.git" --depth=1
   fi
