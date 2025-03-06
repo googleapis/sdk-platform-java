@@ -15,6 +15,8 @@
 
 set -eo pipefail
 
+pwd
+
 # Comma-delimited list of repos to test with the local java-shared-dependencies
 if [ -z "${REPOS_UNDER_TEST}" ]; then
   echo "REPOS_UNDER_TEST must be set to run downstream-protobuf-source-compatibility.sh"
@@ -30,17 +32,18 @@ if [ -z "${PROTOBUF_RUNTIME_VERSION}" ]; then
 fi
 
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
-  # Perform source-compatibility testing on main (latest changes)
-  git clone "https://github.com/googleapis/$repo.git" --depth=1
-  pushd "$repo"
+  if [ "${REPOS_INSTALLED}" != "true" ]; then
+    # Perform source-compatibility testing on main (latest changes)
+    git clone "https://github.com/googleapis/$repo.git" --depth=1
+    pushd "$repo"
+  fi
 
   # Compile the Handwritten Library with the Protobuf-Java version to test source compatibility
   # Run unit tests to help check for any behavior differences (dependant on coverage)
-  mvn clean test -B -V -ntp \
+  mvn test -B -V -ntp \
       -Dclirr.skip=true \
       -Denforcer.skip=true \
       -Dmaven.javadoc.skip=true \
       -Dprotobuf.version=${PROTOBUF_RUNTIME_VERSION} \
       -T 1C
-  popd
 done
