@@ -63,7 +63,7 @@ jobs:
       - name: Print Protobuf-Java testing version
         run: echo "Testing with Protobuf-Java v${{ matrix.protobuf-version }}"
       - name: Perform downstream source compatibility testing
-        run: REPOS_UNDER_TEST="${{ matrix.repo }}" PROTOBUF_RUNTIME_VERSION="${{ matrix.protobuf-version}}" REPOS_INSTALLED="true" ./.kokoro/nightly/downstream-protobuf-source-compatibility.sh
+        run: REPOS_UNDER_TEST="${{ matrix.repo }}" PROTOBUF_RUNTIME_VERSION="${{ matrix.protobuf-version}}" REPOS_INSTALLED_LOCALLY="true" ./.kokoro/nightly/downstream-protobuf-source-compatibility.sh
       - name: Perform downstream binary compatibility testing
-        run: REPOS_UNDER_TEST="${{ matrix.repo }}" PROTOBUF_RUNTIME_VERSION="${{ matrix.protobuf-version}}" REPOS_INSTALLED="true" ./.kokoro/nightly/downstream-protobuf-binary-compatibility.sh
+        run: REPOS_UNDER_TEST="${{ matrix.repo }}" PROTOBUF_RUNTIME_VERSION="${{ matrix.protobuf-version}}" REPOS_INSTALLED_LOCALLY="true" ./.kokoro/nightly/downstream-protobuf-binary-compatibility.sh
 

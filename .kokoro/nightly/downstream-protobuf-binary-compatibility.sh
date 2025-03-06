@@ -74,15 +74,15 @@ function build_artifact_list() {
 }
 
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
-  if [ "${REPOS_INSTALLED}" != "true" ]; then
+  if [ "${REPOS_INSTALLED_LOCALLY}" != "true" ]; then
     # Perform testing on main (with latest changes). Shallow copy as history is not important
     git clone "https://github.com/googleapis/${repo}.git" --depth=1
-    pushd "${repo}"
+    pushd "../../${repo}"
     # Install all repo modules to ~/.m2 (there can be multiple relevant artifacts to test i.e. core, admin, control)
     mvn -B -ntp install -T 1C -DskipTests -Dclirr.skip -Denforcer.skip
   else
-    pushd "${repo}"
-    curl -O "https://raw.githubusercontent.com/googleapis/${repo}/refs/heads/main/versions.txt"
+    pushd "../../${repo}"
+#    curl -O "https://raw.githubusercontent.com/googleapis/${repo}/refs/heads/main/versions.txt"
   fi
 
   # The artifact_list will be a comma separate list of artifacts
