@@ -17,3 +17,6 @@ proto-google-iam-v2:1.48.0:1.48.1-SNAPSHOT
 grpc-google-iam-v2:1.48.0:1.48.1-SNAPSHOT
 google-cloud-core:2.52.0:2.52.1-SNAPSHOT
 google-cloud-shared-dependencies:3.44.0:3.44.1-SNAPSHOT
+gapic-showcase:0.0.0:0.0.1-SNAPSHOT
+proto-gapic-showcase-v1beta1:0.0.0:0.0.1-SNAPSHOT
+grpc-gapic-showcase-v1beta1:0.0.0:0.0.1-SNAPSHOT
