@@ -1,4 +1,6 @@
 googleapis_commitish: 0a459af4362c0e41b9723dd4d7edc022c552db40
+is_monorepo: true
+
 # the libraries are ordered with respect to library name, which is
 # java-{library.library_name} or java-{library.api-shortname} when
 # library.library_name is not defined.
