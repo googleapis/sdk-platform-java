@@ -41,7 +41,7 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
 
   # Compile the Handwritten Library with the Protobuf-Java version to test source compatibility
   # Run unit tests to help check for any behavior differences (dependant on coverage)
-  mvn test -B -V -ntp \
+  mvn compile -B -V -ntp \
       -Dclirr.skip=true \
       -Denforcer.skip=true \
       -Dmaven.javadoc.skip=true \

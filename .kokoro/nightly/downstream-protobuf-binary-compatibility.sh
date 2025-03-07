@@ -15,8 +15,6 @@
 
 set -eo pipefail
 
-pwd
-
 # Comma-delimited list of repos to test with the local java-shared-dependencies
 if [ -z "${REPOS_UNDER_TEST}" ]; then
   echo "REPOS_UNDER_TEST must be set to run downstream-protobuf-binary-compatibility.sh"
@@ -34,14 +32,42 @@ fi
 # Create two mappings of possible API names (Key: Maven Artifact ID Prefix, Value: Maven Group ID)
 # for the libraries that should be tested.
 # 1. These are special handwritten libraries in google-cloud-java that should be tested
-declare -A google_cloud_java_handwritten_libraries
-google_cloud_java_handwritten_libraries["grafeas"]="io.grafeas"
-google_cloud_java_handwritten_libraries["google-cloud-vertexai"]="com.google.cloud"
-google_cloud_java_handwritten_libraries["google-cloud-resourcemanager"]="com.google.cloud"
+declare -A monorepo_handwritten_libraries
+monorepo_handwritten_libraries["grafeas"]="io.grafeas"
+monorepo_handwritten_libraries["google-cloud-vertexai"]="com.google.cloud"
+monorepo_handwritten_libraries["google-cloud-resourcemanager"]="com.google.cloud"
 
-# 2. These are the mappings of all the downstream handwritten libraries
-declare -A gcp_handwritten_libraries
-gcp_handwritten_libraries["google-cloud"]="com.google.cloud"
+# 2. These are the mappings of all the downstream handwritten libraries' artifacts
+declare -A downstream_handwritten_libraries
+downstream_handwritten_libraries["google-cloud"]="com.google.cloud"
+
+# Builds a string output to `artifact_list`. It contains a comma separate list of Maven GAV coordinates. Parses
+# the `versions.txt` file by searching for the matching artifact_id_prefix to get the corresponding version.
+function build_artifact_list() {
+  local -n api_maven_mapping=$1
+  for artifact_id_prefix in "${!api_maven_mapping[@]}"; do
+    group_id="${api_maven_mapping[${artifact_id_prefix}]}"
+
+    # Match all artifacts that start with the artifact_id_prefix to exclude any proto and grpc modules.
+    repo_artifact_list=$(cat "versions.txt" | grep "^${artifact_id_prefix}" || true)
+
+    # Only proceed if there are matching elements
+    if [ -n "${repo_artifact_list}" ]; then
+      # Exclude any matches to BOM artifacts or emulators. The repo artifact list will look like:
+      # "com.google.cloud:google-cloud-accessapproval:2.60.0-SNAPSHOT,com.google.cloud:google-cloud-aiplatform:3.60.0-SNAPSHOT,"
+      repo_artifact_list=$(echo "${repo_artifact_list}" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: "{\$1=\"${group_id}:\"\$1; \$2=\"\"; print}" OFS=: | sed 's/::/:/' | tr '\n' ',')
+      # Remove the trailing comma after the last entry
+      repo_artifact_list=${repo_artifact_list%,}
+
+      # The first entry added is not separated with a comma. Avoids generating `,{ARTIFACT_LIST}`
+      if [ -z "${artifact_list}" ]; then
+        artifact_list="${repo_artifact_list}"
+      else
+        artifact_list="${artifact_list},${repo_artifact_list}"
+      fi
+    fi
+  done
+}
 
 # cloud-opensource-java contains the Linkage Checker tool
 git clone https://github.com/GoogleCloudPlatform/cloud-opensource-java.git
@@ -50,53 +76,25 @@ mvn -B -ntp clean compile -T 1C
 # Linkage Checker tool resides in the /dependencies subfolder
 pushd dependencies
 
-function build_artifact_list() {
-  local artifact_id_prefix=$1
-  local group_id=$2
-  # Match all artifacts that start with the artifact_id_prefix to exclude any proto and grpc modules.
-  repo_artifact_list=$(cat "versions.txt" | grep "^${artifact_id_prefix}" || true)
-
-  # Only proceed if there are matching elements
-  if [ -n "${repo_artifact_list}" ]; then
-    # Exclude any matches to BOM artifacts or emulators. The repo artifact list will look like:
-    # "com.google.cloud:google-cloud-accessapproval:2.60.0-SNAPSHOT,com.google.cloud:google-cloud-aiplatform:3.60.0-SNAPSHOT,"
-    repo_artifact_list=$(echo "${repo_artifact_list}" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: "{\$1=\"${group_id}:\"\$1; \$2=\"\"; print}" OFS=: | sed 's/::/:/' | tr '\n' ',')
-    # Remove the trailing comma after the last entry
-    repo_artifact_list=${repo_artifact_list%,}
-
-    # The first entry added is not separated with a comma. Avoids generating `,{ARTIFACT_LIST}`
-    if [ -z "${artifact_list}" ]; then
-      artifact_list="${repo_artifact_list}"
-    else
-      artifact_list="${artifact_list},${repo_artifact_list}"
-    fi
-  fi
-}
-
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   if [ "${REPOS_INSTALLED_LOCALLY}" != "true" ]; then
     # Perform testing on main (with latest changes). Shallow copy as history is not important
     git clone "https://github.com/googleapis/${repo}.git" --depth=1
-    pushd "../../${repo}"
+    pushd "${repo}"
     # Install all repo modules to ~/.m2 (there can be multiple relevant artifacts to test i.e. core, admin, control)
     mvn -B -ntp install -T 1C -DskipTests -Dclirr.skip -Denforcer.skip
   else
+    # If installed locally to .m2, then just pull the versions.txt file to parse
+    mkdir -p "../../${repo}"
     pushd "../../${repo}"
-#    curl -O "https://raw.githubusercontent.com/googleapis/${repo}/refs/heads/main/versions.txt"
+    curl -Os "https://raw.githubusercontent.com/googleapis/${repo}/refs/heads/main/versions.txt"
   fi
 
-  # The artifact_list will be a comma separate list of artifacts
   artifact_list=""
   if [ "${repo}" == "google-cloud-java" ]; then
-    for artifact_id_prefix in "${!google_cloud_java_handwritten_libraries[@]}"; do
-      group_id="${google_cloud_java_handwritten_libraries[${artifact_id_prefix}]}"
-      build_artifact_list "${artifact_id_prefix}" "${group_id}"
-    done
+    build_artifact_list monorepo_handwritten_libraries
   else
-    for artifact_id_prefix in "${!gcp_handwritten_libraries[@]}"; do
-      group_id="${gcp_handwritten_libraries[${artifact_id_prefix}]}"
-      build_artifact_list "${artifact_id_prefix}" "${group_id}"
-    done
+    build_artifact_list downstream_handwritten_libraries
   fi
 
   # Linkage Checker /dependencies
@@ -105,7 +103,6 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   echo "Artifact List: ${artifact_list}"
   # Only run Linkage Checker if the repo has any relevant artifacts to test for
   if [ -n "${artifact_list}" ]; then
-    echo "Found artifacts ${artifact_list}"
     # The `-s` argument filters the linkage check problems that stem from the artifact
     program_args="-r --artifacts ${artifact_list},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION},com.google.protobuf:protobuf-java-util:${PROTOBUF_RUNTIME_VERSION} -s ${artifact_list}"
     echo "Linkage Checker Program Arguments: ${program_args}"
