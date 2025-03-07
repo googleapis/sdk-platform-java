@@ -15,6 +15,14 @@
 
 set -eo pipefail
 
+# There are three Env Vars that this script uses.
+# 1. (Required) REPOS_UNDER_TEST: Comma separate list of the repo names
+# 2. (Required) PROTOBUF_RUNTIME_VERSION: Protobuf runtime version to test again
+# 3. REPOS_INSTALLED_LOCALLY: Flag (if set to "true) will determine if the repo
+# needs to be cloned from github and re-installed locally to the m2. If the artifact
+# is already installed locally, this saves time as the artifact is not again compiled
+# and built.
+
 # Comma-delimited list of repos to test with the local java-shared-dependencies
 if [ -z "${REPOS_UNDER_TEST}" ]; then
   echo "REPOS_UNDER_TEST must be set to run downstream-protobuf-binary-compatibility.sh"
@@ -106,7 +114,7 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
     # The `-s` argument filters the linkage check problems that stem from the artifact
     program_args="-r --artifacts ${artifact_list},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION},com.google.protobuf:protobuf-java-util:${PROTOBUF_RUNTIME_VERSION} -s ${artifact_list}"
     echo "Linkage Checker Program Arguments: ${program_args}"
-    mvn -B -ntp exec:java -Dexec.mainClass="com.google.cloud.tools.opensource.classpath.LinkageCheckerMain" -Dexec.args="${program_args}"
+    mvn -B -ntp exec:java -Dexec.mainClass="com.google.cloud.tools.opensource.classpath.LinkageCheckerMain" -Dexec.args="${program_args}" -P exec-linkage-checker
   fi
   echo "done"
 done

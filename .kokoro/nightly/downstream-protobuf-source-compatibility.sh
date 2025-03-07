@@ -15,7 +15,13 @@
 
 set -eo pipefail
 
-pwd
+# There are three Env Vars that this script uses.
+# 1. (Required) REPOS_UNDER_TEST: Comma separate list of the repo names
+# 2. (Required) PROTOBUF_RUNTIME_VERSION: Protobuf runtime version to test again
+# 3. REPOS_INSTALLED_LOCALLY: Flag (if set to "true) will determine if the repo
+# needs to be cloned from github and re-installed locally to the m2. If the artifact
+# is already installed locally, this saves time as the artifact is not again compiled
+# and built.
 
 # Comma-delimited list of repos to test with the local java-shared-dependencies
 if [ -z "${REPOS_UNDER_TEST}" ]; then
