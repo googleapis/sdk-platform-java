@@ -18,14 +18,14 @@ monorepo, for example, google-cloud-java) from a configuration file.
 
 A generation configuration file is required to generate GAPIC Client Libraries.
 
-Please refer to [Generation configuration yaml](#generation-configuration-yaml--generation-config-path---optional)
+Please refer to [Generation configuration](#configuration-to-generate-a-repository)
 for more information.
 
 ### versions.txt
 
 In order to generate a version for each library, a `versions.txt` has to exist
 in `repository-path`.
-Please refer to [Repository path](#repository-path--repositorypath---optional)
+Please refer to [Repository path](#repository-path-repository-path-optional)
 for more information.
 
 ## Parameters to generate a repository using the docker image
@@ -55,7 +55,7 @@ repository the user `cd`'d into.
 
 Note that `versions.txt` has to exist in `repository_path` in order to generate
 the right version for each library.
-Please refer [here](go/java-client-releasing#versionstxt-manifest) for more info
+Please refer go/java-client-releasing#versionstxt-manifest for more info
 of versions.txt.
 
 ### A list of library names (`library-names`), optional
