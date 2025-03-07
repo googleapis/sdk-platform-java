@@ -161,17 +161,17 @@ class ITLongRunningOperation {
       throws Exception {
     RetrySettings initialUnaryRetrySettings =
         RetrySettings.newBuilder()
-            .setInitialRpcTimeout(Duration.ofMillis(5000L))
+            .setInitialRpcTimeout(Duration.ofMillis(500L))
             .setRpcTimeoutMultiplier(1.0)
-            .setMaxRpcTimeout(Duration.ofMillis(5000L))
-            .setTotalTimeout(Duration.ofMillis(5000L))
+            .setMaxRpcTimeout(Duration.ofMillis(500L))
+            .setTotalTimeout(Duration.ofMillis(500L))
             .build();
     RetrySettings pollingRetrySettings =
         RetrySettings.newBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(1000L))
+            .setInitialRetryDelay(Duration.ofMillis(100L))
             .setRetryDelayMultiplier(2.0)
-            .setMaxRetryDelay(Duration.ofMillis(3000L))
-            .setTotalTimeout(Duration.ofMillis(5000L))
+            .setMaxRetryDelay(Duration.ofMillis(500L))
+            .setTotalTimeout(Duration.ofMillis(1000L))
             .build();
     EchoClient httpjsonClient =
         TestClientInitializer.createHttpJsonEchoClientCustomWaitSettings(
