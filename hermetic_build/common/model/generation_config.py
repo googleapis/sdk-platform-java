@@ -25,6 +25,7 @@ GAPIC_LEVEL_PARAMETER = "GAPIC level parameter"
 COMMON_PROTOS_LIBRARY_NAME = "common-protos"
 GAPIC_GENERATOR_VERSION = "gapic_generator_version"
 LIBRARIES_BOM_VERSION = "libraries_bom_version"
+IS_MONOREPO = "is_monorepo"
 GENERATOR_VERSION_ENV_KEY = "GENERATOR_VERSION"
 
 
@@ -39,6 +40,7 @@ class GenerationConfig:
         libraries: list[LibraryConfig],
         gapic_generator_version: Optional[str] = None,
         libraries_bom_version: Optional[str] = None,
+        monorepo: Optional[bool] = False,
     ):
         self.googleapis_commitish = googleapis_commitish
         self.libraries_bom_version = (
@@ -48,6 +50,7 @@ class GenerationConfig:
             gapic_generator_version
         )
         self.libraries = libraries
+        self.monorepo = monorepo
         # explicit set to None so that we can compute the
         # value in getter.
         self.__contains_common_protos = None
@@ -66,7 +69,7 @@ class GenerationConfig:
         return paths
 
     def is_monorepo(self) -> bool:
-        return len(self.libraries) > 1
+        return self.monorepo
 
     def contains_common_protos(self) -> bool:
         if self.__contains_common_protos is None:
@@ -169,6 +172,7 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
         ),
         gapic_generator_version=__optional(config, GAPIC_GENERATOR_VERSION, None),
         libraries_bom_version=__optional(config, LIBRARIES_BOM_VERSION, None),
+        monorepo=__optional(config, IS_MONOREPO, False),
         libraries=parsed_libraries,
     )
 
