@@ -37,6 +37,7 @@ branchProtectionRules:
       - should-run-library-generation-tests
       - showcase (11)
       - showcase (17)
+      - Build with Airlock
   - pattern: 2.23.x
     isAdminEnforced: true
     requiredApprovingReviewCount: 1
