@@ -374,7 +374,7 @@ class EndpointContextTest {
   }
 
   @Test
-  void endpointContextBuild_shouldUseS2A_mtlsEndpoint() throws IOException {
+  void endpointContextBuild_shouldUseS2A_tlsEndpoint() throws IOException {
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(envProvider.getenv(EndpointContext.S2A_ENV_ENABLE_USE_S2A)).thenReturn("true");
     defaultEndpointContextBuilder =
@@ -385,7 +385,7 @@ class EndpointContextTest {
             .setUsingGDCH(false);
     EndpointContext endpointContext = defaultEndpointContextBuilder.build();
     Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isTrue();
-    Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(DEFAULT_MTLS_ENDPOINT);
+    Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
   }
 
   @Test
