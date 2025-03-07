@@ -45,25 +45,15 @@ jobs:
     steps:
       - name: Checkout sdk-platform-java repo
         uses: actions/checkout@v4
-      - name: Checkout downstream handwritten repo
-        uses: actions/checkout@v4
-        with:
-          repository: "googleapis/${{ matrix.repo }}"
-          path: "${{ matrix.repo }}"
       - uses: actions/setup-java@v4
         with:
           # Use Java 11 for this as Linkage Checker is only compatible with Java 11 or below
           java-version: 11
           distribution: temurin
-      - name: Install downstream repo locally
-        run: |
-          pushd "${{ matrix.repo }}"
-          mvn -B -ntp install -T 1C -DskipTests -Dclirr.skip -Denforcer.skip
-          popd
       - name: Print Protobuf-Java testing version
         run: echo "Testing with Protobuf-Java v${{ matrix.protobuf-version }}"
       - name: Perform downstream source compatibility testing
         run: REPOS_UNDER_TEST="${{ matrix.repo }}" PROTOBUF_RUNTIME_VERSION="${{ matrix.protobuf-version }}" ./.kokoro/nightly/downstream-protobuf-source-compatibility.sh
       - name: Perform downstream binary compatibility testing
-        run: REPOS_UNDER_TEST="${{ matrix.repo }}" PROTOBUF_RUNTIME_VERSION="${{ matrix.protobuf-version }}" REPOS_INSTALLED_LOCALLY="true" ./.kokoro/nightly/downstream-protobuf-binary-compatibility.sh
+        run: REPOS_UNDER_TEST="${{ matrix.repo }}" PROTOBUF_RUNTIME_VERSION="${{ matrix.protobuf-version }}" ./.kokoro/nightly/downstream-protobuf-binary-compatibility.sh
 

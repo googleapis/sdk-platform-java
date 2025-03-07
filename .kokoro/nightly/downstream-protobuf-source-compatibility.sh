@@ -15,10 +15,6 @@
 
 set -eo pipefail
 
-# There are two Env Vars that this script uses.
-# 1. (Required) REPOS_UNDER_TEST: Comma separate list of the repo names
-# 2. (Required) PROTOBUF_RUNTIME_VERSION: Protobuf runtime version to test again
-
 # Comma-delimited list of repos to test with the local java-shared-dependencies
 if [ -z "${REPOS_UNDER_TEST}" ]; then
   echo "REPOS_UNDER_TEST must be set to run downstream-protobuf-source-compatibility.sh"
@@ -46,4 +42,5 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
       -Dmaven.javadoc.skip=true \
       -Dprotobuf.version=${PROTOBUF_RUNTIME_VERSION} \
       -T 1C
+  popd
 done

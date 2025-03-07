@@ -15,14 +15,6 @@
 
 set -eo pipefail
 
-# There are three Env Vars that this script uses.
-# 1. (Required) REPOS_UNDER_TEST: Comma separate list of the repo names
-# 2. (Required) PROTOBUF_RUNTIME_VERSION: Protobuf runtime version to test again
-# 3. REPOS_INSTALLED_LOCALLY: Flag (if set to "true) will determine if the repo
-# needs to be cloned from github and re-installed locally to the m2. If the artifact
-# is already installed locally, this saves time as the artifact is not again compiled
-# and built.
-
 # Comma-delimited list of repos to test with the local java-shared-dependencies
 if [ -z "${REPOS_UNDER_TEST}" ]; then
   echo "REPOS_UNDER_TEST must be set to run downstream-protobuf-binary-compatibility.sh"
@@ -85,18 +77,11 @@ mvn -B -ntp clean compile -T 1C
 pushd dependencies
 
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
-  if [ "${REPOS_INSTALLED_LOCALLY}" != "true" ]; then
-    # Perform testing on main (with latest changes). Shallow copy as history is not important
-    git clone "https://github.com/googleapis/${repo}.git" --depth=1
-    pushd "${repo}"
-    # Install all repo modules to ~/.m2 (there can be multiple relevant artifacts to test i.e. core, admin, control)
-    mvn -B -ntp install -T 1C -DskipTests -Dclirr.skip -Denforcer.skip
-  else
-    # If installed locally to .m2, then just pull the versions.txt file to parse
-    mkdir -p "../../${repo}"
-    pushd "../../${repo}"
-    curl -Os "https://raw.githubusercontent.com/googleapis/${repo}/refs/heads/main/versions.txt"
-  fi
+  # Perform testing on main (with latest changes). Shallow copy as history is not important
+  git clone "https://github.com/googleapis/${repo}.git" --depth=1
+  pushd "${repo}"
+  # Install all repo modules to ~/.m2 (there can be multiple relevant artifacts to test i.e. core, admin, control)
+  mvn -B -ntp install -T 1C -DskipTests -Dclirr.skip -Denforcer.skip
 
   artifact_list=""
   if [ "${repo}" == "google-cloud-java" ]; then
@@ -114,7 +99,7 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
     # The `-s` argument filters the linkage check problems that stem from the artifact
     program_args="-r --artifacts ${artifact_list},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION},com.google.protobuf:protobuf-java-util:${PROTOBUF_RUNTIME_VERSION} -s ${artifact_list}"
     echo "Linkage Checker Program Arguments: ${program_args}"
-    mvn -B -ntp exec:java -Dexec.mainClass="com.google.cloud.tools.opensource.classpath.LinkageCheckerMain" -Dexec.args="${program_args}" -P exec-linkage-checker
+    mvn -B -ntp exec:java -Dexec.args="${program_args}" -P exec-linkage-checker
   fi
   echo "done"
 done
