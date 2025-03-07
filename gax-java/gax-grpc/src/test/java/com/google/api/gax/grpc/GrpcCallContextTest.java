@@ -121,10 +121,6 @@ class GrpcCallContextTest {
     context.withCallOptions(
         CallOptions.DEFAULT.withCallCredentials(MoreCallCredentials.from(credentials)));
     assertNull(context.getCallOptions().getCredentials());
-
-    // This should revert isDirectPath to false.
-    context = context.withChannel(channel);
-    assertNotNull(context.getCallOptions().getCredentials());
   }
 
   @Test

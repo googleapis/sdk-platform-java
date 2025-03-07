@@ -489,8 +489,7 @@ public final class GrpcCallContext implements ApiCallContext {
     boolean newIsDirectPath = grpcCallContext.isDirectPath;
 
     CallCredentials newCallCredentials = grpcCallContext.callOptions.getCredentials();
-    // If newIsDirectPath is true, then newChannel is guanrateed to be not null.
-    if (newCallCredentials == null && !newIsDirectPath) {
+    if (newCallCredentials == null) {
       newCallCredentials = callOptions.getCredentials();
     }
 
@@ -622,14 +621,16 @@ public final class GrpcCallContext implements ApiCallContext {
     return extraHeaders;
   }
 
-  /** Returns a new instance with the channel set to the given channel. */
+  /**
+   * This method is obsolete. Use {@link #withTransportChannel()} instead. Returns a new instance
+   * with the channel set to the given channel.
+   */
+  @ObsoleteApi("Use withTransportChannel() instead")
   public GrpcCallContext withChannel(Channel newChannel) {
     return new GrpcCallContext(
         newChannel,
         credentials,
-        credentials != null
-            ? callOptions.withCallCredentials(MoreCallCredentials.from(credentials))
-            : callOptions,
+        callOptions,
         timeout,
         streamWaitTimeout,
         streamIdleTimeout,
@@ -639,8 +640,7 @@ public final class GrpcCallContext implements ApiCallContext {
         retrySettings,
         retryableCodes,
         endpointContext,
-        // Defaults to false again since we cannot tell whether the channel is DirectPath.
-        false);
+        isDirectPath);
   }
 
   /** Returns a new instance with the call options set to the given call options. */
