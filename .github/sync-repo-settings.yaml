@@ -16,10 +16,18 @@ branchProtectionRules:
       - compatibility
       - graalvm-presubmit-sdk-platform-java-a (java-graalvm-ci-prod)
       - graalvm-presubmit-sdk-platform-java-b (java-graalvm-ci-prod)
-      - graalvm-presubmit-sdk-platform-java-a-downstream-kms (java-graalvm-ci-prod)
-      - graalvm-presubmit-sdk-platform-java-b-downstream-kms (java-graalvm-ci-prod)
-      - graalvm-presubmit-sdk-platform-java-a-downstream-kmsinventory (java-graalvm-ci-prod)
-      - graalvm-presubmit-sdk-platform-java-b-downstream-kmsinventory (java-graalvm-ci-prod)
+      - >-
+        graalvm-presubmit-sdk-platform-java-a-downstream-kms
+        (java-graalvm-ci-prod)
+      - >-
+        graalvm-presubmit-sdk-platform-java-b-downstream-kms
+        (java-graalvm-ci-prod)
+      - >-
+        graalvm-presubmit-sdk-platform-java-a-downstream-kmsinventory
+        (java-graalvm-ci-prod)
+      - >-
+        graalvm-presubmit-sdk-platform-java-b-downstream-kmsinventory
+        (java-graalvm-ci-prod)
       - library_generation
       - library-generation-integration-test (java-hermetic-build-prod)
       - library-generation-lint-python
@@ -73,6 +81,42 @@ branchProtectionRules:
       - library-generation-lint-shell
       - library-generation-lint-python
       - should-run-library-generation-tests
+  - pattern: 2.54.x
+    isAdminEnforced: true
+    requiredApprovingReviewCount: 1
+    requiresCodeOwnerReviews: true
+    requiresStrictStatusChecks: false
+    requiredStatusCheckContexts:
+      - build(8) except for gapic-generator-java
+      - build(8) for gapic-generator-java
+      - build (11)
+      - build (17)
+      - cla/google
+      - compatibility
+      - graalvm-presubmit-sdk-platform-java-a (java-graalvm-ci-prod)
+      - graalvm-presubmit-sdk-platform-java-b (java-graalvm-ci-prod)
+      - >-
+        graalvm-presubmit-sdk-platform-java-a-downstream-kms
+        (java-graalvm-ci-prod)
+      - >-
+        graalvm-presubmit-sdk-platform-java-b-downstream-kms
+        (java-graalvm-ci-prod)
+      - >-
+        graalvm-presubmit-sdk-platform-java-a-downstream-kmsinventory
+        (java-graalvm-ci-prod)
+      - >-
+        graalvm-presubmit-sdk-platform-java-b-downstream-kmsinventory
+        (java-graalvm-ci-prod)
+      - library_generation
+      - library-generation-integration-test (java-hermetic-build-prod)
+      - library-generation-lint-python
+      - library-generation-lint-shell
+      - library-generation-unit-tests
+      - lint
+      - should-run-library-generation-tests
+      - showcase-native
+      - showcase (11)
+      - showcase (17)
 permissionRules:
   - team: cloud-java-team-teamsync
     permission: admin

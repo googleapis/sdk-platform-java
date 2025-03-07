@@ -57,6 +57,10 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
     this(null, true, null, null);
   }
 
+  String getEndpoint() {
+    return endpoint;
+  }
+
   private ManagedHttpJsonChannel(
       Executor executor,
       boolean usingDefaultExecutor,
