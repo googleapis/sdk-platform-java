@@ -147,4 +147,33 @@ public interface AuthorizationInfoOrBuilder
    * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
    */
   com.google.rpc.context.AttributeContext.ResourceOrBuilder getResourceAttributesOrBuilder();
+
+  /**
+   *
+   *
+   * <pre>
+   * The type of the permission that was checked. For data access audit logs
+   * this corresponds with the permission type that must be enabled in the
+   * project/folder/organization IAM policy in order for the log to be written.
+   * </pre>
+   *
+   * <code>.google.cloud.audit.AuthorizationInfo.PermissionType permission_type = 7;</code>
+   *
+   * @return The enum numeric value on the wire for permissionType.
+   */
+  int getPermissionTypeValue();
+  /**
+   *
+   *
+   * <pre>
+   * The type of the permission that was checked. For data access audit logs
+   * this corresponds with the permission type that must be enabled in the
+   * project/folder/organization IAM policy in order for the log to be written.
+   * </pre>
+   *
+   * <code>.google.cloud.audit.AuthorizationInfo.PermissionType permission_type = 7;</code>
+   *
+   * @return The permissionType.
+   */
+  com.google.cloud.audit.AuthorizationInfo.PermissionType getPermissionType();
 }

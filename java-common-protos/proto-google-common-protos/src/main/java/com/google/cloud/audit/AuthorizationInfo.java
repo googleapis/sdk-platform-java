@@ -41,6 +41,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
   private AuthorizationInfo() {
     resource_ = "";
     permission_ = "";
+    permissionType_ = 0;
   }
 
   @java.lang.Override
@@ -62,6 +63,207 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
         .ensureFieldAccessorsInitialized(
             com.google.cloud.audit.AuthorizationInfo.class,
             com.google.cloud.audit.AuthorizationInfo.Builder.class);
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * The list of valid permission types that can be checked.
+   * </pre>
+   *
+   * Protobuf enum {@code google.cloud.audit.AuthorizationInfo.PermissionType}
+   */
+  public enum PermissionType implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     *
+     *
+     * <pre>
+     * Default. Should not be used.
+     * </pre>
+     *
+     * <code>PERMISSION_TYPE_UNSPECIFIED = 0;</code>
+     */
+    PERMISSION_TYPE_UNSPECIFIED(0),
+    /**
+     *
+     *
+     * <pre>
+     * Permissions that gate reading resource configuration or metadata.
+     * </pre>
+     *
+     * <code>ADMIN_READ = 1;</code>
+     */
+    ADMIN_READ(1),
+    /**
+     *
+     *
+     * <pre>
+     * Permissions that gate modification of resource configuration or metadata.
+     * </pre>
+     *
+     * <code>ADMIN_WRITE = 2;</code>
+     */
+    ADMIN_WRITE(2),
+    /**
+     *
+     *
+     * <pre>
+     * Permissions that gate reading user-provided data.
+     * </pre>
+     *
+     * <code>DATA_READ = 3;</code>
+     */
+    DATA_READ(3),
+    /**
+     *
+     *
+     * <pre>
+     * Permissions that gate writing user-provided data.
+     * </pre>
+     *
+     * <code>DATA_WRITE = 4;</code>
+     */
+    DATA_WRITE(4),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     *
+     *
+     * <pre>
+     * Default. Should not be used.
+     * </pre>
+     *
+     * <code>PERMISSION_TYPE_UNSPECIFIED = 0;</code>
+     */
+    public static final int PERMISSION_TYPE_UNSPECIFIED_VALUE = 0;
+    /**
+     *
+     *
+     * <pre>
+     * Permissions that gate reading resource configuration or metadata.
+     * </pre>
+     *
+     * <code>ADMIN_READ = 1;</code>
+     */
+    public static final int ADMIN_READ_VALUE = 1;
+    /**
+     *
+     *
+     * <pre>
+     * Permissions that gate modification of resource configuration or metadata.
+     * </pre>
+     *
+     * <code>ADMIN_WRITE = 2;</code>
+     */
+    public static final int ADMIN_WRITE_VALUE = 2;
+    /**
+     *
+     *
+     * <pre>
+     * Permissions that gate reading user-provided data.
+     * </pre>
+     *
+     * <code>DATA_READ = 3;</code>
+     */
+    public static final int DATA_READ_VALUE = 3;
+    /**
+     *
+     *
+     * <pre>
+     * Permissions that gate writing user-provided data.
+     * </pre>
+     *
+     * <code>DATA_WRITE = 4;</code>
+     */
+    public static final int DATA_WRITE_VALUE = 4;
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static PermissionType valueOf(int value) {
+      return forNumber(value);
+    }
+
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     */
+    public static PermissionType forNumber(int value) {
+      switch (value) {
+        case 0:
+          return PERMISSION_TYPE_UNSPECIFIED;
+        case 1:
+          return ADMIN_READ;
+        case 2:
+          return ADMIN_WRITE;
+        case 3:
+          return DATA_READ;
+        case 4:
+          return DATA_WRITE;
+        default:
+          return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<PermissionType> internalGetValueMap() {
+      return internalValueMap;
+    }
+
+    private static final com.google.protobuf.Internal.EnumLiteMap<PermissionType> internalValueMap =
+        new com.google.protobuf.Internal.EnumLiteMap<PermissionType>() {
+          public PermissionType findValueByNumber(int number) {
+            return PermissionType.forNumber(number);
+          }
+        };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalStateException(
+            "Can't get the descriptor of an unrecognized enum value.");
+      }
+      return getDescriptor().getValues().get(ordinal());
+    }
+
+    public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
+      return getDescriptor();
+    }
+
+    public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
+      return com.google.cloud.audit.AuthorizationInfo.getDescriptor().getEnumTypes().get(0);
+    }
+
+    private static final PermissionType[] VALUES = values();
+
+    public static PermissionType valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private PermissionType(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:google.cloud.audit.AuthorizationInfo.PermissionType)
   }
 
   private int bitField0_;
@@ -262,6 +464,47 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
         : resourceAttributes_;
   }
 
+  public static final int PERMISSION_TYPE_FIELD_NUMBER = 7;
+  private int permissionType_ = 0;
+  /**
+   *
+   *
+   * <pre>
+   * The type of the permission that was checked. For data access audit logs
+   * this corresponds with the permission type that must be enabled in the
+   * project/folder/organization IAM policy in order for the log to be written.
+   * </pre>
+   *
+   * <code>.google.cloud.audit.AuthorizationInfo.PermissionType permission_type = 7;</code>
+   *
+   * @return The enum numeric value on the wire for permissionType.
+   */
+  @java.lang.Override
+  public int getPermissionTypeValue() {
+    return permissionType_;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The type of the permission that was checked. For data access audit logs
+   * this corresponds with the permission type that must be enabled in the
+   * project/folder/organization IAM policy in order for the log to be written.
+   * </pre>
+   *
+   * <code>.google.cloud.audit.AuthorizationInfo.PermissionType permission_type = 7;</code>
+   *
+   * @return The permissionType.
+   */
+  @java.lang.Override
+  public com.google.cloud.audit.AuthorizationInfo.PermissionType getPermissionType() {
+    com.google.cloud.audit.AuthorizationInfo.PermissionType result =
+        com.google.cloud.audit.AuthorizationInfo.PermissionType.forNumber(permissionType_);
+    return result == null
+        ? com.google.cloud.audit.AuthorizationInfo.PermissionType.UNRECOGNIZED
+        : result;
+  }
+
   private byte memoizedIsInitialized = -1;
 
   @java.lang.Override
@@ -288,6 +531,11 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
     if (((bitField0_ & 0x00000001) != 0)) {
       output.writeMessage(5, getResourceAttributes());
     }
+    if (permissionType_
+        != com.google.cloud.audit.AuthorizationInfo.PermissionType.PERMISSION_TYPE_UNSPECIFIED
+            .getNumber()) {
+      output.writeEnum(7, permissionType_);
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -308,6 +556,11 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
     }
     if (((bitField0_ & 0x00000001) != 0)) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(5, getResourceAttributes());
+    }
+    if (permissionType_
+        != com.google.cloud.audit.AuthorizationInfo.PermissionType.PERMISSION_TYPE_UNSPECIFIED
+            .getNumber()) {
+      size += com.google.protobuf.CodedOutputStream.computeEnumSize(7, permissionType_);
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -331,6 +584,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
     if (hasResourceAttributes()) {
       if (!getResourceAttributes().equals(other.getResourceAttributes())) return false;
     }
+    if (permissionType_ != other.permissionType_) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -352,6 +606,8 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
       hash = (37 * hash) + RESOURCE_ATTRIBUTES_FIELD_NUMBER;
       hash = (53 * hash) + getResourceAttributes().hashCode();
     }
+    hash = (37 * hash) + PERMISSION_TYPE_FIELD_NUMBER;
+    hash = (53 * hash) + permissionType_;
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -508,6 +764,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
         resourceAttributesBuilder_.dispose();
         resourceAttributesBuilder_ = null;
       }
+      permissionType_ = 0;
       return this;
     }
 
@@ -560,6 +817,9 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
                 ? resourceAttributes_
                 : resourceAttributesBuilder_.build();
         to_bitField0_ |= 0x00000001;
+      }
+      if (((from_bitField0_ & 0x00000010) != 0)) {
+        result.permissionType_ = permissionType_;
       }
       result.bitField0_ |= to_bitField0_;
     }
@@ -625,6 +885,9 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
       if (other.hasResourceAttributes()) {
         mergeResourceAttributes(other.getResourceAttributes());
       }
+      if (other.permissionType_ != 0) {
+        setPermissionTypeValue(other.getPermissionTypeValue());
+      }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
@@ -676,6 +939,12 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
                 bitField0_ |= 0x00000008;
                 break;
               } // case 42
+            case 56:
+              {
+                permissionType_ = input.readEnum();
+                bitField0_ |= 0x00000010;
+                break;
+              } // case 56
             default:
               {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -1219,6 +1488,109 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
         resourceAttributes_ = null;
       }
       return resourceAttributesBuilder_;
+    }
+
+    private int permissionType_ = 0;
+    /**
+     *
+     *
+     * <pre>
+     * The type of the permission that was checked. For data access audit logs
+     * this corresponds with the permission type that must be enabled in the
+     * project/folder/organization IAM policy in order for the log to be written.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.AuthorizationInfo.PermissionType permission_type = 7;</code>
+     *
+     * @return The enum numeric value on the wire for permissionType.
+     */
+    @java.lang.Override
+    public int getPermissionTypeValue() {
+      return permissionType_;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The type of the permission that was checked. For data access audit logs
+     * this corresponds with the permission type that must be enabled in the
+     * project/folder/organization IAM policy in order for the log to be written.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.AuthorizationInfo.PermissionType permission_type = 7;</code>
+     *
+     * @param value The enum numeric value on the wire for permissionType to set.
+     * @return This builder for chaining.
+     */
+    public Builder setPermissionTypeValue(int value) {
+      permissionType_ = value;
+      bitField0_ |= 0x00000010;
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The type of the permission that was checked. For data access audit logs
+     * this corresponds with the permission type that must be enabled in the
+     * project/folder/organization IAM policy in order for the log to be written.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.AuthorizationInfo.PermissionType permission_type = 7;</code>
+     *
+     * @return The permissionType.
+     */
+    @java.lang.Override
+    public com.google.cloud.audit.AuthorizationInfo.PermissionType getPermissionType() {
+      com.google.cloud.audit.AuthorizationInfo.PermissionType result =
+          com.google.cloud.audit.AuthorizationInfo.PermissionType.forNumber(permissionType_);
+      return result == null
+          ? com.google.cloud.audit.AuthorizationInfo.PermissionType.UNRECOGNIZED
+          : result;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The type of the permission that was checked. For data access audit logs
+     * this corresponds with the permission type that must be enabled in the
+     * project/folder/organization IAM policy in order for the log to be written.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.AuthorizationInfo.PermissionType permission_type = 7;</code>
+     *
+     * @param value The permissionType to set.
+     * @return This builder for chaining.
+     */
+    public Builder setPermissionType(
+        com.google.cloud.audit.AuthorizationInfo.PermissionType value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      bitField0_ |= 0x00000010;
+      permissionType_ = value.getNumber();
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The type of the permission that was checked. For data access audit logs
+     * this corresponds with the permission type that must be enabled in the
+     * project/folder/organization IAM policy in order for the log to be written.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.AuthorizationInfo.PermissionType permission_type = 7;</code>
+     *
+     * @return This builder for chaining.
+     */
+    public Builder clearPermissionType() {
+      bitField0_ = (bitField0_ & ~0x00000010);
+      permissionType_ = 0;
+      onChanged();
+      return this;
     }
 
     @java.lang.Override
