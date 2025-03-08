@@ -229,18 +229,18 @@ jobs:
         run: |
           mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
       - name: Java Linter
-        working-directory: showcase
+        working-directory: java-showcase
         run: |
           mvn -B -ntp fmt:check
       - name: Showcase golden tests
-        working-directory: showcase
+        working-directory: java-showcase
         run: |
           mvn test \
             -P enable-golden-tests \
             --batch-mode \
             --no-transfer-progress
       - name: Parse showcase version
-        working-directory: showcase/gapic-showcase
+        working-directory: java-showcase/gapic-showcase
         run: echo "SHOWCASE_VERSION=$(mvn help:evaluate -Dexpression=gapic-showcase.version -q -DforceStdout)" >> "$GITHUB_ENV"
       - name: Install showcase server
         run: |
@@ -252,7 +252,7 @@ jobs:
           ./gapic-showcase run &
           cd -
       - name: Showcase integration tests
-        working-directory: showcase
+        working-directory: java-showcase
         run: |
           mvn verify \
             -P enable-integration-tests \
@@ -260,7 +260,7 @@ jobs:
             --no-transfer-progress
       # The `slf4j2_logback` profile brings logging dependency and compiles logging tests, require env var to be set
       - name: Showcase integration tests - Logging SLF4J 2.x
-        working-directory: showcase
+        working-directory: java-showcase
         run: |
           mvn clean verify -P '!showcase,enable-integration-tests,loggingTestBase,slf4j2_logback' \
             --batch-mode \
@@ -270,7 +270,7 @@ jobs:
           GOOGLE_SDK_JAVA_LOGGING: true
     # The `slf4j1_logback` profile brings logging dependency and compiles logging tests, require env var to be set
       - name: Showcase integration tests - Logging SLF4J 1.x
-        working-directory: showcase
+        working-directory: java-showcase
         run: |
           mvn clean verify -P '!showcase,enable-integration-tests,loggingTestBase,slf4j1_logback' \
             --batch-mode \
@@ -281,7 +281,7 @@ jobs:
     # The `disabledLogging` profile tests logging disabled when logging dependency present,
     # do not set env var for this step
       - name: Showcase integration tests - Logging disabed
-        working-directory: showcase
+        working-directory: java-showcase
         run: |
           mvn clean verify -P '!showcase,enable-integration-tests,loggingTestBase,disabledLogging'  \
             --batch-mode \
@@ -303,6 +303,7 @@ jobs:
       - name: Install sdk-platform-java and showcase to local maven repository
         run: |
           mvn install -B -ntp -T 1C -DskipTests
+          # change to `cd java-showcase` once https://github.com/googleapis/sdk-platform-java/pull/3568/ is merged
           cd showcase
           mvn install -B -ntp -T 1C -DskipTests
           SHOWCASE_CLIENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
@@ -313,7 +314,7 @@ jobs:
         run: mvn install -B -ntp -T 1C -DskipTests
         # Showcase golden test ensures that src changes are already reflected in the PR.
       - name: Clirr check
-        working-directory: showcase
+        working-directory: java-showcase
         run: |
           mvn versions:set -B -ntp -DnewVersion=local
           mvn clirr:check -B -ntp -Dclirr.skip=false -DcomparisonVersion=$SHOWCASE_CLIENT_VERSION
