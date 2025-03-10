@@ -114,10 +114,12 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
     # This is because mvn has a limit on the number of program arguments you can pass in
 
     program_args="-r --artifacts ${artifact_list},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION},com.google.protobuf:protobuf-java-util:${PROTOBUF_RUNTIME_VERSION} -s ${artifact_list}"
+    echo "Running Linkage Checker on the repo's handwritten modules"
     echo "Linkage Checker Program Arguments: ${program_args}"
     mvn -B -ntp exec:java -Dexec.args="${program_args}" -P exec-linkage-checker
 
     program_args="-r --artifacts ${artifact_list},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION},com.google.protobuf:protobuf-java-util:${PROTOBUF_RUNTIME_VERSION} -s ${grpc_artifact_list}"
+    echo "Running Linkage Checker on the repo's gRPC modules"
     echo "Linkage Checker Program Arguments for gRPC Modules: ${program_args}"
     mvn -B -ntp exec:java -Dexec.args="${program_args}" -P exec-linkage-checker
   else
