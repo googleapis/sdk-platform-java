@@ -33,7 +33,7 @@ jobs:
       shell: bash
       run: |
         find . -type f -name "*.class" -path "*/classes/*" \
-          -not -path "*/grpc-*" \
+          -not -path "*/grpc-*/*" \
           -not -path "*/proto-*/*" \
           -not -path "*/gapic-generator-java/*" -print |\
           while IFS= read -r class_file; do
