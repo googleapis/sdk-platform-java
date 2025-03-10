@@ -65,14 +65,12 @@ function build_artifact_list() {
 
     # Only proceed if there are matching elements
     if [ -n "${grpc_repo_artifact_list}" ]; then
-      # Exclude any matches to BOM artifacts or emulators. The repo artifact list will look like:
-      # "com.google.cloud:google-cloud-accessapproval:2.60.0-SNAPSHOT,com.google.cloud:google-cloud-aiplatform:3.60.0-SNAPSHOT,"
-      grpc_repo_artifact_list=$(echo "${grpc_repo_artifact_list}" | awk -F: "{\$1=\"${group_id}:\"\$1; \$2=\"\"; print}" OFS=: | sed 's/::/:/' | tr '\n' ',')
+      grpc_repo_artifact_list=$(echo "${grpc_repo_artifact_list}" | awk -F: "{\$1=\"com.google.api.grpc:\"\$1; \$2=\"\"; print}" OFS=: | sed 's/::/:/' | tr '\n' ',')
       # Remove the trailing comma after the last entry
       grpc_repo_artifact_list=${grpc_repo_artifact_list%,}
 
       # The first entry added is not separated with a comma. Avoids generating `,{ARTIFACT_LIST}`
-      if [ -z "${artifact_list}" ]; then
+      if [ -z "${grpc_artifact_list}" ]; then
         grpc_artifact_list="${grpc_repo_artifact_list}"
       else
         grpc_artifact_list="${grpc_artifact_list},${grpc_repo_artifact_list}"
@@ -107,24 +105,26 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   popd
 
   echo "Artifact List: ${artifact_list}"
-  # Only run Linkage Checker if the repo has any relevant artifacts to test for
-  if [ -n "${artifact_list}" ] || [ -n "${grpc_artifact_list}" ]; then
-    # The `-s` argument filters the linkage check problems that stem from the artifact
-    # There are two calls to Linkage Checker: 1. repo's handwritten modules 2. repo's gRPC modules
-    # This is because mvn has a limit on the number of program arguments you can pass in
-
+  # The `-s` argument filters the linkage check problems that stem from the artifact
+  # There are two calls to Linkage Checker: 1. repo's handwritten modules 2. repo's gRPC modules
+  # This is because mvn has a limit on the number of program arguments you can pass in
+  if [ -n "${artifact_list}" ]; then
     program_args="-r --artifacts ${artifact_list},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION},com.google.protobuf:protobuf-java-util:${PROTOBUF_RUNTIME_VERSION} -s ${artifact_list}"
     echo "Running Linkage Checker on the repo's handwritten modules"
     echo "Linkage Checker Program Arguments: ${program_args}"
     mvn -B -ntp exec:java -Dexec.args="${program_args}" -P exec-linkage-checker
-
-    program_args="-r --artifacts ${artifact_list},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION},com.google.protobuf:protobuf-java-util:${PROTOBUF_RUNTIME_VERSION} -s ${grpc_artifact_list}"
-    echo "Running Linkage Checker on the repo's gRPC modules"
-    echo "Linkage Checker Program Arguments for gRPC Modules: ${program_args}"
-    mvn -B -ntp exec:java -Dexec.args="${program_args}" -P exec-linkage-checker
   else
     echo "Unable to find any matching artifacts to test in ${repo}"
     exit 1
+  fi
+
+  echo "gRPC Artifact List: ${grpc_artifact_list}"
+  # Some downstream handwritten artifacts do not have gRPC support, do not fail if there are no artifacts
+  if [ -n "${grpc_artifact_list}" ]; then
+    program_args="-r --artifacts ${grpc_artifact_list},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION},com.google.protobuf:protobuf-java-util:${PROTOBUF_RUNTIME_VERSION} -s ${grpc_artifact_list}"
+    echo "Running Linkage Checker on the repo's gRPC modules"
+    echo "Linkage Checker Program Arguments for gRPC Modules: ${program_args}"
+    mvn -B -ntp exec:java -Dexec.args="${program_args}" -P exec-linkage-checker
   fi
 done
 popd
