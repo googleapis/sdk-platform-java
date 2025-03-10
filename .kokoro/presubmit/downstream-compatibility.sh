@@ -40,7 +40,7 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   git clone "https://github.com/googleapis/$repo.git" --depth=1 --branch "v$last_release"
   update_all_poms_dependency "$repo" google-cloud-shared-dependencies "$SHARED_DEPS_VERSION"
   pushd "$repo"
-  ./.kokoro/build.sh
+  JOB_TYPE="test" ./.kokoro/build.sh
   popd
 done
 popd
