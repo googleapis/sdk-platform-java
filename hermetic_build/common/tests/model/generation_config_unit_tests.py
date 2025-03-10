@@ -127,11 +127,21 @@ class GenerationConfigTest(unittest.TestCase):
         )
         self.assertFalse(config.is_monorepo())
 
+    def test_is_monorepo_with_one_library_explicit_set_true(self):
+        config = GenerationConfig(
+            gapic_generator_version="",
+            googleapis_commitish="",
+            libraries=[library_1],
+            monorepo=True
+        )
+        self.assertTrue(config.is_monorepo())
+
     def test_is_monorepo_with_two_libraries_returns_true(self):
         config = GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
             libraries=[library_1, library_2],
+            monorepo=True
         )
         self.assertTrue(config.is_monorepo())
 
