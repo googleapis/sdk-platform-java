@@ -38,7 +38,7 @@
     <j2objc-annotations.version>3.0.0</j2objc-annotations.version>
     <threetenbp.version>1.7.0</threetenbp.version>
     <junit.version>5.11.4</junit.version>
-    <slf4j.version>2.0.16</slf4j.version>
+    <slf4j.version>2.0.17</slf4j.version>
   </properties>
 
   <developers>
