@@ -28,10 +28,17 @@ monorepo_handwritten_libraries["grafeas"]="io.grafeas"
 monorepo_handwritten_libraries["google-cloud-vertexai"]="com.google.cloud"
 monorepo_handwritten_libraries["google-cloud-resourcemanager"]="com.google.cloud"
 monorepo_handwritten_libraries["google-cloud-translate"]="com.google.cloud"
+# Test a few grpc-* modules as gRPC-Java controls their Protobuf version and may generate code using
+# a different version of Protobuf. Not all grpc-* modules are tested as this may build a massive list
+# of artifacts. Maven has a limit on the number of arguments it can take (google-cloud-java surpasses that)
+monorepo_handwritten_libraries["grpc-google-cloud-vertexai"]="com.google.api.grpc"
+monorepo_handwritten_libraries["grpc-google-cloud-resourcemanager"]="com.google.api.grpc"
+monorepo_handwritten_libraries["grpc-google-cloud-translate"]="com.google.api.grpc"
 
 # 2. These are the mappings of all the downstream handwritten libraries' artifacts
 declare -A downstream_handwritten_libraries
 downstream_handwritten_libraries["google-cloud"]="com.google.cloud"
+downstream_handwritten_libraries["grpc-google-cloud"]="com.google.api.grpc"
 
 # Builds a string output to `artifact_list`. It contains a comma separate list of Maven GAV coordinates. Parses
 # the `versions.txt` file by searching for the matching artifact_id_prefix to get the corresponding version.
@@ -58,24 +65,6 @@ function build_artifact_list() {
         artifact_list="${artifact_list},${repo_artifact_list}"
       fi
     fi
-
-    # grpc-* module are included as gRPC-Java controls their Protobuf version and may generate code
-    # using a different version of Protobuf
-    grpc_repo_artifact_list=$(cat "versions.txt" | grep -E "^grpc" || true)
-
-    # Only proceed if there are matching elements
-    if [ -n "${grpc_repo_artifact_list}" ]; then
-      grpc_repo_artifact_list=$(echo "${grpc_repo_artifact_list}" | awk -F: "{\$1=\"com.google.api.grpc:\"\$1; \$2=\"\"; print}" OFS=: | sed 's/::/:/' | tr '\n' ',')
-      # Remove the trailing comma after the last entry
-      grpc_repo_artifact_list=${grpc_repo_artifact_list%,}
-
-      # The first entry added is not separated with a comma. Avoids generating `,{ARTIFACT_LIST}`
-      if [ -z "${grpc_artifact_list}" ]; then
-        grpc_artifact_list="${grpc_repo_artifact_list}"
-      else
-        grpc_artifact_list="${grpc_artifact_list},${grpc_repo_artifact_list}"
-      fi
-    fi
   done
 }
 
@@ -94,7 +83,6 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   mvn -B -ntp install -T 1C -DskipTests -Dclirr.skip -Denforcer.skip
 
   artifact_list=""
-  grpc_artifact_list=""
   if [ "${repo}" == "google-cloud-java" ]; then
     build_artifact_list monorepo_handwritten_libraries
   else
@@ -106,8 +94,6 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
 
   echo "Artifact List: ${artifact_list}"
   # The `-s` argument filters the linkage check problems that stem from the artifact
-  # There are two calls to Linkage Checker: 1. repo's handwritten modules 2. repo's gRPC modules
-  # This is because mvn has a limit on the number of program arguments you can pass in
   if [ -n "${artifact_list}" ]; then
     program_args="-r --artifacts ${artifact_list},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION},com.google.protobuf:protobuf-java-util:${PROTOBUF_RUNTIME_VERSION} -s ${artifact_list}"
     echo "Running Linkage Checker on the repo's handwritten modules"
@@ -116,15 +102,6 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   else
     echo "Unable to find any matching artifacts to test in ${repo}"
     exit 1
-  fi
-
-  echo "gRPC Artifact List: ${grpc_artifact_list}"
-  # Some downstream handwritten artifacts do not have gRPC support, do not fail if there are no artifacts
-  if [ -n "${grpc_artifact_list}" ]; then
-    program_args="-r --artifacts ${grpc_artifact_list},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION},com.google.protobuf:protobuf-java-util:${PROTOBUF_RUNTIME_VERSION} -s ${grpc_artifact_list}"
-    echo "Running Linkage Checker on the repo's gRPC modules"
-    echo "Linkage Checker Program Arguments for gRPC Modules: ${program_args}"
-    mvn -B -ntp exec:java -Dexec.args="${program_args}" -P exec-linkage-checker
   fi
 done
 popd
