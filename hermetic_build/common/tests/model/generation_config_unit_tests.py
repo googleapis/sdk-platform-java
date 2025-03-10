@@ -132,7 +132,7 @@ class GenerationConfigTest(unittest.TestCase):
             gapic_generator_version="",
             googleapis_commitish="",
             libraries=[library_1],
-            monorepo=True
+            monorepo=True,
         )
         self.assertTrue(config.is_monorepo())
 
@@ -141,7 +141,7 @@ class GenerationConfigTest(unittest.TestCase):
             gapic_generator_version="",
             googleapis_commitish="",
             libraries=[library_1, library_2],
-            monorepo=True
+            monorepo=True,
         )
         self.assertTrue(config.is_monorepo())
 
