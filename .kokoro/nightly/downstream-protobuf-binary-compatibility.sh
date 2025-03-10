@@ -108,7 +108,7 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
 
   echo "Artifact List: ${artifact_list}"
   # Only run Linkage Checker if the repo has any relevant artifacts to test for
-  if [ -n "${artifact_list}" ] && [ -n "${grpc_artifact_list}" ]; then
+  if [ -n "${artifact_list}" ] || [ -n "${grpc_artifact_list}" ]; then
     # The `-s` argument filters the linkage check problems that stem from the artifact
     # There are two calls to Linkage Checker: 1. repo's handwritten modules 2. repo's gRPC modules
     # This is because mvn has a limit on the number of program arguments you can pass in
