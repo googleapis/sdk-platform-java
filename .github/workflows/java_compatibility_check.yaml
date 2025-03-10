@@ -32,7 +32,10 @@ jobs:
     - name: Check Java 8 compatibility for class files
       shell: bash
       run: |
-        find . -type f -name "*.class" -path "*/classes/*" -not -path "*/grpc-*" -not -path "*/proto-*/*" -print |\
+        find . -type f -name "*.class" -path "*/classes/*" \
+          -not -path "*/grpc-*" \
+          -not -path "*/proto-*/*" \
+          -not -path "*/gapic-generator-java/*" -print |\
           while IFS= read -r class_file; do
           version=$(javap -v "${class_file}" | grep "major version" | cut -d ' ' -f 5)
           if [[ "${version}" != "52" ]]; then
