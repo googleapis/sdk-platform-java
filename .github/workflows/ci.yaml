@@ -303,8 +303,7 @@ jobs:
       - name: Install sdk-platform-java and showcase to local maven repository
         run: |
           mvn install -B -ntp -T 1C -DskipTests
-          # change to `cd java-showcase` once https://github.com/googleapis/sdk-platform-java/pull/3568/ is merged
-          cd showcase
+          cd java-showcase
           mvn install -B -ntp -T 1C -DskipTests
           SHOWCASE_CLIENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "SHOWCASE_CLIENT_VERSION=$SHOWCASE_CLIENT_VERSION" >> "$GITHUB_ENV"
