@@ -343,10 +343,13 @@ class UtilitiesTest(unittest.TestCase):
         """
         if combination == 1:
             libraries = [library_1]
+            monorepo = False
         elif combination == 2:
             libraries = [library_1, library_2]
+            monorepo = True
         else:
             libraries = [library_1, common_protos]
+            monorepo = True
 
         # update libraries with custom configuration (for now, only
         # library_type)
@@ -363,6 +366,7 @@ class UtilitiesTest(unittest.TestCase):
             gapic_generator_version="",
             googleapis_commitish="",
             libraries=libraries,
+            monorepo=monorepo,
         )
 
     @staticmethod
