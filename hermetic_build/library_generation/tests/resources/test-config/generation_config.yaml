@@ -2,6 +2,7 @@ gapic_generator_version: 2.34.0
 protoc_version: 25.2
 googleapis_commitish: 1a45bf7393b52407188c82e63101db7dc9c72026
 libraries_bom_version: 26.37.0
+is_monorepo: false
 libraries:
   - api_shortname: cloudasset
     name_pretty: Cloud Asset Inventory
