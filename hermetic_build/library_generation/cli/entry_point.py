@@ -50,6 +50,7 @@ def main(ctx):
 )
 @click.option(
     "--repository-path",
+    "--output",
     type=str,
     default=".",
     show_default=True,
@@ -62,6 +63,7 @@ def main(ctx):
 )
 @click.option(
     "--api-definitions-path",
+    "--api-root",
     type=str,
     default=".",
     show_default=True,
