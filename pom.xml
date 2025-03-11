@@ -89,7 +89,7 @@
         </property>
       </activation>
       <modules>
-        <module>showcase</module>
+        <module>java-showcase</module>
       </modules>
     </profile>
 
@@ -101,7 +101,7 @@
         </property>
       </activation>
       <modules>
-        <module>showcase</module>
+        <module>java-showcase</module>
         <module>coverage-report</module>
       </modules>
       <properties>
