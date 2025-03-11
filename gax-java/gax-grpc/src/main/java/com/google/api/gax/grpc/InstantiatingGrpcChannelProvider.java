@@ -690,6 +690,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
             channelCredentials =
                 CompositeChannelCredentials.create(channelCredentials, mtlsS2ACallCredentials);
           }
+          // Connect to the MTLS endpoint when using S2A because S2A is used to perform an MTLS handshake.
           builder = Grpc.newChannelBuilder(mtlsEndpoint, channelCredentials);
         } else {
           // Use default if we cannot initialize channel credentials via DCA or S2A.
