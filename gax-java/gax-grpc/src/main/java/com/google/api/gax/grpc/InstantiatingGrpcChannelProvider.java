@@ -260,6 +260,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return endpoint == null;
   }
 
+  @InternalApi("This public method is used by Gax to help configure the MTLS endpoint for S2A")
   @Override
   public boolean needsMtlsEndpoint() {
     return mtlsEndpoint == null;
@@ -288,6 +289,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
    * @return A new {@link InstantiatingGrpcChannelProvider} with the specified mTLS endpoint
    *     configured
    */
+  @InternalApi("This public method is used by Gax to help configure the MTLS endpoint for S2A")
   @Override
   public TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint) {
     validateEndpoint(mtlsEndpoint);
@@ -950,6 +952,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
 
     /** Sets the mTLS Endpoint used to reach the service, eg "localhost:8080". */
+    @InternalApi("This public method is used by Gax to help configure the MTLS endpoint for S2A")
     public Builder setMtlsEndpoint(String mtlsEndpoint) {
       validateEndpoint(mtlsEndpoint);
       this.mtlsEndpoint = mtlsEndpoint;
