@@ -20,14 +20,16 @@ public class SDKLoggingMdcJsonProviderTest {
     JsonGenerator generator = mock(JsonGenerator.class);
     ILoggingEvent event = mock(ILoggingEvent.class);
     Map<String, String> mdc = new HashMap<>();
-    mdc.put("json1", "{\n"
-        + "  \"@version\": \"1\",\n"
-        + "  \"textPayload\": \"Received response\",\n"
-        + "  \"response.payload\": {\n"
-        + "    \"name\": \"example\",\n"
-        + "    \"state\": \"ACTIVE\"\n"
-        + "  }\n"
-        + "}");
+    mdc.put(
+        "json1",
+        "{\n"
+            + "  \"@version\": \"1\",\n"
+            + "  \"textPayload\": \"Received response\",\n"
+            + "  \"response.payload\": {\n"
+            + "    \"name\": \"example\",\n"
+            + "    \"state\": \"ACTIVE\"\n"
+            + "  }\n"
+            + "}");
     when(event.getMDCPropertyMap()).thenReturn(mdc);
 
     provider.writeTo(generator, event);
