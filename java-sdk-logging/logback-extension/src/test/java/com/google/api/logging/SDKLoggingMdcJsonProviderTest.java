@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +35,6 @@ public class SDKLoggingMdcJsonProviderTest {
 
     provider.writeTo(generator, event);
     verify(generator).writeFieldName("json1");
-    verify(generator).writeTree(any());
+    verify(generator).writeTree(any(JsonNode.class));
   }
 }
