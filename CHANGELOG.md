@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.55.0](https://github.com/googleapis/sdk-platform-java/compare/v2.54.0...v2.55.0) (2025-03-12)
+
+
+### Features
+
+* generate showcase using docker image ([#3568](https://github.com/googleapis/sdk-platform-java/issues/3568)) ([3857e3f](https://github.com/googleapis/sdk-platform-java/commit/3857e3f6dc633a9adaf29e9770a584419e2f2214))
+* next release from main branch is 2.55.0 ([#3668](https://github.com/googleapis/sdk-platform-java/issues/3668)) ([1eda55f](https://github.com/googleapis/sdk-platform-java/commit/1eda55fc5e4cecedba3f8c163db0ce259d180a66))
+
+
+### Bug Fixes
+
+* remove call credentials from call options if DirectPath ([#3670](https://github.com/googleapis/sdk-platform-java/issues/3670)) ([5ede29c](https://github.com/googleapis/sdk-platform-java/commit/5ede29cc9a3f4c585378b03a1b6c6a1e3eed8231))
+
+
+### Dependencies
+
+* update arrow.version to v18.2.0 ([#3675](https://github.com/googleapis/sdk-platform-java/issues/3675)) ([5a555e5](https://github.com/googleapis/sdk-platform-java/commit/5a555e5b553b65b0e61517271eafbc3bd7eeb735))
+
 ## [2.54.0](https://github.com/googleapis/sdk-platform-java/compare/v2.53.0...v2.54.0) (2025-02-25)
 
 
