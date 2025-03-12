@@ -32,7 +32,7 @@ public class SDKLoggingMdcJsonProviderTest {
   }
 
   @Test
-  void testWriteJsonStringToJsonTree() throws IOException {
+  void testWriteValidJsonStringToJsonTree() throws IOException {
     mdc.put(
         "json1",
         "{\n"
@@ -50,7 +50,7 @@ public class SDKLoggingMdcJsonProviderTest {
   }
 
   @Test
-  void testWriteIllegalJsonFormatToString() throws IOException {
+  void testWriteInvalidJsonStringToString() throws IOException {
     mdc.put(
         "json1",
         "{\n"
@@ -65,7 +65,8 @@ public class SDKLoggingMdcJsonProviderTest {
 
     provider.writeTo(generator, event);
     verify(generator).writeFieldName("json1");
-    verify(generator, never()).writeTree(any(JsonNode.class));
     verify(generator).writeObject(anyString());
+    // should not write tree node because the json string is invalid.
+    verify(generator, never()).writeTree(any(JsonNode.class));
   }
 }
