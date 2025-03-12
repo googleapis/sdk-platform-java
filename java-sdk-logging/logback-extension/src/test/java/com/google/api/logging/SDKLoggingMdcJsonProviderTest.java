@@ -60,7 +60,6 @@ public class SDKLoggingMdcJsonProviderTest {
             + "  }\n"
             + "}");
 
-
     provider.writeTo(generator, event);
     verify(generator).writeFieldName("json1");
     verify(generator).writeObject(anyString());
