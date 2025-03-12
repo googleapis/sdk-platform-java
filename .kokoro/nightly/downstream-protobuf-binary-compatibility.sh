@@ -20,50 +20,44 @@ source "${scriptDir}/common.sh"
 
 validate_protobuf_compatibility_script_inputs
 
-# Create two mappings of possible API names (Key: Maven Artifact ID Prefix, Value: Maven Group ID)
-# for the libraries that should be tested.
-# 1. These are special handwritten libraries in google-cloud-java that should be tested
-declare -A monorepo_handwritten_libraries
-monorepo_handwritten_libraries["grafeas"]="io.grafeas"
-monorepo_handwritten_libraries["google-cloud-vertexai"]="com.google.cloud"
-monorepo_handwritten_libraries["google-cloud-resourcemanager"]="com.google.cloud"
-monorepo_handwritten_libraries["google-cloud-translate"]="com.google.cloud"
-# Test a few grpc-* modules as gRPC-Java controls their Protobuf version and may generate code using
-# a different version of Protobuf. Not all grpc-* modules are tested as this may build a massive list
-# of artifacts. Maven has a limit on the number of arguments it can take (google-cloud-java surpasses that)
-monorepo_handwritten_libraries["grpc-google-cloud-vertexai"]="com.google.api.grpc"
-monorepo_handwritten_libraries["grpc-google-cloud-resourcemanager"]="com.google.api.grpc"
-monorepo_handwritten_libraries["grpc-google-cloud-translate"]="com.google.api.grpc"
+# Declare a map of downstream handwritten libraries and the relevant artifacts to test. The map stores a
+# K/V pairing of (Key: repo name, Value: comma separate list of Group ID:Artifact ID pairings). Note: The
+# value list doesn't hold the version and this needs to be parsed from the repo's versions.txt file
+declare -A repo_linkage_checker_arguments
+repo_linkage_checker_arguments["google-cloud-java"]="io.grafeas:grafeas,com.google.cloud:google-cloud-vertexai,com.google.cloud:google-cloud-resourcemanager,com.google.cloud:google-cloud-translate,com.google.api.grpc:grpc-google-cloud-vertexai,com.google.api.grpc:grpc-google-cloud-resourcemanager,com.google.api.grpc:grpc-google-cloud-translate"
+repo_linkage_checker_arguments["java-bigtable"]="com.google.cloud:google-cloud-bigtable,com.google.api.grpc:grpc-google-cloud-bigtable-admin-v2,com.google.api.grpc:grpc-google-cloud-bigtable-v2"
+repo_linkage_checker_arguments["java-bigquery"]="com.google.cloud:google-cloud-bigquery"
+repo_linkage_checker_arguments["java-bigquerystorage"]="com.google.cloud:google-cloud-bigquerystorage,com.google.api.grpc:grpc-google-cloud-bigquerystorage-v1beta1,com.google.api.grpc:grpc-google-cloud-bigquerystorage-v1beta2,com.google.api.grpc:grpc-google-cloud-bigquerystorage-v1,com.google.api.grpc:grpc-google-cloud-bigquerystorage-v1alpha"
+repo_linkage_checker_arguments["java-datastore"]="com.google.cloud:google-cloud-datastore,com.google.cloud.datastre:datastore-v1-proto-client,com.google.api.grpc:grpc-google-cloud-datastore-admin-v1"
+repo_linkage_checker_arguments["java-firestore"]="com.google.cloud:google-cloud-firestore,com.google.cloud:google-cloud-firestore-admin,com.google.api.grpc:grpc-google-cloud-firestore-admin-v1,com.google.api.grpc:grpc-google-cloud-firestore-v1"
+repo_linkage_checker_arguments["java-logging"]="com.google.cloud:google-cloud-logging,com.google.api.grpc:grpc-google-cloud-logging-v2"
+repo_linkage_checker_arguments["java-logging-logback"]="com.google.cloud:google-cloud-logging-logback"
+repo_linkage_checker_arguments["java-pubsub"]="com.google.cloud:google-cloud-pubsub,com.google.api.grpc:grpc-google-cloud-pubsub-v1"
+repo_linkage_checker_arguments["java-pubsublite"]="com.google.cloud:google-cloud-pubsublite,com.google.api.grpc:grpc-google-cloud-pubsublite-v1"
+repo_linkage_checker_arguments["java-spanner-jdbc"]="com.google.cloud:google-cloud-spanner-jdbc"
+repo_linkage_checker_arguments["java-spanner"]="com.google.cloud:google-cloud-spanner,com.google.cloud:google-cloud-spanner-executor,com.google.api.grpc:grpc-google-cloud-spanner-v1,com.google.api.grpc:grpc-google-cloud-spanner-admin-instance-v1,com.google.api.grpc:grpc-google-cloud-spanner-admin-database-v1,com.google.api.grpc:grpc-google-cloud-spanner-executor-v1"
+repo_linkage_checker_arguments["java-storage"]="com.google.cloud:google-cloud-storage,com.google.api.grpc:gapic-google-cloud-storage-v2,com.google.api.grpc:grpc-google-cloud-storage-v2,com.google.cloud:google-cloud-storage-control,com.google.api.grpc:grpc-google-cloud-storage-control-v2"
+repo_linkage_checker_arguments["java-storage-nio"]="com.google.cloud:google-cloud-nio"
 
-# 2. These are the mappings of all the downstream handwritten libraries' artifacts
-declare -A downstream_handwritten_libraries
-downstream_handwritten_libraries["google-cloud"]="com.google.cloud"
-downstream_handwritten_libraries["grpc-google-cloud"]="com.google.api.grpc"
+# This function requires access to the versions.txt to retrieve the versions for the artifacts
+# It will try to match the artifact_id in the versions.txt file and attach it to form the GAV
+# The GAV list is required by Linkage Checker as program arguments
+function build_program_arguments() {
+  artifact_list="${repo_linkage_checker_arguments[$1]}"
 
-# Builds a string output to `artifact_list`. It contains a comma separate list of Maven GAV coordinates. Parses
-# the `versions.txt` file by searching for the matching artifact_id_prefix to get the corresponding version.
-function build_artifact_list() {
-  local -n api_maven_mapping=$1
-  for artifact_id_prefix in "${!api_maven_mapping[@]}"; do
-    group_id="${api_maven_mapping[${artifact_id_prefix}]}"
+  for artifact in ${artifact_list//,/ }; do # Split on comma
+    artifact_id=$(echo "${artifact}" | cut -d ':' -f2)
 
-    # Match all artifacts that start with the $artifact_id_prefix exclude any non-relevant modules.
-    repo_artifact_list=$(cat "versions.txt" | grep -E "^${artifact_id_prefix}" || true)
+    # The grep query tries to match `{artifact_id}:{released_version}:{current_version}`.
+    # The artifact_id must be exact otherwise multiple entries may match
+    version=$(cat "versions.txt" | grep -E "^${artifact_id}:.*:.*$" | cut -d ':' -f3)
+    repo_gav_coordinate="${artifact}:${version}"
 
-    # Only proceed if there are matching elements
-    if [ -n "${repo_artifact_list}" ]; then
-      # Exclude any matches to BOM artifacts or emulators. The repo artifact list will look like:
-      # "com.google.cloud:google-cloud-accessapproval:2.60.0-SNAPSHOT,com.google.cloud:google-cloud-aiplatform:3.60.0-SNAPSHOT,"
-      repo_artifact_list=$(echo "${repo_artifact_list}" | grep -vE "(bom|emulator|google-cloud-java)" | awk -F: "{\$1=\"${group_id}:\"\$1; \$2=\"\"; print}" OFS=: | sed 's/::/:/' | tr '\n' ',')
-      # Remove the trailing comma after the last entry
-      repo_artifact_list=${repo_artifact_list%,}
-
-      # The first entry added is not separated with a comma. Avoids generating `,{ARTIFACT_LIST}`
-      if [ -z "${artifact_list}" ]; then
-        artifact_list="${repo_artifact_list}"
-      else
-        artifact_list="${artifact_list},${repo_artifact_list}"
-      fi
+    # The first entry added is not separated with a comma. Avoids generating `,{ARTIFACT_LIST}`
+    if [ -z "${linkage_checker_arguments}" ]; then
+      linkage_checker_arguments="${repo_gav_coordinate}"
+    else
+      linkage_checker_arguments="${linkage_checker_arguments},${repo_gav_coordinate}"
     fi
   done
 }
@@ -75,6 +69,9 @@ mvn -B -ntp clean compile -T 1C
 # Linkage Checker tool resides in the /dependencies subfolder
 pushd dependencies
 
+# REPOS_UNDER_TEST Env Var accepts a comma separated list of googleapis repos to test. For Github CI,
+# this will be a single repo as Github will build a matrix of repos with each repo being tested in parallel.
+# For local invocation, you can pass a list of repos to test multiple repos together.
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   # Perform testing on main (with latest changes). Shallow copy as history is not important
   git clone "https://github.com/googleapis/${repo}.git" --depth=1
@@ -82,27 +79,18 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   # Install all repo modules to ~/.m2 (there can be multiple relevant artifacts to test i.e. core, admin, control)
   mvn -B -ntp install -T 1C -DskipTests -Dclirr.skip -Denforcer.skip
 
-  artifact_list=""
-  if [ "${repo}" == "google-cloud-java" ]; then
-    build_artifact_list monorepo_handwritten_libraries
-  else
-    build_artifact_list downstream_handwritten_libraries
-  fi
+  linkage_checker_arguments=""
+  build_program_arguments "${repo}"
 
   # Linkage Checker /dependencies
   popd
 
-  echo "Artifact List: ${artifact_list}"
+  echo "Artifact List: ${linkage_checker_arguments}"
   # The `-s` argument filters the linkage check problems that stem from the artifact
-  if [ -n "${artifact_list}" ]; then
-    program_args="-r --artifacts ${artifact_list},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION},com.google.protobuf:protobuf-java-util:${PROTOBUF_RUNTIME_VERSION} -s ${artifact_list}"
-    echo "Running Linkage Checker on the repo's handwritten modules"
-    echo "Linkage Checker Program Arguments: ${program_args}"
-    mvn -B -ntp exec:java -Dexec.args="${program_args}" -P exec-linkage-checker
-  else
-    echo "Unable to find any matching artifacts to test in ${repo}"
-    exit 1
-  fi
+  program_args="-r --artifacts ${linkage_checker_arguments},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION},com.google.protobuf:protobuf-java-util:${PROTOBUF_RUNTIME_VERSION} -s ${linkage_checker_arguments}"
+  echo "Running Linkage Checker on the repo's handwritten modules"
+  echo "Linkage Checker Program Arguments: ${program_args}"
+  mvn -B -ntp exec:java -Dexec.args="${program_args}" -P exec-linkage-checker
 done
 popd
 popd
