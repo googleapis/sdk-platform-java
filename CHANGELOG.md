@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.55.1](https://github.com/googleapis/sdk-platform-java/compare/v2.55.0...v2.55.1) (2025-03-12)
+
+
+### Dependencies
+
+* revert "deps: update arrow.version to v18.2.0" ([#3694](https://github.com/googleapis/sdk-platform-java/issues/3694)) ([2725744](https://github.com/googleapis/sdk-platform-java/commit/272574489bc40b8b6379e5edb6ea5161b57bd687))
+
 ## [2.55.0](https://github.com/googleapis/sdk-platform-java/compare/v2.54.0...v2.55.0) (2025-03-12)
 
 
