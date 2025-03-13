@@ -31,22 +31,21 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   # Compile the Handwritten Library with the Protobuf-Java version to test source compatibility
   # Run unit tests to help check for any behavior differences (dependant on coverage)
   if [ "${repo}" == "google-cloud-java" ]; then
-    # For google-cloud-java, only test specific handwritten libraries
-    # -am command also builds anything these libraries depend on (i.e. proto-* and grpc-* sub modules)
-    # Specify the nested `google-cloud-*` path (except for grafeas as it doesn't have one) because maven -pl
-    # will only build the specified folder (i.e. parent folder) and ignore all the sub-modules inside
     mvn clean test -B -V -ntp \
-      -Dclirr.skip=true \
-      -Denforcer.skip=true \
-      -Dmaven.javadoc.skip=true \
+      -Dclirr.skip \
+      -Denforcer.skip \
+      -Dmaven.javadoc.skip \
+      -Denforcer.skip \
       -Dprotobuf.version=${PROTOBUF_RUNTIME_VERSION} \
-      -pl java-grafeas,java-vertexai/google-cloud-vertexai,java-resourcemanager/google-cloud-resourcemanager -am \
+      # The `-am` command also builds anything these libraries depend on (i.e. proto-* and grpc-* sub modules)
+      -pl "${google_cloud_java_handwritten_maven_args}" -am \
       -T 1C
   else
     mvn clean test -B -V -ntp \
-      -Dclirr.skip=true \
-      -Denforcer.skip=true \
-      -Dmaven.javadoc.skip=true \
+      -Dclirr.skip \
+      -Denforcer.skip \
+      -Dmaven.javadoc.skip \
+      -Denforcer.skip \
       -Dprotobuf.version=${PROTOBUF_RUNTIME_VERSION} \
       -T 1C
   fi
