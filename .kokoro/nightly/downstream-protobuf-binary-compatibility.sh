@@ -24,7 +24,7 @@ validate_protobuf_compatibility_script_inputs
 # K/V pairing of (Key: repo name, Value: comma separate list of Group ID:Artifact ID pairings). Note: The
 # value list doesn't hold the version and this needs to be parsed from the repo's versions.txt file
 declare -A repo_linkage_checker_arguments
-repo_linkage_checker_arguments["google-cloud-java"]="io.grafeas:grafeas,com.google.cloud:google-cloud-vertexai,com.google.cloud:google-cloud-resourcemanager,com.google.cloud:google-cloud-translate,com.google.api.grpc:grpc-google-cloud-vertexai,com.google.api.grpc:grpc-google-cloud-resourcemanager,com.google.api.grpc:grpc-google-cloud-translate"
+repo_linkage_checker_arguments["google-cloud-java"]="io.grafeas:grafeas,com.google.cloud:google-cloud-vertexai,com.google.cloud:google-cloud-resourcemanager,com.google.cloud:google-cloud-translate,com.google.api.grpc:grpc-google-cloud-vertexai-v1,com.google.api.grpc:grpc-google-cloud-vertexai-v1beta1,com.google.api.grpc:grpc-google-cloud-resourcemanager-v3,com.google.api.grpc:grpc-google-cloud-translate-v3,com.google.api.grpc:grpc-google-cloud-translate-v3beta1"
 repo_linkage_checker_arguments["java-bigtable"]="com.google.cloud:google-cloud-bigtable,com.google.api.grpc:grpc-google-cloud-bigtable-admin-v2,com.google.api.grpc:grpc-google-cloud-bigtable-v2"
 repo_linkage_checker_arguments["java-bigquery"]="com.google.cloud:google-cloud-bigquery"
 repo_linkage_checker_arguments["java-bigquerystorage"]="com.google.cloud:google-cloud-bigquerystorage,com.google.api.grpc:grpc-google-cloud-bigquerystorage-v1beta1,com.google.api.grpc:grpc-google-cloud-bigquerystorage-v1beta2,com.google.api.grpc:grpc-google-cloud-bigquerystorage-v1,com.google.api.grpc:grpc-google-cloud-bigquerystorage-v1alpha"
