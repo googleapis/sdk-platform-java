@@ -20,7 +20,7 @@ FROM docker.io/library/maven:3.9.9-eclipse-temurin-11-alpine@sha256:456f60c1643c
 WORKDIR /sdk-platform-java
 COPY . .
 # {x-version-update-start:gapic-generator-java:current}
-ENV DOCKER_GAPIC_GENERATOR_VERSION="2.53.1-SNAPSHOT"
+ENV DOCKER_GAPIC_GENERATOR_VERSION="2.55.1"
 # {x-version-update-end}
 
 RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
@@ -51,7 +51,7 @@ FROM docker.io/library/python:3.13.2-alpine3.20@sha256:816feb29731cdee64b15b0ae9
 
 ARG OWLBOT_CLI_COMMITTISH=3a68a9c0de318784b3aefadcc502a6521b3f1bc5
 ARG PROTOC_VERSION=25.5
-ARG GRPC_VERSION=1.69.1
+ARG GRPC_VERSION=1.70.0
 ARG JAVA_FORMAT_VERSION=1.7
 ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
@@ -98,14 +98,6 @@ RUN source /src/library_generation/utils/utilities.sh \
 # similar to protoc, we indicate grpc is available in the container via env vars
 ENV DOCKER_GRPC_LOCATION="/grpc/protoc-gen-grpc-java.exe"
 
-# Here we transfer gapic-generator-java from the previous stage.
-# Note that the destination is a well-known location that will be assumed at runtime
-# We hard-code the location string to avoid making it configurable (via ARG) as
-# well as to avoid it making it overridable at runtime (via ENV).
-COPY --from=ggj-build "/sdk-platform-java/gapic-generator-java.jar" "${HOME}/.library_generation/gapic-generator-java.jar"
-RUN chmod 755 "${HOME}/.library_generation/gapic-generator-java.jar"
-ENV GAPIC_GENERATOR_LOCATION="${HOME}/.library_generation/gapic-generator-java.jar"
-
 RUN python -m pip install --upgrade pip
 
 # install main scripts as a python package
@@ -124,6 +116,14 @@ RUN npm i && npm run compile && npm link
 RUN owl-bot copy-code --version
 RUN chmod o+rx $(which owl-bot)
 RUN apk del -r npm && apk cache clean
+
+# Here we transfer gapic-generator-java from the previous stage.
+# Note that the destination is a well-known location that will be assumed at runtime
+# We hard-code the location string to avoid making it configurable (via ARG) as
+# well as to avoid it making it overridable at runtime (via ENV).
+COPY --from=ggj-build "/sdk-platform-java/gapic-generator-java.jar" "${HOME}/.library_generation/gapic-generator-java.jar"
+RUN chmod 755 "${HOME}/.library_generation/gapic-generator-java.jar"
+ENV GAPIC_GENERATOR_LOCATION="${HOME}/.library_generation/gapic-generator-java.jar"
 
 # download the Java formatter
 ADD https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/${JAVA_FORMAT_VERSION}/google-java-format-${JAVA_FORMAT_VERSION}-all-deps.jar \
