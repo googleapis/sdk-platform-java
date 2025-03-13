@@ -31,12 +31,7 @@ public class SDKLoggingMdcJsonProvider extends MdcJsonProvider {
       generator.writeFieldName(fieldName);
       String entryValueString = entry.getValue();
       try {
-        JsonNode jsonNode = convertToTreeNode(entryValueString);
-        if (jsonNode != null) {
-          generator.writeTree(jsonNode);
-        } else {
-          generator.writeObject(entryValueString);
-        }
+        generator.writeTree(convertToTreeNode(entryValueString));
       } catch (JsonProcessingException e) {
         // in case of conversion exception, just use String
         generator.writeObject(entryValueString);

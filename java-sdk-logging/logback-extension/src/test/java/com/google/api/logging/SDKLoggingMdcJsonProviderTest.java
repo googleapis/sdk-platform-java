@@ -1,5 +1,6 @@
 package com.google.api.logging;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -65,5 +66,12 @@ public class SDKLoggingMdcJsonProviderTest {
     verify(generator).writeObject(anyString());
     // should not write tree node because the json string is invalid.
     verify(generator, never()).writeTree(any(JsonNode.class));
+  }
+
+  @Test
+  void testWriteNullThrowsException() {
+    mdc.put("json1", null);
+
+    assertThrows(IllegalArgumentException.class, () -> provider.writeTo(generator, event));
   }
 }
