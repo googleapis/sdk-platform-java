@@ -15,6 +15,8 @@ import os
 import sys
 from typing import Optional
 import click as click
+import shutil
+from pathlib import Path
 from library_generation.generate_repo import generate_from_yaml
 from common.model.generation_config import from_yaml, GenerationConfig
 
@@ -35,6 +37,17 @@ def main(ctx):
     help="""
     Absolute or relative path to a generation_config.yaml that contains the
     metadata about library generation.
+    """,
+)
+@click.option(
+    "--generation-input",
+    required=False,
+    default=None,
+    type=str,
+    help="""
+    Absolute or relative path to a input folder that contains 
+    generation_config.yaml and versions.txt.
+    This is only used when generation-config-path is not set.
     """,
 )
 @click.option(
@@ -75,6 +88,7 @@ def main(ctx):
 )
 def generate(
     generation_config_path: Optional[str],
+    generation_input: Optional[str],
     library_names: Optional[str],
     repository_path: str,
     api_definitions_path: str,
@@ -95,6 +109,7 @@ def generate(
     """
     __generate_repo_impl(
         generation_config_path=generation_config_path,
+        generation_input=generation_input,
         library_names=library_names,
         repository_path=repository_path,
         api_definitions_path=api_definitions_path,
@@ -106,6 +121,7 @@ def __generate_repo_impl(
     library_names: Optional[str],
     repository_path: str,
     api_definitions_path: str,
+    generation_input: Optional[str] = None,
 ):
     """
     Implementation method for generate().
@@ -113,8 +129,28 @@ def __generate_repo_impl(
     meant to allow testing of this implementation function.
     """
 
+    # only use generation_input when generation_config_path is not provided and
+    # generation_input provided. generation_config_path should be deprecated after
+    # migration to 1pp.
     default_generation_config_path = f"{os.getcwd()}/generation_config.yaml"
-    if generation_config_path is None:
+    if generation_config_path is None and generation_input is not None:
+        print(
+            "generation_config_path is not provided, using generation-input folder provided"
+        )
+        source_file = Path(generation_input) / "versions.txt"
+        destination_file = Path(repository_path) / "versions.txt"
+
+        # perhaps allow not present and create an empty one?
+        if not source_file.exists():
+            raise FileNotFoundError(
+                f"Source file not found from {generation_input}: {source_file}"
+            )
+
+        generation_config_path = f"{generation_input}/generation_config.yaml"
+        # copy versions.txt from generation_input to repository_path
+        # override if present.
+        _copy_versions_file(generation_input, repository_path)
+    if generation_config_path is None and generation_input is None:
         generation_config_path = default_generation_config_path
     generation_config_path = os.path.abspath(generation_config_path)
     if not os.path.isfile(generation_config_path):
@@ -133,6 +169,31 @@ def __generate_repo_impl(
         api_definitions_path=api_definitions_path,
         target_library_names=include_library_names,
     )
+
+
+def _copy_versions_file(generation_input_path, repository_path):
+    """
+    Copies the versions.txt file from the generation_input folder to the repository_path.
+    Overrides the destination file if it already exists.
+
+    Args:
+        generation_input_path (str): The path to the generation_input folder.
+        repository_path (str): The path to the repository folder.
+    """
+    source_file = Path(generation_input_path) / "versions.txt"
+    destination_file = Path(repository_path) / "versions.txt"
+
+    # perhaps allow not present and create an empty one?
+    if not source_file.exists():
+        raise FileNotFoundError(
+            f"Source file not found from {generation_input_path}: {source_file}"
+        )
+    try:
+        # Use shutil.copyfile to copy the file, overwriting if it exists.
+        shutil.copy2(source_file, destination_file)
+        print(f"Copied '{source_file}' to '{destination_file}'")
+    except Exception as e:
+        print(f"An error occurred while copying the file: {e}")
 
 
 def _needs_full_repo_generation(generation_config: GenerationConfig) -> bool:
