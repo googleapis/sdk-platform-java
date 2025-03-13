@@ -78,8 +78,8 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   pushd "${repo}"
 
   if [ "${repo}" == "google-cloud-java" ]; then
+    # The `-am` command also builds anything these libraries depend on (i.e. proto-* and grpc-* sub modules)
     mvn clean install -B -V -ntp -T 1C -DskipTests -Dclirr.skip -Denforcer.skip -Dmaven.javadoc.skip \
-      # The `-am` command also builds anything these libraries depend on (i.e. proto-* and grpc-* sub modules)
       -pl "${google_cloud_java_handwritten_maven_args}" -am
   else
     # Install all repo modules to ~/.m2 (there can be multiple relevant artifacts to test i.e. core, admin, control)

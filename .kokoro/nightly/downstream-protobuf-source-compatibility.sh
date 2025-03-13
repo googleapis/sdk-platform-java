@@ -31,13 +31,13 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   # Compile the Handwritten Library with the Protobuf-Java version to test source compatibility
   # Run unit tests to help check for any behavior differences (dependant on coverage)
   if [ "${repo}" == "google-cloud-java" ]; then
+    # The `-am` command also builds anything these libraries depend on (i.e. proto-* and grpc-* sub modules)
     mvn clean test -B -V -ntp \
       -Dclirr.skip \
       -Denforcer.skip \
       -Dmaven.javadoc.skip \
       -Denforcer.skip \
       -Dprotobuf.version=${PROTOBUF_RUNTIME_VERSION} \
-      # The `-am` command also builds anything these libraries depend on (i.e. proto-* and grpc-* sub modules)
       -pl "${google_cloud_java_handwritten_maven_args}" -am \
       -T 1C
   else
