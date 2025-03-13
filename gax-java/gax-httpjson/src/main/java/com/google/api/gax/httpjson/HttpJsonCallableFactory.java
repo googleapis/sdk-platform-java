@@ -206,7 +206,8 @@ public class HttpJsonCallableFactory {
           ClientContext clientContext) {
 
     ServerStreamingCallable<RequestT, ResponseT> callable =
-        new HttpJsonDirectServerStreamingCallable<>(httpJsoncallSettings.getMethodDescriptor());
+        new HttpJsonDirectServerStreamingCallable<>(
+            httpJsoncallSettings.getMethodDescriptor(), httpJsoncallSettings.getTypeRegistry());
 
     if (httpJsoncallSettings.getParamsExtractor() != null) {
       callable =
