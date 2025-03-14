@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.List;
 import net.logstash.logback.encoder.LogstashEncoder;
 
-
 public class TestMdcAppender extends AppenderBase<ILoggingEvent> {
 
   private final LogstashEncoder encoder;
