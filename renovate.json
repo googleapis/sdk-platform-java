@@ -214,7 +214,7 @@
     },
     {
       "matchPackageNames": ["ch.qos.logback:logback-classic", "ch.qos.logback:logback-core"],
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchUpdateTypes": ["patch"],
       "enabled": true
     }
   ]
