@@ -20,6 +20,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.api.gax.grpc.GrpcLoggingInterceptor;
 import com.google.api.gax.httpjson.HttpJsonLoggingInterceptor;
 import com.google.common.collect.ImmutableMap;
@@ -27,6 +28,7 @@ import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.AfterAll;
@@ -59,6 +61,15 @@ public class ITLogging1x {
     ((ch.qos.logback.classic.Logger) logger).setLevel(level);
     ((ch.qos.logback.classic.Logger) logger).addAppender(testAppender);
     return testAppender;
+  }
+
+  private TestMdcAppender setupTestMdcAppender(Class<?> clazz, Level level) {
+    TestMdcAppender appender = new TestMdcAppender();
+    appender.start();
+    Logger logger = LoggerFactory.getLogger(clazz);
+    ((ch.qos.logback.classic.Logger) logger).setLevel(level);
+    ((ch.qos.logback.classic.Logger) logger).addAppender(appender);
+    return appender;
   }
 
   @BeforeAll
@@ -117,6 +128,21 @@ public class ITLogging1x {
                 "serviceName", SERVICE_NAME, "rpcName", RPC_NAME, "response.status", "OK"));
     assertThat(responseMdcPropertyMap).containsKey("response.payload");
     assertThat(responseMdcPropertyMap).containsKey("response.headers");
+
+    testAppender.stop();
+  }
+
+  @Test
+  void testGrpc_receiveContent_logDebug_structured_log() {
+    TestMdcAppender testAppender = setupTestMdcAppender(GrpcLoggingInterceptor.class, Level.DEBUG);
+    assertThat(echoGrpc(ECHO_STRING)).isEqualTo(ECHO_STRING);
+    List<JsonNode> jsonNodes = testAppender.getLoggingEntries();
+    assertThat(jsonNodes.size()).isEqualTo(2);
+    System.out.println(jsonNodes.get(1));
+    assertThat(jsonNodes.get(0).get("message").asText()).isEqualTo("Sending request");
+    assertThat(jsonNodes.get(0).get("request.payload").get("content").asText()).isEqualTo("echo?");
+    assertThat(jsonNodes.get(1).get("message").asText()).isEqualTo("Received response");
+    assertThat(jsonNodes.get(1).get("response.payload").get("content").asText()).isEqualTo("echo?");
 
     testAppender.stop();
   }
