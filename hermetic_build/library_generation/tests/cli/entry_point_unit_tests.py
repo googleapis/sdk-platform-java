@@ -12,7 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
+import shutil
 import unittest
+from pathlib import Path
 from unittest.mock import patch, ANY
 from click.testing import CliRunner
 from library_generation.cli.entry_point import (
@@ -245,3 +247,51 @@ class EntryPointTest(unittest.TestCase):
             api_definitions_path=ANY,
             target_library_names=["asset"],
         )
+
+    @patch("library_generation.cli.entry_point.from_yaml")
+    def test_generate_provide_generation_input(
+        self,
+        from_yaml,
+    ):
+        """
+        This test confirms that when no generation_config_path and
+        only generation_input is provided, it looks inside this path
+        for generation config and creates versions file when not exists
+        """
+        config_path = f"{test_resource_dir}/generation_config.yaml"
+        self._create_folder_in_current_dir("test-output")
+        # we call the implementation method directly since click
+        # does special handling when a method is annotated with @main.command()
+        generate_impl(
+            generation_config_path=None,
+            library_names="asset",
+            repository_path="./test-output",
+            api_definitions_path=".",
+            generation_input=test_resource_dir,
+        )
+        from_yaml.assert_called_with(
+            os.path.abspath(config_path)
+            # config_path
+        )
+        self.assertTrue(os.path.exists(f"test-output/versions.txt"))
+
+    def tearDown(self):
+        # clean up after
+        if os.path.exists("./output"):
+            shutil.rmtree(Path("./output"))
+        if os.path.exists("./test-output"):
+            shutil.rmtree(Path("./test-output"))
+        # # if os.path.exists(f"{test_resource_dir}/versions.txt"):
+        # #     os.remove(f"{test_resource_dir}/versions.txt")
+        # if os.path.exists(f"test-output/versions.txt"):
+        #     os.remove(f"test-output/versions.txt")
+
+    def _create_folder_in_current_dir(self, folder_name):
+        """Creates a folder in the current directory."""
+        try:
+            os.makedirs(
+                folder_name, exist_ok=True
+            )  # exist_ok prevents errors if folder exists
+            print(f"Folder '{folder_name}' created successfully.")
+        except OSError as e:
+            print(f"Error creating folder '{folder_name}': {e}")

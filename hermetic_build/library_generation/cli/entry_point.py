@@ -137,15 +137,6 @@ def __generate_repo_impl(
         print(
             "generation_config_path is not provided, using generation-input folder provided"
         )
-        source_file = Path(generation_input) / "versions.txt"
-        destination_file = Path(repository_path) / "versions.txt"
-
-        # perhaps allow not present and create an empty one?
-        if not source_file.exists():
-            raise FileNotFoundError(
-                f"Source file not found from {generation_input}: {source_file}"
-            )
-
         generation_config_path = f"{generation_input}/generation_config.yaml"
         # copy versions.txt from generation_input to repository_path
         # override if present.
@@ -183,17 +174,18 @@ def _copy_versions_file(generation_input_path, repository_path):
     source_file = Path(generation_input_path) / "versions.txt"
     destination_file = Path(repository_path) / "versions.txt"
 
-    # perhaps allow not present and create an empty one?
     if not source_file.exists():
-        raise FileNotFoundError(
-            f"Source file not found from {generation_input_path}: {source_file}"
+        destination_file.touch()
+        print(
+            f"generation-input does not contain versions.txt. "
+            f"Created empty versions file: {source_file}"
         )
+        return
     try:
-        # Use shutil.copyfile to copy the file, overwriting if it exists.
         shutil.copy2(source_file, destination_file)
         print(f"Copied '{source_file}' to '{destination_file}'")
     except Exception as e:
-        print(f"An error occurred while copying the file: {e}")
+        print(f"An error occurred while copying the versions.txt: {e}")
 
 
 def _needs_full_repo_generation(generation_config: GenerationConfig) -> bool:
