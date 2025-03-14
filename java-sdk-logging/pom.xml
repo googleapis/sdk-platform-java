@@ -3,8 +3,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>java-sdk-logging</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <artifactId>java-sdk-logging-parent</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <parent>
     <groupId>com.google.api</groupId>
@@ -14,6 +14,7 @@
   </parent>
   <modules>
     <module>logback-extension</module>
+    <module>java-sdk-logging-bom</module>
   </modules>
 
   <properties>
