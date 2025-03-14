@@ -126,7 +126,7 @@ def __generate_repo_impl(
     library_names: Optional[str],
     repository_path: str,
     api_definitions_path: str,
-    generation_input: Optional[str] = None,
+    generation_input: Optional[str],
 ):
     """
     Implementation method for generate().
