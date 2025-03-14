@@ -9,7 +9,5 @@ public class TestMdcAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
   private final SDKLoggingMdcJsonProvider provider = new SDKLoggingMdcJsonProvider();
 
   @Override
-  protected void append(ILoggingEvent eventObject) {
-
-  }
+  protected void append(ILoggingEvent eventObject) {}
 }
