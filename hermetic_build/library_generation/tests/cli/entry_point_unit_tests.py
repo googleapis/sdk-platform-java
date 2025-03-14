@@ -12,7 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
+import shutil
 import unittest
+from pathlib import Path
 from unittest.mock import patch, ANY
 from click.testing import CliRunner
 from library_generation.cli.entry_point import (
@@ -48,6 +50,20 @@ class EntryPointTest(unittest.TestCase):
         self.assertEqual(1, result.exit_code)
         self.assertEqual(FileNotFoundError, result.exc_info[0])
         self.assertRegex(result.exception.args[0], "/non-existent/file does not exist.")
+
+    def test_entry_point_with_invalid_generation_input_raise_file_exception(
+        self,
+    ):
+        os.chdir(script_dir)
+        runner = CliRunner()
+        # noinspection PyTypeChecker
+        result = runner.invoke(generate, ["--generation-input=/non-existent/folder"])
+        self.assertEqual(1, result.exit_code)
+        self.assertEqual(FileNotFoundError, result.exc_info[0])
+        self.assertRegex(
+            result.exception.args[0],
+            "/non-existent/folder/generation_config.yaml does not exist.",
+        )
 
     def test_validate_generation_config_succeeds(
         self,
@@ -94,6 +110,7 @@ class EntryPointTest(unittest.TestCase):
         # does special handling when a method is annotated with @main.command()
         generate_impl(
             generation_config_path=config_path,
+            generation_input=None,
             library_names=None,
             repository_path=".",
             api_definitions_path=".",
@@ -122,6 +139,7 @@ class EntryPointTest(unittest.TestCase):
         # does special handling when a method is annotated with @main.command()
         generate_impl(
             generation_config_path=config_path,
+            generation_input=None,
             library_names="non-existent-library",
             repository_path=".",
             api_definitions_path=".",
@@ -150,6 +168,7 @@ class EntryPointTest(unittest.TestCase):
         # does special handling when a method is annotated with @main.command()
         generate_impl(
             generation_config_path=config_path,
+            generation_input=None,
             library_names=None,
             repository_path=".",
             api_definitions_path=".",
@@ -177,6 +196,7 @@ class EntryPointTest(unittest.TestCase):
         # does special handling when a method is annotated with @main.command()
         generate_impl(
             generation_config_path=config_path,
+            generation_input=None,
             library_names="iam,non-existent-library",
             repository_path=".",
             api_definitions_path=".",
@@ -206,6 +226,7 @@ class EntryPointTest(unittest.TestCase):
         # does special handling when a method is annotated with @main.command()
         generate_impl(
             generation_config_path=config_path,
+            generation_input=None,
             library_names=None,
             repository_path=".",
             api_definitions_path=".",
@@ -235,6 +256,7 @@ class EntryPointTest(unittest.TestCase):
         # does special handling when a method is annotated with @main.command()
         generate_impl(
             generation_config_path=config_path,
+            generation_input=None,
             library_names="asset",
             repository_path=".",
             api_definitions_path=".",
@@ -245,3 +267,44 @@ class EntryPointTest(unittest.TestCase):
             api_definitions_path=ANY,
             target_library_names=["asset"],
         )
+
+    @patch("library_generation.cli.entry_point.from_yaml")
+    def test_generate_provide_generation_input(
+        self,
+        from_yaml,
+    ):
+        """
+        This test confirms that when no generation_config_path and
+        only generation_input is provided, it looks inside this path
+        for generation config and creates versions file when not exists
+        """
+        config_path = f"{test_resource_dir}/generation_config.yaml"
+        self._create_folder_in_current_dir("test-output")
+        # we call the implementation method directly since click
+        # does special handling when a method is annotated with @main.command()
+        generate_impl(
+            generation_config_path=None,
+            generation_input=test_resource_dir,
+            library_names="asset",
+            repository_path="./test-output",
+            api_definitions_path=".",
+        )
+        from_yaml.assert_called_with(os.path.abspath(config_path))
+        self.assertTrue(os.path.exists(f"test-output/versions.txt"))
+
+    def tearDown(self):
+        # clean up after
+        if os.path.exists("./output"):
+            shutil.rmtree(Path("./output"))
+        if os.path.exists("./test-output"):
+            shutil.rmtree(Path("./test-output"))
+
+    def _create_folder_in_current_dir(self, folder_name):
+        """Creates a folder in the current directory."""
+        try:
+            os.makedirs(
+                folder_name, exist_ok=True
+            )  # exist_ok prevents errors if folder exists
+            print(f"Folder '{folder_name}' created successfully.")
+        except OSError as e:
+            print(f"Error creating folder '{folder_name}': {e}")
