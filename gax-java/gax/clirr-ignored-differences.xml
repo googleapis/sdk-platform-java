@@ -118,4 +118,14 @@
     <className>com/google/api/gax/rpc/TransportChannelProvider</className>
     <method>* withUseS2A(*)</method>
   </difference>
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/rpc/TransportChannelProvider</className>
+    <method>* withMtlsEndpoint(*)</method>
+  </difference>
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/rpc/TransportChannelProvider</className>
+    <method>* needsMtlsEndpoint()</method>
+  </difference>
 </differences>
