@@ -37,6 +37,9 @@ def main(ctx):
     help="""
     Absolute or relative path to a generation_config.yaml that contains the
     metadata about library generation.
+    When not set, will use generation_config.yaml from --generation-input.
+    When neither this or --generation-input is set default to 
+    generation_config.yaml in the current working directory 
     """,
 )
 @click.option(
@@ -47,7 +50,9 @@ def main(ctx):
     help="""
     Absolute or relative path to a input folder that contains 
     generation_config.yaml and versions.txt.
-    This is only used when generation-config-path is not set.
+    This is only used when --generation-config-path is not set.
+    When neither this or --generation-config-path is set default to 
+    generation_config.yaml in the current working directory 
     """,
 )
 @click.option(
@@ -142,6 +147,7 @@ def __generate_repo_impl(
         # override if present.
         _copy_versions_file(generation_input, repository_path)
     if generation_config_path is None and generation_input is None:
+        print("Using default generation config path")
         generation_config_path = default_generation_config_path
     generation_config_path = os.path.abspath(generation_config_path)
     if not os.path.isfile(generation_config_path):

@@ -269,10 +269,7 @@ class EntryPointTest(unittest.TestCase):
             api_definitions_path=".",
             generation_input=test_resource_dir,
         )
-        from_yaml.assert_called_with(
-            os.path.abspath(config_path)
-            # config_path
-        )
+        from_yaml.assert_called_with(os.path.abspath(config_path))
         self.assertTrue(os.path.exists(f"test-output/versions.txt"))
 
     def tearDown(self):
@@ -281,10 +278,6 @@ class EntryPointTest(unittest.TestCase):
             shutil.rmtree(Path("./output"))
         if os.path.exists("./test-output"):
             shutil.rmtree(Path("./test-output"))
-        # # if os.path.exists(f"{test_resource_dir}/versions.txt"):
-        # #     os.remove(f"{test_resource_dir}/versions.txt")
-        # if os.path.exists(f"test-output/versions.txt"):
-        #     os.remove(f"test-output/versions.txt")
 
     def _create_folder_in_current_dir(self, folder_name):
         """Creates a folder in the current directory."""
