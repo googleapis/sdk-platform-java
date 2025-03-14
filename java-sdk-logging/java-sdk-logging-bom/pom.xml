@@ -12,6 +12,7 @@
   <packaging>pom</packaging>
 
   <artifactId>java-sdk-logging-bom</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
