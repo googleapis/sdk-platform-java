@@ -355,6 +355,8 @@
                 <testExclude>**/com/google/showcase/v1beta1/it/*.java</testExclude>
                 <testExclude>**/com/google/showcase/v1beta1/it/logging/ITLogging1x.java</testExclude>
                 <testExclude>**/com/google/showcase/v1beta1/it/logging/ITLogging.java</testExclude>
+                <!-- this profile doesn't have logstash deps -->
+                <testExclude>**/com/google/showcase/v1beta1/it/logging/TestMdcAppender.java</testExclude>
               </testExcludes>
             </configuration>
           </plugin>
