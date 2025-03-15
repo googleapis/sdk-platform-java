@@ -58,7 +58,8 @@ public class ITLogging1x {
 
   private static final Logger CLASS_LOGGER = LoggerFactory.getLogger(ITLogging1x.class);
 
-  private <T extends AppenderBase<ILoggingEvent>> void setupTestLogger(T appender, Class<?> clazz, Level level) {
+  private <T extends AppenderBase<ILoggingEvent>> void setupTestLogger(
+      T appender, Class<?> clazz, Level level) {
     appender.start();
     Logger logger = LoggerFactory.getLogger(clazz);
     ((ch.qos.logback.classic.Logger) logger).setLevel(level);
