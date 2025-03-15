@@ -258,6 +258,8 @@
                 <testExclude>**/com/google/showcase/v1beta1/it/*.java</testExclude>
                 <testExclude>**/com/google/showcase/v1beta1/it/logging/ITLoggingDisabled.java</testExclude>
                 <testExclude>**/com/google/showcase/v1beta1/it/logging/ITLogging1x.java</testExclude>
+                <!-- this profile doesn't have logstash deps -->
+                <testExclude>**/com/google/showcase/v1beta1/it/logging/TestMdcAppender.java</testExclude>
               </testExcludes>
             </configuration>
           </plugin>
@@ -289,6 +291,12 @@
           <groupId>ch.qos.logback</groupId>
           <artifactId>logback-core</artifactId>
           <version>${slf4j1-logback.version}</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>com.google.api</groupId>
+          <artifactId>logback-extension</artifactId>
+          <version>0.1.0-SNAPSHOT</version>
           <scope>test</scope>
         </dependency>
       </dependencies>
@@ -347,6 +355,8 @@
                 <testExclude>**/com/google/showcase/v1beta1/it/*.java</testExclude>
                 <testExclude>**/com/google/showcase/v1beta1/it/logging/ITLogging1x.java</testExclude>
                 <testExclude>**/com/google/showcase/v1beta1/it/logging/ITLogging.java</testExclude>
+                <!-- this profile doesn't have logstash deps -->
+                <testExclude>**/com/google/showcase/v1beta1/it/logging/TestMdcAppender.java</testExclude>
               </testExcludes>
             </configuration>
           </plugin>
