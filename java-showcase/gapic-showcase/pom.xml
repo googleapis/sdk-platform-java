@@ -254,6 +254,9 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
+              <excludes>
+                <exclude>**/com/google/showcase/v1beta1/it/logging/TestMdcAppender.java</exclude>
+              </excludes>
               <testExcludes>
                 <testExclude>**/com/google/showcase/v1beta1/it/*.java</testExclude>
                 <testExclude>**/com/google/showcase/v1beta1/it/logging/ITLoggingDisabled.java</testExclude>
