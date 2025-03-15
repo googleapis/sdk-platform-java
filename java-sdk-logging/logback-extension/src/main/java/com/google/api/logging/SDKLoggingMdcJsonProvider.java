@@ -52,6 +52,10 @@ public class SDKLoggingMdcJsonProvider extends MdcJsonProvider {
 
     boolean hasWrittenStart = false;
     for (Map.Entry<String, String> entry : mdcProperties.entrySet()) {
+      if (entry.getKey() == null || entry.getValue() == null) {
+        return;
+      }
+
       String fieldName = entry.getKey();
 
       if (!hasWrittenStart && getFieldName() != null) {

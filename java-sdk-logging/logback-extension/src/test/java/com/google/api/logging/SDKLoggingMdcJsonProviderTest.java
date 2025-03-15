@@ -30,7 +30,6 @@
 
 package com.google.api.logging;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -120,9 +119,18 @@ public class SDKLoggingMdcJsonProviderTest {
   }
 
   @Test
-  void testWriteNullThrowsException() {
+  void testWriteNullValueDoesNotThrowsException() throws IOException {
     mdc.put("json1", null);
+    provider.writeTo(generator, event);
+    verify(generator, never()).writeObject(anyString());
+    verify(generator, never()).writeTree(any(JsonNode.class));
+  }
 
-    assertThrows(IllegalArgumentException.class, () -> provider.writeTo(generator, event));
+  @Test
+  void testWriteNullKeyDoesNotThrowsException() throws IOException {
+    mdc.put(null, "example value");
+    provider.writeTo(generator, event);
+    verify(generator, never()).writeObject(anyString());
+    verify(generator, never()).writeTree(any(JsonNode.class));
   }
 }
