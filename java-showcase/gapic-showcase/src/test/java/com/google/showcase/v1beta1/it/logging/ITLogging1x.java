@@ -55,7 +55,7 @@ public class ITLogging1x {
   private static final String RECEIVING_RESPONSE_MESSAGE = "Received response";
   private final ObjectMapper objectMapper = new ObjectMapper();
 
-  private static Logger logger = LoggerFactory.getLogger(ITLogging1x.class);
+  private final static Logger CLASS_LOGGER = LoggerFactory.getLogger(ITLogging1x.class);
 
   private TestAppender setupTestLogger(Class<?> clazz, Level level) {
     TestAppender testAppender = new TestAppender();
@@ -95,8 +95,8 @@ public class ITLogging1x {
 
   @Test
   void test() {
-    assertThat(logger.isInfoEnabled()).isTrue();
-    assertThat(logger.isDebugEnabled()).isTrue();
+    assertThat(CLASS_LOGGER.isInfoEnabled()).isTrue();
+    assertThat(CLASS_LOGGER.isDebugEnabled()).isTrue();
   }
 
   @Test
