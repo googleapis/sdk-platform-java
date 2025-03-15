@@ -49,7 +49,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 
-public class SDKLoggingMdcJsonProviderTest {
+class SDKLoggingMdcJsonProviderTest {
 
   private SDKLoggingMdcJsonProvider provider = new SDKLoggingMdcJsonProvider();
   private JsonGenerator generator = mock(JsonGenerator.class);
