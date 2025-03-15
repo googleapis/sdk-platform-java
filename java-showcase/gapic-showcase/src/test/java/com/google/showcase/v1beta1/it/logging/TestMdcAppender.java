@@ -2,10 +2,7 @@ package com.google.showcase.v1beta1.it.logging;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.AppenderBase;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.logging.SDKLoggingMdcJsonProvider;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,16 +11,12 @@ import net.logstash.logback.encoder.LogstashEncoder;
 public class TestMdcAppender extends AppenderBase<ILoggingEvent> {
 
   private final LogstashEncoder encoder;
-
-  private final ObjectMapper objectMapper;
-
-  private final List<JsonNode> jsonNodes;
+  private final List<byte[]> byteLists;
 
   public TestMdcAppender() {
     encoder = new LogstashEncoder();
     encoder.addProvider(new SDKLoggingMdcJsonProvider());
-    objectMapper = new ObjectMapper();
-    jsonNodes = new ArrayList<>();
+    byteLists = new ArrayList<>();
   }
 
   @Override
@@ -40,15 +33,10 @@ public class TestMdcAppender extends AppenderBase<ILoggingEvent> {
 
   @Override
   protected void append(ILoggingEvent eventObject) {
-    byte[] encodedBytes = encoder.encode(eventObject);
-    try {
-      jsonNodes.add(objectMapper.readTree(encodedBytes));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+    byteLists.add(encoder.encode(eventObject));
   }
 
-  public List<JsonNode> getLoggingEntries() {
-    return Collections.unmodifiableList(jsonNodes);
+  public List<byte[]> getByteLists() {
+    return Collections.unmodifiableList(byteLists);
   }
 }

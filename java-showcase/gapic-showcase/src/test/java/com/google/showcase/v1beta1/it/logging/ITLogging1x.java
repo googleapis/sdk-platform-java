@@ -21,6 +21,7 @@ import static com.google.common.truth.Truth.assertThat;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.gax.grpc.GrpcLoggingInterceptor;
 import com.google.api.gax.httpjson.HttpJsonLoggingInterceptor;
 import com.google.common.collect.ImmutableMap;
@@ -28,6 +29,7 @@ import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -51,6 +53,7 @@ public class ITLogging1x {
   private static final String ENDPOINT = "http://localhost:7469";
   private static final String SENDING_REQUEST_MESSAGE = "Sending request";
   private static final String RECEIVING_RESPONSE_MESSAGE = "Received response";
+  private final ObjectMapper objectMapper = new ObjectMapper();
 
   private static Logger logger = LoggerFactory.getLogger(ITLogging1x.class);
 
@@ -133,16 +136,17 @@ public class ITLogging1x {
   }
 
   @Test
-  void testGrpc_receiveContent_logDebug_structured_log() {
+  void testGrpc_receiveContent_logDebug_structured_log() throws IOException {
     TestMdcAppender testAppender = setupTestMdcAppender(GrpcLoggingInterceptor.class, Level.DEBUG);
     assertThat(echoGrpc(ECHO_STRING)).isEqualTo(ECHO_STRING);
-    List<JsonNode> jsonNodes = testAppender.getLoggingEntries();
-    assertThat(jsonNodes.size()).isEqualTo(2);
-    System.out.println(jsonNodes.get(1));
-    assertThat(jsonNodes.get(0).get("message").asText()).isEqualTo("Sending request");
-    assertThat(jsonNodes.get(0).get("request.payload").get("content").asText()).isEqualTo("echo?");
-    assertThat(jsonNodes.get(1).get("message").asText()).isEqualTo("Received response");
-    assertThat(jsonNodes.get(1).get("response.payload").get("content").asText()).isEqualTo("echo?");
+    List<byte[]> byteLists = testAppender.getByteLists();
+    assertThat(byteLists.size()).isEqualTo(2);
+    JsonNode request = objectMapper.readTree(byteLists.get(0));
+    assertThat(request.get("message").asText()).isEqualTo("Sending request");
+    assertThat(request.get("request.payload").get("content").asText()).isEqualTo("echo?");
+    JsonNode response = objectMapper.readTree(byteLists.get(1));
+    assertThat(response.get("message").asText()).isEqualTo("Received response");
+    assertThat(response.get("response.payload").get("content").asText()).isEqualTo("echo?");
 
     testAppender.stop();
   }
