@@ -55,7 +55,7 @@ public class ITLogging1x {
   private static final String RECEIVING_RESPONSE_MESSAGE = "Received response";
   private final ObjectMapper objectMapper = new ObjectMapper();
 
-  private final static Logger CLASS_LOGGER = LoggerFactory.getLogger(ITLogging1x.class);
+  private static final Logger CLASS_LOGGER = LoggerFactory.getLogger(ITLogging1x.class);
 
   private TestAppender setupTestLogger(Class<?> clazz, Level level) {
     TestAppender testAppender = new TestAppender();
