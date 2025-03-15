@@ -76,8 +76,16 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   # Perform testing on main (with latest changes). Shallow copy as history is not important
   git clone "https://github.com/googleapis/${repo}.git" --depth=1
   pushd "${repo}"
-  # Install all repo modules to ~/.m2 (there can be multiple relevant artifacts to test i.e. core, admin, control)
-  mvn -B -ntp install -T 1C -DskipTests -Dclirr.skip -Denforcer.skip
+
+  if [ "${repo}" == "google-cloud-java" ]; then
+    # The `-am` command also builds anything these libraries depend on (i.e. proto-* and grpc-* sub modules)
+    mvn clean install -B -V -ntp -T 1C -DskipTests -Dclirr.skip -Denforcer.skip -Dmaven.javadoc.skip \
+      -pl "${google_cloud_java_handwritten_maven_args}" -am
+  else
+    # Install all repo modules to ~/.m2 (there can be multiple relevant artifacts to test i.e. core, admin, control)
+    mvn clean install -B -V -ntp -T 1C -DskipTests -Dclirr.skip -Denforcer.skip -Dmaven.javadoc.skip
+  fi
+
 
   linkage_checker_arguments=""
   build_program_arguments "${repo}"
