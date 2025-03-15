@@ -52,18 +52,18 @@ public class SDKLoggingMdcJsonProvider extends MdcJsonProvider {
 
     boolean hasWrittenStart = false;
     for (Map.Entry<String, String> entry : mdcProperties.entrySet()) {
-      if (entry.getKey() == null || entry.getValue() == null) {
+      String fieldName = entry.getKey();
+      String entryValueString = entry.getValue();
+      if (fieldName == null || entryValueString == null) {
         return;
       }
-
-      String fieldName = entry.getKey();
 
       if (!hasWrittenStart && getFieldName() != null) {
         generator.writeObjectFieldStart(getFieldName());
         hasWrittenStart = true;
       }
       generator.writeFieldName(fieldName);
-      String entryValueString = entry.getValue();
+
       try {
         generator.writeTree(convertToTreeNode(entryValueString));
       } catch (JsonProcessingException e) {
