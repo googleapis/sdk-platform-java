@@ -229,6 +229,22 @@ public class ITLogging1x {
   }
 
   @Test
+  void testHttpJson_receiveContent_logDebug_structured_log() throws IOException {
+    TestMdcAppender testAppender = setupTestMdcAppender(HttpJsonLoggingInterceptor.class, Level.DEBUG);
+    assertThat(echoHttpJson(ECHO_STRING)).isEqualTo(ECHO_STRING);
+    List<byte[]> byteLists = testAppender.getByteLists();
+    assertThat(byteLists.size()).isEqualTo(2);
+    JsonNode request = objectMapper.readTree(byteLists.get(0));
+    assertThat(request.get("message").asText()).isEqualTo("Sending request");
+    assertThat(request.get("request.payload").get("content").asText()).isEqualTo("echo?");
+    JsonNode response = objectMapper.readTree(byteLists.get(1));
+    assertThat(response.get("message").asText()).isEqualTo("Received response");
+    assertThat(response.get("response.payload").get("content").asText()).isEqualTo("echo?");
+
+    testAppender.stop();
+  }
+
+  @Test
   void testHttpJson_receiveContent_logInfo() {
     TestAppender testAppender = setupTestLogger(HttpJsonLoggingInterceptor.class, Level.INFO);
     assertThat(echoHttpJson(ECHO_STRING)).isEqualTo(ECHO_STRING);
