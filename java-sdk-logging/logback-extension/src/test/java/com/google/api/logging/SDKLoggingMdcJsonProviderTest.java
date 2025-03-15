@@ -32,6 +32,7 @@ package com.google.api.logging;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -46,6 +47,7 @@ import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InOrder;
 
 public class SDKLoggingMdcJsonProviderTest {
 
@@ -93,9 +95,13 @@ public class SDKLoggingMdcJsonProviderTest {
             + "  }\n"
             + "}");
 
+    provider.setFieldName("log-name");
     provider.writeTo(generator, event);
-    verify(generator).writeFieldName("json1");
-    verify(generator).writeTree(any(JsonNode.class));
+    InOrder inOrder = inOrder(generator);
+    inOrder.verify(generator).writeObjectFieldStart("log-name");
+    inOrder.verify(generator).writeFieldName("json1");
+    inOrder.verify(generator).writeTree(any(JsonNode.class));
+    inOrder.verify(generator).writeEndObject();
   }
 
   @Test
@@ -110,7 +116,6 @@ public class SDKLoggingMdcJsonProviderTest {
             + "    \"state\": \"ACTIVE\",\n" // the last semicolon is redundant.
             + "  }\n"
             + "}");
-
     provider.writeTo(generator, event);
     verify(generator).writeFieldName("json1");
     verify(generator).writeObject(anyString());
