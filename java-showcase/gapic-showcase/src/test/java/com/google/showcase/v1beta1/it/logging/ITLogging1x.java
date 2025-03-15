@@ -180,6 +180,25 @@ public class ITLogging1x {
   }
 
   @Test
+  void testGrpc_receiveContent_logInfo_structured_log() throws IOException {
+    TestMdcAppender testAppender = setupTestMdcAppender(GrpcLoggingInterceptor.class, Level.INFO);
+    assertThat(echoGrpc(ECHO_STRING)).isEqualTo(ECHO_STRING);
+    List<byte[]> byteLists = testAppender.getByteLists();
+    assertThat(byteLists.size()).isEqualTo(2);
+    JsonNode request = objectMapper.readTree(byteLists.get(0));
+    assertThat(request.get("message").asText()).isEqualTo("Sending request");
+    assertThat(request.get("serviceName").asText()).isEqualTo(SERVICE_NAME);
+    assertThat(request.get("rpcName").asText()).isEqualTo(RPC_NAME);
+    JsonNode response = objectMapper.readTree(byteLists.get(1));
+    assertThat(response.get("message").asText()).isEqualTo("Received response");
+    assertThat(response.get("serviceName").asText()).isEqualTo(SERVICE_NAME);
+    assertThat(response.get("rpcName").asText()).isEqualTo(RPC_NAME);
+    assertThat(response.get("response.status").asText()).isEqualTo("OK");
+
+    testAppender.stop();
+  }
+
+  @Test
   void testHttpJson_receiveContent_logDebug() {
     TestAppender testAppender = setupTestLogger(HttpJsonLoggingInterceptor.class, Level.DEBUG);
     assertThat(echoHttpJson(ECHO_STRING)).isEqualTo(ECHO_STRING);
