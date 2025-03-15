@@ -44,6 +44,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -58,6 +59,26 @@ public class SDKLoggingMdcJsonProviderTest {
   void init() {
     mdc = new HashMap<>();
     when(event.getMDCPropertyMap()).thenReturn(mdc);
+  }
+
+  @AfterEach
+  void post() {
+    mdc.clear();
+  }
+
+  @Test
+  void testWriteNullMdcMap() throws IOException {
+    when(event.getMDCPropertyMap()).thenReturn(null);
+    provider.writeTo(generator, event);
+    verify(generator, never()).writeFieldName(anyString());
+    verify(generator, never()).writeTree(any(JsonNode.class));
+  }
+
+  @Test
+  void testWriteEmptyMdcMap() throws IOException {
+    provider.writeTo(generator, event);
+    verify(generator, never()).writeFieldName(anyString());
+    verify(generator, never()).writeTree(any(JsonNode.class));
   }
 
   @Test
