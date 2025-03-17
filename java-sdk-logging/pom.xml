@@ -13,7 +13,7 @@
     <relativePath>../gapic-generator-java-pom-parent</relativePath>
   </parent>
   <modules>
-    <module>java-sdk-logging-bom</module>
+    <module>java-sdk-logging-extensions-bom</module>
     <module>log4j-extension</module>
     <module>logback-extension</module>
   </modules>

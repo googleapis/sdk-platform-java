@@ -11,7 +11,7 @@
   </parent>
   <packaging>pom</packaging>
 
-  <artifactId>java-sdk-logging-bom</artifactId>
+  <artifactId>java-sdk-logging-extensions-bom</artifactId>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
