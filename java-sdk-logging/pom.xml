@@ -17,10 +17,6 @@
     <module>logback-extension</module>
   </modules>
 
-  <properties>
-    <mockito.version>4.11.0</mockito.version>
-  </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
