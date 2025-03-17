@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import shutil
+from pathlib import Path
 from typing import Optional
 import library_generation.utils.utilities as util
 from common.model.generation_config import GenerationConfig
@@ -64,6 +65,14 @@ def generate_from_yaml(
     monorepo_postprocessing(
         repository_path=repository_path, versions_file=repo_config.versions_file
     )
+
+    # cleanup temp output folder
+    try:
+        shutil.rmtree(Path(repo_config.output_folder))
+        print(f"Directory {repo_config.output_folder} and its contents removed.")
+    except OSError as e:
+        print(f"Error: {e} - Failed to remove directory {repo_config.output_folder}.")
+        raise
 
 
 def get_target_libraries(
