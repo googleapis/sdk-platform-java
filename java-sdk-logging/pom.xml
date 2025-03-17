@@ -14,7 +14,7 @@
   </parent>
   <modules>
     <module>java-sdk-logging-extensions-bom</module>
-    <module>log4j-extension</module>
+    <module>log4j2-extension</module>
     <module>logback-extension</module>
   </modules>
 
