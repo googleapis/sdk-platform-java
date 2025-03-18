@@ -58,7 +58,8 @@ public class SDKLoggingMdcJsonProvider extends MdcJsonProvider {
       // 1. key or value is null
       // 2. includeMdcKeyNames is not empty and the key is not in the list
       // 3. excludeMdcKeyNames is not empty and the key is in the list
-      if (fieldName == null || entryValueString == null
+      if (fieldName == null
+          || entryValueString == null
           || !(getIncludeMdcKeyNames().isEmpty() || getIncludeMdcKeyNames().contains(fieldName))
           || (!getExcludeMdcKeyNames().isEmpty() && getExcludeMdcKeyNames().contains(fieldName))) {
         continue;
