@@ -9,17 +9,13 @@
   <parent>
     <groupId>com.google.api</groupId>
     <artifactId>gapic-generator-java-pom-parent</artifactId>
-    <version>2.55.1</version><!-- {x-version-update:gapic-generator-java:current} -->
+    <version>2.55.2-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
     <relativePath>../gapic-generator-java-pom-parent</relativePath>
   </parent>
   <modules>
+    <module>log4j2-extension</module>
     <module>logback-extension</module>
-    <module>java-sdk-logging-bom</module>
   </modules>
-
-  <properties>
-    <mockito.version>4.11.0</mockito.version>
-  </properties>
 
   <dependencyManagement>
     <dependencies>
@@ -39,16 +35,4 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 </project>
