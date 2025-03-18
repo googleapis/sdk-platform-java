@@ -38,7 +38,7 @@ jobs:
       working-directory: java-sdk-logging
       run: |
         mvn test -B -ntp -Dcheckstyle.skip -Dfmt.skip
-  lint:
+  module-lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
