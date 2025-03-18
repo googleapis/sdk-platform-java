@@ -31,13 +31,28 @@ jobs:
       with:
         java-version: 8
         distribution: temurin
+    - run: echo "JAVA8_HOME=${JAVA_HOME}" >> $GITHUB_ENV
+    - uses: actions/setup-java@v4
+      with:
+        java-version: 17
+        distribution: temurin
     - name: Install parent module
       run: |
         mvn install -B -ntp -pl gapic-generator-java-pom-parent
-    - name: Unit Tests
-      working-directory: java-sdk-logging
+    - name: Install logging module
       run: |
-        mvn test -B -ntp -Dcheckstyle.skip -Dfmt.skip
+        mvn install -B -ntp -Dcheckstyle.skip -Dfmt.skip
+      working-directory: java-sdk-logging
+    - name: Unit Tests in Java 8
+      run: |
+        set -x
+        export JAVA_HOME=$JAVA_HOME
+        export PATH=${JAVA_HOME}/bin:$PATH
+        mvn verify -B -ntp \
+          -Dcheckstyle.skip \
+          -Dfmt.skip \
+          -Djvm="${JAVA8_HOME}/bin/java"
+      working-directory: java-sdk-logging
   module-lint:
     runs-on: ubuntu-latest
     steps:
@@ -59,7 +74,7 @@ jobs:
     - uses: actions/checkout@v4
     - uses: actions/setup-java@v4
       with:
-        java-version: 11
+        java-version: 17
         distribution: temurin
     - name: Install parent module
       run: |
@@ -74,7 +89,7 @@ jobs:
     - uses: actions/checkout@v4
     - uses: actions/setup-java@v4
       with:
-        java-version: 11
+        java-version: 17
         distribution: temurin
     - name: Install parent module
       run: |
