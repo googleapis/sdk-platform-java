@@ -43,8 +43,10 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -168,6 +170,29 @@ class SDKLoggingMdcJsonProviderTest {
     verify(generator, times(1)).writeFieldName("json1");
     verify(generator, never()).writeFieldName("example key");
     verify(generator, times(1)).writeTree(any(JsonNode.class));
+    verify(generator, never()).writeObject(anyString());
+  }
+
+  @Test
+  void testWriteToJsonTreeExcludedKey() throws IOException {
+    mdc.put(
+        "json1",
+        "{\n"
+            + "  \"@version\": \"1\",\n"
+            + "  \"textPayload\": \"Received response\",\n"
+            + "  \"response.payload\": {\n"
+            + "    \"name\": \"example\",\n"
+            + "    \"state\": \"ACTIVE\"\n"
+            + "  }\n"
+            + "}");
+    mdc.put("example key", "example value");
+    List<String> excluded = new ArrayList<>();
+    excluded.add("json1");
+    excluded.add("example key");
+    provider.setExcludeMdcKeyNames(excluded);
+    provider.writeTo(generator, event);
+    verify(generator, never()).writeFieldName(anyString());
+    verify(generator, never()).writeTree(any(JsonNode.class));
     verify(generator, never()).writeObject(anyString());
   }
 
