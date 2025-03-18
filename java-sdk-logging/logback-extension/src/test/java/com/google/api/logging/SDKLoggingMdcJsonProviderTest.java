@@ -55,9 +55,9 @@ import org.mockito.InOrder;
 
 class SDKLoggingMdcJsonProviderTest {
 
-  private SDKLoggingMdcJsonProvider provider = new SDKLoggingMdcJsonProvider();
-  private JsonGenerator generator = mock(JsonGenerator.class);
-  private ILoggingEvent event = mock(ILoggingEvent.class);
+  private final SDKLoggingMdcJsonProvider provider = new SDKLoggingMdcJsonProvider();
+  private final JsonGenerator generator = mock(JsonGenerator.class);
+  private final ILoggingEvent event = mock(ILoggingEvent.class);
   private Map<String, String> mdc;
 
   @BeforeEach
