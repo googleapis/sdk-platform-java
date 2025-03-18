@@ -55,7 +55,7 @@ public class SDKLoggingMdcJsonProvider extends MdcJsonProvider {
       String fieldName = entry.getKey();
       String entryValueString = entry.getValue();
       if (fieldName == null || entryValueString == null) {
-        return;
+        continue;
       }
 
       if (!hasWrittenStart && getFieldName() != null) {
