@@ -188,6 +188,7 @@ def __generate_repo_impl(
         repository_path=repository_path,
         api_definitions_path=api_definitions_path,
         target_library_names=include_library_names,
+        target_api_path=api_path,
     )
 
 
@@ -215,6 +216,7 @@ def _copy_versions_file(generation_input_path, repository_path):
         print(f"Copied '{source_file}' to '{destination_file}'")
     except Exception as e:
         print(f"An error occurred while copying the versions.txt: {e}")
+        raise  # Re-raises the caught exception
 
 
 def _needs_full_repo_generation(generation_config: GenerationConfig) -> bool:

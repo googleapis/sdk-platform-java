@@ -82,7 +82,7 @@ class LibraryConfig:
         self.distribution_name = self.__get_distribution_name(distribution_name)
         self.transport = self.__validate_transport(transport)
 
-    def set_gapic_configs(self, gapic_configs: list[GapicConfig]):
+    def set_gapic_configs(self, gapic_configs: list[GapicConfig]) -> None:
         """
         Sets the gapic_configs for the library.
 

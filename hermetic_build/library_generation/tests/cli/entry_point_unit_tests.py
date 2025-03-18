@@ -121,6 +121,7 @@ class EntryPointTest(unittest.TestCase):
             repository_path=ANY,
             api_definitions_path=ANY,
             target_library_names=None,
+            target_api_path=None,
         )
 
     @patch("library_generation.cli.entry_point.generate_from_yaml")
@@ -151,6 +152,7 @@ class EntryPointTest(unittest.TestCase):
             repository_path=ANY,
             api_definitions_path=ANY,
             target_library_names=None,
+            target_api_path=None,
         )
 
     @patch("library_generation.cli.entry_point.generate_from_yaml")
@@ -181,6 +183,7 @@ class EntryPointTest(unittest.TestCase):
             repository_path=ANY,
             api_definitions_path=ANY,
             target_library_names=None,
+            target_api_path=None,
         )
 
     @patch("library_generation.cli.entry_point.generate_from_yaml")
@@ -210,6 +213,7 @@ class EntryPointTest(unittest.TestCase):
             repository_path=ANY,
             api_definitions_path=ANY,
             target_library_names=None,
+            target_api_path=None,
         )
 
     @patch("library_generation.cli.entry_point.generate_from_yaml")
@@ -241,6 +245,7 @@ class EntryPointTest(unittest.TestCase):
             repository_path=ANY,
             api_definitions_path=ANY,
             target_library_names=None,
+            target_api_path=None,
         )
 
     @patch("library_generation.cli.entry_point.generate_from_yaml")
@@ -272,6 +277,7 @@ class EntryPointTest(unittest.TestCase):
             repository_path=ANY,
             api_definitions_path=ANY,
             target_library_names=["asset"],
+            target_api_path=None,
         )
 
     @patch("library_generation.cli.entry_point.generate_from_yaml")
