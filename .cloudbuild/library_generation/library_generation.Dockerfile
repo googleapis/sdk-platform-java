@@ -26,7 +26,7 @@ ENV DOCKER_GAPIC_GENERATOR_VERSION="2.55.2-SNAPSHOT"
 # Download the java formatter
 RUN mvn -pl gapic-generator-java-pom-parent help:evaluate -Dexpression='google-java-format.version' -q -DforceStdout > /java-formatter-version
 RUN cat /java-formatter-version
-RUN curl -o "/google-java-format.jar" "https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/$(cat /java-formatter-version)/google-java-format-$(cat /java-formatter-version)-all-deps.jar"
+RUN V=$(cat /java-formatter-version) curl -o "/google-java-format.jar" "https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/${V}/google-java-format-${V}-all-deps.jar"
 
 # Compile and install packages
 RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
