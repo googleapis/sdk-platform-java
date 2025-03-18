@@ -53,3 +53,33 @@ jobs:
       run: |
         mvn -B -ntp fmt:check
       working-directory: java-sdk-logging
+  module-clirr:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-java@v4
+      with:
+        java-version: 11
+        distribution: temurin
+    - name: Install parent module
+      run: |
+        mvn install -B -ntp -pl gapic-generator-java-pom-parent
+    - name: Clirr check
+      run: |
+        mvn -B -ntp -Denforcer.skip=true clirr:check
+      working-directory: java-sdk-logging
+  module-enforcer:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-java@v4
+      with:
+        java-version: 11
+        distribution: temurin
+    - name: Install parent module
+      run: |
+        mvn install -B -ntp -pl gapic-generator-java-pom-parent
+    - name: Enforcer check
+      run: |
+        mvn -B -ntp enforcer:enforce@enforce -T 1C
+      working-directory: java-sdk-logging
