@@ -57,6 +57,7 @@ def main(ctx):
 )
 @click.option(
     "--library-names",
+    required=False,
     type=str,
     default=None,
     show_default=True,
@@ -64,6 +65,25 @@ def main(ctx):
     A list of library names that will be generated, separated by comma.
     The library name of a library is the value of library_name or api_shortname,
     if library_name is not specified, in the generation configuration.
+    
+    If neither this or --api-path specified, all libraries in the 
+    generation configuration will be generated.
+    """,
+)
+@click.option(
+    "--api-path",
+    required=False,
+    type=str,
+    default=None,
+    show_default=True,
+    help="""
+    Path within the API root (e.g. googleapis) to the API to 
+    generate/build/configure etc. This is expected to be a major-versioned 
+    API directory, e.g. google/cloud/functions/v2.
+
+    Takes precedence over --library-names when specidied. 
+    If neither this or --api-path specified, all libraries in the 
+    generation configuration will be generated.
     """,
 )
 @click.option(
@@ -95,6 +115,7 @@ def generate(
     generation_config_path: Optional[str],
     generation_input: Optional[str],
     library_names: Optional[str],
+    api_path: Optional[str],
     repository_path: str,
     api_definitions_path: str,
 ):
@@ -116,6 +137,7 @@ def generate(
         generation_config_path=generation_config_path,
         generation_input=generation_input,
         library_names=library_names,
+        api_path=api_path,
         repository_path=repository_path,
         api_definitions_path=api_definitions_path,
     )
@@ -123,10 +145,11 @@ def generate(
 
 def __generate_repo_impl(
     generation_config_path: Optional[str],
+    generation_input: Optional[str],
     library_names: Optional[str],
+    api_path: Optional[str],
     repository_path: str,
     api_definitions_path: str,
-    generation_input: Optional[str],
 ):
     """
     Implementation method for generate().

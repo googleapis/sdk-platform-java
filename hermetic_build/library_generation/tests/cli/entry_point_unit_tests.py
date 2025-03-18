@@ -112,6 +112,7 @@ class EntryPointTest(unittest.TestCase):
             generation_config_path=config_path,
             generation_input=None,
             library_names=None,
+            api_path=None,
             repository_path=".",
             api_definitions_path=".",
         )
@@ -141,6 +142,7 @@ class EntryPointTest(unittest.TestCase):
             generation_config_path=config_path,
             generation_input=None,
             library_names="non-existent-library",
+            api_path=None,
             repository_path=".",
             api_definitions_path=".",
         )
@@ -170,6 +172,7 @@ class EntryPointTest(unittest.TestCase):
             generation_config_path=config_path,
             generation_input=None,
             library_names=None,
+            api_path=None,
             repository_path=".",
             api_definitions_path=".",
         )
@@ -198,6 +201,7 @@ class EntryPointTest(unittest.TestCase):
             generation_config_path=config_path,
             generation_input=None,
             library_names="iam,non-existent-library",
+            api_path=None,
             repository_path=".",
             api_definitions_path=".",
         )
@@ -228,6 +232,7 @@ class EntryPointTest(unittest.TestCase):
             generation_config_path=config_path,
             generation_input=None,
             library_names=None,
+            api_path=None,
             repository_path=".",
             api_definitions_path=".",
         )
@@ -258,6 +263,7 @@ class EntryPointTest(unittest.TestCase):
             generation_config_path=config_path,
             generation_input=None,
             library_names="asset",
+            api_path=None,
             repository_path=".",
             api_definitions_path=".",
         )
@@ -288,6 +294,7 @@ class EntryPointTest(unittest.TestCase):
             generation_config_path=None,
             generation_input=test_resource_dir,
             library_names="asset",
+            api_path=None,
             repository_path="./test-output",
             api_definitions_path=".",
         )
