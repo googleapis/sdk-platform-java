@@ -31,6 +31,9 @@ jobs:
       with:
         java-version: 8
         distribution: temurin
+    - name: Build parent module
+      run: |
+        mvn clean install -pl gapic-generator-java-pom-parent
     - name: Unit Tests
       working-directory: java-sdk-logging
       run: |
@@ -43,7 +46,9 @@ jobs:
       with:
         java-version: 11
         distribution: temurin
-        cache: maven
+    - name: Build parent module
+      run: |
+        mvn clean install -pl gapic-generator-java-pom-parent
     - name: Java Linter
       run: mvn -B -ntp fmt:check
       working-directory: java-sdk-logging
