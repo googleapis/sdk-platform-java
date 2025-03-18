@@ -43,6 +43,7 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
@@ -147,6 +148,27 @@ class SDKLoggingMdcJsonProviderTest {
     verify(generator, times(1)).writeFieldName("example key");
     verify(generator, times(1)).writeTree(any(JsonNode.class));
     verify(generator, times(1)).writeObject(anyString());
+  }
+
+  @Test
+  void testWriteToJsonTreeIncludedKey() throws IOException {
+    mdc.put(
+        "json1",
+        "{\n"
+            + "  \"@version\": \"1\",\n"
+            + "  \"textPayload\": \"Received response\",\n"
+            + "  \"response.payload\": {\n"
+            + "    \"name\": \"example\",\n"
+            + "    \"state\": \"ACTIVE\"\n"
+            + "  }\n"
+            + "}");
+    mdc.put("example key", "example value");
+    provider.setIncludeMdcKeyNames(Collections.singletonList("json1"));
+    provider.writeTo(generator, event);
+    verify(generator, times(1)).writeFieldName("json1");
+    verify(generator, never()).writeFieldName("example key");
+    verify(generator, times(1)).writeTree(any(JsonNode.class));
+    verify(generator, never()).writeObject(anyString());
   }
 
   @Test
