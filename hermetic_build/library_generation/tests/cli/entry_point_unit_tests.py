@@ -268,10 +268,12 @@ class EntryPointTest(unittest.TestCase):
             target_library_names=["asset"],
         )
 
+    @patch("library_generation.cli.entry_point.generate_from_yaml")
     @patch("common.model.generation_config.GenerationConfig.from_yaml")
     def test_generate_provide_generation_input(
         self,
-        from_yaml,
+        mock_from_yaml,
+        mock_generate_from_yaml,
     ):
         """
         This test confirms that when no generation_config_path and
@@ -289,7 +291,7 @@ class EntryPointTest(unittest.TestCase):
             repository_path="./test-output",
             api_definitions_path=".",
         )
-        from_yaml.assert_called_with(os.path.abspath(config_path))
+        mock_from_yaml.assert_called_with(os.path.abspath(config_path))
         self.assertTrue(os.path.exists(f"test-output/versions.txt"))
 
     def tearDown(self):
