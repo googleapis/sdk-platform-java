@@ -33,7 +33,7 @@ jobs:
         distribution: temurin
     - name: Install parent module
       run: |
-        mvn install -pl gapic-generator-java-pom-parent
+        mvn install -B -ntp -pl gapic-generator-java-pom-parent
     - name: Unit Tests
       working-directory: java-sdk-logging
       run: |
@@ -48,7 +48,7 @@ jobs:
         distribution: temurin
     - name: Install parent module
       run: |
-        mvn install -pl gapic-generator-java-pom-parent
+        mvn install -B -ntp -pl gapic-generator-java-pom-parent
     - name: Java Linter
       run: |
         mvn -B -ntp fmt:check
