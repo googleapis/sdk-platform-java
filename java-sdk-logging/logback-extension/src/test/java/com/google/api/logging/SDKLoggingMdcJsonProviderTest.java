@@ -35,6 +35,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -102,6 +103,50 @@ class SDKLoggingMdcJsonProviderTest {
     inOrder.verify(generator).writeFieldName("json1");
     inOrder.verify(generator).writeTree(any(JsonNode.class));
     inOrder.verify(generator).writeEndObject();
+  }
+
+  @Test
+  void testWriteValidJsonStringAndNullKeyToJsonTree() throws IOException {
+    mdc.put(
+        "json1",
+        "{\n"
+            + "  \"@version\": \"1\",\n"
+            + "  \"textPayload\": \"Received response\",\n"
+            + "  \"response.payload\": {\n"
+            + "    \"name\": \"example\",\n"
+            + "    \"state\": \"ACTIVE\"\n"
+            + "  }\n"
+            + "}");
+    mdc.put(null, "example value");
+
+    provider.setFieldName("log-name");
+    provider.writeTo(generator, event);
+    verify(generator, times(1)).writeObjectFieldStart("log-name");
+    verify(generator, times(1)).writeFieldName("json1");
+    verify(generator, times(1)).writeTree(any(JsonNode.class));
+    verify(generator, never()).writeObject(anyString());
+    verify(generator, times(1)).writeEndObject();
+  }
+
+  @Test
+  void testWriteValidJsonStringAndValidPairToJsonTree() throws IOException {
+    mdc.put(
+        "json1",
+        "{\n"
+            + "  \"@version\": \"1\",\n"
+            + "  \"textPayload\": \"Received response\",\n"
+            + "  \"response.payload\": {\n"
+            + "    \"name\": \"example\",\n"
+            + "    \"state\": \"ACTIVE\"\n"
+            + "  }\n"
+            + "}");
+    mdc.put("example key", "example value");
+
+    provider.writeTo(generator, event);
+    verify(generator, times(1)).writeFieldName("json1");
+    verify(generator, times(1)).writeFieldName("example key");
+    verify(generator, times(1)).writeTree(any(JsonNode.class));
+    verify(generator, times(1)).writeObject(anyString());
   }
 
   @Test
