@@ -18,7 +18,7 @@ import click as click
 import shutil
 from pathlib import Path
 from library_generation.generate_repo import generate_from_yaml
-from common.model.generation_config import from_yaml, GenerationConfig
+from common.model.generation_config import GenerationConfig
 
 
 @click.group(invoke_without_command=False)
@@ -156,7 +156,7 @@ def __generate_repo_impl(
         )
     repository_path = os.path.abspath(repository_path)
     api_definitions_path = os.path.abspath(api_definitions_path)
-    generation_config = from_yaml(generation_config_path)
+    generation_config = GenerationConfig.from_yaml(generation_config_path)
     include_library_names = _parse_library_name_from(
         includes=library_names, generation_config=generation_config
     )
@@ -230,7 +230,7 @@ def validate_generation_config(generation_config_path: str) -> None:
     if generation_config_path is None:
         generation_config_path = "generation_config.yaml"
     try:
-        from_yaml(os.path.abspath(generation_config_path))
+        GenerationConfig.from_yaml(os.path.abspath(generation_config_path))
         print(f"{generation_config_path} is validated without any errors.")
     except ValueError as err:
         print(err)

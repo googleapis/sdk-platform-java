@@ -22,7 +22,7 @@ from library_generation.cli.entry_point import (
     validate_generation_config,
     __generate_repo_impl as generate_impl,
 )
-from common.model.generation_config import from_yaml
+from common.model.generation_config import GenerationConfig
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 test_resource_dir = os.path.join(script_dir, "..", "resources", "test-config")
@@ -105,7 +105,7 @@ class EntryPointTest(unittest.TestCase):
         with target_library_names=None in order to trigger the full generation
         """
         config_path = f"{test_resource_dir}/generation_config.yaml"
-        self.assertFalse(from_yaml(config_path).is_monorepo())
+        self.assertFalse(GenerationConfig.from_yaml(config_path).is_monorepo())
         # we call the implementation method directly since click
         # does special handling when a method is annotated with @main.command()
         generate_impl(
@@ -134,7 +134,7 @@ class EntryPointTest(unittest.TestCase):
         target_library_names equals includes.
         """
         config_path = f"{test_resource_dir}/generation_config.yaml"
-        self.assertFalse(from_yaml(config_path).is_monorepo())
+        self.assertFalse(GenerationConfig.from_yaml(config_path).is_monorepo())
         # we call the implementation method directly since click
         # does special handling when a method is annotated with @main.command()
         generate_impl(
@@ -163,7 +163,7 @@ class EntryPointTest(unittest.TestCase):
         target_library_names=None in order to trigger the full generation
         """
         config_path = f"{test_resource_dir}/monorepo_with_common_protos.yaml"
-        self.assertTrue(from_yaml(config_path).is_monorepo())
+        self.assertTrue(GenerationConfig.from_yaml(config_path).is_monorepo())
         # we call the implementation method directly since click
         # does special handling when a method is annotated with @main.command()
         generate_impl(
@@ -191,7 +191,7 @@ class EntryPointTest(unittest.TestCase):
         target_library_names is the same as includes.
         """
         config_path = f"{test_resource_dir}/monorepo_with_common_protos.yaml"
-        self.assertTrue(from_yaml(config_path).is_monorepo())
+        self.assertTrue(GenerationConfig.from_yaml(config_path).is_monorepo())
         # we call the implementation method directly since click
         # does special handling when a method is annotated with @main.command()
         generate_impl(
@@ -221,7 +221,7 @@ class EntryPointTest(unittest.TestCase):
         generation.
         """
         config_path = f"{test_resource_dir}/monorepo_without_common_protos.yaml"
-        self.assertTrue(from_yaml(config_path).is_monorepo())
+        self.assertTrue(GenerationConfig.from_yaml(config_path).is_monorepo())
         # we call the implementation method directly since click
         # does special handling when a method is annotated with @main.command()
         generate_impl(
@@ -251,7 +251,7 @@ class EntryPointTest(unittest.TestCase):
         generation.
         """
         config_path = f"{test_resource_dir}/monorepo_without_common_protos.yaml"
-        self.assertTrue(from_yaml(config_path).is_monorepo())
+        self.assertTrue(GenerationConfig.from_yaml(config_path).is_monorepo())
         # we call the implementation method directly since click
         # does special handling when a method is annotated with @main.command()
         generate_impl(
@@ -268,7 +268,7 @@ class EntryPointTest(unittest.TestCase):
             target_library_names=["asset"],
         )
 
-    @patch("library_generation.cli.entry_point.from_yaml")
+    @patch("common.model.generation_config.GenerationConfig.from_yaml")
     def test_generate_provide_generation_input(
         self,
         from_yaml,
