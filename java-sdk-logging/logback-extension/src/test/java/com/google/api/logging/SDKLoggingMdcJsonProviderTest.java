@@ -174,6 +174,25 @@ class SDKLoggingMdcJsonProviderTest {
   }
 
   @Test
+  void testWriteToJsonTreeReplacedKey() throws IOException {
+    mdc.put(
+        "json1",
+        "{\n"
+            + "  \"@version\": \"1\",\n"
+            + "  \"textPayload\": \"Received response\",\n"
+            + "  \"response.payload\": {\n"
+            + "    \"name\": \"example\",\n"
+            + "    \"state\": \"ACTIVE\"\n"
+            + "  }\n"
+            + "}");
+    provider.addMdcKeyFieldName("json1=new_json");
+    provider.writeTo(generator, event);
+    verify(generator, times(1)).writeFieldName("new_json");
+    verify(generator, times(1)).writeTree(any(JsonNode.class));
+    verify(generator, never()).writeObject(anyString());
+  }
+
+  @Test
   void testWriteToJsonTreeExcludedKey() throws IOException {
     mdc.put(
         "json1",

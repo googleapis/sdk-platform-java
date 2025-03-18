@@ -65,6 +65,7 @@ public class SDKLoggingMdcJsonProvider extends MdcJsonProvider {
         continue;
       }
 
+      fieldName = getMdcKeyFieldNames().getOrDefault(entry.getKey(), fieldName);
       if (!hasWrittenStart && getFieldName() != null) {
         generator.writeObjectFieldStart(getFieldName());
         hasWrittenStart = true;
