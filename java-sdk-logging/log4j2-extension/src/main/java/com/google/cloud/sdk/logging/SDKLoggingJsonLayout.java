@@ -51,8 +51,6 @@ import org.apache.logging.log4j.core.layout.AbstractStringLayout;
 public class SDKLoggingJsonLayout extends AbstractStringLayout {
 
   private final Gson gson = new Gson();
-
-  private static final String EMPTY_STRING = "";
   private static final String TIME_STAMP = "timestamp";
   private static final String LEVEL = "level";
   private static final String LOGGER_NAME = "logger_name";
