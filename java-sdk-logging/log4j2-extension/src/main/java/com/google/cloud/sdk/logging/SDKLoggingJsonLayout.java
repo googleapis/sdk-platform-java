@@ -57,6 +57,8 @@ public final class SDKLoggingJsonLayout extends AbstractStringLayout {
   private static final String TIME_STAMP = "timestamp";
   private static final String LEVEL = "level";
   private static final String LOGGER_NAME = "logger_name";
+  private static final String THREAD_NAME = "thread_name";
+  private static final String THREAD_ID = "thread_ID";
   private static final String MESSAGE = "message";
 
   private SDKLoggingJsonLayout(final Builder builder) {
@@ -92,6 +94,8 @@ public final class SDKLoggingJsonLayout extends AbstractStringLayout {
     jsonMap.put(TIME_STAMP, event.getTimeMillis());
     jsonMap.put(LEVEL, event.getLevel().toString());
     jsonMap.put(LOGGER_NAME, event.getLoggerName());
+    jsonMap.put(THREAD_NAME, event.getThreadName());
+    jsonMap.put(THREAD_ID, event.getThreadId());
     jsonMap.put(MESSAGE, event.getMessage().getFormattedMessage());
   }
 

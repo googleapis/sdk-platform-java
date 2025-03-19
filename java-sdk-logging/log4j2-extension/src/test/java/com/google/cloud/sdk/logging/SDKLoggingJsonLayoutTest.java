@@ -58,6 +58,8 @@ public class SDKLoggingJsonLayoutTest {
     when(logEvent.getTimeMillis()).thenReturn(10000L);
     when(logEvent.getLevel()).thenReturn(Level.DEBUG);
     when(logEvent.getLoggerName()).thenReturn("com.example.Example");
+    when(logEvent.getThreadName()).thenReturn("example thread name");
+    when(logEvent.getThreadId()).thenReturn(123L);
     when(logEvent.getMessage()).thenReturn(new SimpleMessage("example message"));
     when(logEvent.getContextData()).thenReturn(map);
     when(map.toMap()).thenReturn(mdcMap);
@@ -66,7 +68,7 @@ public class SDKLoggingJsonLayoutTest {
   @Test
   void testToSerializableContainsNonMdcContents() {
     assertEquals(
-        "{\"timestamp\":10000,\"level\":\"DEBUG\",\"logger_name\":\"com.example.Example\",\"message\":\"example message\"}\n",
+        "{\"timestamp\":10000,\"level\":\"DEBUG\",\"logger_name\":\"com.example.Example\",\"thread_name\":\"example thread name\",\"thread_ID\":123,\"message\":\"example message\"}\n",
         sdkLoggingJsonLayout.toSerializable(logEvent));
   }
 
@@ -89,7 +91,7 @@ public class SDKLoggingJsonLayoutTest {
     // the last colon is invalid.
     mdcMap.put("example key", "{key:value,jsonKey:{nestedKey:nestedValue,}}");
     assertEquals(
-        "{\"timestamp\":10000,\"level\":\"DEBUG\",\"logger_name\":\"com.example.Example\",\"message\":\"example message\",\"example key\":\"{key:value,jsonKey:{nestedKey:nestedValue,}}\"}\n",
+        "{\"timestamp\":10000,\"level\":\"DEBUG\",\"logger_name\":\"com.example.Example\",\"thread_name\":\"example thread name\",\"thread_ID\":123,\"message\":\"example message\",\"example key\":\"{key:value,jsonKey:{nestedKey:nestedValue,}}\"}\n",
         sdkLoggingJsonLayout.toSerializable(logEvent));
   }
 
@@ -99,7 +101,7 @@ public class SDKLoggingJsonLayoutTest {
     mdcMap.put("example key", "{key:value,jsonKey:{nestedKey:nestedValue}}");
     String log = sdkLoggingJsonLayout.toSerializable(logEvent);
     assertEquals(
-        "{\"timestamp\":10000,\"level\":\"DEBUG\",\"logger_name\":\"com.example.Example\",\"message\":\"example message\",\"example key\":{\"key\":\"value\",\"jsonKey\":{\"nestedKey\":\"nestedValue\"}}}\n",
+        "{\"timestamp\":10000,\"level\":\"DEBUG\",\"logger_name\":\"com.example.Example\",\"thread_name\":\"example thread name\",\"thread_ID\":123,\"message\":\"example message\",\"example key\":{\"key\":\"value\",\"jsonKey\":{\"nestedKey\":\"nestedValue\"}}}\n",
         log);
     assertDoesNotThrow(() -> JsonParser.parseString(log));
   }
