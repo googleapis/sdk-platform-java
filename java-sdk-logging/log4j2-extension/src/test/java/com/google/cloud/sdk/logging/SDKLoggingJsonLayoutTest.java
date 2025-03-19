@@ -86,7 +86,7 @@ public class SDKLoggingJsonLayoutTest {
   }
 
   @Test
-  void testToSerializableInvalidJsonValue() {
+  void testToSerializableInvalidJsonValueWriteString() {
     // the last colon is invalid.
     mdcMap.put("example key", "{key:value,jsonKey:{nestedKey:nestedValue,}}");
     assertEquals(
@@ -95,7 +95,7 @@ public class SDKLoggingJsonLayoutTest {
   }
 
   @Test
-  void testToSerializableValidJsonValue() {
+  void testToSerializableValidJsonValueWriteJson() {
     // the last colon is invalid.
     mdcMap.put("example key", "{key:value,jsonKey:{nestedKey:nestedValue}}");
     String log = sdkLoggingJsonLayout.toSerializable(logEvent);
