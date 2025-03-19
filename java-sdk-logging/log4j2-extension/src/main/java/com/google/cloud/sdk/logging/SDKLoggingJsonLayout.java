@@ -42,11 +42,19 @@ import org.apache.logging.log4j.core.config.Node;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.apache.logging.log4j.core.layout.AbstractStringLayout;
 
-@Plugin(name = "SDKLoggingJsonLayout", category = Node.CATEGORY, elementType = Layout.ELEMENT_TYPE, printObject = true)
+@Plugin(
+    name = "SDKLoggingJsonLayout",
+    category = Node.CATEGORY,
+    elementType = Layout.ELEMENT_TYPE,
+    printObject = true)
 public class SDKLoggingJsonLayout extends AbstractStringLayout {
 
   private final ObjectMapper objectMapper = new ObjectMapper();
-  private final static String EMPTY_STRING = "";
+  private static final String EMPTY_STRING = "";
+  private static final String TIME_STAMP = "timestamp";
+  private static final String LEVEL = "level";
+  private static final String LOGGER_NAME = "logger_name";
+  private static final String MESSAGE = "message";
 
   protected SDKLoggingJsonLayout(Charset charset) {
     super(charset);
@@ -55,9 +63,7 @@ public class SDKLoggingJsonLayout extends AbstractStringLayout {
   @Override
   public String toSerializable(LogEvent event) {
     Map<String, Object> jsonMap = new HashMap<>();
-    jsonMap.put("timestamp", event.getTimeMillis());
-    jsonMap.put("severity", event.getLevel().toString());
-    jsonMap.put("message", event.getMessage().getFormattedMessage());
+    extractNonMdc(event, jsonMap);
 
     Map<String, String> mdcMap = event.getContextData().toMap();
     for (Map.Entry<String, String> entry : mdcMap.entrySet()) {
@@ -80,6 +86,13 @@ public class SDKLoggingJsonLayout extends AbstractStringLayout {
     } catch (JsonProcessingException e) {
       return EMPTY_STRING;
     }
+  }
+
+  private void extractNonMdc(LogEvent event, Map<String, Object> jsonMap) {
+    jsonMap.put(TIME_STAMP, event.getTimeMillis());
+    jsonMap.put(LEVEL, event.getLevel().toString());
+    jsonMap.put(LOGGER_NAME, event.getLoggerName());
+    jsonMap.put(MESSAGE, event.getMessage().getFormattedMessage());
   }
 
   private JsonNode convertToTreeNode(String jsonString) throws JsonProcessingException {
