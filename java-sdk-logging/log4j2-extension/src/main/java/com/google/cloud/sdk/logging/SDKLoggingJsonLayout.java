@@ -85,7 +85,7 @@ public final class SDKLoggingJsonLayout extends AbstractStringLayout {
       }
     }
 
-    return gson.toJson(jsonMap);
+    return String.format("%s\n", gson.toJson(jsonMap));
   }
 
   private void extractNonMdc(LogEvent event, Map<String, Object> jsonMap) {

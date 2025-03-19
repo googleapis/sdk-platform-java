@@ -66,7 +66,7 @@ public class SDKLoggingJsonLayoutTest {
   @Test
   void testToSerializableContainsNonMdcContents() {
     assertEquals(
-        "{\"timestamp\":10000,\"level\":\"DEBUG\",\"logger_name\":\"com.example.Example\",\"message\":\"example message\"}",
+        "{\"timestamp\":10000,\"level\":\"DEBUG\",\"logger_name\":\"com.example.Example\",\"message\":\"example message\"}\n",
         sdkLoggingJsonLayout.toSerializable(logEvent));
   }
 
@@ -89,7 +89,7 @@ public class SDKLoggingJsonLayoutTest {
     // the last colon is invalid.
     mdcMap.put("example key", "{key:value,jsonKey:{nestedKey:nestedValue,}}");
     assertEquals(
-        "{\"timestamp\":10000,\"level\":\"DEBUG\",\"logger_name\":\"com.example.Example\",\"message\":\"example message\",\"example key\":\"{key:value,jsonKey:{nestedKey:nestedValue,}}\"}",
+        "{\"timestamp\":10000,\"level\":\"DEBUG\",\"logger_name\":\"com.example.Example\",\"message\":\"example message\",\"example key\":\"{key:value,jsonKey:{nestedKey:nestedValue,}}\"}\n",
         sdkLoggingJsonLayout.toSerializable(logEvent));
   }
 
@@ -99,7 +99,7 @@ public class SDKLoggingJsonLayoutTest {
     mdcMap.put("example key", "{key:value,jsonKey:{nestedKey:nestedValue}}");
     String log = sdkLoggingJsonLayout.toSerializable(logEvent);
     assertEquals(
-        "{\"timestamp\":10000,\"level\":\"DEBUG\",\"logger_name\":\"com.example.Example\",\"message\":\"example message\",\"example key\":{\"key\":\"value\",\"jsonKey\":{\"nestedKey\":\"nestedValue\"}}}",
+        "{\"timestamp\":10000,\"level\":\"DEBUG\",\"logger_name\":\"com.example.Example\",\"message\":\"example message\",\"example key\":{\"key\":\"value\",\"jsonKey\":{\"nestedKey\":\"nestedValue\"}}}\n",
         log);
     assertDoesNotThrow(() -> JsonParser.parseString(log));
   }
