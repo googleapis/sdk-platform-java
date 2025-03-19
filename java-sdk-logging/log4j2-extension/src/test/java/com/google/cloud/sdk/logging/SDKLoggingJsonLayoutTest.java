@@ -100,7 +100,7 @@ public class SDKLoggingJsonLayoutTest {
     mdcMap.put("example key", "{key:value,jsonKey:{nestedKey:nestedValue}}");
     String log = sdkLoggingJsonLayout.toSerializable(logEvent);
     assertEquals(
-        "{\"example key\":\"{key:value,jsonKey:{nestedKey:nestedValue}}\",\"level\":\"DEBUG\",\"logger_name\":\"com.example.Example\",\"message\":\"example message\",\"timestamp\":10000}",
+        "{\"example key\":{\"key\":\"value\",\"jsonKey\":{\"nestedKey\":\"nestedValue\"}},\"level\":\"DEBUG\",\"logger_name\":\"com.example.Example\",\"message\":\"example message\",\"timestamp\":10000}",
         log);
     assertDoesNotThrow(() -> JsonParser.parseString(log));
   }
