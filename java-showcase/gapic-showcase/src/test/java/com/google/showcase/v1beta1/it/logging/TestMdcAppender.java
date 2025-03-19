@@ -2,7 +2,7 @@ package com.google.showcase.v1beta1.it.logging;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.AppenderBase;
-import com.google.api.logging.SDKLoggingMdcJsonProvider;
+import com.google.cloud.sdk.logging.SDKLoggingMdcJsonProvider;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
