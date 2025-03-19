@@ -30,9 +30,10 @@
 
 package com.google.cloud.sdk.logging;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +50,8 @@ import org.apache.logging.log4j.core.layout.AbstractStringLayout;
     printObject = true)
 public class SDKLoggingJsonLayout extends AbstractStringLayout {
 
-  private final ObjectMapper objectMapper = new ObjectMapper();
+  private final Gson gson = new Gson();
+
   private static final String EMPTY_STRING = "";
   private static final String TIME_STAMP = "timestamp";
   private static final String LEVEL = "level";
@@ -74,18 +76,14 @@ public class SDKLoggingJsonLayout extends AbstractStringLayout {
       }
 
       try {
-        jsonMap.put(key, convertToTreeNode(value));
-      } catch (JsonProcessingException e) {
+        jsonMap.put(key, toJsonElement(value));
+      } catch (JsonParseException e) {
         // in case of conversion exception, just use String
         jsonMap.put(key, value);
       }
     }
 
-    try {
-      return objectMapper.writeValueAsString(jsonMap);
-    } catch (JsonProcessingException e) {
-      return EMPTY_STRING;
-    }
+    return gson.toJson(jsonMap);
   }
 
   private void extractNonMdc(LogEvent event, Map<String, Object> jsonMap) {
@@ -95,7 +93,7 @@ public class SDKLoggingJsonLayout extends AbstractStringLayout {
     jsonMap.put(MESSAGE, event.getMessage().getFormattedMessage());
   }
 
-  private JsonNode convertToTreeNode(String jsonString) throws JsonProcessingException {
-    return objectMapper.readTree(jsonString);
+  private JsonElement toJsonElement(String jsonString) throws JsonParseException {
+    return JsonParser.parseString(jsonString);
   }
 }
