@@ -35,12 +35,15 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import java.nio.charset.Charset;
-import java.util.HashMap;
+import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import org.apache.logging.log4j.core.Layout;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.config.Node;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
+import org.apache.logging.log4j.core.config.plugins.PluginBuilderAttribute;
+import org.apache.logging.log4j.core.config.plugins.PluginBuilderFactory;
 import org.apache.logging.log4j.core.layout.AbstractStringLayout;
 
 @Plugin(
@@ -48,7 +51,7 @@ import org.apache.logging.log4j.core.layout.AbstractStringLayout;
     category = Node.CATEGORY,
     elementType = Layout.ELEMENT_TYPE,
     printObject = true)
-public class SDKLoggingJsonLayout extends AbstractStringLayout {
+public final class SDKLoggingJsonLayout extends AbstractStringLayout {
 
   private final Gson gson = new Gson();
   private static final String TIME_STAMP = "timestamp";
@@ -56,16 +59,17 @@ public class SDKLoggingJsonLayout extends AbstractStringLayout {
   private static final String LOGGER_NAME = "logger_name";
   private static final String MESSAGE = "message";
 
-  protected SDKLoggingJsonLayout(Charset charset) {
-    super(charset);
+  private SDKLoggingJsonLayout(final Builder builder) {
+    super(builder.getCharset());
   }
 
   @Override
   public String toSerializable(LogEvent event) {
-    Map<String, Object> jsonMap = new HashMap<>();
+    // use LinkedHashMap to fix iteration order.
+    Map<String, Object> jsonMap = new LinkedHashMap<>();
     extractNonMdc(event, jsonMap);
 
-    Map<String, String> mdcMap = event.getContextData().toMap();
+    Map<String, String> mdcMap = new LinkedHashMap<>(event.getContextData().toMap());
     for (Map.Entry<String, String> entry : mdcMap.entrySet()) {
       String key = entry.getKey();
       String value = entry.getValue();
@@ -93,5 +97,30 @@ public class SDKLoggingJsonLayout extends AbstractStringLayout {
 
   private JsonElement toJsonElement(String jsonString) throws JsonParseException {
     return JsonParser.parseString(jsonString);
+  }
+
+  @PluginBuilderFactory
+  public static Builder newBuilder() {
+    return new Builder();
+  }
+
+  public static final class Builder
+      implements org.apache.logging.log4j.core.util.Builder<SDKLoggingJsonLayout> {
+
+    @PluginBuilderAttribute private Charset charset = StandardCharsets.UTF_8;
+
+    public Charset getCharset() {
+      return charset;
+    }
+
+    public Builder setCharset(final Charset charset) {
+      this.charset = charset;
+      return this;
+    }
+
+    @Override
+    public SDKLoggingJsonLayout build() {
+      return new SDKLoggingJsonLayout(this);
+    }
   }
 }

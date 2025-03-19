@@ -37,7 +37,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.google.gson.JsonParser;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.logging.log4j.Level;
@@ -49,7 +48,7 @@ import org.junit.jupiter.api.Test;
 
 public class SDKLoggingJsonLayoutTest {
   private final SDKLoggingJsonLayout sdkLoggingJsonLayout =
-      new SDKLoggingJsonLayout(StandardCharsets.UTF_8);
+      SDKLoggingJsonLayout.newBuilder().build();
   private final LogEvent logEvent = mock(LogEvent.class);
   private final ReadOnlyStringMap map = mock(ReadOnlyStringMap.class);
   private final Map<String, String> mdcMap = new HashMap<>();
@@ -67,7 +66,7 @@ public class SDKLoggingJsonLayoutTest {
   @Test
   void testToSerializableContainsNonMdcContents() {
     assertEquals(
-        "{\"level\":\"DEBUG\",\"logger_name\":\"com.example.Example\",\"message\":\"example message\",\"timestamp\":10000}",
+        "{\"timestamp\":10000,\"level\":\"DEBUG\",\"logger_name\":\"com.example.Example\",\"message\":\"example message\"}",
         sdkLoggingJsonLayout.toSerializable(logEvent));
   }
 
@@ -90,7 +89,7 @@ public class SDKLoggingJsonLayoutTest {
     // the last colon is invalid.
     mdcMap.put("example key", "{key:value,jsonKey:{nestedKey:nestedValue,}}");
     assertEquals(
-        "{\"example key\":\"{key:value,jsonKey:{nestedKey:nestedValue,}}\",\"level\":\"DEBUG\",\"logger_name\":\"com.example.Example\",\"message\":\"example message\",\"timestamp\":10000}",
+        "{\"timestamp\":10000,\"level\":\"DEBUG\",\"logger_name\":\"com.example.Example\",\"message\":\"example message\",\"example key\":\"{key:value,jsonKey:{nestedKey:nestedValue,}}\"}",
         sdkLoggingJsonLayout.toSerializable(logEvent));
   }
 
@@ -100,7 +99,7 @@ public class SDKLoggingJsonLayoutTest {
     mdcMap.put("example key", "{key:value,jsonKey:{nestedKey:nestedValue}}");
     String log = sdkLoggingJsonLayout.toSerializable(logEvent);
     assertEquals(
-        "{\"example key\":{\"key\":\"value\",\"jsonKey\":{\"nestedKey\":\"nestedValue\"}},\"level\":\"DEBUG\",\"logger_name\":\"com.example.Example\",\"message\":\"example message\",\"timestamp\":10000}",
+        "{\"timestamp\":10000,\"level\":\"DEBUG\",\"logger_name\":\"com.example.Example\",\"message\":\"example message\",\"example key\":{\"key\":\"value\",\"jsonKey\":{\"nestedKey\":\"nestedValue\"}}}",
         log);
     assertDoesNotThrow(() -> JsonParser.parseString(log));
   }
