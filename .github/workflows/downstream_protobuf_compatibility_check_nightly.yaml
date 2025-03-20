@@ -47,8 +47,8 @@ jobs:
         uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          # Use Java 11 for this as Linkage Checker is only compatible with Java 11 or below
-          java-version: 11
+          # TODO(https://github.com/GoogleCloudPlatform/cloud-opensource-java/issues/2395): Java 17+ support for Linkage Checker
+          java-version: 8
           distribution: temurin
       - name: Print Protobuf-Java testing version
         run: echo "Testing with Protobuf-Java v${{ matrix.protobuf-version }}"
