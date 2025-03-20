@@ -12,13 +12,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import shutil
 import copy
+import re
+import shutil
 from pathlib import Path
 from typing import Optional
 import library_generation.utils.utilities as util
 from common.model.generation_config import GenerationConfig
 from common.model.library_config import LibraryConfig
+from common.utils.proto_path_utils import ends_with_version
 from library_generation.generate_composed_library import generate_composed_library
 from library_generation.utils.monorepo_postprocessor import monorepo_postprocessing
 
@@ -125,7 +127,8 @@ def _get_target_libraries_from_api_path(
 ) -> list[LibraryConfig]:
     """
     Retrieves a copy of the LibraryConfig objects that contain the specified
-    target API path, removed other proto_path from LibraryConfig if any.
+    target API path, removed other proto_path versions from LibraryConfig if any.
+    proto_path that is dependency, not another version is kept.
 
     :param config: The GenerationConfig object.
     :param target_api_path: The target proto path to search for.
@@ -136,11 +139,15 @@ def _get_target_libraries_from_api_path(
     """
     target_libraries = []
     for library in config.libraries:
+        target_library = copy.deepcopy(library)
+        gapic_config_list = []
         for item in library.gapic_configs:
-            if item.proto_path == target_api_path:
-                target_library = copy.deepcopy(library)
-                target_library.set_gapic_configs([GapicConfig(target_api_path)])
-                target_libraries.append(target_library)
-                return target_libraries
-
+            if item.proto_path == target_api_path or not ends_with_version(
+                item.proto_path
+            ):
+                gapic_config_list.append(GapicConfig(item.proto_path))
+        if gapic_config_list:
+            target_library.set_gapic_configs(gapic_config_list)
+            target_libraries.append(target_library)
+            return target_libraries
     return []

@@ -16,6 +16,7 @@ import os
 import unittest
 from pathlib import Path
 from common.utils.proto_path_utils import find_versioned_proto_path
+from common.utils.proto_path_utils import ends_with_version
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "..", "resources")
@@ -37,3 +38,20 @@ class ProtoPathsUtilsTest(unittest.TestCase):
         proto_path = "google/type/color.proto"
         expected = "google/type/color.proto"
         self.assertEqual(expected, find_versioned_proto_path(proto_path))
+
+    def test_ends_with_version_valid(self):
+        self.assertTrue(ends_with_version("google/cloud/gsuiteaddons/v1"))
+        self.assertTrue(ends_with_version("google/iam/v1beta"))
+        self.assertTrue(ends_with_version("google/iam/v2betav1"))
+        self.assertTrue(ends_with_version("google/cloud/alloydb/connectors/v1alpha"))
+        self.assertTrue(ends_with_version("v1"))
+        self.assertTrue(ends_with_version("anything/v123"))
+
+    def test_ends_with_version_invalid(self):
+        self.assertFalse(ends_with_version("google/apps/script/type"))
+        self.assertFalse(ends_with_version("google/apps/script/type/docs"))
+        self.assertFalse(
+            ends_with_version("google/cloud/alloydb/connectors/v123/something")
+        )
+        self.assertFalse(ends_with_version(""))
+        self.assertFalse(ends_with_version("noVersion"))
