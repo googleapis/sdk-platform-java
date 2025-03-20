@@ -14,6 +14,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <logback.version>1.2.13</logback.version>
+    <!-- do not update this version as this is the last version support
+     SLF4J 1.x and logback 1.2.x -->
     <logstash.encoder.version>7.3</logstash.encoder.version>
   </properties>
 

@@ -228,6 +228,10 @@ jobs:
       - name: Install Maven modules
         run: |
           mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+      - name: Install logging module # this module is not part of root project.
+        run: |
+          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+        working-directory: java-sdk-logging
       - name: Java Linter
         working-directory: java-showcase
         run: |
