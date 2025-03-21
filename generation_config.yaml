@@ -5,7 +5,7 @@ googleapis_commitish: 66ab6ceb69178f5368b130949eaf518b7c28352f
 libraries:
 - api_shortname: showcase
   excluded_poms: gapic-showcase-bom
-  name_pretty: Showcase
+  name_pretty: Showcase test
   api_description: Showcase module
   product_documentation: https://cloud.google.com/dummy
   distribution_name: com.google.cloud:gapic-showcase
