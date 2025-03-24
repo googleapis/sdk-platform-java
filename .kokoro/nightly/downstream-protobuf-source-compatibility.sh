@@ -20,14 +20,6 @@ source "${scriptDir}/common.sh"
 
 validate_protobuf_compatibility_script_inputs
 
-
-java -version
-# Install to ~/.m2 because the generator tests require Gax testlibs
-mvn clean install -T 1C -DskipTests
-
-export JAVA_HOME="${JAVA8_HOME}"
-java -version
-
 # REPOS_UNDER_TEST Env Var accepts a comma separated list of googleapis repos to test. For Github CI,
 # this will be a single repo as Github will build a matrix of repos with each repo being tested in parallel.
 # For local invocation, you can pass a list of repos to test multiple repos together.
@@ -35,6 +27,13 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   # Perform source-compatibility testing on main (latest changes)
   git clone "https://github.com/googleapis/$repo.git" --depth=1
   pushd "$repo"
+
+  # Compile with Java 11 and run the tests with Java 8
+  mvn clean compile -T 1C
+
+  export JAVA_HOME="${JAVA8_HOME}"
+  export PATH=$JAVA_HOME/bin:$PATH
+  java -version
 
   # Compile the Handwritten Library with the Protobuf-Java version to test source compatibility
   # Run unit tests to help check for any behavior differences (dependant on coverage)
