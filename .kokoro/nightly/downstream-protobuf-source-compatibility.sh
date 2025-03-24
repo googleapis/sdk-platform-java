@@ -20,6 +20,14 @@ source "${scriptDir}/common.sh"
 
 validate_protobuf_compatibility_script_inputs
 
+
+java -version
+# Compile the repos with Java 11
+mvn clean compile -T 1C
+
+export JAVA_HOME="${JAVA8_HOME}"
+java -version
+
 # REPOS_UNDER_TEST Env Var accepts a comma separated list of googleapis repos to test. For Github CI,
 # this will be a single repo as Github will build a matrix of repos with each repo being tested in parallel.
 # For local invocation, you can pass a list of repos to test multiple repos together.
@@ -32,7 +40,7 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   # Run unit tests to help check for any behavior differences (dependant on coverage)
   if [ "${repo}" == "google-cloud-java" ]; then
     # The `-am` command also builds anything these libraries depend on (i.e. proto-* and grpc-* sub modules)
-    mvn clean test -B -V -ntp \
+    mvn test -B -V -ntp \
       -Dclirr.skip \
       -Denforcer.skip \
       -Dmaven.javadoc.skip \
@@ -41,7 +49,7 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
       -pl "${google_cloud_java_handwritten_maven_args}" -am \
       -T 1C
   else
-    mvn clean test -B -V -ntp \
+    mvn test -B -V -ntp \
       -Dclirr.skip \
       -Denforcer.skip \
       -Dmaven.javadoc.skip \

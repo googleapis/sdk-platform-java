@@ -62,6 +62,8 @@ function build_program_arguments() {
   done
 }
 
+java -version
+
 # cloud-opensource-java contains the Linkage Checker tool
 git clone https://github.com/GoogleCloudPlatform/cloud-opensource-java.git
 pushd cloud-opensource-java
