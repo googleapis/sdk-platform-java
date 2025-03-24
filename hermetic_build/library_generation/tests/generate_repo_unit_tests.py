@@ -59,7 +59,7 @@ class GenerateRepoTest(unittest.TestCase):
     def test_get_target_library_returns_selected_api_path(self):
         one_library = GenerateRepoTest.__get_an_empty_library_config()
         one_library.api_shortname = "one_library"
-        one_library.gapic_configs = [GapicConfig("google/cloud/one/library")]
+        one_library.gapic_configs = [GapicConfig("google/cloud/one/library/v1")]
         another_library = GenerateRepoTest.__get_an_empty_library_config()
         another_library.api_shortname = "another_library"
         another_library_gapic_config = list()
