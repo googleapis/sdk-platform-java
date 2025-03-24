@@ -33,7 +33,6 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
 
   export JAVA_HOME="${JAVA8_HOME}"
   export PATH=$JAVA_HOME/bin:$PATH
-  java -version
 
   # Compile the Handwritten Library with the Protobuf-Java version to test source compatibility
   # Run unit tests to help check for any behavior differences (dependant on coverage)

@@ -56,7 +56,6 @@ jobs:
         with:
           java-version: 11
           distribution: temurin
-      - run: echo "JAVA11_HOME=${JAVA_HOME}" >> $GITHUB_ENV
       - name: Print Protobuf-Java testing version
         run: echo "Testing with Protobuf-Java v${{ matrix.protobuf-version }}"
       - name: Perform downstream source compatibility testing
