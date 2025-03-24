@@ -114,6 +114,21 @@ class GenerateRepoTest(unittest.TestCase):
 
         self.assertEqual([another_library_v1], target_libraries)
 
+    def test_get_target_library_invalid_target_api_path(self):
+        """
+        Tests when the api_path is invalid and sys.exit is called.
+        """
+        config = GenerateRepoTest.__get_an_empty_library_config()
+        with self.assertRaises(ValueError) as context:
+            _target_libraries = get_target_libraries(
+                config, target_api_path="google/cloud/another/library/type"
+            )
+
+        self.assertEqual(
+            str(context.exception),
+            "api_path is not ending with a version is not supported",
+        )
+
     @staticmethod
     def __get_an_empty_generation_config() -> GenerationConfig:
         return GenerationConfig(

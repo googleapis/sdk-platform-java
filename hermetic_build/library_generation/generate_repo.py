@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import copy
-import re
 import shutil
 from pathlib import Path
 from typing import Optional
@@ -137,6 +136,8 @@ def _get_target_libraries_from_api_path(
         A list of LibraryConfig objects matching the target API path, or an
         empty list if no matches are found.
     """
+    if not ends_with_version(target_api_path):
+        raise ValueError("api_path is not ending with a version is not supported")
     target_libraries = []
     for library in config.libraries:
         target_library = copy.deepcopy(library)
