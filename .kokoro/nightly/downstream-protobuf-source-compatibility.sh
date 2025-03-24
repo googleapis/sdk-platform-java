@@ -22,8 +22,8 @@ validate_protobuf_compatibility_script_inputs
 
 
 java -version
-# Compile the repos with Java 11
-mvn clean compile -T 1C
+# Install to ~/.m2 because the generator tests require Gax testlibs
+mvn clean install -T 1C -DskipTests
 
 export JAVA_HOME="${JAVA8_HOME}"
 java -version
