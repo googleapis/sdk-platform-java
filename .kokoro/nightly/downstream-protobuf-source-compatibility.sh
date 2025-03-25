@@ -28,11 +28,17 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   git clone "https://github.com/googleapis/$repo.git" --depth=1
   pushd "$repo"
 
+  # Compile with Java 11 and run the tests with Java 8
+  mvn clean compile -T 1C
+
+  export JAVA_HOME="${JAVA8_HOME}"
+  export PATH=$JAVA_HOME/bin:$PATH
+
   # Compile the Handwritten Library with the Protobuf-Java version to test source compatibility
   # Run unit tests to help check for any behavior differences (dependant on coverage)
   if [ "${repo}" == "google-cloud-java" ]; then
     # The `-am` command also builds anything these libraries depend on (i.e. proto-* and grpc-* sub modules)
-    mvn clean test -B -V -ntp \
+    mvn test -B -V -ntp \
       -Dclirr.skip \
       -Denforcer.skip \
       -Dmaven.javadoc.skip \
@@ -41,7 +47,7 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
       -pl "${google_cloud_java_handwritten_maven_args}" -am \
       -T 1C
   else
-    mvn clean test -B -V -ntp \
+    mvn test -B -V -ntp \
       -Dclirr.skip \
       -Denforcer.skip \
       -Dmaven.javadoc.skip \

@@ -62,6 +62,7 @@ function build_program_arguments() {
   done
 }
 
+# TODO(https://github.com/GoogleCloudPlatform/cloud-opensource-java/issues/2395): Java 17+ support for Linkage Checker
 # cloud-opensource-java contains the Linkage Checker tool
 git clone https://github.com/GoogleCloudPlatform/cloud-opensource-java.git
 pushd cloud-opensource-java
