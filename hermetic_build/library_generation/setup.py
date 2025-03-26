@@ -24,6 +24,8 @@ setup(
             "owlbot/src/poms/*.py",
             "owlbot/templates/clirr/*.j2",
             "owlbot/templates/poms/*.j2",
+            "owlbot/templates/java_library/.github/**/*",
+            "owlbot/templates/java_library/.kokoro/**/*",
             "owlbot/templates/java_library/**/*",
         ],
         "synthtool": ["owlbot/synthtool/**/*"],

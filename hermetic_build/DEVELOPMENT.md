@@ -78,7 +78,7 @@ as per [POSIX env var definition](https://pubs.opengroup.org/onlinepubs/96999197
 2. Move the jar into its well-known location.
 
    ```shell
-   mv /path/to/jar "${HOME}/.library_generation/gapic-generator-java.jar"
+   mv ~/.m2/repository/com/google/api/gapic-generator-java/{version}/gapic-generator-java-{version}.jar "${HOME}/.library_generation/gapic-generator-java.jar"
    ```
 
 #### Put the protobuf compiler in its well-known location
@@ -130,6 +130,9 @@ owl-bot copy-code --version
 The key step is `npm link`, which will make the command available in you current
 shell session.
 
+If you get a permission denied error when running the command `owl-bot`, try
+relinking owl-bot by running `npm unlink -g` and re-running the steps above.
+
 ## Run the script
 The entrypoint script (`hermetic_build/library_generation/cli/entry_point.py`)
 allows you to generate a GAPIC repository with a given api definition (proto,
@@ -153,12 +156,14 @@ export path_to_repo="$(pwd)/google-cloud-java"
 ### Install the scripts
 
 You can skip this step if you've installed the packages in [Install package dependencies](#install-package-dependencies).
+Use the `--editable` flag for your changes to take effect as soon as you modify any file inside
+the package.
 
 ```shell
 python -m pip install --require-hashes -r hermetic_build/common/requirements.txt
-python -m pip install hermetic_build/common
+python -m pip install --editable hermetic_build/common
 python -m pip install --require-hashes -r hermetic_build/library_generation/requirements.txt
-python -m pip install hermetic_build/library_generation
+python -m pip install --editable hermetic_build/library_generation
 ```
 
 ### Run the script
