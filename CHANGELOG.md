@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.55.2](https://github.com/googleapis/sdk-platform-java/compare/v2.55.1...v2.55.2) (2025-03-26)
+
+
+### Bug Fixes
+
+* plumb mtls endpoint to TransportChannelProvider ([#3673](https://github.com/googleapis/sdk-platform-java/issues/3673)) ([a961459](https://github.com/googleapis/sdk-platform-java/commit/a9614593701d945a58b9e333b99589871f82ef33))
+
 ## [2.55.1](https://github.com/googleapis/sdk-platform-java/compare/v2.55.0...v2.55.1) (2025-03-12)
 
 
