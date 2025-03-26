@@ -1,0 +1,499 @@
+
+YAML Differences in: java-security-private-ca/.OwlBot-hermetic.yaml
+- deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/security/privateca/(v.*)/.*-java/gapic-google-.*/src, dest=/owl-bot-staging/java-security-private-ca/$1/google-cloud-security-private-ca/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/security/privateca/v.*/.*-java/gapic-google-.*/src, dest=/owl-bot-staging/java-security-private-ca/$1/google-cloud-security-private-ca/src)
+- deep_preserve_regex: ['/java-security-private-ca/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-appengine-admin/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-appengine-admin/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-servicedirectory/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-servicedirectory/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-gkehub/.OwlBot-hermetic.yaml
++ deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/gkehub/policycontroller/(v.*)/.*-java/proto-google-.*/src, dest=/owl-bot-staging/java-gkehub/$1/proto-google-cloud-gkehub-$1/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/gkehub/servicemesh/(v.*)/.*-java/proto-google-.*/src, dest=/owl-bot-staging/java-gkehub/$1/proto-google-cloud-gkehub-$1/src)
+- deep_preserve_regex: ['/java-gkehub/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-debugger-client/.OwlBot-hermetic.yaml
++ deep_copy_regex: DeepCopyRegexItem(source=/google/devtools/source/v1/google-devtools-source-v1-java/proto-google-devtools-source-v1-java/src, dest=/owl-bot-staging/java-debugger-client/v1/proto-google-devtools-source-protos/src)
+- deep_remove_regex: /java-debugger-client/proto-google-.*/src
++ deep_remove_regex: /java-debugger-client/proto-google-cloud.*/src
+
+YAML Differences in: java-dms/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-dms/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-aiplatform/.OwlBot-hermetic.yaml
+- deep_remove_regex: /java-aiplatform/google-.*/src
++ deep_remove_regex: /java-aiplatform/google-.*/src/main/java/com/google/cloud/aiplatform/v1
++ deep_remove_regex: /java-aiplatform/google-.*/src/main/java/com/google/cloud/aiplatform/v1beta1
+- deep_preserve_regex: ['/java-aiplatform/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-area120-tables/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-area120-tables/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-workflows/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-workflows/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-datalabeling/.OwlBot-hermetic.yaml
+- deep_preserve_regex: /java-datalabeling/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java
++ deep_preserve_regex: /java-datalabeling/google-cloud-datalabeling/src/test/java/com/google/cloud/datalabeling/it/ITSystemTest.java
++ deep_preserve_regex: /java-datalabeling/google-cloud-datalabeling/src/test/java/com/google/cloud/datalabeling/v1beta1/it/ITSystemTest.java
+
+YAML Differences in: java-accessapproval/.OwlBot-hermetic.yaml
+- deep_preserve_regex: /java-accessapproval/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java
++ deep_preserve_regex: /java-accessapproval/google-cloud-accessapproval/src/test/java/com/google/cloud/accessapproval/v1/it
+
+YAML Differences in: java-compute/.OwlBot-hermetic.yaml
+- deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/compute/(v.*)/.*-java/grpc-google-.*/src, dest=/owl-bot-staging/java-compute/$1/grpc-google-cloud-compute-$1/src)
+- deep_remove_regex: /java-compute/grpc-google-.*/src
++ deep_preserve_regex: /java-compute/google-cloud-compute/src/test/java/com/google/cloud/compute/v1/integration
+
+YAML Differences in: java-gsuite-addons/.OwlBot-hermetic.yaml
++ deep_copy_regex: DeepCopyRegexItem(source=/google/apps/script/type/.*-java/proto-google-.*/src, dest=/owl-bot-staging/java-gsuite-addons/v1/proto-google-apps-script-type-protos/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/apps/script/type/calendar/.*-java/proto-google-.*/src, dest=/owl-bot-staging/java-gsuite-addons/v1/proto-google-apps-script-type-protos/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/apps/script/type/docs/.*-java/proto-google-.*/src, dest=/owl-bot-staging/java-gsuite-addons/v1/proto-google-apps-script-type-protos/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/apps/script/type/drive/.*-java/proto-google-.*/src, dest=/owl-bot-staging/java-gsuite-addons/v1/proto-google-apps-script-type-protos/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/apps/script/type/gmail/.*-java/proto-google-.*/src, dest=/owl-bot-staging/java-gsuite-addons/v1/proto-google-apps-script-type-protos/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/apps/script/type/sheets/.*-java/proto-google-.*/src, dest=/owl-bot-staging/java-gsuite-addons/v1/proto-google-apps-script-type-protos/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/apps/script/type/slides/.*-java/proto-google-.*/src, dest=/owl-bot-staging/java-gsuite-addons/v1/proto-google-apps-script-type-protos/src)
+- deep_preserve_regex: ['/java-gsuite-addons/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-essential-contacts/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-essential-contacts/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-channel/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-channel/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-automl/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-automl/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-policy-troubleshooter/.OwlBot-hermetic.yaml
++ deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/policytroubleshooter/iam/v3/.*-java/gapic-google-.*/src, dest=/owl-bot-staging/java-policy-troubleshooter/v3/google-cloud-policy-troubleshooter/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/policytroubleshooter/iam/v3/.*-java/grpc-google-.*/src, dest=/owl-bot-staging/java-policy-troubleshooter/v3/grpc-google-cloud-policy-troubleshooter-v3/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/policytroubleshooter/iam/v3/.*-java/proto-google-.*/src, dest=/owl-bot-staging/java-policy-troubleshooter/v3/proto-google-cloud-policy-troubleshooter-v3/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/policytroubleshooter/iam/v3/.*-java/samples/snippets/generated, dest=/owl-bot-staging/java-policy-troubleshooter/v3/samples/snippets/generated)
++ deep_remove_regex: /java-policy-troubleshooter/iam/google-.*/src
++ deep_remove_regex: /java-policy-troubleshooter/iam/grpc-google-.*/src
++ deep_remove_regex: /java-policy-troubleshooter/iam/proto-google-.*/src
++ deep_remove_regex: /java-policy-troubleshooter/iam/samples/snippets/generated
+
+YAML Differences in: java-analytics-data/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-analytics-data/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-binary-authorization/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-binary-authorization/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-contentwarehouse/.OwlBot-hermetic.yaml
+- api_name: contentwarehouse
++ api_name: None
+
+YAML Differences in: java-os-login/.OwlBot-hermetic.yaml
++ deep_preserve_regex: /java-os-login/proto-google-cloud-os-login-v1/src/main/java/com/google/cloud/oslogin/common/FingerprintName.java
++ deep_preserve_regex: /java-os-login/proto-google-cloud-os-login-v1/src/main/java/com/google/cloud/oslogin/common/ProjectName.java
++ deep_preserve_regex: /java-os-login/proto-google-cloud-os-login-v1/src/main/java/com/google/cloud/oslogin/v1/FingerprintName.java
++ deep_preserve_regex: /java-os-login/proto-google-cloud-os-login-v1/src/main/java/com/google/cloud/oslogin/v1/PosixAccountName.java
++ deep_preserve_regex: /java-os-login/proto-google-cloud-os-login-v1/src/main/java/com/google/cloud/oslogin/v1/ProjectName.java
++ deep_preserve_regex: /java-os-login/proto-google-cloud-os-login-v1/src/main/java/com/google/cloud/oslogin/v1/SshPublicKeyName.java
+
+YAML Differences in: java-analytics-admin/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-analytics-admin/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-service-usage/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-service-usage/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-dataproc/.OwlBot-hermetic.yaml
+- deep_preserve_regex: /java-dataproc/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java
++ deep_preserve_regex: /java-dataproc/google-cloud-dataproc/src/test/java/com/google/cloud/dataproc/v.*/it/ITSystemTest.java
+
+YAML Differences in: java-billingbudgets/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-billingbudgets/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-life-sciences/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-life-sciences/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-container/.OwlBot-hermetic.yaml
+- deep_preserve_regex: /java-container/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java
++ deep_preserve_regex: /java-container/google-cloud-container/src/main/java/com/google/cloud/container/v1/SampleApp.java
++ deep_preserve_regex: /java-container/google-cloud-container/src/test/java/com/google/cloud/container/v1/it/ITSystemTest.java
++ deep_preserve_regex: /java-container/google-cloud-container/src/test/java/com/google/cloud/container/v1/it/Util.java
+
+YAML Differences in: java-iot/.OwlBot-hermetic.yaml
+- deep_preserve_regex: /java-iot/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java
++ deep_preserve_regex: /java-iot/google-cloud-iot/src/test/java/com/google/cloud/iot/v1/it/ITSystemTest.java
+
+YAML Differences in: java-tasks/.OwlBot-hermetic.yaml
++ deep_preserve_regex: /java-tasks/google-cloud-tasks/src/test/java/com/google/cloud/tasks/v2beta3/CloudTasksSmokeTest.java
++ deep_preserve_regex: /java-tasks/proto-google-cloud-tasks-v2/src/main/java/com/google/cloud/tasks/v2/ProjectName.java
++ deep_preserve_regex: /java-tasks/proto-google-cloud-tasks-v2beta2/src/main/java/com/google/cloud/tasks/v2beta2/ProjectName.java
++ deep_preserve_regex: /java-tasks/proto-google-cloud-tasks-v2beta3/src/main/java/com/google/cloud/tasks/v2beta3/ProjectName.java
+
+YAML Differences in: java-datacatalog/.OwlBot-hermetic.yaml
+- deep_preserve_regex: /java-datacatalog/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java
++ deep_preserve_regex: /java-datacatalog/google-cloud-datacatalog/src/test/java/com/google/cloud/datacatalog/v1beta1/it/ITSystemTest.java
++ deep_preserve_regex: /java-datacatalog/proto-google-cloud-datacatalog-v1beta1/src/main/java/com/google/cloud/datacatalog/v1beta1/FieldName.java
+
+YAML Differences in: java-websecurityscanner/.OwlBot-hermetic.yaml
++ deep_preserve_regex: /java-websecurityscanner/google-cloud-websecurityscanner/src/test/java/com/google/cloud/websecurityscanner/it/v1beta/VPCServiceControlNegativeTest.java
++ deep_preserve_regex: /java-websecurityscanner/google-cloud-websecurityscanner/src/test/java/com/google/cloud/websecurityscanner/it/v1beta/VPCServiceControlPositiveTest.java
+
+YAML Differences in: java-service-management/.OwlBot-hermetic.yaml
++ deep_preserve_regex: /java-service-management/google-cloud-service-management/src/test/java/com/google/cloud/api/servicemanagement/v1/ServiceManagerClientHttpJsonTest.java
+
+YAML Differences in: java-errorreporting/.OwlBot-hermetic.yaml
+- deep_copy_regex: DeepCopyRegexItem(source=/google/devtools/clouderrorreporting/(v.*)/.*-java/grpc-google-.*/src, dest=/owl-bot-staging/java-errorreporting/$1/grpc-google-cloud-errorreporting-$1/src)
+- deep_copy_regex: DeepCopyRegexItem(source=/google/devtools/clouderrorreporting/(v.*)/.*-java/proto-google-.*/src, dest=/owl-bot-staging/java-errorreporting/$1/proto-google-cloud-errorreporting-$1/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/devtools/clouderrorreporting/(v.*)/.*-java/grpc-google-.*/src, dest=/owl-bot-staging/java-errorreporting/$1/grpc-google-cloud-error-reporting-$1/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/devtools/clouderrorreporting/(v.*)/.*-java/proto-google-.*/src, dest=/owl-bot-staging/java-errorreporting/$1/proto-google-cloud-error-reporting-$1/src)
++ deep_preserve_regex: /java-errorreporting/google-cloud-errorreporting/src/test/java/com/google/devtools/clouderrorreporting/v1beta1/ITSystemTest.java
++ deep_preserve_regex: /java-errorreporting/proto-google-cloud-error-reporting-v1beta1/src/main/java/com/google/devtools/clouderrorreporting/v1beta1/GroupName.java
+
+YAML Differences in: java-os-config/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-os-config/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-connectgateway/.OwlBot-hermetic.yaml
+- deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/gkeconnect/gateway/(v.*)/.*-java/grpc-google-.*/src, dest=/owl-bot-staging/java-connectgateway/$1/grpc-google-cloud-connectgateway-$1/src)
+- deep_remove_regex: /java-connectgateway/grpc-google-.*/src
+
+YAML Differences in: java-bigqueryconnection/.OwlBot-hermetic.yaml
+- deep_preserve_regex: /java-bigqueryconnection/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java
++ deep_preserve_regex: /java-bigqueryconnection/google-cloud-bigqueryconnection/src/test/java/com/google/cloud/bigqueryconnection/v.*/it/ITSystemTest.java
+
+YAML Differences in: java-bigquerydatatransfer/.OwlBot-hermetic.yaml
+- deep_preserve_regex: /java-bigquerydatatransfer/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java
++ deep_preserve_regex: /java-bigquerydatatransfer/google-cloud-bigquerydatatransfer/src/main/java/com/google/cloud/bigquery/datatransfer/v1/SampleApp.java
+
+YAML Differences in: java-resourcemanager/.OwlBot-hermetic.yaml
+- deep_remove_regex: /java-resourcemanager/google-.*/src
++ deep_remove_regex: /java-resourcemanager/google-.*/src/main/java/com/google/cloud/resourcemanager/v3/
+- deep_preserve_regex: ['/java-resourcemanager/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-vpcaccess/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-vpcaccess/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-grafeas/.OwlBot-hermetic.yaml
+- deep_copy_regex: DeepCopyRegexItem(source=/grafeas/(v.*)/.*-java/gapic-google-.*/src, dest=/owl-bot-staging/java-grafeas/$1/grafeas/src)
+- deep_copy_regex: DeepCopyRegexItem(source=/grafeas/(v.*)/.*-java/grpc-google-.*/src, dest=/owl-bot-staging/java-grafeas/$1/grpc-grafeas-$1/src)
+- deep_copy_regex: DeepCopyRegexItem(source=/grafeas/(v.*)/.*-java/proto-google-.*/src, dest=/owl-bot-staging/java-grafeas/$1/proto-grafeas-$1/src)
+- deep_copy_regex: DeepCopyRegexItem(source=/grafeas/(v.*)/.*-java/samples/snippets/generated, dest=/owl-bot-staging/java-grafeas/$1/samples/snippets/generated)
++ deep_copy_regex: DeepCopyRegexItem(source=/grafeas/(v.*)/.*-java/gapic-google-.*/src, dest=/owl-bot-staging/java-grafeas/$1/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/grafeas/(v.*)/.*-java/grpc-google-.*/src, dest=/owl-bot-staging/java-grafeas/$1/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/grafeas/(v.*)/.*-java/proto-google-.*/src, dest=/owl-bot-staging/java-grafeas/$1/src)
+- deep_remove_regex: /java-grafeas/google-.*/src
+- deep_remove_regex: /java-grafeas/grpc-google-.*/src
+- deep_remove_regex: /java-grafeas/proto-google-.*/src
+- deep_remove_regex: /java-grafeas/samples/snippets/generated
++ deep_remove_regex: /src
++ deep_preserve_regex: /java-grafeas/samples/snippets/generated
+
+YAML Differences in: java-artifact-registry/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-artifact-registry/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-secretmanager/.OwlBot-hermetic.yaml
+- deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/secretmanager/(v.*)/.*-java/gapic-google-.*/src, dest=/owl-bot-staging/java-secretmanager/$1/google-cloud-secretmanager/src)
+- deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/secretmanager/(v.*)/.*-java/grpc-google-.*/src, dest=/owl-bot-staging/java-secretmanager/$1/grpc-google-cloud-secretmanager-$1/src)
+- deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/secretmanager/(v.*)/.*-java/proto-google-.*/src, dest=/owl-bot-staging/java-secretmanager/$1/proto-google-cloud-secretmanager-$1/src)
+- deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/secretmanager/(v.*)/.*-java/samples/snippets/generated, dest=/owl-bot-staging/java-secretmanager/$1/samples/snippets/generated)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/secretmanager/(v\d.*)/.*-java/gapic-google-.*/src, dest=/owl-bot-staging/java-secretmanager/$1/google-cloud-secretmanager/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/secretmanager/(v\d.*)/.*-java/grpc-google-.*/src, dest=/owl-bot-staging/java-secretmanager/$1/grpc-google-cloud-secretmanager-$1/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/secretmanager/(v\d.*)/.*-java/proto-google-.*/src, dest=/owl-bot-staging/java-secretmanager/$1/proto-google-cloud-secretmanager-$1/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/secretmanager/(v\d.*)/.*-java/samples/snippets/generated, dest=/owl-bot-staging/java-secretmanager/$1/samples/snippets/generated)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/secrets/(v\d.*)/.*-java/gapic-google-.*/src, dest=/owl-bot-staging/java-secretmanager/$1/google-cloud-secretmanager/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/secrets/(v\d.*)/.*-java/grpc-google-.*/src, dest=/owl-bot-staging/java-secretmanager/$1/grpc-google-cloud-secretmanager-$1/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/secrets/(v\d.*)/.*-java/proto-google-.*/src, dest=/owl-bot-staging/java-secretmanager/$1/proto-google-cloud-secretmanager-$1/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/secrets/(v\d.*)/.*-java/samples/snippets/generated, dest=/owl-bot-staging/java-secretmanager/$1/samples/snippets/generated)
+- deep_preserve_regex: /java-secretmanager/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java
++ deep_preserve_regex: /java-secretmanager/google-.*/src/test/java/com/google/cloud/.*/v1/it/IT.*Test.java
++ deep_preserve_regex: /java-secretmanager/proto-google-cloud-secretmanager-v1/src/main/java/com/google/cloud/secretmanager/v1/TopicName.java
+
+YAML Differences in: java-trace/.OwlBot-hermetic.yaml
++ deep_preserve_regex: /java-trace/google-cloud-trace/src/test/java/com/google/cloud/trace/v1/VPCServiceControlTest.java
++ deep_preserve_regex: /java-trace/google-cloud-trace/src/test/java/com/google/cloud/trace/v2/VPCServiceControlTest.java
+
+YAML Differences in: java-iam/.OwlBot-hermetic.yaml
+- deep_copy_regex: DeepCopyRegexItem(source=/google/iam/(v.*)/.*-java/gapic-google-.*/src, dest=/owl-bot-staging/java-iam/$1/google-iam-policy/src)
+- deep_copy_regex: DeepCopyRegexItem(source=/google/iam/(v.*)/.*-java/grpc-google-.*/src, dest=/owl-bot-staging/java-iam/$1/grpc-google-iam-policy-$1/src)
+- deep_copy_regex: DeepCopyRegexItem(source=/google/iam/(v.*)/.*-java/proto-google-.*/src, dest=/owl-bot-staging/java-iam/$1/proto-google-iam-policy-$1/src)
+- deep_copy_regex: DeepCopyRegexItem(source=/google/iam/(v.*)/.*-java/samples/snippets/generated, dest=/owl-bot-staging/java-iam/$1/samples/snippets/generated)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/iam/v2/.*-java/gapic-google-.*/src, dest=/owl-bot-staging/java-iam/v2/google-iam-policy/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/iam/v2beta/.*-java/gapic-google-.*/src, dest=/owl-bot-staging/java-iam/v2beta/google-iam-policy/src)
+- deep_remove_regex: /java-iam/google-.*/src
+- deep_remove_regex: /java-iam/samples/snippets/generated
++ deep_preserve_regex: /java-iam/samples/snippets/generated
+
+YAML Differences in: java-billing/.OwlBot-hermetic.yaml
+- deep_preserve_regex: /java-billing/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java
++ deep_preserve_regex: /java-billing/google-cloud-billing/src/test/java/com/google/cloud/billing/v1/CloudBillingClientHttpJsonTest.java
+
+YAML Differences in: java-securitycenter/.OwlBot-hermetic.yaml
++ deep_preserve_regex: /java-securitycenter/proto-google-cloud-securitycenter-v1beta1/src/main/java/com/google/cloud/securitycenter/v1beta1/AssetSecurityMarksName.java
++ deep_preserve_regex: /java-securitycenter/proto-google-cloud-securitycenter-v1beta1/src/main/java/com/google/cloud/securitycenter/v1beta1/FindingSecurityMarksName.java
++ deep_preserve_regex: /java-securitycenter/proto-google-cloud-securitycenter-v1beta1/src/main/java/com/google/cloud/securitycenter/v1beta1/SecuritymarksName.java
++ deep_preserve_regex: /java-securitycenter/proto-google-cloud-securitycenter-v1beta1/src/main/java/com/google/cloud/securitycenter/v1beta1/SecuritymarksNames.java
++ deep_preserve_regex: /java-securitycenter/proto-google-cloud-securitycenter-v1beta1/src/main/java/com/google/cloud/securitycenter/v1beta1/UntypedSecuritymarksName.java
+
+YAML Differences in: java-document-ai/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-document-ai/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-dlp/.OwlBot-hermetic.yaml
++ deep_preserve_regex: /java-dlp/proto-google-cloud-dlp-v2/src/main/java/com/google/privacy/dlp/v2/DeidentifyTemplateNames.java
++ deep_preserve_regex: /java-dlp/proto-google-cloud-dlp-v2/src/main/java/com/google/privacy/dlp/v2/InspectFindingName.java
++ deep_preserve_regex: /java-dlp/proto-google-cloud-dlp-v2/src/main/java/com/google/privacy/dlp/v2/InspectTemplateNames.java
++ deep_preserve_regex: /java-dlp/proto-google-cloud-dlp-v2/src/main/java/com/google/privacy/dlp/v2/OrganizationDeidentifyTemplateName.java
++ deep_preserve_regex: /java-dlp/proto-google-cloud-dlp-v2/src/main/java/com/google/privacy/dlp/v2/OrganizationInspectTemplateName.java
++ deep_preserve_regex: /java-dlp/proto-google-cloud-dlp-v2/src/main/java/com/google/privacy/dlp/v2/OrganizationStoredInfoTypeName.java
++ deep_preserve_regex: /java-dlp/proto-google-cloud-dlp-v2/src/main/java/com/google/privacy/dlp/v2/ProjectDeidentifyTemplateName.java
++ deep_preserve_regex: /java-dlp/proto-google-cloud-dlp-v2/src/main/java/com/google/privacy/dlp/v2/ProjectInspectTemplateName.java
++ deep_preserve_regex: /java-dlp/proto-google-cloud-dlp-v2/src/main/java/com/google/privacy/dlp/v2/ProjectJobTriggerName.java
++ deep_preserve_regex: /java-dlp/proto-google-cloud-dlp-v2/src/main/java/com/google/privacy/dlp/v2/ProjectStoredInfoTypeName.java
++ deep_preserve_regex: /java-dlp/proto-google-cloud-dlp-v2/src/main/java/com/google/privacy/dlp/v2/StoredInfoTypeNames.java
++ deep_preserve_regex: /java-dlp/proto-google-cloud-dlp-v2/src/main/java/com/google/privacy/dlp/v2/UntypedDeidentifyTemplateName.java
++ deep_preserve_regex: /java-dlp/proto-google-cloud-dlp-v2/src/main/java/com/google/privacy/dlp/v2/UntypedInspectTemplateName.java
++ deep_preserve_regex: /java-dlp/proto-google-cloud-dlp-v2/src/main/java/com/google/privacy/dlp/v2/UntypedStoredInfoTypeName.java
+
+YAML Differences in: java-translate/.OwlBot-hermetic.yaml
+- deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/translate/(v.*)/.*-java/proto-google-.*/src, dest=/owl-bot-staging/java-translate/$1/proto-google-cloud-translate-$1/src)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/translate/(v.*)/.*-java/proto-google-.*/src/main/java/com/google/cloud/translate, dest=/owl-bot-staging/java-translate/$1/proto-google-cloud-translate-$1/src/main/java/com/google/cloud/translate)
++ deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/translate/(v.*)/.*-java/proto-google-.*/src/main/proto/google/cloud/translate, dest=/owl-bot-staging/java-translate/$1/proto-google-cloud-translate-$1/src/main/proto/google/cloud/translate)
+- deep_remove_regex: /java-translate/google-.*/src
++ deep_remove_regex: /java-translate/google-.*/src/com/google/cloud/translate/v3
++ deep_remove_regex: /java-translate/google-.*/src/com/google/cloud/translate/v3beta1
+- deep_preserve_regex: ['/java-translate/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-language/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-language/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-speech/.OwlBot-hermetic.yaml
++ deep_preserve_regex: /java-speech/google-cloud-speech/src/test/java/com/google/cloud/speech/v1/SpeechSmokeTest.java
++ deep_preserve_regex: /java-speech/google-cloud-speech/src/test/java/com/google/cloud/speech/v1p1beta1/SpeechSmokeTest.java
++ deep_preserve_regex: /java-speech/google-cloud-speech/src/test/resources/META-INF/native-image/
++ deep_preserve_regex: /java-speech/google-cloud-speech/src/test/resources/hello.flac
+
+YAML Differences in: java-mediatranslation/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-mediatranslation/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-admanager/.OwlBot-hermetic.yaml
+- deep_remove_regex: /java-admanager/google-.*/src
+- deep_remove_regex: /java-admanager/grpc-google-.*/src
+- deep_remove_regex: /java-admanager/proto-google-.*/src
++ deep_remove_regex: /java-admanager/ad-manager.*/src
++ deep_remove_regex: /java-admanager/grpc-ad-manager-.*/src
++ deep_remove_regex: /java-admanager/proto-ad-manager-.*/src
+- deep_preserve_regex: /java-admanager/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java
++ deep_preserve_regex: /java-admanager/ad-manager-.*/src/test/java/com/google/.*/v.*/it/IT.*Test.java
+
+YAML Differences in: java-asset/.OwlBot-hermetic.yaml
+- deep_preserve_regex: /java-asset/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java
++ deep_preserve_regex: /java-asset/google-cloud-.*/src/test/java/com/google/cloud/.*/it
++ deep_preserve_regex: /java-asset/google-cloud-asset/src/test/java/com/google/cloud/asset/v1/VPCServiceControlTest.java
++ deep_preserve_regex: /java-asset/proto-google-cloud-asset-v1/src/main/java/com/google/cloud/asset/v1/ProjectName.java
+
+YAML Differences in: java-assured-workloads/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-assured-workloads/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-shell/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-shell/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-monitoring/.OwlBot-hermetic.yaml
++ deep_preserve_regex: /java-monitoring/google-cloud-monitoring/src/test/java/com/google/cloud/monitoring/v3/ITVPCServiceControlTest.java
+
+YAML Differences in: java-dialogflow/.OwlBot-hermetic.yaml
++ deep_preserve_regex: /java-dialogflow/google-cloud-dialogflow/src/test/java/com/google/cloud/dialogflow/v2/ContextManagementSmokeTest.java
++ deep_preserve_regex: /java-dialogflow/proto-google-cloud-dialogflow-v2/src/main/java/com/google/cloud/dialogflow/v2/ConversationModelName.java
++ deep_preserve_regex: /java-dialogflow/proto-google-cloud-dialogflow-v2/src/main/java/com/google/cloud/dialogflow/v2/ProjectAgentName.java
++ deep_preserve_regex: /java-dialogflow/proto-google-cloud-dialogflow-v2beta1/src/main/java/com/google/cloud/dialogflow/v2beta1/ConversationModelName.java
++ deep_preserve_regex: /java-dialogflow/proto-google-cloud-dialogflow-v2beta1/src/main/java/com/google/cloud/dialogflow/v2beta1/EnvironmentContextName.java
++ deep_preserve_regex: /java-dialogflow/proto-google-cloud-dialogflow-v2beta1/src/main/java/com/google/cloud/dialogflow/v2beta1/EnvironmentSessionEntityTypeName.java
++ deep_preserve_regex: /java-dialogflow/proto-google-cloud-dialogflow-v2beta1/src/main/java/com/google/cloud/dialogflow/v2beta1/EnvironmentSessionName.java
++ deep_preserve_regex: /java-dialogflow/proto-google-cloud-dialogflow-v2beta1/src/main/java/com/google/cloud/dialogflow/v2beta1/ProjectAgentName.java
+
+YAML Differences in: java-accesscontextmanager/.OwlBot-hermetic.yaml
++ deep_copy_regex: DeepCopyRegexItem(source=/google/identity/accesscontextmanager/type/.*-java/proto-google-.*/src, dest=/owl-bot-staging/java-accesscontextmanager/type/proto-google-identity-accesscontextmanager-type/src)
+- deep_remove_regex: /java-accesscontextmanager/google-.*/src
+- deep_remove_regex: /java-accesscontextmanager/grpc-google-.*/src
+
+YAML Differences in: java-scheduler/.OwlBot-hermetic.yaml
++ deep_preserve_regex: /java-scheduler/proto-google-cloud-scheduler-v1/src/main/java/com/google/cloud/scheduler/v1/ProjectName.java
++ deep_preserve_regex: /java-scheduler/proto-google-cloud-scheduler-v1beta1/src/main/java/com/google/cloud/scheduler/v1beta1/ProjectName.java
+
+YAML Differences in: java-containeranalysis/.OwlBot-hermetic.yaml
+- deep_copy_regex: DeepCopyRegexItem(source=/google/devtools/containeranalysis/(v.*)/.*-java/samples/snippets/generated, dest=/owl-bot-staging/java-containeranalysis/$1/samples/snippets/generated)
+- deep_remove_regex: /java-containeranalysis/google-.*/src
+- deep_remove_regex: /java-containeranalysis/grpc-google-.*/src
+- deep_remove_regex: /java-containeranalysis/proto-google-.*/src
++ deep_remove_regex: /java-containeranalysis/google-cloud-containeranalysis/src/.*/java/com/google/cloud/devtools/containeranalysis/v1
++ deep_remove_regex: /java-containeranalysis/grpc-google-cloud-containeranalysis-v1/src
++ deep_remove_regex: /java-containeranalysis/proto-google-*/src
++ deep_preserve_regex: /java-containeranalysis/google-cloud-containeranalysis/src/main/java/com/google/cloud/devtools/containeranalysis/v1/GrafeasUtils.java
++ deep_preserve_regex: /java-containeranalysis/google-cloud-containeranalysis/src/test/java/com/google/cloud/devtools/containeranalysis/v1/ITGrafeasInteropTest.java
+
+YAML Differences in: java-tpu/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-tpu/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-cloudbuild/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-cloudbuild/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-functions/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-functions/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-gke-connect-gateway/.OwlBot-hermetic.yaml
+- deep_copy_regex: DeepCopyRegexItem(source=/google/cloud/gkeconnect/gateway/(v.*)/.*-java/grpc-google-.*/src, dest=/owl-bot-staging/java-gke-connect-gateway/$1/grpc-google-cloud-gke-connect-gateway-$1/src)
+- deep_remove_regex: /java-gke-connect-gateway/grpc-google-.*/src
+- deep_preserve_regex: ['/java-gke-connect-gateway/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-vision/.OwlBot-hermetic.yaml
++ deep_preserve_regex: /java-vision/google-cloud-vision/src/test/java/com/google/cloud/vision/it/ITSystemTest.java
++ deep_preserve_regex: /java-vision/google-cloud-vision/src/test/resources/city.jpg
++ deep_preserve_regex: /java-vision/google-cloud-vision/src/test/resources/face_no_surprise.jpg
++ deep_preserve_regex: /java-vision/google-cloud-vision/src/test/resources/landmark.jpg
++ deep_preserve_regex: /java-vision/google-cloud-vision/src/test/resources/logos.png
++ deep_preserve_regex: /java-vision/google-cloud-vision/src/test/resources/puppies.jpg
++ deep_preserve_regex: /java-vision/google-cloud-vision/src/test/resources/text.jpg
++ deep_preserve_regex: /java-vision/google-cloud-vision/src/test/resources/wakeupcat.jpg
++ deep_preserve_regex: /java-vision/proto-google-cloud-vision-v1/src/main/java/com/google/cloud/vision/v1/ImageName.java
+
+YAML Differences in: java-private-catalog/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-private-catalog/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-domains/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-domains/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-apigee-connect/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-apigee-connect/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-notebooks/.OwlBot-hermetic.yaml
+- deep_preserve_regex: /java-notebooks/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java
++ deep_preserve_regex: /java-notebooks/google-.*/src/test/java/com/google/cloud/.*/v.*/it/.*.java
+
+YAML Differences in: java-texttospeech/.OwlBot-hermetic.yaml
++ deep_preserve_regex: /java-texttospeech/google-cloud-texttospeech/src/test/java/com/google/cloud/texttospeech/v1/TextToSpeechSmokeTest.java
++ deep_preserve_regex: /java-texttospeech/google-cloud-texttospeech/src/test/java/com/google/cloud/texttospeech/v1beta1/TextToSpeechSmokeTest.java
+
+YAML Differences in: java-kms/.OwlBot-hermetic.yaml
++ deep_preserve_regex: /java-kms/google-cloud-kms/src/test/java/com/google/cloud/kms/it/ITKmsTest.java
++ deep_preserve_regex: /java-kms/proto-google-cloud-kms-v1/src/main/java/com/google/cloud/kms/v1/CryptoKeyPathName.java
++ deep_preserve_regex: /java-kms/proto-google-cloud-kms-v1/src/main/java/com/google/cloud/kms/v1/KeyName.java
++ deep_preserve_regex: /java-kms/proto-google-cloud-kms-v1/src/main/java/com/google/cloud/kms/v1/KeyNames.java
++ deep_preserve_regex: /java-kms/proto-google-cloud-kms-v1/src/main/java/com/google/cloud/kms/v1/UntypedKeyName.java
+
+YAML Differences in: java-contact-center-insights/.OwlBot-hermetic.yaml
+- deep_preserve_regex: ['/java-contact-center-insights/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java']
++ deep_preserve_regex: None
+
+YAML Differences in: java-dialogflow-cx/.OwlBot-hermetic.yaml
+- deep_preserve_regex: /java-dialogflow-cx/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java
++ deep_preserve_regex: /java-dialogflow-cx/google-cloud-dialogflow-cx/src/test/java/com/google/cloud/dialogflow/cx/v.*/it/ITSystemTest.java
+Files with YAML differences (relative to 'input'):
+java-security-private-ca/.OwlBot-hermetic.yaml
+java-appengine-admin/.OwlBot-hermetic.yaml
+java-servicedirectory/.OwlBot-hermetic.yaml
+java-gkehub/.OwlBot-hermetic.yaml
+java-debugger-client/.OwlBot-hermetic.yaml
+java-dms/.OwlBot-hermetic.yaml
+java-aiplatform/.OwlBot-hermetic.yaml
+java-area120-tables/.OwlBot-hermetic.yaml
+java-workflows/.OwlBot-hermetic.yaml
+java-datalabeling/.OwlBot-hermetic.yaml
+java-accessapproval/.OwlBot-hermetic.yaml
+java-compute/.OwlBot-hermetic.yaml
+java-gsuite-addons/.OwlBot-hermetic.yaml
+java-essential-contacts/.OwlBot-hermetic.yaml
+java-channel/.OwlBot-hermetic.yaml
+java-automl/.OwlBot-hermetic.yaml
+java-policy-troubleshooter/.OwlBot-hermetic.yaml
+java-analytics-data/.OwlBot-hermetic.yaml
+java-binary-authorization/.OwlBot-hermetic.yaml
+java-contentwarehouse/.OwlBot-hermetic.yaml
+java-os-login/.OwlBot-hermetic.yaml
+java-analytics-admin/.OwlBot-hermetic.yaml
+java-service-usage/.OwlBot-hermetic.yaml
+java-dataproc/.OwlBot-hermetic.yaml
+java-billingbudgets/.OwlBot-hermetic.yaml
+java-life-sciences/.OwlBot-hermetic.yaml
+java-container/.OwlBot-hermetic.yaml
+java-iot/.OwlBot-hermetic.yaml
+java-tasks/.OwlBot-hermetic.yaml
+java-datacatalog/.OwlBot-hermetic.yaml
+java-websecurityscanner/.OwlBot-hermetic.yaml
+java-service-management/.OwlBot-hermetic.yaml
+java-errorreporting/.OwlBot-hermetic.yaml
+java-os-config/.OwlBot-hermetic.yaml
+java-connectgateway/.OwlBot-hermetic.yaml
+java-bigqueryconnection/.OwlBot-hermetic.yaml
+java-bigquerydatatransfer/.OwlBot-hermetic.yaml
+java-resourcemanager/.OwlBot-hermetic.yaml
+java-vpcaccess/.OwlBot-hermetic.yaml
+java-grafeas/.OwlBot-hermetic.yaml
+java-artifact-registry/.OwlBot-hermetic.yaml
+java-secretmanager/.OwlBot-hermetic.yaml
+java-trace/.OwlBot-hermetic.yaml
+java-iam/.OwlBot-hermetic.yaml
+java-billing/.OwlBot-hermetic.yaml
+java-securitycenter/.OwlBot-hermetic.yaml
+java-document-ai/.OwlBot-hermetic.yaml
+java-dlp/.OwlBot-hermetic.yaml
+java-translate/.OwlBot-hermetic.yaml
+java-language/.OwlBot-hermetic.yaml
+java-speech/.OwlBot-hermetic.yaml
+java-mediatranslation/.OwlBot-hermetic.yaml
+java-admanager/.OwlBot-hermetic.yaml
+java-asset/.OwlBot-hermetic.yaml
+java-assured-workloads/.OwlBot-hermetic.yaml
+java-shell/.OwlBot-hermetic.yaml
+java-monitoring/.OwlBot-hermetic.yaml
+java-dialogflow/.OwlBot-hermetic.yaml
+java-accesscontextmanager/.OwlBot-hermetic.yaml
+java-scheduler/.OwlBot-hermetic.yaml
+java-containeranalysis/.OwlBot-hermetic.yaml
+java-tpu/.OwlBot-hermetic.yaml
+java-cloudbuild/.OwlBot-hermetic.yaml
+java-functions/.OwlBot-hermetic.yaml
+java-gke-connect-gateway/.OwlBot-hermetic.yaml
+java-vision/.OwlBot-hermetic.yaml
+java-private-catalog/.OwlBot-hermetic.yaml
+java-domains/.OwlBot-hermetic.yaml
+java-apigee-connect/.OwlBot-hermetic.yaml
+java-notebooks/.OwlBot-hermetic.yaml
+java-texttospeech/.OwlBot-hermetic.yaml
+java-kms/.OwlBot-hermetic.yaml
+java-contact-center-insights/.OwlBot-hermetic.yaml
+java-dialogflow-cx/.OwlBot-hermetic.yaml
+
+Total YAML differences found: 74
+
+Total files compared: 204
