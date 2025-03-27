@@ -78,7 +78,7 @@ as per [POSIX env var definition](https://pubs.opengroup.org/onlinepubs/96999197
 2. Move the jar into its well-known location.
 
    ```shell
-   mv ~/.m2/repository/com/google/api/gapic-generator-java/{version}/gapic-generator-java-{version}.jar "${HOME}/.library_generation/gapic-generator-java.jar"
+   mv /path/to/jar "${HOME}/.library_generation/gapic-generator-java.jar"
    ```
 
 #### Put the protobuf compiler in its well-known location
