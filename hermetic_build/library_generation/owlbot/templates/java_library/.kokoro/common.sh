@@ -40,7 +40,7 @@ function retry_with_backoff {
     fi
 
     # failure
-    if [[ ${attempts_left} > 0 ]]
+    if [[ ${attempts_left} -gt 0 ]]
     then
         echo "failure (${exit_code}), sleeping ${sleep_seconds}..."
         sleep ${sleep_seconds}
