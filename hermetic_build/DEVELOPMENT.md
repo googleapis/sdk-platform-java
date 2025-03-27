@@ -217,10 +217,19 @@ python hermetic_build/library_generation/cli/entry_point.py generate \
         --api-definitions-path=/workspace/apis
    ```
 
-# Debug the library generation container
+# Debugging tips
+## Debug the scripts
+Especially on local setups, consider adding the `xtrace` (`set -x`) flag to
+ - `hermetic_build/library_generation/generate_library.sh`
+ - `hermetic_build/library_generation/utils/utilities.sh`
+
+This will allow you to observe how the tools you prepared in `~/.library_generation` are being used.
+
+
+## Debug the library generation container
 If you are working on changing the way the containers are created, you may want
 to inspect the containers to check the setup.
-It would be convenient in such case to have a text editor/viewer available. 
+It would be convenient in such case to have a text editor/viewer available.
 You can achieve this by modifying the Dockerfile as follows:
 
 ```dockerfile
