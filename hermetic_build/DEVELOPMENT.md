@@ -130,6 +130,9 @@ owl-bot copy-code --version
 The key step is `npm link`, which will make the command available in you current
 shell session.
 
+If you get a permission denied error when running the command `owl-bot`, try
+relinking owl-bot by running `npm unlink -g` and re-running the steps above.
+
 ## Run the script
 The entrypoint script (`hermetic_build/library_generation/cli/entry_point.py`)
 allows you to generate a GAPIC repository with a given api definition (proto,
@@ -153,12 +156,14 @@ export path_to_repo="$(pwd)/google-cloud-java"
 ### Install the scripts
 
 You can skip this step if you've installed the packages in [Install package dependencies](#install-package-dependencies).
+Use the `--editable` flag for your changes to take effect as soon as you modify any file inside
+the package.
 
 ```shell
 python -m pip install --require-hashes -r hermetic_build/common/requirements.txt
-python -m pip install hermetic_build/common
+python -m pip install --editable hermetic_build/common
 python -m pip install --require-hashes -r hermetic_build/library_generation/requirements.txt
-python -m pip install hermetic_build/library_generation
+python -m pip install --editable hermetic_build/library_generation
 ```
 
 ### Run the script
@@ -212,10 +217,19 @@ python hermetic_build/library_generation/cli/entry_point.py generate \
         --api-definitions-path=/workspace/apis
    ```
 
-# Debug the library generation container
+# Debugging tips
+## Debug the scripts
+Especially on local setups, consider adding the `xtrace` (`set -x`) flag to
+ - `hermetic_build/library_generation/generate_library.sh`
+ - `hermetic_build/library_generation/utils/utilities.sh`
+
+This will allow you to observe how the tools you prepared in `~/.library_generation` are being used.
+
+
+## Debug the library generation container
 If you are working on changing the way the containers are created, you may want
 to inspect the containers to check the setup.
-It would be convenient in such case to have a text editor/viewer available. 
+It would be convenient in such case to have a text editor/viewer available.
 You can achieve this by modifying the Dockerfile as follows:
 
 ```dockerfile
