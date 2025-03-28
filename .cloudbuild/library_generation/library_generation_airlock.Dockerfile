@@ -24,7 +24,8 @@ COPY . .
 ENV DOCKER_GAPIC_GENERATOR_VERSION="2.55.2-SNAPSHOT"
 # {x-version-update-end}
 
-RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+# Skipping the fmt check until 3.9.9-eclipse-temurin-17-alpine:969014ee8852 is available in Airlock.
+RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip -Dfmt.skip
 RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "./gapic-generator-java.jar"
 
@@ -60,7 +61,7 @@ ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
 
 # install OS tools
-RUN apk update && apk add unzip curl rsync openjdk11 jq bash nodejs npm git
+RUN apk update && apk add unzip curl rsync openjdk17 jq bash nodejs npm git
 
 SHELL [ "/bin/bash", "-c" ]
 
