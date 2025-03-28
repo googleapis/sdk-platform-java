@@ -20,6 +20,9 @@ import static com.google.common.truth.Truth.assertThat;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.AppenderBase;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.gax.grpc.GrpcLoggingInterceptor;
 import com.google.api.gax.httpjson.HttpJsonLoggingInterceptor;
 import com.google.common.collect.ImmutableMap;
@@ -27,6 +30,8 @@ import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.AfterAll;
@@ -49,16 +54,16 @@ public class ITLogging1x {
   private static final String ENDPOINT = "http://localhost:7469";
   private static final String SENDING_REQUEST_MESSAGE = "Sending request";
   private static final String RECEIVING_RESPONSE_MESSAGE = "Received response";
+  private final ObjectMapper objectMapper = new ObjectMapper();
 
-  private static Logger logger = LoggerFactory.getLogger(ITLogging1x.class);
+  private static final Logger CLASS_LOGGER = LoggerFactory.getLogger(ITLogging1x.class);
 
-  private TestAppender setupTestLogger(Class<?> clazz, Level level) {
-    TestAppender testAppender = new TestAppender();
-    testAppender.start();
+  private <T extends AppenderBase<ILoggingEvent>> void setupTestLogger(
+      T appender, Class<?> clazz, Level level) {
+    appender.start();
     Logger logger = LoggerFactory.getLogger(clazz);
     ((ch.qos.logback.classic.Logger) logger).setLevel(level);
-    ((ch.qos.logback.classic.Logger) logger).addAppender(testAppender);
-    return testAppender;
+    ((ch.qos.logback.classic.Logger) logger).addAppender(appender);
   }
 
   @BeforeAll
@@ -81,13 +86,14 @@ public class ITLogging1x {
 
   @Test
   void test() {
-    assertThat(logger.isInfoEnabled()).isTrue();
-    assertThat(logger.isDebugEnabled()).isTrue();
+    assertThat(CLASS_LOGGER.isInfoEnabled()).isTrue();
+    assertThat(CLASS_LOGGER.isDebugEnabled()).isTrue();
   }
 
   @Test
   void testGrpc_receiveContent_logDebug() {
-    TestAppender testAppender = setupTestLogger(GrpcLoggingInterceptor.class, Level.DEBUG);
+    TestAppender testAppender = new TestAppender();
+    setupTestLogger(testAppender, GrpcLoggingInterceptor.class, Level.DEBUG);
     assertThat(echoGrpc(ECHO_STRING)).isEqualTo(ECHO_STRING);
 
     assertThat(testAppender.events.size()).isEqualTo(2);
@@ -122,8 +128,26 @@ public class ITLogging1x {
   }
 
   @Test
+  void testGrpc_receiveContent_logDebug_structured_log() throws IOException {
+    TestMdcAppender testAppender = new TestMdcAppender();
+    setupTestLogger(testAppender, GrpcLoggingInterceptor.class, Level.DEBUG);
+    assertThat(echoGrpc(ECHO_STRING)).isEqualTo(ECHO_STRING);
+    List<byte[]> byteLists = testAppender.getByteLists();
+    assertThat(byteLists.size()).isEqualTo(2);
+    JsonNode request = objectMapper.readTree(byteLists.get(0));
+    assertThat(request.get("message").asText()).isEqualTo("Sending request");
+    assertThat(request.get("request.payload").get("content").asText()).isEqualTo("echo?");
+    JsonNode response = objectMapper.readTree(byteLists.get(1));
+    assertThat(response.get("message").asText()).isEqualTo("Received response");
+    assertThat(response.get("response.payload").get("content").asText()).isEqualTo("echo?");
+
+    testAppender.stop();
+  }
+
+  @Test
   void testGrpc_receiveContent_logInfo() {
-    TestAppender testAppender = setupTestLogger(GrpcLoggingInterceptor.class, Level.INFO);
+    TestAppender testAppender = new TestAppender();
+    setupTestLogger(testAppender, GrpcLoggingInterceptor.class, Level.INFO);
     assertThat(echoGrpc(ECHO_STRING)).isEqualTo(ECHO_STRING);
 
     assertThat(testAppender.events.size()).isEqualTo(2);
@@ -150,8 +174,29 @@ public class ITLogging1x {
   }
 
   @Test
+  void testGrpc_receiveContent_logInfo_structured_log() throws IOException {
+    TestMdcAppender testAppender = new TestMdcAppender();
+    setupTestLogger(testAppender, GrpcLoggingInterceptor.class, Level.INFO);
+    assertThat(echoGrpc(ECHO_STRING)).isEqualTo(ECHO_STRING);
+    List<byte[]> byteLists = testAppender.getByteLists();
+    assertThat(byteLists.size()).isEqualTo(2);
+    JsonNode request = objectMapper.readTree(byteLists.get(0));
+    assertThat(request.get("message").asText()).isEqualTo("Sending request");
+    assertThat(request.get("serviceName").asText()).isEqualTo(SERVICE_NAME);
+    assertThat(request.get("rpcName").asText()).isEqualTo(RPC_NAME);
+    JsonNode response = objectMapper.readTree(byteLists.get(1));
+    assertThat(response.get("message").asText()).isEqualTo("Received response");
+    assertThat(response.get("serviceName").asText()).isEqualTo(SERVICE_NAME);
+    assertThat(response.get("rpcName").asText()).isEqualTo(RPC_NAME);
+    assertThat(response.get("response.status").asText()).isEqualTo("OK");
+
+    testAppender.stop();
+  }
+
+  @Test
   void testHttpJson_receiveContent_logDebug() {
-    TestAppender testAppender = setupTestLogger(HttpJsonLoggingInterceptor.class, Level.DEBUG);
+    TestAppender testAppender = new TestAppender();
+    setupTestLogger(testAppender, HttpJsonLoggingInterceptor.class, Level.DEBUG);
     assertThat(echoHttpJson(ECHO_STRING)).isEqualTo(ECHO_STRING);
     assertThat(testAppender.events.size()).isEqualTo(2);
     // logging event for request
@@ -180,8 +225,27 @@ public class ITLogging1x {
   }
 
   @Test
+  void testHttpJson_receiveContent_logDebug_structured_log() throws IOException {
+    TestMdcAppender testAppender = new TestMdcAppender();
+    setupTestLogger(testAppender, HttpJsonLoggingInterceptor.class, Level.DEBUG);
+    assertThat(echoHttpJson(ECHO_STRING)).isEqualTo(ECHO_STRING);
+    List<byte[]> byteLists = testAppender.getByteLists();
+    assertThat(byteLists.size()).isEqualTo(2);
+    JsonNode request = objectMapper.readTree(byteLists.get(0));
+    assertThat(request.get("request.url").asText()).isEqualTo(ENDPOINT);
+    assertThat(request.get("request.payload").get("content").asText()).isEqualTo("echo?");
+    JsonNode response = objectMapper.readTree(byteLists.get(1));
+    assertThat(response.get("rpcName").asText()).isEqualTo(RPC_NAME);
+    assertThat(response.get("response.payload").get("content").asText()).isEqualTo("echo?");
+    assertThat(response.get("response.status").asText()).isEqualTo("200");
+
+    testAppender.stop();
+  }
+
+  @Test
   void testHttpJson_receiveContent_logInfo() {
-    TestAppender testAppender = setupTestLogger(HttpJsonLoggingInterceptor.class, Level.INFO);
+    TestAppender testAppender = new TestAppender();
+    setupTestLogger(testAppender, HttpJsonLoggingInterceptor.class, Level.INFO);
     assertThat(echoHttpJson(ECHO_STRING)).isEqualTo(ECHO_STRING);
     assertThat(testAppender.events.size()).isEqualTo(2);
     // logging event for request
@@ -202,6 +266,24 @@ public class ITLogging1x {
     Map<String, String> responseMdcPropertyMap = loggingEvent2.getMDCPropertyMap();
     assertThat(responseMdcPropertyMap)
         .containsExactlyEntriesIn(ImmutableMap.of("rpcName", RPC_NAME, "response.status", "200"));
+    testAppender.stop();
+  }
+
+  @Test
+  void testHttpJson_receiveContent_logInfo_structured_log() throws IOException {
+    TestMdcAppender testAppender = new TestMdcAppender();
+    setupTestLogger(testAppender, HttpJsonLoggingInterceptor.class, Level.INFO);
+    assertThat(echoHttpJson(ECHO_STRING)).isEqualTo(ECHO_STRING);
+    List<byte[]> byteLists = testAppender.getByteLists();
+    assertThat(byteLists.size()).isEqualTo(2);
+    JsonNode request = objectMapper.readTree(byteLists.get(0));
+    assertThat(request.get("rpcName").asText()).isEqualTo(RPC_NAME);
+    assertThat(request.get("rpcName").asText()).isEqualTo(RPC_NAME);
+    JsonNode response = objectMapper.readTree(byteLists.get(1));
+    assertThat(response.get("message").asText()).isEqualTo("Received response");
+    assertThat(response.get("rpcName").asText()).isEqualTo(RPC_NAME);
+    assertThat(response.get("response.status").asText()).isEqualTo("200");
+
     testAppender.stop();
   }
 
