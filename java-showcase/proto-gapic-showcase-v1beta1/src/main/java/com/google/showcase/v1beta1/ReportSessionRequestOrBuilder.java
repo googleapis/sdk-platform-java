@@ -36,7 +36,6 @@ public interface ReportSessionRequestOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *

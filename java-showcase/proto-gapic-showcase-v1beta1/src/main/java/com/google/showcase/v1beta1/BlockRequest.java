@@ -33,7 +33,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.BlockRequest)
     BlockRequestOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use BlockRequest.newBuilder() to construct.
   private BlockRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -80,7 +79,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
     private ResponseCase(int value) {
       this.value = value;
     }
-
     /**
      * @param value The number of the enum to look for.
      * @return The enum associated with the given number.
@@ -115,7 +113,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
 
   public static final int RESPONSE_DELAY_FIELD_NUMBER = 1;
   private com.google.protobuf.Duration responseDelay_;
-
   /**
    *
    *
@@ -131,7 +128,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean hasResponseDelay() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -149,7 +145,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
         ? com.google.protobuf.Duration.getDefaultInstance()
         : responseDelay_;
   }
-
   /**
    *
    *
@@ -167,7 +162,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ERROR_FIELD_NUMBER = 2;
-
   /**
    *
    *
@@ -184,7 +178,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean hasError() {
     return responseCase_ == 2;
   }
-
   /**
    *
    *
@@ -204,7 +197,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.rpc.Status.getDefaultInstance();
   }
-
   /**
    *
    *
@@ -224,7 +216,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SUCCESS_FIELD_NUMBER = 3;
-
   /**
    *
    *
@@ -240,7 +231,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean hasSuccess() {
     return responseCase_ == 3;
   }
-
   /**
    *
    *
@@ -259,7 +249,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.showcase.v1beta1.BlockResponse.getDefaultInstance();
   }
-
   /**
    *
    *
@@ -479,7 +468,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -745,7 +733,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.Duration.Builder,
             com.google.protobuf.DurationOrBuilder>
         responseDelayBuilder_;
-
     /**
      *
      *
@@ -760,7 +747,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean hasResponseDelay() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -781,7 +767,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
         return responseDelayBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -804,7 +789,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -824,7 +808,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -852,7 +835,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -872,7 +854,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -887,7 +868,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getResponseDelayFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -906,7 +886,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
             : responseDelay_;
       }
     }
-
     /**
      *
      *
@@ -936,7 +915,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.rpc.Status, com.google.rpc.Status.Builder, com.google.rpc.StatusOrBuilder>
         errorBuilder_;
-
     /**
      *
      *
@@ -953,7 +931,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean hasError() {
       return responseCase_ == 2;
     }
-
     /**
      *
      *
@@ -980,7 +957,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
         return com.google.rpc.Status.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1004,7 +980,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
       responseCase_ = 2;
       return this;
     }
-
     /**
      *
      *
@@ -1025,7 +1000,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
       responseCase_ = 2;
       return this;
     }
-
     /**
      *
      *
@@ -1057,7 +1031,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
       responseCase_ = 2;
       return this;
     }
-
     /**
      *
      *
@@ -1084,7 +1057,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1098,7 +1070,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
     public com.google.rpc.Status.Builder getErrorBuilder() {
       return getErrorFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1120,7 +1091,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
         return com.google.rpc.Status.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1156,7 +1126,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
             com.google.showcase.v1beta1.BlockResponse.Builder,
             com.google.showcase.v1beta1.BlockResponseOrBuilder>
         successBuilder_;
-
     /**
      *
      *
@@ -1172,7 +1141,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean hasSuccess() {
       return responseCase_ == 3;
     }
-
     /**
      *
      *
@@ -1198,7 +1166,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
         return com.google.showcase.v1beta1.BlockResponse.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1221,7 +1188,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
       responseCase_ = 3;
       return this;
     }
-
     /**
      *
      *
@@ -1241,7 +1207,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
       responseCase_ = 3;
       return this;
     }
-
     /**
      *
      *
@@ -1274,7 +1239,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
       responseCase_ = 3;
       return this;
     }
-
     /**
      *
      *
@@ -1300,7 +1264,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1313,7 +1276,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
     public com.google.showcase.v1beta1.BlockResponse.Builder getSuccessBuilder() {
       return getSuccessFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1334,7 +1296,6 @@ public final class BlockRequest extends com.google.protobuf.GeneratedMessageV3
         return com.google.showcase.v1beta1.BlockResponse.getDefaultInstance();
       }
     }
-
     /**
      *
      *

@@ -34,7 +34,6 @@ public interface ListUsersResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.User users = 1;</code>
    */
   java.util.List<com.google.showcase.v1beta1.User> getUsersList();
-
   /**
    *
    *
@@ -45,7 +44,6 @@ public interface ListUsersResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.User users = 1;</code>
    */
   com.google.showcase.v1beta1.User getUsers(int index);
-
   /**
    *
    *
@@ -56,7 +54,6 @@ public interface ListUsersResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.User users = 1;</code>
    */
   int getUsersCount();
-
   /**
    *
    *
@@ -67,7 +64,6 @@ public interface ListUsersResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.User users = 1;</code>
    */
   java.util.List<? extends com.google.showcase.v1beta1.UserOrBuilder> getUsersOrBuilderList();
-
   /**
    *
    *
@@ -94,7 +90,6 @@ public interface ListUsersResponseOrBuilder
    * @return The nextPageToken.
    */
   java.lang.String getNextPageToken();
-
   /**
    *
    *

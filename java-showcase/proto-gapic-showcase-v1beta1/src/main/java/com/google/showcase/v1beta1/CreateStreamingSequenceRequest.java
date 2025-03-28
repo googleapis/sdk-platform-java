@@ -25,7 +25,6 @@ public final class CreateStreamingSequenceRequest extends com.google.protobuf.Ge
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.CreateStreamingSequenceRequest)
     CreateStreamingSequenceRequestOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use CreateStreamingSequenceRequest.newBuilder() to construct.
   private CreateStreamingSequenceRequest(
       com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -58,7 +57,6 @@ public final class CreateStreamingSequenceRequest extends com.google.protobuf.Ge
   private int bitField0_;
   public static final int STREAMING_SEQUENCE_FIELD_NUMBER = 1;
   private com.google.showcase.v1beta1.StreamingSequence streamingSequence_;
-
   /**
    * <code>.google.showcase.v1beta1.StreamingSequence streaming_sequence = 1;</code>
    *
@@ -68,7 +66,6 @@ public final class CreateStreamingSequenceRequest extends com.google.protobuf.Ge
   public boolean hasStreamingSequence() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    * <code>.google.showcase.v1beta1.StreamingSequence streaming_sequence = 1;</code>
    *
@@ -80,7 +77,6 @@ public final class CreateStreamingSequenceRequest extends com.google.protobuf.Ge
         ? com.google.showcase.v1beta1.StreamingSequence.getDefaultInstance()
         : streamingSequence_;
   }
-
   /** <code>.google.showcase.v1beta1.StreamingSequence streaming_sequence = 1;</code> */
   @java.lang.Override
   public com.google.showcase.v1beta1.StreamingSequenceOrBuilder getStreamingSequenceOrBuilder() {
@@ -254,7 +250,6 @@ public final class CreateStreamingSequenceRequest extends com.google.protobuf.Ge
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /** Protobuf type {@code google.showcase.v1beta1.CreateStreamingSequenceRequest} */
   public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
       implements
@@ -454,7 +449,6 @@ public final class CreateStreamingSequenceRequest extends com.google.protobuf.Ge
             com.google.showcase.v1beta1.StreamingSequence.Builder,
             com.google.showcase.v1beta1.StreamingSequenceOrBuilder>
         streamingSequenceBuilder_;
-
     /**
      * <code>.google.showcase.v1beta1.StreamingSequence streaming_sequence = 1;</code>
      *
@@ -463,7 +457,6 @@ public final class CreateStreamingSequenceRequest extends com.google.protobuf.Ge
     public boolean hasStreamingSequence() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      * <code>.google.showcase.v1beta1.StreamingSequence streaming_sequence = 1;</code>
      *
@@ -478,7 +471,6 @@ public final class CreateStreamingSequenceRequest extends com.google.protobuf.Ge
         return streamingSequenceBuilder_.getMessage();
       }
     }
-
     /** <code>.google.showcase.v1beta1.StreamingSequence streaming_sequence = 1;</code> */
     public Builder setStreamingSequence(com.google.showcase.v1beta1.StreamingSequence value) {
       if (streamingSequenceBuilder_ == null) {
@@ -493,7 +485,6 @@ public final class CreateStreamingSequenceRequest extends com.google.protobuf.Ge
       onChanged();
       return this;
     }
-
     /** <code>.google.showcase.v1beta1.StreamingSequence streaming_sequence = 1;</code> */
     public Builder setStreamingSequence(
         com.google.showcase.v1beta1.StreamingSequence.Builder builderForValue) {
@@ -506,7 +497,6 @@ public final class CreateStreamingSequenceRequest extends com.google.protobuf.Ge
       onChanged();
       return this;
     }
-
     /** <code>.google.showcase.v1beta1.StreamingSequence streaming_sequence = 1;</code> */
     public Builder mergeStreamingSequence(com.google.showcase.v1beta1.StreamingSequence value) {
       if (streamingSequenceBuilder_ == null) {
@@ -527,7 +517,6 @@ public final class CreateStreamingSequenceRequest extends com.google.protobuf.Ge
       }
       return this;
     }
-
     /** <code>.google.showcase.v1beta1.StreamingSequence streaming_sequence = 1;</code> */
     public Builder clearStreamingSequence() {
       bitField0_ = (bitField0_ & ~0x00000001);
@@ -539,14 +528,12 @@ public final class CreateStreamingSequenceRequest extends com.google.protobuf.Ge
       onChanged();
       return this;
     }
-
     /** <code>.google.showcase.v1beta1.StreamingSequence streaming_sequence = 1;</code> */
     public com.google.showcase.v1beta1.StreamingSequence.Builder getStreamingSequenceBuilder() {
       bitField0_ |= 0x00000001;
       onChanged();
       return getStreamingSequenceFieldBuilder().getBuilder();
     }
-
     /** <code>.google.showcase.v1beta1.StreamingSequence streaming_sequence = 1;</code> */
     public com.google.showcase.v1beta1.StreamingSequenceOrBuilder getStreamingSequenceOrBuilder() {
       if (streamingSequenceBuilder_ != null) {
@@ -557,7 +544,6 @@ public final class CreateStreamingSequenceRequest extends com.google.protobuf.Ge
             : streamingSequence_;
       }
     }
-
     /** <code>.google.showcase.v1beta1.StreamingSequence streaming_sequence = 1;</code> */
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.showcase.v1beta1.StreamingSequence,

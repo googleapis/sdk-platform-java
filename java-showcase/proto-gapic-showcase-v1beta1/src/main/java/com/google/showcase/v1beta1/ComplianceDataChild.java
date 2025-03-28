@@ -25,7 +25,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.ComplianceDataChild)
     ComplianceDataChildOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use ComplianceDataChild.newBuilder() to construct.
   private ComplianceDataChild(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -64,7 +63,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object fString_ = "";
-
   /**
    * <code>string f_string = 1;</code>
    *
@@ -82,7 +80,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       return s;
     }
   }
-
   /**
    * <code>string f_string = 1;</code>
    *
@@ -103,7 +100,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
 
   public static final int F_FLOAT_FIELD_NUMBER = 2;
   private float fFloat_ = 0F;
-
   /**
    * <code>float f_float = 2;</code>
    *
@@ -116,7 +112,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
 
   public static final int F_DOUBLE_FIELD_NUMBER = 3;
   private double fDouble_ = 0D;
-
   /**
    * <code>double f_double = 3;</code>
    *
@@ -129,7 +124,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
 
   public static final int F_BOOL_FIELD_NUMBER = 4;
   private boolean fBool_ = false;
-
   /**
    * <code>bool f_bool = 4;</code>
    *
@@ -142,7 +136,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
 
   public static final int F_CONTINENT_FIELD_NUMBER = 11;
   private int fContinent_ = 0;
-
   /**
    * <code>.google.showcase.v1beta1.Continent f_continent = 11;</code>
    *
@@ -152,7 +145,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
   public int getFContinentValue() {
     return fContinent_;
   }
-
   /**
    * <code>.google.showcase.v1beta1.Continent f_continent = 11;</code>
    *
@@ -167,7 +159,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
 
   public static final int F_CHILD_FIELD_NUMBER = 5;
   private com.google.showcase.v1beta1.ComplianceDataGrandchild fChild_;
-
   /**
    * <code>.google.showcase.v1beta1.ComplianceDataGrandchild f_child = 5;</code>
    *
@@ -177,7 +168,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
   public boolean hasFChild() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    * <code>.google.showcase.v1beta1.ComplianceDataGrandchild f_child = 5;</code>
    *
@@ -189,7 +179,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
         ? com.google.showcase.v1beta1.ComplianceDataGrandchild.getDefaultInstance()
         : fChild_;
   }
-
   /** <code>.google.showcase.v1beta1.ComplianceDataGrandchild f_child = 5;</code> */
   @java.lang.Override
   public com.google.showcase.v1beta1.ComplianceDataGrandchildOrBuilder getFChildOrBuilder() {
@@ -202,7 +191,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object pString_ = "";
-
   /**
    * <code>optional string p_string = 6;</code>
    *
@@ -212,7 +200,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
   public boolean hasPString() {
     return ((bitField0_ & 0x00000002) != 0);
   }
-
   /**
    * <code>optional string p_string = 6;</code>
    *
@@ -230,7 +217,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       return s;
     }
   }
-
   /**
    * <code>optional string p_string = 6;</code>
    *
@@ -251,7 +237,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
 
   public static final int P_FLOAT_FIELD_NUMBER = 7;
   private float pFloat_ = 0F;
-
   /**
    * <code>optional float p_float = 7;</code>
    *
@@ -261,7 +246,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
   public boolean hasPFloat() {
     return ((bitField0_ & 0x00000004) != 0);
   }
-
   /**
    * <code>optional float p_float = 7;</code>
    *
@@ -274,7 +258,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
 
   public static final int P_DOUBLE_FIELD_NUMBER = 8;
   private double pDouble_ = 0D;
-
   /**
    * <code>optional double p_double = 8;</code>
    *
@@ -284,7 +267,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
   public boolean hasPDouble() {
     return ((bitField0_ & 0x00000008) != 0);
   }
-
   /**
    * <code>optional double p_double = 8;</code>
    *
@@ -297,7 +279,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
 
   public static final int P_BOOL_FIELD_NUMBER = 9;
   private boolean pBool_ = false;
-
   /**
    * <code>optional bool p_bool = 9;</code>
    *
@@ -307,7 +288,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
   public boolean hasPBool() {
     return ((bitField0_ & 0x00000010) != 0);
   }
-
   /**
    * <code>optional bool p_bool = 9;</code>
    *
@@ -320,7 +300,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
 
   public static final int P_CONTINENT_FIELD_NUMBER = 12;
   private int pContinent_ = 0;
-
   /**
    * <code>.google.showcase.v1beta1.Continent p_continent = 12;</code>
    *
@@ -330,7 +309,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
   public int getPContinentValue() {
     return pContinent_;
   }
-
   /**
    * <code>.google.showcase.v1beta1.Continent p_continent = 12;</code>
    *
@@ -345,7 +323,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
 
   public static final int P_CHILD_FIELD_NUMBER = 10;
   private com.google.showcase.v1beta1.ComplianceDataGrandchild pChild_;
-
   /**
    * <code>optional .google.showcase.v1beta1.ComplianceDataGrandchild p_child = 10;</code>
    *
@@ -355,7 +332,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
   public boolean hasPChild() {
     return ((bitField0_ & 0x00000020) != 0);
   }
-
   /**
    * <code>optional .google.showcase.v1beta1.ComplianceDataGrandchild p_child = 10;</code>
    *
@@ -367,7 +343,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
         ? com.google.showcase.v1beta1.ComplianceDataGrandchild.getDefaultInstance()
         : pChild_;
   }
-
   /** <code>optional .google.showcase.v1beta1.ComplianceDataGrandchild p_child = 10;</code> */
   @java.lang.Override
   public com.google.showcase.v1beta1.ComplianceDataGrandchildOrBuilder getPChildOrBuilder() {
@@ -674,7 +649,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /** Protobuf type {@code google.showcase.v1beta1.ComplianceDataChild} */
   public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
       implements
@@ -1022,7 +996,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     private int bitField0_;
 
     private java.lang.Object fString_ = "";
-
     /**
      * <code>string f_string = 1;</code>
      *
@@ -1039,7 +1012,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
         return (java.lang.String) ref;
       }
     }
-
     /**
      * <code>string f_string = 1;</code>
      *
@@ -1056,7 +1028,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      * <code>string f_string = 1;</code>
      *
@@ -1072,7 +1043,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      * <code>string f_string = 1;</code>
      *
@@ -1084,7 +1054,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      * <code>string f_string = 1;</code>
      *
@@ -1103,7 +1072,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     }
 
     private float fFloat_;
-
     /**
      * <code>float f_float = 2;</code>
      *
@@ -1113,7 +1081,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     public float getFFloat() {
       return fFloat_;
     }
-
     /**
      * <code>float f_float = 2;</code>
      *
@@ -1127,7 +1094,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      * <code>float f_float = 2;</code>
      *
@@ -1141,7 +1107,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     }
 
     private double fDouble_;
-
     /**
      * <code>double f_double = 3;</code>
      *
@@ -1151,7 +1116,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     public double getFDouble() {
       return fDouble_;
     }
-
     /**
      * <code>double f_double = 3;</code>
      *
@@ -1165,7 +1129,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      * <code>double f_double = 3;</code>
      *
@@ -1179,7 +1142,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     }
 
     private boolean fBool_;
-
     /**
      * <code>bool f_bool = 4;</code>
      *
@@ -1189,7 +1151,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     public boolean getFBool() {
       return fBool_;
     }
-
     /**
      * <code>bool f_bool = 4;</code>
      *
@@ -1203,7 +1164,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      * <code>bool f_bool = 4;</code>
      *
@@ -1217,7 +1177,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     }
 
     private int fContinent_ = 0;
-
     /**
      * <code>.google.showcase.v1beta1.Continent f_continent = 11;</code>
      *
@@ -1227,7 +1186,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     public int getFContinentValue() {
       return fContinent_;
     }
-
     /**
      * <code>.google.showcase.v1beta1.Continent f_continent = 11;</code>
      *
@@ -1240,7 +1198,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      * <code>.google.showcase.v1beta1.Continent f_continent = 11;</code>
      *
@@ -1252,7 +1209,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
           com.google.showcase.v1beta1.Continent.forNumber(fContinent_);
       return result == null ? com.google.showcase.v1beta1.Continent.UNRECOGNIZED : result;
     }
-
     /**
      * <code>.google.showcase.v1beta1.Continent f_continent = 11;</code>
      *
@@ -1268,7 +1224,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      * <code>.google.showcase.v1beta1.Continent f_continent = 11;</code>
      *
@@ -1287,7 +1242,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
             com.google.showcase.v1beta1.ComplianceDataGrandchild.Builder,
             com.google.showcase.v1beta1.ComplianceDataGrandchildOrBuilder>
         fChildBuilder_;
-
     /**
      * <code>.google.showcase.v1beta1.ComplianceDataGrandchild f_child = 5;</code>
      *
@@ -1296,7 +1250,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     public boolean hasFChild() {
       return ((bitField0_ & 0x00000020) != 0);
     }
-
     /**
      * <code>.google.showcase.v1beta1.ComplianceDataGrandchild f_child = 5;</code>
      *
@@ -1311,7 +1264,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
         return fChildBuilder_.getMessage();
       }
     }
-
     /** <code>.google.showcase.v1beta1.ComplianceDataGrandchild f_child = 5;</code> */
     public Builder setFChild(com.google.showcase.v1beta1.ComplianceDataGrandchild value) {
       if (fChildBuilder_ == null) {
@@ -1326,7 +1278,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /** <code>.google.showcase.v1beta1.ComplianceDataGrandchild f_child = 5;</code> */
     public Builder setFChild(
         com.google.showcase.v1beta1.ComplianceDataGrandchild.Builder builderForValue) {
@@ -1339,7 +1290,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /** <code>.google.showcase.v1beta1.ComplianceDataGrandchild f_child = 5;</code> */
     public Builder mergeFChild(com.google.showcase.v1beta1.ComplianceDataGrandchild value) {
       if (fChildBuilder_ == null) {
@@ -1360,7 +1310,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
-
     /** <code>.google.showcase.v1beta1.ComplianceDataGrandchild f_child = 5;</code> */
     public Builder clearFChild() {
       bitField0_ = (bitField0_ & ~0x00000020);
@@ -1372,14 +1321,12 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /** <code>.google.showcase.v1beta1.ComplianceDataGrandchild f_child = 5;</code> */
     public com.google.showcase.v1beta1.ComplianceDataGrandchild.Builder getFChildBuilder() {
       bitField0_ |= 0x00000020;
       onChanged();
       return getFChildFieldBuilder().getBuilder();
     }
-
     /** <code>.google.showcase.v1beta1.ComplianceDataGrandchild f_child = 5;</code> */
     public com.google.showcase.v1beta1.ComplianceDataGrandchildOrBuilder getFChildOrBuilder() {
       if (fChildBuilder_ != null) {
@@ -1390,7 +1337,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
             : fChild_;
       }
     }
-
     /** <code>.google.showcase.v1beta1.ComplianceDataGrandchild f_child = 5;</code> */
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.showcase.v1beta1.ComplianceDataGrandchild,
@@ -1410,7 +1356,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     }
 
     private java.lang.Object pString_ = "";
-
     /**
      * <code>optional string p_string = 6;</code>
      *
@@ -1419,7 +1364,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     public boolean hasPString() {
       return ((bitField0_ & 0x00000040) != 0);
     }
-
     /**
      * <code>optional string p_string = 6;</code>
      *
@@ -1436,7 +1380,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
         return (java.lang.String) ref;
       }
     }
-
     /**
      * <code>optional string p_string = 6;</code>
      *
@@ -1453,7 +1396,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      * <code>optional string p_string = 6;</code>
      *
@@ -1469,7 +1411,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      * <code>optional string p_string = 6;</code>
      *
@@ -1481,7 +1422,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      * <code>optional string p_string = 6;</code>
      *
@@ -1500,7 +1440,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     }
 
     private float pFloat_;
-
     /**
      * <code>optional float p_float = 7;</code>
      *
@@ -1510,7 +1449,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     public boolean hasPFloat() {
       return ((bitField0_ & 0x00000080) != 0);
     }
-
     /**
      * <code>optional float p_float = 7;</code>
      *
@@ -1520,7 +1458,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     public float getPFloat() {
       return pFloat_;
     }
-
     /**
      * <code>optional float p_float = 7;</code>
      *
@@ -1534,7 +1471,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      * <code>optional float p_float = 7;</code>
      *
@@ -1548,7 +1484,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     }
 
     private double pDouble_;
-
     /**
      * <code>optional double p_double = 8;</code>
      *
@@ -1558,7 +1493,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     public boolean hasPDouble() {
       return ((bitField0_ & 0x00000100) != 0);
     }
-
     /**
      * <code>optional double p_double = 8;</code>
      *
@@ -1568,7 +1502,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     public double getPDouble() {
       return pDouble_;
     }
-
     /**
      * <code>optional double p_double = 8;</code>
      *
@@ -1582,7 +1515,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      * <code>optional double p_double = 8;</code>
      *
@@ -1596,7 +1528,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     }
 
     private boolean pBool_;
-
     /**
      * <code>optional bool p_bool = 9;</code>
      *
@@ -1606,7 +1537,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     public boolean hasPBool() {
       return ((bitField0_ & 0x00000200) != 0);
     }
-
     /**
      * <code>optional bool p_bool = 9;</code>
      *
@@ -1616,7 +1546,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     public boolean getPBool() {
       return pBool_;
     }
-
     /**
      * <code>optional bool p_bool = 9;</code>
      *
@@ -1630,7 +1559,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      * <code>optional bool p_bool = 9;</code>
      *
@@ -1644,7 +1572,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     }
 
     private int pContinent_ = 0;
-
     /**
      * <code>.google.showcase.v1beta1.Continent p_continent = 12;</code>
      *
@@ -1654,7 +1581,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     public int getPContinentValue() {
       return pContinent_;
     }
-
     /**
      * <code>.google.showcase.v1beta1.Continent p_continent = 12;</code>
      *
@@ -1667,7 +1593,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      * <code>.google.showcase.v1beta1.Continent p_continent = 12;</code>
      *
@@ -1679,7 +1604,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
           com.google.showcase.v1beta1.Continent.forNumber(pContinent_);
       return result == null ? com.google.showcase.v1beta1.Continent.UNRECOGNIZED : result;
     }
-
     /**
      * <code>.google.showcase.v1beta1.Continent p_continent = 12;</code>
      *
@@ -1695,7 +1619,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      * <code>.google.showcase.v1beta1.Continent p_continent = 12;</code>
      *
@@ -1714,7 +1637,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
             com.google.showcase.v1beta1.ComplianceDataGrandchild.Builder,
             com.google.showcase.v1beta1.ComplianceDataGrandchildOrBuilder>
         pChildBuilder_;
-
     /**
      * <code>optional .google.showcase.v1beta1.ComplianceDataGrandchild p_child = 10;</code>
      *
@@ -1723,7 +1645,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     public boolean hasPChild() {
       return ((bitField0_ & 0x00000800) != 0);
     }
-
     /**
      * <code>optional .google.showcase.v1beta1.ComplianceDataGrandchild p_child = 10;</code>
      *
@@ -1738,7 +1659,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
         return pChildBuilder_.getMessage();
       }
     }
-
     /** <code>optional .google.showcase.v1beta1.ComplianceDataGrandchild p_child = 10;</code> */
     public Builder setPChild(com.google.showcase.v1beta1.ComplianceDataGrandchild value) {
       if (pChildBuilder_ == null) {
@@ -1753,7 +1673,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /** <code>optional .google.showcase.v1beta1.ComplianceDataGrandchild p_child = 10;</code> */
     public Builder setPChild(
         com.google.showcase.v1beta1.ComplianceDataGrandchild.Builder builderForValue) {
@@ -1766,7 +1685,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /** <code>optional .google.showcase.v1beta1.ComplianceDataGrandchild p_child = 10;</code> */
     public Builder mergePChild(com.google.showcase.v1beta1.ComplianceDataGrandchild value) {
       if (pChildBuilder_ == null) {
@@ -1787,7 +1705,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
-
     /** <code>optional .google.showcase.v1beta1.ComplianceDataGrandchild p_child = 10;</code> */
     public Builder clearPChild() {
       bitField0_ = (bitField0_ & ~0x00000800);
@@ -1799,14 +1716,12 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /** <code>optional .google.showcase.v1beta1.ComplianceDataGrandchild p_child = 10;</code> */
     public com.google.showcase.v1beta1.ComplianceDataGrandchild.Builder getPChildBuilder() {
       bitField0_ |= 0x00000800;
       onChanged();
       return getPChildFieldBuilder().getBuilder();
     }
-
     /** <code>optional .google.showcase.v1beta1.ComplianceDataGrandchild p_child = 10;</code> */
     public com.google.showcase.v1beta1.ComplianceDataGrandchildOrBuilder getPChildOrBuilder() {
       if (pChildBuilder_ != null) {
@@ -1817,7 +1732,6 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
             : pChild_;
       }
     }
-
     /** <code>optional .google.showcase.v1beta1.ComplianceDataGrandchild p_child = 10;</code> */
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.showcase.v1beta1.ComplianceDataGrandchild,

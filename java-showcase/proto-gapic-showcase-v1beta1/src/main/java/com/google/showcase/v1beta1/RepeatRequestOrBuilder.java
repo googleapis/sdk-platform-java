@@ -30,7 +30,6 @@ public interface RepeatRequestOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    * <code>string name = 1;</code>
    *
@@ -44,14 +43,12 @@ public interface RepeatRequestOrBuilder
    * @return Whether the info field is set.
    */
   boolean hasInfo();
-
   /**
    * <code>.google.showcase.v1beta1.ComplianceData info = 2;</code>
    *
    * @return The info.
    */
   com.google.showcase.v1beta1.ComplianceData getInfo();
-
   /** <code>.google.showcase.v1beta1.ComplianceData info = 2;</code> */
   com.google.showcase.v1beta1.ComplianceDataOrBuilder getInfoOrBuilder();
 
@@ -81,7 +78,6 @@ public interface RepeatRequestOrBuilder
    * @return Whether the intendedBindingUri field is set.
    */
   boolean hasIntendedBindingUri();
-
   /**
    *
    *
@@ -94,7 +90,6 @@ public interface RepeatRequestOrBuilder
    * @return The intendedBindingUri.
    */
   java.lang.String getIntendedBindingUri();
-
   /**
    *
    *
@@ -142,7 +137,6 @@ public interface RepeatRequestOrBuilder
    * @return Whether the pInt32 field is set.
    */
   boolean hasPInt32();
-
   /**
    * <code>optional int32 p_int32 = 7;</code>
    *
@@ -156,7 +150,6 @@ public interface RepeatRequestOrBuilder
    * @return Whether the pInt64 field is set.
    */
   boolean hasPInt64();
-
   /**
    * <code>optional int64 p_int64 = 8;</code>
    *
@@ -170,7 +163,6 @@ public interface RepeatRequestOrBuilder
    * @return Whether the pDouble field is set.
    */
   boolean hasPDouble();
-
   /**
    * <code>optional double p_double = 9;</code>
    *

@@ -25,7 +25,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.StreamingSequence)
     StreamingSequenceOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use StreamingSequence.newBuilder() to construct.
   private StreamingSequence(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -75,7 +74,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
      * @return Whether the status field is set.
      */
     boolean hasStatus();
-
     /**
      *
      *
@@ -88,7 +86,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
      * @return The status.
      */
     com.google.rpc.Status getStatus();
-
     /**
      *
      *
@@ -112,7 +109,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
      * @return Whether the delay field is set.
      */
     boolean hasDelay();
-
     /**
      *
      *
@@ -125,7 +121,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
      * @return The delay.
      */
     com.google.protobuf.Duration getDelay();
-
     /**
      *
      *
@@ -150,7 +145,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
      */
     int getResponseIndex();
   }
-
   /**
    *
    *
@@ -165,7 +159,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.StreamingSequence.Response)
       ResponseOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use Response.newBuilder() to construct.
     private Response(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -197,7 +190,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
     private int bitField0_;
     public static final int STATUS_FIELD_NUMBER = 1;
     private com.google.rpc.Status status_;
-
     /**
      *
      *
@@ -213,7 +205,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
     public boolean hasStatus() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -229,7 +220,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
     public com.google.rpc.Status getStatus() {
       return status_ == null ? com.google.rpc.Status.getDefaultInstance() : status_;
     }
-
     /**
      *
      *
@@ -246,7 +236,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
 
     public static final int DELAY_FIELD_NUMBER = 2;
     private com.google.protobuf.Duration delay_;
-
     /**
      *
      *
@@ -262,7 +251,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
     public boolean hasDelay() {
       return ((bitField0_ & 0x00000002) != 0);
     }
-
     /**
      *
      *
@@ -278,7 +266,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
     public com.google.protobuf.Duration getDelay() {
       return delay_ == null ? com.google.protobuf.Duration.getDefaultInstance() : delay_;
     }
-
     /**
      *
      *
@@ -295,7 +282,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
 
     public static final int RESPONSE_INDEX_FIELD_NUMBER = 3;
     private int responseIndex_ = 0;
-
     /**
      *
      *
@@ -501,7 +487,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -738,7 +723,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       private com.google.protobuf.SingleFieldBuilderV3<
               com.google.rpc.Status, com.google.rpc.Status.Builder, com.google.rpc.StatusOrBuilder>
           statusBuilder_;
-
       /**
        *
        *
@@ -753,7 +737,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       public boolean hasStatus() {
         return ((bitField0_ & 0x00000001) != 0);
       }
-
       /**
        *
        *
@@ -772,7 +755,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
           return statusBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -795,7 +777,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -815,7 +796,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -843,7 +823,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         }
         return this;
       }
-
       /**
        *
        *
@@ -863,7 +842,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -878,7 +856,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         onChanged();
         return getStatusFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -895,7 +872,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
           return status_ == null ? com.google.rpc.Status.getDefaultInstance() : status_;
         }
       }
-
       /**
        *
        *
@@ -925,7 +901,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
               com.google.protobuf.Duration.Builder,
               com.google.protobuf.DurationOrBuilder>
           delayBuilder_;
-
       /**
        *
        *
@@ -940,7 +915,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       public boolean hasDelay() {
         return ((bitField0_ & 0x00000002) != 0);
       }
-
       /**
        *
        *
@@ -959,7 +933,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
           return delayBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -982,7 +955,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1002,7 +974,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1030,7 +1001,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         }
         return this;
       }
-
       /**
        *
        *
@@ -1050,7 +1020,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1065,7 +1034,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         onChanged();
         return getDelayFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -1082,7 +1050,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
           return delay_ == null ? com.google.protobuf.Duration.getDefaultInstance() : delay_;
         }
       }
-
       /**
        *
        *
@@ -1110,7 +1077,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       }
 
       private int responseIndex_;
-
       /**
        *
        *
@@ -1126,7 +1092,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       public int getResponseIndex() {
         return responseIndex_;
       }
-
       /**
        *
        *
@@ -1146,7 +1111,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1233,7 +1197,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object name_ = "";
-
   /**
    * <code>string name = 1 [(.google.api.field_behavior) = OUTPUT_ONLY];</code>
    *
@@ -1251,7 +1214,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       return s;
     }
   }
-
   /**
    * <code>string name = 1 [(.google.api.field_behavior) = OUTPUT_ONLY];</code>
    *
@@ -1274,7 +1236,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object content_ = "";
-
   /**
    *
    *
@@ -1298,7 +1259,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       return s;
     }
   }
-
   /**
    *
    *
@@ -1327,7 +1287,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.showcase.v1beta1.StreamingSequence.Response> responses_;
-
   /**
    *
    *
@@ -1342,7 +1301,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
   public java.util.List<com.google.showcase.v1beta1.StreamingSequence.Response> getResponsesList() {
     return responses_;
   }
-
   /**
    *
    *
@@ -1358,7 +1316,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       getResponsesOrBuilderList() {
     return responses_;
   }
-
   /**
    *
    *
@@ -1373,7 +1330,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
   public int getResponsesCount() {
     return responses_.size();
   }
-
   /**
    *
    *
@@ -1388,7 +1344,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
   public com.google.showcase.v1beta1.StreamingSequence.Response getResponses(int index) {
     return responses_.get(index);
   }
-
   /**
    *
    *
@@ -1584,7 +1539,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /** Protobuf type {@code google.showcase.v1beta1.StreamingSequence} */
   public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
       implements
@@ -1836,7 +1790,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
     private int bitField0_;
 
     private java.lang.Object name_ = "";
-
     /**
      * <code>string name = 1 [(.google.api.field_behavior) = OUTPUT_ONLY];</code>
      *
@@ -1853,7 +1806,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         return (java.lang.String) ref;
       }
     }
-
     /**
      * <code>string name = 1 [(.google.api.field_behavior) = OUTPUT_ONLY];</code>
      *
@@ -1870,7 +1822,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      * <code>string name = 1 [(.google.api.field_behavior) = OUTPUT_ONLY];</code>
      *
@@ -1886,7 +1837,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
-
     /**
      * <code>string name = 1 [(.google.api.field_behavior) = OUTPUT_ONLY];</code>
      *
@@ -1898,7 +1848,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
-
     /**
      * <code>string name = 1 [(.google.api.field_behavior) = OUTPUT_ONLY];</code>
      *
@@ -1917,7 +1866,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
     }
 
     private java.lang.Object content_ = "";
-
     /**
      *
      *
@@ -1940,7 +1888,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1963,7 +1910,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1985,7 +1931,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2003,7 +1948,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2063,7 +2007,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         return responsesBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -2081,7 +2024,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         return responsesBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -2099,7 +2041,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         return responsesBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -2124,7 +2065,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -2146,7 +2086,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -2170,7 +2109,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -2195,7 +2133,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -2217,7 +2154,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -2239,7 +2175,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -2262,7 +2197,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -2283,7 +2217,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -2304,7 +2237,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -2319,7 +2251,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         int index) {
       return getResponsesFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -2338,7 +2269,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         return responsesBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -2357,7 +2287,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
         return java.util.Collections.unmodifiableList(responses_);
       }
     }
-
     /**
      *
      *
@@ -2372,7 +2301,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
       return getResponsesFieldBuilder()
           .addBuilder(com.google.showcase.v1beta1.StreamingSequence.Response.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -2389,7 +2317,6 @@ public final class StreamingSequence extends com.google.protobuf.GeneratedMessag
           .addBuilder(
               index, com.google.showcase.v1beta1.StreamingSequence.Response.getDefaultInstance());
     }
-
     /**
      *
      *

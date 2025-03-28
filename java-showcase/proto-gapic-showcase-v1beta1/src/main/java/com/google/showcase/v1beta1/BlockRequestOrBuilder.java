@@ -36,7 +36,6 @@ public interface BlockRequestOrBuilder
    * @return Whether the responseDelay field is set.
    */
   boolean hasResponseDelay();
-
   /**
    *
    *
@@ -49,7 +48,6 @@ public interface BlockRequestOrBuilder
    * @return The responseDelay.
    */
   com.google.protobuf.Duration getResponseDelay();
-
   /**
    *
    *
@@ -74,7 +72,6 @@ public interface BlockRequestOrBuilder
    * @return Whether the error field is set.
    */
   boolean hasError();
-
   /**
    *
    *
@@ -88,7 +85,6 @@ public interface BlockRequestOrBuilder
    * @return The error.
    */
   com.google.rpc.Status getError();
-
   /**
    *
    *
@@ -113,7 +109,6 @@ public interface BlockRequestOrBuilder
    * @return Whether the success field is set.
    */
   boolean hasSuccess();
-
   /**
    *
    *
@@ -126,7 +121,6 @@ public interface BlockRequestOrBuilder
    * @return The success.
    */
   com.google.showcase.v1beta1.BlockResponse getSuccess();
-
   /**
    *
    *

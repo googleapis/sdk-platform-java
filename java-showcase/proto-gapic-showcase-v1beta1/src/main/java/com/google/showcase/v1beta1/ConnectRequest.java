@@ -34,7 +34,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.ConnectRequest)
     ConnectRequestOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use ConnectRequest.newBuilder() to construct.
   private ConnectRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -80,7 +79,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
      * @return The parent.
      */
     java.lang.String getParent();
-
     /**
      *
      *
@@ -94,14 +92,12 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
      */
     com.google.protobuf.ByteString getParentBytes();
   }
-
   /** Protobuf type {@code google.showcase.v1beta1.ConnectRequest.ConnectConfig} */
   public static final class ConnectConfig extends com.google.protobuf.GeneratedMessageV3
       implements
       // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.ConnectRequest.ConnectConfig)
       ConnectConfigOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use ConnectConfig.newBuilder() to construct.
     private ConnectConfig(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -136,7 +132,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object parent_ = "";
-
     /**
      *
      *
@@ -160,7 +155,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
-
     /**
      *
      *
@@ -346,7 +340,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /** Protobuf type {@code google.showcase.v1beta1.ConnectRequest.ConnectConfig} */
     public static final class Builder
         extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
@@ -526,7 +519,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
       private int bitField0_;
 
       private java.lang.Object parent_ = "";
-
       /**
        *
        *
@@ -549,7 +541,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -572,7 +563,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -594,7 +584,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -612,7 +601,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -717,7 +705,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
     private RequestCase(int value) {
       this.value = value;
     }
-
     /**
      * @param value The number of the enum to look for.
      * @return The enum associated with the given number.
@@ -751,7 +738,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int CONFIG_FIELD_NUMBER = 1;
-
   /**
    *
    *
@@ -768,7 +754,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean hasConfig() {
     return requestCase_ == 1;
   }
-
   /**
    *
    *
@@ -788,7 +773,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.showcase.v1beta1.ConnectRequest.ConnectConfig.getDefaultInstance();
   }
-
   /**
    *
    *
@@ -808,7 +792,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int BLURB_FIELD_NUMBER = 2;
-
   /**
    *
    *
@@ -824,7 +807,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean hasBlurb() {
     return requestCase_ == 2;
   }
-
   /**
    *
    *
@@ -843,7 +825,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.showcase.v1beta1.Blurb.getDefaultInstance();
   }
-
   /**
    *
    *
@@ -1050,7 +1031,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -1286,7 +1266,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
             com.google.showcase.v1beta1.ConnectRequest.ConnectConfig.Builder,
             com.google.showcase.v1beta1.ConnectRequest.ConnectConfigOrBuilder>
         configBuilder_;
-
     /**
      *
      *
@@ -1303,7 +1282,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean hasConfig() {
       return requestCase_ == 1;
     }
-
     /**
      *
      *
@@ -1330,7 +1308,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
         return com.google.showcase.v1beta1.ConnectRequest.ConnectConfig.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1354,7 +1331,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
       requestCase_ = 1;
       return this;
     }
-
     /**
      *
      *
@@ -1376,7 +1352,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
       requestCase_ = 1;
       return this;
     }
-
     /**
      *
      *
@@ -1411,7 +1386,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
       requestCase_ = 1;
       return this;
     }
-
     /**
      *
      *
@@ -1438,7 +1412,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1452,7 +1425,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
     public com.google.showcase.v1beta1.ConnectRequest.ConnectConfig.Builder getConfigBuilder() {
       return getConfigFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1474,7 +1446,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
         return com.google.showcase.v1beta1.ConnectRequest.ConnectConfig.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1514,7 +1485,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
             com.google.showcase.v1beta1.Blurb.Builder,
             com.google.showcase.v1beta1.BlurbOrBuilder>
         blurbBuilder_;
-
     /**
      *
      *
@@ -1530,7 +1500,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean hasBlurb() {
       return requestCase_ == 2;
     }
-
     /**
      *
      *
@@ -1556,7 +1525,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
         return com.google.showcase.v1beta1.Blurb.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1579,7 +1547,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
       requestCase_ = 2;
       return this;
     }
-
     /**
      *
      *
@@ -1599,7 +1566,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
       requestCase_ = 2;
       return this;
     }
-
     /**
      *
      *
@@ -1632,7 +1598,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
       requestCase_ = 2;
       return this;
     }
-
     /**
      *
      *
@@ -1658,7 +1623,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1671,7 +1635,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
     public com.google.showcase.v1beta1.Blurb.Builder getBlurbBuilder() {
       return getBlurbFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1692,7 +1655,6 @@ public final class ConnectRequest extends com.google.protobuf.GeneratedMessageV3
         return com.google.showcase.v1beta1.Blurb.getDefaultInstance();
       }
     }
-
     /**
      *
      *

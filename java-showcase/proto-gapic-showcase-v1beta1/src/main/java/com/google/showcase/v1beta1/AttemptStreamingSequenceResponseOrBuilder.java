@@ -36,7 +36,6 @@ public interface AttemptStreamingSequenceResponseOrBuilder
    * @return The content.
    */
   java.lang.String getContent();
-
   /**
    *
    *

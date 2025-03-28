@@ -36,7 +36,6 @@ public interface BlurbOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *
@@ -64,7 +63,6 @@ public interface BlurbOrBuilder
    * @return The user.
    */
   java.lang.String getUser();
-
   /**
    *
    *
@@ -92,7 +90,6 @@ public interface BlurbOrBuilder
    * @return Whether the text field is set.
    */
   boolean hasText();
-
   /**
    *
    *
@@ -105,7 +102,6 @@ public interface BlurbOrBuilder
    * @return The text.
    */
   java.lang.String getText();
-
   /**
    *
    *
@@ -131,7 +127,6 @@ public interface BlurbOrBuilder
    * @return Whether the image field is set.
    */
   boolean hasImage();
-
   /**
    *
    *
@@ -158,7 +153,6 @@ public interface BlurbOrBuilder
    * @return Whether the createTime field is set.
    */
   boolean hasCreateTime();
-
   /**
    *
    *
@@ -172,7 +166,6 @@ public interface BlurbOrBuilder
    * @return The createTime.
    */
   com.google.protobuf.Timestamp getCreateTime();
-
   /**
    *
    *
@@ -198,7 +191,6 @@ public interface BlurbOrBuilder
    * @return Whether the updateTime field is set.
    */
   boolean hasUpdateTime();
-
   /**
    *
    *
@@ -212,7 +204,6 @@ public interface BlurbOrBuilder
    * @return The updateTime.
    */
   com.google.protobuf.Timestamp getUpdateTime();
-
   /**
    *
    *
@@ -239,7 +230,6 @@ public interface BlurbOrBuilder
    * @return Whether the legacyRoomId field is set.
    */
   boolean hasLegacyRoomId();
-
   /**
    *
    *
@@ -254,7 +244,6 @@ public interface BlurbOrBuilder
    * @return The legacyRoomId.
    */
   java.lang.String getLegacyRoomId();
-
   /**
    *
    *
@@ -284,7 +273,6 @@ public interface BlurbOrBuilder
    * @return Whether the legacyUserId field is set.
    */
   boolean hasLegacyUserId();
-
   /**
    *
    *
@@ -299,7 +287,6 @@ public interface BlurbOrBuilder
    * @return The legacyUserId.
    */
   java.lang.String getLegacyUserId();
-
   /**
    *
    *

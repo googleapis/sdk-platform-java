@@ -33,7 +33,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.ReportSessionResponse)
     ReportSessionResponseOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use ReportSessionResponse.newBuilder() to construct.
   private ReportSessionResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -112,7 +111,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
 
     /** <code>RESULT_UNSPECIFIED = 0;</code> */
     public static final int RESULT_UNSPECIFIED_VALUE = 0;
-
     /**
      *
      *
@@ -123,7 +121,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
      * <code>PASSED = 1;</code>
      */
     public static final int PASSED_VALUE = 1;
-
     /**
      *
      *
@@ -134,7 +131,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
      * <code>FAILED = 2;</code>
      */
     public static final int FAILED_VALUE = 2;
-
     /**
      *
      *
@@ -235,7 +231,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
 
   public static final int RESULT_FIELD_NUMBER = 1;
   private int result_ = 0;
-
   /**
    *
    *
@@ -251,7 +246,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
   public int getResultValue() {
     return result_;
   }
-
   /**
    *
    *
@@ -276,7 +270,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.showcase.v1beta1.TestRun> testRuns_;
-
   /**
    *
    *
@@ -290,7 +283,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
   public java.util.List<com.google.showcase.v1beta1.TestRun> getTestRunsList() {
     return testRuns_;
   }
-
   /**
    *
    *
@@ -305,7 +297,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
       getTestRunsOrBuilderList() {
     return testRuns_;
   }
-
   /**
    *
    *
@@ -319,7 +310,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
   public int getTestRunsCount() {
     return testRuns_.size();
   }
-
   /**
    *
    *
@@ -333,7 +323,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
   public com.google.showcase.v1beta1.TestRun getTestRuns(int index) {
     return testRuns_.get(index);
   }
-
   /**
    *
    *
@@ -522,7 +511,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -766,7 +754,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
     private int bitField0_;
 
     private int result_ = 0;
-
     /**
      *
      *
@@ -782,7 +769,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
     public int getResultValue() {
       return result_;
     }
-
     /**
      *
      *
@@ -801,7 +787,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -821,7 +806,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
           ? com.google.showcase.v1beta1.ReportSessionResponse.Result.UNRECOGNIZED
           : result;
     }
-
     /**
      *
      *
@@ -843,7 +827,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -894,7 +877,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
         return testRunsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -911,7 +893,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
         return testRunsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -928,7 +909,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
         return testRunsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -951,7 +931,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
       }
       return this;
     }
-
     /**
      *
      *
@@ -972,7 +951,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
       }
       return this;
     }
-
     /**
      *
      *
@@ -995,7 +973,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
       }
       return this;
     }
-
     /**
      *
      *
@@ -1018,7 +995,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
       }
       return this;
     }
-
     /**
      *
      *
@@ -1038,7 +1014,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
       }
       return this;
     }
-
     /**
      *
      *
@@ -1059,7 +1034,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
       }
       return this;
     }
-
     /**
      *
      *
@@ -1080,7 +1054,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
       }
       return this;
     }
-
     /**
      *
      *
@@ -1100,7 +1073,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
       }
       return this;
     }
-
     /**
      *
      *
@@ -1120,7 +1092,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
       }
       return this;
     }
-
     /**
      *
      *
@@ -1133,7 +1104,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
     public com.google.showcase.v1beta1.TestRun.Builder getTestRunsBuilder(int index) {
       return getTestRunsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -1150,7 +1120,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
         return testRunsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -1168,7 +1137,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
         return java.util.Collections.unmodifiableList(testRuns_);
       }
     }
-
     /**
      *
      *
@@ -1182,7 +1150,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
       return getTestRunsFieldBuilder()
           .addBuilder(com.google.showcase.v1beta1.TestRun.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1196,7 +1163,6 @@ public final class ReportSessionResponse extends com.google.protobuf.GeneratedMe
       return getTestRunsFieldBuilder()
           .addBuilder(index, com.google.showcase.v1beta1.TestRun.getDefaultInstance());
     }
-
     /**
      *
      *

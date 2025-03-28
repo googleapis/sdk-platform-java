@@ -33,7 +33,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.TestRun)
     TestRunOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use TestRun.newBuilder() to construct.
   private TestRun(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -69,7 +68,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object test_ = "";
-
   /**
    *
    *
@@ -95,7 +93,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -124,7 +121,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
 
   public static final int ISSUE_FIELD_NUMBER = 2;
   private com.google.showcase.v1beta1.Issue issue_;
-
   /**
    *
    *
@@ -140,7 +136,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
   public boolean hasIssue() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -156,7 +151,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
   public com.google.showcase.v1beta1.Issue getIssue() {
     return issue_ == null ? com.google.showcase.v1beta1.Issue.getDefaultInstance() : issue_;
   }
-
   /**
    *
    *
@@ -342,7 +336,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -554,7 +547,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object test_ = "";
-
     /**
      *
      *
@@ -579,7 +571,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -604,7 +595,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -628,7 +618,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -648,7 +637,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -680,7 +668,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
             com.google.showcase.v1beta1.Issue.Builder,
             com.google.showcase.v1beta1.IssueOrBuilder>
         issueBuilder_;
-
     /**
      *
      *
@@ -695,7 +682,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
     public boolean hasIssue() {
       return ((bitField0_ & 0x00000002) != 0);
     }
-
     /**
      *
      *
@@ -714,7 +700,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
         return issueBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -737,7 +722,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -757,7 +741,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -785,7 +768,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -805,7 +787,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -820,7 +801,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getIssueFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -837,7 +817,6 @@ public final class TestRun extends com.google.protobuf.GeneratedMessageV3
         return issue_ == null ? com.google.showcase.v1beta1.Issue.getDefaultInstance() : issue_;
       }
     }
-
     /**
      *
      *

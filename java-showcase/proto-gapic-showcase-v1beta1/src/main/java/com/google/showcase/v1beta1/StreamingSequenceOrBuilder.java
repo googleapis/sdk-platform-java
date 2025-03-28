@@ -30,7 +30,6 @@ public interface StreamingSequenceOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    * <code>string name = 1 [(.google.api.field_behavior) = OUTPUT_ONLY];</code>
    *
@@ -50,7 +49,6 @@ public interface StreamingSequenceOrBuilder
    * @return The content.
    */
   java.lang.String getContent();
-
   /**
    *
    *
@@ -75,7 +73,6 @@ public interface StreamingSequenceOrBuilder
    * <code>repeated .google.showcase.v1beta1.StreamingSequence.Response responses = 3;</code>
    */
   java.util.List<com.google.showcase.v1beta1.StreamingSequence.Response> getResponsesList();
-
   /**
    *
    *
@@ -87,7 +84,6 @@ public interface StreamingSequenceOrBuilder
    * <code>repeated .google.showcase.v1beta1.StreamingSequence.Response responses = 3;</code>
    */
   com.google.showcase.v1beta1.StreamingSequence.Response getResponses(int index);
-
   /**
    *
    *
@@ -99,7 +95,6 @@ public interface StreamingSequenceOrBuilder
    * <code>repeated .google.showcase.v1beta1.StreamingSequence.Response responses = 3;</code>
    */
   int getResponsesCount();
-
   /**
    *
    *
@@ -112,7 +107,6 @@ public interface StreamingSequenceOrBuilder
    */
   java.util.List<? extends com.google.showcase.v1beta1.StreamingSequence.ResponseOrBuilder>
       getResponsesOrBuilderList();
-
   /**
    *
    *

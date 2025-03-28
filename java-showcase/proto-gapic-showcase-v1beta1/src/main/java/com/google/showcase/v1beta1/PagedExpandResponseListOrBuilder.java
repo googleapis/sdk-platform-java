@@ -30,14 +30,12 @@ public interface PagedExpandResponseListOrBuilder
    * @return A list containing the words.
    */
   java.util.List<java.lang.String> getWordsList();
-
   /**
    * <code>repeated string words = 1;</code>
    *
    * @return The count of words.
    */
   int getWordsCount();
-
   /**
    * <code>repeated string words = 1;</code>
    *
@@ -45,7 +43,6 @@ public interface PagedExpandResponseListOrBuilder
    * @return The words at the given index.
    */
   java.lang.String getWords(int index);
-
   /**
    * <code>repeated string words = 1;</code>
    *

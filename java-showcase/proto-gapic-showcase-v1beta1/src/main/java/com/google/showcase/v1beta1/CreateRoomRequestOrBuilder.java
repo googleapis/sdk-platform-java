@@ -36,7 +36,6 @@ public interface CreateRoomRequestOrBuilder
    * @return Whether the room field is set.
    */
   boolean hasRoom();
-
   /**
    *
    *
@@ -49,7 +48,6 @@ public interface CreateRoomRequestOrBuilder
    * @return The room.
    */
   com.google.showcase.v1beta1.Room getRoom();
-
   /**
    *
    *

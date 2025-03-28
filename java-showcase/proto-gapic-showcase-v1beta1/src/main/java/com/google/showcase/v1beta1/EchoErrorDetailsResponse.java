@@ -33,7 +33,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.EchoErrorDetailsResponse)
     EchoErrorDetailsResponseOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use EchoErrorDetailsResponse.newBuilder() to construct.
   private EchoErrorDetailsResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -73,25 +72,21 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
      * @return Whether the error field is set.
      */
     boolean hasError();
-
     /**
      * <code>.google.showcase.v1beta1.ErrorWithSingleDetail error = 1;</code>
      *
      * @return The error.
      */
     com.google.showcase.v1beta1.ErrorWithSingleDetail getError();
-
     /** <code>.google.showcase.v1beta1.ErrorWithSingleDetail error = 1;</code> */
     com.google.showcase.v1beta1.ErrorWithSingleDetailOrBuilder getErrorOrBuilder();
   }
-
   /** Protobuf type {@code google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail} */
   public static final class SingleDetail extends com.google.protobuf.GeneratedMessageV3
       implements
       // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail)
       SingleDetailOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use SingleDetail.newBuilder() to construct.
     private SingleDetail(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -123,7 +118,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
     private int bitField0_;
     public static final int ERROR_FIELD_NUMBER = 1;
     private com.google.showcase.v1beta1.ErrorWithSingleDetail error_;
-
     /**
      * <code>.google.showcase.v1beta1.ErrorWithSingleDetail error = 1;</code>
      *
@@ -133,7 +127,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
     public boolean hasError() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      * <code>.google.showcase.v1beta1.ErrorWithSingleDetail error = 1;</code>
      *
@@ -145,7 +138,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
           ? com.google.showcase.v1beta1.ErrorWithSingleDetail.getDefaultInstance()
           : error_;
     }
-
     /** <code>.google.showcase.v1beta1.ErrorWithSingleDetail error = 1;</code> */
     @java.lang.Override
     public com.google.showcase.v1beta1.ErrorWithSingleDetailOrBuilder getErrorOrBuilder() {
@@ -321,7 +313,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /** Protobuf type {@code google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail} */
     public static final class Builder
         extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
@@ -527,7 +518,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
               com.google.showcase.v1beta1.ErrorWithSingleDetail.Builder,
               com.google.showcase.v1beta1.ErrorWithSingleDetailOrBuilder>
           errorBuilder_;
-
       /**
        * <code>.google.showcase.v1beta1.ErrorWithSingleDetail error = 1;</code>
        *
@@ -536,7 +526,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
       public boolean hasError() {
         return ((bitField0_ & 0x00000001) != 0);
       }
-
       /**
        * <code>.google.showcase.v1beta1.ErrorWithSingleDetail error = 1;</code>
        *
@@ -551,7 +540,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
           return errorBuilder_.getMessage();
         }
       }
-
       /** <code>.google.showcase.v1beta1.ErrorWithSingleDetail error = 1;</code> */
       public Builder setError(com.google.showcase.v1beta1.ErrorWithSingleDetail value) {
         if (errorBuilder_ == null) {
@@ -566,7 +554,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
         onChanged();
         return this;
       }
-
       /** <code>.google.showcase.v1beta1.ErrorWithSingleDetail error = 1;</code> */
       public Builder setError(
           com.google.showcase.v1beta1.ErrorWithSingleDetail.Builder builderForValue) {
@@ -579,7 +566,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
         onChanged();
         return this;
       }
-
       /** <code>.google.showcase.v1beta1.ErrorWithSingleDetail error = 1;</code> */
       public Builder mergeError(com.google.showcase.v1beta1.ErrorWithSingleDetail value) {
         if (errorBuilder_ == null) {
@@ -599,7 +585,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
         }
         return this;
       }
-
       /** <code>.google.showcase.v1beta1.ErrorWithSingleDetail error = 1;</code> */
       public Builder clearError() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -611,14 +596,12 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
         onChanged();
         return this;
       }
-
       /** <code>.google.showcase.v1beta1.ErrorWithSingleDetail error = 1;</code> */
       public com.google.showcase.v1beta1.ErrorWithSingleDetail.Builder getErrorBuilder() {
         bitField0_ |= 0x00000001;
         onChanged();
         return getErrorFieldBuilder().getBuilder();
       }
-
       /** <code>.google.showcase.v1beta1.ErrorWithSingleDetail error = 1;</code> */
       public com.google.showcase.v1beta1.ErrorWithSingleDetailOrBuilder getErrorOrBuilder() {
         if (errorBuilder_ != null) {
@@ -629,7 +612,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
               : error_;
         }
       }
-
       /** <code>.google.showcase.v1beta1.ErrorWithSingleDetail error = 1;</code> */
       private com.google.protobuf.SingleFieldBuilderV3<
               com.google.showcase.v1beta1.ErrorWithSingleDetail,
@@ -726,25 +708,21 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
      * @return Whether the error field is set.
      */
     boolean hasError();
-
     /**
      * <code>.google.showcase.v1beta1.ErrorWithMultipleDetails error = 1;</code>
      *
      * @return The error.
      */
     com.google.showcase.v1beta1.ErrorWithMultipleDetails getError();
-
     /** <code>.google.showcase.v1beta1.ErrorWithMultipleDetails error = 1;</code> */
     com.google.showcase.v1beta1.ErrorWithMultipleDetailsOrBuilder getErrorOrBuilder();
   }
-
   /** Protobuf type {@code google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails} */
   public static final class MultipleDetails extends com.google.protobuf.GeneratedMessageV3
       implements
       // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails)
       MultipleDetailsOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use MultipleDetails.newBuilder() to construct.
     private MultipleDetails(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -776,7 +754,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
     private int bitField0_;
     public static final int ERROR_FIELD_NUMBER = 1;
     private com.google.showcase.v1beta1.ErrorWithMultipleDetails error_;
-
     /**
      * <code>.google.showcase.v1beta1.ErrorWithMultipleDetails error = 1;</code>
      *
@@ -786,7 +763,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
     public boolean hasError() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      * <code>.google.showcase.v1beta1.ErrorWithMultipleDetails error = 1;</code>
      *
@@ -798,7 +774,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
           ? com.google.showcase.v1beta1.ErrorWithMultipleDetails.getDefaultInstance()
           : error_;
     }
-
     /** <code>.google.showcase.v1beta1.ErrorWithMultipleDetails error = 1;</code> */
     @java.lang.Override
     public com.google.showcase.v1beta1.ErrorWithMultipleDetailsOrBuilder getErrorOrBuilder() {
@@ -974,7 +949,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /** Protobuf type {@code google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails} */
     public static final class Builder
         extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
@@ -1181,7 +1155,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
               com.google.showcase.v1beta1.ErrorWithMultipleDetails.Builder,
               com.google.showcase.v1beta1.ErrorWithMultipleDetailsOrBuilder>
           errorBuilder_;
-
       /**
        * <code>.google.showcase.v1beta1.ErrorWithMultipleDetails error = 1;</code>
        *
@@ -1190,7 +1163,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
       public boolean hasError() {
         return ((bitField0_ & 0x00000001) != 0);
       }
-
       /**
        * <code>.google.showcase.v1beta1.ErrorWithMultipleDetails error = 1;</code>
        *
@@ -1205,7 +1177,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
           return errorBuilder_.getMessage();
         }
       }
-
       /** <code>.google.showcase.v1beta1.ErrorWithMultipleDetails error = 1;</code> */
       public Builder setError(com.google.showcase.v1beta1.ErrorWithMultipleDetails value) {
         if (errorBuilder_ == null) {
@@ -1220,7 +1191,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
         onChanged();
         return this;
       }
-
       /** <code>.google.showcase.v1beta1.ErrorWithMultipleDetails error = 1;</code> */
       public Builder setError(
           com.google.showcase.v1beta1.ErrorWithMultipleDetails.Builder builderForValue) {
@@ -1233,7 +1203,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
         onChanged();
         return this;
       }
-
       /** <code>.google.showcase.v1beta1.ErrorWithMultipleDetails error = 1;</code> */
       public Builder mergeError(com.google.showcase.v1beta1.ErrorWithMultipleDetails value) {
         if (errorBuilder_ == null) {
@@ -1254,7 +1223,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
         }
         return this;
       }
-
       /** <code>.google.showcase.v1beta1.ErrorWithMultipleDetails error = 1;</code> */
       public Builder clearError() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -1266,14 +1234,12 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
         onChanged();
         return this;
       }
-
       /** <code>.google.showcase.v1beta1.ErrorWithMultipleDetails error = 1;</code> */
       public com.google.showcase.v1beta1.ErrorWithMultipleDetails.Builder getErrorBuilder() {
         bitField0_ |= 0x00000001;
         onChanged();
         return getErrorFieldBuilder().getBuilder();
       }
-
       /** <code>.google.showcase.v1beta1.ErrorWithMultipleDetails error = 1;</code> */
       public com.google.showcase.v1beta1.ErrorWithMultipleDetailsOrBuilder getErrorOrBuilder() {
         if (errorBuilder_ != null) {
@@ -1284,7 +1250,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
               : error_;
         }
       }
-
       /** <code>.google.showcase.v1beta1.ErrorWithMultipleDetails error = 1;</code> */
       private com.google.protobuf.SingleFieldBuilderV3<
               com.google.showcase.v1beta1.ErrorWithMultipleDetails,
@@ -1373,7 +1338,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
   private int bitField0_;
   public static final int SINGLE_DETAIL_FIELD_NUMBER = 1;
   private com.google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail singleDetail_;
-
   /**
    * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail single_detail = 1;</code>
    *
@@ -1383,7 +1347,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
   public boolean hasSingleDetail() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail single_detail = 1;</code>
    *
@@ -1395,7 +1358,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
         ? com.google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail.getDefaultInstance()
         : singleDetail_;
   }
-
   /**
    * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail single_detail = 1;</code>
    */
@@ -1409,7 +1371,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
 
   public static final int MULTIPLE_DETAILS_FIELD_NUMBER = 2;
   private com.google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails multipleDetails_;
-
   /**
    * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails multiple_details = 2;
    * </code>
@@ -1420,7 +1381,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
   public boolean hasMultipleDetails() {
     return ((bitField0_ & 0x00000002) != 0);
   }
-
   /**
    * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails multiple_details = 2;
    * </code>
@@ -1433,7 +1393,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
         ? com.google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails.getDefaultInstance()
         : multipleDetails_;
   }
-
   /**
    * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails multiple_details = 2;
    * </code>
@@ -1624,7 +1583,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -1849,7 +1807,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
             com.google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail.Builder,
             com.google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetailOrBuilder>
         singleDetailBuilder_;
-
     /**
      * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail single_detail = 1;
      * </code>
@@ -1859,7 +1816,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
     public boolean hasSingleDetail() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail single_detail = 1;
      * </code>
@@ -1875,7 +1831,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
         return singleDetailBuilder_.getMessage();
       }
     }
-
     /**
      * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail single_detail = 1;
      * </code>
@@ -1894,7 +1849,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail single_detail = 1;
      * </code>
@@ -1910,7 +1864,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail single_detail = 1;
      * </code>
@@ -1936,7 +1889,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
       }
       return this;
     }
-
     /**
      * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail single_detail = 1;
      * </code>
@@ -1951,7 +1903,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail single_detail = 1;
      * </code>
@@ -1962,7 +1913,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
       onChanged();
       return getSingleDetailFieldBuilder().getBuilder();
     }
-
     /**
      * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail single_detail = 1;
      * </code>
@@ -1977,7 +1927,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
             : singleDetail_;
       }
     }
-
     /**
      * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail single_detail = 1;
      * </code>
@@ -2005,7 +1954,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
             com.google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails.Builder,
             com.google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetailsOrBuilder>
         multipleDetailsBuilder_;
-
     /**
      * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails multiple_details = 2;
      * </code>
@@ -2015,7 +1963,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
     public boolean hasMultipleDetails() {
       return ((bitField0_ & 0x00000002) != 0);
     }
-
     /**
      * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails multiple_details = 2;
      * </code>
@@ -2033,7 +1980,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
         return multipleDetailsBuilder_.getMessage();
       }
     }
-
     /**
      * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails multiple_details = 2;
      * </code>
@@ -2052,7 +1998,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails multiple_details = 2;
      * </code>
@@ -2069,7 +2014,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails multiple_details = 2;
      * </code>
@@ -2095,7 +2039,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
       }
       return this;
     }
-
     /**
      * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails multiple_details = 2;
      * </code>
@@ -2110,7 +2053,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails multiple_details = 2;
      * </code>
@@ -2121,7 +2063,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
       onChanged();
       return getMultipleDetailsFieldBuilder().getBuilder();
     }
-
     /**
      * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails multiple_details = 2;
      * </code>
@@ -2137,7 +2078,6 @@ public final class EchoErrorDetailsResponse extends com.google.protobuf.Generate
             : multipleDetails_;
       }
     }
-
     /**
      * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails multiple_details = 2;
      * </code>

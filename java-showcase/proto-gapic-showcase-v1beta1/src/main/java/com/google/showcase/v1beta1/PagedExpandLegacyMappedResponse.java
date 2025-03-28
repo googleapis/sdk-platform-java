@@ -25,7 +25,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.PagedExpandLegacyMappedResponse)
     PagedExpandLegacyMappedResponseOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use PagedExpandLegacyMappedResponse.newBuilder() to construct.
   private PagedExpandLegacyMappedResponse(
       com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -104,7 +103,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
   public int getAlphabetizedCount() {
     return internalGetAlphabetized().getMap().size();
   }
-
   /**
    *
    *
@@ -124,7 +122,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
     }
     return internalGetAlphabetized().getMap().containsKey(key);
   }
-
   /** Use {@link #getAlphabetizedMap()} instead. */
   @java.lang.Override
   @java.lang.Deprecated
@@ -132,7 +129,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
       getAlphabetized() {
     return getAlphabetizedMap();
   }
-
   /**
    *
    *
@@ -150,7 +146,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
       getAlphabetizedMap() {
     return internalGetAlphabetized().getMap();
   }
-
   /**
    *
    *
@@ -176,7 +171,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
         internalGetAlphabetized().getMap();
     return map.containsKey(key) ? map.get(key) : defaultValue;
   }
-
   /**
    *
    *
@@ -207,7 +201,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object nextPageToken_ = "";
-
   /**
    *
    *
@@ -231,7 +224,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
       return s;
     }
   }
-
   /**
    *
    *
@@ -435,7 +427,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /** Protobuf type {@code google.showcase.v1beta1.PagedExpandLegacyMappedResponse} */
   public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
       implements
@@ -674,8 +665,7 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
           defaultEntry() {
         return AlphabetizedDefaultEntryHolder.defaultEntry;
       }
-    }
-    ;
+    };
 
     private static final AlphabetizedConverter alphabetizedConverter = new AlphabetizedConverter();
 
@@ -715,7 +705,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
     public int getAlphabetizedCount() {
       return internalGetAlphabetized().ensureBuilderMap().size();
     }
-
     /**
      *
      *
@@ -735,7 +724,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
       }
       return internalGetAlphabetized().ensureBuilderMap().containsKey(key);
     }
-
     /** Use {@link #getAlphabetizedMap()} instead. */
     @java.lang.Override
     @java.lang.Deprecated
@@ -743,7 +731,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
         getAlphabetized() {
       return getAlphabetizedMap();
     }
-
     /**
      *
      *
@@ -761,7 +748,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
         getAlphabetizedMap() {
       return internalGetAlphabetized().getImmutableMap();
     }
-
     /**
      *
      *
@@ -787,7 +773,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
           map = internalGetMutableAlphabetized().ensureBuilderMap();
       return map.containsKey(key) ? alphabetizedConverter.build(map.get(key)) : defaultValue;
     }
-
     /**
      *
      *
@@ -819,7 +804,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
       internalGetMutableAlphabetized().clear();
       return this;
     }
-
     /**
      *
      *
@@ -839,7 +823,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
       internalGetMutableAlphabetized().ensureBuilderMap().remove(key);
       return this;
     }
-
     /** Use alternate mutation accessors instead. */
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, com.google.showcase.v1beta1.PagedExpandResponseList>
@@ -847,7 +830,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
       bitField0_ |= 0x00000001;
       return internalGetMutableAlphabetized().ensureMessageMap();
     }
-
     /**
      *
      *
@@ -872,7 +854,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
       bitField0_ |= 0x00000001;
       return this;
     }
-
     /**
      *
      *
@@ -899,7 +880,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
       bitField0_ |= 0x00000001;
       return this;
     }
-
     /**
      *
      *
@@ -929,7 +909,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
     }
 
     private java.lang.Object nextPageToken_ = "";
-
     /**
      *
      *
@@ -952,7 +931,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -975,7 +953,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -997,7 +974,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1015,7 +991,6 @@ public final class PagedExpandLegacyMappedResponse extends com.google.protobuf.G
       onChanged();
       return this;
     }
-
     /**
      *
      *

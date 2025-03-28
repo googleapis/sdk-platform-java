@@ -36,7 +36,6 @@ public interface SearchBlurbsMetadataOrBuilder
    * @return Whether the retryInfo field is set.
    */
   boolean hasRetryInfo();
-
   /**
    *
    *
@@ -49,7 +48,6 @@ public interface SearchBlurbsMetadataOrBuilder
    * @return The retryInfo.
    */
   com.google.rpc.RetryInfo getRetryInfo();
-
   /**
    *
    *

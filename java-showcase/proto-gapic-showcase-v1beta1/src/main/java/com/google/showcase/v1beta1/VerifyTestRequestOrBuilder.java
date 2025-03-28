@@ -36,7 +36,6 @@ public interface VerifyTestRequestOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *
@@ -75,7 +74,6 @@ public interface VerifyTestRequestOrBuilder
    * @return A list containing the answers.
    */
   java.util.List<com.google.protobuf.ByteString> getAnswersList();
-
   /**
    *
    *
@@ -88,7 +86,6 @@ public interface VerifyTestRequestOrBuilder
    * @return The count of answers.
    */
   int getAnswersCount();
-
   /**
    *
    *

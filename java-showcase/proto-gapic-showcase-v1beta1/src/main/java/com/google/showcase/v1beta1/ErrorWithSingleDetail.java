@@ -25,7 +25,6 @@ public final class ErrorWithSingleDetail extends com.google.protobuf.GeneratedMe
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.ErrorWithSingleDetail)
     ErrorWithSingleDetailOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use ErrorWithSingleDetail.newBuilder() to construct.
   private ErrorWithSingleDetail(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -57,7 +56,6 @@ public final class ErrorWithSingleDetail extends com.google.protobuf.GeneratedMe
   private int bitField0_;
   public static final int DETAILS_FIELD_NUMBER = 1;
   private com.google.protobuf.Any details_;
-
   /**
    * <code>.google.protobuf.Any details = 1;</code>
    *
@@ -67,7 +65,6 @@ public final class ErrorWithSingleDetail extends com.google.protobuf.GeneratedMe
   public boolean hasDetails() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    * <code>.google.protobuf.Any details = 1;</code>
    *
@@ -77,7 +74,6 @@ public final class ErrorWithSingleDetail extends com.google.protobuf.GeneratedMe
   public com.google.protobuf.Any getDetails() {
     return details_ == null ? com.google.protobuf.Any.getDefaultInstance() : details_;
   }
-
   /** <code>.google.protobuf.Any details = 1;</code> */
   @java.lang.Override
   public com.google.protobuf.AnyOrBuilder getDetailsOrBuilder() {
@@ -248,7 +244,6 @@ public final class ErrorWithSingleDetail extends com.google.protobuf.GeneratedMe
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /** Protobuf type {@code google.showcase.v1beta1.ErrorWithSingleDetail} */
   public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
       implements
@@ -444,7 +439,6 @@ public final class ErrorWithSingleDetail extends com.google.protobuf.GeneratedMe
             com.google.protobuf.Any.Builder,
             com.google.protobuf.AnyOrBuilder>
         detailsBuilder_;
-
     /**
      * <code>.google.protobuf.Any details = 1;</code>
      *
@@ -453,7 +447,6 @@ public final class ErrorWithSingleDetail extends com.google.protobuf.GeneratedMe
     public boolean hasDetails() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      * <code>.google.protobuf.Any details = 1;</code>
      *
@@ -466,7 +459,6 @@ public final class ErrorWithSingleDetail extends com.google.protobuf.GeneratedMe
         return detailsBuilder_.getMessage();
       }
     }
-
     /** <code>.google.protobuf.Any details = 1;</code> */
     public Builder setDetails(com.google.protobuf.Any value) {
       if (detailsBuilder_ == null) {
@@ -481,7 +473,6 @@ public final class ErrorWithSingleDetail extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /** <code>.google.protobuf.Any details = 1;</code> */
     public Builder setDetails(com.google.protobuf.Any.Builder builderForValue) {
       if (detailsBuilder_ == null) {
@@ -493,7 +484,6 @@ public final class ErrorWithSingleDetail extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /** <code>.google.protobuf.Any details = 1;</code> */
     public Builder mergeDetails(com.google.protobuf.Any value) {
       if (detailsBuilder_ == null) {
@@ -513,7 +503,6 @@ public final class ErrorWithSingleDetail extends com.google.protobuf.GeneratedMe
       }
       return this;
     }
-
     /** <code>.google.protobuf.Any details = 1;</code> */
     public Builder clearDetails() {
       bitField0_ = (bitField0_ & ~0x00000001);
@@ -525,14 +514,12 @@ public final class ErrorWithSingleDetail extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /** <code>.google.protobuf.Any details = 1;</code> */
     public com.google.protobuf.Any.Builder getDetailsBuilder() {
       bitField0_ |= 0x00000001;
       onChanged();
       return getDetailsFieldBuilder().getBuilder();
     }
-
     /** <code>.google.protobuf.Any details = 1;</code> */
     public com.google.protobuf.AnyOrBuilder getDetailsOrBuilder() {
       if (detailsBuilder_ != null) {
@@ -541,7 +528,6 @@ public final class ErrorWithSingleDetail extends com.google.protobuf.GeneratedMe
         return details_ == null ? com.google.protobuf.Any.getDefaultInstance() : details_;
       }
     }
-
     /** <code>.google.protobuf.Any details = 1;</code> */
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.protobuf.Any,

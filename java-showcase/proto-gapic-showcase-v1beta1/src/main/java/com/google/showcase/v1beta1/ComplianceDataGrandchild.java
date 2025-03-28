@@ -25,7 +25,6 @@ public final class ComplianceDataGrandchild extends com.google.protobuf.Generate
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.ComplianceDataGrandchild)
     ComplianceDataGrandchildOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use ComplianceDataGrandchild.newBuilder() to construct.
   private ComplianceDataGrandchild(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -60,7 +59,6 @@ public final class ComplianceDataGrandchild extends com.google.protobuf.Generate
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object fString_ = "";
-
   /**
    * <code>string f_string = 1;</code>
    *
@@ -78,7 +76,6 @@ public final class ComplianceDataGrandchild extends com.google.protobuf.Generate
       return s;
     }
   }
-
   /**
    * <code>string f_string = 1;</code>
    *
@@ -99,7 +96,6 @@ public final class ComplianceDataGrandchild extends com.google.protobuf.Generate
 
   public static final int F_DOUBLE_FIELD_NUMBER = 2;
   private double fDouble_ = 0D;
-
   /**
    * <code>double f_double = 2;</code>
    *
@@ -112,7 +108,6 @@ public final class ComplianceDataGrandchild extends com.google.protobuf.Generate
 
   public static final int F_BOOL_FIELD_NUMBER = 3;
   private boolean fBool_ = false;
-
   /**
    * <code>bool f_bool = 3;</code>
    *
@@ -304,7 +299,6 @@ public final class ComplianceDataGrandchild extends com.google.protobuf.Generate
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /** Protobuf type {@code google.showcase.v1beta1.ComplianceDataGrandchild} */
   public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
       implements
@@ -507,7 +501,6 @@ public final class ComplianceDataGrandchild extends com.google.protobuf.Generate
     private int bitField0_;
 
     private java.lang.Object fString_ = "";
-
     /**
      * <code>string f_string = 1;</code>
      *
@@ -524,7 +517,6 @@ public final class ComplianceDataGrandchild extends com.google.protobuf.Generate
         return (java.lang.String) ref;
       }
     }
-
     /**
      * <code>string f_string = 1;</code>
      *
@@ -541,7 +533,6 @@ public final class ComplianceDataGrandchild extends com.google.protobuf.Generate
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      * <code>string f_string = 1;</code>
      *
@@ -557,7 +548,6 @@ public final class ComplianceDataGrandchild extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      * <code>string f_string = 1;</code>
      *
@@ -569,7 +559,6 @@ public final class ComplianceDataGrandchild extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      * <code>string f_string = 1;</code>
      *
@@ -588,7 +577,6 @@ public final class ComplianceDataGrandchild extends com.google.protobuf.Generate
     }
 
     private double fDouble_;
-
     /**
      * <code>double f_double = 2;</code>
      *
@@ -598,7 +586,6 @@ public final class ComplianceDataGrandchild extends com.google.protobuf.Generate
     public double getFDouble() {
       return fDouble_;
     }
-
     /**
      * <code>double f_double = 2;</code>
      *
@@ -612,7 +599,6 @@ public final class ComplianceDataGrandchild extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      * <code>double f_double = 2;</code>
      *
@@ -626,7 +612,6 @@ public final class ComplianceDataGrandchild extends com.google.protobuf.Generate
     }
 
     private boolean fBool_;
-
     /**
      * <code>bool f_bool = 3;</code>
      *
@@ -636,7 +621,6 @@ public final class ComplianceDataGrandchild extends com.google.protobuf.Generate
     public boolean getFBool() {
       return fBool_;
     }
-
     /**
      * <code>bool f_bool = 3;</code>
      *
@@ -650,7 +634,6 @@ public final class ComplianceDataGrandchild extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      * <code>bool f_bool = 3;</code>
      *

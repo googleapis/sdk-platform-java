@@ -33,7 +33,6 @@ public final class AttemptStreamingSequenceResponse extends com.google.protobuf.
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.AttemptStreamingSequenceResponse)
     AttemptStreamingSequenceResponseOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use AttemptStreamingSequenceResponse.newBuilder() to construct.
   private AttemptStreamingSequenceResponse(
       com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -69,7 +68,6 @@ public final class AttemptStreamingSequenceResponse extends com.google.protobuf.
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object content_ = "";
-
   /**
    *
    *
@@ -93,7 +91,6 @@ public final class AttemptStreamingSequenceResponse extends com.google.protobuf.
       return s;
     }
   }
-
   /**
    *
    *
@@ -278,7 +275,6 @@ public final class AttemptStreamingSequenceResponse extends com.google.protobuf.
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -466,7 +462,6 @@ public final class AttemptStreamingSequenceResponse extends com.google.protobuf.
     private int bitField0_;
 
     private java.lang.Object content_ = "";
-
     /**
      *
      *
@@ -489,7 +484,6 @@ public final class AttemptStreamingSequenceResponse extends com.google.protobuf.
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -512,7 +506,6 @@ public final class AttemptStreamingSequenceResponse extends com.google.protobuf.
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -534,7 +527,6 @@ public final class AttemptStreamingSequenceResponse extends com.google.protobuf.
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -552,7 +544,6 @@ public final class AttemptStreamingSequenceResponse extends com.google.protobuf.
       onChanged();
       return this;
     }
-
     /**
      *
      *

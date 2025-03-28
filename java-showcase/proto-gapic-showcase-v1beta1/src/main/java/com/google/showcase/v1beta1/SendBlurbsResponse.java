@@ -34,7 +34,6 @@ public final class SendBlurbsResponse extends com.google.protobuf.GeneratedMessa
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.SendBlurbsResponse)
     SendBlurbsResponseOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use SendBlurbsResponse.newBuilder() to construct.
   private SendBlurbsResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -70,7 +69,6 @@ public final class SendBlurbsResponse extends com.google.protobuf.GeneratedMessa
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList names_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
-
   /**
    *
    *
@@ -85,7 +83,6 @@ public final class SendBlurbsResponse extends com.google.protobuf.GeneratedMessa
   public com.google.protobuf.ProtocolStringList getNamesList() {
     return names_;
   }
-
   /**
    *
    *
@@ -100,7 +97,6 @@ public final class SendBlurbsResponse extends com.google.protobuf.GeneratedMessa
   public int getNamesCount() {
     return names_.size();
   }
-
   /**
    *
    *
@@ -116,7 +112,6 @@ public final class SendBlurbsResponse extends com.google.protobuf.GeneratedMessa
   public java.lang.String getNames(int index) {
     return names_.get(index);
   }
-
   /**
    *
    *
@@ -299,7 +294,6 @@ public final class SendBlurbsResponse extends com.google.protobuf.GeneratedMessa
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -499,7 +493,6 @@ public final class SendBlurbsResponse extends com.google.protobuf.GeneratedMessa
       }
       bitField0_ |= 0x00000001;
     }
-
     /**
      *
      *
@@ -515,7 +508,6 @@ public final class SendBlurbsResponse extends com.google.protobuf.GeneratedMessa
       names_.makeImmutable();
       return names_;
     }
-
     /**
      *
      *
@@ -530,7 +522,6 @@ public final class SendBlurbsResponse extends com.google.protobuf.GeneratedMessa
     public int getNamesCount() {
       return names_.size();
     }
-
     /**
      *
      *
@@ -546,7 +537,6 @@ public final class SendBlurbsResponse extends com.google.protobuf.GeneratedMessa
     public java.lang.String getNames(int index) {
       return names_.get(index);
     }
-
     /**
      *
      *
@@ -562,7 +552,6 @@ public final class SendBlurbsResponse extends com.google.protobuf.GeneratedMessa
     public com.google.protobuf.ByteString getNamesBytes(int index) {
       return names_.getByteString(index);
     }
-
     /**
      *
      *
@@ -586,7 +575,6 @@ public final class SendBlurbsResponse extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -609,7 +597,6 @@ public final class SendBlurbsResponse extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -629,7 +616,6 @@ public final class SendBlurbsResponse extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -648,7 +634,6 @@ public final class SendBlurbsResponse extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *

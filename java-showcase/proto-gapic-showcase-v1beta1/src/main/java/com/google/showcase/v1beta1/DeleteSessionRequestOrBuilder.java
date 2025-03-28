@@ -36,7 +36,6 @@ public interface DeleteSessionRequestOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *

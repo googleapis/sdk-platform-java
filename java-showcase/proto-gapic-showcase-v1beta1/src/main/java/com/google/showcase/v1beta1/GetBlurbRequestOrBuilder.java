@@ -38,7 +38,6 @@ public interface GetBlurbRequestOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *

@@ -52,7 +52,6 @@ public interface ListUsersRequestOrBuilder
    * @return The pageToken.
    */
   java.lang.String getPageToken();
-
   /**
    *
    *

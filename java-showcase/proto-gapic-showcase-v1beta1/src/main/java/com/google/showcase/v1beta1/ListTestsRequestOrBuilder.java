@@ -36,7 +36,6 @@ public interface ListTestsRequestOrBuilder
    * @return The parent.
    */
   java.lang.String getParent();
-
   /**
    *
    *
@@ -75,7 +74,6 @@ public interface ListTestsRequestOrBuilder
    * @return The pageToken.
    */
   java.lang.String getPageToken();
-
   /**
    *
    *

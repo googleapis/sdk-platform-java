@@ -36,7 +36,6 @@ public interface EnumResponseOrBuilder
    * @return Whether the request field is set.
    */
   boolean hasRequest();
-
   /**
    *
    *
@@ -49,7 +48,6 @@ public interface EnumResponseOrBuilder
    * @return The request.
    */
   com.google.showcase.v1beta1.EnumRequest getRequest();
-
   /**
    *
    *
@@ -73,7 +71,6 @@ public interface EnumResponseOrBuilder
    * @return The enum numeric value on the wire for continent.
    */
   int getContinentValue();
-
   /**
    *
    *

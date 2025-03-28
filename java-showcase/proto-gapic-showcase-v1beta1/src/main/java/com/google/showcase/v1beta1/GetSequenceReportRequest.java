@@ -25,7 +25,6 @@ public final class GetSequenceReportRequest extends com.google.protobuf.Generate
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.GetSequenceReportRequest)
     GetSequenceReportRequestOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use GetSequenceReportRequest.newBuilder() to construct.
   private GetSequenceReportRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -60,7 +59,6 @@ public final class GetSequenceReportRequest extends com.google.protobuf.Generate
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object name_ = "";
-
   /**
    * <code>
    * string name = 1 [(.google.api.field_behavior) = REQUIRED, (.google.api.resource_reference) = { ... }
@@ -80,7 +78,6 @@ public final class GetSequenceReportRequest extends com.google.protobuf.Generate
       return s;
     }
   }
-
   /**
    * <code>
    * string name = 1 [(.google.api.field_behavior) = REQUIRED, (.google.api.resource_reference) = { ... }
@@ -260,7 +257,6 @@ public final class GetSequenceReportRequest extends com.google.protobuf.Generate
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /** Protobuf type {@code google.showcase.v1beta1.GetSequenceReportRequest} */
   public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
       implements
@@ -437,7 +433,6 @@ public final class GetSequenceReportRequest extends com.google.protobuf.Generate
     private int bitField0_;
 
     private java.lang.Object name_ = "";
-
     /**
      * <code>
      * string name = 1 [(.google.api.field_behavior) = REQUIRED, (.google.api.resource_reference) = { ... }
@@ -456,7 +451,6 @@ public final class GetSequenceReportRequest extends com.google.protobuf.Generate
         return (java.lang.String) ref;
       }
     }
-
     /**
      * <code>
      * string name = 1 [(.google.api.field_behavior) = REQUIRED, (.google.api.resource_reference) = { ... }
@@ -475,7 +469,6 @@ public final class GetSequenceReportRequest extends com.google.protobuf.Generate
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      * <code>
      * string name = 1 [(.google.api.field_behavior) = REQUIRED, (.google.api.resource_reference) = { ... }
@@ -493,7 +486,6 @@ public final class GetSequenceReportRequest extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      * <code>
      * string name = 1 [(.google.api.field_behavior) = REQUIRED, (.google.api.resource_reference) = { ... }
@@ -507,7 +499,6 @@ public final class GetSequenceReportRequest extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      * <code>
      * string name = 1 [(.google.api.field_behavior) = REQUIRED, (.google.api.resource_reference) = { ... }

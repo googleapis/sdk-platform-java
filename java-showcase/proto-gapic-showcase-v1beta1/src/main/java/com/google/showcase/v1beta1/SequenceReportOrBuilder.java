@@ -30,7 +30,6 @@ public interface SequenceReportOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    * <code>string name = 1 [(.google.api.field_behavior) = OUTPUT_ONLY];</code>
    *
@@ -48,7 +47,6 @@ public interface SequenceReportOrBuilder
    * <code>repeated .google.showcase.v1beta1.SequenceReport.Attempt attempts = 2;</code>
    */
   java.util.List<com.google.showcase.v1beta1.SequenceReport.Attempt> getAttemptsList();
-
   /**
    *
    *
@@ -59,7 +57,6 @@ public interface SequenceReportOrBuilder
    * <code>repeated .google.showcase.v1beta1.SequenceReport.Attempt attempts = 2;</code>
    */
   com.google.showcase.v1beta1.SequenceReport.Attempt getAttempts(int index);
-
   /**
    *
    *
@@ -70,7 +67,6 @@ public interface SequenceReportOrBuilder
    * <code>repeated .google.showcase.v1beta1.SequenceReport.Attempt attempts = 2;</code>
    */
   int getAttemptsCount();
-
   /**
    *
    *
@@ -82,7 +78,6 @@ public interface SequenceReportOrBuilder
    */
   java.util.List<? extends com.google.showcase.v1beta1.SequenceReport.AttemptOrBuilder>
       getAttemptsOrBuilderList();
-
   /**
    *
    *

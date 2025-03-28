@@ -25,7 +25,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.Test)
     TestOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Test.newBuilder() to construct.
   private Test(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -118,7 +117,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
 
     /** <code>EXPECTATION_LEVEL_UNSPECIFIED = 0;</code> */
     public static final int EXPECTATION_LEVEL_UNSPECIFIED_VALUE = 0;
-
     /**
      *
      *
@@ -129,7 +127,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
      * <code>REQUIRED = 1;</code>
      */
     public static final int REQUIRED_VALUE = 1;
-
     /**
      *
      *
@@ -146,7 +143,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
      * <code>RECOMMENDED = 2;</code>
      */
     public static final int RECOMMENDED_VALUE = 2;
-
     /**
      *
      *
@@ -269,7 +265,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
      * @return The name.
      */
     java.lang.String getName();
-
     /**
      *
      *
@@ -295,7 +290,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
      * @return The description.
      */
     java.lang.String getDescription();
-
     /**
      *
      *
@@ -321,7 +315,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the request field is set.
      */
     boolean hasRequest();
-
     /**
      *
      *
@@ -334,7 +327,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
      * @return The request.
      */
     com.google.showcase.v1beta1.Test.Blueprint.Invocation getRequest();
-
     /**
      *
      *
@@ -358,7 +350,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
      */
     java.util.List<com.google.showcase.v1beta1.Test.Blueprint.Invocation>
         getAdditionalRequestsList();
-
     /**
      *
      *
@@ -370,7 +361,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
      * </code>
      */
     com.google.showcase.v1beta1.Test.Blueprint.Invocation getAdditionalRequests(int index);
-
     /**
      *
      *
@@ -382,7 +372,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
      * </code>
      */
     int getAdditionalRequestsCount();
-
     /**
      *
      *
@@ -395,7 +384,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
      */
     java.util.List<? extends com.google.showcase.v1beta1.Test.Blueprint.InvocationOrBuilder>
         getAdditionalRequestsOrBuilderList();
-
     /**
      *
      *
@@ -409,7 +397,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
     com.google.showcase.v1beta1.Test.Blueprint.InvocationOrBuilder getAdditionalRequestsOrBuilder(
         int index);
   }
-
   /**
    *
    *
@@ -427,7 +414,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.Test.Blueprint)
       BlueprintOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use Blueprint.newBuilder() to construct.
     private Blueprint(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -477,7 +463,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
        * @return The method.
        */
       java.lang.String getMethod();
-
       /**
        *
        *
@@ -504,7 +489,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
        */
       com.google.protobuf.ByteString getSerializedRequest();
     }
-
     /**
      *
      *
@@ -519,7 +503,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.Test.Blueprint.Invocation)
         InvocationOrBuilder {
       private static final long serialVersionUID = 0L;
-
       // Use Invocation.newBuilder() to construct.
       private Invocation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
         super(builder);
@@ -555,7 +538,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
 
       @SuppressWarnings("serial")
       private volatile java.lang.Object method_ = "";
-
       /**
        *
        *
@@ -579,7 +561,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
           return s;
         }
       }
-
       /**
        *
        *
@@ -607,7 +588,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       public static final int SERIALIZED_REQUEST_FIELD_NUMBER = 2;
       private com.google.protobuf.ByteString serializedRequest_ =
           com.google.protobuf.ByteString.EMPTY;
-
       /**
        *
        *
@@ -794,7 +774,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         Builder builder = new Builder(parent);
         return builder;
       }
-
       /**
        *
        *
@@ -995,7 +974,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         private int bitField0_;
 
         private java.lang.Object method_ = "";
-
         /**
          *
          *
@@ -1018,7 +996,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
             return (java.lang.String) ref;
           }
         }
-
         /**
          *
          *
@@ -1041,7 +1018,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
             return (com.google.protobuf.ByteString) ref;
           }
         }
-
         /**
          *
          *
@@ -1063,7 +1039,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
           onChanged();
           return this;
         }
-
         /**
          *
          *
@@ -1081,7 +1056,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
           onChanged();
           return this;
         }
-
         /**
          *
          *
@@ -1107,7 +1081,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
 
         private com.google.protobuf.ByteString serializedRequest_ =
             com.google.protobuf.ByteString.EMPTY;
-
         /**
          *
          *
@@ -1123,7 +1096,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         public com.google.protobuf.ByteString getSerializedRequest() {
           return serializedRequest_;
         }
-
         /**
          *
          *
@@ -1145,7 +1117,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
           onChanged();
           return this;
         }
-
         /**
          *
          *
@@ -1233,7 +1204,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object name_ = "";
-
     /**
      *
      *
@@ -1257,7 +1227,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
-
     /**
      *
      *
@@ -1286,7 +1255,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object description_ = "";
-
     /**
      *
      *
@@ -1310,7 +1278,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
-
     /**
      *
      *
@@ -1337,7 +1304,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
 
     public static final int REQUEST_FIELD_NUMBER = 3;
     private com.google.showcase.v1beta1.Test.Blueprint.Invocation request_;
-
     /**
      *
      *
@@ -1353,7 +1319,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
     public boolean hasRequest() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -1371,7 +1336,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
           ? com.google.showcase.v1beta1.Test.Blueprint.Invocation.getDefaultInstance()
           : request_;
     }
-
     /**
      *
      *
@@ -1393,7 +1357,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
     @SuppressWarnings("serial")
     private java.util.List<com.google.showcase.v1beta1.Test.Blueprint.Invocation>
         additionalRequests_;
-
     /**
      *
      *
@@ -1409,7 +1372,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         getAdditionalRequestsList() {
       return additionalRequests_;
     }
-
     /**
      *
      *
@@ -1425,7 +1387,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         getAdditionalRequestsOrBuilderList() {
       return additionalRequests_;
     }
-
     /**
      *
      *
@@ -1440,7 +1401,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
     public int getAdditionalRequestsCount() {
       return additionalRequests_.size();
     }
-
     /**
      *
      *
@@ -1455,7 +1415,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
     public com.google.showcase.v1beta1.Test.Blueprint.Invocation getAdditionalRequests(int index) {
       return additionalRequests_.get(index);
     }
-
     /**
      *
      *
@@ -1667,7 +1626,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -1963,7 +1921,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       private int bitField0_;
 
       private java.lang.Object name_ = "";
-
       /**
        *
        *
@@ -1986,7 +1943,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -2009,7 +1965,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -2031,7 +1986,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2049,7 +2003,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2074,7 +2027,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       }
 
       private java.lang.Object description_ = "";
-
       /**
        *
        *
@@ -2097,7 +2049,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -2120,7 +2071,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -2142,7 +2092,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2160,7 +2109,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2190,7 +2138,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
               com.google.showcase.v1beta1.Test.Blueprint.Invocation.Builder,
               com.google.showcase.v1beta1.Test.Blueprint.InvocationOrBuilder>
           requestBuilder_;
-
       /**
        *
        *
@@ -2205,7 +2152,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       public boolean hasRequest() {
         return ((bitField0_ & 0x00000004) != 0);
       }
-
       /**
        *
        *
@@ -2226,7 +2172,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
           return requestBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -2249,7 +2194,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2270,7 +2214,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2299,7 +2242,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -2319,7 +2261,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2334,7 +2275,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return getRequestFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -2353,7 +2293,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
               : request_;
         }
       }
-
       /**
        *
        *
@@ -2416,7 +2355,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
           return additionalRequestsBuilder_.getMessageList();
         }
       }
-
       /**
        *
        *
@@ -2434,7 +2372,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
           return additionalRequestsBuilder_.getCount();
         }
       }
-
       /**
        *
        *
@@ -2453,7 +2390,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
           return additionalRequestsBuilder_.getMessage(index);
         }
       }
-
       /**
        *
        *
@@ -2478,7 +2414,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -2501,7 +2436,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -2526,7 +2460,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -2551,7 +2484,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -2573,7 +2505,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -2596,7 +2527,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -2619,7 +2549,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -2640,7 +2569,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -2661,7 +2589,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -2676,7 +2603,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
           getAdditionalRequestsBuilder(int index) {
         return getAdditionalRequestsFieldBuilder().getBuilder(index);
       }
-
       /**
        *
        *
@@ -2695,7 +2621,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
           return additionalRequestsBuilder_.getMessageOrBuilder(index);
         }
       }
-
       /**
        *
        *
@@ -2715,7 +2640,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
           return java.util.Collections.unmodifiableList(additionalRequests_);
         }
       }
-
       /**
        *
        *
@@ -2731,7 +2655,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         return getAdditionalRequestsFieldBuilder()
             .addBuilder(com.google.showcase.v1beta1.Test.Blueprint.Invocation.getDefaultInstance());
       }
-
       /**
        *
        *
@@ -2748,7 +2671,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
             .addBuilder(
                 index, com.google.showcase.v1beta1.Test.Blueprint.Invocation.getDefaultInstance());
       }
-
       /**
        *
        *
@@ -2852,7 +2774,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object name_ = "";
-
   /**
    *
    *
@@ -2878,7 +2799,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -2907,7 +2827,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
 
   public static final int EXPECTATION_LEVEL_FIELD_NUMBER = 2;
   private int expectationLevel_ = 0;
-
   /**
    *
    *
@@ -2923,7 +2842,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
   public int getExpectationLevelValue() {
     return expectationLevel_;
   }
-
   /**
    *
    *
@@ -2946,7 +2864,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object description_ = "";
-
   /**
    *
    *
@@ -2970,7 +2887,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -2999,7 +2915,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.showcase.v1beta1.Test.Blueprint> blueprints_;
-
   /**
    *
    *
@@ -3016,7 +2931,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.showcase.v1beta1.Test.Blueprint> getBlueprintsList() {
     return blueprints_;
   }
-
   /**
    *
    *
@@ -3034,7 +2948,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       getBlueprintsOrBuilderList() {
     return blueprints_;
   }
-
   /**
    *
    *
@@ -3051,7 +2964,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
   public int getBlueprintsCount() {
     return blueprints_.size();
   }
-
   /**
    *
    *
@@ -3068,7 +2980,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
   public com.google.showcase.v1beta1.Test.Blueprint getBlueprints(int index) {
     return blueprints_.get(index);
   }
-
   /**
    *
    *
@@ -3276,7 +3187,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /** Protobuf type {@code google.showcase.v1beta1.Test} */
   public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
       implements
@@ -3539,7 +3449,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object name_ = "";
-
     /**
      *
      *
@@ -3564,7 +3473,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -3589,7 +3497,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -3613,7 +3520,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -3633,7 +3539,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -3660,7 +3565,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int expectationLevel_ = 0;
-
     /**
      *
      *
@@ -3676,7 +3580,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
     public int getExpectationLevelValue() {
       return expectationLevel_;
     }
-
     /**
      *
      *
@@ -3695,7 +3598,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -3715,7 +3617,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
           ? com.google.showcase.v1beta1.Test.ExpectationLevel.UNRECOGNIZED
           : result;
     }
-
     /**
      *
      *
@@ -3737,7 +3638,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -3757,7 +3657,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object description_ = "";
-
     /**
      *
      *
@@ -3780,7 +3679,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -3803,7 +3701,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -3825,7 +3722,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -3843,7 +3739,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -3903,7 +3798,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         return blueprintsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -3923,7 +3817,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         return blueprintsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -3943,7 +3836,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         return blueprintsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -3969,7 +3861,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -3993,7 +3884,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -4019,7 +3909,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -4045,7 +3934,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -4069,7 +3957,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -4093,7 +3980,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -4117,7 +4003,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -4140,7 +4025,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -4163,7 +4047,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -4179,7 +4062,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
     public com.google.showcase.v1beta1.Test.Blueprint.Builder getBlueprintsBuilder(int index) {
       return getBlueprintsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -4199,7 +4081,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         return blueprintsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -4220,7 +4101,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(blueprints_);
       }
     }
-
     /**
      *
      *
@@ -4237,7 +4117,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       return getBlueprintsFieldBuilder()
           .addBuilder(com.google.showcase.v1beta1.Test.Blueprint.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -4254,7 +4133,6 @@ public final class Test extends com.google.protobuf.GeneratedMessageV3
       return getBlueprintsFieldBuilder()
           .addBuilder(index, com.google.showcase.v1beta1.Test.Blueprint.getDefaultInstance());
     }
-
     /**
      *
      *

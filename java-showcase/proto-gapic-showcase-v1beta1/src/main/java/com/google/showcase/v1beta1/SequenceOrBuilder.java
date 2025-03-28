@@ -30,7 +30,6 @@ public interface SequenceOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    * <code>string name = 1 [(.google.api.field_behavior) = OUTPUT_ONLY];</code>
    *
@@ -49,7 +48,6 @@ public interface SequenceOrBuilder
    * <code>repeated .google.showcase.v1beta1.Sequence.Response responses = 2;</code>
    */
   java.util.List<com.google.showcase.v1beta1.Sequence.Response> getResponsesList();
-
   /**
    *
    *
@@ -61,7 +59,6 @@ public interface SequenceOrBuilder
    * <code>repeated .google.showcase.v1beta1.Sequence.Response responses = 2;</code>
    */
   com.google.showcase.v1beta1.Sequence.Response getResponses(int index);
-
   /**
    *
    *
@@ -73,7 +70,6 @@ public interface SequenceOrBuilder
    * <code>repeated .google.showcase.v1beta1.Sequence.Response responses = 2;</code>
    */
   int getResponsesCount();
-
   /**
    *
    *
@@ -86,7 +82,6 @@ public interface SequenceOrBuilder
    */
   java.util.List<? extends com.google.showcase.v1beta1.Sequence.ResponseOrBuilder>
       getResponsesOrBuilderList();
-
   /**
    *
    *

@@ -37,7 +37,6 @@ public interface EchoErrorDetailsRequestOrBuilder
    * @return The singleDetailText.
    */
   java.lang.String getSingleDetailText();
-
   /**
    *
    *
@@ -65,7 +64,6 @@ public interface EchoErrorDetailsRequestOrBuilder
    * @return A list containing the multiDetailText.
    */
   java.util.List<java.lang.String> getMultiDetailTextList();
-
   /**
    *
    *
@@ -79,7 +77,6 @@ public interface EchoErrorDetailsRequestOrBuilder
    * @return The count of multiDetailText.
    */
   int getMultiDetailTextCount();
-
   /**
    *
    *
@@ -94,7 +91,6 @@ public interface EchoErrorDetailsRequestOrBuilder
    * @return The multiDetailText at the given index.
    */
   java.lang.String getMultiDetailText(int index);
-
   /**
    *
    *

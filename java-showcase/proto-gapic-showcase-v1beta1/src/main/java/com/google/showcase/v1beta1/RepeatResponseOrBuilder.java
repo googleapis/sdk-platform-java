@@ -30,14 +30,12 @@ public interface RepeatResponseOrBuilder
    * @return Whether the request field is set.
    */
   boolean hasRequest();
-
   /**
    * <code>.google.showcase.v1beta1.RepeatRequest request = 1;</code>
    *
    * @return The request.
    */
   com.google.showcase.v1beta1.RepeatRequest getRequest();
-
   /** <code>.google.showcase.v1beta1.RepeatRequest request = 1;</code> */
   com.google.showcase.v1beta1.RepeatRequestOrBuilder getRequestOrBuilder();
 
@@ -53,7 +51,6 @@ public interface RepeatResponseOrBuilder
    * @return The bindingUri.
    */
   java.lang.String getBindingUri();
-
   /**
    *
    *
