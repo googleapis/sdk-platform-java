@@ -30,6 +30,7 @@ public interface ComplianceDataChildOrBuilder
    * @return The fString.
    */
   java.lang.String getFString();
+
   /**
    * <code>string f_string = 1;</code>
    *
@@ -64,6 +65,7 @@ public interface ComplianceDataChildOrBuilder
    * @return The enum numeric value on the wire for fContinent.
    */
   int getFContinentValue();
+
   /**
    * <code>.google.showcase.v1beta1.Continent f_continent = 11;</code>
    *
@@ -77,12 +79,14 @@ public interface ComplianceDataChildOrBuilder
    * @return Whether the fChild field is set.
    */
   boolean hasFChild();
+
   /**
    * <code>.google.showcase.v1beta1.ComplianceDataGrandchild f_child = 5;</code>
    *
    * @return The fChild.
    */
   com.google.showcase.v1beta1.ComplianceDataGrandchild getFChild();
+
   /** <code>.google.showcase.v1beta1.ComplianceDataGrandchild f_child = 5;</code> */
   com.google.showcase.v1beta1.ComplianceDataGrandchildOrBuilder getFChildOrBuilder();
 
@@ -92,12 +96,14 @@ public interface ComplianceDataChildOrBuilder
    * @return Whether the pString field is set.
    */
   boolean hasPString();
+
   /**
    * <code>optional string p_string = 6;</code>
    *
    * @return The pString.
    */
   java.lang.String getPString();
+
   /**
    * <code>optional string p_string = 6;</code>
    *
@@ -111,6 +117,7 @@ public interface ComplianceDataChildOrBuilder
    * @return Whether the pFloat field is set.
    */
   boolean hasPFloat();
+
   /**
    * <code>optional float p_float = 7;</code>
    *
@@ -124,6 +131,7 @@ public interface ComplianceDataChildOrBuilder
    * @return Whether the pDouble field is set.
    */
   boolean hasPDouble();
+
   /**
    * <code>optional double p_double = 8;</code>
    *
@@ -137,6 +145,7 @@ public interface ComplianceDataChildOrBuilder
    * @return Whether the pBool field is set.
    */
   boolean hasPBool();
+
   /**
    * <code>optional bool p_bool = 9;</code>
    *
@@ -150,6 +159,7 @@ public interface ComplianceDataChildOrBuilder
    * @return The enum numeric value on the wire for pContinent.
    */
   int getPContinentValue();
+
   /**
    * <code>.google.showcase.v1beta1.Continent p_continent = 12;</code>
    *
@@ -163,12 +173,14 @@ public interface ComplianceDataChildOrBuilder
    * @return Whether the pChild field is set.
    */
   boolean hasPChild();
+
   /**
    * <code>optional .google.showcase.v1beta1.ComplianceDataGrandchild p_child = 10;</code>
    *
    * @return The pChild.
    */
   com.google.showcase.v1beta1.ComplianceDataGrandchild getPChild();
+
   /** <code>optional .google.showcase.v1beta1.ComplianceDataGrandchild p_child = 10;</code> */
   com.google.showcase.v1beta1.ComplianceDataGrandchildOrBuilder getPChildOrBuilder();
 }

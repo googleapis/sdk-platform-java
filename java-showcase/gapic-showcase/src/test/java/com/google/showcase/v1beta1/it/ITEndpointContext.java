@@ -324,7 +324,8 @@ class ITEndpointContext {
         assertThrows(UnauthenticatedException.class, () -> echoClient.echo(DEFAULT_REQUEST));
     Truth.assertThat(exception.getMessage())
         .contains(
-            "The configured universe domain (googleapis.com) does not match the universe domain found in the credentials (random.com).");
+            "The configured universe domain (googleapis.com) does not match the universe domain"
+                + " found in the credentials (random.com).");
   }
 
   @Test
@@ -367,7 +368,8 @@ class ITEndpointContext {
         assertThrows(UnauthenticatedException.class, () -> echoClient.echo(DEFAULT_REQUEST));
     Truth.assertThat(exception.getMessage())
         .contains(
-            "The configured universe domain (test.com) does not match the universe domain found in the credentials (random.com).");
+            "The configured universe domain (test.com) does not match the universe domain found in"
+                + " the credentials (random.com).");
   }
 
   // This test uses NoCredentialsProvider (will default to GDU)
@@ -408,7 +410,8 @@ class ITEndpointContext {
         assertThrows(UnauthenticatedException.class, () -> echoClient.echo(DEFAULT_REQUEST));
     Truth.assertThat(exception.getMessage())
         .contains(
-            "The configured universe domain (random.com) does not match the universe domain found in the credentials (googleapis.com).");
+            "The configured universe domain (random.com) does not match the universe domain found"
+                + " in the credentials (googleapis.com).");
   }
 
   // Default in Builder (no configuration)
