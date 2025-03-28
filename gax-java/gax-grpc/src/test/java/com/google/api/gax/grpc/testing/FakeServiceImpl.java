@@ -131,5 +131,6 @@ public class FakeServiceImpl extends FakeServiceImplBase {
     public void onCompleted() {
       responseObserver.onCompleted();
     }
-  };
+  }
+  ;
 }

@@ -36,6 +36,7 @@ public interface EndpointOrBuilder
    * @return The name.
    */
   java.lang.String getName();
+
   /**
    *
    *
@@ -63,6 +64,7 @@ public interface EndpointOrBuilder
    * @return A list containing the aliases.
    */
   java.util.List<java.lang.String> getAliasesList();
+
   /**
    *
    *
@@ -77,6 +79,7 @@ public interface EndpointOrBuilder
    * @return The count of aliases.
    */
   int getAliasesCount();
+
   /**
    *
    *
@@ -92,6 +95,7 @@ public interface EndpointOrBuilder
    * @return The aliases at the given index.
    */
   java.lang.String getAliases(int index);
+
   /**
    *
    *
@@ -124,6 +128,7 @@ public interface EndpointOrBuilder
    * @return The target.
    */
   java.lang.String getTarget();
+
   /**
    *
    *
