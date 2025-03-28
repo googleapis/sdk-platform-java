@@ -25,7 +25,9 @@ setup(
             "owlbot/templates/clirr/*.j2",
             "owlbot/templates/poms/*.j2",
             "owlbot/templates/java_library/.github/**/*",
-            "owlbot/templates/java_library/.kokoro/**/*",
+            # TODO: uncomment this line after https://github.com/googleapis/sdk-platform-java/pull/3723
+            # has been merged.
+            #"owlbot/templates/java_library/.kokoro/**/*",
             "owlbot/templates/java_library/**/*",
         ],
         "synthtool": ["owlbot/synthtool/**/*"],
