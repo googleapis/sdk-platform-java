@@ -36,6 +36,7 @@ public interface WaitMetadataOrBuilder
    * @return Whether the endTime field is set.
    */
   boolean hasEndTime();
+
   /**
    *
    *
@@ -48,6 +49,7 @@ public interface WaitMetadataOrBuilder
    * @return The endTime.
    */
   com.google.protobuf.Timestamp getEndTime();
+
   /**
    *
    *

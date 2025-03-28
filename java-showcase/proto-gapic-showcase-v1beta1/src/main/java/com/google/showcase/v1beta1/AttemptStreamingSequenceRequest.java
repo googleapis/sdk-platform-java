@@ -25,6 +25,7 @@ public final class AttemptStreamingSequenceRequest extends com.google.protobuf.G
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.AttemptStreamingSequenceRequest)
     AttemptStreamingSequenceRequestOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use AttemptStreamingSequenceRequest.newBuilder() to construct.
   private AttemptStreamingSequenceRequest(
       com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -60,6 +61,7 @@ public final class AttemptStreamingSequenceRequest extends com.google.protobuf.G
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object name_ = "";
+
   /**
    * <code>
    * string name = 1 [(.google.api.field_behavior) = REQUIRED, (.google.api.resource_reference) = { ... }
@@ -79,6 +81,7 @@ public final class AttemptStreamingSequenceRequest extends com.google.protobuf.G
       return s;
     }
   }
+
   /**
    * <code>
    * string name = 1 [(.google.api.field_behavior) = REQUIRED, (.google.api.resource_reference) = { ... }
@@ -101,6 +104,7 @@ public final class AttemptStreamingSequenceRequest extends com.google.protobuf.G
 
   public static final int LAST_FAIL_INDEX_FIELD_NUMBER = 2;
   private int lastFailIndex_ = 0;
+
   /**
    *
    *
@@ -288,6 +292,7 @@ public final class AttemptStreamingSequenceRequest extends com.google.protobuf.G
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /** Protobuf type {@code google.showcase.v1beta1.AttemptStreamingSequenceRequest} */
   public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
       implements
@@ -477,6 +482,7 @@ public final class AttemptStreamingSequenceRequest extends com.google.protobuf.G
     private int bitField0_;
 
     private java.lang.Object name_ = "";
+
     /**
      * <code>
      * string name = 1 [(.google.api.field_behavior) = REQUIRED, (.google.api.resource_reference) = { ... }
@@ -495,6 +501,7 @@ public final class AttemptStreamingSequenceRequest extends com.google.protobuf.G
         return (java.lang.String) ref;
       }
     }
+
     /**
      * <code>
      * string name = 1 [(.google.api.field_behavior) = REQUIRED, (.google.api.resource_reference) = { ... }
@@ -513,6 +520,7 @@ public final class AttemptStreamingSequenceRequest extends com.google.protobuf.G
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      * <code>
      * string name = 1 [(.google.api.field_behavior) = REQUIRED, (.google.api.resource_reference) = { ... }
@@ -530,6 +538,7 @@ public final class AttemptStreamingSequenceRequest extends com.google.protobuf.G
       onChanged();
       return this;
     }
+
     /**
      * <code>
      * string name = 1 [(.google.api.field_behavior) = REQUIRED, (.google.api.resource_reference) = { ... }
@@ -543,6 +552,7 @@ public final class AttemptStreamingSequenceRequest extends com.google.protobuf.G
       onChanged();
       return this;
     }
+
     /**
      * <code>
      * string name = 1 [(.google.api.field_behavior) = REQUIRED, (.google.api.resource_reference) = { ... }
@@ -563,6 +573,7 @@ public final class AttemptStreamingSequenceRequest extends com.google.protobuf.G
     }
 
     private int lastFailIndex_;
+
     /**
      *
      *
@@ -580,6 +591,7 @@ public final class AttemptStreamingSequenceRequest extends com.google.protobuf.G
     public int getLastFailIndex() {
       return lastFailIndex_;
     }
+
     /**
      *
      *
@@ -601,6 +613,7 @@ public final class AttemptStreamingSequenceRequest extends com.google.protobuf.G
       onChanged();
       return this;
     }
+
     /**
      *
      *

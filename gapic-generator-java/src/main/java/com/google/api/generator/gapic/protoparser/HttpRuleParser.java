@@ -183,7 +183,7 @@ public class HttpRuleParser {
       case PATCH:
         return httpRule.getPatch();
       case CUSTOM: // Invalid pattern.
-        // Fall through.
+      // Fall through.
       default:
         return "";
     }

@@ -36,6 +36,7 @@ public interface GoSettingsOrBuilder
    * @return Whether the common field is set.
    */
   boolean hasCommon();
+
   /**
    *
    *
@@ -48,6 +49,7 @@ public interface GoSettingsOrBuilder
    * @return The common.
    */
   com.google.api.CommonLanguageSettings getCommon();
+
   /**
    *
    *
@@ -76,6 +78,7 @@ public interface GoSettingsOrBuilder
    * <code>map&lt;string, string&gt; renamed_services = 2;</code>
    */
   int getRenamedServicesCount();
+
   /**
    *
    *
@@ -93,9 +96,11 @@ public interface GoSettingsOrBuilder
    * <code>map&lt;string, string&gt; renamed_services = 2;</code>
    */
   boolean containsRenamedServices(java.lang.String key);
+
   /** Use {@link #getRenamedServicesMap()} instead. */
   @java.lang.Deprecated
   java.util.Map<java.lang.String, java.lang.String> getRenamedServices();
+
   /**
    *
    *
@@ -113,6 +118,7 @@ public interface GoSettingsOrBuilder
    * <code>map&lt;string, string&gt; renamed_services = 2;</code>
    */
   java.util.Map<java.lang.String, java.lang.String> getRenamedServicesMap();
+
   /**
    *
    *
@@ -134,6 +140,7 @@ public interface GoSettingsOrBuilder
       java.lang.String key,
       /* nullable */
       java.lang.String defaultValue);
+
   /**
    *
    *

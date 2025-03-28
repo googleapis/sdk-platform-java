@@ -148,10 +148,7 @@ class ITVersionHeaders {
   @Test
   void testGrpcEcho_userApiVersionThrowsException() throws IOException {
     StubSettings stubSettings =
-        grpcClient
-            .getSettings()
-            .getStubSettings()
-            .toBuilder()
+        grpcClient.getSettings().getStubSettings().toBuilder()
             .setHeaderProvider(
                 FixedHeaderProvider.create(
                     ApiClientHeaderProvider.API_VERSION_HEADER_KEY, CUSTOM_API_VERSION))
@@ -167,10 +164,7 @@ class ITVersionHeaders {
   @Test
   void testHttpJsonEcho_userApiVersionThrowsException() throws IOException {
     StubSettings stubSettings =
-        httpJsonClient
-            .getSettings()
-            .getStubSettings()
-            .toBuilder()
+        httpJsonClient.getSettings().getStubSettings().toBuilder()
             .setHeaderProvider(
                 FixedHeaderProvider.create(
                     ApiClientHeaderProvider.API_VERSION_HEADER_KEY, CUSTOM_API_VERSION))
@@ -186,10 +180,7 @@ class ITVersionHeaders {
   @Test
   void testGrpcCompliance_userApiVersionSetSuccess() throws IOException {
     StubSettings stubSettingsWithApiVersionHeader =
-        grpcComplianceClient
-            .getSettings()
-            .getStubSettings()
-            .toBuilder()
+        grpcComplianceClient.getSettings().getStubSettings().toBuilder()
             .setHeaderProvider(
                 FixedHeaderProvider.create(
                     ApiClientHeaderProvider.API_VERSION_HEADER_KEY, CUSTOM_API_VERSION))
@@ -211,10 +202,7 @@ class ITVersionHeaders {
   @Test
   void testHttpJsonCompliance_userApiVersionSetSuccess() throws IOException {
     StubSettings httpJsonStubSettingsWithApiVersionHeader =
-        httpJsonComplianceClient
-            .getSettings()
-            .getStubSettings()
-            .toBuilder()
+        httpJsonComplianceClient.getSettings().getStubSettings().toBuilder()
             .setHeaderProvider(
                 FixedHeaderProvider.create(
                     ApiClientHeaderProvider.API_VERSION_HEADER_KEY, CUSTOM_API_VERSION))

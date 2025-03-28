@@ -46,6 +46,7 @@ public interface RequestMetadataOrBuilder
    * @return The callerIp.
    */
   java.lang.String getCallerIp();
+
   /**
    *
    *
@@ -91,6 +92,7 @@ public interface RequestMetadataOrBuilder
    * @return The callerSuppliedUserAgent.
    */
   java.lang.String getCallerSuppliedUserAgent();
+
   /**
    *
    *
@@ -132,6 +134,7 @@ public interface RequestMetadataOrBuilder
    * @return The callerNetwork.
    */
   java.lang.String getCallerNetwork();
+
   /**
    *
    *
@@ -170,6 +173,7 @@ public interface RequestMetadataOrBuilder
    * @return Whether the requestAttributes field is set.
    */
   boolean hasRequestAttributes();
+
   /**
    *
    *
@@ -189,6 +193,7 @@ public interface RequestMetadataOrBuilder
    * @return The requestAttributes.
    */
   com.google.rpc.context.AttributeContext.Request getRequestAttributes();
+
   /**
    *
    *
@@ -223,6 +228,7 @@ public interface RequestMetadataOrBuilder
    * @return Whether the destinationAttributes field is set.
    */
   boolean hasDestinationAttributes();
+
   /**
    *
    *
@@ -239,6 +245,7 @@ public interface RequestMetadataOrBuilder
    * @return The destinationAttributes.
    */
   com.google.rpc.context.AttributeContext.Peer getDestinationAttributes();
+
   /**
    *
    *

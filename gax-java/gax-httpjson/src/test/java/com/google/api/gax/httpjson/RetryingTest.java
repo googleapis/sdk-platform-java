@@ -179,8 +179,7 @@ class RetryingTest {
         .thenReturn(ApiFutures.<Integer>immediateFuture(2));
 
     RetrySettings retrySettings =
-        FAST_RETRY_SETTINGS
-            .toBuilder()
+        FAST_RETRY_SETTINGS.toBuilder()
             .setInitialRetryDelayDuration(java.time.Duration.ofMillis(Integer.MAX_VALUE))
             .setMaxRetryDelayDuration(java.time.Duration.ofMillis(Integer.MAX_VALUE))
             .build();

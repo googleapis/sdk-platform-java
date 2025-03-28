@@ -124,14 +124,18 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
     return toBuilder().setEndpoint(endpoint).build();
   }
 
-  /** @deprecated REST transport channel doesn't support channel pooling */
+  /**
+   * @deprecated REST transport channel doesn't support channel pooling
+   */
   @Deprecated
   @Override
   public boolean acceptsPoolSize() {
     return false;
   }
 
-  /** @deprecated REST transport channel doesn't support channel pooling */
+  /**
+   * @deprecated REST transport channel doesn't support channel pooling
+   */
   @Deprecated
   @Override
   public TransportChannelProvider withPoolSize(int size) {
@@ -259,7 +263,9 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
       return this;
     }
 
-    /** @deprecated Please use {@link #setExecutor(Executor)}. */
+    /**
+     * @deprecated Please use {@link #setExecutor(Executor)}.
+     */
     @Deprecated
     public Builder setExecutorProvider(ExecutorProvider executorProvider) {
       return setExecutor((Executor) executorProvider.getExecutor());

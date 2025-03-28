@@ -287,6 +287,7 @@ public abstract class BaseEmulatorHelper<T extends ServiceOptions> {
       log.fine("Starting emulator via Google Cloud SDK");
       process = CommandWrapper.create().setCommand(commandText).setRedirectErrorStream().start();
     }
+
     /** This method is obsolete. Use {@link #waitForDuration(java.time.Duration)} instead */
     @ObsoleteApi("Use waitForDuration() instead")
     @Override

@@ -344,7 +344,8 @@ public class BlurbName implements ResourceName {
     private Builder(BlurbName blurbName) {
       Preconditions.checkArgument(
           Objects.equals(blurbName.pathTemplate, USER_LEGACY_USER_BLURB),
-          "toBuilder is only supported when BlurbName has the pattern of users/{user}/profile/blurbs/legacy/{legacy_user}~{blurb}");
+          "toBuilder is only supported when BlurbName has the pattern of"
+              + " users/{user}/profile/blurbs/legacy/{legacy_user}~{blurb}");
       this.user = blurbName.user;
       this.legacyUser = blurbName.legacyUser;
       this.blurb = blurbName.blurb;

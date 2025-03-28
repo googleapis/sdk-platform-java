@@ -79,6 +79,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     // @@protoc_insertion_point(message_implements:google.api.ResourceDescriptor)
     ResourceDescriptorOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use ResourceDescriptor.newBuilder() to construct.
   private ResourceDescriptor(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -171,6 +172,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * <code>HISTORY_UNSPECIFIED = 0;</code>
      */
     public static final int HISTORY_UNSPECIFIED_VALUE = 0;
+
     /**
      *
      *
@@ -182,6 +184,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * <code>ORIGINALLY_SINGLE_PATTERN = 1;</code>
      */
     public static final int ORIGINALLY_SINGLE_PATTERN_VALUE = 1;
+
     /**
      *
      *
@@ -328,6 +331,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * <code>STYLE_UNSPECIFIED = 0;</code>
      */
     public static final int STYLE_UNSPECIFIED_VALUE = 0;
+
     /**
      *
      *
@@ -431,6 +435,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object type_ = "";
+
   /**
    *
    *
@@ -463,6 +468,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       return s;
     }
   }
+
   /**
    *
    *
@@ -501,6 +507,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList pattern_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
+
   /**
    *
    *
@@ -533,6 +540,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
   public com.google.protobuf.ProtocolStringList getPatternList() {
     return pattern_;
   }
+
   /**
    *
    *
@@ -565,6 +573,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
   public int getPatternCount() {
     return pattern_.size();
   }
+
   /**
    *
    *
@@ -598,6 +607,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
   public java.lang.String getPattern(int index) {
     return pattern_.get(index);
   }
+
   /**
    *
    *
@@ -636,6 +646,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object nameField_ = "";
+
   /**
    *
    *
@@ -660,6 +671,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       return s;
     }
   }
+
   /**
    *
    *
@@ -687,6 +699,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
 
   public static final int HISTORY_FIELD_NUMBER = 4;
   private int history_ = 0;
+
   /**
    *
    *
@@ -716,6 +729,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
   public int getHistoryValue() {
     return history_;
   }
+
   /**
    *
    *
@@ -752,6 +766,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object plural_ = "";
+
   /**
    *
    *
@@ -787,6 +802,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       return s;
     }
   }
+
   /**
    *
    *
@@ -827,6 +843,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object singular_ = "";
+
   /**
    *
    *
@@ -852,6 +869,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       return s;
     }
   }
+
   /**
    *
    *
@@ -894,6 +912,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
               return result == null ? com.google.api.ResourceDescriptor.Style.UNRECOGNIZED : result;
             }
           };
+
   /**
    *
    *
@@ -912,6 +931,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     return new com.google.protobuf.Internal.ListAdapter<
         java.lang.Integer, com.google.api.ResourceDescriptor.Style>(style_, style_converter_);
   }
+
   /**
    *
    *
@@ -929,6 +949,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
   public int getStyleCount() {
     return style_.size();
   }
+
   /**
    *
    *
@@ -947,6 +968,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
   public com.google.api.ResourceDescriptor.Style getStyle(int index) {
     return style_converter_.convert(style_.get(index));
   }
+
   /**
    *
    *
@@ -964,6 +986,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
   public java.util.List<java.lang.Integer> getStyleValueList() {
     return style_;
   }
+
   /**
    *
    *
@@ -1219,6 +1242,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -1565,6 +1589,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     private int bitField0_;
 
     private java.lang.Object type_ = "";
+
     /**
      *
      *
@@ -1596,6 +1621,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -1627,6 +1653,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -1657,6 +1684,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1683,6 +1711,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1724,6 +1753,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       }
       bitField0_ |= 0x00000002;
     }
+
     /**
      *
      *
@@ -1757,6 +1787,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       pattern_.makeImmutable();
       return pattern_;
     }
+
     /**
      *
      *
@@ -1789,6 +1820,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     public int getPatternCount() {
       return pattern_.size();
     }
+
     /**
      *
      *
@@ -1822,6 +1854,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     public java.lang.String getPattern(int index) {
       return pattern_.get(index);
     }
+
     /**
      *
      *
@@ -1855,6 +1888,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     public com.google.protobuf.ByteString getPatternBytes(int index) {
       return pattern_.getByteString(index);
     }
+
     /**
      *
      *
@@ -1896,6 +1930,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1936,6 +1971,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1973,6 +2009,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2009,6 +2046,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2052,6 +2090,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     }
 
     private java.lang.Object nameField_ = "";
+
     /**
      *
      *
@@ -2075,6 +2114,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -2098,6 +2138,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -2120,6 +2161,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2138,6 +2180,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2163,6 +2206,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     }
 
     private int history_ = 0;
+
     /**
      *
      *
@@ -2192,6 +2236,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     public int getHistoryValue() {
       return history_;
     }
+
     /**
      *
      *
@@ -2224,6 +2269,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2255,6 +2301,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
           com.google.api.ResourceDescriptor.History.forNumber(history_);
       return result == null ? com.google.api.ResourceDescriptor.History.UNRECOGNIZED : result;
     }
+
     /**
      *
      *
@@ -2290,6 +2337,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2323,6 +2371,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     }
 
     private java.lang.Object plural_ = "";
+
     /**
      *
      *
@@ -2357,6 +2406,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -2391,6 +2441,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -2424,6 +2475,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2453,6 +2505,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2489,6 +2542,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     }
 
     private java.lang.Object singular_ = "";
+
     /**
      *
      *
@@ -2513,6 +2567,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -2537,6 +2592,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -2560,6 +2616,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2579,6 +2636,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2612,6 +2670,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
         bitField0_ |= 0x00000040;
       }
     }
+
     /**
      *
      *
@@ -2629,6 +2688,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       return new com.google.protobuf.Internal.ListAdapter<
           java.lang.Integer, com.google.api.ResourceDescriptor.Style>(style_, style_converter_);
     }
+
     /**
      *
      *
@@ -2645,6 +2705,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     public int getStyleCount() {
       return style_.size();
     }
+
     /**
      *
      *
@@ -2662,6 +2723,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     public com.google.api.ResourceDescriptor.Style getStyle(int index) {
       return style_converter_.convert(style_.get(index));
     }
+
     /**
      *
      *
@@ -2686,6 +2748,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2709,6 +2772,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2732,6 +2796,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2751,6 +2816,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2767,6 +2833,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     public java.util.List<java.lang.Integer> getStyleValueList() {
       return java.util.Collections.unmodifiableList(style_);
     }
+
     /**
      *
      *
@@ -2784,6 +2851,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     public int getStyleValue(int index) {
       return style_.get(index);
     }
+
     /**
      *
      *
@@ -2805,6 +2873,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2825,6 +2894,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *

@@ -70,8 +70,7 @@ class MethodTest {
   @Test
   void hasRoutingHeaders_shouldReturnTrueIfRoutingHeadersIsNotEmpty() {
     Method method =
-        METHOD
-            .toBuilder()
+        METHOD.toBuilder()
             .setRoutingHeaderRule(
                 RoutingHeaderRule.builder()
                     .addParam(RoutingHeaderParam.create("table", "routing_id", ""))
@@ -83,8 +82,7 @@ class MethodTest {
   @Test
   void shouldSetParamsExtractor_shouldReturnTrueIfHasRoutingHeaders() {
     Method method =
-        METHOD
-            .toBuilder()
+        METHOD.toBuilder()
             .setRoutingHeaderRule(
                 RoutingHeaderRule.builder()
                     .addParam(RoutingHeaderParam.create("table", "routing_id", ""))
@@ -103,8 +101,7 @@ class MethodTest {
   @Test
   void shouldSetParamsExtractor_shouldReturnFalseIfHasHttpBindingsAndRoutingHeadersIsEmpty() {
     Method method =
-        METHOD
-            .toBuilder()
+        METHOD.toBuilder()
             .setHttpBindings(HTTP_BINDINGS)
             .setRoutingHeaderRule(RoutingHeaderRule.builder().build())
             .build();
@@ -129,24 +126,21 @@ class MethodTest {
   void hasAutoPopulatedFields_shouldReturnFalseIfMethodIsStreaming() {
     List<String> autoPopulatedFields = Arrays.asList("field1", "field2");
     Method method =
-        METHOD
-            .toBuilder()
+        METHOD.toBuilder()
             .setAutoPopulatedFields(autoPopulatedFields)
             .setStream(Stream.SERVER)
             .build();
     assertEquals(false, method.hasAutoPopulatedFields());
 
     method =
-        METHOD
-            .toBuilder()
+        METHOD.toBuilder()
             .setAutoPopulatedFields(autoPopulatedFields)
             .setStream(Stream.BIDI)
             .build();
     assertEquals(false, method.hasAutoPopulatedFields());
 
     method =
-        METHOD
-            .toBuilder()
+        METHOD.toBuilder()
             .setAutoPopulatedFields(autoPopulatedFields)
             .setStream(Stream.CLIENT)
             .build();
@@ -157,8 +151,7 @@ class MethodTest {
   void hasAutoPopulatedFields_shouldReturnFalseIfAutoPopulatedFieldsIsEmpty() {
     List<String> autoPopulatedFields = new ArrayList<>();
     Method method =
-        METHOD
-            .toBuilder()
+        METHOD.toBuilder()
             .setAutoPopulatedFields(autoPopulatedFields)
             .setStream(Stream.NONE)
             .build();

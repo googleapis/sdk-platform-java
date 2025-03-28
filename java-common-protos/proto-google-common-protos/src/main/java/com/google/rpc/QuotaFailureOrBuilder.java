@@ -34,6 +34,7 @@ public interface QuotaFailureOrBuilder
    * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
    */
   java.util.List<com.google.rpc.QuotaFailure.Violation> getViolationsList();
+
   /**
    *
    *
@@ -44,6 +45,7 @@ public interface QuotaFailureOrBuilder
    * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
    */
   com.google.rpc.QuotaFailure.Violation getViolations(int index);
+
   /**
    *
    *
@@ -54,6 +56,7 @@ public interface QuotaFailureOrBuilder
    * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
    */
   int getViolationsCount();
+
   /**
    *
    *
@@ -65,6 +68,7 @@ public interface QuotaFailureOrBuilder
    */
   java.util.List<? extends com.google.rpc.QuotaFailure.ViolationOrBuilder>
       getViolationsOrBuilderList();
+
   /**
    *
    *

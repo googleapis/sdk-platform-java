@@ -57,6 +57,7 @@ import java.time.Duration;
 public abstract class ChannelPoolSettings {
   /** How often to check and possibly resize the {@link ChannelPool}. */
   static final Duration RESIZE_INTERVAL = Duration.ofMinutes(1);
+
   /** The maximum number of channels that can be added or removed at a time. */
   static final int MAX_RESIZE_DELTA = 2;
 

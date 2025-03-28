@@ -25,6 +25,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.EnumResponse)
     EnumResponseOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use EnumResponse.newBuilder() to construct.
   private EnumResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -58,6 +59,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
   private int bitField0_;
   public static final int REQUEST_FIELD_NUMBER = 1;
   private com.google.showcase.v1beta1.EnumRequest request_;
+
   /**
    *
    *
@@ -73,6 +75,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
   public boolean hasRequest() {
     return ((bitField0_ & 0x00000001) != 0);
   }
+
   /**
    *
    *
@@ -90,6 +93,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
         ? com.google.showcase.v1beta1.EnumRequest.getDefaultInstance()
         : request_;
   }
+
   /**
    *
    *
@@ -108,6 +112,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
 
   public static final int CONTINENT_FIELD_NUMBER = 2;
   private int continent_ = 0;
+
   /**
    *
    *
@@ -123,6 +128,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
   public int getContinentValue() {
     return continent_;
   }
+
   /**
    *
    *
@@ -313,6 +319,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /** Protobuf type {@code google.showcase.v1beta1.EnumResponse} */
   public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
       implements
@@ -520,6 +527,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
             com.google.showcase.v1beta1.EnumRequest.Builder,
             com.google.showcase.v1beta1.EnumRequestOrBuilder>
         requestBuilder_;
+
     /**
      *
      *
@@ -534,6 +542,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
     public boolean hasRequest() {
       return ((bitField0_ & 0x00000001) != 0);
     }
+
     /**
      *
      *
@@ -554,6 +563,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
         return requestBuilder_.getMessage();
       }
     }
+
     /**
      *
      *
@@ -576,6 +586,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -595,6 +606,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -622,6 +634,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -641,6 +654,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -655,6 +669,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getRequestFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -673,6 +688,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
             : request_;
       }
     }
+
     /**
      *
      *
@@ -700,6 +716,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int continent_ = 0;
+
     /**
      *
      *
@@ -715,6 +732,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
     public int getContinentValue() {
       return continent_;
     }
+
     /**
      *
      *
@@ -733,6 +751,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -750,6 +769,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
           com.google.showcase.v1beta1.Continent.forNumber(continent_);
       return result == null ? com.google.showcase.v1beta1.Continent.UNRECOGNIZED : result;
     }
+
     /**
      *
      *
@@ -771,6 +791,7 @@ public final class EnumResponse extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *

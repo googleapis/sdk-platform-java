@@ -137,8 +137,7 @@ class HttpJsonServiceStubClassComposerTest {
                 .build());
     GapicContext contextServiceYaml = RestTestProtoLoader.instance().parseCompliance();
     contextServiceYaml =
-        contextServiceYaml
-            .toBuilder()
+        contextServiceYaml.toBuilder()
             .setServiceYamlProto(
                 com.google.api.Service.newBuilder()
                     .setHttp(Http.newBuilder().addAllRules(httpRuleList))
@@ -159,8 +158,7 @@ class HttpJsonServiceStubClassComposerTest {
 
     GapicContext contextEmptyServiceYaml = RestTestProtoLoader.instance().parseCompliance();
     contextNullServiceYaml =
-        contextEmptyServiceYaml
-            .toBuilder()
+        contextEmptyServiceYaml.toBuilder()
             .setServiceYamlProto(com.google.api.Service.newBuilder().build())
             .build();
     Map<String, HttpRule> httpRuleMapEmpty =

@@ -36,6 +36,7 @@ public interface WaitOperationRequestOrBuilder
    * @return The name.
    */
   java.lang.String getName();
+
   /**
    *
    *
@@ -63,6 +64,7 @@ public interface WaitOperationRequestOrBuilder
    * @return Whether the timeout field is set.
    */
   boolean hasTimeout();
+
   /**
    *
    *
@@ -77,6 +79,7 @@ public interface WaitOperationRequestOrBuilder
    * @return The timeout.
    */
   com.google.protobuf.Duration getTimeout();
+
   /**
    *
    *

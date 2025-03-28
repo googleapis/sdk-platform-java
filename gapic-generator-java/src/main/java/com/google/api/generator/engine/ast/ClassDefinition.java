@@ -27,13 +27,17 @@ import javax.annotation.Nullable;
 public abstract class ClassDefinition implements AstNode {
   // Optional.
   public abstract ImmutableList<CommentStatement> fileHeader();
+
   // Required for samples classes.
   @Nullable
   public abstract RegionTag regionTag();
+
   // Required.
   public abstract ScopeNode scope();
+
   // Required.
   public abstract IdentifierNode classIdentifier();
+
   // Required for outer classes.
   @Nullable
   public abstract String packageString();

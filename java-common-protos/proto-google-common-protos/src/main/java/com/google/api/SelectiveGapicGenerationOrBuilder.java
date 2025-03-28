@@ -37,6 +37,7 @@ public interface SelectiveGapicGenerationOrBuilder
    * @return A list containing the methods.
    */
   java.util.List<java.lang.String> getMethodsList();
+
   /**
    *
    *
@@ -50,6 +51,7 @@ public interface SelectiveGapicGenerationOrBuilder
    * @return The count of methods.
    */
   int getMethodsCount();
+
   /**
    *
    *
@@ -64,6 +66,7 @@ public interface SelectiveGapicGenerationOrBuilder
    * @return The methods at the given index.
    */
   java.lang.String getMethods(int index);
+
   /**
    *
    *

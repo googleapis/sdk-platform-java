@@ -36,6 +36,7 @@ public interface ReportSessionResponseOrBuilder
    * @return The enum numeric value on the wire for result.
    */
   int getResultValue();
+
   /**
    *
    *
@@ -59,6 +60,7 @@ public interface ReportSessionResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.TestRun test_runs = 2;</code>
    */
   java.util.List<com.google.showcase.v1beta1.TestRun> getTestRunsList();
+
   /**
    *
    *
@@ -69,6 +71,7 @@ public interface ReportSessionResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.TestRun test_runs = 2;</code>
    */
   com.google.showcase.v1beta1.TestRun getTestRuns(int index);
+
   /**
    *
    *
@@ -79,6 +82,7 @@ public interface ReportSessionResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.TestRun test_runs = 2;</code>
    */
   int getTestRunsCount();
+
   /**
    *
    *
@@ -89,6 +93,7 @@ public interface ReportSessionResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.TestRun test_runs = 2;</code>
    */
   java.util.List<? extends com.google.showcase.v1beta1.TestRunOrBuilder> getTestRunsOrBuilderList();
+
   /**
    *
    *

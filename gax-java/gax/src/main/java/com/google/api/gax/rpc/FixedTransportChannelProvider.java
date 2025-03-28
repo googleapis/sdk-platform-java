@@ -89,14 +89,18 @@ public class FixedTransportChannelProvider implements TransportChannelProvider {
         "FixedTransportChannelProvider doesn't need an endpoint");
   }
 
-  /** @deprecated FixedTransportChannelProvider doesn't support ChannelPool configuration */
+  /**
+   * @deprecated FixedTransportChannelProvider doesn't support ChannelPool configuration
+   */
   @Deprecated
   @Override
   public boolean acceptsPoolSize() {
     return false;
   }
 
-  /** @deprecated FixedTransportChannelProvider doesn't support ChannelPool configuration */
+  /**
+   * @deprecated FixedTransportChannelProvider doesn't support ChannelPool configuration
+   */
   @Deprecated
   @Override
   public TransportChannelProvider withPoolSize(int size) {

@@ -36,6 +36,7 @@ public interface GridOrBuilder
    * @return The title.
    */
   java.lang.String getTitle();
+
   /**
    *
    *
@@ -59,6 +60,7 @@ public interface GridOrBuilder
    * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
    */
   java.util.List<com.google.apps.card.v1.Grid.GridItem> getItemsList();
+
   /**
    *
    *
@@ -69,6 +71,7 @@ public interface GridOrBuilder
    * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
    */
   com.google.apps.card.v1.Grid.GridItem getItems(int index);
+
   /**
    *
    *
@@ -79,6 +82,7 @@ public interface GridOrBuilder
    * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
    */
   int getItemsCount();
+
   /**
    *
    *
@@ -89,6 +93,7 @@ public interface GridOrBuilder
    * <code>repeated .google.apps.card.v1.Grid.GridItem items = 2;</code>
    */
   java.util.List<? extends com.google.apps.card.v1.Grid.GridItemOrBuilder> getItemsOrBuilderList();
+
   /**
    *
    *
@@ -112,6 +117,7 @@ public interface GridOrBuilder
    * @return Whether the borderStyle field is set.
    */
   boolean hasBorderStyle();
+
   /**
    *
    *
@@ -124,6 +130,7 @@ public interface GridOrBuilder
    * @return The borderStyle.
    */
   com.google.apps.card.v1.BorderStyle getBorderStyle();
+
   /**
    *
    *
@@ -164,6 +171,7 @@ public interface GridOrBuilder
    * @return Whether the onClick field is set.
    */
   boolean hasOnClick();
+
   /**
    *
    *
@@ -178,6 +186,7 @@ public interface GridOrBuilder
    * @return The onClick.
    */
   com.google.apps.card.v1.OnClick getOnClick();
+
   /**
    *
    *

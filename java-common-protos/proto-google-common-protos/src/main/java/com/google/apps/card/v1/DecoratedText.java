@@ -40,6 +40,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.DecoratedText)
     DecoratedTextOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use DecoratedText.newBuilder() to construct.
   private DecoratedText(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -92,6 +93,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * @return The name.
      */
     java.lang.String getName();
+
     /**
      *
      *
@@ -123,6 +125,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * @return The value.
      */
     java.lang.String getValue();
+
     /**
      *
      *
@@ -165,6 +168,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the onChangeAction field is set.
      */
     boolean hasOnChangeAction();
+
     /**
      *
      *
@@ -178,6 +182,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * @return The onChangeAction.
      */
     com.google.apps.card.v1.Action getOnChangeAction();
+
     /**
      *
      *
@@ -205,6 +210,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      * @return The enum numeric value on the wire for controlType.
      */
     int getControlTypeValue();
+
     /**
      *
      *
@@ -221,6 +227,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
      */
     com.google.apps.card.v1.DecoratedText.SwitchControl.ControlType getControlType();
   }
+
   /**
    *
    *
@@ -240,6 +247,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       // @@protoc_insertion_point(message_implements:google.apps.card.v1.DecoratedText.SwitchControl)
       SwitchControlOrBuilder {
     private static final long serialVersionUID = 0L;
+
     // Use SwitchControl.newBuilder() to construct.
     private SwitchControl(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -328,6 +336,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * <code>SWITCH = 0;</code>
        */
       public static final int SWITCH_VALUE = 0;
+
       /**
        *
        *
@@ -338,6 +347,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
        * <code>CHECKBOX = 1;</code>
        */
       public static final int CHECKBOX_VALUE = 1;
+
       /**
        *
        *
@@ -439,6 +449,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object name_ = "";
+
     /**
      *
      *
@@ -465,6 +476,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
+
     /**
      *
      *
@@ -496,6 +508,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object value_ = "";
+
     /**
      *
      *
@@ -522,6 +535,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
+
     /**
      *
      *
@@ -551,6 +565,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
 
     public static final int SELECTED_FIELD_NUMBER = 3;
     private boolean selected_ = false;
+
     /**
      *
      *
@@ -569,6 +584,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
 
     public static final int ON_CHANGE_ACTION_FIELD_NUMBER = 4;
     private com.google.apps.card.v1.Action onChangeAction_;
+
     /**
      *
      *
@@ -585,6 +601,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     public boolean hasOnChangeAction() {
       return ((bitField0_ & 0x00000001) != 0);
     }
+
     /**
      *
      *
@@ -603,6 +620,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
           ? com.google.apps.card.v1.Action.getDefaultInstance()
           : onChangeAction_;
     }
+
     /**
      *
      *
@@ -622,6 +640,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
 
     public static final int CONTROL_TYPE_FIELD_NUMBER = 5;
     private int controlType_ = 0;
+
     /**
      *
      *
@@ -640,6 +659,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     public int getControlTypeValue() {
       return controlType_;
     }
+
     /**
      *
      *
@@ -867,6 +887,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       Builder builder = new Builder(parent);
       return builder;
     }
+
     /**
      *
      *
@@ -1131,6 +1152,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       private int bitField0_;
 
       private java.lang.Object name_ = "";
+
       /**
        *
        *
@@ -1156,6 +1178,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
+
       /**
        *
        *
@@ -1181,6 +1204,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
+
       /**
        *
        *
@@ -1205,6 +1229,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -1225,6 +1250,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -1252,6 +1278,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       }
 
       private java.lang.Object value_ = "";
+
       /**
        *
        *
@@ -1277,6 +1304,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
+
       /**
        *
        *
@@ -1302,6 +1330,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
+
       /**
        *
        *
@@ -1326,6 +1355,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -1346,6 +1376,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -1373,6 +1404,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       }
 
       private boolean selected_;
+
       /**
        *
        *
@@ -1388,6 +1420,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       public boolean getSelected() {
         return selected_;
       }
+
       /**
        *
        *
@@ -1407,6 +1440,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -1431,6 +1465,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
               com.google.apps.card.v1.Action.Builder,
               com.google.apps.card.v1.ActionOrBuilder>
           onChangeActionBuilder_;
+
       /**
        *
        *
@@ -1446,6 +1481,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       public boolean hasOnChangeAction() {
         return ((bitField0_ & 0x00000008) != 0);
       }
+
       /**
        *
        *
@@ -1467,6 +1503,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
           return onChangeActionBuilder_.getMessage();
         }
       }
+
       /**
        *
        *
@@ -1490,6 +1527,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -1510,6 +1548,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -1538,6 +1577,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
+
       /**
        *
        *
@@ -1558,6 +1598,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -1573,6 +1614,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return getOnChangeActionFieldBuilder().getBuilder();
       }
+
       /**
        *
        *
@@ -1592,6 +1634,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
               : onChangeAction_;
         }
       }
+
       /**
        *
        *
@@ -1620,6 +1663,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       }
 
       private int controlType_ = 0;
+
       /**
        *
        *
@@ -1638,6 +1682,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       public int getControlTypeValue() {
         return controlType_;
       }
+
       /**
        *
        *
@@ -1659,6 +1704,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -1681,6 +1727,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
             ? com.google.apps.card.v1.DecoratedText.SwitchControl.ControlType.UNRECOGNIZED
             : result;
       }
+
       /**
        *
        *
@@ -1706,6 +1753,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -1810,6 +1858,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     private ControlCase(int value) {
       this.value = value;
     }
+
     /**
      * @param value The number of the enum to look for.
      * @return The enum associated with the given number.
@@ -1846,6 +1895,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
 
   public static final int ICON_FIELD_NUMBER = 1;
   private com.google.apps.card.v1.Icon icon_;
+
   /**
    *
    *
@@ -1864,6 +1914,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
   public boolean hasIcon() {
     return ((bitField0_ & 0x00000001) != 0);
   }
+
   /**
    *
    *
@@ -1882,6 +1933,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
   public com.google.apps.card.v1.Icon getIcon() {
     return icon_ == null ? com.google.apps.card.v1.Icon.getDefaultInstance() : icon_;
   }
+
   /**
    *
    *
@@ -1899,6 +1951,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
 
   public static final int START_ICON_FIELD_NUMBER = 12;
   private com.google.apps.card.v1.Icon startIcon_;
+
   /**
    *
    *
@@ -1914,6 +1967,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
   public boolean hasStartIcon() {
     return ((bitField0_ & 0x00000002) != 0);
   }
+
   /**
    *
    *
@@ -1929,6 +1983,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
   public com.google.apps.card.v1.Icon getStartIcon() {
     return startIcon_ == null ? com.google.apps.card.v1.Icon.getDefaultInstance() : startIcon_;
   }
+
   /**
    *
    *
@@ -1947,6 +2002,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object topLabel_ = "";
+
   /**
    *
    *
@@ -1970,6 +2026,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
+
   /**
    *
    *
@@ -1998,6 +2055,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object text_ = "";
+
   /**
    *
    *
@@ -2030,6 +2088,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
+
   /**
    *
    *
@@ -2065,6 +2124,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
 
   public static final int WRAP_TEXT_FIELD_NUMBER = 5;
   private boolean wrapText_ = false;
+
   /**
    *
    *
@@ -2088,6 +2148,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object bottomLabel_ = "";
+
   /**
    *
    *
@@ -2111,6 +2172,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
+
   /**
    *
    *
@@ -2137,6 +2199,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
 
   public static final int ON_CLICK_FIELD_NUMBER = 7;
   private com.google.apps.card.v1.OnClick onClick_;
+
   /**
    *
    *
@@ -2152,6 +2215,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
   public boolean hasOnClick() {
     return ((bitField0_ & 0x00000004) != 0);
   }
+
   /**
    *
    *
@@ -2167,6 +2231,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
   public com.google.apps.card.v1.OnClick getOnClick() {
     return onClick_ == null ? com.google.apps.card.v1.OnClick.getDefaultInstance() : onClick_;
   }
+
   /**
    *
    *
@@ -2182,6 +2247,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int BUTTON_FIELD_NUMBER = 8;
+
   /**
    *
    *
@@ -2197,6 +2263,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
   public boolean hasButton() {
     return controlCase_ == 8;
   }
+
   /**
    *
    *
@@ -2215,6 +2282,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.apps.card.v1.Button.getDefaultInstance();
   }
+
   /**
    *
    *
@@ -2233,6 +2301,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SWITCH_CONTROL_FIELD_NUMBER = 9;
+
   /**
    *
    *
@@ -2249,6 +2318,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
   public boolean hasSwitchControl() {
     return controlCase_ == 9;
   }
+
   /**
    *
    *
@@ -2268,6 +2338,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.apps.card.v1.DecoratedText.SwitchControl.getDefaultInstance();
   }
+
   /**
    *
    *
@@ -2287,6 +2358,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int END_ICON_FIELD_NUMBER = 11;
+
   /**
    *
    *
@@ -2308,6 +2380,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
   public boolean hasEndIcon() {
     return controlCase_ == 11;
   }
+
   /**
    *
    *
@@ -2332,6 +2405,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.apps.card.v1.Icon.getDefaultInstance();
   }
+
   /**
    *
    *
@@ -2635,6 +2709,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -3019,6 +3094,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.Icon.Builder,
             com.google.apps.card.v1.IconOrBuilder>
         iconBuilder_;
+
     /**
      *
      *
@@ -3036,6 +3112,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     public boolean hasIcon() {
       return ((bitField0_ & 0x00000001) != 0);
     }
+
     /**
      *
      *
@@ -3057,6 +3134,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return iconBuilder_.getMessage();
       }
     }
+
     /**
      *
      *
@@ -3080,6 +3158,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -3100,6 +3179,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -3128,6 +3208,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -3148,6 +3229,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -3163,6 +3245,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getIconFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -3180,6 +3263,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return icon_ == null ? com.google.apps.card.v1.Icon.getDefaultInstance() : icon_;
       }
     }
+
     /**
      *
      *
@@ -3212,6 +3296,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.Icon.Builder,
             com.google.apps.card.v1.IconOrBuilder>
         startIconBuilder_;
+
     /**
      *
      *
@@ -3226,6 +3311,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     public boolean hasStartIcon() {
       return ((bitField0_ & 0x00000002) != 0);
     }
+
     /**
      *
      *
@@ -3244,6 +3330,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return startIconBuilder_.getMessage();
       }
     }
+
     /**
      *
      *
@@ -3266,6 +3353,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -3285,6 +3373,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -3312,6 +3401,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -3331,6 +3421,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -3345,6 +3436,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getStartIconFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -3361,6 +3453,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return startIcon_ == null ? com.google.apps.card.v1.Icon.getDefaultInstance() : startIcon_;
       }
     }
+
     /**
      *
      *
@@ -3388,6 +3481,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object topLabel_ = "";
+
     /**
      *
      *
@@ -3410,6 +3504,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -3432,6 +3527,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -3453,6 +3549,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -3470,6 +3567,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -3494,6 +3592,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object text_ = "";
+
     /**
      *
      *
@@ -3525,6 +3624,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -3556,6 +3656,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -3586,6 +3687,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -3612,6 +3714,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -3645,6 +3748,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     }
 
     private boolean wrapText_;
+
     /**
      *
      *
@@ -3663,6 +3767,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     public boolean getWrapText() {
       return wrapText_;
     }
+
     /**
      *
      *
@@ -3685,6 +3790,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -3707,6 +3813,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object bottomLabel_ = "";
+
     /**
      *
      *
@@ -3729,6 +3836,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -3751,6 +3859,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -3772,6 +3881,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -3789,6 +3899,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -3818,6 +3929,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.OnClick.Builder,
             com.google.apps.card.v1.OnClickOrBuilder>
         onClickBuilder_;
+
     /**
      *
      *
@@ -3832,6 +3944,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     public boolean hasOnClick() {
       return ((bitField0_ & 0x00000040) != 0);
     }
+
     /**
      *
      *
@@ -3850,6 +3963,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return onClickBuilder_.getMessage();
       }
     }
+
     /**
      *
      *
@@ -3872,6 +3986,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -3891,6 +4006,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -3918,6 +4034,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -3937,6 +4054,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -3951,6 +4069,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getOnClickFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -3967,6 +4086,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return onClick_ == null ? com.google.apps.card.v1.OnClick.getDefaultInstance() : onClick_;
       }
     }
+
     /**
      *
      *
@@ -3998,6 +4118,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.Button.Builder,
             com.google.apps.card.v1.ButtonOrBuilder>
         buttonBuilder_;
+
     /**
      *
      *
@@ -4013,6 +4134,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     public boolean hasButton() {
       return controlCase_ == 8;
     }
+
     /**
      *
      *
@@ -4038,6 +4160,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.Button.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -4060,6 +4183,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       controlCase_ = 8;
       return this;
     }
+
     /**
      *
      *
@@ -4079,6 +4203,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       controlCase_ = 8;
       return this;
     }
+
     /**
      *
      *
@@ -4109,6 +4234,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       controlCase_ = 8;
       return this;
     }
+
     /**
      *
      *
@@ -4134,6 +4260,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -4146,6 +4273,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.Button.Builder getButtonBuilder() {
       return getButtonFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -4166,6 +4294,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.Button.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -4202,6 +4331,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.DecoratedText.SwitchControl.Builder,
             com.google.apps.card.v1.DecoratedText.SwitchControlOrBuilder>
         switchControlBuilder_;
+
     /**
      *
      *
@@ -4218,6 +4348,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     public boolean hasSwitchControl() {
       return controlCase_ == 9;
     }
+
     /**
      *
      *
@@ -4244,6 +4375,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.DecoratedText.SwitchControl.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -4267,6 +4399,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       controlCase_ = 9;
       return this;
     }
+
     /**
      *
      *
@@ -4288,6 +4421,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       controlCase_ = 9;
       return this;
     }
+
     /**
      *
      *
@@ -4322,6 +4456,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       controlCase_ = 9;
       return this;
     }
+
     /**
      *
      *
@@ -4348,6 +4483,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -4361,6 +4497,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.DecoratedText.SwitchControl.Builder getSwitchControlBuilder() {
       return getSwitchControlFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -4383,6 +4520,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.DecoratedText.SwitchControl.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -4422,6 +4560,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.Icon.Builder,
             com.google.apps.card.v1.IconOrBuilder>
         endIconBuilder_;
+
     /**
      *
      *
@@ -4443,6 +4582,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     public boolean hasEndIcon() {
       return controlCase_ == 11;
     }
+
     /**
      *
      *
@@ -4474,6 +4614,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.Icon.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -4502,6 +4643,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       controlCase_ = 11;
       return this;
     }
+
     /**
      *
      *
@@ -4527,6 +4669,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       controlCase_ = 11;
       return this;
     }
+
     /**
      *
      *
@@ -4563,6 +4706,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       controlCase_ = 11;
       return this;
     }
+
     /**
      *
      *
@@ -4594,6 +4738,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -4612,6 +4757,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.Icon.Builder getEndIconBuilder() {
       return getEndIconFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -4638,6 +4784,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.Icon.getDefaultInstance();
       }
     }
+
     /**
      *
      *

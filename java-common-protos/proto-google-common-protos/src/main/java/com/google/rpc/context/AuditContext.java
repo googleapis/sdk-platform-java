@@ -33,6 +33,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.rpc.context.AuditContext)
     AuditContextOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use AuditContext.newBuilder() to construct.
   private AuditContext(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -67,6 +68,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
   private int bitField0_;
   public static final int AUDIT_LOG_FIELD_NUMBER = 1;
   private com.google.protobuf.ByteString auditLog_ = com.google.protobuf.ByteString.EMPTY;
+
   /**
    *
    *
@@ -85,6 +87,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
 
   public static final int SCRUBBED_REQUEST_FIELD_NUMBER = 2;
   private com.google.protobuf.Struct scrubbedRequest_;
+
   /**
    *
    *
@@ -103,6 +106,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
   public boolean hasScrubbedRequest() {
     return ((bitField0_ & 0x00000001) != 0);
   }
+
   /**
    *
    *
@@ -123,6 +127,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
         ? com.google.protobuf.Struct.getDefaultInstance()
         : scrubbedRequest_;
   }
+
   /**
    *
    *
@@ -144,6 +149,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
 
   public static final int SCRUBBED_RESPONSE_FIELD_NUMBER = 3;
   private com.google.protobuf.Struct scrubbedResponse_;
+
   /**
    *
    *
@@ -162,6 +168,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
   public boolean hasScrubbedResponse() {
     return ((bitField0_ & 0x00000002) != 0);
   }
+
   /**
    *
    *
@@ -182,6 +189,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
         ? com.google.protobuf.Struct.getDefaultInstance()
         : scrubbedResponse_;
   }
+
   /**
    *
    *
@@ -203,6 +211,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
 
   public static final int SCRUBBED_RESPONSE_ITEM_COUNT_FIELD_NUMBER = 4;
   private int scrubbedResponseItemCount_ = 0;
+
   /**
    *
    *
@@ -223,6 +232,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object targetResource_ = "";
+
   /**
    *
    *
@@ -246,6 +256,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
+
   /**
    *
    *
@@ -473,6 +484,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -732,6 +744,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private com.google.protobuf.ByteString auditLog_ = com.google.protobuf.ByteString.EMPTY;
+
     /**
      *
      *
@@ -747,6 +760,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ByteString getAuditLog() {
       return auditLog_;
     }
+
     /**
      *
      *
@@ -768,6 +782,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -792,6 +807,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.Struct.Builder,
             com.google.protobuf.StructOrBuilder>
         scrubbedRequestBuilder_;
+
     /**
      *
      *
@@ -809,6 +825,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
     public boolean hasScrubbedRequest() {
       return ((bitField0_ & 0x00000002) != 0);
     }
+
     /**
      *
      *
@@ -832,6 +849,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
         return scrubbedRequestBuilder_.getMessage();
       }
     }
+
     /**
      *
      *
@@ -857,6 +875,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -879,6 +898,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -909,6 +929,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -931,6 +952,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -948,6 +970,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getScrubbedRequestFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -969,6 +992,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
             : scrubbedRequest_;
       }
     }
+
     /**
      *
      *
@@ -1004,6 +1028,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.Struct.Builder,
             com.google.protobuf.StructOrBuilder>
         scrubbedResponseBuilder_;
+
     /**
      *
      *
@@ -1021,6 +1046,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
     public boolean hasScrubbedResponse() {
       return ((bitField0_ & 0x00000004) != 0);
     }
+
     /**
      *
      *
@@ -1044,6 +1070,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
         return scrubbedResponseBuilder_.getMessage();
       }
     }
+
     /**
      *
      *
@@ -1069,6 +1096,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1091,6 +1119,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1121,6 +1150,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1143,6 +1173,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1160,6 +1191,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getScrubbedResponseFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -1181,6 +1213,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
             : scrubbedResponse_;
       }
     }
+
     /**
      *
      *
@@ -1211,6 +1244,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int scrubbedResponseItemCount_;
+
     /**
      *
      *
@@ -1226,6 +1260,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
     public int getScrubbedResponseItemCount() {
       return scrubbedResponseItemCount_;
     }
+
     /**
      *
      *
@@ -1245,6 +1280,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1264,6 +1300,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object targetResource_ = "";
+
     /**
      *
      *
@@ -1286,6 +1323,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -1308,6 +1346,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -1329,6 +1368,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1346,6 +1386,7 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *

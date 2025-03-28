@@ -39,6 +39,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.ButtonList)
     ButtonListOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use ButtonList.newBuilder() to construct.
   private ButtonList(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -73,6 +74,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.apps.card.v1.Button> buttons_;
+
   /**
    *
    *
@@ -86,6 +88,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.apps.card.v1.Button> getButtonsList() {
     return buttons_;
   }
+
   /**
    *
    *
@@ -100,6 +103,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
       getButtonsOrBuilderList() {
     return buttons_;
   }
+
   /**
    *
    *
@@ -113,6 +117,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
   public int getButtonsCount() {
     return buttons_.size();
   }
+
   /**
    *
    *
@@ -126,6 +131,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
   public com.google.apps.card.v1.Button getButtons(int index) {
     return buttons_.get(index);
   }
+
   /**
    *
    *
@@ -299,6 +305,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -562,6 +569,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
         return buttonsBuilder_.getMessageList();
       }
     }
+
     /**
      *
      *
@@ -578,6 +586,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
         return buttonsBuilder_.getCount();
       }
     }
+
     /**
      *
      *
@@ -594,6 +603,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
         return buttonsBuilder_.getMessage(index);
       }
     }
+
     /**
      *
      *
@@ -616,6 +626,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -635,6 +646,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -657,6 +669,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -679,6 +692,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -698,6 +712,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -717,6 +732,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -737,6 +753,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -756,6 +773,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -775,6 +793,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -787,6 +806,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.Button.Builder getButtonsBuilder(int index) {
       return getButtonsFieldBuilder().getBuilder(index);
     }
+
     /**
      *
      *
@@ -803,6 +823,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
         return buttonsBuilder_.getMessageOrBuilder(index);
       }
     }
+
     /**
      *
      *
@@ -820,6 +841,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(buttons_);
       }
     }
+
     /**
      *
      *
@@ -833,6 +855,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
       return getButtonsFieldBuilder()
           .addBuilder(com.google.apps.card.v1.Button.getDefaultInstance());
     }
+
     /**
      *
      *
@@ -846,6 +869,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
       return getButtonsFieldBuilder()
           .addBuilder(index, com.google.apps.card.v1.Button.getDefaultInstance());
     }
+
     /**
      *
      *

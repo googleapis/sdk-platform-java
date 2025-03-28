@@ -38,6 +38,7 @@ public interface TestOrBuilder
    * @return The name.
    */
   java.lang.String getName();
+
   /**
    *
    *
@@ -65,6 +66,7 @@ public interface TestOrBuilder
    * @return The enum numeric value on the wire for expectationLevel.
    */
   int getExpectationLevelValue();
+
   /**
    *
    *
@@ -90,6 +92,7 @@ public interface TestOrBuilder
    * @return The description.
    */
   java.lang.String getDescription();
+
   /**
    *
    *
@@ -116,6 +119,7 @@ public interface TestOrBuilder
    * <code>repeated .google.showcase.v1beta1.Test.Blueprint blueprints = 4;</code>
    */
   java.util.List<com.google.showcase.v1beta1.Test.Blueprint> getBlueprintsList();
+
   /**
    *
    *
@@ -129,6 +133,7 @@ public interface TestOrBuilder
    * <code>repeated .google.showcase.v1beta1.Test.Blueprint blueprints = 4;</code>
    */
   com.google.showcase.v1beta1.Test.Blueprint getBlueprints(int index);
+
   /**
    *
    *
@@ -142,6 +147,7 @@ public interface TestOrBuilder
    * <code>repeated .google.showcase.v1beta1.Test.Blueprint blueprints = 4;</code>
    */
   int getBlueprintsCount();
+
   /**
    *
    *
@@ -156,6 +162,7 @@ public interface TestOrBuilder
    */
   java.util.List<? extends com.google.showcase.v1beta1.Test.BlueprintOrBuilder>
       getBlueprintsOrBuilderList();
+
   /**
    *
    *

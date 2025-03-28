@@ -36,6 +36,7 @@ public interface CustomAttributeOrBuilder
    * @return Whether the name field is set.
    */
   boolean hasName();
+
   /**
    *
    *
@@ -48,6 +49,7 @@ public interface CustomAttributeOrBuilder
    * @return The name.
    */
   java.lang.String getName();
+
   /**
    *
    *
@@ -74,6 +76,7 @@ public interface CustomAttributeOrBuilder
    * @return Whether the value field is set.
    */
   boolean hasValue();
+
   /**
    *
    *
@@ -87,6 +90,7 @@ public interface CustomAttributeOrBuilder
    * @return The value.
    */
   java.lang.String getValue();
+
   /**
    *
    *
@@ -112,6 +116,7 @@ public interface CustomAttributeOrBuilder
    * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
    */
   java.util.List<com.google.shopping.type.CustomAttribute> getGroupValuesList();
+
   /**
    *
    *
@@ -123,6 +128,7 @@ public interface CustomAttributeOrBuilder
    * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
    */
   com.google.shopping.type.CustomAttribute getGroupValues(int index);
+
   /**
    *
    *
@@ -134,6 +140,7 @@ public interface CustomAttributeOrBuilder
    * <code>repeated .google.shopping.type.CustomAttribute group_values = 3;</code>
    */
   int getGroupValuesCount();
+
   /**
    *
    *
@@ -146,6 +153,7 @@ public interface CustomAttributeOrBuilder
    */
   java.util.List<? extends com.google.shopping.type.CustomAttributeOrBuilder>
       getGroupValuesOrBuilderList();
+
   /**
    *
    *

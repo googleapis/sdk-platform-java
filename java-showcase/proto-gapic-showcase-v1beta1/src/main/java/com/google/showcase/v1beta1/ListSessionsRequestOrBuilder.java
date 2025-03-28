@@ -49,6 +49,7 @@ public interface ListSessionsRequestOrBuilder
    * @return The pageToken.
    */
   java.lang.String getPageToken();
+
   /**
    *
    *

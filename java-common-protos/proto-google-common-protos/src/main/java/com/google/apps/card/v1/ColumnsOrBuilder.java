@@ -34,6 +34,7 @@ public interface ColumnsOrBuilder
    * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
    */
   java.util.List<com.google.apps.card.v1.Columns.Column> getColumnItemsList();
+
   /**
    *
    *
@@ -44,6 +45,7 @@ public interface ColumnsOrBuilder
    * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
    */
   com.google.apps.card.v1.Columns.Column getColumnItems(int index);
+
   /**
    *
    *
@@ -54,6 +56,7 @@ public interface ColumnsOrBuilder
    * <code>repeated .google.apps.card.v1.Columns.Column column_items = 2;</code>
    */
   int getColumnItemsCount();
+
   /**
    *
    *
@@ -65,6 +68,7 @@ public interface ColumnsOrBuilder
    */
   java.util.List<? extends com.google.apps.card.v1.Columns.ColumnOrBuilder>
       getColumnItemsOrBuilderList();
+
   /**
    *
    *

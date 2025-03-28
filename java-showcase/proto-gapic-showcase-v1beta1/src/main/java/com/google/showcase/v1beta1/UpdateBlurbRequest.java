@@ -34,6 +34,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.UpdateBlurbRequest)
     UpdateBlurbRequestOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use UpdateBlurbRequest.newBuilder() to construct.
   private UpdateBlurbRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -65,6 +66,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
   private int bitField0_;
   public static final int BLURB_FIELD_NUMBER = 1;
   private com.google.showcase.v1beta1.Blurb blurb_;
+
   /**
    *
    *
@@ -80,6 +82,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
   public boolean hasBlurb() {
     return ((bitField0_ & 0x00000001) != 0);
   }
+
   /**
    *
    *
@@ -95,6 +98,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
   public com.google.showcase.v1beta1.Blurb getBlurb() {
     return blurb_ == null ? com.google.showcase.v1beta1.Blurb.getDefaultInstance() : blurb_;
   }
+
   /**
    *
    *
@@ -111,6 +115,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
 
   public static final int UPDATE_MASK_FIELD_NUMBER = 2;
   private com.google.protobuf.FieldMask updateMask_;
+
   /**
    *
    *
@@ -127,6 +132,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
   public boolean hasUpdateMask() {
     return ((bitField0_ & 0x00000002) != 0);
   }
+
   /**
    *
    *
@@ -143,6 +149,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
   public com.google.protobuf.FieldMask getUpdateMask() {
     return updateMask_ == null ? com.google.protobuf.FieldMask.getDefaultInstance() : updateMask_;
   }
+
   /**
    *
    *
@@ -336,6 +343,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -558,6 +566,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
             com.google.showcase.v1beta1.Blurb.Builder,
             com.google.showcase.v1beta1.BlurbOrBuilder>
         blurbBuilder_;
+
     /**
      *
      *
@@ -572,6 +581,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
     public boolean hasBlurb() {
       return ((bitField0_ & 0x00000001) != 0);
     }
+
     /**
      *
      *
@@ -590,6 +600,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
         return blurbBuilder_.getMessage();
       }
     }
+
     /**
      *
      *
@@ -612,6 +623,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -631,6 +643,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -658,6 +671,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
+
     /**
      *
      *
@@ -677,6 +691,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -691,6 +706,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
       onChanged();
       return getBlurbFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -707,6 +723,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
         return blurb_ == null ? com.google.showcase.v1beta1.Blurb.getDefaultInstance() : blurb_;
       }
     }
+
     /**
      *
      *
@@ -739,6 +756,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
             com.google.protobuf.FieldMask.Builder,
             com.google.protobuf.FieldMaskOrBuilder>
         updateMaskBuilder_;
+
     /**
      *
      *
@@ -754,6 +772,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
     public boolean hasUpdateMask() {
       return ((bitField0_ & 0x00000002) != 0);
     }
+
     /**
      *
      *
@@ -775,6 +794,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
         return updateMaskBuilder_.getMessage();
       }
     }
+
     /**
      *
      *
@@ -798,6 +818,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -818,6 +839,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -846,6 +868,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
+
     /**
      *
      *
@@ -866,6 +889,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -881,6 +905,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
       onChanged();
       return getUpdateMaskFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -900,6 +925,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
             : updateMask_;
       }
     }
+
     /**
      *
      *
