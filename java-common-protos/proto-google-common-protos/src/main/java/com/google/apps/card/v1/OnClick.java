@@ -37,7 +37,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.OnClick)
     OnClickOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use OnClick.newBuilder() to construct.
   private OnClick(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -83,7 +82,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
     private DataCase(int value) {
       this.value = value;
     }
-
     /**
      * @param value The number of the enum to look for.
      * @return The enum associated with the given number.
@@ -121,7 +119,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ACTION_FIELD_NUMBER = 1;
-
   /**
    *
    *
@@ -137,7 +134,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
   public boolean hasAction() {
     return dataCase_ == 1;
   }
-
   /**
    *
    *
@@ -156,7 +152,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.apps.card.v1.Action.getDefaultInstance();
   }
-
   /**
    *
    *
@@ -175,7 +170,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int OPEN_LINK_FIELD_NUMBER = 2;
-
   /**
    *
    *
@@ -191,7 +185,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
   public boolean hasOpenLink() {
     return dataCase_ == 2;
   }
-
   /**
    *
    *
@@ -210,7 +203,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.apps.card.v1.OpenLink.getDefaultInstance();
   }
-
   /**
    *
    *
@@ -229,7 +221,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int OPEN_DYNAMIC_LINK_ACTION_FIELD_NUMBER = 3;
-
   /**
    *
    *
@@ -251,7 +242,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
   public boolean hasOpenDynamicLinkAction() {
     return dataCase_ == 3;
   }
-
   /**
    *
    *
@@ -276,7 +266,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.apps.card.v1.Action.getDefaultInstance();
   }
-
   /**
    *
    *
@@ -301,7 +290,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int CARD_FIELD_NUMBER = 4;
-
   /**
    *
    *
@@ -320,7 +308,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
   public boolean hasCard() {
     return dataCase_ == 4;
   }
-
   /**
    *
    *
@@ -342,7 +329,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.apps.card.v1.Card.getDefaultInstance();
   }
-
   /**
    *
    *
@@ -580,7 +566,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -852,7 +837,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.Action.Builder,
             com.google.apps.card.v1.ActionOrBuilder>
         actionBuilder_;
-
     /**
      *
      *
@@ -868,7 +852,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
     public boolean hasAction() {
       return dataCase_ == 1;
     }
-
     /**
      *
      *
@@ -894,7 +877,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.Action.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -917,7 +899,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 1;
       return this;
     }
-
     /**
      *
      *
@@ -937,7 +918,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 1;
       return this;
     }
-
     /**
      *
      *
@@ -968,7 +948,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 1;
       return this;
     }
-
     /**
      *
      *
@@ -994,7 +973,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1007,7 +985,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.Action.Builder getActionBuilder() {
       return getActionFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1028,7 +1005,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.Action.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1065,7 +1041,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.OpenLink.Builder,
             com.google.apps.card.v1.OpenLinkOrBuilder>
         openLinkBuilder_;
-
     /**
      *
      *
@@ -1081,7 +1056,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
     public boolean hasOpenLink() {
       return dataCase_ == 2;
     }
-
     /**
      *
      *
@@ -1107,7 +1081,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.OpenLink.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1130,7 +1103,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 2;
       return this;
     }
-
     /**
      *
      *
@@ -1150,7 +1122,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 2;
       return this;
     }
-
     /**
      *
      *
@@ -1181,7 +1152,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 2;
       return this;
     }
-
     /**
      *
      *
@@ -1207,7 +1177,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1220,7 +1189,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.OpenLink.Builder getOpenLinkBuilder() {
       return getOpenLinkFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1241,7 +1209,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.OpenLink.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1278,7 +1245,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.Action.Builder,
             com.google.apps.card.v1.ActionOrBuilder>
         openDynamicLinkActionBuilder_;
-
     /**
      *
      *
@@ -1300,7 +1266,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
     public boolean hasOpenDynamicLinkAction() {
       return dataCase_ == 3;
     }
-
     /**
      *
      *
@@ -1332,7 +1297,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.Action.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1361,7 +1325,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 3;
       return this;
     }
-
     /**
      *
      *
@@ -1388,7 +1351,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 3;
       return this;
     }
-
     /**
      *
      *
@@ -1425,7 +1387,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 3;
       return this;
     }
-
     /**
      *
      *
@@ -1457,7 +1418,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1476,7 +1436,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.Action.Builder getOpenDynamicLinkActionBuilder() {
       return getOpenDynamicLinkActionFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1503,7 +1462,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.Action.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1546,7 +1504,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.Card.Builder,
             com.google.apps.card.v1.CardOrBuilder>
         cardBuilder_;
-
     /**
      *
      *
@@ -1565,7 +1522,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
     public boolean hasCard() {
       return dataCase_ == 4;
     }
-
     /**
      *
      *
@@ -1594,7 +1550,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.Card.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1620,7 +1575,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 4;
       return this;
     }
-
     /**
      *
      *
@@ -1643,7 +1597,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 4;
       return this;
     }
-
     /**
      *
      *
@@ -1677,7 +1630,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 4;
       return this;
     }
-
     /**
      *
      *
@@ -1706,7 +1658,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1722,7 +1673,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.Card.Builder getCardBuilder() {
       return getCardFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1746,7 +1696,6 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.Card.getDefaultInstance();
       }
     }
-
     /**
      *
      *

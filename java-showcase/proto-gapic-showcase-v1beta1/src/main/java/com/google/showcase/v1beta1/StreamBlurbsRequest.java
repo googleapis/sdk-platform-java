@@ -34,7 +34,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.StreamBlurbsRequest)
     StreamBlurbsRequestOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use StreamBlurbsRequest.newBuilder() to construct.
   private StreamBlurbsRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -70,7 +69,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object name_ = "";
-
   /**
    *
    *
@@ -96,7 +94,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
       return s;
     }
   }
-
   /**
    *
    *
@@ -125,7 +122,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
 
   public static final int EXPIRE_TIME_FIELD_NUMBER = 2;
   private com.google.protobuf.Timestamp expireTime_;
-
   /**
    *
    *
@@ -142,7 +138,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
   public boolean hasExpireTime() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -159,7 +154,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
   public com.google.protobuf.Timestamp getExpireTime() {
     return expireTime_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : expireTime_;
   }
-
   /**
    *
    *
@@ -348,7 +342,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -563,7 +556,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
     private int bitField0_;
 
     private java.lang.Object name_ = "";
-
     /**
      *
      *
@@ -588,7 +580,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -613,7 +604,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -637,7 +627,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -657,7 +646,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -689,7 +677,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
             com.google.protobuf.Timestamp.Builder,
             com.google.protobuf.TimestampOrBuilder>
         expireTimeBuilder_;
-
     /**
      *
      *
@@ -705,7 +692,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
     public boolean hasExpireTime() {
       return ((bitField0_ & 0x00000002) != 0);
     }
-
     /**
      *
      *
@@ -727,7 +713,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
         return expireTimeBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -751,7 +736,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -772,7 +756,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -801,7 +784,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
-
     /**
      *
      *
@@ -822,7 +804,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -838,7 +819,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
       onChanged();
       return getExpireTimeFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -858,7 +838,6 @@ public final class StreamBlurbsRequest extends com.google.protobuf.GeneratedMess
             : expireTime_;
       }
     }
-
     /**
      *
      *

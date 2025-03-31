@@ -34,7 +34,6 @@ public interface ListTestsResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.Test tests = 1;</code>
    */
   java.util.List<com.google.showcase.v1beta1.Test> getTestsList();
-
   /**
    *
    *
@@ -45,7 +44,6 @@ public interface ListTestsResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.Test tests = 1;</code>
    */
   com.google.showcase.v1beta1.Test getTests(int index);
-
   /**
    *
    *
@@ -56,7 +54,6 @@ public interface ListTestsResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.Test tests = 1;</code>
    */
   int getTestsCount();
-
   /**
    *
    *
@@ -67,7 +64,6 @@ public interface ListTestsResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.Test tests = 1;</code>
    */
   java.util.List<? extends com.google.showcase.v1beta1.TestOrBuilder> getTestsOrBuilderList();
-
   /**
    *
    *
@@ -92,7 +88,6 @@ public interface ListTestsResponseOrBuilder
    * @return The nextPageToken.
    */
   java.lang.String getNextPageToken();
-
   /**
    *
    *

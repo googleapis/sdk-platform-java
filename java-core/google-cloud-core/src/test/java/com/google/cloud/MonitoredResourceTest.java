@@ -61,7 +61,8 @@ class MonitoredResourceTest {
     assertEquals("global", monitoredResource.getType());
     assertEquals(ImmutableMap.of(), monitoredResource.getLabels());
     monitoredResource =
-        monitoredResource.toBuilder()
+        monitoredResource
+            .toBuilder()
             .setType(TYPE)
             .setLabels(ImmutableMap.of("dataset-id", "myDataset"))
             .addLabel("zone", "myZone")

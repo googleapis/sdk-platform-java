@@ -56,7 +56,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.type.DateTime)
     DateTimeOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use DateTime.newBuilder() to construct.
   private DateTime(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -99,7 +98,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     private TimeOffsetCase(int value) {
       this.value = value;
     }
-
     /**
      * @param value The number of the enum to look for.
      * @return The enum associated with the given number.
@@ -134,7 +132,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
 
   public static final int YEAR_FIELD_NUMBER = 1;
   private int year_ = 0;
-
   /**
    *
    *
@@ -154,7 +151,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
 
   public static final int MONTH_FIELD_NUMBER = 2;
   private int month_ = 0;
-
   /**
    *
    *
@@ -173,7 +169,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
 
   public static final int DAY_FIELD_NUMBER = 3;
   private int day_ = 0;
-
   /**
    *
    *
@@ -193,7 +188,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
 
   public static final int HOURS_FIELD_NUMBER = 4;
   private int hours_ = 0;
-
   /**
    *
    *
@@ -214,7 +208,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
 
   public static final int MINUTES_FIELD_NUMBER = 5;
   private int minutes_ = 0;
-
   /**
    *
    *
@@ -233,7 +226,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
 
   public static final int SECONDS_FIELD_NUMBER = 6;
   private int seconds_ = 0;
-
   /**
    *
    *
@@ -253,7 +245,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
 
   public static final int NANOS_FIELD_NUMBER = 7;
   private int nanos_ = 0;
-
   /**
    *
    *
@@ -272,7 +263,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int UTC_OFFSET_FIELD_NUMBER = 8;
-
   /**
    *
    *
@@ -290,7 +280,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
   public boolean hasUtcOffset() {
     return timeOffsetCase_ == 8;
   }
-
   /**
    *
    *
@@ -311,7 +300,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.protobuf.Duration.getDefaultInstance();
   }
-
   /**
    *
    *
@@ -332,7 +320,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int TIME_ZONE_FIELD_NUMBER = 9;
-
   /**
    *
    *
@@ -348,7 +335,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
   public boolean hasTimeZone() {
     return timeOffsetCase_ == 9;
   }
-
   /**
    *
    *
@@ -367,7 +353,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.type.TimeZone.getDefaultInstance();
   }
-
   /**
    *
    *
@@ -635,7 +620,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -975,7 +959,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private int year_;
-
     /**
      *
      *
@@ -992,7 +975,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     public int getYear() {
       return year_;
     }
-
     /**
      *
      *
@@ -1013,7 +995,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1034,7 +1015,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int month_;
-
     /**
      *
      *
@@ -1050,7 +1030,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     public int getMonth() {
       return month_;
     }
-
     /**
      *
      *
@@ -1070,7 +1049,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1090,7 +1068,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int day_;
-
     /**
      *
      *
@@ -1107,7 +1084,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     public int getDay() {
       return day_;
     }
-
     /**
      *
      *
@@ -1128,7 +1104,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1149,7 +1124,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int hours_;
-
     /**
      *
      *
@@ -1167,7 +1141,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     public int getHours() {
       return hours_;
     }
-
     /**
      *
      *
@@ -1189,7 +1162,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1211,7 +1183,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int minutes_;
-
     /**
      *
      *
@@ -1227,7 +1198,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     public int getMinutes() {
       return minutes_;
     }
-
     /**
      *
      *
@@ -1247,7 +1217,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1267,7 +1236,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int seconds_;
-
     /**
      *
      *
@@ -1284,7 +1252,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     public int getSeconds() {
       return seconds_;
     }
-
     /**
      *
      *
@@ -1305,7 +1272,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1326,7 +1292,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int nanos_;
-
     /**
      *
      *
@@ -1343,7 +1308,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     public int getNanos() {
       return nanos_;
     }
-
     /**
      *
      *
@@ -1364,7 +1328,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1389,7 +1352,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.Duration.Builder,
             com.google.protobuf.DurationOrBuilder>
         utcOffsetBuilder_;
-
     /**
      *
      *
@@ -1407,7 +1369,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     public boolean hasUtcOffset() {
       return timeOffsetCase_ == 8;
     }
-
     /**
      *
      *
@@ -1435,7 +1396,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
         return com.google.protobuf.Duration.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1460,7 +1420,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
       timeOffsetCase_ = 8;
       return this;
     }
-
     /**
      *
      *
@@ -1482,7 +1441,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
       timeOffsetCase_ = 8;
       return this;
     }
-
     /**
      *
      *
@@ -1516,7 +1474,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
       timeOffsetCase_ = 8;
       return this;
     }
-
     /**
      *
      *
@@ -1544,7 +1501,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1559,7 +1515,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.Duration.Builder getUtcOffsetBuilder() {
       return getUtcOffsetFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1582,7 +1537,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
         return com.google.protobuf.Duration.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1621,7 +1575,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
             com.google.type.TimeZone.Builder,
             com.google.type.TimeZoneOrBuilder>
         timeZoneBuilder_;
-
     /**
      *
      *
@@ -1637,7 +1590,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     public boolean hasTimeZone() {
       return timeOffsetCase_ == 9;
     }
-
     /**
      *
      *
@@ -1663,7 +1615,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
         return com.google.type.TimeZone.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1686,7 +1637,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
       timeOffsetCase_ = 9;
       return this;
     }
-
     /**
      *
      *
@@ -1706,7 +1656,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
       timeOffsetCase_ = 9;
       return this;
     }
-
     /**
      *
      *
@@ -1737,7 +1686,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
       timeOffsetCase_ = 9;
       return this;
     }
-
     /**
      *
      *
@@ -1763,7 +1711,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1776,7 +1723,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
     public com.google.type.TimeZone.Builder getTimeZoneBuilder() {
       return getTimeZoneFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1797,7 +1743,6 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
         return com.google.type.TimeZone.getDefaultInstance();
       }
     }
-
     /**
      *
      *

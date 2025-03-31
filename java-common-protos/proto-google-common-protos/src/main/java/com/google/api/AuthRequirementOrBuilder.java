@@ -40,7 +40,6 @@ public interface AuthRequirementOrBuilder
    * @return The providerId.
    */
   java.lang.String getProviderId();
-
   /**
    *
    *
@@ -85,7 +84,6 @@ public interface AuthRequirementOrBuilder
    * @return The audiences.
    */
   java.lang.String getAudiences();
-
   /**
    *
    *

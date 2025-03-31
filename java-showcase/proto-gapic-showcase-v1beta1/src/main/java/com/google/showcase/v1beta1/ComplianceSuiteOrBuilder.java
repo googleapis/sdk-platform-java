@@ -26,17 +26,13 @@ public interface ComplianceSuiteOrBuilder
 
   /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
   java.util.List<com.google.showcase.v1beta1.ComplianceGroup> getGroupList();
-
   /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
   com.google.showcase.v1beta1.ComplianceGroup getGroup(int index);
-
   /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
   int getGroupCount();
-
   /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
   java.util.List<? extends com.google.showcase.v1beta1.ComplianceGroupOrBuilder>
       getGroupOrBuilderList();
-
   /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
   com.google.showcase.v1beta1.ComplianceGroupOrBuilder getGroupOrBuilder(int index);
 }

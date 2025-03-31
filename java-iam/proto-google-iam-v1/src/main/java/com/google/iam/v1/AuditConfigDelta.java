@@ -34,7 +34,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
     // @@protoc_insertion_point(message_implements:google.iam.v1.AuditConfigDelta)
     AuditConfigDeltaOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use AuditConfigDelta.newBuilder() to construct.
   private AuditConfigDelta(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -120,7 +119,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      * <code>ACTION_UNSPECIFIED = 0;</code>
      */
     public static final int ACTION_UNSPECIFIED_VALUE = 0;
-
     /**
      *
      *
@@ -131,7 +129,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
      * <code>ADD = 1;</code>
      */
     public static final int ADD_VALUE = 1;
-
     /**
      *
      *
@@ -228,7 +225,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
 
   public static final int ACTION_FIELD_NUMBER = 1;
   private int action_ = 0;
-
   /**
    *
    *
@@ -245,7 +241,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
   public int getActionValue() {
     return action_;
   }
-
   /**
    *
    *
@@ -269,7 +264,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object service_ = "";
-
   /**
    *
    *
@@ -296,7 +290,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
       return s;
     }
   }
-
   /**
    *
    *
@@ -328,7 +321,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object exemptedMember_ = "";
-
   /**
    *
    *
@@ -354,7 +346,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
       return s;
     }
   }
-
   /**
    *
    *
@@ -385,7 +376,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object logType_ = "";
-
   /**
    *
    *
@@ -411,7 +401,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
       return s;
     }
   }
-
   /**
    *
    *
@@ -622,7 +611,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -849,7 +837,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
     private int bitField0_;
 
     private int action_ = 0;
-
     /**
      *
      *
@@ -866,7 +853,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
     public int getActionValue() {
       return action_;
     }
-
     /**
      *
      *
@@ -886,7 +872,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -905,7 +890,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
           com.google.iam.v1.AuditConfigDelta.Action.forNumber(action_);
       return result == null ? com.google.iam.v1.AuditConfigDelta.Action.UNRECOGNIZED : result;
     }
-
     /**
      *
      *
@@ -928,7 +912,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -949,7 +932,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
     }
 
     private java.lang.Object service_ = "";
-
     /**
      *
      *
@@ -975,7 +957,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1001,7 +982,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1026,7 +1006,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1047,7 +1026,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1075,7 +1053,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
     }
 
     private java.lang.Object exemptedMember_ = "";
-
     /**
      *
      *
@@ -1100,7 +1077,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1125,7 +1101,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1149,7 +1124,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1169,7 +1143,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1196,7 +1169,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
     }
 
     private java.lang.Object logType_ = "";
-
     /**
      *
      *
@@ -1221,7 +1193,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1246,7 +1217,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1270,7 +1240,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1290,7 +1259,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *

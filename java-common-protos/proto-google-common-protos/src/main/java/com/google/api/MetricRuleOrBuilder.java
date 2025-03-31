@@ -39,7 +39,6 @@ public interface MetricRuleOrBuilder
    * @return The selector.
    */
   java.lang.String getSelector();
-
   /**
    *
    *
@@ -71,7 +70,6 @@ public interface MetricRuleOrBuilder
    * <code>map&lt;string, int64&gt; metric_costs = 2;</code>
    */
   int getMetricCostsCount();
-
   /**
    *
    *
@@ -87,11 +85,9 @@ public interface MetricRuleOrBuilder
    * <code>map&lt;string, int64&gt; metric_costs = 2;</code>
    */
   boolean containsMetricCosts(java.lang.String key);
-
   /** Use {@link #getMetricCostsMap()} instead. */
   @java.lang.Deprecated
   java.util.Map<java.lang.String, java.lang.Long> getMetricCosts();
-
   /**
    *
    *
@@ -107,7 +103,6 @@ public interface MetricRuleOrBuilder
    * <code>map&lt;string, int64&gt; metric_costs = 2;</code>
    */
   java.util.Map<java.lang.String, java.lang.Long> getMetricCostsMap();
-
   /**
    *
    *
@@ -123,7 +118,6 @@ public interface MetricRuleOrBuilder
    * <code>map&lt;string, int64&gt; metric_costs = 2;</code>
    */
   long getMetricCostsOrDefault(java.lang.String key, long defaultValue);
-
   /**
    *
    *

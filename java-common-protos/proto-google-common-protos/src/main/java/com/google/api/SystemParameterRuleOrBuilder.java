@@ -40,7 +40,6 @@ public interface SystemParameterRuleOrBuilder
    * @return The selector.
    */
   java.lang.String getSelector();
-
   /**
    *
    *
@@ -72,7 +71,6 @@ public interface SystemParameterRuleOrBuilder
    * <code>repeated .google.api.SystemParameter parameters = 2;</code>
    */
   java.util.List<com.google.api.SystemParameter> getParametersList();
-
   /**
    *
    *
@@ -87,7 +85,6 @@ public interface SystemParameterRuleOrBuilder
    * <code>repeated .google.api.SystemParameter parameters = 2;</code>
    */
   com.google.api.SystemParameter getParameters(int index);
-
   /**
    *
    *
@@ -102,7 +99,6 @@ public interface SystemParameterRuleOrBuilder
    * <code>repeated .google.api.SystemParameter parameters = 2;</code>
    */
   int getParametersCount();
-
   /**
    *
    *
@@ -117,7 +113,6 @@ public interface SystemParameterRuleOrBuilder
    * <code>repeated .google.api.SystemParameter parameters = 2;</code>
    */
   java.util.List<? extends com.google.api.SystemParameterOrBuilder> getParametersOrBuilderList();
-
   /**
    *
    *

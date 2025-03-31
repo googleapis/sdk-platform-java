@@ -38,7 +38,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.Image)
     ImageOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Image.newBuilder() to construct.
   private Image(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -73,7 +72,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object imageUrl_ = "";
-
   /**
    *
    *
@@ -103,7 +101,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -136,7 +133,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
 
   public static final int ON_CLICK_FIELD_NUMBER = 2;
   private com.google.apps.card.v1.OnClick onClick_;
-
   /**
    *
    *
@@ -152,7 +148,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
   public boolean hasOnClick() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -168,7 +163,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
   public com.google.apps.card.v1.OnClick getOnClick() {
     return onClick_ == null ? com.google.apps.card.v1.OnClick.getDefaultInstance() : onClick_;
   }
-
   /**
    *
    *
@@ -187,7 +181,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object altText_ = "";
-
   /**
    *
    *
@@ -211,7 +204,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -416,7 +408,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -645,7 +636,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object imageUrl_ = "";
-
     /**
      *
      *
@@ -674,7 +664,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -703,7 +692,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -731,7 +719,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -755,7 +742,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -791,7 +777,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.OnClick.Builder,
             com.google.apps.card.v1.OnClickOrBuilder>
         onClickBuilder_;
-
     /**
      *
      *
@@ -806,7 +791,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
     public boolean hasOnClick() {
       return ((bitField0_ & 0x00000002) != 0);
     }
-
     /**
      *
      *
@@ -825,7 +809,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
         return onClickBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -848,7 +831,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -868,7 +850,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -896,7 +877,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -916,7 +896,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -931,7 +910,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getOnClickFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -948,7 +926,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
         return onClick_ == null ? com.google.apps.card.v1.OnClick.getDefaultInstance() : onClick_;
       }
     }
-
     /**
      *
      *
@@ -976,7 +953,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object altText_ = "";
-
     /**
      *
      *
@@ -999,7 +975,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1022,7 +997,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1044,7 +1018,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1062,7 +1035,6 @@ public final class Image extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

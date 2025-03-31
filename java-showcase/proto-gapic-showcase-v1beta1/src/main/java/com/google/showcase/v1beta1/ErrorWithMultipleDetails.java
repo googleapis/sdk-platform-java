@@ -25,7 +25,6 @@ public final class ErrorWithMultipleDetails extends com.google.protobuf.Generate
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.ErrorWithMultipleDetails)
     ErrorWithMultipleDetailsOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use ErrorWithMultipleDetails.newBuilder() to construct.
   private ErrorWithMultipleDetails(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -60,31 +59,26 @@ public final class ErrorWithMultipleDetails extends com.google.protobuf.Generate
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.protobuf.Any> details_;
-
   /** <code>repeated .google.protobuf.Any details = 1;</code> */
   @java.lang.Override
   public java.util.List<com.google.protobuf.Any> getDetailsList() {
     return details_;
   }
-
   /** <code>repeated .google.protobuf.Any details = 1;</code> */
   @java.lang.Override
   public java.util.List<? extends com.google.protobuf.AnyOrBuilder> getDetailsOrBuilderList() {
     return details_;
   }
-
   /** <code>repeated .google.protobuf.Any details = 1;</code> */
   @java.lang.Override
   public int getDetailsCount() {
     return details_.size();
   }
-
   /** <code>repeated .google.protobuf.Any details = 1;</code> */
   @java.lang.Override
   public com.google.protobuf.Any getDetails(int index) {
     return details_.get(index);
   }
-
   /** <code>repeated .google.protobuf.Any details = 1;</code> */
   @java.lang.Override
   public com.google.protobuf.AnyOrBuilder getDetailsOrBuilder(int index) {
@@ -252,7 +246,6 @@ public final class ErrorWithMultipleDetails extends com.google.protobuf.Generate
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /** Protobuf type {@code google.showcase.v1beta1.ErrorWithMultipleDetails} */
   public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
       implements
@@ -496,7 +489,6 @@ public final class ErrorWithMultipleDetails extends com.google.protobuf.Generate
         return detailsBuilder_.getMessageList();
       }
     }
-
     /** <code>repeated .google.protobuf.Any details = 1;</code> */
     public int getDetailsCount() {
       if (detailsBuilder_ == null) {
@@ -505,7 +497,6 @@ public final class ErrorWithMultipleDetails extends com.google.protobuf.Generate
         return detailsBuilder_.getCount();
       }
     }
-
     /** <code>repeated .google.protobuf.Any details = 1;</code> */
     public com.google.protobuf.Any getDetails(int index) {
       if (detailsBuilder_ == null) {
@@ -514,7 +505,6 @@ public final class ErrorWithMultipleDetails extends com.google.protobuf.Generate
         return detailsBuilder_.getMessage(index);
       }
     }
-
     /** <code>repeated .google.protobuf.Any details = 1;</code> */
     public Builder setDetails(int index, com.google.protobuf.Any value) {
       if (detailsBuilder_ == null) {
@@ -529,7 +519,6 @@ public final class ErrorWithMultipleDetails extends com.google.protobuf.Generate
       }
       return this;
     }
-
     /** <code>repeated .google.protobuf.Any details = 1;</code> */
     public Builder setDetails(int index, com.google.protobuf.Any.Builder builderForValue) {
       if (detailsBuilder_ == null) {
@@ -541,7 +530,6 @@ public final class ErrorWithMultipleDetails extends com.google.protobuf.Generate
       }
       return this;
     }
-
     /** <code>repeated .google.protobuf.Any details = 1;</code> */
     public Builder addDetails(com.google.protobuf.Any value) {
       if (detailsBuilder_ == null) {
@@ -556,7 +544,6 @@ public final class ErrorWithMultipleDetails extends com.google.protobuf.Generate
       }
       return this;
     }
-
     /** <code>repeated .google.protobuf.Any details = 1;</code> */
     public Builder addDetails(int index, com.google.protobuf.Any value) {
       if (detailsBuilder_ == null) {
@@ -571,7 +558,6 @@ public final class ErrorWithMultipleDetails extends com.google.protobuf.Generate
       }
       return this;
     }
-
     /** <code>repeated .google.protobuf.Any details = 1;</code> */
     public Builder addDetails(com.google.protobuf.Any.Builder builderForValue) {
       if (detailsBuilder_ == null) {
@@ -583,7 +569,6 @@ public final class ErrorWithMultipleDetails extends com.google.protobuf.Generate
       }
       return this;
     }
-
     /** <code>repeated .google.protobuf.Any details = 1;</code> */
     public Builder addDetails(int index, com.google.protobuf.Any.Builder builderForValue) {
       if (detailsBuilder_ == null) {
@@ -595,7 +580,6 @@ public final class ErrorWithMultipleDetails extends com.google.protobuf.Generate
       }
       return this;
     }
-
     /** <code>repeated .google.protobuf.Any details = 1;</code> */
     public Builder addAllDetails(java.lang.Iterable<? extends com.google.protobuf.Any> values) {
       if (detailsBuilder_ == null) {
@@ -607,7 +591,6 @@ public final class ErrorWithMultipleDetails extends com.google.protobuf.Generate
       }
       return this;
     }
-
     /** <code>repeated .google.protobuf.Any details = 1;</code> */
     public Builder clearDetails() {
       if (detailsBuilder_ == null) {
@@ -619,7 +602,6 @@ public final class ErrorWithMultipleDetails extends com.google.protobuf.Generate
       }
       return this;
     }
-
     /** <code>repeated .google.protobuf.Any details = 1;</code> */
     public Builder removeDetails(int index) {
       if (detailsBuilder_ == null) {
@@ -631,12 +613,10 @@ public final class ErrorWithMultipleDetails extends com.google.protobuf.Generate
       }
       return this;
     }
-
     /** <code>repeated .google.protobuf.Any details = 1;</code> */
     public com.google.protobuf.Any.Builder getDetailsBuilder(int index) {
       return getDetailsFieldBuilder().getBuilder(index);
     }
-
     /** <code>repeated .google.protobuf.Any details = 1;</code> */
     public com.google.protobuf.AnyOrBuilder getDetailsOrBuilder(int index) {
       if (detailsBuilder_ == null) {
@@ -645,7 +625,6 @@ public final class ErrorWithMultipleDetails extends com.google.protobuf.Generate
         return detailsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /** <code>repeated .google.protobuf.Any details = 1;</code> */
     public java.util.List<? extends com.google.protobuf.AnyOrBuilder> getDetailsOrBuilderList() {
       if (detailsBuilder_ != null) {
@@ -654,18 +633,15 @@ public final class ErrorWithMultipleDetails extends com.google.protobuf.Generate
         return java.util.Collections.unmodifiableList(details_);
       }
     }
-
     /** <code>repeated .google.protobuf.Any details = 1;</code> */
     public com.google.protobuf.Any.Builder addDetailsBuilder() {
       return getDetailsFieldBuilder().addBuilder(com.google.protobuf.Any.getDefaultInstance());
     }
-
     /** <code>repeated .google.protobuf.Any details = 1;</code> */
     public com.google.protobuf.Any.Builder addDetailsBuilder(int index) {
       return getDetailsFieldBuilder()
           .addBuilder(index, com.google.protobuf.Any.getDefaultInstance());
     }
-
     /** <code>repeated .google.protobuf.Any details = 1;</code> */
     public java.util.List<com.google.protobuf.Any.Builder> getDetailsBuilderList() {
       return getDetailsFieldBuilder().getBuilderList();

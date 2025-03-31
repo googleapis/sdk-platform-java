@@ -144,7 +144,6 @@ public enum LaunchStage implements com.google.protobuf.ProtocolMessageEnum {
    * <code>LAUNCH_STAGE_UNSPECIFIED = 0;</code>
    */
   public static final int LAUNCH_STAGE_UNSPECIFIED_VALUE = 0;
-
   /**
    *
    *
@@ -155,7 +154,6 @@ public enum LaunchStage implements com.google.protobuf.ProtocolMessageEnum {
    * <code>UNIMPLEMENTED = 6;</code>
    */
   public static final int UNIMPLEMENTED_VALUE = 6;
-
   /**
    *
    *
@@ -166,7 +164,6 @@ public enum LaunchStage implements com.google.protobuf.ProtocolMessageEnum {
    * <code>PRELAUNCH = 7;</code>
    */
   public static final int PRELAUNCH_VALUE = 7;
-
   /**
    *
    *
@@ -181,7 +178,6 @@ public enum LaunchStage implements com.google.protobuf.ProtocolMessageEnum {
    * <code>EARLY_ACCESS = 1;</code>
    */
   public static final int EARLY_ACCESS_VALUE = 1;
-
   /**
    *
    *
@@ -200,7 +196,6 @@ public enum LaunchStage implements com.google.protobuf.ProtocolMessageEnum {
    * <code>ALPHA = 2;</code>
    */
   public static final int ALPHA_VALUE = 2;
-
   /**
    *
    *
@@ -215,7 +210,6 @@ public enum LaunchStage implements com.google.protobuf.ProtocolMessageEnum {
    * <code>BETA = 3;</code>
    */
   public static final int BETA_VALUE = 3;
-
   /**
    *
    *
@@ -227,7 +221,6 @@ public enum LaunchStage implements com.google.protobuf.ProtocolMessageEnum {
    * <code>GA = 4;</code>
    */
   public static final int GA_VALUE = 4;
-
   /**
    *
    *

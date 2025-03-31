@@ -36,7 +36,6 @@ public interface LocalizedTextOrBuilder
    * @return The text.
    */
   java.lang.String getText();
-
   /**
    *
    *
@@ -65,7 +64,6 @@ public interface LocalizedTextOrBuilder
    * @return The languageCode.
    */
   java.lang.String getLanguageCode();
-
   /**
    *
    *

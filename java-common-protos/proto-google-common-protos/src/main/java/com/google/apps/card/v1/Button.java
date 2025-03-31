@@ -44,7 +44,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.Button)
     ButtonOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Button.newBuilder() to construct.
   private Button(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -79,7 +78,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object text_ = "";
-
   /**
    *
    *
@@ -103,7 +101,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -130,7 +127,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
 
   public static final int ICON_FIELD_NUMBER = 2;
   private com.google.apps.card.v1.Icon icon_;
-
   /**
    *
    *
@@ -147,7 +143,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
   public boolean hasIcon() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -164,7 +159,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
   public com.google.apps.card.v1.Icon getIcon() {
     return icon_ == null ? com.google.apps.card.v1.Icon.getDefaultInstance() : icon_;
   }
-
   /**
    *
    *
@@ -182,7 +176,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
 
   public static final int COLOR_FIELD_NUMBER = 3;
   private com.google.type.Color color_;
-
   /**
    *
    *
@@ -229,7 +222,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
   public boolean hasColor() {
     return ((bitField0_ & 0x00000002) != 0);
   }
-
   /**
    *
    *
@@ -276,7 +268,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
   public com.google.type.Color getColor() {
     return color_ == null ? com.google.type.Color.getDefaultInstance() : color_;
   }
-
   /**
    *
    *
@@ -324,7 +315,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
 
   public static final int ON_CLICK_FIELD_NUMBER = 4;
   private com.google.apps.card.v1.OnClick onClick_;
-
   /**
    *
    *
@@ -341,7 +331,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
   public boolean hasOnClick() {
     return ((bitField0_ & 0x00000004) != 0);
   }
-
   /**
    *
    *
@@ -358,7 +347,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
   public com.google.apps.card.v1.OnClick getOnClick() {
     return onClick_ == null ? com.google.apps.card.v1.OnClick.getDefaultInstance() : onClick_;
   }
-
   /**
    *
    *
@@ -376,7 +364,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
 
   public static final int DISABLED_FIELD_NUMBER = 5;
   private boolean disabled_ = false;
-
   /**
    *
    *
@@ -398,7 +385,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object altText_ = "";
-
   /**
    *
    *
@@ -427,7 +413,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -674,7 +659,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -962,7 +946,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object text_ = "";
-
     /**
      *
      *
@@ -985,7 +968,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1008,7 +990,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1030,7 +1011,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1048,7 +1028,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1078,7 +1057,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.Icon.Builder,
             com.google.apps.card.v1.IconOrBuilder>
         iconBuilder_;
-
     /**
      *
      *
@@ -1094,7 +1072,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
     public boolean hasIcon() {
       return ((bitField0_ & 0x00000002) != 0);
     }
-
     /**
      *
      *
@@ -1114,7 +1091,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
         return iconBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -1138,7 +1114,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1159,7 +1134,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1188,7 +1162,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1209,7 +1182,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1225,7 +1197,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getIconFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1243,7 +1214,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
         return icon_ == null ? com.google.apps.card.v1.Icon.getDefaultInstance() : icon_;
       }
     }
-
     /**
      *
      *
@@ -1275,7 +1245,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.type.Color, com.google.type.Color.Builder, com.google.type.ColorOrBuilder>
         colorBuilder_;
-
     /**
      *
      *
@@ -1321,7 +1290,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
     public boolean hasColor() {
       return ((bitField0_ & 0x00000004) != 0);
     }
-
     /**
      *
      *
@@ -1371,7 +1339,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
         return colorBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -1425,7 +1392,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1476,7 +1442,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1535,7 +1500,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1586,7 +1550,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1632,7 +1595,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getColorFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1680,7 +1642,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
         return color_ == null ? com.google.type.Color.getDefaultInstance() : color_;
       }
     }
-
     /**
      *
      *
@@ -1741,7 +1702,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.OnClick.Builder,
             com.google.apps.card.v1.OnClickOrBuilder>
         onClickBuilder_;
-
     /**
      *
      *
@@ -1757,7 +1717,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
     public boolean hasOnClick() {
       return ((bitField0_ & 0x00000008) != 0);
     }
-
     /**
      *
      *
@@ -1777,7 +1736,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
         return onClickBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -1801,7 +1759,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1822,7 +1779,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1851,7 +1807,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1872,7 +1827,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1888,7 +1842,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getOnClickFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1906,7 +1859,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
         return onClick_ == null ? com.google.apps.card.v1.OnClick.getDefaultInstance() : onClick_;
       }
     }
-
     /**
      *
      *
@@ -1935,7 +1887,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
     }
 
     private boolean disabled_;
-
     /**
      *
      *
@@ -1952,7 +1903,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
     public boolean getDisabled() {
       return disabled_;
     }
-
     /**
      *
      *
@@ -1973,7 +1923,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1994,7 +1943,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object altText_ = "";
-
     /**
      *
      *
@@ -2022,7 +1970,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -2050,7 +1997,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -2077,7 +2023,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2100,7 +2045,6 @@ public final class Button extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

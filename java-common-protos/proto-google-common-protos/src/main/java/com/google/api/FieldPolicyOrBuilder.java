@@ -45,7 +45,6 @@ public interface FieldPolicyOrBuilder
    * @return The selector.
    */
   java.lang.String getSelector();
-
   /**
    *
    *
@@ -83,7 +82,6 @@ public interface FieldPolicyOrBuilder
    * @return The resourcePermission.
    */
   java.lang.String getResourcePermission();
-
   /**
    *
    *
@@ -112,7 +110,6 @@ public interface FieldPolicyOrBuilder
    * @return The resourceType.
    */
   java.lang.String getResourceType();
-
   /**
    *
    *

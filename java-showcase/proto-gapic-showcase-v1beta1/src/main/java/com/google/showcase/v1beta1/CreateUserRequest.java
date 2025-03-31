@@ -34,7 +34,6 @@ public final class CreateUserRequest extends com.google.protobuf.GeneratedMessag
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.CreateUserRequest)
     CreateUserRequestOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use CreateUserRequest.newBuilder() to construct.
   private CreateUserRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -66,7 +65,6 @@ public final class CreateUserRequest extends com.google.protobuf.GeneratedMessag
   private int bitField0_;
   public static final int USER_FIELD_NUMBER = 1;
   private com.google.showcase.v1beta1.User user_;
-
   /**
    *
    *
@@ -82,7 +80,6 @@ public final class CreateUserRequest extends com.google.protobuf.GeneratedMessag
   public boolean hasUser() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -98,7 +95,6 @@ public final class CreateUserRequest extends com.google.protobuf.GeneratedMessag
   public com.google.showcase.v1beta1.User getUser() {
     return user_ == null ? com.google.showcase.v1beta1.User.getDefaultInstance() : user_;
   }
-
   /**
    *
    *
@@ -277,7 +273,6 @@ public final class CreateUserRequest extends com.google.protobuf.GeneratedMessag
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -481,7 +476,6 @@ public final class CreateUserRequest extends com.google.protobuf.GeneratedMessag
             com.google.showcase.v1beta1.User.Builder,
             com.google.showcase.v1beta1.UserOrBuilder>
         userBuilder_;
-
     /**
      *
      *
@@ -496,7 +490,6 @@ public final class CreateUserRequest extends com.google.protobuf.GeneratedMessag
     public boolean hasUser() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -515,7 +508,6 @@ public final class CreateUserRequest extends com.google.protobuf.GeneratedMessag
         return userBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -538,7 +530,6 @@ public final class CreateUserRequest extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -558,7 +549,6 @@ public final class CreateUserRequest extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -586,7 +576,6 @@ public final class CreateUserRequest extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -606,7 +595,6 @@ public final class CreateUserRequest extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -621,7 +609,6 @@ public final class CreateUserRequest extends com.google.protobuf.GeneratedMessag
       onChanged();
       return getUserFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -638,7 +625,6 @@ public final class CreateUserRequest extends com.google.protobuf.GeneratedMessag
         return user_ == null ? com.google.showcase.v1beta1.User.getDefaultInstance() : user_;
       }
     }
-
     /**
      *
      *

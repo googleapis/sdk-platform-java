@@ -33,7 +33,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.Usage)
     UsageOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Usage.newBuilder() to construct.
   private Usage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -68,7 +67,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList requirements_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
-
   /**
    *
    *
@@ -91,7 +89,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.ProtocolStringList getRequirementsList() {
     return requirements_;
   }
-
   /**
    *
    *
@@ -114,7 +111,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
   public int getRequirementsCount() {
     return requirements_.size();
   }
-
   /**
    *
    *
@@ -138,7 +134,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
   public java.lang.String getRequirements(int index) {
     return requirements_.get(index);
   }
-
   /**
    *
    *
@@ -167,7 +162,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.UsageRule> rules_;
-
   /**
    *
    *
@@ -183,7 +177,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.api.UsageRule> getRulesList() {
     return rules_;
   }
-
   /**
    *
    *
@@ -199,7 +192,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<? extends com.google.api.UsageRuleOrBuilder> getRulesOrBuilderList() {
     return rules_;
   }
-
   /**
    *
    *
@@ -215,7 +207,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
   public int getRulesCount() {
     return rules_.size();
   }
-
   /**
    *
    *
@@ -231,7 +222,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.UsageRule getRules(int index) {
     return rules_.get(index);
   }
-
   /**
    *
    *
@@ -252,7 +242,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object producerNotificationChannel_ = "";
-
   /**
    *
    *
@@ -283,7 +272,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -501,7 +489,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -769,7 +756,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ |= 0x00000001;
     }
-
     /**
      *
      *
@@ -793,7 +779,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       requirements_.makeImmutable();
       return requirements_;
     }
-
     /**
      *
      *
@@ -816,7 +801,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
     public int getRequirementsCount() {
       return requirements_.size();
     }
-
     /**
      *
      *
@@ -840,7 +824,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
     public java.lang.String getRequirements(int index) {
       return requirements_.get(index);
     }
-
     /**
      *
      *
@@ -864,7 +847,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ByteString getRequirementsBytes(int index) {
       return requirements_.getByteString(index);
     }
-
     /**
      *
      *
@@ -896,7 +878,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -927,7 +908,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -955,7 +935,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -982,7 +961,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1048,7 +1026,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
         return rulesBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -1067,7 +1044,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
         return rulesBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -1086,7 +1062,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
         return rulesBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -1111,7 +1086,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1133,7 +1107,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1158,7 +1131,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1183,7 +1155,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1205,7 +1176,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1227,7 +1197,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1249,7 +1218,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1271,7 +1239,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1293,7 +1260,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1308,7 +1274,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.UsageRule.Builder getRulesBuilder(int index) {
       return getRulesFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -1327,7 +1292,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
         return rulesBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -1346,7 +1310,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(rules_);
       }
     }
-
     /**
      *
      *
@@ -1361,7 +1324,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.UsageRule.Builder addRulesBuilder() {
       return getRulesFieldBuilder().addBuilder(com.google.api.UsageRule.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1377,7 +1339,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       return getRulesFieldBuilder()
           .addBuilder(index, com.google.api.UsageRule.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1411,7 +1372,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object producerNotificationChannel_ = "";
-
     /**
      *
      *
@@ -1441,7 +1401,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1471,7 +1430,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1500,7 +1458,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1525,7 +1482,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

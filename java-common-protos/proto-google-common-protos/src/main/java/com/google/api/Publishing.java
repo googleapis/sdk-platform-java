@@ -35,7 +35,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.Publishing)
     PublishingOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Publishing.newBuilder() to construct.
   private Publishing(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -77,7 +76,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.MethodSettings> methodSettings_;
-
   /**
    *
    *
@@ -92,7 +90,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.api.MethodSettings> getMethodSettingsList() {
     return methodSettings_;
   }
-
   /**
    *
    *
@@ -108,7 +105,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       getMethodSettingsOrBuilderList() {
     return methodSettings_;
   }
-
   /**
    *
    *
@@ -123,7 +119,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   public int getMethodSettingsCount() {
     return methodSettings_.size();
   }
-
   /**
    *
    *
@@ -138,7 +133,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.MethodSettings getMethodSettings(int index) {
     return methodSettings_.get(index);
   }
-
   /**
    *
    *
@@ -158,7 +152,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object newIssueUri_ = "";
-
   /**
    *
    *
@@ -183,7 +176,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -213,7 +205,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object documentationUri_ = "";
-
   /**
    *
    *
@@ -238,7 +229,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -268,7 +258,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object apiShortName_ = "";
-
   /**
    *
    *
@@ -294,7 +283,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -325,7 +313,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object githubLabel_ = "";
-
   /**
    *
    *
@@ -349,7 +336,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -379,7 +365,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList codeownerGithubTeams_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
-
   /**
    *
    *
@@ -395,7 +380,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.ProtocolStringList getCodeownerGithubTeamsList() {
     return codeownerGithubTeams_;
   }
-
   /**
    *
    *
@@ -411,7 +395,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   public int getCodeownerGithubTeamsCount() {
     return codeownerGithubTeams_.size();
   }
-
   /**
    *
    *
@@ -428,7 +411,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   public java.lang.String getCodeownerGithubTeams(int index) {
     return codeownerGithubTeams_.get(index);
   }
-
   /**
    *
    *
@@ -450,7 +432,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object docTagPrefix_ = "";
-
   /**
    *
    *
@@ -475,7 +456,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -503,7 +483,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
 
   public static final int ORGANIZATION_FIELD_NUMBER = 107;
   private int organization_ = 0;
-
   /**
    *
    *
@@ -519,7 +498,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   public int getOrganizationValue() {
     return organization_;
   }
-
   /**
    *
    *
@@ -542,7 +520,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.ClientLibrarySettings> librarySettings_;
-
   /**
    *
    *
@@ -558,7 +535,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.api.ClientLibrarySettings> getLibrarySettingsList() {
     return librarySettings_;
   }
-
   /**
    *
    *
@@ -575,7 +551,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       getLibrarySettingsOrBuilderList() {
     return librarySettings_;
   }
-
   /**
    *
    *
@@ -591,7 +566,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   public int getLibrarySettingsCount() {
     return librarySettings_.size();
   }
-
   /**
    *
    *
@@ -607,7 +581,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.ClientLibrarySettings getLibrarySettings(int index) {
     return librarySettings_.get(index);
   }
-
   /**
    *
    *
@@ -628,7 +601,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object protoReferenceDocumentationUri_ = "";
-
   /**
    *
    *
@@ -653,7 +625,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -683,7 +654,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object restReferenceDocumentationUri_ = "";
-
   /**
    *
    *
@@ -708,7 +678,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -1006,7 +975,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -1459,7 +1427,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return methodSettingsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -1477,7 +1444,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return methodSettingsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -1495,7 +1461,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return methodSettingsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -1519,7 +1484,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1541,7 +1505,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1565,7 +1528,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1589,7 +1551,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1610,7 +1571,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1632,7 +1592,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1654,7 +1613,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1675,7 +1633,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1696,7 +1653,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1710,7 +1666,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.MethodSettings.Builder getMethodSettingsBuilder(int index) {
       return getMethodSettingsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -1728,7 +1683,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return methodSettingsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -1747,7 +1701,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(methodSettings_);
       }
     }
-
     /**
      *
      *
@@ -1762,7 +1715,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       return getMethodSettingsFieldBuilder()
           .addBuilder(com.google.api.MethodSettings.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1777,7 +1729,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       return getMethodSettingsFieldBuilder()
           .addBuilder(index, com.google.api.MethodSettings.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1813,7 +1764,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object newIssueUri_ = "";
-
     /**
      *
      *
@@ -1837,7 +1787,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1861,7 +1810,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1884,7 +1832,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1903,7 +1850,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1929,7 +1875,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object documentationUri_ = "";
-
     /**
      *
      *
@@ -1953,7 +1898,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1977,7 +1921,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -2000,7 +1943,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2019,7 +1961,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2045,7 +1986,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object apiShortName_ = "";
-
     /**
      *
      *
@@ -2070,7 +2010,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -2095,7 +2034,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -2119,7 +2057,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2139,7 +2076,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2166,7 +2102,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object githubLabel_ = "";
-
     /**
      *
      *
@@ -2189,7 +2124,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -2212,7 +2146,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -2234,7 +2167,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2252,7 +2184,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2285,7 +2216,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ |= 0x00000020;
     }
-
     /**
      *
      *
@@ -2302,7 +2232,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       codeownerGithubTeams_.makeImmutable();
       return codeownerGithubTeams_;
     }
-
     /**
      *
      *
@@ -2318,7 +2247,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     public int getCodeownerGithubTeamsCount() {
       return codeownerGithubTeams_.size();
     }
-
     /**
      *
      *
@@ -2335,7 +2263,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     public java.lang.String getCodeownerGithubTeams(int index) {
       return codeownerGithubTeams_.get(index);
     }
-
     /**
      *
      *
@@ -2352,7 +2279,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ByteString getCodeownerGithubTeamsBytes(int index) {
       return codeownerGithubTeams_.getByteString(index);
     }
-
     /**
      *
      *
@@ -2377,7 +2303,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2401,7 +2326,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2422,7 +2346,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2442,7 +2365,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2469,7 +2391,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object docTagPrefix_ = "";
-
     /**
      *
      *
@@ -2493,7 +2414,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -2517,7 +2437,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -2540,7 +2459,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2559,7 +2477,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2585,7 +2502,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int organization_ = 0;
-
     /**
      *
      *
@@ -2601,7 +2517,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     public int getOrganizationValue() {
       return organization_;
     }
-
     /**
      *
      *
@@ -2620,7 +2535,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2638,7 +2552,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
           com.google.api.ClientLibraryOrganization.forNumber(organization_);
       return result == null ? com.google.api.ClientLibraryOrganization.UNRECOGNIZED : result;
     }
-
     /**
      *
      *
@@ -2660,7 +2573,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2714,7 +2626,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return librarySettingsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -2733,7 +2644,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return librarySettingsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -2752,7 +2662,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return librarySettingsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -2777,7 +2686,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2800,7 +2708,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2825,7 +2732,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2850,7 +2756,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2873,7 +2778,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2896,7 +2800,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2919,7 +2822,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2941,7 +2843,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2963,7 +2864,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2978,7 +2878,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.ClientLibrarySettings.Builder getLibrarySettingsBuilder(int index) {
       return getLibrarySettingsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -2997,7 +2896,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return librarySettingsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -3017,7 +2915,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(librarySettings_);
       }
     }
-
     /**
      *
      *
@@ -3033,7 +2930,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       return getLibrarySettingsFieldBuilder()
           .addBuilder(com.google.api.ClientLibrarySettings.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -3049,7 +2945,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       return getLibrarySettingsFieldBuilder()
           .addBuilder(index, com.google.api.ClientLibrarySettings.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -3087,7 +2982,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object protoReferenceDocumentationUri_ = "";
-
     /**
      *
      *
@@ -3111,7 +3005,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -3135,7 +3028,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -3158,7 +3050,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -3177,7 +3068,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -3203,7 +3093,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object restReferenceDocumentationUri_ = "";
-
     /**
      *
      *
@@ -3227,7 +3116,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -3251,7 +3139,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -3274,7 +3161,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -3293,7 +3179,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

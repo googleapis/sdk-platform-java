@@ -25,7 +25,6 @@ public final class VerifyTestResponse extends com.google.protobuf.GeneratedMessa
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.VerifyTestResponse)
     VerifyTestResponseOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use VerifyTestResponse.newBuilder() to construct.
   private VerifyTestResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -57,7 +56,6 @@ public final class VerifyTestResponse extends com.google.protobuf.GeneratedMessa
   private int bitField0_;
   public static final int ISSUE_FIELD_NUMBER = 1;
   private com.google.showcase.v1beta1.Issue issue_;
-
   /**
    *
    *
@@ -73,7 +71,6 @@ public final class VerifyTestResponse extends com.google.protobuf.GeneratedMessa
   public boolean hasIssue() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -89,7 +86,6 @@ public final class VerifyTestResponse extends com.google.protobuf.GeneratedMessa
   public com.google.showcase.v1beta1.Issue getIssue() {
     return issue_ == null ? com.google.showcase.v1beta1.Issue.getDefaultInstance() : issue_;
   }
-
   /**
    *
    *
@@ -268,7 +264,6 @@ public final class VerifyTestResponse extends com.google.protobuf.GeneratedMessa
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /** Protobuf type {@code google.showcase.v1beta1.VerifyTestResponse} */
   public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
       implements
@@ -463,7 +458,6 @@ public final class VerifyTestResponse extends com.google.protobuf.GeneratedMessa
             com.google.showcase.v1beta1.Issue.Builder,
             com.google.showcase.v1beta1.IssueOrBuilder>
         issueBuilder_;
-
     /**
      *
      *
@@ -478,7 +472,6 @@ public final class VerifyTestResponse extends com.google.protobuf.GeneratedMessa
     public boolean hasIssue() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -497,7 +490,6 @@ public final class VerifyTestResponse extends com.google.protobuf.GeneratedMessa
         return issueBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -520,7 +512,6 @@ public final class VerifyTestResponse extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -540,7 +531,6 @@ public final class VerifyTestResponse extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -568,7 +558,6 @@ public final class VerifyTestResponse extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -588,7 +577,6 @@ public final class VerifyTestResponse extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -603,7 +591,6 @@ public final class VerifyTestResponse extends com.google.protobuf.GeneratedMessa
       onChanged();
       return getIssueFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -620,7 +607,6 @@ public final class VerifyTestResponse extends com.google.protobuf.GeneratedMessa
         return issue_ == null ? com.google.showcase.v1beta1.Issue.getDefaultInstance() : issue_;
       }
     }
-
     /**
      *
      *

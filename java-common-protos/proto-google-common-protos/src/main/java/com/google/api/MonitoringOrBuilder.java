@@ -39,7 +39,6 @@ public interface MonitoringOrBuilder
    * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
    */
   java.util.List<com.google.api.Monitoring.MonitoringDestination> getProducerDestinationsList();
-
   /**
    *
    *
@@ -55,7 +54,6 @@ public interface MonitoringOrBuilder
    * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
    */
   com.google.api.Monitoring.MonitoringDestination getProducerDestinations(int index);
-
   /**
    *
    *
@@ -71,7 +69,6 @@ public interface MonitoringOrBuilder
    * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
    */
   int getProducerDestinationsCount();
-
   /**
    *
    *
@@ -88,7 +85,6 @@ public interface MonitoringOrBuilder
    */
   java.util.List<? extends com.google.api.Monitoring.MonitoringDestinationOrBuilder>
       getProducerDestinationsOrBuilderList();
-
   /**
    *
    *
@@ -121,7 +117,6 @@ public interface MonitoringOrBuilder
    * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
    */
   java.util.List<com.google.api.Monitoring.MonitoringDestination> getConsumerDestinationsList();
-
   /**
    *
    *
@@ -137,7 +132,6 @@ public interface MonitoringOrBuilder
    * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
    */
   com.google.api.Monitoring.MonitoringDestination getConsumerDestinations(int index);
-
   /**
    *
    *
@@ -153,7 +147,6 @@ public interface MonitoringOrBuilder
    * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
    */
   int getConsumerDestinationsCount();
-
   /**
    *
    *
@@ -170,7 +163,6 @@ public interface MonitoringOrBuilder
    */
   java.util.List<? extends com.google.api.Monitoring.MonitoringDestinationOrBuilder>
       getConsumerDestinationsOrBuilderList();
-
   /**
    *
    *

@@ -33,7 +33,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
     // @@protoc_insertion_point(message_implements:google.api.DocumentationRule)
     DocumentationRuleOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use DocumentationRule.newBuilder() to construct.
   private DocumentationRule(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -69,7 +68,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object selector_ = "";
-
   /**
    *
    *
@@ -99,7 +97,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
       return s;
     }
   }
-
   /**
    *
    *
@@ -134,7 +131,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object description_ = "";
-
   /**
    *
    *
@@ -160,7 +156,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
       return s;
     }
   }
-
   /**
    *
    *
@@ -191,7 +186,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object deprecationDescription_ = "";
-
   /**
    *
    *
@@ -216,7 +210,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
       return s;
     }
   }
-
   /**
    *
    *
@@ -417,7 +410,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -630,7 +622,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
     private int bitField0_;
 
     private java.lang.Object selector_ = "";
-
     /**
      *
      *
@@ -659,7 +650,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -688,7 +678,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -716,7 +705,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -740,7 +728,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -771,7 +758,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
     }
 
     private java.lang.Object description_ = "";
-
     /**
      *
      *
@@ -796,7 +782,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -821,7 +806,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -845,7 +829,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -865,7 +848,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -892,7 +874,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
     }
 
     private java.lang.Object deprecationDescription_ = "";
-
     /**
      *
      *
@@ -916,7 +897,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -940,7 +920,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -963,7 +942,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -982,7 +960,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
-
     /**
      *
      *

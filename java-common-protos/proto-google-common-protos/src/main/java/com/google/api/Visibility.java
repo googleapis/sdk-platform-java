@@ -55,7 +55,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.Visibility)
     VisibilityOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Visibility.newBuilder() to construct.
   private Visibility(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -87,7 +86,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.VisibilityRule> rules_;
-
   /**
    *
    *
@@ -103,7 +101,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.api.VisibilityRule> getRulesList() {
     return rules_;
   }
-
   /**
    *
    *
@@ -119,7 +116,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<? extends com.google.api.VisibilityRuleOrBuilder> getRulesOrBuilderList() {
     return rules_;
   }
-
   /**
    *
    *
@@ -135,7 +131,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
   public int getRulesCount() {
     return rules_.size();
   }
-
   /**
    *
    *
@@ -151,7 +146,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.VisibilityRule getRules(int index) {
     return rules_.get(index);
   }
-
   /**
    *
    *
@@ -327,7 +321,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -605,7 +598,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
         return rulesBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -624,7 +616,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
         return rulesBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -643,7 +634,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
         return rulesBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -668,7 +658,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -690,7 +679,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -715,7 +703,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -740,7 +727,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -762,7 +748,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -784,7 +769,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -806,7 +790,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -828,7 +811,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -850,7 +832,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -865,7 +846,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.VisibilityRule.Builder getRulesBuilder(int index) {
       return getRulesFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -884,7 +864,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
         return rulesBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -904,7 +883,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(rules_);
       }
     }
-
     /**
      *
      *
@@ -919,7 +897,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.VisibilityRule.Builder addRulesBuilder() {
       return getRulesFieldBuilder().addBuilder(com.google.api.VisibilityRule.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -935,7 +912,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
       return getRulesFieldBuilder()
           .addBuilder(index, com.google.api.VisibilityRule.getDefaultInstance());
     }
-
     /**
      *
      *

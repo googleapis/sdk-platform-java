@@ -33,7 +33,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
     // @@protoc_insertion_point(message_implements:google.iam.v2beta.UpdatePolicyRequest)
     UpdatePolicyRequestOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use UpdatePolicyRequest.newBuilder() to construct.
   private UpdatePolicyRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -65,7 +64,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
   private int bitField0_;
   public static final int POLICY_FIELD_NUMBER = 1;
   private com.google.iam.v2beta.Policy policy_;
-
   /**
    *
    *
@@ -85,7 +83,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
   public boolean hasPolicy() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -105,7 +102,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
   public com.google.iam.v2beta.Policy getPolicy() {
     return policy_ == null ? com.google.iam.v2beta.Policy.getDefaultInstance() : policy_;
   }
-
   /**
    *
    *
@@ -288,7 +284,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -491,7 +486,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
             com.google.iam.v2beta.Policy.Builder,
             com.google.iam.v2beta.PolicyOrBuilder>
         policyBuilder_;
-
     /**
      *
      *
@@ -510,7 +504,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
     public boolean hasPolicy() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -533,7 +526,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
         return policyBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -560,7 +552,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -584,7 +575,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -616,7 +606,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
-
     /**
      *
      *
@@ -640,7 +629,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -659,7 +647,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
       onChanged();
       return getPolicyFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -680,7 +667,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
         return policy_ == null ? com.google.iam.v2beta.Policy.getDefaultInstance() : policy_;
       }
     }
-
     /**
      *
      *

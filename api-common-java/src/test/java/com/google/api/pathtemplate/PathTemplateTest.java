@@ -430,8 +430,7 @@ class PathTemplateTest {
         Assertions.assertThrows(
             ValidationException.class,
             () -> PathTemplate.create("v1/publishers/{publisher}/books/-"));
-  }
-  ;
+  };
 
   @Test
   void complexResourceIdPubSubDeletedTopic() {

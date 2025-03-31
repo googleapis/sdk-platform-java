@@ -38,7 +38,6 @@ public interface AttributeContextOrBuilder
    * @return Whether the origin field is set.
    */
   boolean hasOrigin();
-
   /**
    *
    *
@@ -53,7 +52,6 @@ public interface AttributeContextOrBuilder
    * @return The origin.
    */
   com.google.rpc.context.AttributeContext.Peer getOrigin();
-
   /**
    *
    *
@@ -81,7 +79,6 @@ public interface AttributeContextOrBuilder
    * @return Whether the source field is set.
    */
   boolean hasSource();
-
   /**
    *
    *
@@ -96,7 +93,6 @@ public interface AttributeContextOrBuilder
    * @return The source.
    */
   com.google.rpc.context.AttributeContext.Peer getSource();
-
   /**
    *
    *
@@ -124,7 +120,6 @@ public interface AttributeContextOrBuilder
    * @return Whether the destination field is set.
    */
   boolean hasDestination();
-
   /**
    *
    *
@@ -139,7 +134,6 @@ public interface AttributeContextOrBuilder
    * @return The destination.
    */
   com.google.rpc.context.AttributeContext.Peer getDestination();
-
   /**
    *
    *
@@ -165,7 +159,6 @@ public interface AttributeContextOrBuilder
    * @return Whether the request field is set.
    */
   boolean hasRequest();
-
   /**
    *
    *
@@ -178,7 +171,6 @@ public interface AttributeContextOrBuilder
    * @return The request.
    */
   com.google.rpc.context.AttributeContext.Request getRequest();
-
   /**
    *
    *
@@ -202,7 +194,6 @@ public interface AttributeContextOrBuilder
    * @return Whether the response field is set.
    */
   boolean hasResponse();
-
   /**
    *
    *
@@ -215,7 +206,6 @@ public interface AttributeContextOrBuilder
    * @return The response.
    */
   com.google.rpc.context.AttributeContext.Response getResponse();
-
   /**
    *
    *
@@ -241,7 +231,6 @@ public interface AttributeContextOrBuilder
    * @return Whether the resource field is set.
    */
   boolean hasResource();
-
   /**
    *
    *
@@ -256,7 +245,6 @@ public interface AttributeContextOrBuilder
    * @return The resource.
    */
   com.google.rpc.context.AttributeContext.Resource getResource();
-
   /**
    *
    *
@@ -282,7 +270,6 @@ public interface AttributeContextOrBuilder
    * @return Whether the api field is set.
    */
   boolean hasApi();
-
   /**
    *
    *
@@ -295,7 +282,6 @@ public interface AttributeContextOrBuilder
    * @return The api.
    */
   com.google.rpc.context.AttributeContext.Api getApi();
-
   /**
    *
    *
@@ -317,7 +303,6 @@ public interface AttributeContextOrBuilder
    * <code>repeated .google.protobuf.Any extensions = 8;</code>
    */
   java.util.List<com.google.protobuf.Any> getExtensionsList();
-
   /**
    *
    *
@@ -328,7 +313,6 @@ public interface AttributeContextOrBuilder
    * <code>repeated .google.protobuf.Any extensions = 8;</code>
    */
   com.google.protobuf.Any getExtensions(int index);
-
   /**
    *
    *
@@ -339,7 +323,6 @@ public interface AttributeContextOrBuilder
    * <code>repeated .google.protobuf.Any extensions = 8;</code>
    */
   int getExtensionsCount();
-
   /**
    *
    *
@@ -350,7 +333,6 @@ public interface AttributeContextOrBuilder
    * <code>repeated .google.protobuf.Any extensions = 8;</code>
    */
   java.util.List<? extends com.google.protobuf.AnyOrBuilder> getExtensionsOrBuilderList();
-
   /**
    *
    *

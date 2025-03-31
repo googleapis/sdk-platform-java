@@ -118,7 +118,8 @@ class ExponentialRetryAlgorithmTest {
     long overrideRpcTimeout = 100;
     long overrideTotalTimeout = 20;
     RetrySettings retrySettingsOverride =
-        retrySettings.toBuilder()
+        retrySettings
+            .toBuilder()
             .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(overrideRpcTimeout))
             .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(overrideRpcTimeout))
             .setTotalTimeoutDuration(java.time.Duration.ofMillis(overrideTotalTimeout))
@@ -174,7 +175,8 @@ class ExponentialRetryAlgorithmTest {
   @Test
   void testTruncateToTotalTimeout() {
     RetrySettings timeoutSettings =
-        retrySettings.toBuilder()
+        retrySettings
+            .toBuilder()
             .setInitialRpcTimeoutDuration(java.time.Duration.ofSeconds(4L))
             .setMaxRpcTimeoutDuration(java.time.Duration.ofSeconds(4L))
             .setTotalTimeoutDuration(java.time.Duration.ofSeconds(4L))

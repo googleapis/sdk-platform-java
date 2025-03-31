@@ -33,7 +33,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.WaitRequest)
     WaitRequestOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use WaitRequest.newBuilder() to construct.
   private WaitRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -79,7 +78,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
     private EndCase(int value) {
       this.value = value;
     }
-
     /**
      * @param value The number of the enum to look for.
      * @return The enum associated with the given number.
@@ -129,7 +127,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
     private ResponseCase(int value) {
       this.value = value;
     }
-
     /**
      * @param value The number of the enum to look for.
      * @return The enum associated with the given number.
@@ -163,7 +160,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int END_TIME_FIELD_NUMBER = 1;
-
   /**
    *
    *
@@ -179,7 +175,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean hasEndTime() {
     return endCase_ == 1;
   }
-
   /**
    *
    *
@@ -198,7 +193,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.protobuf.Timestamp.getDefaultInstance();
   }
-
   /**
    *
    *
@@ -217,7 +211,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int TTL_FIELD_NUMBER = 4;
-
   /**
    *
    *
@@ -233,7 +226,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean hasTtl() {
     return endCase_ == 4;
   }
-
   /**
    *
    *
@@ -252,7 +244,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.protobuf.Duration.getDefaultInstance();
   }
-
   /**
    *
    *
@@ -271,7 +262,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ERROR_FIELD_NUMBER = 2;
-
   /**
    *
    *
@@ -288,7 +278,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean hasError() {
     return responseCase_ == 2;
   }
-
   /**
    *
    *
@@ -308,7 +297,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.rpc.Status.getDefaultInstance();
   }
-
   /**
    *
    *
@@ -328,7 +316,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SUCCESS_FIELD_NUMBER = 3;
-
   /**
    *
    *
@@ -344,7 +331,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean hasSuccess() {
     return responseCase_ == 3;
   }
-
   /**
    *
    *
@@ -363,7 +349,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.showcase.v1beta1.WaitResponse.getDefaultInstance();
   }
-
   /**
    *
    *
@@ -608,7 +593,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -901,7 +885,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.Timestamp.Builder,
             com.google.protobuf.TimestampOrBuilder>
         endTimeBuilder_;
-
     /**
      *
      *
@@ -917,7 +900,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean hasEndTime() {
       return endCase_ == 1;
     }
-
     /**
      *
      *
@@ -943,7 +925,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
         return com.google.protobuf.Timestamp.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -966,7 +947,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
       endCase_ = 1;
       return this;
     }
-
     /**
      *
      *
@@ -986,7 +966,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
       endCase_ = 1;
       return this;
     }
-
     /**
      *
      *
@@ -1017,7 +996,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
       endCase_ = 1;
       return this;
     }
-
     /**
      *
      *
@@ -1043,7 +1021,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1056,7 +1033,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.Timestamp.Builder getEndTimeBuilder() {
       return getEndTimeFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1077,7 +1053,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
         return com.google.protobuf.Timestamp.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1114,7 +1089,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.Duration.Builder,
             com.google.protobuf.DurationOrBuilder>
         ttlBuilder_;
-
     /**
      *
      *
@@ -1130,7 +1104,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean hasTtl() {
       return endCase_ == 4;
     }
-
     /**
      *
      *
@@ -1156,7 +1129,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
         return com.google.protobuf.Duration.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1179,7 +1151,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
       endCase_ = 4;
       return this;
     }
-
     /**
      *
      *
@@ -1199,7 +1170,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
       endCase_ = 4;
       return this;
     }
-
     /**
      *
      *
@@ -1230,7 +1200,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
       endCase_ = 4;
       return this;
     }
-
     /**
      *
      *
@@ -1256,7 +1225,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1269,7 +1237,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.Duration.Builder getTtlBuilder() {
       return getTtlFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1290,7 +1257,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
         return com.google.protobuf.Duration.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1325,7 +1291,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.rpc.Status, com.google.rpc.Status.Builder, com.google.rpc.StatusOrBuilder>
         errorBuilder_;
-
     /**
      *
      *
@@ -1342,7 +1307,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean hasError() {
       return responseCase_ == 2;
     }
-
     /**
      *
      *
@@ -1369,7 +1333,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
         return com.google.rpc.Status.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1393,7 +1356,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
       responseCase_ = 2;
       return this;
     }
-
     /**
      *
      *
@@ -1414,7 +1376,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
       responseCase_ = 2;
       return this;
     }
-
     /**
      *
      *
@@ -1446,7 +1407,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
       responseCase_ = 2;
       return this;
     }
-
     /**
      *
      *
@@ -1473,7 +1433,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1487,7 +1446,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
     public com.google.rpc.Status.Builder getErrorBuilder() {
       return getErrorFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1509,7 +1467,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
         return com.google.rpc.Status.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1545,7 +1502,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
             com.google.showcase.v1beta1.WaitResponse.Builder,
             com.google.showcase.v1beta1.WaitResponseOrBuilder>
         successBuilder_;
-
     /**
      *
      *
@@ -1561,7 +1517,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean hasSuccess() {
       return responseCase_ == 3;
     }
-
     /**
      *
      *
@@ -1587,7 +1542,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
         return com.google.showcase.v1beta1.WaitResponse.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1610,7 +1564,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
       responseCase_ = 3;
       return this;
     }
-
     /**
      *
      *
@@ -1630,7 +1583,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
       responseCase_ = 3;
       return this;
     }
-
     /**
      *
      *
@@ -1663,7 +1615,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
       responseCase_ = 3;
       return this;
     }
-
     /**
      *
      *
@@ -1689,7 +1640,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1702,7 +1652,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
     public com.google.showcase.v1beta1.WaitResponse.Builder getSuccessBuilder() {
       return getSuccessFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1723,7 +1672,6 @@ public final class WaitRequest extends com.google.protobuf.GeneratedMessageV3
         return com.google.showcase.v1beta1.WaitResponse.getDefaultInstance();
       }
     }
-
     /**
      *
      *

@@ -45,7 +45,6 @@ public final class RetryInfo extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.rpc.RetryInfo)
     RetryInfoOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use RetryInfo.newBuilder() to construct.
   private RetryInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -74,7 +73,6 @@ public final class RetryInfo extends com.google.protobuf.GeneratedMessageV3
   private int bitField0_;
   public static final int RETRY_DELAY_FIELD_NUMBER = 1;
   private com.google.protobuf.Duration retryDelay_;
-
   /**
    *
    *
@@ -90,7 +88,6 @@ public final class RetryInfo extends com.google.protobuf.GeneratedMessageV3
   public boolean hasRetryDelay() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -106,7 +103,6 @@ public final class RetryInfo extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.Duration getRetryDelay() {
     return retryDelay_ == null ? com.google.protobuf.Duration.getDefaultInstance() : retryDelay_;
   }
-
   /**
    *
    *
@@ -283,7 +279,6 @@ public final class RetryInfo extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -494,7 +489,6 @@ public final class RetryInfo extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.Duration.Builder,
             com.google.protobuf.DurationOrBuilder>
         retryDelayBuilder_;
-
     /**
      *
      *
@@ -509,7 +503,6 @@ public final class RetryInfo extends com.google.protobuf.GeneratedMessageV3
     public boolean hasRetryDelay() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -530,7 +523,6 @@ public final class RetryInfo extends com.google.protobuf.GeneratedMessageV3
         return retryDelayBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -553,7 +545,6 @@ public final class RetryInfo extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -573,7 +564,6 @@ public final class RetryInfo extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -601,7 +591,6 @@ public final class RetryInfo extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -621,7 +610,6 @@ public final class RetryInfo extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -636,7 +624,6 @@ public final class RetryInfo extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getRetryDelayFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -655,7 +642,6 @@ public final class RetryInfo extends com.google.protobuf.GeneratedMessageV3
             : retryDelay_;
       }
     }
-
     /**
      *
      *

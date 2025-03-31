@@ -43,7 +43,6 @@ public interface ResourceLocationOrBuilder
    * @return A list containing the currentLocations.
    */
   java.util.List<java.lang.String> getCurrentLocationsList();
-
   /**
    *
    *
@@ -63,7 +62,6 @@ public interface ResourceLocationOrBuilder
    * @return The count of currentLocations.
    */
   int getCurrentLocationsCount();
-
   /**
    *
    *
@@ -84,7 +82,6 @@ public interface ResourceLocationOrBuilder
    * @return The currentLocations at the given index.
    */
   java.lang.String getCurrentLocations(int index);
-
   /**
    *
    *
@@ -125,7 +122,6 @@ public interface ResourceLocationOrBuilder
    * @return A list containing the originalLocations.
    */
   java.util.List<java.lang.String> getOriginalLocationsList();
-
   /**
    *
    *
@@ -145,7 +141,6 @@ public interface ResourceLocationOrBuilder
    * @return The count of originalLocations.
    */
   int getOriginalLocationsCount();
-
   /**
    *
    *
@@ -166,7 +161,6 @@ public interface ResourceLocationOrBuilder
    * @return The originalLocations at the given index.
    */
   java.lang.String getOriginalLocations(int index);
-
   /**
    *
    *

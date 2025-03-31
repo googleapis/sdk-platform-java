@@ -37,7 +37,6 @@ public interface PagedExpandLegacyMappedResponseOrBuilder
    * </code>
    */
   int getAlphabetizedCount();
-
   /**
    *
    *
@@ -51,12 +50,10 @@ public interface PagedExpandLegacyMappedResponseOrBuilder
    * </code>
    */
   boolean containsAlphabetized(java.lang.String key);
-
   /** Use {@link #getAlphabetizedMap()} instead. */
   @java.lang.Deprecated
   java.util.Map<java.lang.String, com.google.showcase.v1beta1.PagedExpandResponseList>
       getAlphabetized();
-
   /**
    *
    *
@@ -71,7 +68,6 @@ public interface PagedExpandLegacyMappedResponseOrBuilder
    */
   java.util.Map<java.lang.String, com.google.showcase.v1beta1.PagedExpandResponseList>
       getAlphabetizedMap();
-
   /**
    *
    *
@@ -89,7 +85,6 @@ public interface PagedExpandLegacyMappedResponseOrBuilder
       java.lang.String key,
       /* nullable */
       com.google.showcase.v1beta1.PagedExpandResponseList defaultValue);
-
   /**
    *
    *
@@ -116,7 +111,6 @@ public interface PagedExpandLegacyMappedResponseOrBuilder
    * @return The nextPageToken.
    */
   java.lang.String getNextPageToken();
-
   /**
    *
    *

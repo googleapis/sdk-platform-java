@@ -38,7 +38,6 @@ public interface PriceOrBuilder
    * @return Whether the amountMicros field is set.
    */
   boolean hasAmountMicros();
-
   /**
    *
    *
@@ -67,7 +66,6 @@ public interface PriceOrBuilder
    * @return Whether the currencyCode field is set.
    */
   boolean hasCurrencyCode();
-
   /**
    *
    *
@@ -81,7 +79,6 @@ public interface PriceOrBuilder
    * @return The currencyCode.
    */
   java.lang.String getCurrencyCode();
-
   /**
    *
    *

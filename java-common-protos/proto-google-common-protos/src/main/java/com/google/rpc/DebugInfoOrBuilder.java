@@ -36,7 +36,6 @@ public interface DebugInfoOrBuilder
    * @return A list containing the stackEntries.
    */
   java.util.List<java.lang.String> getStackEntriesList();
-
   /**
    *
    *
@@ -49,7 +48,6 @@ public interface DebugInfoOrBuilder
    * @return The count of stackEntries.
    */
   int getStackEntriesCount();
-
   /**
    *
    *
@@ -63,7 +61,6 @@ public interface DebugInfoOrBuilder
    * @return The stackEntries at the given index.
    */
   java.lang.String getStackEntries(int index);
-
   /**
    *
    *
@@ -90,7 +87,6 @@ public interface DebugInfoOrBuilder
    * @return The detail.
    */
   java.lang.String getDetail();
-
   /**
    *
    *

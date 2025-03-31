@@ -977,9 +977,9 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
         callableClazz = ServerStreamingCallable.class;
         break;
       case CLIENT:
-      // Fall through.
+        // Fall through.
       case NONE:
-      // Fall through
+        // Fall through
       default:
         // Fall through
     }
@@ -1013,9 +1013,9 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
       case SERVER:
         return "serverStreamingCall";
       case CLIENT:
-      // Fall through.
+        // Fall through.
       case NONE:
-      // Fall through
+        // Fall through
       default:
         return "clientStreamingCall";
     }

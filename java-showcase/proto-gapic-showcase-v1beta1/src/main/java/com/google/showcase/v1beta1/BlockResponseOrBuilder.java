@@ -37,7 +37,6 @@ public interface BlockResponseOrBuilder
    * @return The content.
    */
   java.lang.String getContent();
-
   /**
    *
    *

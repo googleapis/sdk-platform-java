@@ -80,7 +80,6 @@ public interface PolicyOrBuilder
    * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
    */
   java.util.List<com.google.iam.v1.Binding> getBindingsList();
-
   /**
    *
    *
@@ -100,7 +99,6 @@ public interface PolicyOrBuilder
    * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
    */
   com.google.iam.v1.Binding getBindings(int index);
-
   /**
    *
    *
@@ -120,7 +118,6 @@ public interface PolicyOrBuilder
    * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
    */
   int getBindingsCount();
-
   /**
    *
    *
@@ -140,7 +137,6 @@ public interface PolicyOrBuilder
    * <code>repeated .google.iam.v1.Binding bindings = 4;</code>
    */
   java.util.List<? extends com.google.iam.v1.BindingOrBuilder> getBindingsOrBuilderList();
-
   /**
    *
    *
@@ -171,7 +167,6 @@ public interface PolicyOrBuilder
    * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
    */
   java.util.List<com.google.iam.v1.AuditConfig> getAuditConfigsList();
-
   /**
    *
    *
@@ -182,7 +177,6 @@ public interface PolicyOrBuilder
    * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
    */
   com.google.iam.v1.AuditConfig getAuditConfigs(int index);
-
   /**
    *
    *
@@ -193,7 +187,6 @@ public interface PolicyOrBuilder
    * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
    */
   int getAuditConfigsCount();
-
   /**
    *
    *
@@ -204,7 +197,6 @@ public interface PolicyOrBuilder
    * <code>repeated .google.iam.v1.AuditConfig audit_configs = 6;</code>
    */
   java.util.List<? extends com.google.iam.v1.AuditConfigOrBuilder> getAuditConfigsOrBuilderList();
-
   /**
    *
    *

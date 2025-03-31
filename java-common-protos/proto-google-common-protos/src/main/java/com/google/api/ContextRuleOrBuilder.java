@@ -39,7 +39,6 @@ public interface ContextRuleOrBuilder
    * @return The selector.
    */
   java.lang.String getSelector();
-
   /**
    *
    *
@@ -69,7 +68,6 @@ public interface ContextRuleOrBuilder
    * @return A list containing the requested.
    */
   java.util.List<java.lang.String> getRequestedList();
-
   /**
    *
    *
@@ -83,7 +81,6 @@ public interface ContextRuleOrBuilder
    * @return The count of requested.
    */
   int getRequestedCount();
-
   /**
    *
    *
@@ -98,7 +95,6 @@ public interface ContextRuleOrBuilder
    * @return The requested at the given index.
    */
   java.lang.String getRequested(int index);
-
   /**
    *
    *
@@ -127,7 +123,6 @@ public interface ContextRuleOrBuilder
    * @return A list containing the provided.
    */
   java.util.List<java.lang.String> getProvidedList();
-
   /**
    *
    *
@@ -141,7 +136,6 @@ public interface ContextRuleOrBuilder
    * @return The count of provided.
    */
   int getProvidedCount();
-
   /**
    *
    *
@@ -156,7 +150,6 @@ public interface ContextRuleOrBuilder
    * @return The provided at the given index.
    */
   java.lang.String getProvided(int index);
-
   /**
    *
    *
@@ -185,7 +178,6 @@ public interface ContextRuleOrBuilder
    * @return A list containing the allowedRequestExtensions.
    */
   java.util.List<java.lang.String> getAllowedRequestExtensionsList();
-
   /**
    *
    *
@@ -199,7 +191,6 @@ public interface ContextRuleOrBuilder
    * @return The count of allowedRequestExtensions.
    */
   int getAllowedRequestExtensionsCount();
-
   /**
    *
    *
@@ -214,7 +205,6 @@ public interface ContextRuleOrBuilder
    * @return The allowedRequestExtensions at the given index.
    */
   java.lang.String getAllowedRequestExtensions(int index);
-
   /**
    *
    *
@@ -243,7 +233,6 @@ public interface ContextRuleOrBuilder
    * @return A list containing the allowedResponseExtensions.
    */
   java.util.List<java.lang.String> getAllowedResponseExtensionsList();
-
   /**
    *
    *
@@ -257,7 +246,6 @@ public interface ContextRuleOrBuilder
    * @return The count of allowedResponseExtensions.
    */
   int getAllowedResponseExtensionsCount();
-
   /**
    *
    *
@@ -272,7 +260,6 @@ public interface ContextRuleOrBuilder
    * @return The allowedResponseExtensions at the given index.
    */
   java.lang.String getAllowedResponseExtensions(int index);
-
   /**
    *
    *

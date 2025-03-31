@@ -43,7 +43,6 @@ public interface OperationInfoOrBuilder
    * @return The responseType.
    */
   java.lang.String getResponseType();
-
   /**
    *
    *
@@ -82,7 +81,6 @@ public interface OperationInfoOrBuilder
    * @return The metadataType.
    */
   java.lang.String getMetadataType();
-
   /**
    *
    *

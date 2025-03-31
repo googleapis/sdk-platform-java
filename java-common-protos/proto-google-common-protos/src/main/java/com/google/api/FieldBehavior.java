@@ -165,7 +165,6 @@ public enum FieldBehavior implements com.google.protobuf.ProtocolMessageEnum {
    * <code>FIELD_BEHAVIOR_UNSPECIFIED = 0;</code>
    */
   public static final int FIELD_BEHAVIOR_UNSPECIFIED_VALUE = 0;
-
   /**
    *
    *
@@ -178,7 +177,6 @@ public enum FieldBehavior implements com.google.protobuf.ProtocolMessageEnum {
    * <code>OPTIONAL = 1;</code>
    */
   public static final int OPTIONAL_VALUE = 1;
-
   /**
    *
    *
@@ -191,7 +189,6 @@ public enum FieldBehavior implements com.google.protobuf.ProtocolMessageEnum {
    * <code>REQUIRED = 2;</code>
    */
   public static final int REQUIRED_VALUE = 2;
-
   /**
    *
    *
@@ -205,7 +202,6 @@ public enum FieldBehavior implements com.google.protobuf.ProtocolMessageEnum {
    * <code>OUTPUT_ONLY = 3;</code>
    */
   public static final int OUTPUT_ONLY_VALUE = 3;
-
   /**
    *
    *
@@ -218,7 +214,6 @@ public enum FieldBehavior implements com.google.protobuf.ProtocolMessageEnum {
    * <code>INPUT_ONLY = 4;</code>
    */
   public static final int INPUT_ONLY_VALUE = 4;
-
   /**
    *
    *
@@ -231,7 +226,6 @@ public enum FieldBehavior implements com.google.protobuf.ProtocolMessageEnum {
    * <code>IMMUTABLE = 5;</code>
    */
   public static final int IMMUTABLE_VALUE = 5;
-
   /**
    *
    *
@@ -245,7 +239,6 @@ public enum FieldBehavior implements com.google.protobuf.ProtocolMessageEnum {
    * <code>UNORDERED_LIST = 6;</code>
    */
   public static final int UNORDERED_LIST_VALUE = 6;
-
   /**
    *
    *
@@ -259,7 +252,6 @@ public enum FieldBehavior implements com.google.protobuf.ProtocolMessageEnum {
    * <code>NON_EMPTY_DEFAULT = 7;</code>
    */
   public static final int NON_EMPTY_DEFAULT_VALUE = 7;
-
   /**
    *
    *

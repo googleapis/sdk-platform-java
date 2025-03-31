@@ -36,7 +36,6 @@ public interface PagedExpandRequestOrBuilder
    * @return The content.
    */
   java.lang.String getContent();
-
   /**
    *
    *
@@ -75,7 +74,6 @@ public interface PagedExpandRequestOrBuilder
    * @return The pageToken.
    */
   java.lang.String getPageToken();
-
   /**
    *
    *

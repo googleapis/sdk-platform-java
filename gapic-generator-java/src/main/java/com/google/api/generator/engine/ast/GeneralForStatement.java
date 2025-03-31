@@ -67,13 +67,10 @@ public abstract class GeneralForStatement implements Statement {
   abstract static class Builder {
     // Private setter.
     abstract Builder setInitializationExpr(Expr initializationExpr);
-
     // Private setter.
     abstract Builder setTerminationExpr(Expr terminationExpr);
-
     // Private setter.
     abstract Builder setUpdateExpr(Expr incrementExpr);
-
     // Private setter.
     abstract Builder setBody(List<Statement> body);
 

@@ -36,7 +36,6 @@ public interface WaitRequestOrBuilder
    * @return Whether the endTime field is set.
    */
   boolean hasEndTime();
-
   /**
    *
    *
@@ -49,7 +48,6 @@ public interface WaitRequestOrBuilder
    * @return The endTime.
    */
   com.google.protobuf.Timestamp getEndTime();
-
   /**
    *
    *
@@ -73,7 +71,6 @@ public interface WaitRequestOrBuilder
    * @return Whether the ttl field is set.
    */
   boolean hasTtl();
-
   /**
    *
    *
@@ -86,7 +83,6 @@ public interface WaitRequestOrBuilder
    * @return The ttl.
    */
   com.google.protobuf.Duration getTtl();
-
   /**
    *
    *
@@ -111,7 +107,6 @@ public interface WaitRequestOrBuilder
    * @return Whether the error field is set.
    */
   boolean hasError();
-
   /**
    *
    *
@@ -125,7 +120,6 @@ public interface WaitRequestOrBuilder
    * @return The error.
    */
   com.google.rpc.Status getError();
-
   /**
    *
    *
@@ -150,7 +144,6 @@ public interface WaitRequestOrBuilder
    * @return Whether the success field is set.
    */
   boolean hasSuccess();
-
   /**
    *
    *
@@ -163,7 +156,6 @@ public interface WaitRequestOrBuilder
    * @return The success.
    */
   com.google.showcase.v1beta1.WaitResponse getSuccess();
-
   /**
    *
    *

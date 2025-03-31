@@ -33,7 +33,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
     // @@protoc_insertion_point(message_implements:google.cloud.audit.AuthenticationInfo)
     AuthenticationInfoOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use AuthenticationInfo.newBuilder() to construct.
   private AuthenticationInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -73,7 +72,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object principalEmail_ = "";
-
   /**
    *
    *
@@ -102,7 +100,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       return s;
     }
   }
-
   /**
    *
    *
@@ -136,7 +133,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object authoritySelector_ = "";
-
   /**
    *
    *
@@ -161,7 +157,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       return s;
     }
   }
-
   /**
    *
    *
@@ -189,7 +184,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
 
   public static final int THIRD_PARTY_PRINCIPAL_FIELD_NUMBER = 4;
   private com.google.protobuf.Struct thirdPartyPrincipal_;
-
   /**
    *
    *
@@ -208,7 +202,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
   public boolean hasThirdPartyPrincipal() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -229,7 +222,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         ? com.google.protobuf.Struct.getDefaultInstance()
         : thirdPartyPrincipal_;
   }
-
   /**
    *
    *
@@ -253,7 +245,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object serviceAccountKeyName_ = "";
-
   /**
    *
    *
@@ -281,7 +272,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       return s;
     }
   }
-
   /**
    *
    *
@@ -315,7 +305,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
   @SuppressWarnings("serial")
   private java.util.List<com.google.cloud.audit.ServiceAccountDelegationInfo>
       serviceAccountDelegationInfo_;
-
   /**
    *
    *
@@ -336,7 +325,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       getServiceAccountDelegationInfoList() {
     return serviceAccountDelegationInfo_;
   }
-
   /**
    *
    *
@@ -357,7 +345,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       getServiceAccountDelegationInfoOrBuilderList() {
     return serviceAccountDelegationInfo_;
   }
-
   /**
    *
    *
@@ -377,7 +364,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
   public int getServiceAccountDelegationInfoCount() {
     return serviceAccountDelegationInfo_.size();
   }
-
   /**
    *
    *
@@ -398,7 +384,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       int index) {
     return serviceAccountDelegationInfo_.get(index);
   }
-
   /**
    *
    *
@@ -424,7 +409,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object principalSubject_ = "";
-
   /**
    *
    *
@@ -449,7 +433,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       return s;
     }
   }
-
   /**
    *
    *
@@ -689,7 +672,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -1015,7 +997,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
     private int bitField0_;
 
     private java.lang.Object principalEmail_ = "";
-
     /**
      *
      *
@@ -1043,7 +1024,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1071,7 +1051,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1098,7 +1077,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1121,7 +1099,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1151,7 +1128,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
     }
 
     private java.lang.Object authoritySelector_ = "";
-
     /**
      *
      *
@@ -1175,7 +1151,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1199,7 +1174,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1222,7 +1196,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1241,7 +1214,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1272,7 +1244,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
             com.google.protobuf.Struct.Builder,
             com.google.protobuf.StructOrBuilder>
         thirdPartyPrincipalBuilder_;
-
     /**
      *
      *
@@ -1290,7 +1261,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
     public boolean hasThirdPartyPrincipal() {
       return ((bitField0_ & 0x00000004) != 0);
     }
-
     /**
      *
      *
@@ -1314,7 +1284,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         return thirdPartyPrincipalBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -1340,7 +1309,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1363,7 +1331,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1394,7 +1361,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -1417,7 +1383,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1435,7 +1400,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       onChanged();
       return getThirdPartyPrincipalFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1457,7 +1421,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
             : thirdPartyPrincipal_;
       }
     }
-
     /**
      *
      *
@@ -1488,7 +1451,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
     }
 
     private java.lang.Object serviceAccountKeyName_ = "";
-
     /**
      *
      *
@@ -1515,7 +1477,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1542,7 +1503,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1568,7 +1528,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1590,7 +1549,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1659,7 +1617,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         return serviceAccountDelegationInfoBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -1682,7 +1639,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         return serviceAccountDelegationInfoBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -1706,7 +1662,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         return serviceAccountDelegationInfoBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -1736,7 +1691,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -1763,7 +1717,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -1793,7 +1746,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -1823,7 +1775,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -1850,7 +1801,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -1877,7 +1827,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -1905,7 +1854,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -1931,7 +1879,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -1957,7 +1904,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -1977,7 +1923,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         getServiceAccountDelegationInfoBuilder(int index) {
       return getServiceAccountDelegationInfoFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -2001,7 +1946,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         return serviceAccountDelegationInfoBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -2025,7 +1969,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         return java.util.Collections.unmodifiableList(serviceAccountDelegationInfo_);
       }
     }
-
     /**
      *
      *
@@ -2046,7 +1989,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       return getServiceAccountDelegationInfoFieldBuilder()
           .addBuilder(com.google.cloud.audit.ServiceAccountDelegationInfo.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -2068,7 +2010,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
           .addBuilder(
               index, com.google.cloud.audit.ServiceAccountDelegationInfo.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -2110,7 +2051,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
     }
 
     private java.lang.Object principalSubject_ = "";
-
     /**
      *
      *
@@ -2134,7 +2074,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -2158,7 +2097,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -2181,7 +2119,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2200,7 +2137,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *

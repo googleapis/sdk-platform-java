@@ -35,7 +35,6 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.ComplianceSuite)
     ComplianceSuiteOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use ComplianceSuite.newBuilder() to construct.
   private ComplianceSuite(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -70,32 +69,27 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.showcase.v1beta1.ComplianceGroup> group_;
-
   /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
   @java.lang.Override
   public java.util.List<com.google.showcase.v1beta1.ComplianceGroup> getGroupList() {
     return group_;
   }
-
   /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
   @java.lang.Override
   public java.util.List<? extends com.google.showcase.v1beta1.ComplianceGroupOrBuilder>
       getGroupOrBuilderList() {
     return group_;
   }
-
   /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
   @java.lang.Override
   public int getGroupCount() {
     return group_.size();
   }
-
   /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
   @java.lang.Override
   public com.google.showcase.v1beta1.ComplianceGroup getGroup(int index) {
     return group_.get(index);
   }
-
   /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
   @java.lang.Override
   public com.google.showcase.v1beta1.ComplianceGroupOrBuilder getGroupOrBuilder(int index) {
@@ -263,7 +257,6 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -517,7 +510,6 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
         return groupBuilder_.getMessageList();
       }
     }
-
     /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
     public int getGroupCount() {
       if (groupBuilder_ == null) {
@@ -526,7 +518,6 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
         return groupBuilder_.getCount();
       }
     }
-
     /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
     public com.google.showcase.v1beta1.ComplianceGroup getGroup(int index) {
       if (groupBuilder_ == null) {
@@ -535,7 +526,6 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
         return groupBuilder_.getMessage(index);
       }
     }
-
     /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
     public Builder setGroup(int index, com.google.showcase.v1beta1.ComplianceGroup value) {
       if (groupBuilder_ == null) {
@@ -550,7 +540,6 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
       }
       return this;
     }
-
     /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
     public Builder setGroup(
         int index, com.google.showcase.v1beta1.ComplianceGroup.Builder builderForValue) {
@@ -563,7 +552,6 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
       }
       return this;
     }
-
     /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
     public Builder addGroup(com.google.showcase.v1beta1.ComplianceGroup value) {
       if (groupBuilder_ == null) {
@@ -578,7 +566,6 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
       }
       return this;
     }
-
     /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
     public Builder addGroup(int index, com.google.showcase.v1beta1.ComplianceGroup value) {
       if (groupBuilder_ == null) {
@@ -593,7 +580,6 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
       }
       return this;
     }
-
     /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
     public Builder addGroup(com.google.showcase.v1beta1.ComplianceGroup.Builder builderForValue) {
       if (groupBuilder_ == null) {
@@ -605,7 +591,6 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
       }
       return this;
     }
-
     /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
     public Builder addGroup(
         int index, com.google.showcase.v1beta1.ComplianceGroup.Builder builderForValue) {
@@ -618,7 +603,6 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
       }
       return this;
     }
-
     /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
     public Builder addAllGroup(
         java.lang.Iterable<? extends com.google.showcase.v1beta1.ComplianceGroup> values) {
@@ -631,7 +615,6 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
       }
       return this;
     }
-
     /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
     public Builder clearGroup() {
       if (groupBuilder_ == null) {
@@ -643,7 +626,6 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
       }
       return this;
     }
-
     /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
     public Builder removeGroup(int index) {
       if (groupBuilder_ == null) {
@@ -655,12 +637,10 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
       }
       return this;
     }
-
     /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
     public com.google.showcase.v1beta1.ComplianceGroup.Builder getGroupBuilder(int index) {
       return getGroupFieldBuilder().getBuilder(index);
     }
-
     /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
     public com.google.showcase.v1beta1.ComplianceGroupOrBuilder getGroupOrBuilder(int index) {
       if (groupBuilder_ == null) {
@@ -669,7 +649,6 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
         return groupBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
     public java.util.List<? extends com.google.showcase.v1beta1.ComplianceGroupOrBuilder>
         getGroupOrBuilderList() {
@@ -679,19 +658,16 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
         return java.util.Collections.unmodifiableList(group_);
       }
     }
-
     /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
     public com.google.showcase.v1beta1.ComplianceGroup.Builder addGroupBuilder() {
       return getGroupFieldBuilder()
           .addBuilder(com.google.showcase.v1beta1.ComplianceGroup.getDefaultInstance());
     }
-
     /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
     public com.google.showcase.v1beta1.ComplianceGroup.Builder addGroupBuilder(int index) {
       return getGroupFieldBuilder()
           .addBuilder(index, com.google.showcase.v1beta1.ComplianceGroup.getDefaultInstance());
     }
-
     /** <code>repeated .google.showcase.v1beta1.ComplianceGroup group = 1;</code> */
     public java.util.List<com.google.showcase.v1beta1.ComplianceGroup.Builder>
         getGroupBuilderList() {

@@ -48,7 +48,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
     // @@protoc_insertion_point(message_implements:google.api.ProjectProperties)
     ProjectPropertiesOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use ProjectProperties.newBuilder() to construct.
   private ProjectProperties(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -81,7 +80,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.Property> properties_;
-
   /**
    *
    *
@@ -95,7 +93,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
   public java.util.List<com.google.api.Property> getPropertiesList() {
     return properties_;
   }
-
   /**
    *
    *
@@ -109,7 +106,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
   public java.util.List<? extends com.google.api.PropertyOrBuilder> getPropertiesOrBuilderList() {
     return properties_;
   }
-
   /**
    *
    *
@@ -123,7 +119,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
   public int getPropertiesCount() {
     return properties_.size();
   }
-
   /**
    *
    *
@@ -137,7 +132,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
   public com.google.api.Property getProperties(int index) {
     return properties_.get(index);
   }
-
   /**
    *
    *
@@ -311,7 +305,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -581,7 +574,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
         return propertiesBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -598,7 +590,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
         return propertiesBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -615,7 +606,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
         return propertiesBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -638,7 +628,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -658,7 +647,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -681,7 +669,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -704,7 +691,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -724,7 +710,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -744,7 +729,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -764,7 +748,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -784,7 +767,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -804,7 +786,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -817,7 +798,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
     public com.google.api.Property.Builder getPropertiesBuilder(int index) {
       return getPropertiesFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -834,7 +814,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
         return propertiesBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -851,7 +830,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
         return java.util.Collections.unmodifiableList(properties_);
       }
     }
-
     /**
      *
      *
@@ -864,7 +842,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
     public com.google.api.Property.Builder addPropertiesBuilder() {
       return getPropertiesFieldBuilder().addBuilder(com.google.api.Property.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -878,7 +855,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
       return getPropertiesFieldBuilder()
           .addBuilder(index, com.google.api.Property.getDefaultInstance());
     }
-
     /**
      *
      *

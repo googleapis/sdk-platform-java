@@ -38,7 +38,6 @@ public interface CreateSessionRequestOrBuilder
    * @return Whether the session field is set.
    */
   boolean hasSession();
-
   /**
    *
    *
@@ -53,7 +52,6 @@ public interface CreateSessionRequestOrBuilder
    * @return The session.
    */
   com.google.showcase.v1beta1.Session getSession();
-
   /**
    *
    *

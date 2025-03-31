@@ -33,7 +33,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.EchoResponse)
     EchoResponseOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use EchoResponse.newBuilder() to construct.
   private EchoResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -71,7 +70,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object content_ = "";
-
   /**
    *
    *
@@ -95,7 +93,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -122,7 +119,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
 
   public static final int SEVERITY_FIELD_NUMBER = 2;
   private int severity_ = 0;
-
   /**
    *
    *
@@ -138,7 +134,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
   public int getSeverityValue() {
     return severity_;
   }
-
   /**
    *
    *
@@ -161,7 +156,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object requestId_ = "";
-
   /**
    *
    *
@@ -185,7 +179,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -214,7 +207,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object otherRequestId_ = "";
-
   /**
    *
    *
@@ -238,7 +230,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -448,7 +439,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -675,7 +665,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object content_ = "";
-
     /**
      *
      *
@@ -698,7 +687,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -721,7 +709,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -743,7 +730,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -761,7 +747,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -786,7 +771,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int severity_ = 0;
-
     /**
      *
      *
@@ -802,7 +786,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
     public int getSeverityValue() {
       return severity_;
     }
-
     /**
      *
      *
@@ -821,7 +804,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -839,7 +821,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
           com.google.showcase.v1beta1.Severity.forNumber(severity_);
       return result == null ? com.google.showcase.v1beta1.Severity.UNRECOGNIZED : result;
     }
-
     /**
      *
      *
@@ -861,7 +842,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -881,7 +861,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object requestId_ = "";
-
     /**
      *
      *
@@ -904,7 +883,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -927,7 +905,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -949,7 +926,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -967,7 +943,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -992,7 +967,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object otherRequestId_ = "";
-
     /**
      *
      *
@@ -1015,7 +989,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1038,7 +1011,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1060,7 +1032,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1078,7 +1049,6 @@ public final class EchoResponse extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

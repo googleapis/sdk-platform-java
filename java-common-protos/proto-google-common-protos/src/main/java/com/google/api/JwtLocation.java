@@ -33,7 +33,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.JwtLocation)
     JwtLocationOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use JwtLocation.newBuilder() to construct.
   private JwtLocation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -79,7 +78,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
     private InCase(int value) {
       this.value = value;
     }
-
     /**
      * @param value The number of the enum to look for.
      * @return The enum associated with the given number.
@@ -115,7 +113,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int HEADER_FIELD_NUMBER = 1;
-
   /**
    *
    *
@@ -130,7 +127,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
   public boolean hasHeader() {
     return inCase_ == 1;
   }
-
   /**
    *
    *
@@ -158,7 +154,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -188,7 +183,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int QUERY_FIELD_NUMBER = 2;
-
   /**
    *
    *
@@ -203,7 +197,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
   public boolean hasQuery() {
     return inCase_ == 2;
   }
-
   /**
    *
    *
@@ -231,7 +224,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -261,7 +253,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int COOKIE_FIELD_NUMBER = 4;
-
   /**
    *
    *
@@ -276,7 +267,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
   public boolean hasCookie() {
     return inCase_ == 4;
   }
-
   /**
    *
    *
@@ -304,7 +294,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -337,7 +326,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object valuePrefix_ = "";
-
   /**
    *
    *
@@ -368,7 +356,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -605,7 +592,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -868,7 +854,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
     public boolean hasHeader() {
       return inCase_ == 1;
     }
-
     /**
      *
      *
@@ -897,7 +882,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -926,7 +910,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -948,7 +931,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -968,7 +950,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1007,7 +988,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
     public boolean hasQuery() {
       return inCase_ == 2;
     }
-
     /**
      *
      *
@@ -1036,7 +1016,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1065,7 +1044,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1087,7 +1065,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1107,7 +1084,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1146,7 +1122,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
     public boolean hasCookie() {
       return inCase_ == 4;
     }
-
     /**
      *
      *
@@ -1175,7 +1150,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1204,7 +1178,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1226,7 +1199,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1246,7 +1218,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1271,7 +1242,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object valuePrefix_ = "";
-
     /**
      *
      *
@@ -1301,7 +1271,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1331,7 +1300,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1360,7 +1328,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1385,7 +1352,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

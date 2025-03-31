@@ -39,7 +39,6 @@ public interface GetIamPolicyRequestOrBuilder
    * @return The resource.
    */
   java.lang.String getResource();
-
   /**
    *
    *
@@ -69,7 +68,6 @@ public interface GetIamPolicyRequestOrBuilder
    * @return Whether the options field is set.
    */
   boolean hasOptions();
-
   /**
    *
    *
@@ -83,7 +81,6 @@ public interface GetIamPolicyRequestOrBuilder
    * @return The options.
    */
   com.google.iam.v1.GetPolicyOptions getOptions();
-
   /**
    *
    *

@@ -35,7 +35,6 @@ public final class PagedExpandLegacyRequest extends com.google.protobuf.Generate
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.PagedExpandLegacyRequest)
     PagedExpandLegacyRequestOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use PagedExpandLegacyRequest.newBuilder() to construct.
   private PagedExpandLegacyRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -71,7 +70,6 @@ public final class PagedExpandLegacyRequest extends com.google.protobuf.Generate
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object content_ = "";
-
   /**
    *
    *
@@ -95,7 +93,6 @@ public final class PagedExpandLegacyRequest extends com.google.protobuf.Generate
       return s;
     }
   }
-
   /**
    *
    *
@@ -122,7 +119,6 @@ public final class PagedExpandLegacyRequest extends com.google.protobuf.Generate
 
   public static final int MAX_RESULTS_FIELD_NUMBER = 2;
   private int maxResults_ = 0;
-
   /**
    *
    *
@@ -145,7 +141,6 @@ public final class PagedExpandLegacyRequest extends com.google.protobuf.Generate
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object pageToken_ = "";
-
   /**
    *
    *
@@ -169,7 +164,6 @@ public final class PagedExpandLegacyRequest extends com.google.protobuf.Generate
       return s;
     }
   }
-
   /**
    *
    *
@@ -371,7 +365,6 @@ public final class PagedExpandLegacyRequest extends com.google.protobuf.Generate
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -586,7 +579,6 @@ public final class PagedExpandLegacyRequest extends com.google.protobuf.Generate
     private int bitField0_;
 
     private java.lang.Object content_ = "";
-
     /**
      *
      *
@@ -609,7 +601,6 @@ public final class PagedExpandLegacyRequest extends com.google.protobuf.Generate
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -632,7 +623,6 @@ public final class PagedExpandLegacyRequest extends com.google.protobuf.Generate
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -654,7 +644,6 @@ public final class PagedExpandLegacyRequest extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -672,7 +661,6 @@ public final class PagedExpandLegacyRequest extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -697,7 +685,6 @@ public final class PagedExpandLegacyRequest extends com.google.protobuf.Generate
     }
 
     private int maxResults_;
-
     /**
      *
      *
@@ -715,7 +702,6 @@ public final class PagedExpandLegacyRequest extends com.google.protobuf.Generate
     public int getMaxResults() {
       return maxResults_;
     }
-
     /**
      *
      *
@@ -737,7 +723,6 @@ public final class PagedExpandLegacyRequest extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -759,7 +744,6 @@ public final class PagedExpandLegacyRequest extends com.google.protobuf.Generate
     }
 
     private java.lang.Object pageToken_ = "";
-
     /**
      *
      *
@@ -782,7 +766,6 @@ public final class PagedExpandLegacyRequest extends com.google.protobuf.Generate
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -805,7 +788,6 @@ public final class PagedExpandLegacyRequest extends com.google.protobuf.Generate
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -827,7 +809,6 @@ public final class PagedExpandLegacyRequest extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -845,7 +826,6 @@ public final class PagedExpandLegacyRequest extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      *
      *

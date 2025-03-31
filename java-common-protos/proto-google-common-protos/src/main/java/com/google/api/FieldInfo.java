@@ -33,7 +33,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.FieldInfo)
     FieldInfoOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use FieldInfo.newBuilder() to construct.
   private FieldInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -149,7 +148,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
      * <code>FORMAT_UNSPECIFIED = 0;</code>
      */
     public static final int FORMAT_UNSPECIFIED_VALUE = 0;
-
     /**
      *
      *
@@ -164,7 +162,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
      * <code>UUID4 = 1;</code>
      */
     public static final int UUID4_VALUE = 1;
-
     /**
      *
      *
@@ -178,7 +175,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
      * <code>IPV4 = 2;</code>
      */
     public static final int IPV4_VALUE = 2;
-
     /**
      *
      *
@@ -193,7 +189,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
      * <code>IPV6 = 3;</code>
      */
     public static final int IPV6_VALUE = 3;
-
     /**
      *
      *
@@ -296,7 +291,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
 
   public static final int FORMAT_FIELD_NUMBER = 1;
   private int format_ = 0;
-
   /**
    *
    *
@@ -314,7 +308,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
   public int getFormatValue() {
     return format_;
   }
-
   /**
    *
    *
@@ -338,7 +331,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.TypeReference> referencedTypes_;
-
   /**
    *
    *
@@ -355,7 +347,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.api.TypeReference> getReferencedTypesList() {
     return referencedTypes_;
   }
-
   /**
    *
    *
@@ -373,7 +364,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
       getReferencedTypesOrBuilderList() {
     return referencedTypes_;
   }
-
   /**
    *
    *
@@ -390,7 +380,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
   public int getReferencedTypesCount() {
     return referencedTypes_.size();
   }
-
   /**
    *
    *
@@ -407,7 +396,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.TypeReference getReferencedTypes(int index) {
     return referencedTypes_.get(index);
   }
-
   /**
    *
    *
@@ -593,7 +581,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -829,7 +816,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private int format_ = 0;
-
     /**
      *
      *
@@ -847,7 +833,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
     public int getFormatValue() {
       return format_;
     }
-
     /**
      *
      *
@@ -868,7 +853,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -887,7 +871,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
       com.google.api.FieldInfo.Format result = com.google.api.FieldInfo.Format.forNumber(format_);
       return result == null ? com.google.api.FieldInfo.Format.UNRECOGNIZED : result;
     }
-
     /**
      *
      *
@@ -911,7 +894,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -967,7 +949,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
         return referencedTypesBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -987,7 +968,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
         return referencedTypesBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -1007,7 +987,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
         return referencedTypesBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -1033,7 +1012,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1057,7 +1035,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1083,7 +1060,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1109,7 +1085,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1132,7 +1107,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1156,7 +1130,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1180,7 +1153,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1203,7 +1175,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1226,7 +1197,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1242,7 +1212,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.TypeReference.Builder getReferencedTypesBuilder(int index) {
       return getReferencedTypesFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -1262,7 +1231,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
         return referencedTypesBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -1283,7 +1251,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(referencedTypes_);
       }
     }
-
     /**
      *
      *
@@ -1300,7 +1267,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
       return getReferencedTypesFieldBuilder()
           .addBuilder(com.google.api.TypeReference.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1317,7 +1283,6 @@ public final class FieldInfo extends com.google.protobuf.GeneratedMessageV3
       return getReferencedTypesFieldBuilder()
           .addBuilder(index, com.google.api.TypeReference.getDefaultInstance());
     }
-
     /**
      *
      *

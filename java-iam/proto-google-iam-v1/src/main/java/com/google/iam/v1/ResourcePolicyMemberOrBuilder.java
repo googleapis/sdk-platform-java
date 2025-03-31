@@ -42,7 +42,6 @@ public interface ResourcePolicyMemberOrBuilder
    * @return The iamPolicyNamePrincipal.
    */
   java.lang.String getIamPolicyNamePrincipal();
-
   /**
    *
    *
@@ -80,7 +79,6 @@ public interface ResourcePolicyMemberOrBuilder
    * @return The iamPolicyUidPrincipal.
    */
   java.lang.String getIamPolicyUidPrincipal();
-
   /**
    *
    *

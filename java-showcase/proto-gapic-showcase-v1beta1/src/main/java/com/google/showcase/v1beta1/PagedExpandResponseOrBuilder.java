@@ -34,7 +34,6 @@ public interface PagedExpandResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.EchoResponse responses = 1;</code>
    */
   java.util.List<com.google.showcase.v1beta1.EchoResponse> getResponsesList();
-
   /**
    *
    *
@@ -45,7 +44,6 @@ public interface PagedExpandResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.EchoResponse responses = 1;</code>
    */
   com.google.showcase.v1beta1.EchoResponse getResponses(int index);
-
   /**
    *
    *
@@ -56,7 +54,6 @@ public interface PagedExpandResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.EchoResponse responses = 1;</code>
    */
   int getResponsesCount();
-
   /**
    *
    *
@@ -68,7 +65,6 @@ public interface PagedExpandResponseOrBuilder
    */
   java.util.List<? extends com.google.showcase.v1beta1.EchoResponseOrBuilder>
       getResponsesOrBuilderList();
-
   /**
    *
    *
@@ -92,7 +88,6 @@ public interface PagedExpandResponseOrBuilder
    * @return The nextPageToken.
    */
   java.lang.String getNextPageToken();
-
   /**
    *
    *

@@ -33,7 +33,6 @@ public final class ResourceProto {
   }
 
   public static final int RESOURCE_REFERENCE_FIELD_NUMBER = 1055;
-
   /**
    *
    *
@@ -52,7 +51,6 @@ public final class ResourceProto {
               com.google.api.ResourceReference.getDefaultInstance());
 
   public static final int RESOURCE_DEFINITION_FIELD_NUMBER = 1053;
-
   /**
    *
    *
@@ -72,7 +70,6 @@ public final class ResourceProto {
               com.google.api.ResourceDescriptor.getDefaultInstance());
 
   public static final int RESOURCE_FIELD_NUMBER = 1053;
-
   /**
    *
    *

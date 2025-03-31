@@ -123,7 +123,6 @@ public enum ClientLibraryOrganization implements com.google.protobuf.ProtocolMes
    * <code>CLIENT_LIBRARY_ORGANIZATION_UNSPECIFIED = 0;</code>
    */
   public static final int CLIENT_LIBRARY_ORGANIZATION_UNSPECIFIED_VALUE = 0;
-
   /**
    *
    *
@@ -134,7 +133,6 @@ public enum ClientLibraryOrganization implements com.google.protobuf.ProtocolMes
    * <code>CLOUD = 1;</code>
    */
   public static final int CLOUD_VALUE = 1;
-
   /**
    *
    *
@@ -145,7 +143,6 @@ public enum ClientLibraryOrganization implements com.google.protobuf.ProtocolMes
    * <code>ADS = 2;</code>
    */
   public static final int ADS_VALUE = 2;
-
   /**
    *
    *
@@ -156,7 +153,6 @@ public enum ClientLibraryOrganization implements com.google.protobuf.ProtocolMes
    * <code>PHOTOS = 3;</code>
    */
   public static final int PHOTOS_VALUE = 3;
-
   /**
    *
    *
@@ -167,7 +163,6 @@ public enum ClientLibraryOrganization implements com.google.protobuf.ProtocolMes
    * <code>STREET_VIEW = 4;</code>
    */
   public static final int STREET_VIEW_VALUE = 4;
-
   /**
    *
    *
@@ -178,7 +173,6 @@ public enum ClientLibraryOrganization implements com.google.protobuf.ProtocolMes
    * <code>SHOPPING = 5;</code>
    */
   public static final int SHOPPING_VALUE = 5;
-
   /**
    *
    *
@@ -189,7 +183,6 @@ public enum ClientLibraryOrganization implements com.google.protobuf.ProtocolMes
    * <code>GEO = 6;</code>
    */
   public static final int GEO_VALUE = 6;
-
   /**
    *
    *

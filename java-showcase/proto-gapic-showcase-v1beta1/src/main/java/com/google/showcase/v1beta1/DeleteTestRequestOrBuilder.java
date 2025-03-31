@@ -36,7 +36,6 @@ public interface DeleteTestRequestOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *

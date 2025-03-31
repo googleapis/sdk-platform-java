@@ -79,7 +79,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.Grid)
     GridOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Grid.newBuilder() to construct.
   private Grid(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -127,7 +126,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * @return The id.
      */
     java.lang.String getId();
-
     /**
      *
      *
@@ -154,7 +152,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the image field is set.
      */
     boolean hasImage();
-
     /**
      *
      *
@@ -167,7 +164,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * @return The image.
      */
     com.google.apps.card.v1.ImageComponent getImage();
-
     /**
      *
      *
@@ -191,7 +187,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * @return The title.
      */
     java.lang.String getTitle();
-
     /**
      *
      *
@@ -217,7 +212,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * @return The subtitle.
      */
     java.lang.String getSubtitle();
-
     /**
      *
      *
@@ -243,7 +237,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * @return The enum numeric value on the wire for layout.
      */
     int getLayoutValue();
-
     /**
      *
      *
@@ -257,7 +250,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      */
     com.google.apps.card.v1.Grid.GridItem.GridItemLayout getLayout();
   }
-
   /**
    *
    *
@@ -276,7 +268,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       // @@protoc_insertion_point(message_implements:google.apps.card.v1.Grid.GridItem)
       GridItemOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use GridItem.newBuilder() to construct.
     private GridItem(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -366,7 +357,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        * <code>GRID_ITEM_LAYOUT_UNSPECIFIED = 0;</code>
        */
       public static final int GRID_ITEM_LAYOUT_UNSPECIFIED_VALUE = 0;
-
       /**
        *
        *
@@ -377,7 +367,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
        * <code>TEXT_BELOW = 1;</code>
        */
       public static final int TEXT_BELOW_VALUE = 1;
-
       /**
        *
        *
@@ -479,7 +468,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object id_ = "";
-
     /**
      *
      *
@@ -504,7 +492,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
-
     /**
      *
      *
@@ -532,7 +519,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
 
     public static final int IMAGE_FIELD_NUMBER = 2;
     private com.google.apps.card.v1.ImageComponent image_;
-
     /**
      *
      *
@@ -548,7 +534,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
     public boolean hasImage() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -564,7 +549,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.ImageComponent getImage() {
       return image_ == null ? com.google.apps.card.v1.ImageComponent.getDefaultInstance() : image_;
     }
-
     /**
      *
      *
@@ -583,7 +567,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object title_ = "";
-
     /**
      *
      *
@@ -607,7 +590,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
-
     /**
      *
      *
@@ -636,7 +618,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object subtitle_ = "";
-
     /**
      *
      *
@@ -660,7 +641,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
-
     /**
      *
      *
@@ -687,7 +667,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
 
     public static final int LAYOUT_FIELD_NUMBER = 9;
     private int layout_ = 0;
-
     /**
      *
      *
@@ -703,7 +682,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
     public int getLayoutValue() {
       return layout_;
     }
-
     /**
      *
      *
@@ -928,7 +906,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -1191,7 +1168,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       private int bitField0_;
 
       private java.lang.Object id_ = "";
-
       /**
        *
        *
@@ -1215,7 +1191,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -1239,7 +1214,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -1262,7 +1236,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1281,7 +1254,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1312,7 +1284,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
               com.google.apps.card.v1.ImageComponent.Builder,
               com.google.apps.card.v1.ImageComponentOrBuilder>
           imageBuilder_;
-
       /**
        *
        *
@@ -1327,7 +1298,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       public boolean hasImage() {
         return ((bitField0_ & 0x00000002) != 0);
       }
-
       /**
        *
        *
@@ -1348,7 +1318,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
           return imageBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -1371,7 +1340,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1391,7 +1359,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1419,7 +1386,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -1439,7 +1405,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1454,7 +1419,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return getImageFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -1473,7 +1437,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
               : image_;
         }
       }
-
       /**
        *
        *
@@ -1501,7 +1464,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       }
 
       private java.lang.Object title_ = "";
-
       /**
        *
        *
@@ -1524,7 +1486,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -1547,7 +1508,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -1569,7 +1529,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1587,7 +1546,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1612,7 +1570,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       }
 
       private java.lang.Object subtitle_ = "";
-
       /**
        *
        *
@@ -1635,7 +1592,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -1658,7 +1614,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -1680,7 +1635,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1698,7 +1652,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1723,7 +1676,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       }
 
       private int layout_ = 0;
-
       /**
        *
        *
@@ -1739,7 +1691,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       public int getLayoutValue() {
         return layout_;
       }
-
       /**
        *
        *
@@ -1758,7 +1709,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1778,7 +1728,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
             ? com.google.apps.card.v1.Grid.GridItem.GridItemLayout.UNRECOGNIZED
             : result;
       }
-
       /**
        *
        *
@@ -1800,7 +1749,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1888,7 +1836,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object title_ = "";
-
   /**
    *
    *
@@ -1912,7 +1859,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -1941,7 +1887,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.apps.card.v1.Grid.GridItem> items_;
-
   /**
    *
    *
@@ -1955,7 +1900,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.apps.card.v1.Grid.GridItem> getItemsList() {
     return items_;
   }
-
   /**
    *
    *
@@ -1970,7 +1914,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       getItemsOrBuilderList() {
     return items_;
   }
-
   /**
    *
    *
@@ -1984,7 +1927,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
   public int getItemsCount() {
     return items_.size();
   }
-
   /**
    *
    *
@@ -1998,7 +1940,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
   public com.google.apps.card.v1.Grid.GridItem getItems(int index) {
     return items_.get(index);
   }
-
   /**
    *
    *
@@ -2015,7 +1956,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
 
   public static final int BORDER_STYLE_FIELD_NUMBER = 3;
   private com.google.apps.card.v1.BorderStyle borderStyle_;
-
   /**
    *
    *
@@ -2031,7 +1971,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
   public boolean hasBorderStyle() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -2049,7 +1988,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         ? com.google.apps.card.v1.BorderStyle.getDefaultInstance()
         : borderStyle_;
   }
-
   /**
    *
    *
@@ -2068,7 +2006,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
 
   public static final int COLUMN_COUNT_FIELD_NUMBER = 4;
   private int columnCount_ = 0;
-
   /**
    *
    *
@@ -2089,7 +2026,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
 
   public static final int ON_CLICK_FIELD_NUMBER = 5;
   private com.google.apps.card.v1.OnClick onClick_;
-
   /**
    *
    *
@@ -2107,7 +2043,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
   public boolean hasOnClick() {
     return ((bitField0_ & 0x00000002) != 0);
   }
-
   /**
    *
    *
@@ -2125,7 +2060,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
   public com.google.apps.card.v1.OnClick getOnClick() {
     return onClick_ == null ? com.google.apps.card.v1.OnClick.getDefaultInstance() : onClick_;
   }
-
   /**
    *
    *
@@ -2347,7 +2281,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -2696,7 +2629,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object title_ = "";
-
     /**
      *
      *
@@ -2719,7 +2651,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -2742,7 +2673,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -2764,7 +2694,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2782,7 +2711,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2838,7 +2766,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         return itemsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -2855,7 +2782,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         return itemsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -2872,7 +2798,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         return itemsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -2895,7 +2820,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2916,7 +2840,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2939,7 +2862,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2962,7 +2884,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2982,7 +2903,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -3003,7 +2923,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -3024,7 +2943,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -3044,7 +2962,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -3064,7 +2981,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -3077,7 +2993,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.Grid.GridItem.Builder getItemsBuilder(int index) {
       return getItemsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -3094,7 +3009,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         return itemsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -3112,7 +3026,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(items_);
       }
     }
-
     /**
      *
      *
@@ -3126,7 +3039,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       return getItemsFieldBuilder()
           .addBuilder(com.google.apps.card.v1.Grid.GridItem.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -3140,7 +3052,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       return getItemsFieldBuilder()
           .addBuilder(index, com.google.apps.card.v1.Grid.GridItem.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -3177,7 +3088,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.BorderStyle.Builder,
             com.google.apps.card.v1.BorderStyleOrBuilder>
         borderStyleBuilder_;
-
     /**
      *
      *
@@ -3192,7 +3102,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
     public boolean hasBorderStyle() {
       return ((bitField0_ & 0x00000004) != 0);
     }
-
     /**
      *
      *
@@ -3213,7 +3122,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         return borderStyleBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -3236,7 +3144,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -3256,7 +3163,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -3284,7 +3190,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -3304,7 +3209,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -3319,7 +3223,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getBorderStyleFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -3338,7 +3241,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
             : borderStyle_;
       }
     }
-
     /**
      *
      *
@@ -3366,7 +3268,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int columnCount_;
-
     /**
      *
      *
@@ -3384,7 +3285,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
     public int getColumnCount() {
       return columnCount_;
     }
-
     /**
      *
      *
@@ -3406,7 +3306,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -3433,7 +3332,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.OnClick.Builder,
             com.google.apps.card.v1.OnClickOrBuilder>
         onClickBuilder_;
-
     /**
      *
      *
@@ -3450,7 +3348,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
     public boolean hasOnClick() {
       return ((bitField0_ & 0x00000010) != 0);
     }
-
     /**
      *
      *
@@ -3471,7 +3368,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         return onClickBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -3496,7 +3392,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -3518,7 +3413,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -3548,7 +3442,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -3570,7 +3463,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -3587,7 +3479,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getOnClickFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -3606,7 +3497,6 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         return onClick_ == null ? com.google.apps.card.v1.OnClick.getDefaultInstance() : onClick_;
       }
     }
-
     /**
      *
      *

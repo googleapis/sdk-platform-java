@@ -171,7 +171,6 @@ public interface ApiCallContext extends RetryingContext {
    */
   @Nullable
   java.time.Duration getStreamIdleTimeoutDuration();
-
   /**
    * The {@link ApiTracer} that was previously set for this context.
    *

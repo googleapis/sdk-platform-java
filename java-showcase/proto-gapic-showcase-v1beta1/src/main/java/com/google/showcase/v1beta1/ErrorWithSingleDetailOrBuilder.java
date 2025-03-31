@@ -30,14 +30,12 @@ public interface ErrorWithSingleDetailOrBuilder
    * @return Whether the details field is set.
    */
   boolean hasDetails();
-
   /**
    * <code>.google.protobuf.Any details = 1;</code>
    *
    * @return The details.
    */
   com.google.protobuf.Any getDetails();
-
   /** <code>.google.protobuf.Any details = 1;</code> */
   com.google.protobuf.AnyOrBuilder getDetailsOrBuilder();
 }

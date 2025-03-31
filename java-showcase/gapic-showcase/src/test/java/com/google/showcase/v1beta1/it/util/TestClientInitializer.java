@@ -81,7 +81,8 @@ public class TestClientInitializer {
         .setRetryableCodes(retryableCodes);
     EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
     grpcEchoSettings =
-        grpcEchoSettings.toBuilder()
+        grpcEchoSettings
+            .toBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
                 EchoSettings.defaultGrpcTransportProviderBuilder()
@@ -125,7 +126,8 @@ public class TestClientInitializer {
         .setRetryableCodes(retryableCodes);
     EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
     httpJsonEchoSettings =
-        httpJsonEchoSettings.toBuilder()
+        httpJsonEchoSettings
+            .toBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
                 EchoSettings.defaultHttpJsonTransportProviderBuilder()
@@ -147,7 +149,8 @@ public class TestClientInitializer {
         .setRetryableCodes(retryableCodes);
     EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
     grpcEchoSettings =
-        grpcEchoSettings.toBuilder()
+        grpcEchoSettings
+            .toBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
                 EchoSettings.defaultGrpcTransportProviderBuilder()
@@ -167,7 +170,8 @@ public class TestClientInitializer {
         .setRetryableCodes(retryableCodes);
     EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
     httpJsonEchoSettings =
-        httpJsonEchoSettings.toBuilder()
+        httpJsonEchoSettings
+            .toBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
                 EchoSettings.defaultHttpJsonTransportProviderBuilder()
@@ -192,7 +196,8 @@ public class TestClientInitializer {
         .setPollingAlgorithm(OperationTimedPollAlgorithm.create(pollingRetrySettings));
     EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
     grpcEchoSettings =
-        grpcEchoSettings.toBuilder()
+        grpcEchoSettings
+            .toBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
                 EchoSettings.defaultGrpcTransportProviderBuilder()
@@ -216,7 +221,8 @@ public class TestClientInitializer {
         .setPollingAlgorithm(OperationTimedPollAlgorithm.create(pollingRetrySettings));
     EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
     httpJsonEchoSettings =
-        httpJsonEchoSettings.toBuilder()
+        httpJsonEchoSettings
+            .toBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
                 EchoSettings.defaultHttpJsonTransportProviderBuilder()
@@ -302,7 +308,9 @@ public class TestClientInitializer {
 
     EchoStubSettings echoStubSettings =
         (EchoStubSettings)
-            grpcEchoSettings.getStubSettings().toBuilder()
+            grpcEchoSettings
+                .getStubSettings()
+                .toBuilder()
                 .setTracerFactory(metricsTracerFactory)
                 .build();
     EchoStub stub = echoStubSettings.createStub();
@@ -326,7 +334,9 @@ public class TestClientInitializer {
 
     EchoStubSettings echoStubSettings =
         (EchoStubSettings)
-            httpJsonEchoSettings.getStubSettings().toBuilder()
+            httpJsonEchoSettings
+                .getStubSettings()
+                .toBuilder()
                 .setTracerFactory(metricsTracerFactory)
                 .build();
     EchoStub stub = echoStubSettings.createStub();

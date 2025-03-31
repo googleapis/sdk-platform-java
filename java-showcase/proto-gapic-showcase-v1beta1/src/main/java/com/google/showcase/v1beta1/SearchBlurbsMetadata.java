@@ -34,7 +34,6 @@ public final class SearchBlurbsMetadata extends com.google.protobuf.GeneratedMes
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.SearchBlurbsMetadata)
     SearchBlurbsMetadataOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use SearchBlurbsMetadata.newBuilder() to construct.
   private SearchBlurbsMetadata(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -66,7 +65,6 @@ public final class SearchBlurbsMetadata extends com.google.protobuf.GeneratedMes
   private int bitField0_;
   public static final int RETRY_INFO_FIELD_NUMBER = 1;
   private com.google.rpc.RetryInfo retryInfo_;
-
   /**
    *
    *
@@ -82,7 +80,6 @@ public final class SearchBlurbsMetadata extends com.google.protobuf.GeneratedMes
   public boolean hasRetryInfo() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -98,7 +95,6 @@ public final class SearchBlurbsMetadata extends com.google.protobuf.GeneratedMes
   public com.google.rpc.RetryInfo getRetryInfo() {
     return retryInfo_ == null ? com.google.rpc.RetryInfo.getDefaultInstance() : retryInfo_;
   }
-
   /**
    *
    *
@@ -277,7 +273,6 @@ public final class SearchBlurbsMetadata extends com.google.protobuf.GeneratedMes
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -482,7 +477,6 @@ public final class SearchBlurbsMetadata extends com.google.protobuf.GeneratedMes
             com.google.rpc.RetryInfo.Builder,
             com.google.rpc.RetryInfoOrBuilder>
         retryInfoBuilder_;
-
     /**
      *
      *
@@ -497,7 +491,6 @@ public final class SearchBlurbsMetadata extends com.google.protobuf.GeneratedMes
     public boolean hasRetryInfo() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -516,7 +509,6 @@ public final class SearchBlurbsMetadata extends com.google.protobuf.GeneratedMes
         return retryInfoBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -539,7 +531,6 @@ public final class SearchBlurbsMetadata extends com.google.protobuf.GeneratedMes
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -559,7 +550,6 @@ public final class SearchBlurbsMetadata extends com.google.protobuf.GeneratedMes
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -587,7 +577,6 @@ public final class SearchBlurbsMetadata extends com.google.protobuf.GeneratedMes
       }
       return this;
     }
-
     /**
      *
      *
@@ -607,7 +596,6 @@ public final class SearchBlurbsMetadata extends com.google.protobuf.GeneratedMes
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -622,7 +610,6 @@ public final class SearchBlurbsMetadata extends com.google.protobuf.GeneratedMes
       onChanged();
       return getRetryInfoFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -639,7 +626,6 @@ public final class SearchBlurbsMetadata extends com.google.protobuf.GeneratedMes
         return retryInfo_ == null ? com.google.rpc.RetryInfo.getDefaultInstance() : retryInfo_;
       }
     }
-
     /**
      *
      *

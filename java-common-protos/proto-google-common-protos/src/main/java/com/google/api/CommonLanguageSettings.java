@@ -33,7 +33,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
     // @@protoc_insertion_point(message_implements:google.api.CommonLanguageSettings)
     CommonLanguageSettingsOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use CommonLanguageSettings.newBuilder() to construct.
   private CommonLanguageSettings(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -69,7 +68,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object referenceDocsUri_ = "";
-
   /**
    *
    *
@@ -97,7 +95,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
       return s;
     }
   }
-
   /**
    *
    *
@@ -142,7 +139,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
               return result == null ? com.google.api.ClientLibraryDestination.UNRECOGNIZED : result;
             }
           };
-
   /**
    *
    *
@@ -160,7 +156,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
         java.lang.Integer, com.google.api.ClientLibraryDestination>(
         destinations_, destinations_converter_);
   }
-
   /**
    *
    *
@@ -176,7 +171,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
   public int getDestinationsCount() {
     return destinations_.size();
   }
-
   /**
    *
    *
@@ -193,7 +187,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
   public com.google.api.ClientLibraryDestination getDestinations(int index) {
     return destinations_converter_.convert(destinations_.get(index));
   }
-
   /**
    *
    *
@@ -209,7 +202,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
   public java.util.List<java.lang.Integer> getDestinationsValueList() {
     return destinations_;
   }
-
   /**
    *
    *
@@ -231,7 +223,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
 
   public static final int SELECTIVE_GAPIC_GENERATION_FIELD_NUMBER = 3;
   private com.google.api.SelectiveGapicGeneration selectiveGapicGeneration_;
-
   /**
    *
    *
@@ -247,7 +238,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
   public boolean hasSelectiveGapicGeneration() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -265,7 +255,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
         ? com.google.api.SelectiveGapicGeneration.getDefaultInstance()
         : selectiveGapicGeneration_;
   }
-
   /**
    *
    *
@@ -481,7 +470,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -738,7 +726,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
     private int bitField0_;
 
     private java.lang.Object referenceDocsUri_ = "";
-
     /**
      *
      *
@@ -765,7 +752,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -792,7 +778,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -818,7 +803,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -840,7 +824,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -876,7 +859,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
         bitField0_ |= 0x00000002;
       }
     }
-
     /**
      *
      *
@@ -893,7 +875,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
           java.lang.Integer, com.google.api.ClientLibraryDestination>(
           destinations_, destinations_converter_);
     }
-
     /**
      *
      *
@@ -908,7 +889,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
     public int getDestinationsCount() {
       return destinations_.size();
     }
-
     /**
      *
      *
@@ -924,7 +904,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
     public com.google.api.ClientLibraryDestination getDestinations(int index) {
       return destinations_converter_.convert(destinations_.get(index));
     }
-
     /**
      *
      *
@@ -947,7 +926,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -969,7 +947,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -991,7 +968,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1009,7 +985,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1024,7 +999,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
     public java.util.List<java.lang.Integer> getDestinationsValueList() {
       return java.util.Collections.unmodifiableList(destinations_);
     }
-
     /**
      *
      *
@@ -1040,7 +1014,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
     public int getDestinationsValue(int index) {
       return destinations_.get(index);
     }
-
     /**
      *
      *
@@ -1060,7 +1033,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1079,7 +1051,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1107,7 +1078,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
             com.google.api.SelectiveGapicGeneration.Builder,
             com.google.api.SelectiveGapicGenerationOrBuilder>
         selectiveGapicGenerationBuilder_;
-
     /**
      *
      *
@@ -1122,7 +1092,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
     public boolean hasSelectiveGapicGeneration() {
       return ((bitField0_ & 0x00000004) != 0);
     }
-
     /**
      *
      *
@@ -1143,7 +1112,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
         return selectiveGapicGenerationBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -1166,7 +1134,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1187,7 +1154,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1216,7 +1182,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
       }
       return this;
     }
-
     /**
      *
      *
@@ -1236,7 +1201,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1251,7 +1215,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
       onChanged();
       return getSelectiveGapicGenerationFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1270,7 +1233,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
             : selectiveGapicGeneration_;
       }
     }
-
     /**
      *
      *

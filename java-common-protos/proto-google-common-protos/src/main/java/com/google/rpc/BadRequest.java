@@ -34,7 +34,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.rpc.BadRequest)
     BadRequestOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use BadRequest.newBuilder() to construct.
   private BadRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -115,7 +114,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
      * @return The field.
      */
     java.lang.String getField();
-
     /**
      *
      *
@@ -177,7 +175,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
      * @return The description.
      */
     java.lang.String getDescription();
-
     /**
      *
      *
@@ -208,7 +205,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
      * @return The reason.
      */
     java.lang.String getReason();
-
     /**
      *
      *
@@ -240,7 +236,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the localizedMessage field is set.
      */
     boolean hasLocalizedMessage();
-
     /**
      *
      *
@@ -254,7 +249,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
      * @return The localizedMessage.
      */
     com.google.rpc.LocalizedMessage getLocalizedMessage();
-
     /**
      *
      *
@@ -267,7 +261,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
      */
     com.google.rpc.LocalizedMessageOrBuilder getLocalizedMessageOrBuilder();
   }
-
   /**
    *
    *
@@ -282,7 +275,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       // @@protoc_insertion_point(message_implements:google.rpc.BadRequest.FieldViolation)
       FieldViolationOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use FieldViolation.newBuilder() to construct.
     private FieldViolation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -320,7 +312,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object field_ = "";
-
     /**
      *
      *
@@ -380,7 +371,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
-
     /**
      *
      *
@@ -445,7 +435,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object description_ = "";
-
     /**
      *
      *
@@ -469,7 +458,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
-
     /**
      *
      *
@@ -498,7 +486,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object reason_ = "";
-
     /**
      *
      *
@@ -527,7 +514,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
-
     /**
      *
      *
@@ -559,7 +545,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
 
     public static final int LOCALIZED_MESSAGE_FIELD_NUMBER = 4;
     private com.google.rpc.LocalizedMessage localizedMessage_;
-
     /**
      *
      *
@@ -576,7 +561,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean hasLocalizedMessage() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -595,7 +579,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
           ? com.google.rpc.LocalizedMessage.getDefaultInstance()
           : localizedMessage_;
     }
-
     /**
      *
      *
@@ -805,7 +788,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -1055,7 +1037,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       private int bitField0_;
 
       private java.lang.Object field_ = "";
-
       /**
        *
        *
@@ -1114,7 +1095,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -1173,7 +1153,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -1231,7 +1210,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1285,7 +1263,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1346,7 +1323,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       }
 
       private java.lang.Object description_ = "";
-
       /**
        *
        *
@@ -1369,7 +1345,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -1392,7 +1367,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -1414,7 +1388,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1432,7 +1405,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1457,7 +1429,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       }
 
       private java.lang.Object reason_ = "";
-
       /**
        *
        *
@@ -1485,7 +1456,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -1513,7 +1483,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -1540,7 +1509,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1563,7 +1531,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1598,7 +1565,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
               com.google.rpc.LocalizedMessage.Builder,
               com.google.rpc.LocalizedMessageOrBuilder>
           localizedMessageBuilder_;
-
       /**
        *
        *
@@ -1614,7 +1580,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       public boolean hasLocalizedMessage() {
         return ((bitField0_ & 0x00000008) != 0);
       }
-
       /**
        *
        *
@@ -1636,7 +1601,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
           return localizedMessageBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -1660,7 +1624,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1681,7 +1644,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1710,7 +1672,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -1731,7 +1692,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1747,7 +1707,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return getLocalizedMessageFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -1767,7 +1726,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
               : localizedMessage_;
         }
       }
-
       /**
        *
        *
@@ -1863,7 +1821,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.rpc.BadRequest.FieldViolation> fieldViolations_;
-
   /**
    *
    *
@@ -1877,7 +1834,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.rpc.BadRequest.FieldViolation> getFieldViolationsList() {
     return fieldViolations_;
   }
-
   /**
    *
    *
@@ -1892,7 +1848,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       getFieldViolationsOrBuilderList() {
     return fieldViolations_;
   }
-
   /**
    *
    *
@@ -1906,7 +1861,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
   public int getFieldViolationsCount() {
     return fieldViolations_.size();
   }
-
   /**
    *
    *
@@ -1920,7 +1874,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
   public com.google.rpc.BadRequest.FieldViolation getFieldViolations(int index) {
     return fieldViolations_.get(index);
   }
-
   /**
    *
    *
@@ -2094,7 +2047,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -2352,7 +2304,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         return fieldViolationsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -2369,7 +2320,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         return fieldViolationsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -2386,7 +2336,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         return fieldViolationsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -2409,7 +2358,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2430,7 +2378,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2453,7 +2400,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2476,7 +2422,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2497,7 +2442,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2518,7 +2462,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2539,7 +2482,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2559,7 +2501,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2579,7 +2520,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2592,7 +2532,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
     public com.google.rpc.BadRequest.FieldViolation.Builder getFieldViolationsBuilder(int index) {
       return getFieldViolationsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -2610,7 +2549,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         return fieldViolationsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -2628,7 +2566,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(fieldViolations_);
       }
     }
-
     /**
      *
      *
@@ -2642,7 +2579,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       return getFieldViolationsFieldBuilder()
           .addBuilder(com.google.rpc.BadRequest.FieldViolation.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -2656,7 +2592,6 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       return getFieldViolationsFieldBuilder()
           .addBuilder(index, com.google.rpc.BadRequest.FieldViolation.getDefaultInstance());
     }
-
     /**
      *
      *

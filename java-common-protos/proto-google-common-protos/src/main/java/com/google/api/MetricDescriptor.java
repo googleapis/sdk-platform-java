@@ -35,7 +35,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     // @@protoc_insertion_point(message_implements:google.api.MetricDescriptor)
     MetricDescriptorOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use MetricDescriptor.newBuilder() to construct.
   private MetricDescriptor(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -141,7 +140,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * <code>METRIC_KIND_UNSPECIFIED = 0;</code>
      */
     public static final int METRIC_KIND_UNSPECIFIED_VALUE = 0;
-
     /**
      *
      *
@@ -152,7 +150,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * <code>GAUGE = 1;</code>
      */
     public static final int GAUGE_VALUE = 1;
-
     /**
      *
      *
@@ -163,7 +160,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * <code>DELTA = 2;</code>
      */
     public static final int DELTA_VALUE = 2;
-
     /**
      *
      *
@@ -359,7 +355,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * <code>VALUE_TYPE_UNSPECIFIED = 0;</code>
      */
     public static final int VALUE_TYPE_UNSPECIFIED_VALUE = 0;
-
     /**
      *
      *
@@ -371,7 +366,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * <code>BOOL = 1;</code>
      */
     public static final int BOOL_VALUE = 1;
-
     /**
      *
      *
@@ -382,7 +376,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * <code>INT64 = 2;</code>
      */
     public static final int INT64_VALUE = 2;
-
     /**
      *
      *
@@ -393,7 +386,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * <code>DOUBLE = 3;</code>
      */
     public static final int DOUBLE_VALUE = 3;
-
     /**
      *
      *
@@ -405,7 +397,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * <code>STRING = 4;</code>
      */
     public static final int STRING_VALUE = 4;
-
     /**
      *
      *
@@ -416,7 +407,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * <code>DISTRIBUTION = 5;</code>
      */
     public static final int DISTRIBUTION_VALUE = 5;
-
     /**
      *
      *
@@ -541,7 +531,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      */
     @java.lang.Deprecated
     int getLaunchStageValue();
-
     /**
      *
      *
@@ -575,7 +564,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return Whether the samplePeriod field is set.
      */
     boolean hasSamplePeriod();
-
     /**
      *
      *
@@ -591,7 +579,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return The samplePeriod.
      */
     com.google.protobuf.Duration getSamplePeriod();
-
     /**
      *
      *
@@ -620,7 +607,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return Whether the ingestDelay field is set.
      */
     boolean hasIngestDelay();
-
     /**
      *
      *
@@ -635,7 +621,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return The ingestDelay.
      */
     com.google.protobuf.Duration getIngestDelay();
-
     /**
      *
      *
@@ -666,7 +651,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
             com.google.api.MetricDescriptor.MetricDescriptorMetadata
                 .TimeSeriesResourceHierarchyLevel>
         getTimeSeriesResourceHierarchyLevelList();
-
     /**
      *
      *
@@ -681,7 +665,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return The count of timeSeriesResourceHierarchyLevel.
      */
     int getTimeSeriesResourceHierarchyLevelCount();
-
     /**
      *
      *
@@ -698,7 +681,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      */
     com.google.api.MetricDescriptor.MetricDescriptorMetadata.TimeSeriesResourceHierarchyLevel
         getTimeSeriesResourceHierarchyLevel(int index);
-
     /**
      *
      *
@@ -714,7 +696,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *     timeSeriesResourceHierarchyLevel.
      */
     java.util.List<java.lang.Integer> getTimeSeriesResourceHierarchyLevelValueList();
-
     /**
      *
      *
@@ -732,7 +713,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      */
     int getTimeSeriesResourceHierarchyLevelValue(int index);
   }
-
   /**
    *
    *
@@ -747,7 +727,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       // @@protoc_insertion_point(message_implements:google.api.MetricDescriptor.MetricDescriptorMetadata)
       MetricDescriptorMetadataOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use MetricDescriptorMetadata.newBuilder() to construct.
     private MetricDescriptorMetadata(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -844,7 +823,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        * <code>TIME_SERIES_RESOURCE_HIERARCHY_LEVEL_UNSPECIFIED = 0;</code>
        */
       public static final int TIME_SERIES_RESOURCE_HIERARCHY_LEVEL_UNSPECIFIED_VALUE = 0;
-
       /**
        *
        *
@@ -855,7 +833,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        * <code>PROJECT = 1;</code>
        */
       public static final int PROJECT_VALUE = 1;
-
       /**
        *
        *
@@ -866,7 +843,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        * <code>ORGANIZATION = 2;</code>
        */
       public static final int ORGANIZATION_VALUE = 2;
-
       /**
        *
        *
@@ -972,7 +948,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     private int bitField0_;
     public static final int LAUNCH_STAGE_FIELD_NUMBER = 1;
     private int launchStage_ = 0;
-
     /**
      *
      *
@@ -993,7 +968,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     public int getLaunchStageValue() {
       return launchStage_;
     }
-
     /**
      *
      *
@@ -1018,7 +992,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
 
     public static final int SAMPLE_PERIOD_FIELD_NUMBER = 2;
     private com.google.protobuf.Duration samplePeriod_;
-
     /**
      *
      *
@@ -1037,7 +1010,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     public boolean hasSamplePeriod() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -1058,7 +1030,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
           ? com.google.protobuf.Duration.getDefaultInstance()
           : samplePeriod_;
     }
-
     /**
      *
      *
@@ -1080,7 +1051,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
 
     public static final int INGEST_DELAY_FIELD_NUMBER = 3;
     private com.google.protobuf.Duration ingestDelay_;
-
     /**
      *
      *
@@ -1098,7 +1068,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     public boolean hasIngestDelay() {
       return ((bitField0_ & 0x00000002) != 0);
     }
-
     /**
      *
      *
@@ -1118,7 +1087,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
           ? com.google.protobuf.Duration.getDefaultInstance()
           : ingestDelay_;
     }
-
     /**
      *
      *
@@ -1165,7 +1133,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
                     : result;
               }
             };
-
     /**
      *
      *
@@ -1190,7 +1157,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
               .TimeSeriesResourceHierarchyLevel>(
           timeSeriesResourceHierarchyLevel_, timeSeriesResourceHierarchyLevel_converter_);
     }
-
     /**
      *
      *
@@ -1208,7 +1174,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     public int getTimeSeriesResourceHierarchyLevelCount() {
       return timeSeriesResourceHierarchyLevel_.size();
     }
-
     /**
      *
      *
@@ -1229,7 +1194,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       return timeSeriesResourceHierarchyLevel_converter_.convert(
           timeSeriesResourceHierarchyLevel_.get(index));
     }
-
     /**
      *
      *
@@ -1248,7 +1212,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     public java.util.List<java.lang.Integer> getTimeSeriesResourceHierarchyLevelValueList() {
       return timeSeriesResourceHierarchyLevel_;
     }
-
     /**
      *
      *
@@ -1488,7 +1451,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -1766,7 +1728,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       private int bitField0_;
 
       private int launchStage_ = 0;
-
       /**
        *
        *
@@ -1787,7 +1748,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       public int getLaunchStageValue() {
         return launchStage_;
       }
-
       /**
        *
        *
@@ -1811,7 +1771,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1833,7 +1792,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         com.google.api.LaunchStage result = com.google.api.LaunchStage.forNumber(launchStage_);
         return result == null ? com.google.api.LaunchStage.UNRECOGNIZED : result;
       }
-
       /**
        *
        *
@@ -1860,7 +1818,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1890,7 +1847,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
               com.google.protobuf.Duration.Builder,
               com.google.protobuf.DurationOrBuilder>
           samplePeriodBuilder_;
-
       /**
        *
        *
@@ -1908,7 +1864,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       public boolean hasSamplePeriod() {
         return ((bitField0_ & 0x00000002) != 0);
       }
-
       /**
        *
        *
@@ -1932,7 +1887,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
           return samplePeriodBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -1958,7 +1912,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1981,7 +1934,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2012,7 +1964,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         }
         return this;
       }
-
       /**
        *
        *
@@ -2035,7 +1986,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2053,7 +2003,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         onChanged();
         return getSamplePeriodFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -2075,7 +2024,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
               : samplePeriod_;
         }
       }
-
       /**
        *
        *
@@ -2111,7 +2059,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
               com.google.protobuf.Duration.Builder,
               com.google.protobuf.DurationOrBuilder>
           ingestDelayBuilder_;
-
       /**
        *
        *
@@ -2128,7 +2075,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       public boolean hasIngestDelay() {
         return ((bitField0_ & 0x00000004) != 0);
       }
-
       /**
        *
        *
@@ -2151,7 +2097,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
           return ingestDelayBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -2176,7 +2121,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2198,7 +2142,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2228,7 +2171,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         }
         return this;
       }
-
       /**
        *
        *
@@ -2250,7 +2192,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2267,7 +2208,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         onChanged();
         return getIngestDelayFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -2288,7 +2228,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
               : ingestDelay_;
         }
       }
-
       /**
        *
        *
@@ -2327,7 +2266,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
           bitField0_ |= 0x00000008;
         }
       }
-
       /**
        *
        *
@@ -2351,7 +2289,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
                 .TimeSeriesResourceHierarchyLevel>(
             timeSeriesResourceHierarchyLevel_, timeSeriesResourceHierarchyLevel_converter_);
       }
-
       /**
        *
        *
@@ -2368,7 +2305,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       public int getTimeSeriesResourceHierarchyLevelCount() {
         return timeSeriesResourceHierarchyLevel_.size();
       }
-
       /**
        *
        *
@@ -2389,7 +2325,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         return timeSeriesResourceHierarchyLevel_converter_.convert(
             timeSeriesResourceHierarchyLevel_.get(index));
       }
-
       /**
        *
        *
@@ -2417,7 +2352,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2443,7 +2377,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2473,7 +2406,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2493,7 +2425,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2511,7 +2442,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       public java.util.List<java.lang.Integer> getTimeSeriesResourceHierarchyLevelValueList() {
         return java.util.Collections.unmodifiableList(timeSeriesResourceHierarchyLevel_);
       }
-
       /**
        *
        *
@@ -2530,7 +2460,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       public int getTimeSeriesResourceHierarchyLevelValue(int index) {
         return timeSeriesResourceHierarchyLevel_.get(index);
       }
-
       /**
        *
        *
@@ -2553,7 +2482,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2575,7 +2503,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2670,7 +2597,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object name_ = "";
-
   /**
    *
    *
@@ -2694,7 +2620,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       return s;
     }
   }
-
   /**
    *
    *
@@ -2723,7 +2648,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object type_ = "";
-
   /**
    *
    *
@@ -2754,7 +2678,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       return s;
     }
   }
-
   /**
    *
    *
@@ -2790,7 +2713,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.LabelDescriptor> labels_;
-
   /**
    *
    *
@@ -2809,7 +2731,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
   public java.util.List<com.google.api.LabelDescriptor> getLabelsList() {
     return labels_;
   }
-
   /**
    *
    *
@@ -2829,7 +2750,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       getLabelsOrBuilderList() {
     return labels_;
   }
-
   /**
    *
    *
@@ -2848,7 +2768,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
   public int getLabelsCount() {
     return labels_.size();
   }
-
   /**
    *
    *
@@ -2867,7 +2786,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
   public com.google.api.LabelDescriptor getLabels(int index) {
     return labels_.get(index);
   }
-
   /**
    *
    *
@@ -2889,7 +2807,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
 
   public static final int METRIC_KIND_FIELD_NUMBER = 3;
   private int metricKind_ = 0;
-
   /**
    *
    *
@@ -2906,7 +2823,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
   public int getMetricKindValue() {
     return metricKind_;
   }
-
   /**
    *
    *
@@ -2928,7 +2844,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
 
   public static final int VALUE_TYPE_FIELD_NUMBER = 4;
   private int valueType_ = 0;
-
   /**
    *
    *
@@ -2945,7 +2860,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
   public int getValueTypeValue() {
     return valueType_;
   }
-
   /**
    *
    *
@@ -2969,7 +2883,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object unit_ = "";
-
   /**
    *
    *
@@ -3094,7 +3007,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       return s;
     }
   }
-
   /**
    *
    *
@@ -3224,7 +3136,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object description_ = "";
-
   /**
    *
    *
@@ -3248,7 +3159,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       return s;
     }
   }
-
   /**
    *
    *
@@ -3277,7 +3187,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object displayName_ = "";
-
   /**
    *
    *
@@ -3304,7 +3213,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       return s;
     }
   }
-
   /**
    *
    *
@@ -3334,7 +3242,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
 
   public static final int METADATA_FIELD_NUMBER = 10;
   private com.google.api.MetricDescriptor.MetricDescriptorMetadata metadata_;
-
   /**
    *
    *
@@ -3350,7 +3257,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
   public boolean hasMetadata() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -3368,7 +3274,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         ? com.google.api.MetricDescriptor.MetricDescriptorMetadata.getDefaultInstance()
         : metadata_;
   }
-
   /**
    *
    *
@@ -3387,7 +3292,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
 
   public static final int LAUNCH_STAGE_FIELD_NUMBER = 12;
   private int launchStage_ = 0;
-
   /**
    *
    *
@@ -3403,7 +3307,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
   public int getLaunchStageValue() {
     return launchStage_;
   }
-
   /**
    *
    *
@@ -3426,7 +3329,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList monitoredResourceTypes_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
-
   /**
    *
    *
@@ -3446,7 +3348,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
   public com.google.protobuf.ProtocolStringList getMonitoredResourceTypesList() {
     return monitoredResourceTypes_;
   }
-
   /**
    *
    *
@@ -3466,7 +3367,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
   public int getMonitoredResourceTypesCount() {
     return monitoredResourceTypes_.size();
   }
-
   /**
    *
    *
@@ -3487,7 +3387,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
   public java.lang.String getMonitoredResourceTypes(int index) {
     return monitoredResourceTypes_.get(index);
   }
-
   /**
    *
    *
@@ -3776,7 +3675,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -4168,7 +4066,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     private int bitField0_;
 
     private java.lang.Object name_ = "";
-
     /**
      *
      *
@@ -4191,7 +4088,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -4214,7 +4110,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -4236,7 +4131,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -4254,7 +4148,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -4279,7 +4172,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     }
 
     private java.lang.Object type_ = "";
-
     /**
      *
      *
@@ -4309,7 +4201,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -4339,7 +4230,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -4368,7 +4258,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -4393,7 +4282,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -4461,7 +4349,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         return labelsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -4483,7 +4370,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         return labelsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -4505,7 +4391,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         return labelsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -4533,7 +4418,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -4558,7 +4442,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -4586,7 +4469,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -4614,7 +4496,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -4639,7 +4520,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -4664,7 +4544,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -4690,7 +4569,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -4715,7 +4593,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -4740,7 +4617,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -4758,7 +4634,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     public com.google.api.LabelDescriptor.Builder getLabelsBuilder(int index) {
       return getLabelsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -4780,7 +4655,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         return labelsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -4803,7 +4677,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         return java.util.Collections.unmodifiableList(labels_);
       }
     }
-
     /**
      *
      *
@@ -4822,7 +4695,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       return getLabelsFieldBuilder()
           .addBuilder(com.google.api.LabelDescriptor.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -4841,7 +4713,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       return getLabelsFieldBuilder()
           .addBuilder(index, com.google.api.LabelDescriptor.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -4878,7 +4749,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     }
 
     private int metricKind_ = 0;
-
     /**
      *
      *
@@ -4895,7 +4765,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     public int getMetricKindValue() {
       return metricKind_;
     }
-
     /**
      *
      *
@@ -4915,7 +4784,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -4934,7 +4802,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
           com.google.api.MetricDescriptor.MetricKind.forNumber(metricKind_);
       return result == null ? com.google.api.MetricDescriptor.MetricKind.UNRECOGNIZED : result;
     }
-
     /**
      *
      *
@@ -4957,7 +4824,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -4978,7 +4844,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     }
 
     private int valueType_ = 0;
-
     /**
      *
      *
@@ -4995,7 +4860,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     public int getValueTypeValue() {
       return valueType_;
     }
-
     /**
      *
      *
@@ -5015,7 +4879,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -5034,7 +4897,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
           com.google.api.MetricDescriptor.ValueType.forNumber(valueType_);
       return result == null ? com.google.api.MetricDescriptor.ValueType.UNRECOGNIZED : result;
     }
-
     /**
      *
      *
@@ -5057,7 +4919,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -5078,7 +4939,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     }
 
     private java.lang.Object unit_ = "";
-
     /**
      *
      *
@@ -5202,7 +5062,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -5326,7 +5185,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -5449,7 +5307,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -5568,7 +5425,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -5694,7 +5550,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     }
 
     private java.lang.Object description_ = "";
-
     /**
      *
      *
@@ -5717,7 +5572,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -5740,7 +5594,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -5762,7 +5615,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -5780,7 +5632,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -5805,7 +5656,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     }
 
     private java.lang.Object displayName_ = "";
-
     /**
      *
      *
@@ -5831,7 +5681,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -5857,7 +5706,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -5882,7 +5730,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -5903,7 +5750,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -5936,7 +5782,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
             com.google.api.MetricDescriptor.MetricDescriptorMetadata.Builder,
             com.google.api.MetricDescriptor.MetricDescriptorMetadataOrBuilder>
         metadataBuilder_;
-
     /**
      *
      *
@@ -5951,7 +5796,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     public boolean hasMetadata() {
       return ((bitField0_ & 0x00000100) != 0);
     }
-
     /**
      *
      *
@@ -5972,7 +5816,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         return metadataBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -5995,7 +5838,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -6016,7 +5858,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -6045,7 +5886,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -6065,7 +5905,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -6080,7 +5919,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return getMetadataFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -6100,7 +5938,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
             : metadata_;
       }
     }
-
     /**
      *
      *
@@ -6128,7 +5965,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     }
 
     private int launchStage_ = 0;
-
     /**
      *
      *
@@ -6144,7 +5980,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     public int getLaunchStageValue() {
       return launchStage_;
     }
-
     /**
      *
      *
@@ -6163,7 +5998,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -6180,7 +6014,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       com.google.api.LaunchStage result = com.google.api.LaunchStage.forNumber(launchStage_);
       return result == null ? com.google.api.LaunchStage.UNRECOGNIZED : result;
     }
-
     /**
      *
      *
@@ -6202,7 +6035,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -6231,7 +6063,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       }
       bitField0_ |= 0x00000400;
     }
-
     /**
      *
      *
@@ -6252,7 +6083,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       monitoredResourceTypes_.makeImmutable();
       return monitoredResourceTypes_;
     }
-
     /**
      *
      *
@@ -6272,7 +6102,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     public int getMonitoredResourceTypesCount() {
       return monitoredResourceTypes_.size();
     }
-
     /**
      *
      *
@@ -6293,7 +6122,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     public java.lang.String getMonitoredResourceTypes(int index) {
       return monitoredResourceTypes_.get(index);
     }
-
     /**
      *
      *
@@ -6314,7 +6142,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     public com.google.protobuf.ByteString getMonitoredResourceTypesBytes(int index) {
       return monitoredResourceTypes_.getByteString(index);
     }
-
     /**
      *
      *
@@ -6343,7 +6170,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -6371,7 +6197,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -6396,7 +6221,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -6420,7 +6244,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *

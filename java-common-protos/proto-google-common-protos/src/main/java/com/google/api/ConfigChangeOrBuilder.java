@@ -44,7 +44,6 @@ public interface ConfigChangeOrBuilder
    * @return The element.
    */
   java.lang.String getElement();
-
   /**
    *
    *
@@ -79,7 +78,6 @@ public interface ConfigChangeOrBuilder
    * @return The oldValue.
    */
   java.lang.String getOldValue();
-
   /**
    *
    *
@@ -107,7 +105,6 @@ public interface ConfigChangeOrBuilder
    * @return The newValue.
    */
   java.lang.String getNewValue();
-
   /**
    *
    *
@@ -134,7 +131,6 @@ public interface ConfigChangeOrBuilder
    * @return The enum numeric value on the wire for changeType.
    */
   int getChangeTypeValue();
-
   /**
    *
    *
@@ -159,7 +155,6 @@ public interface ConfigChangeOrBuilder
    * <code>repeated .google.api.Advice advices = 5;</code>
    */
   java.util.List<com.google.api.Advice> getAdvicesList();
-
   /**
    *
    *
@@ -171,7 +166,6 @@ public interface ConfigChangeOrBuilder
    * <code>repeated .google.api.Advice advices = 5;</code>
    */
   com.google.api.Advice getAdvices(int index);
-
   /**
    *
    *
@@ -183,7 +177,6 @@ public interface ConfigChangeOrBuilder
    * <code>repeated .google.api.Advice advices = 5;</code>
    */
   int getAdvicesCount();
-
   /**
    *
    *
@@ -195,7 +188,6 @@ public interface ConfigChangeOrBuilder
    * <code>repeated .google.api.Advice advices = 5;</code>
    */
   java.util.List<? extends com.google.api.AdviceOrBuilder> getAdvicesOrBuilderList();
-
   /**
    *
    *

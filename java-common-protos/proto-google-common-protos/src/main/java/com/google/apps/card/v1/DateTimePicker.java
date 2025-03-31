@@ -42,7 +42,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.DateTimePicker)
     DateTimePickerOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use DateTimePicker.newBuilder() to construct.
   private DateTimePicker(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -132,7 +131,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      * <code>DATE_AND_TIME = 0;</code>
      */
     public static final int DATE_AND_TIME_VALUE = 0;
-
     /**
      *
      *
@@ -143,7 +141,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      * <code>DATE_ONLY = 1;</code>
      */
     public static final int DATE_ONLY_VALUE = 1;
-
     /**
      *
      *
@@ -246,7 +243,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object name_ = "";
-
   /**
    *
    *
@@ -273,7 +269,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -305,7 +300,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object label_ = "";
-
   /**
    *
    *
@@ -331,7 +325,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -360,7 +353,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
 
   public static final int TYPE_FIELD_NUMBER = 3;
   private int type_ = 0;
-
   /**
    *
    *
@@ -376,7 +368,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
   public int getTypeValue() {
     return type_;
   }
-
   /**
    *
    *
@@ -399,7 +390,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
 
   public static final int VALUE_MS_EPOCH_FIELD_NUMBER = 4;
   private long valueMsEpoch_ = 0L;
-
   /**
    *
    *
@@ -428,7 +418,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
 
   public static final int TIMEZONE_OFFSET_DATE_FIELD_NUMBER = 5;
   private int timezoneOffsetDate_ = 0;
-
   /**
    *
    *
@@ -449,7 +438,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
 
   public static final int ON_CHANGE_ACTION_FIELD_NUMBER = 6;
   private com.google.apps.card.v1.Action onChangeAction_;
-
   /**
    *
    *
@@ -466,7 +454,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
   public boolean hasOnChangeAction() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -485,7 +472,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
         ? com.google.apps.card.v1.Action.getDefaultInstance()
         : onChangeAction_;
   }
-
   /**
    *
    *
@@ -713,7 +699,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -990,7 +975,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object name_ = "";
-
     /**
      *
      *
@@ -1016,7 +1000,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1042,7 +1025,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1067,7 +1049,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1088,7 +1069,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1116,7 +1096,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object label_ = "";
-
     /**
      *
      *
@@ -1141,7 +1120,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1166,7 +1144,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1190,7 +1167,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1210,7 +1186,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1237,7 +1212,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int type_ = 0;
-
     /**
      *
      *
@@ -1253,7 +1227,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
     public int getTypeValue() {
       return type_;
     }
-
     /**
      *
      *
@@ -1272,7 +1245,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1292,7 +1264,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
           ? com.google.apps.card.v1.DateTimePicker.DateTimePickerType.UNRECOGNIZED
           : result;
     }
-
     /**
      *
      *
@@ -1314,7 +1285,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1334,7 +1304,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
     }
 
     private long valueMsEpoch_;
-
     /**
      *
      *
@@ -1360,7 +1329,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
     public long getValueMsEpoch() {
       return valueMsEpoch_;
     }
-
     /**
      *
      *
@@ -1390,7 +1358,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1420,7 +1387,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int timezoneOffsetDate_;
-
     /**
      *
      *
@@ -1438,7 +1404,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
     public int getTimezoneOffsetDate() {
       return timezoneOffsetDate_;
     }
-
     /**
      *
      *
@@ -1460,7 +1425,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1487,7 +1451,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.Action.Builder,
             com.google.apps.card.v1.ActionOrBuilder>
         onChangeActionBuilder_;
-
     /**
      *
      *
@@ -1503,7 +1466,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
     public boolean hasOnChangeAction() {
       return ((bitField0_ & 0x00000020) != 0);
     }
-
     /**
      *
      *
@@ -1525,7 +1487,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
         return onChangeActionBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -1549,7 +1510,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1570,7 +1530,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1599,7 +1558,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1620,7 +1578,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1636,7 +1593,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getOnChangeActionFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1656,7 +1612,6 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
             : onChangeAction_;
       }
     }
-
     /**
      *
      *

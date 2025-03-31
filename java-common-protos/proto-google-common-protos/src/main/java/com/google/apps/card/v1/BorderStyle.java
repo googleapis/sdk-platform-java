@@ -37,7 +37,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.BorderStyle)
     BorderStyleOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use BorderStyle.newBuilder() to construct.
   private BorderStyle(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -124,7 +123,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
      * <code>BORDER_TYPE_UNSPECIFIED = 0;</code>
      */
     public static final int BORDER_TYPE_UNSPECIFIED_VALUE = 0;
-
     /**
      *
      *
@@ -135,7 +133,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
      * <code>NO_BORDER = 1;</code>
      */
     public static final int NO_BORDER_VALUE = 1;
-
     /**
      *
      *
@@ -233,7 +230,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
   private int bitField0_;
   public static final int TYPE_FIELD_NUMBER = 1;
   private int type_ = 0;
-
   /**
    *
    *
@@ -249,7 +245,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
   public int getTypeValue() {
     return type_;
   }
-
   /**
    *
    *
@@ -270,7 +265,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
 
   public static final int STROKE_COLOR_FIELD_NUMBER = 2;
   private com.google.type.Color strokeColor_;
-
   /**
    *
    *
@@ -286,7 +280,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
   public boolean hasStrokeColor() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -302,7 +295,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
   public com.google.type.Color getStrokeColor() {
     return strokeColor_ == null ? com.google.type.Color.getDefaultInstance() : strokeColor_;
   }
-
   /**
    *
    *
@@ -319,7 +311,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
 
   public static final int CORNER_RADIUS_FIELD_NUMBER = 3;
   private int cornerRadius_ = 0;
-
   /**
    *
    *
@@ -518,7 +509,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -746,7 +736,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private int type_ = 0;
-
     /**
      *
      *
@@ -762,7 +751,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
     public int getTypeValue() {
       return type_;
     }
-
     /**
      *
      *
@@ -781,7 +769,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -799,7 +786,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
           com.google.apps.card.v1.BorderStyle.BorderType.forNumber(type_);
       return result == null ? com.google.apps.card.v1.BorderStyle.BorderType.UNRECOGNIZED : result;
     }
-
     /**
      *
      *
@@ -821,7 +807,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -844,7 +829,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.type.Color, com.google.type.Color.Builder, com.google.type.ColorOrBuilder>
         strokeColorBuilder_;
-
     /**
      *
      *
@@ -859,7 +843,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
     public boolean hasStrokeColor() {
       return ((bitField0_ & 0x00000002) != 0);
     }
-
     /**
      *
      *
@@ -878,7 +861,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
         return strokeColorBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -901,7 +883,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -921,7 +902,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -949,7 +929,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -969,7 +948,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -984,7 +962,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getStrokeColorFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1001,7 +978,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
         return strokeColor_ == null ? com.google.type.Color.getDefaultInstance() : strokeColor_;
       }
     }
-
     /**
      *
      *
@@ -1027,7 +1003,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int cornerRadius_;
-
     /**
      *
      *
@@ -1043,7 +1018,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
     public int getCornerRadius() {
       return cornerRadius_;
     }
-
     /**
      *
      *
@@ -1063,7 +1037,6 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

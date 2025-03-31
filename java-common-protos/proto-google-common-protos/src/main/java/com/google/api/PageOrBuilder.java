@@ -49,7 +49,6 @@ public interface PageOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *
@@ -90,7 +89,6 @@ public interface PageOrBuilder
    * @return The content.
    */
   java.lang.String getContent();
-
   /**
    *
    *
@@ -117,7 +115,6 @@ public interface PageOrBuilder
    * <code>repeated .google.api.Page subpages = 3;</code>
    */
   java.util.List<com.google.api.Page> getSubpagesList();
-
   /**
    *
    *
@@ -129,7 +126,6 @@ public interface PageOrBuilder
    * <code>repeated .google.api.Page subpages = 3;</code>
    */
   com.google.api.Page getSubpages(int index);
-
   /**
    *
    *
@@ -141,7 +137,6 @@ public interface PageOrBuilder
    * <code>repeated .google.api.Page subpages = 3;</code>
    */
   int getSubpagesCount();
-
   /**
    *
    *
@@ -153,7 +148,6 @@ public interface PageOrBuilder
    * <code>repeated .google.api.Page subpages = 3;</code>
    */
   java.util.List<? extends com.google.api.PageOrBuilder> getSubpagesOrBuilderList();
-
   /**
    *
    *

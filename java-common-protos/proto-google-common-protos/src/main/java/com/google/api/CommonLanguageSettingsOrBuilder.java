@@ -40,7 +40,6 @@ public interface CommonLanguageSettingsOrBuilder
    */
   @java.lang.Deprecated
   java.lang.String getReferenceDocsUri();
-
   /**
    *
    *
@@ -70,7 +69,6 @@ public interface CommonLanguageSettingsOrBuilder
    * @return A list containing the destinations.
    */
   java.util.List<com.google.api.ClientLibraryDestination> getDestinationsList();
-
   /**
    *
    *
@@ -83,7 +81,6 @@ public interface CommonLanguageSettingsOrBuilder
    * @return The count of destinations.
    */
   int getDestinationsCount();
-
   /**
    *
    *
@@ -97,7 +94,6 @@ public interface CommonLanguageSettingsOrBuilder
    * @return The destinations at the given index.
    */
   com.google.api.ClientLibraryDestination getDestinations(int index);
-
   /**
    *
    *
@@ -110,7 +106,6 @@ public interface CommonLanguageSettingsOrBuilder
    * @return A list containing the enum numeric values on the wire for destinations.
    */
   java.util.List<java.lang.Integer> getDestinationsValueList();
-
   /**
    *
    *
@@ -137,7 +132,6 @@ public interface CommonLanguageSettingsOrBuilder
    * @return Whether the selectiveGapicGeneration field is set.
    */
   boolean hasSelectiveGapicGeneration();
-
   /**
    *
    *
@@ -150,7 +144,6 @@ public interface CommonLanguageSettingsOrBuilder
    * @return The selectiveGapicGeneration.
    */
   com.google.api.SelectiveGapicGeneration getSelectiveGapicGeneration();
-
   /**
    *
    *

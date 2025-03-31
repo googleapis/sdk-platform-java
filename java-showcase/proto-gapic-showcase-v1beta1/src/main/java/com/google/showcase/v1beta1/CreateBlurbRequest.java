@@ -34,7 +34,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.CreateBlurbRequest)
     CreateBlurbRequestOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use CreateBlurbRequest.newBuilder() to construct.
   private CreateBlurbRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -70,7 +69,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object parent_ = "";
-
   /**
    *
    *
@@ -97,7 +95,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
       return s;
     }
   }
-
   /**
    *
    *
@@ -127,7 +124,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
 
   public static final int BLURB_FIELD_NUMBER = 2;
   private com.google.showcase.v1beta1.Blurb blurb_;
-
   /**
    *
    *
@@ -143,7 +139,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
   public boolean hasBlurb() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -159,7 +154,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
   public com.google.showcase.v1beta1.Blurb getBlurb() {
     return blurb_ == null ? com.google.showcase.v1beta1.Blurb.getDefaultInstance() : blurb_;
   }
-
   /**
    *
    *
@@ -347,7 +341,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -561,7 +554,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
     private int bitField0_;
 
     private java.lang.Object parent_ = "";
-
     /**
      *
      *
@@ -587,7 +579,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -613,7 +604,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -638,7 +628,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -659,7 +648,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -692,7 +680,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
             com.google.showcase.v1beta1.Blurb.Builder,
             com.google.showcase.v1beta1.BlurbOrBuilder>
         blurbBuilder_;
-
     /**
      *
      *
@@ -707,7 +694,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
     public boolean hasBlurb() {
       return ((bitField0_ & 0x00000002) != 0);
     }
-
     /**
      *
      *
@@ -726,7 +712,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
         return blurbBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -749,7 +734,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -769,7 +753,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -797,7 +780,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -817,7 +799,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -832,7 +813,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
       onChanged();
       return getBlurbFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -849,7 +829,6 @@ public final class CreateBlurbRequest extends com.google.protobuf.GeneratedMessa
         return blurb_ == null ? com.google.showcase.v1beta1.Blurb.getDefaultInstance() : blurb_;
       }
     }
-
     /**
      *
      *

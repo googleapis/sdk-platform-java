@@ -34,7 +34,6 @@ public interface ListRoomsResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.Room rooms = 1;</code>
    */
   java.util.List<com.google.showcase.v1beta1.Room> getRoomsList();
-
   /**
    *
    *
@@ -45,7 +44,6 @@ public interface ListRoomsResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.Room rooms = 1;</code>
    */
   com.google.showcase.v1beta1.Room getRooms(int index);
-
   /**
    *
    *
@@ -56,7 +54,6 @@ public interface ListRoomsResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.Room rooms = 1;</code>
    */
   int getRoomsCount();
-
   /**
    *
    *
@@ -67,7 +64,6 @@ public interface ListRoomsResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.Room rooms = 1;</code>
    */
   java.util.List<? extends com.google.showcase.v1beta1.RoomOrBuilder> getRoomsOrBuilderList();
-
   /**
    *
    *
@@ -94,7 +90,6 @@ public interface ListRoomsResponseOrBuilder
    * @return The nextPageToken.
    */
   java.lang.String getNextPageToken();
-
   /**
    *
    *

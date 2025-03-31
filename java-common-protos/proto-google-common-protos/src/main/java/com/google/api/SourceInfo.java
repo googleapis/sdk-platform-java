@@ -33,7 +33,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.SourceInfo)
     SourceInfoOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use SourceInfo.newBuilder() to construct.
   private SourceInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -65,7 +64,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.protobuf.Any> sourceFiles_;
-
   /**
    *
    *
@@ -79,7 +77,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.protobuf.Any> getSourceFilesList() {
     return sourceFiles_;
   }
-
   /**
    *
    *
@@ -93,7 +90,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<? extends com.google.protobuf.AnyOrBuilder> getSourceFilesOrBuilderList() {
     return sourceFiles_;
   }
-
   /**
    *
    *
@@ -107,7 +103,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
   public int getSourceFilesCount() {
     return sourceFiles_.size();
   }
-
   /**
    *
    *
@@ -121,7 +116,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.Any getSourceFiles(int index) {
     return sourceFiles_.get(index);
   }
-
   /**
    *
    *
@@ -295,7 +289,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -549,7 +542,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
         return sourceFilesBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -566,7 +558,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
         return sourceFilesBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -583,7 +574,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
         return sourceFilesBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -606,7 +596,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -626,7 +615,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -649,7 +637,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -672,7 +659,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -692,7 +678,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -712,7 +697,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -732,7 +716,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -752,7 +735,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -772,7 +754,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -785,7 +766,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.Any.Builder getSourceFilesBuilder(int index) {
       return getSourceFilesFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -802,7 +782,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
         return sourceFilesBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -820,7 +799,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(sourceFiles_);
       }
     }
-
     /**
      *
      *
@@ -833,7 +811,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.Any.Builder addSourceFilesBuilder() {
       return getSourceFilesFieldBuilder().addBuilder(com.google.protobuf.Any.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -847,7 +824,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
       return getSourceFilesFieldBuilder()
           .addBuilder(index, com.google.protobuf.Any.getDefaultInstance());
     }
-
     /**
      *
      *

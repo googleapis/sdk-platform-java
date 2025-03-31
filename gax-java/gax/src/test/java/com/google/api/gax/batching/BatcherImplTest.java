@@ -119,7 +119,6 @@ class BatcherImplTest {
     EXECUTOR.shutdown();
     EXECUTOR.awaitTermination(100, TimeUnit.MILLISECONDS);
   }
-
   /** The accumulated results in the test are resolved when {@link Batcher#flush()} is called. */
   @Test
   void testResultsAreResolvedAfterFlush() throws Exception {
@@ -504,7 +503,8 @@ class BatcherImplTest {
   @Test
   void testWhenDelayThresholdExceeds() throws Exception {
     BatchingSettings settings =
-        batchingSettings.toBuilder()
+        batchingSettings
+            .toBuilder()
             .setDelayThresholdDuration(java.time.Duration.ofMillis(100))
             .build();
     underTest = createDefaultBatcherImpl(settings, null);
@@ -538,7 +538,8 @@ class BatcherImplTest {
           }
         };
     BatchingSettings settings =
-        batchingSettings.toBuilder()
+        batchingSettings
+            .toBuilder()
             .setDelayThresholdDuration(java.time.Duration.ofMillis(50))
             .build();
 
@@ -578,7 +579,8 @@ class BatcherImplTest {
   void testPushCurrentBatchRunnable() throws Exception {
     long DELAY_TIME = 50L;
     BatchingSettings settings =
-        batchingSettings.toBuilder()
+        batchingSettings
+            .toBuilder()
             .setDelayThresholdDuration(java.time.Duration.ofMillis(DELAY_TIME))
             .build();
     BatcherImpl<Integer, Integer, LabeledIntList, List<Integer>> batcher =

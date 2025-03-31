@@ -36,7 +36,6 @@ public interface EchoRequestOrBuilder
    * @return Whether the content field is set.
    */
   boolean hasContent();
-
   /**
    *
    *
@@ -49,7 +48,6 @@ public interface EchoRequestOrBuilder
    * @return The content.
    */
   java.lang.String getContent();
-
   /**
    *
    *
@@ -75,7 +73,6 @@ public interface EchoRequestOrBuilder
    * @return Whether the error field is set.
    */
   boolean hasError();
-
   /**
    *
    *
@@ -88,7 +85,6 @@ public interface EchoRequestOrBuilder
    * @return The error.
    */
   com.google.rpc.Status getError();
-
   /**
    *
    *
@@ -112,7 +108,6 @@ public interface EchoRequestOrBuilder
    * @return The enum numeric value on the wire for severity.
    */
   int getSeverityValue();
-
   /**
    *
    *
@@ -138,7 +133,6 @@ public interface EchoRequestOrBuilder
    * @return The header.
    */
   java.lang.String getHeader();
-
   /**
    *
    *
@@ -164,7 +158,6 @@ public interface EchoRequestOrBuilder
    * @return The otherHeader.
    */
   java.lang.String getOtherHeader();
-
   /**
    *
    *
@@ -190,7 +183,6 @@ public interface EchoRequestOrBuilder
    * @return The requestId.
    */
   java.lang.String getRequestId();
-
   /**
    *
    *
@@ -216,7 +208,6 @@ public interface EchoRequestOrBuilder
    * @return Whether the otherRequestId field is set.
    */
   boolean hasOtherRequestId();
-
   /**
    *
    *
@@ -229,7 +220,6 @@ public interface EchoRequestOrBuilder
    * @return The otherRequestId.
    */
   java.lang.String getOtherRequestId();
-
   /**
    *
    *

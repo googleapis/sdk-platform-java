@@ -46,7 +46,6 @@ public interface JavaSettingsOrBuilder
    * @return The libraryPackage.
    */
   java.lang.String getLibraryPackage();
-
   /**
    *
    *
@@ -93,7 +92,6 @@ public interface JavaSettingsOrBuilder
    * <code>map&lt;string, string&gt; service_class_names = 2;</code>
    */
   int getServiceClassNamesCount();
-
   /**
    *
    *
@@ -117,11 +115,9 @@ public interface JavaSettingsOrBuilder
    * <code>map&lt;string, string&gt; service_class_names = 2;</code>
    */
   boolean containsServiceClassNames(java.lang.String key);
-
   /** Use {@link #getServiceClassNamesMap()} instead. */
   @java.lang.Deprecated
   java.util.Map<java.lang.String, java.lang.String> getServiceClassNames();
-
   /**
    *
    *
@@ -145,7 +141,6 @@ public interface JavaSettingsOrBuilder
    * <code>map&lt;string, string&gt; service_class_names = 2;</code>
    */
   java.util.Map<java.lang.String, java.lang.String> getServiceClassNamesMap();
-
   /**
    *
    *
@@ -173,7 +168,6 @@ public interface JavaSettingsOrBuilder
       java.lang.String key,
       /* nullable */
       java.lang.String defaultValue);
-
   /**
    *
    *
@@ -210,7 +204,6 @@ public interface JavaSettingsOrBuilder
    * @return Whether the common field is set.
    */
   boolean hasCommon();
-
   /**
    *
    *
@@ -223,7 +216,6 @@ public interface JavaSettingsOrBuilder
    * @return The common.
    */
   com.google.api.CommonLanguageSettings getCommon();
-
   /**
    *
    *

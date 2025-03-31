@@ -715,7 +715,9 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     secondCtorExprs.add(
         AssignmentExpr.builder()
             .setVariableExpr(
-                classMemberVarExprs.get("callableFactory").toBuilder()
+                classMemberVarExprs
+                    .get("callableFactory")
+                    .toBuilder()
                     .setExprReferenceExpr(thisExpr)
                     .build())
             .setValueExpr(callableFactoryVarExpr)
@@ -1259,7 +1261,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
         callableType = FIXED_TYPESTORE.get("BidiStreamingCallable");
         break;
       case NONE:
-      // Fall through
+        // Fall through
       default:
         // Fall through
     }

@@ -33,7 +33,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.JavaSettings)
     JavaSettingsOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use JavaSettings.newBuilder() to construct.
   private JavaSettings(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -78,7 +77,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object libraryPackage_ = "";
-
   /**
    *
    *
@@ -112,7 +110,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -175,7 +172,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
   public int getServiceClassNamesCount() {
     return internalGetServiceClassNames().getMap().size();
   }
-
   /**
    *
    *
@@ -205,14 +201,12 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     }
     return internalGetServiceClassNames().getMap().containsKey(key);
   }
-
   /** Use {@link #getServiceClassNamesMap()} instead. */
   @java.lang.Override
   @java.lang.Deprecated
   public java.util.Map<java.lang.String, java.lang.String> getServiceClassNames() {
     return getServiceClassNamesMap();
   }
-
   /**
    *
    *
@@ -239,7 +233,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
   public java.util.Map<java.lang.String, java.lang.String> getServiceClassNamesMap() {
     return internalGetServiceClassNames().getMap();
   }
-
   /**
    *
    *
@@ -273,7 +266,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     java.util.Map<java.lang.String, java.lang.String> map = internalGetServiceClassNames().getMap();
     return map.containsKey(key) ? map.get(key) : defaultValue;
   }
-
   /**
    *
    *
@@ -310,7 +302,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
 
   public static final int COMMON_FIELD_NUMBER = 3;
   private com.google.api.CommonLanguageSettings common_;
-
   /**
    *
    *
@@ -326,7 +317,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
   public boolean hasCommon() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -342,7 +332,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.CommonLanguageSettings getCommon() {
     return common_ == null ? com.google.api.CommonLanguageSettings.getDefaultInstance() : common_;
   }
-
   /**
    *
    *
@@ -548,7 +537,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -798,7 +786,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object libraryPackage_ = "";
-
     /**
      *
      *
@@ -831,7 +818,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -864,7 +850,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -896,7 +881,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -924,7 +908,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -987,7 +970,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     public int getServiceClassNamesCount() {
       return internalGetServiceClassNames().getMap().size();
     }
-
     /**
      *
      *
@@ -1017,14 +999,12 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
       }
       return internalGetServiceClassNames().getMap().containsKey(key);
     }
-
     /** Use {@link #getServiceClassNamesMap()} instead. */
     @java.lang.Override
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getServiceClassNames() {
       return getServiceClassNamesMap();
     }
-
     /**
      *
      *
@@ -1051,7 +1031,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     public java.util.Map<java.lang.String, java.lang.String> getServiceClassNamesMap() {
       return internalGetServiceClassNames().getMap();
     }
-
     /**
      *
      *
@@ -1086,7 +1065,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
           internalGetServiceClassNames().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
-
     /**
      *
      *
@@ -1127,7 +1105,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
       internalGetMutableServiceClassNames().getMutableMap().clear();
       return this;
     }
-
     /**
      *
      *
@@ -1157,14 +1134,12 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
       internalGetMutableServiceClassNames().getMutableMap().remove(key);
       return this;
     }
-
     /** Use alternate mutation accessors instead. */
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getMutableServiceClassNames() {
       bitField0_ |= 0x00000002;
       return internalGetMutableServiceClassNames().getMutableMap();
     }
-
     /**
      *
      *
@@ -1198,7 +1173,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
       bitField0_ |= 0x00000002;
       return this;
     }
-
     /**
      *
      *
@@ -1234,7 +1208,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
             com.google.api.CommonLanguageSettings.Builder,
             com.google.api.CommonLanguageSettingsOrBuilder>
         commonBuilder_;
-
     /**
      *
      *
@@ -1249,7 +1222,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     public boolean hasCommon() {
       return ((bitField0_ & 0x00000004) != 0);
     }
-
     /**
      *
      *
@@ -1270,7 +1242,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
         return commonBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -1293,7 +1264,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1313,7 +1283,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1341,7 +1310,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1361,7 +1329,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1376,7 +1343,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getCommonFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1395,7 +1361,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
             : common_;
       }
     }
-
     /**
      *
      *

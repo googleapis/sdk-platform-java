@@ -37,7 +37,6 @@ public interface LocationOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *
@@ -64,7 +63,6 @@ public interface LocationOrBuilder
    * @return The locationId.
    */
   java.lang.String getLocationId();
-
   /**
    *
    *
@@ -91,7 +89,6 @@ public interface LocationOrBuilder
    * @return The displayName.
    */
   java.lang.String getDisplayName();
-
   /**
    *
    *
@@ -118,7 +115,6 @@ public interface LocationOrBuilder
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
   int getLabelsCount();
-
   /**
    *
    *
@@ -131,11 +127,9 @@ public interface LocationOrBuilder
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
   boolean containsLabels(java.lang.String key);
-
   /** Use {@link #getLabelsMap()} instead. */
   @java.lang.Deprecated
   java.util.Map<java.lang.String, java.lang.String> getLabels();
-
   /**
    *
    *
@@ -148,7 +142,6 @@ public interface LocationOrBuilder
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
   java.util.Map<java.lang.String, java.lang.String> getLabelsMap();
-
   /**
    *
    *
@@ -165,7 +158,6 @@ public interface LocationOrBuilder
       java.lang.String key,
       /* nullable */
       java.lang.String defaultValue);
-
   /**
    *
    *
@@ -192,7 +184,6 @@ public interface LocationOrBuilder
    * @return Whether the metadata field is set.
    */
   boolean hasMetadata();
-
   /**
    *
    *
@@ -206,7 +197,6 @@ public interface LocationOrBuilder
    * @return The metadata.
    */
   com.google.protobuf.Any getMetadata();
-
   /**
    *
    *

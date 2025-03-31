@@ -38,7 +38,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
     // @@protoc_insertion_point(message_implements:google.api.SystemParameters)
     SystemParametersOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use SystemParameters.newBuilder() to construct.
   private SystemParameters(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -72,7 +71,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.SystemParameterRule> rules_;
-
   /**
    *
    *
@@ -114,7 +112,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
   public java.util.List<com.google.api.SystemParameterRule> getRulesList() {
     return rules_;
   }
-
   /**
    *
    *
@@ -157,7 +154,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
       getRulesOrBuilderList() {
     return rules_;
   }
-
   /**
    *
    *
@@ -199,7 +195,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
   public int getRulesCount() {
     return rules_.size();
   }
-
   /**
    *
    *
@@ -241,7 +236,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
   public com.google.api.SystemParameterRule getRules(int index) {
     return rules_.get(index);
   }
-
   /**
    *
    *
@@ -443,7 +437,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -734,7 +727,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
         return rulesBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -779,7 +771,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
         return rulesBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -824,7 +815,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
         return rulesBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -875,7 +865,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -923,7 +912,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -974,7 +962,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -1025,7 +1012,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -1073,7 +1059,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -1121,7 +1106,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -1170,7 +1154,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -1218,7 +1201,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -1266,7 +1248,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -1307,7 +1288,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
     public com.google.api.SystemParameterRule.Builder getRulesBuilder(int index) {
       return getRulesFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -1352,7 +1332,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
         return rulesBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -1398,7 +1377,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
         return java.util.Collections.unmodifiableList(rules_);
       }
     }
-
     /**
      *
      *
@@ -1440,7 +1418,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
       return getRulesFieldBuilder()
           .addBuilder(com.google.api.SystemParameterRule.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1482,7 +1459,6 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
       return getRulesFieldBuilder()
           .addBuilder(index, com.google.api.SystemParameterRule.getDefaultInstance());
     }
-
     /**
      *
      *

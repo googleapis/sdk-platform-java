@@ -33,7 +33,6 @@ public final class TestIamPermissionsResponse extends com.google.protobuf.Genera
     // @@protoc_insertion_point(message_implements:google.iam.v1.TestIamPermissionsResponse)
     TestIamPermissionsResponseOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use TestIamPermissionsResponse.newBuilder() to construct.
   private TestIamPermissionsResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -69,7 +68,6 @@ public final class TestIamPermissionsResponse extends com.google.protobuf.Genera
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList permissions_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
-
   /**
    *
    *
@@ -85,7 +83,6 @@ public final class TestIamPermissionsResponse extends com.google.protobuf.Genera
   public com.google.protobuf.ProtocolStringList getPermissionsList() {
     return permissions_;
   }
-
   /**
    *
    *
@@ -101,7 +98,6 @@ public final class TestIamPermissionsResponse extends com.google.protobuf.Genera
   public int getPermissionsCount() {
     return permissions_.size();
   }
-
   /**
    *
    *
@@ -118,7 +114,6 @@ public final class TestIamPermissionsResponse extends com.google.protobuf.Genera
   public java.lang.String getPermissions(int index) {
     return permissions_.get(index);
   }
-
   /**
    *
    *
@@ -302,7 +297,6 @@ public final class TestIamPermissionsResponse extends com.google.protobuf.Genera
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -501,7 +495,6 @@ public final class TestIamPermissionsResponse extends com.google.protobuf.Genera
       }
       bitField0_ |= 0x00000001;
     }
-
     /**
      *
      *
@@ -518,7 +511,6 @@ public final class TestIamPermissionsResponse extends com.google.protobuf.Genera
       permissions_.makeImmutable();
       return permissions_;
     }
-
     /**
      *
      *
@@ -534,7 +526,6 @@ public final class TestIamPermissionsResponse extends com.google.protobuf.Genera
     public int getPermissionsCount() {
       return permissions_.size();
     }
-
     /**
      *
      *
@@ -551,7 +542,6 @@ public final class TestIamPermissionsResponse extends com.google.protobuf.Genera
     public java.lang.String getPermissions(int index) {
       return permissions_.get(index);
     }
-
     /**
      *
      *
@@ -568,7 +558,6 @@ public final class TestIamPermissionsResponse extends com.google.protobuf.Genera
     public com.google.protobuf.ByteString getPermissionsBytes(int index) {
       return permissions_.getByteString(index);
     }
-
     /**
      *
      *
@@ -593,7 +582,6 @@ public final class TestIamPermissionsResponse extends com.google.protobuf.Genera
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -617,7 +605,6 @@ public final class TestIamPermissionsResponse extends com.google.protobuf.Genera
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -638,7 +625,6 @@ public final class TestIamPermissionsResponse extends com.google.protobuf.Genera
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -658,7 +644,6 @@ public final class TestIamPermissionsResponse extends com.google.protobuf.Genera
       onChanged();
       return this;
     }
-
     /**
      *
      *

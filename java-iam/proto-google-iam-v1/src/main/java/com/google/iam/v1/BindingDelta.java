@@ -34,7 +34,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.iam.v1.BindingDelta)
     BindingDeltaOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use BindingDelta.newBuilder() to construct.
   private BindingDelta(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -118,7 +117,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
      * <code>ACTION_UNSPECIFIED = 0;</code>
      */
     public static final int ACTION_UNSPECIFIED_VALUE = 0;
-
     /**
      *
      *
@@ -129,7 +127,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
      * <code>ADD = 1;</code>
      */
     public static final int ADD_VALUE = 1;
-
     /**
      *
      *
@@ -227,7 +224,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
   private int bitField0_;
   public static final int ACTION_FIELD_NUMBER = 1;
   private int action_ = 0;
-
   /**
    *
    *
@@ -244,7 +240,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
   public int getActionValue() {
     return action_;
   }
-
   /**
    *
    *
@@ -268,7 +263,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object role_ = "";
-
   /**
    *
    *
@@ -294,7 +288,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -325,7 +318,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object member_ = "";
-
   /**
    *
    *
@@ -351,7 +343,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -380,7 +371,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
 
   public static final int CONDITION_FIELD_NUMBER = 4;
   private com.google.type.Expr condition_;
-
   /**
    *
    *
@@ -396,7 +386,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
   public boolean hasCondition() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -412,7 +401,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
   public com.google.type.Expr getCondition() {
     return condition_ == null ? com.google.type.Expr.getDefaultInstance() : condition_;
   }
-
   /**
    *
    *
@@ -616,7 +604,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -854,7 +841,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private int action_ = 0;
-
     /**
      *
      *
@@ -871,7 +857,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
     public int getActionValue() {
       return action_;
     }
-
     /**
      *
      *
@@ -891,7 +876,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -910,7 +894,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
           com.google.iam.v1.BindingDelta.Action.forNumber(action_);
       return result == null ? com.google.iam.v1.BindingDelta.Action.UNRECOGNIZED : result;
     }
-
     /**
      *
      *
@@ -933,7 +916,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -954,7 +936,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object role_ = "";
-
     /**
      *
      *
@@ -979,7 +960,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1004,7 +984,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1028,7 +1007,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1048,7 +1026,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1075,7 +1052,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object member_ = "";
-
     /**
      *
      *
@@ -1100,7 +1076,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1125,7 +1100,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1149,7 +1123,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1169,7 +1142,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1199,7 +1171,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.type.Expr, com.google.type.Expr.Builder, com.google.type.ExprOrBuilder>
         conditionBuilder_;
-
     /**
      *
      *
@@ -1214,7 +1185,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
     public boolean hasCondition() {
       return ((bitField0_ & 0x00000008) != 0);
     }
-
     /**
      *
      *
@@ -1233,7 +1203,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
         return conditionBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -1256,7 +1225,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1276,7 +1244,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1304,7 +1271,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1324,7 +1290,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1339,7 +1304,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getConditionFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1356,7 +1320,6 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
         return condition_ == null ? com.google.type.Expr.getDefaultInstance() : condition_;
       }
     }
-
     /**
      *
      *

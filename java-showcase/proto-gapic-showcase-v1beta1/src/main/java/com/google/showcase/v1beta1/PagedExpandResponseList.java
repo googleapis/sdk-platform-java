@@ -33,7 +33,6 @@ public final class PagedExpandResponseList extends com.google.protobuf.Generated
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.PagedExpandResponseList)
     PagedExpandResponseListOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use PagedExpandResponseList.newBuilder() to construct.
   private PagedExpandResponseList(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -69,7 +68,6 @@ public final class PagedExpandResponseList extends com.google.protobuf.Generated
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList words_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
-
   /**
    * <code>repeated string words = 1;</code>
    *
@@ -78,7 +76,6 @@ public final class PagedExpandResponseList extends com.google.protobuf.Generated
   public com.google.protobuf.ProtocolStringList getWordsList() {
     return words_;
   }
-
   /**
    * <code>repeated string words = 1;</code>
    *
@@ -87,7 +84,6 @@ public final class PagedExpandResponseList extends com.google.protobuf.Generated
   public int getWordsCount() {
     return words_.size();
   }
-
   /**
    * <code>repeated string words = 1;</code>
    *
@@ -97,7 +93,6 @@ public final class PagedExpandResponseList extends com.google.protobuf.Generated
   public java.lang.String getWords(int index) {
     return words_.get(index);
   }
-
   /**
    * <code>repeated string words = 1;</code>
    *
@@ -274,7 +269,6 @@ public final class PagedExpandResponseList extends com.google.protobuf.Generated
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -474,7 +468,6 @@ public final class PagedExpandResponseList extends com.google.protobuf.Generated
       }
       bitField0_ |= 0x00000001;
     }
-
     /**
      * <code>repeated string words = 1;</code>
      *
@@ -484,7 +477,6 @@ public final class PagedExpandResponseList extends com.google.protobuf.Generated
       words_.makeImmutable();
       return words_;
     }
-
     /**
      * <code>repeated string words = 1;</code>
      *
@@ -493,7 +485,6 @@ public final class PagedExpandResponseList extends com.google.protobuf.Generated
     public int getWordsCount() {
       return words_.size();
     }
-
     /**
      * <code>repeated string words = 1;</code>
      *
@@ -503,7 +494,6 @@ public final class PagedExpandResponseList extends com.google.protobuf.Generated
     public java.lang.String getWords(int index) {
       return words_.get(index);
     }
-
     /**
      * <code>repeated string words = 1;</code>
      *
@@ -513,7 +503,6 @@ public final class PagedExpandResponseList extends com.google.protobuf.Generated
     public com.google.protobuf.ByteString getWordsBytes(int index) {
       return words_.getByteString(index);
     }
-
     /**
      * <code>repeated string words = 1;</code>
      *
@@ -531,7 +520,6 @@ public final class PagedExpandResponseList extends com.google.protobuf.Generated
       onChanged();
       return this;
     }
-
     /**
      * <code>repeated string words = 1;</code>
      *
@@ -548,7 +536,6 @@ public final class PagedExpandResponseList extends com.google.protobuf.Generated
       onChanged();
       return this;
     }
-
     /**
      * <code>repeated string words = 1;</code>
      *
@@ -562,7 +549,6 @@ public final class PagedExpandResponseList extends com.google.protobuf.Generated
       onChanged();
       return this;
     }
-
     /**
      * <code>repeated string words = 1;</code>
      *
@@ -575,7 +561,6 @@ public final class PagedExpandResponseList extends com.google.protobuf.Generated
       onChanged();
       return this;
     }
-
     /**
      * <code>repeated string words = 1;</code>
      *

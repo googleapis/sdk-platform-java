@@ -34,7 +34,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.StreamBlurbsResponse)
     StreamBlurbsResponseOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use StreamBlurbsResponse.newBuilder() to construct.
   private StreamBlurbsResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -112,7 +111,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
 
     /** <code>ACTION_UNSPECIFIED = 0;</code> */
     public static final int ACTION_UNSPECIFIED_VALUE = 0;
-
     /**
      *
      *
@@ -123,7 +121,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
      * <code>CREATE = 1;</code>
      */
     public static final int CREATE_VALUE = 1;
-
     /**
      *
      *
@@ -134,7 +131,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
      * <code>UPDATE = 2;</code>
      */
     public static final int UPDATE_VALUE = 2;
-
     /**
      *
      *
@@ -234,7 +230,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
   private int bitField0_;
   public static final int BLURB_FIELD_NUMBER = 1;
   private com.google.showcase.v1beta1.Blurb blurb_;
-
   /**
    *
    *
@@ -250,7 +245,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
   public boolean hasBlurb() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -266,7 +260,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
   public com.google.showcase.v1beta1.Blurb getBlurb() {
     return blurb_ == null ? com.google.showcase.v1beta1.Blurb.getDefaultInstance() : blurb_;
   }
-
   /**
    *
    *
@@ -283,7 +276,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
 
   public static final int ACTION_FIELD_NUMBER = 2;
   private int action_ = 0;
-
   /**
    *
    *
@@ -299,7 +291,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
   public int getActionValue() {
     return action_;
   }
-
   /**
    *
    *
@@ -495,7 +486,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -713,7 +703,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
             com.google.showcase.v1beta1.Blurb.Builder,
             com.google.showcase.v1beta1.BlurbOrBuilder>
         blurbBuilder_;
-
     /**
      *
      *
@@ -728,7 +717,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
     public boolean hasBlurb() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -747,7 +735,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
         return blurbBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -770,7 +757,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -790,7 +776,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -818,7 +803,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
       }
       return this;
     }
-
     /**
      *
      *
@@ -838,7 +822,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -853,7 +836,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
       onChanged();
       return getBlurbFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -870,7 +852,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
         return blurb_ == null ? com.google.showcase.v1beta1.Blurb.getDefaultInstance() : blurb_;
       }
     }
-
     /**
      *
      *
@@ -898,7 +879,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
     }
 
     private int action_ = 0;
-
     /**
      *
      *
@@ -914,7 +894,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
     public int getActionValue() {
       return action_;
     }
-
     /**
      *
      *
@@ -933,7 +912,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -953,7 +931,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
           ? com.google.showcase.v1beta1.StreamBlurbsResponse.Action.UNRECOGNIZED
           : result;
     }
-
     /**
      *
      *
@@ -975,7 +952,6 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
       onChanged();
       return this;
     }
-
     /**
      *
      *

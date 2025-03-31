@@ -118,7 +118,8 @@ class GrpcDirectServerStreamingCallableTest {
         GrpcCallableFactory.createServerStreamingCallable(
             GrpcCallSettings.create(METHOD_SERVER_STREAMING_RECOGNIZE),
             streamingCallSettings,
-            clientContext.toBuilder()
+            clientContext
+                .toBuilder()
                 .setDefaultCallContext(FakeCallContext.createDefault())
                 .build());
 

@@ -33,7 +33,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
     // @@protoc_insertion_point(message_implements:google.cloud.audit.ResourceLocation)
     ResourceLocationOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use ResourceLocation.newBuilder() to construct.
   private ResourceLocation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -70,7 +69,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList currentLocations_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
-
   /**
    *
    *
@@ -92,7 +90,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
   public com.google.protobuf.ProtocolStringList getCurrentLocationsList() {
     return currentLocations_;
   }
-
   /**
    *
    *
@@ -114,7 +111,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
   public int getCurrentLocationsCount() {
     return currentLocations_.size();
   }
-
   /**
    *
    *
@@ -137,7 +133,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
   public java.lang.String getCurrentLocations(int index) {
     return currentLocations_.get(index);
   }
-
   /**
    *
    *
@@ -166,7 +161,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList originalLocations_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
-
   /**
    *
    *
@@ -188,7 +182,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
   public com.google.protobuf.ProtocolStringList getOriginalLocationsList() {
     return originalLocations_;
   }
-
   /**
    *
    *
@@ -210,7 +203,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
   public int getOriginalLocationsCount() {
     return originalLocations_.size();
   }
-
   /**
    *
    *
@@ -233,7 +225,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
   public java.lang.String getOriginalLocations(int index) {
     return originalLocations_.get(index);
   }
-
   /**
    *
    *
@@ -438,7 +429,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -659,7 +649,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       }
       bitField0_ |= 0x00000001;
     }
-
     /**
      *
      *
@@ -682,7 +671,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       currentLocations_.makeImmutable();
       return currentLocations_;
     }
-
     /**
      *
      *
@@ -704,7 +692,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
     public int getCurrentLocationsCount() {
       return currentLocations_.size();
     }
-
     /**
      *
      *
@@ -727,7 +714,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
     public java.lang.String getCurrentLocations(int index) {
       return currentLocations_.get(index);
     }
-
     /**
      *
      *
@@ -750,7 +736,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
     public com.google.protobuf.ByteString getCurrentLocationsBytes(int index) {
       return currentLocations_.getByteString(index);
     }
-
     /**
      *
      *
@@ -781,7 +766,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -811,7 +795,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -838,7 +821,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -864,7 +846,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -905,7 +886,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       }
       bitField0_ |= 0x00000002;
     }
-
     /**
      *
      *
@@ -928,7 +908,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       originalLocations_.makeImmutable();
       return originalLocations_;
     }
-
     /**
      *
      *
@@ -950,7 +929,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
     public int getOriginalLocationsCount() {
       return originalLocations_.size();
     }
-
     /**
      *
      *
@@ -973,7 +951,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
     public java.lang.String getOriginalLocations(int index) {
       return originalLocations_.get(index);
     }
-
     /**
      *
      *
@@ -996,7 +973,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
     public com.google.protobuf.ByteString getOriginalLocationsBytes(int index) {
       return originalLocations_.getByteString(index);
     }
-
     /**
      *
      *
@@ -1027,7 +1003,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1057,7 +1032,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1084,7 +1058,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1110,7 +1083,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *

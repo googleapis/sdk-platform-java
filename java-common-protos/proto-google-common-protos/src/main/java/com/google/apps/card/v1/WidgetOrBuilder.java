@@ -50,7 +50,6 @@ public interface WidgetOrBuilder
    * @return Whether the textParagraph field is set.
    */
   boolean hasTextParagraph();
-
   /**
    *
    *
@@ -77,7 +76,6 @@ public interface WidgetOrBuilder
    * @return The textParagraph.
    */
   com.google.apps.card.v1.TextParagraph getTextParagraph();
-
   /**
    *
    *
@@ -124,7 +122,6 @@ public interface WidgetOrBuilder
    * @return Whether the image field is set.
    */
   boolean hasImage();
-
   /**
    *
    *
@@ -146,7 +143,6 @@ public interface WidgetOrBuilder
    * @return The image.
    */
   com.google.apps.card.v1.Image getImage();
-
   /**
    *
    *
@@ -198,7 +194,6 @@ public interface WidgetOrBuilder
    * @return Whether the decoratedText field is set.
    */
   boolean hasDecoratedText();
-
   /**
    *
    *
@@ -230,7 +225,6 @@ public interface WidgetOrBuilder
    * @return The decoratedText.
    */
   com.google.apps.card.v1.DecoratedText getDecoratedText();
-
   /**
    *
    *
@@ -304,7 +298,6 @@ public interface WidgetOrBuilder
    * @return Whether the buttonList field is set.
    */
   boolean hasButtonList();
-
   /**
    *
    *
@@ -348,7 +341,6 @@ public interface WidgetOrBuilder
    * @return The buttonList.
    */
   com.google.apps.card.v1.ButtonList getButtonList();
-
   /**
    *
    *
@@ -438,7 +430,6 @@ public interface WidgetOrBuilder
    * @return Whether the textInput field is set.
    */
   boolean hasTextInput();
-
   /**
    *
    *
@@ -486,7 +477,6 @@ public interface WidgetOrBuilder
    * @return The textInput.
    */
   com.google.apps.card.v1.TextInput getTextInput();
-
   /**
    *
    *
@@ -579,7 +569,6 @@ public interface WidgetOrBuilder
    * @return Whether the selectionInput field is set.
    */
   boolean hasSelectionInput();
-
   /**
    *
    *
@@ -626,7 +615,6 @@ public interface WidgetOrBuilder
    * @return The selectionInput.
    */
   com.google.apps.card.v1.SelectionInput getSelectionInput();
-
   /**
    *
    *
@@ -697,7 +685,6 @@ public interface WidgetOrBuilder
    * @return Whether the dateTimePicker field is set.
    */
   boolean hasDateTimePicker();
-
   /**
    *
    *
@@ -723,7 +710,6 @@ public interface WidgetOrBuilder
    * @return The dateTimePicker.
    */
   com.google.apps.card.v1.DateTimePicker getDateTimePicker();
-
   /**
    *
    *
@@ -766,7 +752,6 @@ public interface WidgetOrBuilder
    * @return Whether the divider field is set.
    */
   boolean hasDivider();
-
   /**
    *
    *
@@ -785,7 +770,6 @@ public interface WidgetOrBuilder
    * @return The divider.
    */
   com.google.apps.card.v1.Divider getDivider();
-
   /**
    *
    *
@@ -857,7 +841,6 @@ public interface WidgetOrBuilder
    * @return Whether the grid field is set.
    */
   boolean hasGrid();
-
   /**
    *
    *
@@ -912,7 +895,6 @@ public interface WidgetOrBuilder
    * @return The grid.
    */
   com.google.apps.card.v1.Grid getGrid();
-
   /**
    *
    *
@@ -1014,7 +996,6 @@ public interface WidgetOrBuilder
    * @return Whether the columns field is set.
    */
   boolean hasColumns();
-
   /**
    *
    *
@@ -1063,7 +1044,6 @@ public interface WidgetOrBuilder
    * @return The columns.
    */
   com.google.apps.card.v1.Columns getColumns();
-
   /**
    *
    *
@@ -1123,7 +1103,6 @@ public interface WidgetOrBuilder
    * @return The enum numeric value on the wire for horizontalAlignment.
    */
   int getHorizontalAlignmentValue();
-
   /**
    *
    *

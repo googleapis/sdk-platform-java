@@ -38,7 +38,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
     // @@protoc_insertion_point(message_implements:google.api.MonitoredResourceMetadata)
     MonitoredResourceMetadataOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use MonitoredResourceMetadata.newBuilder() to construct.
   private MonitoredResourceMetadata(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -82,7 +81,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
   private int bitField0_;
   public static final int SYSTEM_LABELS_FIELD_NUMBER = 1;
   private com.google.protobuf.Struct systemLabels_;
-
   /**
    *
    *
@@ -107,7 +105,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
   public boolean hasSystemLabels() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -132,7 +129,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
   public com.google.protobuf.Struct getSystemLabels() {
     return systemLabels_ == null ? com.google.protobuf.Struct.getDefaultInstance() : systemLabels_;
   }
-
   /**
    *
    *
@@ -182,7 +178,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
   public int getUserLabelsCount() {
     return internalGetUserLabels().getMap().size();
   }
-
   /**
    *
    *
@@ -199,14 +194,12 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
     }
     return internalGetUserLabels().getMap().containsKey(key);
   }
-
   /** Use {@link #getUserLabelsMap()} instead. */
   @java.lang.Override
   @java.lang.Deprecated
   public java.util.Map<java.lang.String, java.lang.String> getUserLabels() {
     return getUserLabelsMap();
   }
-
   /**
    *
    *
@@ -220,7 +213,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
   public java.util.Map<java.lang.String, java.lang.String> getUserLabelsMap() {
     return internalGetUserLabels().getMap();
   }
-
   /**
    *
    *
@@ -241,7 +233,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
     java.util.Map<java.lang.String, java.lang.String> map = internalGetUserLabels().getMap();
     return map.containsKey(key) ? map.get(key) : defaultValue;
   }
-
   /**
    *
    *
@@ -443,7 +434,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -693,7 +683,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
             com.google.protobuf.Struct.Builder,
             com.google.protobuf.StructOrBuilder>
         systemLabelsBuilder_;
-
     /**
      *
      *
@@ -717,7 +706,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
     public boolean hasSystemLabels() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -747,7 +735,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
         return systemLabelsBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -779,7 +766,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -808,7 +794,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -845,7 +830,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
       }
       return this;
     }
-
     /**
      *
      *
@@ -874,7 +858,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -898,7 +881,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
       onChanged();
       return getSystemLabelsFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -926,7 +908,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
             : systemLabels_;
       }
     }
-
     /**
      *
      *
@@ -990,7 +971,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
     public int getUserLabelsCount() {
       return internalGetUserLabels().getMap().size();
     }
-
     /**
      *
      *
@@ -1007,14 +987,12 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
       }
       return internalGetUserLabels().getMap().containsKey(key);
     }
-
     /** Use {@link #getUserLabelsMap()} instead. */
     @java.lang.Override
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getUserLabels() {
       return getUserLabelsMap();
     }
-
     /**
      *
      *
@@ -1028,7 +1006,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
     public java.util.Map<java.lang.String, java.lang.String> getUserLabelsMap() {
       return internalGetUserLabels().getMap();
     }
-
     /**
      *
      *
@@ -1049,7 +1026,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
       java.util.Map<java.lang.String, java.lang.String> map = internalGetUserLabels().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
-
     /**
      *
      *
@@ -1076,7 +1052,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
       internalGetMutableUserLabels().getMutableMap().clear();
       return this;
     }
-
     /**
      *
      *
@@ -1093,14 +1068,12 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
       internalGetMutableUserLabels().getMutableMap().remove(key);
       return this;
     }
-
     /** Use alternate mutation accessors instead. */
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getMutableUserLabels() {
       bitField0_ |= 0x00000002;
       return internalGetMutableUserLabels().getMutableMap();
     }
-
     /**
      *
      *
@@ -1121,7 +1094,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
       bitField0_ |= 0x00000002;
       return this;
     }
-
     /**
      *
      *

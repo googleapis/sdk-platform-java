@@ -25,7 +25,6 @@ public final class RepeatResponse extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.RepeatResponse)
     RepeatResponseOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use RepeatResponse.newBuilder() to construct.
   private RepeatResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -59,7 +58,6 @@ public final class RepeatResponse extends com.google.protobuf.GeneratedMessageV3
   private int bitField0_;
   public static final int REQUEST_FIELD_NUMBER = 1;
   private com.google.showcase.v1beta1.RepeatRequest request_;
-
   /**
    * <code>.google.showcase.v1beta1.RepeatRequest request = 1;</code>
    *
@@ -69,7 +67,6 @@ public final class RepeatResponse extends com.google.protobuf.GeneratedMessageV3
   public boolean hasRequest() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    * <code>.google.showcase.v1beta1.RepeatRequest request = 1;</code>
    *
@@ -81,7 +78,6 @@ public final class RepeatResponse extends com.google.protobuf.GeneratedMessageV3
         ? com.google.showcase.v1beta1.RepeatRequest.getDefaultInstance()
         : request_;
   }
-
   /** <code>.google.showcase.v1beta1.RepeatRequest request = 1;</code> */
   @java.lang.Override
   public com.google.showcase.v1beta1.RepeatRequestOrBuilder getRequestOrBuilder() {
@@ -94,7 +90,6 @@ public final class RepeatResponse extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object bindingUri_ = "";
-
   /**
    *
    *
@@ -118,7 +113,6 @@ public final class RepeatResponse extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -316,7 +310,6 @@ public final class RepeatResponse extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /** Protobuf type {@code google.showcase.v1beta1.RepeatResponse} */
   public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
       implements
@@ -526,7 +519,6 @@ public final class RepeatResponse extends com.google.protobuf.GeneratedMessageV3
             com.google.showcase.v1beta1.RepeatRequest.Builder,
             com.google.showcase.v1beta1.RepeatRequestOrBuilder>
         requestBuilder_;
-
     /**
      * <code>.google.showcase.v1beta1.RepeatRequest request = 1;</code>
      *
@@ -535,7 +527,6 @@ public final class RepeatResponse extends com.google.protobuf.GeneratedMessageV3
     public boolean hasRequest() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      * <code>.google.showcase.v1beta1.RepeatRequest request = 1;</code>
      *
@@ -550,7 +541,6 @@ public final class RepeatResponse extends com.google.protobuf.GeneratedMessageV3
         return requestBuilder_.getMessage();
       }
     }
-
     /** <code>.google.showcase.v1beta1.RepeatRequest request = 1;</code> */
     public Builder setRequest(com.google.showcase.v1beta1.RepeatRequest value) {
       if (requestBuilder_ == null) {
@@ -565,7 +555,6 @@ public final class RepeatResponse extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /** <code>.google.showcase.v1beta1.RepeatRequest request = 1;</code> */
     public Builder setRequest(com.google.showcase.v1beta1.RepeatRequest.Builder builderForValue) {
       if (requestBuilder_ == null) {
@@ -577,7 +566,6 @@ public final class RepeatResponse extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /** <code>.google.showcase.v1beta1.RepeatRequest request = 1;</code> */
     public Builder mergeRequest(com.google.showcase.v1beta1.RepeatRequest value) {
       if (requestBuilder_ == null) {
@@ -597,7 +585,6 @@ public final class RepeatResponse extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /** <code>.google.showcase.v1beta1.RepeatRequest request = 1;</code> */
     public Builder clearRequest() {
       bitField0_ = (bitField0_ & ~0x00000001);
@@ -609,14 +596,12 @@ public final class RepeatResponse extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /** <code>.google.showcase.v1beta1.RepeatRequest request = 1;</code> */
     public com.google.showcase.v1beta1.RepeatRequest.Builder getRequestBuilder() {
       bitField0_ |= 0x00000001;
       onChanged();
       return getRequestFieldBuilder().getBuilder();
     }
-
     /** <code>.google.showcase.v1beta1.RepeatRequest request = 1;</code> */
     public com.google.showcase.v1beta1.RepeatRequestOrBuilder getRequestOrBuilder() {
       if (requestBuilder_ != null) {
@@ -627,7 +612,6 @@ public final class RepeatResponse extends com.google.protobuf.GeneratedMessageV3
             : request_;
       }
     }
-
     /** <code>.google.showcase.v1beta1.RepeatRequest request = 1;</code> */
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.showcase.v1beta1.RepeatRequest,
@@ -647,7 +631,6 @@ public final class RepeatResponse extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object bindingUri_ = "";
-
     /**
      *
      *
@@ -670,7 +653,6 @@ public final class RepeatResponse extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -693,7 +675,6 @@ public final class RepeatResponse extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -715,7 +696,6 @@ public final class RepeatResponse extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -733,7 +713,6 @@ public final class RepeatResponse extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

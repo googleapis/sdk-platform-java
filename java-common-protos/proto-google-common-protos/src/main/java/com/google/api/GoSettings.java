@@ -33,7 +33,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.GoSettings)
     GoSettingsOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use GoSettings.newBuilder() to construct.
   private GoSettings(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -74,7 +73,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
   private int bitField0_;
   public static final int COMMON_FIELD_NUMBER = 1;
   private com.google.api.CommonLanguageSettings common_;
-
   /**
    *
    *
@@ -90,7 +88,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
   public boolean hasCommon() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -106,7 +103,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.CommonLanguageSettings getCommon() {
     return common_ == null ? com.google.api.CommonLanguageSettings.getDefaultInstance() : common_;
   }
-
   /**
    *
    *
@@ -149,7 +145,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
   public int getRenamedServicesCount() {
     return internalGetRenamedServices().getMap().size();
   }
-
   /**
    *
    *
@@ -173,14 +168,12 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
     }
     return internalGetRenamedServices().getMap().containsKey(key);
   }
-
   /** Use {@link #getRenamedServicesMap()} instead. */
   @java.lang.Override
   @java.lang.Deprecated
   public java.util.Map<java.lang.String, java.lang.String> getRenamedServices() {
     return getRenamedServicesMap();
   }
-
   /**
    *
    *
@@ -201,7 +194,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
   public java.util.Map<java.lang.String, java.lang.String> getRenamedServicesMap() {
     return internalGetRenamedServices().getMap();
   }
-
   /**
    *
    *
@@ -229,7 +221,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
     java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedServices().getMap();
     return map.containsKey(key) ? map.get(key) : defaultValue;
   }
-
   /**
    *
    *
@@ -437,7 +428,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -676,7 +666,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
             com.google.api.CommonLanguageSettings.Builder,
             com.google.api.CommonLanguageSettingsOrBuilder>
         commonBuilder_;
-
     /**
      *
      *
@@ -691,7 +680,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
     public boolean hasCommon() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -712,7 +700,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
         return commonBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -735,7 +722,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -755,7 +741,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -783,7 +768,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -803,7 +787,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -818,7 +801,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getCommonFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -837,7 +819,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
             : common_;
       }
     }
-
     /**
      *
      *
@@ -893,7 +874,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
     public int getRenamedServicesCount() {
       return internalGetRenamedServices().getMap().size();
     }
-
     /**
      *
      *
@@ -917,14 +897,12 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
       }
       return internalGetRenamedServices().getMap().containsKey(key);
     }
-
     /** Use {@link #getRenamedServicesMap()} instead. */
     @java.lang.Override
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getRenamedServices() {
       return getRenamedServicesMap();
     }
-
     /**
      *
      *
@@ -945,7 +923,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
     public java.util.Map<java.lang.String, java.lang.String> getRenamedServicesMap() {
       return internalGetRenamedServices().getMap();
     }
-
     /**
      *
      *
@@ -973,7 +950,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
       java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedServices().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
-
     /**
      *
      *
@@ -1007,7 +983,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
       internalGetMutableRenamedServices().getMutableMap().clear();
       return this;
     }
-
     /**
      *
      *
@@ -1031,14 +1006,12 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
       internalGetMutableRenamedServices().getMutableMap().remove(key);
       return this;
     }
-
     /** Use alternate mutation accessors instead. */
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getMutableRenamedServices() {
       bitField0_ |= 0x00000002;
       return internalGetMutableRenamedServices().getMutableMap();
     }
-
     /**
      *
      *
@@ -1066,7 +1039,6 @@ public final class GoSettings extends com.google.protobuf.GeneratedMessageV3
       bitField0_ |= 0x00000002;
       return this;
     }
-
     /**
      *
      *

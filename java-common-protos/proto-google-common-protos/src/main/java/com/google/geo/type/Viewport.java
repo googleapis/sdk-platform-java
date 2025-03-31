@@ -67,7 +67,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.geo.type.Viewport)
     ViewportOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Viewport.newBuilder() to construct.
   private Viewport(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -97,7 +96,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
   private int bitField0_;
   public static final int LOW_FIELD_NUMBER = 1;
   private com.google.type.LatLng low_;
-
   /**
    *
    *
@@ -113,7 +111,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
   public boolean hasLow() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -129,7 +126,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
   public com.google.type.LatLng getLow() {
     return low_ == null ? com.google.type.LatLng.getDefaultInstance() : low_;
   }
-
   /**
    *
    *
@@ -146,7 +142,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
 
   public static final int HIGH_FIELD_NUMBER = 2;
   private com.google.type.LatLng high_;
-
   /**
    *
    *
@@ -162,7 +157,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
   public boolean hasHigh() {
     return ((bitField0_ & 0x00000002) != 0);
   }
-
   /**
    *
    *
@@ -178,7 +172,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
   public com.google.type.LatLng getHigh() {
     return high_ == null ? com.google.type.LatLng.getDefaultInstance() : high_;
   }
-
   /**
    *
    *
@@ -369,7 +362,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -619,7 +611,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.type.LatLng, com.google.type.LatLng.Builder, com.google.type.LatLngOrBuilder>
         lowBuilder_;
-
     /**
      *
      *
@@ -634,7 +625,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
     public boolean hasLow() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -653,7 +643,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
         return lowBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -676,7 +665,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -696,7 +684,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -724,7 +711,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -744,7 +730,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -759,7 +744,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getLowFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -776,7 +760,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
         return low_ == null ? com.google.type.LatLng.getDefaultInstance() : low_;
       }
     }
-
     /**
      *
      *
@@ -804,7 +787,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.type.LatLng, com.google.type.LatLng.Builder, com.google.type.LatLngOrBuilder>
         highBuilder_;
-
     /**
      *
      *
@@ -819,7 +801,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
     public boolean hasHigh() {
       return ((bitField0_ & 0x00000002) != 0);
     }
-
     /**
      *
      *
@@ -838,7 +819,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
         return highBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -861,7 +841,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -881,7 +860,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -909,7 +887,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -929,7 +906,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -944,7 +920,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getHighFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -961,7 +936,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
         return high_ == null ? com.google.type.LatLng.getDefaultInstance() : high_;
       }
     }
-
     /**
      *
      *

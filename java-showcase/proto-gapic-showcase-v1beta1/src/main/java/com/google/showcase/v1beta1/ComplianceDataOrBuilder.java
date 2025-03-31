@@ -30,7 +30,6 @@ public interface ComplianceDataOrBuilder
    * @return The fString.
    */
   java.lang.String getFString();
-
   /**
    * <code>string f_string = 1;</code>
    *
@@ -142,7 +141,6 @@ public interface ComplianceDataOrBuilder
    * @return The enum numeric value on the wire for fKingdom.
    */
   int getFKingdomValue();
-
   /**
    * <code>.google.showcase.v1beta1.ComplianceData.LifeKingdom f_kingdom = 22;</code>
    *
@@ -156,14 +154,12 @@ public interface ComplianceDataOrBuilder
    * @return Whether the fChild field is set.
    */
   boolean hasFChild();
-
   /**
    * <code>.google.showcase.v1beta1.ComplianceDataChild f_child = 16;</code>
    *
    * @return The fChild.
    */
   com.google.showcase.v1beta1.ComplianceDataChild getFChild();
-
   /** <code>.google.showcase.v1beta1.ComplianceDataChild f_child = 16;</code> */
   com.google.showcase.v1beta1.ComplianceDataChildOrBuilder getFChildOrBuilder();
 
@@ -173,14 +169,12 @@ public interface ComplianceDataOrBuilder
    * @return Whether the pString field is set.
    */
   boolean hasPString();
-
   /**
    * <code>optional string p_string = 17;</code>
    *
    * @return The pString.
    */
   java.lang.String getPString();
-
   /**
    * <code>optional string p_string = 17;</code>
    *
@@ -194,7 +188,6 @@ public interface ComplianceDataOrBuilder
    * @return Whether the pInt32 field is set.
    */
   boolean hasPInt32();
-
   /**
    * <code>optional int32 p_int32 = 18;</code>
    *
@@ -208,7 +201,6 @@ public interface ComplianceDataOrBuilder
    * @return Whether the pDouble field is set.
    */
   boolean hasPDouble();
-
   /**
    * <code>optional double p_double = 19;</code>
    *
@@ -222,7 +214,6 @@ public interface ComplianceDataOrBuilder
    * @return Whether the pBool field is set.
    */
   boolean hasPBool();
-
   /**
    * <code>optional bool p_bool = 20;</code>
    *
@@ -236,14 +227,12 @@ public interface ComplianceDataOrBuilder
    * @return Whether the pKingdom field is set.
    */
   boolean hasPKingdom();
-
   /**
    * <code>optional .google.showcase.v1beta1.ComplianceData.LifeKingdom p_kingdom = 23;</code>
    *
    * @return The enum numeric value on the wire for pKingdom.
    */
   int getPKingdomValue();
-
   /**
    * <code>optional .google.showcase.v1beta1.ComplianceData.LifeKingdom p_kingdom = 23;</code>
    *
@@ -257,14 +246,12 @@ public interface ComplianceDataOrBuilder
    * @return Whether the pChild field is set.
    */
   boolean hasPChild();
-
   /**
    * <code>optional .google.showcase.v1beta1.ComplianceDataChild p_child = 21;</code>
    *
    * @return The pChild.
    */
   com.google.showcase.v1beta1.ComplianceDataChild getPChild();
-
   /** <code>optional .google.showcase.v1beta1.ComplianceDataChild p_child = 21;</code> */
   com.google.showcase.v1beta1.ComplianceDataChildOrBuilder getPChildOrBuilder();
 }

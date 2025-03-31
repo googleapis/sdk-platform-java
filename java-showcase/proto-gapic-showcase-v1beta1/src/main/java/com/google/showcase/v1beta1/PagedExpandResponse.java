@@ -33,7 +33,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.PagedExpandResponse)
     PagedExpandResponseOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use PagedExpandResponse.newBuilder() to construct.
   private PagedExpandResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -69,7 +68,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.showcase.v1beta1.EchoResponse> responses_;
-
   /**
    *
    *
@@ -83,7 +81,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
   public java.util.List<com.google.showcase.v1beta1.EchoResponse> getResponsesList() {
     return responses_;
   }
-
   /**
    *
    *
@@ -98,7 +95,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
       getResponsesOrBuilderList() {
     return responses_;
   }
-
   /**
    *
    *
@@ -112,7 +108,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
   public int getResponsesCount() {
     return responses_.size();
   }
-
   /**
    *
    *
@@ -126,7 +121,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
   public com.google.showcase.v1beta1.EchoResponse getResponses(int index) {
     return responses_.get(index);
   }
-
   /**
    *
    *
@@ -145,7 +139,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object nextPageToken_ = "";
-
   /**
    *
    *
@@ -169,7 +162,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
       return s;
     }
   }
-
   /**
    *
    *
@@ -364,7 +356,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -641,7 +632,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
         return responsesBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -658,7 +648,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
         return responsesBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -675,7 +664,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
         return responsesBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -698,7 +686,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
-
     /**
      *
      *
@@ -719,7 +706,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
-
     /**
      *
      *
@@ -742,7 +728,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
-
     /**
      *
      *
@@ -765,7 +750,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
-
     /**
      *
      *
@@ -785,7 +769,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
-
     /**
      *
      *
@@ -806,7 +789,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
-
     /**
      *
      *
@@ -827,7 +809,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
-
     /**
      *
      *
@@ -847,7 +828,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
-
     /**
      *
      *
@@ -867,7 +847,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
-
     /**
      *
      *
@@ -880,7 +859,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
     public com.google.showcase.v1beta1.EchoResponse.Builder getResponsesBuilder(int index) {
       return getResponsesFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -897,7 +875,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
         return responsesBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -915,7 +892,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
         return java.util.Collections.unmodifiableList(responses_);
       }
     }
-
     /**
      *
      *
@@ -929,7 +905,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
       return getResponsesFieldBuilder()
           .addBuilder(com.google.showcase.v1beta1.EchoResponse.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -943,7 +918,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
       return getResponsesFieldBuilder()
           .addBuilder(index, com.google.showcase.v1beta1.EchoResponse.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -976,7 +950,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
     }
 
     private java.lang.Object nextPageToken_ = "";
-
     /**
      *
      *
@@ -999,7 +972,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1022,7 +994,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1044,7 +1015,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1062,7 +1032,6 @@ public final class PagedExpandResponse extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      *
      *

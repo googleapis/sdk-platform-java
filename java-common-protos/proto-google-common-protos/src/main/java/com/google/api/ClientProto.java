@@ -34,7 +34,6 @@ public final class ClientProto {
   }
 
   public static final int METHOD_SIGNATURE_FIELD_NUMBER = 1051;
-
   /**
    *
    *
@@ -85,7 +84,6 @@ public final class ClientProto {
               java.lang.String.class, null);
 
   public static final int DEFAULT_HOST_FIELD_NUMBER = 1049;
-
   /**
    *
    *
@@ -110,7 +108,6 @@ public final class ClientProto {
               java.lang.String.class, null);
 
   public static final int OAUTH_SCOPES_FIELD_NUMBER = 1050;
-
   /**
    *
    *
@@ -146,7 +143,6 @@ public final class ClientProto {
               java.lang.String.class, null);
 
   public static final int API_VERSION_FIELD_NUMBER = 525000001;
-
   /**
    *
    *

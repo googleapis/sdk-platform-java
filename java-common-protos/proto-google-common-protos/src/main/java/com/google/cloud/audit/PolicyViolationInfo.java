@@ -33,7 +33,6 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
     // @@protoc_insertion_point(message_implements:google.cloud.audit.PolicyViolationInfo)
     PolicyViolationInfoOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use PolicyViolationInfo.newBuilder() to construct.
   private PolicyViolationInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -65,7 +64,6 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
   private int bitField0_;
   public static final int ORG_POLICY_VIOLATION_INFO_FIELD_NUMBER = 1;
   private com.google.cloud.audit.OrgPolicyViolationInfo orgPolicyViolationInfo_;
-
   /**
    *
    *
@@ -81,7 +79,6 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
   public boolean hasOrgPolicyViolationInfo() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -99,7 +96,6 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
         ? com.google.cloud.audit.OrgPolicyViolationInfo.getDefaultInstance()
         : orgPolicyViolationInfo_;
   }
-
   /**
    *
    *
@@ -282,7 +278,6 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -489,7 +484,6 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
             com.google.cloud.audit.OrgPolicyViolationInfo.Builder,
             com.google.cloud.audit.OrgPolicyViolationInfoOrBuilder>
         orgPolicyViolationInfoBuilder_;
-
     /**
      *
      *
@@ -504,7 +498,6 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
     public boolean hasOrgPolicyViolationInfo() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -525,7 +518,6 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
         return orgPolicyViolationInfoBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -548,7 +540,6 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -569,7 +560,6 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -599,7 +589,6 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
-
     /**
      *
      *
@@ -619,7 +608,6 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -635,7 +623,6 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
       onChanged();
       return getOrgPolicyViolationInfoFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -655,7 +642,6 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
             : orgPolicyViolationInfo_;
       }
     }
-
     /**
      *
      *

@@ -34,7 +34,6 @@ public interface BadRequestOrBuilder
    * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
    */
   java.util.List<com.google.rpc.BadRequest.FieldViolation> getFieldViolationsList();
-
   /**
    *
    *
@@ -45,7 +44,6 @@ public interface BadRequestOrBuilder
    * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
    */
   com.google.rpc.BadRequest.FieldViolation getFieldViolations(int index);
-
   /**
    *
    *
@@ -56,7 +54,6 @@ public interface BadRequestOrBuilder
    * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
    */
   int getFieldViolationsCount();
-
   /**
    *
    *
@@ -68,7 +65,6 @@ public interface BadRequestOrBuilder
    */
   java.util.List<? extends com.google.rpc.BadRequest.FieldViolationOrBuilder>
       getFieldViolationsOrBuilderList();
-
   /**
    *
    *

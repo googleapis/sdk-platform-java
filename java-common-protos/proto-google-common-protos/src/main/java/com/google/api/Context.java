@@ -68,7 +68,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.Context)
     ContextOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Context.newBuilder() to construct.
   private Context(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -100,7 +99,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.ContextRule> rules_;
-
   /**
    *
    *
@@ -116,7 +114,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.api.ContextRule> getRulesList() {
     return rules_;
   }
-
   /**
    *
    *
@@ -132,7 +129,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<? extends com.google.api.ContextRuleOrBuilder> getRulesOrBuilderList() {
     return rules_;
   }
-
   /**
    *
    *
@@ -148,7 +144,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
   public int getRulesCount() {
     return rules_.size();
   }
-
   /**
    *
    *
@@ -164,7 +159,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.ContextRule getRules(int index) {
     return rules_.get(index);
   }
-
   /**
    *
    *
@@ -340,7 +334,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -630,7 +623,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
         return rulesBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -649,7 +641,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
         return rulesBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -668,7 +659,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
         return rulesBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -693,7 +683,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -715,7 +704,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -740,7 +728,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -765,7 +752,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -787,7 +773,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -809,7 +794,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -831,7 +815,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -853,7 +836,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -875,7 +857,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -890,7 +871,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.ContextRule.Builder getRulesBuilder(int index) {
       return getRulesFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -909,7 +889,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
         return rulesBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -928,7 +907,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(rules_);
       }
     }
-
     /**
      *
      *
@@ -943,7 +921,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.ContextRule.Builder addRulesBuilder() {
       return getRulesFieldBuilder().addBuilder(com.google.api.ContextRule.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -959,7 +936,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
       return getRulesFieldBuilder()
           .addBuilder(index, com.google.api.ContextRule.getDefaultInstance());
     }
-
     /**
      *
      *

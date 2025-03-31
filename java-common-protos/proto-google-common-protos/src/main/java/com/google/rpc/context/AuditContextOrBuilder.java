@@ -52,7 +52,6 @@ public interface AuditContextOrBuilder
    * @return Whether the scrubbedRequest field is set.
    */
   boolean hasScrubbedRequest();
-
   /**
    *
    *
@@ -68,7 +67,6 @@ public interface AuditContextOrBuilder
    * @return The scrubbedRequest.
    */
   com.google.protobuf.Struct getScrubbedRequest();
-
   /**
    *
    *
@@ -98,7 +96,6 @@ public interface AuditContextOrBuilder
    * @return Whether the scrubbedResponse field is set.
    */
   boolean hasScrubbedResponse();
-
   /**
    *
    *
@@ -114,7 +111,6 @@ public interface AuditContextOrBuilder
    * @return The scrubbedResponse.
    */
   com.google.protobuf.Struct getScrubbedResponse();
-
   /**
    *
    *
@@ -154,7 +150,6 @@ public interface AuditContextOrBuilder
    * @return The targetResource.
    */
   java.lang.String getTargetResource();
-
   /**
    *
    *

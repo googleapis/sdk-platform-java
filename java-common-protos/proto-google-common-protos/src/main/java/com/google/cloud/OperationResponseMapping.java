@@ -103,7 +103,6 @@ public enum OperationResponseMapping implements com.google.protobuf.ProtocolMess
    * <code>UNDEFINED = 0;</code>
    */
   public static final int UNDEFINED_VALUE = 0;
-
   /**
    *
    *
@@ -115,7 +114,6 @@ public enum OperationResponseMapping implements com.google.protobuf.ProtocolMess
    * <code>NAME = 1;</code>
    */
   public static final int NAME_VALUE = 1;
-
   /**
    *
    *
@@ -131,7 +129,6 @@ public enum OperationResponseMapping implements com.google.protobuf.ProtocolMess
    * <code>STATUS = 2;</code>
    */
   public static final int STATUS_VALUE = 2;
-
   /**
    *
    *
@@ -143,7 +140,6 @@ public enum OperationResponseMapping implements com.google.protobuf.ProtocolMess
    * <code>ERROR_CODE = 3;</code>
    */
   public static final int ERROR_CODE_VALUE = 3;
-
   /**
    *
    *

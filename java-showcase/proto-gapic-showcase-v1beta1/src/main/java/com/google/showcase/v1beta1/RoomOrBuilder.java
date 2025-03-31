@@ -36,7 +36,6 @@ public interface RoomOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *
@@ -62,7 +61,6 @@ public interface RoomOrBuilder
    * @return The displayName.
    */
   java.lang.String getDisplayName();
-
   /**
    *
    *
@@ -88,7 +86,6 @@ public interface RoomOrBuilder
    * @return The description.
    */
   java.lang.String getDescription();
-
   /**
    *
    *
@@ -115,7 +112,6 @@ public interface RoomOrBuilder
    * @return Whether the createTime field is set.
    */
   boolean hasCreateTime();
-
   /**
    *
    *
@@ -129,7 +125,6 @@ public interface RoomOrBuilder
    * @return The createTime.
    */
   com.google.protobuf.Timestamp getCreateTime();
-
   /**
    *
    *
@@ -155,7 +150,6 @@ public interface RoomOrBuilder
    * @return Whether the updateTime field is set.
    */
   boolean hasUpdateTime();
-
   /**
    *
    *
@@ -169,7 +163,6 @@ public interface RoomOrBuilder
    * @return The updateTime.
    */
   com.google.protobuf.Timestamp getUpdateTime();
-
   /**
    *
    *

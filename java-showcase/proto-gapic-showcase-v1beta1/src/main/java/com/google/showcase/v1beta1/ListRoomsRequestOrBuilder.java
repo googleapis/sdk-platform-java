@@ -52,7 +52,6 @@ public interface ListRoomsRequestOrBuilder
    * @return The pageToken.
    */
   java.lang.String getPageToken();
-
   /**
    *
    *

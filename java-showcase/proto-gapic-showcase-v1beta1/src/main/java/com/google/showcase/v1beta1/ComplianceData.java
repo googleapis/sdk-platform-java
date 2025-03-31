@@ -34,7 +34,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.ComplianceData)
     ComplianceDataOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use ComplianceData.newBuilder() to construct.
   private ComplianceData(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -90,22 +89,16 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
     /** <code>LIFE_KINGDOM_UNSPECIFIED = 0;</code> */
     public static final int LIFE_KINGDOM_UNSPECIFIED_VALUE = 0;
-
     /** <code>ARCHAEBACTERIA = 1;</code> */
     public static final int ARCHAEBACTERIA_VALUE = 1;
-
     /** <code>EUBACTERIA = 2;</code> */
     public static final int EUBACTERIA_VALUE = 2;
-
     /** <code>PROTISTA = 3;</code> */
     public static final int PROTISTA_VALUE = 3;
-
     /** <code>FUNGI = 4;</code> */
     public static final int FUNGI_VALUE = 4;
-
     /** <code>PLANTAE = 5;</code> */
     public static final int PLANTAE_VALUE = 5;
-
     /** <code>ANIMALIA = 6;</code> */
     public static final int ANIMALIA_VALUE = 6;
 
@@ -205,7 +198,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object fString_ = "";
-
   /**
    * <code>string f_string = 1;</code>
    *
@@ -223,7 +215,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    * <code>string f_string = 1;</code>
    *
@@ -244,7 +235,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int F_INT32_FIELD_NUMBER = 2;
   private int fInt32_ = 0;
-
   /**
    * <code>int32 f_int32 = 2;</code>
    *
@@ -257,7 +247,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int F_SINT32_FIELD_NUMBER = 3;
   private int fSint32_ = 0;
-
   /**
    * <code>sint32 f_sint32 = 3;</code>
    *
@@ -270,7 +259,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int F_SFIXED32_FIELD_NUMBER = 4;
   private int fSfixed32_ = 0;
-
   /**
    * <code>sfixed32 f_sfixed32 = 4;</code>
    *
@@ -283,7 +271,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int F_UINT32_FIELD_NUMBER = 5;
   private int fUint32_ = 0;
-
   /**
    * <code>uint32 f_uint32 = 5;</code>
    *
@@ -296,7 +283,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int F_FIXED32_FIELD_NUMBER = 6;
   private int fFixed32_ = 0;
-
   /**
    * <code>fixed32 f_fixed32 = 6;</code>
    *
@@ -309,7 +295,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int F_INT64_FIELD_NUMBER = 7;
   private long fInt64_ = 0L;
-
   /**
    * <code>int64 f_int64 = 7;</code>
    *
@@ -322,7 +307,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int F_SINT64_FIELD_NUMBER = 8;
   private long fSint64_ = 0L;
-
   /**
    * <code>sint64 f_sint64 = 8;</code>
    *
@@ -335,7 +319,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int F_SFIXED64_FIELD_NUMBER = 9;
   private long fSfixed64_ = 0L;
-
   /**
    * <code>sfixed64 f_sfixed64 = 9;</code>
    *
@@ -348,7 +331,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int F_UINT64_FIELD_NUMBER = 10;
   private long fUint64_ = 0L;
-
   /**
    * <code>uint64 f_uint64 = 10;</code>
    *
@@ -361,7 +343,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int F_FIXED64_FIELD_NUMBER = 11;
   private long fFixed64_ = 0L;
-
   /**
    * <code>fixed64 f_fixed64 = 11;</code>
    *
@@ -374,7 +355,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int F_DOUBLE_FIELD_NUMBER = 12;
   private double fDouble_ = 0D;
-
   /**
    * <code>double f_double = 12;</code>
    *
@@ -387,7 +367,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int F_FLOAT_FIELD_NUMBER = 13;
   private float fFloat_ = 0F;
-
   /**
    * <code>float f_float = 13;</code>
    *
@@ -400,7 +379,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int F_BOOL_FIELD_NUMBER = 14;
   private boolean fBool_ = false;
-
   /**
    * <code>bool f_bool = 14;</code>
    *
@@ -413,7 +391,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int F_BYTES_FIELD_NUMBER = 15;
   private com.google.protobuf.ByteString fBytes_ = com.google.protobuf.ByteString.EMPTY;
-
   /**
    * <code>bytes f_bytes = 15;</code>
    *
@@ -426,7 +403,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int F_KINGDOM_FIELD_NUMBER = 22;
   private int fKingdom_ = 0;
-
   /**
    * <code>.google.showcase.v1beta1.ComplianceData.LifeKingdom f_kingdom = 22;</code>
    *
@@ -436,7 +412,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
   public int getFKingdomValue() {
     return fKingdom_;
   }
-
   /**
    * <code>.google.showcase.v1beta1.ComplianceData.LifeKingdom f_kingdom = 22;</code>
    *
@@ -453,7 +428,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int F_CHILD_FIELD_NUMBER = 16;
   private com.google.showcase.v1beta1.ComplianceDataChild fChild_;
-
   /**
    * <code>.google.showcase.v1beta1.ComplianceDataChild f_child = 16;</code>
    *
@@ -463,7 +437,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
   public boolean hasFChild() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    * <code>.google.showcase.v1beta1.ComplianceDataChild f_child = 16;</code>
    *
@@ -475,7 +448,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
         ? com.google.showcase.v1beta1.ComplianceDataChild.getDefaultInstance()
         : fChild_;
   }
-
   /** <code>.google.showcase.v1beta1.ComplianceDataChild f_child = 16;</code> */
   @java.lang.Override
   public com.google.showcase.v1beta1.ComplianceDataChildOrBuilder getFChildOrBuilder() {
@@ -488,7 +460,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object pString_ = "";
-
   /**
    * <code>optional string p_string = 17;</code>
    *
@@ -498,7 +469,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
   public boolean hasPString() {
     return ((bitField0_ & 0x00000002) != 0);
   }
-
   /**
    * <code>optional string p_string = 17;</code>
    *
@@ -516,7 +486,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    * <code>optional string p_string = 17;</code>
    *
@@ -537,7 +506,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int P_INT32_FIELD_NUMBER = 18;
   private int pInt32_ = 0;
-
   /**
    * <code>optional int32 p_int32 = 18;</code>
    *
@@ -547,7 +515,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
   public boolean hasPInt32() {
     return ((bitField0_ & 0x00000004) != 0);
   }
-
   /**
    * <code>optional int32 p_int32 = 18;</code>
    *
@@ -560,7 +527,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int P_DOUBLE_FIELD_NUMBER = 19;
   private double pDouble_ = 0D;
-
   /**
    * <code>optional double p_double = 19;</code>
    *
@@ -570,7 +536,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
   public boolean hasPDouble() {
     return ((bitField0_ & 0x00000008) != 0);
   }
-
   /**
    * <code>optional double p_double = 19;</code>
    *
@@ -583,7 +548,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int P_BOOL_FIELD_NUMBER = 20;
   private boolean pBool_ = false;
-
   /**
    * <code>optional bool p_bool = 20;</code>
    *
@@ -593,7 +557,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
   public boolean hasPBool() {
     return ((bitField0_ & 0x00000010) != 0);
   }
-
   /**
    * <code>optional bool p_bool = 20;</code>
    *
@@ -606,7 +569,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int P_KINGDOM_FIELD_NUMBER = 23;
   private int pKingdom_ = 0;
-
   /**
    * <code>optional .google.showcase.v1beta1.ComplianceData.LifeKingdom p_kingdom = 23;</code>
    *
@@ -616,7 +578,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
   public boolean hasPKingdom() {
     return ((bitField0_ & 0x00000020) != 0);
   }
-
   /**
    * <code>optional .google.showcase.v1beta1.ComplianceData.LifeKingdom p_kingdom = 23;</code>
    *
@@ -626,7 +587,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
   public int getPKingdomValue() {
     return pKingdom_;
   }
-
   /**
    * <code>optional .google.showcase.v1beta1.ComplianceData.LifeKingdom p_kingdom = 23;</code>
    *
@@ -643,7 +603,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
 
   public static final int P_CHILD_FIELD_NUMBER = 21;
   private com.google.showcase.v1beta1.ComplianceDataChild pChild_;
-
   /**
    * <code>optional .google.showcase.v1beta1.ComplianceDataChild p_child = 21;</code>
    *
@@ -653,7 +612,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
   public boolean hasPChild() {
     return ((bitField0_ & 0x00000040) != 0);
   }
-
   /**
    * <code>optional .google.showcase.v1beta1.ComplianceDataChild p_child = 21;</code>
    *
@@ -665,7 +623,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
         ? com.google.showcase.v1beta1.ComplianceDataChild.getDefaultInstance()
         : pChild_;
   }
-
   /** <code>optional .google.showcase.v1beta1.ComplianceDataChild p_child = 21;</code> */
   @java.lang.Override
   public com.google.showcase.v1beta1.ComplianceDataChildOrBuilder getPChildOrBuilder() {
@@ -1079,7 +1036,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -1579,7 +1535,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object fString_ = "";
-
     /**
      * <code>string f_string = 1;</code>
      *
@@ -1596,7 +1551,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      * <code>string f_string = 1;</code>
      *
@@ -1613,7 +1567,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      * <code>string f_string = 1;</code>
      *
@@ -1629,7 +1582,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>string f_string = 1;</code>
      *
@@ -1641,7 +1593,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>string f_string = 1;</code>
      *
@@ -1660,7 +1611,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int fInt32_;
-
     /**
      * <code>int32 f_int32 = 2;</code>
      *
@@ -1670,7 +1620,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public int getFInt32() {
       return fInt32_;
     }
-
     /**
      * <code>int32 f_int32 = 2;</code>
      *
@@ -1684,7 +1633,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>int32 f_int32 = 2;</code>
      *
@@ -1698,7 +1646,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int fSint32_;
-
     /**
      * <code>sint32 f_sint32 = 3;</code>
      *
@@ -1708,7 +1655,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public int getFSint32() {
       return fSint32_;
     }
-
     /**
      * <code>sint32 f_sint32 = 3;</code>
      *
@@ -1722,7 +1668,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>sint32 f_sint32 = 3;</code>
      *
@@ -1736,7 +1681,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int fSfixed32_;
-
     /**
      * <code>sfixed32 f_sfixed32 = 4;</code>
      *
@@ -1746,7 +1690,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public int getFSfixed32() {
       return fSfixed32_;
     }
-
     /**
      * <code>sfixed32 f_sfixed32 = 4;</code>
      *
@@ -1760,7 +1703,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>sfixed32 f_sfixed32 = 4;</code>
      *
@@ -1774,7 +1716,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int fUint32_;
-
     /**
      * <code>uint32 f_uint32 = 5;</code>
      *
@@ -1784,7 +1725,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public int getFUint32() {
       return fUint32_;
     }
-
     /**
      * <code>uint32 f_uint32 = 5;</code>
      *
@@ -1798,7 +1738,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>uint32 f_uint32 = 5;</code>
      *
@@ -1812,7 +1751,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int fFixed32_;
-
     /**
      * <code>fixed32 f_fixed32 = 6;</code>
      *
@@ -1822,7 +1760,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public int getFFixed32() {
       return fFixed32_;
     }
-
     /**
      * <code>fixed32 f_fixed32 = 6;</code>
      *
@@ -1836,7 +1773,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>fixed32 f_fixed32 = 6;</code>
      *
@@ -1850,7 +1786,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     }
 
     private long fInt64_;
-
     /**
      * <code>int64 f_int64 = 7;</code>
      *
@@ -1860,7 +1795,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public long getFInt64() {
       return fInt64_;
     }
-
     /**
      * <code>int64 f_int64 = 7;</code>
      *
@@ -1874,7 +1808,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>int64 f_int64 = 7;</code>
      *
@@ -1888,7 +1821,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     }
 
     private long fSint64_;
-
     /**
      * <code>sint64 f_sint64 = 8;</code>
      *
@@ -1898,7 +1830,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public long getFSint64() {
       return fSint64_;
     }
-
     /**
      * <code>sint64 f_sint64 = 8;</code>
      *
@@ -1912,7 +1843,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>sint64 f_sint64 = 8;</code>
      *
@@ -1926,7 +1856,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     }
 
     private long fSfixed64_;
-
     /**
      * <code>sfixed64 f_sfixed64 = 9;</code>
      *
@@ -1936,7 +1865,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public long getFSfixed64() {
       return fSfixed64_;
     }
-
     /**
      * <code>sfixed64 f_sfixed64 = 9;</code>
      *
@@ -1950,7 +1878,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>sfixed64 f_sfixed64 = 9;</code>
      *
@@ -1964,7 +1891,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     }
 
     private long fUint64_;
-
     /**
      * <code>uint64 f_uint64 = 10;</code>
      *
@@ -1974,7 +1900,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public long getFUint64() {
       return fUint64_;
     }
-
     /**
      * <code>uint64 f_uint64 = 10;</code>
      *
@@ -1988,7 +1913,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>uint64 f_uint64 = 10;</code>
      *
@@ -2002,7 +1926,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     }
 
     private long fFixed64_;
-
     /**
      * <code>fixed64 f_fixed64 = 11;</code>
      *
@@ -2012,7 +1935,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public long getFFixed64() {
       return fFixed64_;
     }
-
     /**
      * <code>fixed64 f_fixed64 = 11;</code>
      *
@@ -2026,7 +1948,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>fixed64 f_fixed64 = 11;</code>
      *
@@ -2040,7 +1961,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     }
 
     private double fDouble_;
-
     /**
      * <code>double f_double = 12;</code>
      *
@@ -2050,7 +1970,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public double getFDouble() {
       return fDouble_;
     }
-
     /**
      * <code>double f_double = 12;</code>
      *
@@ -2064,7 +1983,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>double f_double = 12;</code>
      *
@@ -2078,7 +1996,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     }
 
     private float fFloat_;
-
     /**
      * <code>float f_float = 13;</code>
      *
@@ -2088,7 +2005,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public float getFFloat() {
       return fFloat_;
     }
-
     /**
      * <code>float f_float = 13;</code>
      *
@@ -2102,7 +2018,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>float f_float = 13;</code>
      *
@@ -2116,7 +2031,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     }
 
     private boolean fBool_;
-
     /**
      * <code>bool f_bool = 14;</code>
      *
@@ -2126,7 +2040,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public boolean getFBool() {
       return fBool_;
     }
-
     /**
      * <code>bool f_bool = 14;</code>
      *
@@ -2140,7 +2053,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>bool f_bool = 14;</code>
      *
@@ -2154,7 +2066,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     }
 
     private com.google.protobuf.ByteString fBytes_ = com.google.protobuf.ByteString.EMPTY;
-
     /**
      * <code>bytes f_bytes = 15;</code>
      *
@@ -2164,7 +2075,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ByteString getFBytes() {
       return fBytes_;
     }
-
     /**
      * <code>bytes f_bytes = 15;</code>
      *
@@ -2180,7 +2090,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>bytes f_bytes = 15;</code>
      *
@@ -2194,7 +2103,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int fKingdom_ = 0;
-
     /**
      * <code>.google.showcase.v1beta1.ComplianceData.LifeKingdom f_kingdom = 22;</code>
      *
@@ -2204,7 +2112,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public int getFKingdomValue() {
       return fKingdom_;
     }
-
     /**
      * <code>.google.showcase.v1beta1.ComplianceData.LifeKingdom f_kingdom = 22;</code>
      *
@@ -2217,7 +2124,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>.google.showcase.v1beta1.ComplianceData.LifeKingdom f_kingdom = 22;</code>
      *
@@ -2231,7 +2137,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
           ? com.google.showcase.v1beta1.ComplianceData.LifeKingdom.UNRECOGNIZED
           : result;
     }
-
     /**
      * <code>.google.showcase.v1beta1.ComplianceData.LifeKingdom f_kingdom = 22;</code>
      *
@@ -2247,7 +2152,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>.google.showcase.v1beta1.ComplianceData.LifeKingdom f_kingdom = 22;</code>
      *
@@ -2266,7 +2170,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
             com.google.showcase.v1beta1.ComplianceDataChild.Builder,
             com.google.showcase.v1beta1.ComplianceDataChildOrBuilder>
         fChildBuilder_;
-
     /**
      * <code>.google.showcase.v1beta1.ComplianceDataChild f_child = 16;</code>
      *
@@ -2275,7 +2178,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public boolean hasFChild() {
       return ((bitField0_ & 0x00010000) != 0);
     }
-
     /**
      * <code>.google.showcase.v1beta1.ComplianceDataChild f_child = 16;</code>
      *
@@ -2290,7 +2192,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
         return fChildBuilder_.getMessage();
       }
     }
-
     /** <code>.google.showcase.v1beta1.ComplianceDataChild f_child = 16;</code> */
     public Builder setFChild(com.google.showcase.v1beta1.ComplianceDataChild value) {
       if (fChildBuilder_ == null) {
@@ -2305,7 +2206,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /** <code>.google.showcase.v1beta1.ComplianceDataChild f_child = 16;</code> */
     public Builder setFChild(
         com.google.showcase.v1beta1.ComplianceDataChild.Builder builderForValue) {
@@ -2318,7 +2218,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /** <code>.google.showcase.v1beta1.ComplianceDataChild f_child = 16;</code> */
     public Builder mergeFChild(com.google.showcase.v1beta1.ComplianceDataChild value) {
       if (fChildBuilder_ == null) {
@@ -2338,7 +2237,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /** <code>.google.showcase.v1beta1.ComplianceDataChild f_child = 16;</code> */
     public Builder clearFChild() {
       bitField0_ = (bitField0_ & ~0x00010000);
@@ -2350,14 +2248,12 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /** <code>.google.showcase.v1beta1.ComplianceDataChild f_child = 16;</code> */
     public com.google.showcase.v1beta1.ComplianceDataChild.Builder getFChildBuilder() {
       bitField0_ |= 0x00010000;
       onChanged();
       return getFChildFieldBuilder().getBuilder();
     }
-
     /** <code>.google.showcase.v1beta1.ComplianceDataChild f_child = 16;</code> */
     public com.google.showcase.v1beta1.ComplianceDataChildOrBuilder getFChildOrBuilder() {
       if (fChildBuilder_ != null) {
@@ -2368,7 +2264,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
             : fChild_;
       }
     }
-
     /** <code>.google.showcase.v1beta1.ComplianceDataChild f_child = 16;</code> */
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.showcase.v1beta1.ComplianceDataChild,
@@ -2388,7 +2283,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object pString_ = "";
-
     /**
      * <code>optional string p_string = 17;</code>
      *
@@ -2397,7 +2291,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public boolean hasPString() {
       return ((bitField0_ & 0x00020000) != 0);
     }
-
     /**
      * <code>optional string p_string = 17;</code>
      *
@@ -2414,7 +2307,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      * <code>optional string p_string = 17;</code>
      *
@@ -2431,7 +2323,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      * <code>optional string p_string = 17;</code>
      *
@@ -2447,7 +2338,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>optional string p_string = 17;</code>
      *
@@ -2459,7 +2349,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>optional string p_string = 17;</code>
      *
@@ -2478,7 +2367,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int pInt32_;
-
     /**
      * <code>optional int32 p_int32 = 18;</code>
      *
@@ -2488,7 +2376,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public boolean hasPInt32() {
       return ((bitField0_ & 0x00040000) != 0);
     }
-
     /**
      * <code>optional int32 p_int32 = 18;</code>
      *
@@ -2498,7 +2385,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public int getPInt32() {
       return pInt32_;
     }
-
     /**
      * <code>optional int32 p_int32 = 18;</code>
      *
@@ -2512,7 +2398,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>optional int32 p_int32 = 18;</code>
      *
@@ -2526,7 +2411,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     }
 
     private double pDouble_;
-
     /**
      * <code>optional double p_double = 19;</code>
      *
@@ -2536,7 +2420,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public boolean hasPDouble() {
       return ((bitField0_ & 0x00080000) != 0);
     }
-
     /**
      * <code>optional double p_double = 19;</code>
      *
@@ -2546,7 +2429,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public double getPDouble() {
       return pDouble_;
     }
-
     /**
      * <code>optional double p_double = 19;</code>
      *
@@ -2560,7 +2442,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>optional double p_double = 19;</code>
      *
@@ -2574,7 +2455,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     }
 
     private boolean pBool_;
-
     /**
      * <code>optional bool p_bool = 20;</code>
      *
@@ -2584,7 +2464,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public boolean hasPBool() {
       return ((bitField0_ & 0x00100000) != 0);
     }
-
     /**
      * <code>optional bool p_bool = 20;</code>
      *
@@ -2594,7 +2473,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public boolean getPBool() {
       return pBool_;
     }
-
     /**
      * <code>optional bool p_bool = 20;</code>
      *
@@ -2608,7 +2486,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>optional bool p_bool = 20;</code>
      *
@@ -2622,7 +2499,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int pKingdom_ = 0;
-
     /**
      * <code>optional .google.showcase.v1beta1.ComplianceData.LifeKingdom p_kingdom = 23;</code>
      *
@@ -2632,7 +2508,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public boolean hasPKingdom() {
       return ((bitField0_ & 0x00200000) != 0);
     }
-
     /**
      * <code>optional .google.showcase.v1beta1.ComplianceData.LifeKingdom p_kingdom = 23;</code>
      *
@@ -2642,7 +2517,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public int getPKingdomValue() {
       return pKingdom_;
     }
-
     /**
      * <code>optional .google.showcase.v1beta1.ComplianceData.LifeKingdom p_kingdom = 23;</code>
      *
@@ -2655,7 +2529,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>optional .google.showcase.v1beta1.ComplianceData.LifeKingdom p_kingdom = 23;</code>
      *
@@ -2669,7 +2542,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
           ? com.google.showcase.v1beta1.ComplianceData.LifeKingdom.UNRECOGNIZED
           : result;
     }
-
     /**
      * <code>optional .google.showcase.v1beta1.ComplianceData.LifeKingdom p_kingdom = 23;</code>
      *
@@ -2685,7 +2557,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>optional .google.showcase.v1beta1.ComplianceData.LifeKingdom p_kingdom = 23;</code>
      *
@@ -2704,7 +2575,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
             com.google.showcase.v1beta1.ComplianceDataChild.Builder,
             com.google.showcase.v1beta1.ComplianceDataChildOrBuilder>
         pChildBuilder_;
-
     /**
      * <code>optional .google.showcase.v1beta1.ComplianceDataChild p_child = 21;</code>
      *
@@ -2713,7 +2583,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
     public boolean hasPChild() {
       return ((bitField0_ & 0x00400000) != 0);
     }
-
     /**
      * <code>optional .google.showcase.v1beta1.ComplianceDataChild p_child = 21;</code>
      *
@@ -2728,7 +2597,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
         return pChildBuilder_.getMessage();
       }
     }
-
     /** <code>optional .google.showcase.v1beta1.ComplianceDataChild p_child = 21;</code> */
     public Builder setPChild(com.google.showcase.v1beta1.ComplianceDataChild value) {
       if (pChildBuilder_ == null) {
@@ -2743,7 +2611,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /** <code>optional .google.showcase.v1beta1.ComplianceDataChild p_child = 21;</code> */
     public Builder setPChild(
         com.google.showcase.v1beta1.ComplianceDataChild.Builder builderForValue) {
@@ -2756,7 +2623,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /** <code>optional .google.showcase.v1beta1.ComplianceDataChild p_child = 21;</code> */
     public Builder mergePChild(com.google.showcase.v1beta1.ComplianceDataChild value) {
       if (pChildBuilder_ == null) {
@@ -2776,7 +2642,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /** <code>optional .google.showcase.v1beta1.ComplianceDataChild p_child = 21;</code> */
     public Builder clearPChild() {
       bitField0_ = (bitField0_ & ~0x00400000);
@@ -2788,14 +2653,12 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /** <code>optional .google.showcase.v1beta1.ComplianceDataChild p_child = 21;</code> */
     public com.google.showcase.v1beta1.ComplianceDataChild.Builder getPChildBuilder() {
       bitField0_ |= 0x00400000;
       onChanged();
       return getPChildFieldBuilder().getBuilder();
     }
-
     /** <code>optional .google.showcase.v1beta1.ComplianceDataChild p_child = 21;</code> */
     public com.google.showcase.v1beta1.ComplianceDataChildOrBuilder getPChildOrBuilder() {
       if (pChildBuilder_ != null) {
@@ -2806,7 +2669,6 @@ public final class ComplianceData extends com.google.protobuf.GeneratedMessageV3
             : pChild_;
       }
     }
-
     /** <code>optional .google.showcase.v1beta1.ComplianceDataChild p_child = 21;</code> */
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.showcase.v1beta1.ComplianceDataChild,

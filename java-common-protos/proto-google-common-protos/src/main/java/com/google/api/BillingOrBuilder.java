@@ -37,7 +37,6 @@ public interface BillingOrBuilder
    * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
   java.util.List<com.google.api.Billing.BillingDestination> getConsumerDestinationsList();
-
   /**
    *
    *
@@ -51,7 +50,6 @@ public interface BillingOrBuilder
    * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
   com.google.api.Billing.BillingDestination getConsumerDestinations(int index);
-
   /**
    *
    *
@@ -65,7 +63,6 @@ public interface BillingOrBuilder
    * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
   int getConsumerDestinationsCount();
-
   /**
    *
    *
@@ -80,7 +77,6 @@ public interface BillingOrBuilder
    */
   java.util.List<? extends com.google.api.Billing.BillingDestinationOrBuilder>
       getConsumerDestinationsOrBuilderList();
-
   /**
    *
    *

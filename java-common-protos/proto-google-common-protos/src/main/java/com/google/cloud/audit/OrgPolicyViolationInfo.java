@@ -33,7 +33,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
     // @@protoc_insertion_point(message_implements:google.cloud.audit.OrgPolicyViolationInfo)
     OrgPolicyViolationInfoOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use OrgPolicyViolationInfo.newBuilder() to construct.
   private OrgPolicyViolationInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -80,7 +79,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
   private int bitField0_;
   public static final int PAYLOAD_FIELD_NUMBER = 1;
   private com.google.protobuf.Struct payload_;
-
   /**
    *
    *
@@ -98,7 +96,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
   public boolean hasPayload() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -116,7 +113,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
   public com.google.protobuf.Struct getPayload() {
     return payload_ == null ? com.google.protobuf.Struct.getDefaultInstance() : payload_;
   }
-
   /**
    *
    *
@@ -137,7 +133,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object resourceType_ = "";
-
   /**
    *
    *
@@ -162,7 +157,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       return s;
     }
   }
-
   /**
    *
    *
@@ -216,7 +210,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
   public int getResourceTagsCount() {
     return internalGetResourceTags().getMap().size();
   }
-
   /**
    *
    *
@@ -240,14 +233,12 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
     }
     return internalGetResourceTags().getMap().containsKey(key);
   }
-
   /** Use {@link #getResourceTagsMap()} instead. */
   @java.lang.Override
   @java.lang.Deprecated
   public java.util.Map<java.lang.String, java.lang.String> getResourceTags() {
     return getResourceTagsMap();
   }
-
   /**
    *
    *
@@ -268,7 +259,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
   public java.util.Map<java.lang.String, java.lang.String> getResourceTagsMap() {
     return internalGetResourceTags().getMap();
   }
-
   /**
    *
    *
@@ -296,7 +286,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
     java.util.Map<java.lang.String, java.lang.String> map = internalGetResourceTags().getMap();
     return map.containsKey(key) ? map.get(key) : defaultValue;
   }
-
   /**
    *
    *
@@ -329,7 +318,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.cloud.audit.ViolationInfo> violationInfo_;
-
   /**
    *
    *
@@ -345,7 +333,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
   public java.util.List<com.google.cloud.audit.ViolationInfo> getViolationInfoList() {
     return violationInfo_;
   }
-
   /**
    *
    *
@@ -362,7 +349,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       getViolationInfoOrBuilderList() {
     return violationInfo_;
   }
-
   /**
    *
    *
@@ -378,7 +364,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
   public int getViolationInfoCount() {
     return violationInfo_.size();
   }
-
   /**
    *
    *
@@ -394,7 +379,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
   public com.google.cloud.audit.ViolationInfo getViolationInfo(int index) {
     return violationInfo_.get(index);
   }
-
   /**
    *
    *
@@ -612,7 +596,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -932,7 +915,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
             com.google.protobuf.Struct.Builder,
             com.google.protobuf.StructOrBuilder>
         payloadBuilder_;
-
     /**
      *
      *
@@ -949,7 +931,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
     public boolean hasPayload() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -970,7 +951,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
         return payloadBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -995,7 +975,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1017,7 +996,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1047,7 +1025,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       }
       return this;
     }
-
     /**
      *
      *
@@ -1069,7 +1046,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1086,7 +1062,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       onChanged();
       return getPayloadFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1105,7 +1080,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
         return payload_ == null ? com.google.protobuf.Struct.getDefaultInstance() : payload_;
       }
     }
-
     /**
      *
      *
@@ -1135,7 +1109,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
     }
 
     private java.lang.Object resourceType_ = "";
-
     /**
      *
      *
@@ -1159,7 +1132,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1183,7 +1155,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1206,7 +1177,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1225,7 +1195,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1278,7 +1247,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
     public int getResourceTagsCount() {
       return internalGetResourceTags().getMap().size();
     }
-
     /**
      *
      *
@@ -1302,14 +1270,12 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       }
       return internalGetResourceTags().getMap().containsKey(key);
     }
-
     /** Use {@link #getResourceTagsMap()} instead. */
     @java.lang.Override
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getResourceTags() {
       return getResourceTagsMap();
     }
-
     /**
      *
      *
@@ -1330,7 +1296,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
     public java.util.Map<java.lang.String, java.lang.String> getResourceTagsMap() {
       return internalGetResourceTags().getMap();
     }
-
     /**
      *
      *
@@ -1358,7 +1323,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       java.util.Map<java.lang.String, java.lang.String> map = internalGetResourceTags().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
-
     /**
      *
      *
@@ -1392,7 +1356,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       internalGetMutableResourceTags().getMutableMap().clear();
       return this;
     }
-
     /**
      *
      *
@@ -1416,14 +1379,12 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       internalGetMutableResourceTags().getMutableMap().remove(key);
       return this;
     }
-
     /** Use alternate mutation accessors instead. */
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getMutableResourceTags() {
       bitField0_ |= 0x00000004;
       return internalGetMutableResourceTags().getMutableMap();
     }
-
     /**
      *
      *
@@ -1451,7 +1412,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       bitField0_ |= 0x00000004;
       return this;
     }
-
     /**
      *
      *
@@ -1509,7 +1469,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
         return violationInfoBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -1528,7 +1487,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
         return violationInfoBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -1547,7 +1505,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
         return violationInfoBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -1572,7 +1529,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       }
       return this;
     }
-
     /**
      *
      *
@@ -1595,7 +1551,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       }
       return this;
     }
-
     /**
      *
      *
@@ -1620,7 +1575,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       }
       return this;
     }
-
     /**
      *
      *
@@ -1645,7 +1599,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       }
       return this;
     }
-
     /**
      *
      *
@@ -1667,7 +1620,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       }
       return this;
     }
-
     /**
      *
      *
@@ -1690,7 +1642,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       }
       return this;
     }
-
     /**
      *
      *
@@ -1713,7 +1664,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       }
       return this;
     }
-
     /**
      *
      *
@@ -1735,7 +1685,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       }
       return this;
     }
-
     /**
      *
      *
@@ -1757,7 +1706,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       }
       return this;
     }
-
     /**
      *
      *
@@ -1772,7 +1720,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
     public com.google.cloud.audit.ViolationInfo.Builder getViolationInfoBuilder(int index) {
       return getViolationInfoFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -1791,7 +1738,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
         return violationInfoBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -1811,7 +1757,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
         return java.util.Collections.unmodifiableList(violationInfo_);
       }
     }
-
     /**
      *
      *
@@ -1827,7 +1772,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       return getViolationInfoFieldBuilder()
           .addBuilder(com.google.cloud.audit.ViolationInfo.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1843,7 +1787,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
       return getViolationInfoFieldBuilder()
           .addBuilder(index, com.google.cloud.audit.ViolationInfo.getDefaultInstance());
     }
-
     /**
      *
      *

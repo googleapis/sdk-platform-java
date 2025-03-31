@@ -56,7 +56,6 @@ public interface PostalAddressOrBuilder
    * @return The regionCode.
    */
   java.lang.String getRegionCode();
-
   /**
    *
    *
@@ -97,7 +96,6 @@ public interface PostalAddressOrBuilder
    * @return The languageCode.
    */
   java.lang.String getLanguageCode();
-
   /**
    *
    *
@@ -137,7 +135,6 @@ public interface PostalAddressOrBuilder
    * @return The postalCode.
    */
   java.lang.String getPostalCode();
-
   /**
    *
    *
@@ -170,7 +167,6 @@ public interface PostalAddressOrBuilder
    * @return The sortingCode.
    */
   java.lang.String getSortingCode();
-
   /**
    *
    *
@@ -206,7 +202,6 @@ public interface PostalAddressOrBuilder
    * @return The administrativeArea.
    */
   java.lang.String getAdministrativeArea();
-
   /**
    *
    *
@@ -241,7 +236,6 @@ public interface PostalAddressOrBuilder
    * @return The locality.
    */
   java.lang.String getLocality();
-
   /**
    *
    *
@@ -271,7 +265,6 @@ public interface PostalAddressOrBuilder
    * @return The sublocality.
    */
   java.lang.String getSublocality();
-
   /**
    *
    *
@@ -319,7 +312,6 @@ public interface PostalAddressOrBuilder
    * @return A list containing the addressLines.
    */
   java.util.List<java.lang.String> getAddressLinesList();
-
   /**
    *
    *
@@ -353,7 +345,6 @@ public interface PostalAddressOrBuilder
    * @return The count of addressLines.
    */
   int getAddressLinesCount();
-
   /**
    *
    *
@@ -388,7 +379,6 @@ public interface PostalAddressOrBuilder
    * @return The addressLines at the given index.
    */
   java.lang.String getAddressLines(int index);
-
   /**
    *
    *
@@ -438,7 +428,6 @@ public interface PostalAddressOrBuilder
    * @return A list containing the recipients.
    */
   java.util.List<java.lang.String> getRecipientsList();
-
   /**
    *
    *
@@ -453,7 +442,6 @@ public interface PostalAddressOrBuilder
    * @return The count of recipients.
    */
   int getRecipientsCount();
-
   /**
    *
    *
@@ -469,7 +457,6 @@ public interface PostalAddressOrBuilder
    * @return The recipients at the given index.
    */
   java.lang.String getRecipients(int index);
-
   /**
    *
    *
@@ -498,7 +485,6 @@ public interface PostalAddressOrBuilder
    * @return The organization.
    */
   java.lang.String getOrganization();
-
   /**
    *
    *

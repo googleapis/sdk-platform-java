@@ -34,7 +34,6 @@ public interface ListLocationsResponseOrBuilder
    * <code>repeated .google.cloud.location.Location locations = 1;</code>
    */
   java.util.List<com.google.cloud.location.Location> getLocationsList();
-
   /**
    *
    *
@@ -45,7 +44,6 @@ public interface ListLocationsResponseOrBuilder
    * <code>repeated .google.cloud.location.Location locations = 1;</code>
    */
   com.google.cloud.location.Location getLocations(int index);
-
   /**
    *
    *
@@ -56,7 +54,6 @@ public interface ListLocationsResponseOrBuilder
    * <code>repeated .google.cloud.location.Location locations = 1;</code>
    */
   int getLocationsCount();
-
   /**
    *
    *
@@ -67,7 +64,6 @@ public interface ListLocationsResponseOrBuilder
    * <code>repeated .google.cloud.location.Location locations = 1;</code>
    */
   java.util.List<? extends com.google.cloud.location.LocationOrBuilder> getLocationsOrBuilderList();
-
   /**
    *
    *
@@ -91,7 +87,6 @@ public interface ListLocationsResponseOrBuilder
    * @return The nextPageToken.
    */
   java.lang.String getNextPageToken();
-
   /**
    *
    *

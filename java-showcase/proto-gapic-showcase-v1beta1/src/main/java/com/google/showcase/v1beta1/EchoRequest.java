@@ -36,7 +36,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.EchoRequest)
     EchoRequestOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use EchoRequest.newBuilder() to construct.
   private EchoRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -89,7 +88,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
     private ResponseCase(int value) {
       this.value = value;
     }
-
     /**
      * @param value The number of the enum to look for.
      * @return The enum associated with the given number.
@@ -123,7 +121,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int CONTENT_FIELD_NUMBER = 1;
-
   /**
    *
    *
@@ -138,7 +135,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean hasContent() {
     return responseCase_ == 1;
   }
-
   /**
    *
    *
@@ -166,7 +162,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -196,7 +191,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ERROR_FIELD_NUMBER = 2;
-
   /**
    *
    *
@@ -212,7 +206,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean hasError() {
     return responseCase_ == 2;
   }
-
   /**
    *
    *
@@ -231,7 +224,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.rpc.Status.getDefaultInstance();
   }
-
   /**
    *
    *
@@ -251,7 +243,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
 
   public static final int SEVERITY_FIELD_NUMBER = 3;
   private int severity_ = 0;
-
   /**
    *
    *
@@ -267,7 +258,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
   public int getSeverityValue() {
     return severity_;
   }
-
   /**
    *
    *
@@ -290,7 +280,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object header_ = "";
-
   /**
    *
    *
@@ -314,7 +303,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -343,7 +331,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object otherHeader_ = "";
-
   /**
    *
    *
@@ -367,7 +354,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -396,7 +382,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object requestId_ = "";
-
   /**
    *
    *
@@ -420,7 +405,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -449,7 +433,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object otherRequestId_ = "";
-
   /**
    *
    *
@@ -465,7 +448,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean hasOtherRequestId() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -489,7 +471,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -750,7 +731,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -1071,7 +1051,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean hasContent() {
       return responseCase_ == 1;
     }
-
     /**
      *
      *
@@ -1100,7 +1079,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1129,7 +1107,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1151,7 +1128,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1171,7 +1147,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1198,7 +1173,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.rpc.Status, com.google.rpc.Status.Builder, com.google.rpc.StatusOrBuilder>
         errorBuilder_;
-
     /**
      *
      *
@@ -1214,7 +1188,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean hasError() {
       return responseCase_ == 2;
     }
-
     /**
      *
      *
@@ -1240,7 +1213,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
         return com.google.rpc.Status.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1263,7 +1235,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       responseCase_ = 2;
       return this;
     }
-
     /**
      *
      *
@@ -1283,7 +1254,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       responseCase_ = 2;
       return this;
     }
-
     /**
      *
      *
@@ -1314,7 +1284,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       responseCase_ = 2;
       return this;
     }
-
     /**
      *
      *
@@ -1340,7 +1309,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1353,7 +1321,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
     public com.google.rpc.Status.Builder getErrorBuilder() {
       return getErrorFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1374,7 +1341,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
         return com.google.rpc.Status.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1405,7 +1371,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int severity_ = 0;
-
     /**
      *
      *
@@ -1421,7 +1386,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
     public int getSeverityValue() {
       return severity_;
     }
-
     /**
      *
      *
@@ -1440,7 +1404,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1458,7 +1421,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
           com.google.showcase.v1beta1.Severity.forNumber(severity_);
       return result == null ? com.google.showcase.v1beta1.Severity.UNRECOGNIZED : result;
     }
-
     /**
      *
      *
@@ -1480,7 +1442,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1500,7 +1461,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object header_ = "";
-
     /**
      *
      *
@@ -1523,7 +1483,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1546,7 +1505,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1568,7 +1526,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1586,7 +1543,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1611,7 +1567,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object otherHeader_ = "";
-
     /**
      *
      *
@@ -1634,7 +1589,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1657,7 +1611,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1679,7 +1632,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1697,7 +1649,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1722,7 +1673,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object requestId_ = "";
-
     /**
      *
      *
@@ -1745,7 +1695,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1768,7 +1717,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1790,7 +1738,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1808,7 +1755,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1833,7 +1779,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object otherRequestId_ = "";
-
     /**
      *
      *
@@ -1848,7 +1793,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean hasOtherRequestId() {
       return ((bitField0_ & 0x00000040) != 0);
     }
-
     /**
      *
      *
@@ -1871,7 +1815,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1894,7 +1837,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1916,7 +1858,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1934,7 +1875,6 @@ public final class EchoRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

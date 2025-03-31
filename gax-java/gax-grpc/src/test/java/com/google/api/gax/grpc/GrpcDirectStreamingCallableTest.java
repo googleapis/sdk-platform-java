@@ -211,6 +211,5 @@ class GrpcDirectStreamingCallableTest {
     public void onCompleted() {
       completed = true;
     }
-  }
-  ;
+  };
 }

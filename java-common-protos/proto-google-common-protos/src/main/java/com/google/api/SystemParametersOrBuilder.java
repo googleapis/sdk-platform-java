@@ -62,7 +62,6 @@ public interface SystemParametersOrBuilder
    * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
    */
   java.util.List<com.google.api.SystemParameterRule> getRulesList();
-
   /**
    *
    *
@@ -101,7 +100,6 @@ public interface SystemParametersOrBuilder
    * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
    */
   com.google.api.SystemParameterRule getRules(int index);
-
   /**
    *
    *
@@ -140,7 +138,6 @@ public interface SystemParametersOrBuilder
    * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
    */
   int getRulesCount();
-
   /**
    *
    *
@@ -179,7 +176,6 @@ public interface SystemParametersOrBuilder
    * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
    */
   java.util.List<? extends com.google.api.SystemParameterRuleOrBuilder> getRulesOrBuilderList();
-
   /**
    *
    *

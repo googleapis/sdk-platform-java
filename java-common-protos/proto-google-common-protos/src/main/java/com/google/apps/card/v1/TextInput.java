@@ -47,7 +47,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.TextInput)
     TextInputOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use TextInput.newBuilder() to construct.
   private TextInput(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -132,7 +131,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * <code>SINGLE_LINE = 0;</code>
      */
     public static final int SINGLE_LINE_VALUE = 0;
-
     /**
      *
      *
@@ -230,7 +228,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object name_ = "";
-
   /**
    *
    *
@@ -257,7 +254,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -289,7 +285,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object label_ = "";
-
   /**
    *
    *
@@ -319,7 +314,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -354,7 +348,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object hintText_ = "";
-
   /**
    *
    *
@@ -381,7 +374,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -413,7 +405,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object value_ = "";
-
   /**
    *
    *
@@ -440,7 +431,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -470,7 +460,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
 
   public static final int TYPE_FIELD_NUMBER = 5;
   private int type_ = 0;
-
   /**
    *
    *
@@ -487,7 +476,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
   public int getTypeValue() {
     return type_;
   }
-
   /**
    *
    *
@@ -509,7 +497,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
 
   public static final int ON_CHANGE_ACTION_FIELD_NUMBER = 6;
   private com.google.apps.card.v1.Action onChangeAction_;
-
   /**
    *
    *
@@ -530,7 +517,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
   public boolean hasOnChangeAction() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -553,7 +539,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         ? com.google.apps.card.v1.Action.getDefaultInstance()
         : onChangeAction_;
   }
-
   /**
    *
    *
@@ -577,7 +562,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
 
   public static final int INITIAL_SUGGESTIONS_FIELD_NUMBER = 7;
   private com.google.apps.card.v1.Suggestions initialSuggestions_;
-
   /**
    *
    *
@@ -610,7 +594,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
   public boolean hasInitialSuggestions() {
     return ((bitField0_ & 0x00000002) != 0);
   }
-
   /**
    *
    *
@@ -645,7 +628,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         ? com.google.apps.card.v1.Suggestions.getDefaultInstance()
         : initialSuggestions_;
   }
-
   /**
    *
    *
@@ -681,7 +663,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
 
   public static final int AUTO_COMPLETE_ACTION_FIELD_NUMBER = 8;
   private com.google.apps.card.v1.Action autoCompleteAction_;
-
   /**
    *
    *
@@ -707,7 +688,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
   public boolean hasAutoCompleteAction() {
     return ((bitField0_ & 0x00000004) != 0);
   }
-
   /**
    *
    *
@@ -735,7 +715,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         ? com.google.apps.card.v1.Action.getDefaultInstance()
         : autoCompleteAction_;
   }
-
   /**
    *
    *
@@ -766,7 +745,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object placeholderText_ = "";
-
   /**
    *
    *
@@ -794,7 +772,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -1067,7 +1044,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -1413,7 +1389,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object name_ = "";
-
     /**
      *
      *
@@ -1439,7 +1414,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1465,7 +1439,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1490,7 +1463,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1511,7 +1483,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1539,7 +1510,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object label_ = "";
-
     /**
      *
      *
@@ -1568,7 +1538,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1597,7 +1566,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1625,7 +1593,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1649,7 +1616,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1680,7 +1646,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object hintText_ = "";
-
     /**
      *
      *
@@ -1706,7 +1671,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1732,7 +1696,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1757,7 +1720,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1778,7 +1740,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1806,7 +1767,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object value_ = "";
-
     /**
      *
      *
@@ -1832,7 +1792,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1858,7 +1817,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1883,7 +1841,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1904,7 +1861,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1932,7 +1888,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int type_ = 0;
-
     /**
      *
      *
@@ -1949,7 +1904,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
     public int getTypeValue() {
       return type_;
     }
-
     /**
      *
      *
@@ -1969,7 +1923,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1988,7 +1941,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
           com.google.apps.card.v1.TextInput.Type.forNumber(type_);
       return result == null ? com.google.apps.card.v1.TextInput.Type.UNRECOGNIZED : result;
     }
-
     /**
      *
      *
@@ -2011,7 +1963,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2037,7 +1988,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.Action.Builder,
             com.google.apps.card.v1.ActionOrBuilder>
         onChangeActionBuilder_;
-
     /**
      *
      *
@@ -2057,7 +2007,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
     public boolean hasOnChangeAction() {
       return ((bitField0_ & 0x00000020) != 0);
     }
-
     /**
      *
      *
@@ -2083,7 +2032,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         return onChangeActionBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -2111,7 +2059,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2136,7 +2083,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2169,7 +2115,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2194,7 +2139,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2214,7 +2158,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getOnChangeActionFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -2238,7 +2181,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
             : onChangeAction_;
       }
     }
-
     /**
      *
      *
@@ -2276,7 +2218,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.Suggestions.Builder,
             com.google.apps.card.v1.SuggestionsOrBuilder>
         initialSuggestionsBuilder_;
-
     /**
      *
      *
@@ -2308,7 +2249,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
     public boolean hasInitialSuggestions() {
       return ((bitField0_ & 0x00000040) != 0);
     }
-
     /**
      *
      *
@@ -2346,7 +2286,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         return initialSuggestionsBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -2386,7 +2325,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2424,7 +2362,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2469,7 +2406,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2506,7 +2442,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2538,7 +2473,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getInitialSuggestionsFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -2574,7 +2508,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
             : initialSuggestions_;
       }
     }
-
     /**
      *
      *
@@ -2624,7 +2557,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.Action.Builder,
             com.google.apps.card.v1.ActionOrBuilder>
         autoCompleteActionBuilder_;
-
     /**
      *
      *
@@ -2649,7 +2581,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
     public boolean hasAutoCompleteAction() {
       return ((bitField0_ & 0x00000080) != 0);
     }
-
     /**
      *
      *
@@ -2680,7 +2611,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         return autoCompleteActionBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -2713,7 +2643,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2743,7 +2672,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2781,7 +2709,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2811,7 +2738,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2836,7 +2762,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getAutoCompleteActionFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -2865,7 +2790,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
             : autoCompleteAction_;
       }
     }
-
     /**
      *
      *
@@ -2903,7 +2827,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object placeholderText_ = "";
-
     /**
      *
      *
@@ -2930,7 +2853,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -2957,7 +2879,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -2983,7 +2904,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -3005,7 +2925,6 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

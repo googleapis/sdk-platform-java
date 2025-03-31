@@ -39,7 +39,6 @@ public interface SelectionInputOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *
@@ -73,7 +72,6 @@ public interface SelectionInputOrBuilder
    * @return The label.
    */
   java.lang.String getLabel();
-
   /**
    *
    *
@@ -107,7 +105,6 @@ public interface SelectionInputOrBuilder
    * @return The enum numeric value on the wire for type.
    */
   int getTypeValue();
-
   /**
    *
    *
@@ -135,7 +132,6 @@ public interface SelectionInputOrBuilder
    * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
    */
   java.util.List<com.google.apps.card.v1.SelectionInput.SelectionItem> getItemsList();
-
   /**
    *
    *
@@ -147,7 +143,6 @@ public interface SelectionInputOrBuilder
    * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
    */
   com.google.apps.card.v1.SelectionInput.SelectionItem getItems(int index);
-
   /**
    *
    *
@@ -159,7 +154,6 @@ public interface SelectionInputOrBuilder
    * <code>repeated .google.apps.card.v1.SelectionInput.SelectionItem items = 4;</code>
    */
   int getItemsCount();
-
   /**
    *
    *
@@ -172,7 +166,6 @@ public interface SelectionInputOrBuilder
    */
   java.util.List<? extends com.google.apps.card.v1.SelectionInput.SelectionItemOrBuilder>
       getItemsOrBuilderList();
-
   /**
    *
    *
@@ -201,7 +194,6 @@ public interface SelectionInputOrBuilder
    * @return Whether the onChangeAction field is set.
    */
   boolean hasOnChangeAction();
-
   /**
    *
    *
@@ -218,7 +210,6 @@ public interface SelectionInputOrBuilder
    * @return The onChangeAction.
    */
   com.google.apps.card.v1.Action getOnChangeAction();
-
   /**
    *
    *
@@ -278,7 +269,6 @@ public interface SelectionInputOrBuilder
    * @return Whether the externalDataSource field is set.
    */
   boolean hasExternalDataSource();
-
   /**
    *
    *
@@ -291,7 +281,6 @@ public interface SelectionInputOrBuilder
    * @return The externalDataSource.
    */
   com.google.apps.card.v1.Action getExternalDataSource();
-
   /**
    *
    *
@@ -315,7 +304,6 @@ public interface SelectionInputOrBuilder
    * @return Whether the platformDataSource field is set.
    */
   boolean hasPlatformDataSource();
-
   /**
    *
    *
@@ -328,7 +316,6 @@ public interface SelectionInputOrBuilder
    * @return The platformDataSource.
    */
   com.google.apps.card.v1.SelectionInput.PlatformDataSource getPlatformDataSource();
-
   /**
    *
    *

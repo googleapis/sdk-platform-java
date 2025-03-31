@@ -210,9 +210,7 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
       return this;
     }
 
-    /**
-     * @return the quotaProjectIdToken used for quota and billing purposes.
-     */
+    /** @return the quotaProjectIdToken used for quota and billing purposes. */
     public String getQuotaProjectIdToken() {
       return quotaProjectIdToken;
     }

@@ -36,7 +36,6 @@ public interface ButtonOrBuilder
    * @return The text.
    */
   java.lang.String getText();
-
   /**
    *
    *
@@ -63,7 +62,6 @@ public interface ButtonOrBuilder
    * @return Whether the icon field is set.
    */
   boolean hasIcon();
-
   /**
    *
    *
@@ -77,7 +75,6 @@ public interface ButtonOrBuilder
    * @return The icon.
    */
   com.google.apps.card.v1.Icon getIcon();
-
   /**
    *
    *
@@ -133,7 +130,6 @@ public interface ButtonOrBuilder
    * @return Whether the color field is set.
    */
   boolean hasColor();
-
   /**
    *
    *
@@ -177,7 +173,6 @@ public interface ButtonOrBuilder
    * @return The color.
    */
   com.google.type.Color getColor();
-
   /**
    *
    *
@@ -233,7 +228,6 @@ public interface ButtonOrBuilder
    * @return Whether the onClick field is set.
    */
   boolean hasOnClick();
-
   /**
    *
    *
@@ -247,7 +241,6 @@ public interface ButtonOrBuilder
    * @return The onClick.
    */
   com.google.apps.card.v1.OnClick getOnClick();
-
   /**
    *
    *
@@ -291,7 +284,6 @@ public interface ButtonOrBuilder
    * @return The altText.
    */
   java.lang.String getAltText();
-
   /**
    *
    *

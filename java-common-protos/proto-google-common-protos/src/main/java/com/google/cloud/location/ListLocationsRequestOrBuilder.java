@@ -36,7 +36,6 @@ public interface ListLocationsRequestOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *
@@ -62,7 +61,6 @@ public interface ListLocationsRequestOrBuilder
    * @return The filter.
    */
   java.lang.String getFilter();
-
   /**
    *
    *
@@ -101,7 +99,6 @@ public interface ListLocationsRequestOrBuilder
    * @return The pageToken.
    */
   java.lang.String getPageToken();
-
   /**
    *
    *

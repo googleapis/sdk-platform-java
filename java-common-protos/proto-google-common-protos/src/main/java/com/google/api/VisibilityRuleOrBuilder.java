@@ -39,7 +39,6 @@ public interface VisibilityRuleOrBuilder
    * @return The selector.
    */
   java.lang.String getSelector();
-
   /**
    *
    *
@@ -82,7 +81,6 @@ public interface VisibilityRuleOrBuilder
    * @return The restriction.
    */
   java.lang.String getRestriction();
-
   /**
    *
    *

@@ -38,7 +38,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.ConfigChange)
     ConfigChangeOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use ConfigChange.newBuilder() to construct.
   private ConfigChange(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -75,7 +74,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object element_ = "";
-
   /**
    *
    *
@@ -107,7 +105,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -144,7 +141,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object oldValue_ = "";
-
   /**
    *
    *
@@ -169,7 +165,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -199,7 +194,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object newValue_ = "";
-
   /**
    *
    *
@@ -224,7 +218,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -252,7 +245,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
 
   public static final int CHANGE_TYPE_FIELD_NUMBER = 4;
   private int changeType_ = 0;
-
   /**
    *
    *
@@ -268,7 +260,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
   public int getChangeTypeValue() {
     return changeType_;
   }
-
   /**
    *
    *
@@ -290,7 +281,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.Advice> advices_;
-
   /**
    *
    *
@@ -305,7 +295,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.api.Advice> getAdvicesList() {
     return advices_;
   }
-
   /**
    *
    *
@@ -320,7 +309,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<? extends com.google.api.AdviceOrBuilder> getAdvicesOrBuilderList() {
     return advices_;
   }
-
   /**
    *
    *
@@ -335,7 +323,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
   public int getAdvicesCount() {
     return advices_.size();
   }
-
   /**
    *
    *
@@ -350,7 +337,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.Advice getAdvices(int index) {
     return advices_.get(index);
   }
-
   /**
    *
    *
@@ -561,7 +547,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -848,7 +833,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object element_ = "";
-
     /**
      *
      *
@@ -879,7 +863,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -910,7 +893,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -940,7 +922,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -966,7 +947,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -999,7 +979,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object oldValue_ = "";
-
     /**
      *
      *
@@ -1023,7 +1002,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1047,7 +1025,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1070,7 +1047,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1089,7 +1065,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1115,7 +1090,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object newValue_ = "";
-
     /**
      *
      *
@@ -1139,7 +1113,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1163,7 +1136,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1186,7 +1158,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1205,7 +1176,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1231,7 +1201,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int changeType_ = 0;
-
     /**
      *
      *
@@ -1247,7 +1216,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
     public int getChangeTypeValue() {
       return changeType_;
     }
-
     /**
      *
      *
@@ -1266,7 +1234,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1283,7 +1250,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       com.google.api.ChangeType result = com.google.api.ChangeType.forNumber(changeType_);
       return result == null ? com.google.api.ChangeType.UNRECOGNIZED : result;
     }
-
     /**
      *
      *
@@ -1305,7 +1271,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1354,7 +1319,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
         return advicesBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -1372,7 +1336,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
         return advicesBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -1390,7 +1353,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
         return advicesBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -1414,7 +1376,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1435,7 +1396,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1459,7 +1419,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1483,7 +1442,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1504,7 +1462,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1525,7 +1482,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1546,7 +1502,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1567,7 +1522,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1588,7 +1542,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1602,7 +1555,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.Advice.Builder getAdvicesBuilder(int index) {
       return getAdvicesFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -1620,7 +1572,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
         return advicesBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -1638,7 +1589,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(advices_);
       }
     }
-
     /**
      *
      *
@@ -1652,7 +1602,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.Advice.Builder addAdvicesBuilder() {
       return getAdvicesFieldBuilder().addBuilder(com.google.api.Advice.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1666,7 +1615,6 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.Advice.Builder addAdvicesBuilder(int index) {
       return getAdvicesFieldBuilder().addBuilder(index, com.google.api.Advice.getDefaultInstance());
     }
-
     /**
      *
      *

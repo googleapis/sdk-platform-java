@@ -36,7 +36,6 @@ public interface IssueOrBuilder
    * @return The enum numeric value on the wire for type.
    */
   int getTypeValue();
-
   /**
    *
    *
@@ -62,7 +61,6 @@ public interface IssueOrBuilder
    * @return The enum numeric value on the wire for severity.
    */
   int getSeverityValue();
-
   /**
    *
    *
@@ -88,7 +86,6 @@ public interface IssueOrBuilder
    * @return The description.
    */
   java.lang.String getDescription();
-
   /**
    *
    *

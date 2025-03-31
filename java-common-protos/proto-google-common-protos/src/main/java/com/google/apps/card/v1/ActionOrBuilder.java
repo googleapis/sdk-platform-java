@@ -40,7 +40,6 @@ public interface ActionOrBuilder
    * @return The function.
    */
   java.lang.String getFunction();
-
   /**
    *
    *
@@ -68,7 +67,6 @@ public interface ActionOrBuilder
    * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
    */
   java.util.List<com.google.apps.card.v1.Action.ActionParameter> getParametersList();
-
   /**
    *
    *
@@ -79,7 +77,6 @@ public interface ActionOrBuilder
    * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
    */
   com.google.apps.card.v1.Action.ActionParameter getParameters(int index);
-
   /**
    *
    *
@@ -90,7 +87,6 @@ public interface ActionOrBuilder
    * <code>repeated .google.apps.card.v1.Action.ActionParameter parameters = 2;</code>
    */
   int getParametersCount();
-
   /**
    *
    *
@@ -102,7 +98,6 @@ public interface ActionOrBuilder
    */
   java.util.List<? extends com.google.apps.card.v1.Action.ActionParameterOrBuilder>
       getParametersOrBuilderList();
-
   /**
    *
    *
@@ -127,7 +122,6 @@ public interface ActionOrBuilder
    * @return The enum numeric value on the wire for loadIndicator.
    */
   int getLoadIndicatorValue();
-
   /**
    *
    *
@@ -200,7 +194,6 @@ public interface ActionOrBuilder
    * @return The enum numeric value on the wire for interaction.
    */
   int getInteractionValue();
-
   /**
    *
    *

@@ -39,7 +39,6 @@ public interface AuthenticationRuleOrBuilder
    * @return The selector.
    */
   java.lang.String getSelector();
-
   /**
    *
    *
@@ -68,7 +67,6 @@ public interface AuthenticationRuleOrBuilder
    * @return Whether the oauth field is set.
    */
   boolean hasOauth();
-
   /**
    *
    *
@@ -81,7 +79,6 @@ public interface AuthenticationRuleOrBuilder
    * @return The oauth.
    */
   com.google.api.OAuthRequirements getOauth();
-
   /**
    *
    *
@@ -117,7 +114,6 @@ public interface AuthenticationRuleOrBuilder
    * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
    */
   java.util.List<com.google.api.AuthRequirement> getRequirementsList();
-
   /**
    *
    *
@@ -128,7 +124,6 @@ public interface AuthenticationRuleOrBuilder
    * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
    */
   com.google.api.AuthRequirement getRequirements(int index);
-
   /**
    *
    *
@@ -139,7 +134,6 @@ public interface AuthenticationRuleOrBuilder
    * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
    */
   int getRequirementsCount();
-
   /**
    *
    *
@@ -150,7 +144,6 @@ public interface AuthenticationRuleOrBuilder
    * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
    */
   java.util.List<? extends com.google.api.AuthRequirementOrBuilder> getRequirementsOrBuilderList();
-
   /**
    *
    *

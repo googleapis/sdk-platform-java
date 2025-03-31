@@ -75,7 +75,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.HttpBody)
     HttpBodyOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use HttpBody.newBuilder() to construct.
   private HttpBody(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -109,7 +108,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object contentType_ = "";
-
   /**
    *
    *
@@ -133,7 +131,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -160,7 +157,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
 
   public static final int DATA_FIELD_NUMBER = 2;
   private com.google.protobuf.ByteString data_ = com.google.protobuf.ByteString.EMPTY;
-
   /**
    *
    *
@@ -181,7 +177,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.protobuf.Any> extensions_;
-
   /**
    *
    *
@@ -196,7 +191,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.protobuf.Any> getExtensionsList() {
     return extensions_;
   }
-
   /**
    *
    *
@@ -211,7 +205,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<? extends com.google.protobuf.AnyOrBuilder> getExtensionsOrBuilderList() {
     return extensions_;
   }
-
   /**
    *
    *
@@ -226,7 +219,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
   public int getExtensionsCount() {
     return extensions_.size();
   }
-
   /**
    *
    *
@@ -241,7 +233,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.Any getExtensions(int index) {
     return extensions_.get(index);
   }
-
   /**
    *
    *
@@ -434,7 +425,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -727,7 +717,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object contentType_ = "";
-
     /**
      *
      *
@@ -750,7 +739,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -773,7 +761,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -795,7 +782,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -813,7 +799,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -838,7 +823,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
     }
 
     private com.google.protobuf.ByteString data_ = com.google.protobuf.ByteString.EMPTY;
-
     /**
      *
      *
@@ -854,7 +838,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ByteString getData() {
       return data_;
     }
-
     /**
      *
      *
@@ -876,7 +859,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -927,7 +909,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
         return extensionsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -945,7 +926,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
         return extensionsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -963,7 +943,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
         return extensionsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -987,7 +966,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1008,7 +986,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1032,7 +1009,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1056,7 +1032,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1077,7 +1052,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1098,7 +1072,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1119,7 +1092,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1140,7 +1112,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1161,7 +1132,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1175,7 +1145,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.Any.Builder getExtensionsBuilder(int index) {
       return getExtensionsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -1193,7 +1162,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
         return extensionsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -1211,7 +1179,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(extensions_);
       }
     }
-
     /**
      *
      *
@@ -1225,7 +1192,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.Any.Builder addExtensionsBuilder() {
       return getExtensionsFieldBuilder().addBuilder(com.google.protobuf.Any.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1240,7 +1206,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
       return getExtensionsFieldBuilder()
           .addBuilder(index, com.google.protobuf.Any.getDefaultInstance());
     }
-
     /**
      *
      *

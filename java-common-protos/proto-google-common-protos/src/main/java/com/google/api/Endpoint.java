@@ -53,7 +53,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.Endpoint)
     EndpointOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Endpoint.newBuilder() to construct.
   private Endpoint(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -87,7 +86,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object name_ = "";
-
   /**
    *
    *
@@ -111,7 +109,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -141,7 +138,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList aliases_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
-
   /**
    *
    *
@@ -158,7 +154,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.ProtocolStringList getAliasesList() {
     return aliases_;
   }
-
   /**
    *
    *
@@ -175,7 +170,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
   public int getAliasesCount() {
     return aliases_.size();
   }
-
   /**
    *
    *
@@ -193,7 +187,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
   public java.lang.String getAliases(int index) {
     return aliases_.get(index);
   }
-
   /**
    *
    *
@@ -216,7 +209,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object target_ = "";
-
   /**
    *
    *
@@ -244,7 +236,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -275,7 +266,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
 
   public static final int ALLOW_CORS_FIELD_NUMBER = 5;
   private boolean allowCors_ = false;
-
   /**
    *
    *
@@ -488,7 +478,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -737,7 +726,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object name_ = "";
-
     /**
      *
      *
@@ -760,7 +748,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -783,7 +770,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -805,7 +791,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -823,7 +808,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -856,7 +840,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ |= 0x00000002;
     }
-
     /**
      *
      *
@@ -874,7 +857,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       aliases_.makeImmutable();
       return aliases_;
     }
-
     /**
      *
      *
@@ -891,7 +873,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     public int getAliasesCount() {
       return aliases_.size();
     }
-
     /**
      *
      *
@@ -909,7 +890,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     public java.lang.String getAliases(int index) {
       return aliases_.get(index);
     }
-
     /**
      *
      *
@@ -927,7 +907,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ByteString getAliasesBytes(int index) {
       return aliases_.getByteString(index);
     }
-
     /**
      *
      *
@@ -953,7 +932,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -978,7 +956,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1000,7 +977,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1021,7 +997,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1049,7 +1024,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object target_ = "";
-
     /**
      *
      *
@@ -1076,7 +1050,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1103,7 +1076,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1129,7 +1101,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1151,7 +1122,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1180,7 +1150,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     }
 
     private boolean allowCors_;
-
     /**
      *
      *
@@ -1201,7 +1170,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     public boolean getAllowCors() {
       return allowCors_;
     }
-
     /**
      *
      *
@@ -1226,7 +1194,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

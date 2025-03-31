@@ -36,7 +36,6 @@ public interface MoneyOrBuilder
    * @return The currencyCode.
    */
   java.lang.String getCurrencyCode();
-
   /**
    *
    *

@@ -33,7 +33,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.ListTestsResponse)
     ListTestsResponseOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use ListTestsResponse.newBuilder() to construct.
   private ListTestsResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -69,7 +68,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.showcase.v1beta1.Test> tests_;
-
   /**
    *
    *
@@ -83,7 +81,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
   public java.util.List<com.google.showcase.v1beta1.Test> getTestsList() {
     return tests_;
   }
-
   /**
    *
    *
@@ -98,7 +95,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
       getTestsOrBuilderList() {
     return tests_;
   }
-
   /**
    *
    *
@@ -112,7 +108,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
   public int getTestsCount() {
     return tests_.size();
   }
-
   /**
    *
    *
@@ -126,7 +121,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
   public com.google.showcase.v1beta1.Test getTests(int index) {
     return tests_.get(index);
   }
-
   /**
    *
    *
@@ -145,7 +139,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object nextPageToken_ = "";
-
   /**
    *
    *
@@ -170,7 +163,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
       return s;
     }
   }
-
   /**
    *
    *
@@ -366,7 +358,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -640,7 +631,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
         return testsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -657,7 +647,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
         return testsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -674,7 +663,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
         return testsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -697,7 +685,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -717,7 +704,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -740,7 +726,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -763,7 +748,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -783,7 +767,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -803,7 +786,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -824,7 +806,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -844,7 +825,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -864,7 +844,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
-
     /**
      *
      *
@@ -877,7 +856,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
     public com.google.showcase.v1beta1.Test.Builder getTestsBuilder(int index) {
       return getTestsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -894,7 +872,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
         return testsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -912,7 +889,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
         return java.util.Collections.unmodifiableList(tests_);
       }
     }
-
     /**
      *
      *
@@ -926,7 +902,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
       return getTestsFieldBuilder()
           .addBuilder(com.google.showcase.v1beta1.Test.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -940,7 +915,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
       return getTestsFieldBuilder()
           .addBuilder(index, com.google.showcase.v1beta1.Test.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -972,7 +946,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
     }
 
     private java.lang.Object nextPageToken_ = "";
-
     /**
      *
      *
@@ -996,7 +969,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1020,7 +992,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1043,7 +1014,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1062,7 +1032,6 @@ public final class ListTestsResponse extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
-
     /**
      *
      *

@@ -25,7 +25,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.StreamingSequenceReport)
     StreamingSequenceReportOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use StreamingSequenceReport.newBuilder() to construct.
   private StreamingSequenceReport(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -87,7 +86,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
      * @return Whether the attemptDeadline field is set.
      */
     boolean hasAttemptDeadline();
-
     /**
      *
      *
@@ -100,7 +98,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
      * @return The attemptDeadline.
      */
     com.google.protobuf.Timestamp getAttemptDeadline();
-
     /**
      *
      *
@@ -125,7 +122,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
      * @return Whether the responseTime field is set.
      */
     boolean hasResponseTime();
-
     /**
      *
      *
@@ -139,7 +135,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
      * @return The responseTime.
      */
     com.google.protobuf.Timestamp getResponseTime();
-
     /**
      *
      *
@@ -165,7 +160,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
      * @return Whether the attemptDelay field is set.
      */
     boolean hasAttemptDelay();
-
     /**
      *
      *
@@ -179,7 +173,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
      * @return The attemptDelay.
      */
     com.google.protobuf.Duration getAttemptDelay();
-
     /**
      *
      *
@@ -204,7 +197,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
      * @return Whether the status field is set.
      */
     boolean hasStatus();
-
     /**
      *
      *
@@ -217,7 +209,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
      * @return The status.
      */
     com.google.rpc.Status getStatus();
-
     /**
      *
      *
@@ -229,7 +220,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
      */
     com.google.rpc.StatusOrBuilder getStatusOrBuilder();
   }
-
   /**
    *
    *
@@ -244,7 +234,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.StreamingSequenceReport.Attempt)
       AttemptOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use Attempt.newBuilder() to construct.
     private Attempt(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -276,7 +265,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
     private int bitField0_;
     public static final int ATTEMPT_NUMBER_FIELD_NUMBER = 1;
     private int attemptNumber_ = 0;
-
     /**
      *
      *
@@ -295,7 +283,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
 
     public static final int ATTEMPT_DEADLINE_FIELD_NUMBER = 2;
     private com.google.protobuf.Timestamp attemptDeadline_;
-
     /**
      *
      *
@@ -311,7 +298,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
     public boolean hasAttemptDeadline() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -329,7 +315,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
           ? com.google.protobuf.Timestamp.getDefaultInstance()
           : attemptDeadline_;
     }
-
     /**
      *
      *
@@ -348,7 +333,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
 
     public static final int RESPONSE_TIME_FIELD_NUMBER = 3;
     private com.google.protobuf.Timestamp responseTime_;
-
     /**
      *
      *
@@ -365,7 +349,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
     public boolean hasResponseTime() {
       return ((bitField0_ & 0x00000002) != 0);
     }
-
     /**
      *
      *
@@ -384,7 +367,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
           ? com.google.protobuf.Timestamp.getDefaultInstance()
           : responseTime_;
     }
-
     /**
      *
      *
@@ -404,7 +386,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
 
     public static final int ATTEMPT_DELAY_FIELD_NUMBER = 4;
     private com.google.protobuf.Duration attemptDelay_;
-
     /**
      *
      *
@@ -421,7 +402,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
     public boolean hasAttemptDelay() {
       return ((bitField0_ & 0x00000004) != 0);
     }
-
     /**
      *
      *
@@ -440,7 +420,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
           ? com.google.protobuf.Duration.getDefaultInstance()
           : attemptDelay_;
     }
-
     /**
      *
      *
@@ -460,7 +439,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
 
     public static final int STATUS_FIELD_NUMBER = 5;
     private com.google.rpc.Status status_;
-
     /**
      *
      *
@@ -476,7 +454,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
     public boolean hasStatus() {
       return ((bitField0_ & 0x00000008) != 0);
     }
-
     /**
      *
      *
@@ -492,7 +469,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
     public com.google.rpc.Status getStatus() {
       return status_ == null ? com.google.rpc.Status.getDefaultInstance() : status_;
     }
-
     /**
      *
      *
@@ -724,7 +700,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -1003,7 +978,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       private int bitField0_;
 
       private int attemptNumber_;
-
       /**
        *
        *
@@ -1019,7 +993,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       public int getAttemptNumber() {
         return attemptNumber_;
       }
-
       /**
        *
        *
@@ -1039,7 +1012,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1064,7 +1036,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
               com.google.protobuf.Timestamp.Builder,
               com.google.protobuf.TimestampOrBuilder>
           attemptDeadlineBuilder_;
-
       /**
        *
        *
@@ -1079,7 +1050,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       public boolean hasAttemptDeadline() {
         return ((bitField0_ & 0x00000002) != 0);
       }
-
       /**
        *
        *
@@ -1100,7 +1070,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
           return attemptDeadlineBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -1123,7 +1092,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1143,7 +1111,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1171,7 +1138,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         }
         return this;
       }
-
       /**
        *
        *
@@ -1191,7 +1157,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1206,7 +1171,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         onChanged();
         return getAttemptDeadlineFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -1225,7 +1189,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
               : attemptDeadline_;
         }
       }
-
       /**
        *
        *
@@ -1258,7 +1221,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
               com.google.protobuf.Timestamp.Builder,
               com.google.protobuf.TimestampOrBuilder>
           responseTimeBuilder_;
-
       /**
        *
        *
@@ -1274,7 +1236,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       public boolean hasResponseTime() {
         return ((bitField0_ & 0x00000004) != 0);
       }
-
       /**
        *
        *
@@ -1296,7 +1257,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
           return responseTimeBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -1320,7 +1280,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1341,7 +1300,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1370,7 +1328,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         }
         return this;
       }
-
       /**
        *
        *
@@ -1391,7 +1348,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1407,7 +1363,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         onChanged();
         return getResponseTimeFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -1427,7 +1382,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
               : responseTime_;
         }
       }
-
       /**
        *
        *
@@ -1461,7 +1415,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
               com.google.protobuf.Duration.Builder,
               com.google.protobuf.DurationOrBuilder>
           attemptDelayBuilder_;
-
       /**
        *
        *
@@ -1477,7 +1430,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       public boolean hasAttemptDelay() {
         return ((bitField0_ & 0x00000008) != 0);
       }
-
       /**
        *
        *
@@ -1499,7 +1451,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
           return attemptDelayBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -1523,7 +1474,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1544,7 +1494,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1573,7 +1522,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         }
         return this;
       }
-
       /**
        *
        *
@@ -1594,7 +1542,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1610,7 +1557,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         onChanged();
         return getAttemptDelayFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -1630,7 +1576,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
               : attemptDelay_;
         }
       }
-
       /**
        *
        *
@@ -1662,7 +1607,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       private com.google.protobuf.SingleFieldBuilderV3<
               com.google.rpc.Status, com.google.rpc.Status.Builder, com.google.rpc.StatusOrBuilder>
           statusBuilder_;
-
       /**
        *
        *
@@ -1677,7 +1621,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       public boolean hasStatus() {
         return ((bitField0_ & 0x00000010) != 0);
       }
-
       /**
        *
        *
@@ -1696,7 +1639,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
           return statusBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -1719,7 +1661,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1739,7 +1680,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1767,7 +1707,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         }
         return this;
       }
-
       /**
        *
        *
@@ -1787,7 +1726,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1802,7 +1740,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         onChanged();
         return getStatusFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -1819,7 +1756,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
           return status_ == null ? com.google.rpc.Status.getDefaultInstance() : status_;
         }
       }
-
       /**
        *
        *
@@ -1912,7 +1848,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object name_ = "";
-
   /**
    * <code>string name = 1 [(.google.api.field_behavior) = OUTPUT_ONLY];</code>
    *
@@ -1930,7 +1865,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       return s;
     }
   }
-
   /**
    * <code>string name = 1 [(.google.api.field_behavior) = OUTPUT_ONLY];</code>
    *
@@ -1953,7 +1887,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.showcase.v1beta1.StreamingSequenceReport.Attempt> attempts_;
-
   /**
    *
    *
@@ -1968,7 +1901,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       getAttemptsList() {
     return attempts_;
   }
-
   /**
    *
    *
@@ -1984,7 +1916,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       getAttemptsOrBuilderList() {
     return attempts_;
   }
-
   /**
    *
    *
@@ -1998,7 +1929,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
   public int getAttemptsCount() {
     return attempts_.size();
   }
-
   /**
    *
    *
@@ -2012,7 +1942,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
   public com.google.showcase.v1beta1.StreamingSequenceReport.Attempt getAttempts(int index) {
     return attempts_.get(index);
   }
-
   /**
    *
    *
@@ -2198,7 +2127,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /** Protobuf type {@code google.showcase.v1beta1.StreamingSequenceReport} */
   public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
       implements
@@ -2437,7 +2365,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
     private int bitField0_;
 
     private java.lang.Object name_ = "";
-
     /**
      * <code>string name = 1 [(.google.api.field_behavior) = OUTPUT_ONLY];</code>
      *
@@ -2454,7 +2381,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         return (java.lang.String) ref;
       }
     }
-
     /**
      * <code>string name = 1 [(.google.api.field_behavior) = OUTPUT_ONLY];</code>
      *
@@ -2471,7 +2397,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      * <code>string name = 1 [(.google.api.field_behavior) = OUTPUT_ONLY];</code>
      *
@@ -2487,7 +2412,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       onChanged();
       return this;
     }
-
     /**
      * <code>string name = 1 [(.google.api.field_behavior) = OUTPUT_ONLY];</code>
      *
@@ -2499,7 +2423,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       onChanged();
       return this;
     }
-
     /**
      * <code>string name = 1 [(.google.api.field_behavior) = OUTPUT_ONLY];</code>
      *
@@ -2552,7 +2475,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         return attemptsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -2569,7 +2491,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         return attemptsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -2586,7 +2507,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         return attemptsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -2610,7 +2530,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       }
       return this;
     }
-
     /**
      *
      *
@@ -2632,7 +2551,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       }
       return this;
     }
-
     /**
      *
      *
@@ -2655,7 +2573,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       }
       return this;
     }
-
     /**
      *
      *
@@ -2679,7 +2596,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       }
       return this;
     }
-
     /**
      *
      *
@@ -2700,7 +2616,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       }
       return this;
     }
-
     /**
      *
      *
@@ -2722,7 +2637,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       }
       return this;
     }
-
     /**
      *
      *
@@ -2744,7 +2658,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       }
       return this;
     }
-
     /**
      *
      *
@@ -2764,7 +2677,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       }
       return this;
     }
-
     /**
      *
      *
@@ -2784,7 +2696,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       }
       return this;
     }
-
     /**
      *
      *
@@ -2798,7 +2709,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         int index) {
       return getAttemptsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -2816,7 +2726,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         return attemptsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -2835,7 +2744,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         return java.util.Collections.unmodifiableList(attempts_);
       }
     }
-
     /**
      *
      *
@@ -2851,7 +2759,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
           .addBuilder(
               com.google.showcase.v1beta1.StreamingSequenceReport.Attempt.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -2868,7 +2775,6 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
               index,
               com.google.showcase.v1beta1.StreamingSequenceReport.Attempt.getDefaultInstance());
     }
-
     /**
      *
      *

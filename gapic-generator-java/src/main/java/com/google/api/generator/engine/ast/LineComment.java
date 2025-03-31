@@ -38,7 +38,6 @@ public abstract class LineComment implements Comment {
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setComment(String comment);
-
     // Private accessor.
     abstract String comment();
 

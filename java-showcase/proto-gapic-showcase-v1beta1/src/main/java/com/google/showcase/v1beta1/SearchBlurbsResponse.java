@@ -34,7 +34,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.SearchBlurbsResponse)
     SearchBlurbsResponseOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use SearchBlurbsResponse.newBuilder() to construct.
   private SearchBlurbsResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -70,7 +69,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.showcase.v1beta1.Blurb> blurbs_;
-
   /**
    *
    *
@@ -84,7 +82,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
   public java.util.List<com.google.showcase.v1beta1.Blurb> getBlurbsList() {
     return blurbs_;
   }
-
   /**
    *
    *
@@ -99,7 +96,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
       getBlurbsOrBuilderList() {
     return blurbs_;
   }
-
   /**
    *
    *
@@ -113,7 +109,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
   public int getBlurbsCount() {
     return blurbs_.size();
   }
-
   /**
    *
    *
@@ -127,7 +122,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
   public com.google.showcase.v1beta1.Blurb getBlurbs(int index) {
     return blurbs_.get(index);
   }
-
   /**
    *
    *
@@ -146,7 +140,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object nextPageToken_ = "";
-
   /**
    *
    *
@@ -173,7 +166,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
       return s;
     }
   }
-
   /**
    *
    *
@@ -371,7 +363,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -649,7 +640,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
         return blurbsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -666,7 +656,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
         return blurbsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -683,7 +672,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
         return blurbsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -706,7 +694,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
       }
       return this;
     }
-
     /**
      *
      *
@@ -726,7 +713,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
       }
       return this;
     }
-
     /**
      *
      *
@@ -749,7 +735,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
       }
       return this;
     }
-
     /**
      *
      *
@@ -772,7 +757,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
       }
       return this;
     }
-
     /**
      *
      *
@@ -792,7 +776,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
       }
       return this;
     }
-
     /**
      *
      *
@@ -812,7 +795,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
       }
       return this;
     }
-
     /**
      *
      *
@@ -833,7 +815,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
       }
       return this;
     }
-
     /**
      *
      *
@@ -853,7 +834,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
       }
       return this;
     }
-
     /**
      *
      *
@@ -873,7 +853,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
       }
       return this;
     }
-
     /**
      *
      *
@@ -886,7 +865,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
     public com.google.showcase.v1beta1.Blurb.Builder getBlurbsBuilder(int index) {
       return getBlurbsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -903,7 +881,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
         return blurbsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -921,7 +898,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
         return java.util.Collections.unmodifiableList(blurbs_);
       }
     }
-
     /**
      *
      *
@@ -935,7 +911,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
       return getBlurbsFieldBuilder()
           .addBuilder(com.google.showcase.v1beta1.Blurb.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -949,7 +924,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
       return getBlurbsFieldBuilder()
           .addBuilder(index, com.google.showcase.v1beta1.Blurb.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -981,7 +955,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
     }
 
     private java.lang.Object nextPageToken_ = "";
-
     /**
      *
      *
@@ -1007,7 +980,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1033,7 +1005,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1058,7 +1029,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1079,7 +1049,6 @@ public final class SearchBlurbsResponse extends com.google.protobuf.GeneratedMes
       onChanged();
       return this;
     }
-
     /**
      *
      *

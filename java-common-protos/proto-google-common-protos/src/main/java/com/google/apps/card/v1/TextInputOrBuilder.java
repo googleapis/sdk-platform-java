@@ -39,7 +39,6 @@ public interface TextInputOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *
@@ -74,7 +73,6 @@ public interface TextInputOrBuilder
    * @return The label.
    */
   java.lang.String getLabel();
-
   /**
    *
    *
@@ -109,7 +107,6 @@ public interface TextInputOrBuilder
    * @return The hintText.
    */
   java.lang.String getHintText();
-
   /**
    *
    *
@@ -141,7 +138,6 @@ public interface TextInputOrBuilder
    * @return The value.
    */
   java.lang.String getValue();
-
   /**
    *
    *
@@ -171,7 +167,6 @@ public interface TextInputOrBuilder
    * @return The enum numeric value on the wire for type.
    */
   int getTypeValue();
-
   /**
    *
    *
@@ -203,7 +198,6 @@ public interface TextInputOrBuilder
    * @return Whether the onChangeAction field is set.
    */
   boolean hasOnChangeAction();
-
   /**
    *
    *
@@ -221,7 +215,6 @@ public interface TextInputOrBuilder
    * @return The onChangeAction.
    */
   com.google.apps.card.v1.Action getOnChangeAction();
-
   /**
    *
    *
@@ -267,7 +260,6 @@ public interface TextInputOrBuilder
    * @return Whether the initialSuggestions field is set.
    */
   boolean hasInitialSuggestions();
-
   /**
    *
    *
@@ -297,7 +289,6 @@ public interface TextInputOrBuilder
    * @return The initialSuggestions.
    */
   com.google.apps.card.v1.Suggestions getInitialSuggestions();
-
   /**
    *
    *
@@ -348,7 +339,6 @@ public interface TextInputOrBuilder
    * @return Whether the autoCompleteAction field is set.
    */
   boolean hasAutoCompleteAction();
-
   /**
    *
    *
@@ -371,7 +361,6 @@ public interface TextInputOrBuilder
    * @return The autoCompleteAction.
    */
   com.google.apps.card.v1.Action getAutoCompleteAction();
-
   /**
    *
    *
@@ -409,7 +398,6 @@ public interface TextInputOrBuilder
    * @return The placeholderText.
    */
   java.lang.String getPlaceholderText();
-
   /**
    *
    *

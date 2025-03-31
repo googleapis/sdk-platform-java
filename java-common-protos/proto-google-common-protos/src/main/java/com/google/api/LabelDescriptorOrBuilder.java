@@ -36,7 +36,6 @@ public interface LabelDescriptorOrBuilder
    * @return The key.
    */
   java.lang.String getKey();
-
   /**
    *
    *
@@ -62,7 +61,6 @@ public interface LabelDescriptorOrBuilder
    * @return The enum numeric value on the wire for valueType.
    */
   int getValueTypeValue();
-
   /**
    *
    *
@@ -88,7 +86,6 @@ public interface LabelDescriptorOrBuilder
    * @return The description.
    */
   java.lang.String getDescription();
-
   /**
    *
    *

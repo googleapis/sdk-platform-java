@@ -36,7 +36,6 @@ public final class VisibilityProto {
   }
 
   public static final int ENUM_VISIBILITY_FIELD_NUMBER = 72295727;
-
   /**
    *
    *
@@ -54,7 +53,6 @@ public final class VisibilityProto {
               com.google.api.VisibilityRule.getDefaultInstance());
 
   public static final int VALUE_VISIBILITY_FIELD_NUMBER = 72295727;
-
   /**
    *
    *
@@ -72,7 +70,6 @@ public final class VisibilityProto {
               com.google.api.VisibilityRule.getDefaultInstance());
 
   public static final int FIELD_VISIBILITY_FIELD_NUMBER = 72295727;
-
   /**
    *
    *
@@ -90,7 +87,6 @@ public final class VisibilityProto {
               com.google.api.VisibilityRule.getDefaultInstance());
 
   public static final int MESSAGE_VISIBILITY_FIELD_NUMBER = 72295727;
-
   /**
    *
    *
@@ -108,7 +104,6 @@ public final class VisibilityProto {
               com.google.api.VisibilityRule.getDefaultInstance());
 
   public static final int METHOD_VISIBILITY_FIELD_NUMBER = 72295727;
-
   /**
    *
    *
@@ -126,7 +121,6 @@ public final class VisibilityProto {
               com.google.api.VisibilityRule.getDefaultInstance());
 
   public static final int API_VISIBILITY_FIELD_NUMBER = 72295727;
-
   /**
    *
    *

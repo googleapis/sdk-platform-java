@@ -34,7 +34,6 @@ public interface QuotaOrBuilder
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
    */
   java.util.List<com.google.api.QuotaLimit> getLimitsList();
-
   /**
    *
    *
@@ -45,7 +44,6 @@ public interface QuotaOrBuilder
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
    */
   com.google.api.QuotaLimit getLimits(int index);
-
   /**
    *
    *
@@ -56,7 +54,6 @@ public interface QuotaOrBuilder
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
    */
   int getLimitsCount();
-
   /**
    *
    *
@@ -67,7 +64,6 @@ public interface QuotaOrBuilder
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
    */
   java.util.List<? extends com.google.api.QuotaLimitOrBuilder> getLimitsOrBuilderList();
-
   /**
    *
    *
@@ -90,7 +86,6 @@ public interface QuotaOrBuilder
    * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
    */
   java.util.List<com.google.api.MetricRule> getMetricRulesList();
-
   /**
    *
    *
@@ -102,7 +97,6 @@ public interface QuotaOrBuilder
    * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
    */
   com.google.api.MetricRule getMetricRules(int index);
-
   /**
    *
    *
@@ -114,7 +108,6 @@ public interface QuotaOrBuilder
    * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
    */
   int getMetricRulesCount();
-
   /**
    *
    *
@@ -126,7 +119,6 @@ public interface QuotaOrBuilder
    * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
    */
   java.util.List<? extends com.google.api.MetricRuleOrBuilder> getMetricRulesOrBuilderList();
-
   /**
    *
    *

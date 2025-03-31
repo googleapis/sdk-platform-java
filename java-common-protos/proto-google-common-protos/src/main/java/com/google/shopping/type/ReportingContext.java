@@ -39,7 +39,6 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
     // @@protoc_insertion_point(message_implements:google.shopping.type.ReportingContext)
     ReportingContextOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use ReportingContext.newBuilder() to construct.
   private ReportingContext(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -251,7 +250,6 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
      * <code>REPORTING_CONTEXT_ENUM_UNSPECIFIED = 0;</code>
      */
     public static final int REPORTING_CONTEXT_ENUM_UNSPECIFIED_VALUE = 0;
-
     /**
      *
      *
@@ -262,7 +260,6 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
      * <code>SHOPPING_ADS = 1;</code>
      */
     public static final int SHOPPING_ADS_VALUE = 1;
-
     /**
      *
      *
@@ -275,7 +272,6 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
      * <code>DISCOVERY_ADS = 2 [deprecated = true];</code>
      */
     @java.lang.Deprecated public static final int DISCOVERY_ADS_VALUE = 2;
-
     /**
      *
      *
@@ -286,7 +282,6 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
      * <code>DEMAND_GEN_ADS = 13;</code>
      */
     public static final int DEMAND_GEN_ADS_VALUE = 13;
-
     /**
      *
      *
@@ -298,7 +293,6 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
      * <code>DEMAND_GEN_ADS_DISCOVER_SURFACE = 14;</code>
      */
     public static final int DEMAND_GEN_ADS_DISCOVER_SURFACE_VALUE = 14;
-
     /**
      *
      *
@@ -309,7 +303,6 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
      * <code>VIDEO_ADS = 3;</code>
      */
     public static final int VIDEO_ADS_VALUE = 3;
-
     /**
      *
      *
@@ -320,7 +313,6 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
      * <code>DISPLAY_ADS = 4;</code>
      */
     public static final int DISPLAY_ADS_VALUE = 4;
-
     /**
      *
      *
@@ -332,7 +324,6 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
      * <code>LOCAL_INVENTORY_ADS = 5;</code>
      */
     public static final int LOCAL_INVENTORY_ADS_VALUE = 5;
-
     /**
      *
      *
@@ -344,7 +335,6 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
      * <code>VEHICLE_INVENTORY_ADS = 6;</code>
      */
     public static final int VEHICLE_INVENTORY_ADS_VALUE = 6;
-
     /**
      *
      *
@@ -356,7 +346,6 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
      * <code>FREE_LISTINGS = 7;</code>
      */
     public static final int FREE_LISTINGS_VALUE = 7;
-
     /**
      *
      *
@@ -368,7 +357,6 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
      * <code>FREE_LOCAL_LISTINGS = 8;</code>
      */
     public static final int FREE_LOCAL_LISTINGS_VALUE = 8;
-
     /**
      *
      *
@@ -380,7 +368,6 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
      * <code>FREE_LOCAL_VEHICLE_LISTINGS = 9;</code>
      */
     public static final int FREE_LOCAL_VEHICLE_LISTINGS_VALUE = 9;
-
     /**
      *
      *
@@ -392,7 +379,6 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
      * <code>YOUTUBE_SHOPPING = 10;</code>
      */
     public static final int YOUTUBE_SHOPPING_VALUE = 10;
-
     /**
      *
      *
@@ -403,7 +389,6 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
      * <code>CLOUD_RETAIL = 11;</code>
      */
     public static final int CLOUD_RETAIL_VALUE = 11;
-
     /**
      *
      *
@@ -675,7 +660,6 @@ public final class ReportingContext extends com.google.protobuf.GeneratedMessage
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *

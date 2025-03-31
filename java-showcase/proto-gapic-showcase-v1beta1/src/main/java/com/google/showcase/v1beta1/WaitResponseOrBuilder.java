@@ -36,7 +36,6 @@ public interface WaitResponseOrBuilder
    * @return The content.
    */
   java.lang.String getContent();
-
   /**
    *
    *

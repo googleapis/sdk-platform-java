@@ -56,7 +56,6 @@ public class MockStreamObserver<T> implements ApiStreamObserver<T> {
   public void onCompleted() {
     future.set(actualMessages);
   }
-
   // Returns the SettableFuture object which can be used to retrieve received messages.
   public SettableApiFuture<List<T>> future() {
     return future;

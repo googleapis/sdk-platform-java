@@ -103,7 +103,8 @@ public class Callables {
     if (areRetriesDisabled(settings.getRetryableCodes(), settings.getRetrySettings())) {
       // When retries are disabled, the total timeout can be treated as the rpc timeout.
       settings =
-          settings.toBuilder()
+          settings
+              .toBuilder()
               .setSimpleTimeoutNoRetriesDuration(
                   settings.getRetrySettings().getTotalTimeoutDuration())
               .build();
@@ -127,7 +128,8 @@ public class Callables {
     if (areRetriesDisabled(settings.getRetryableCodes(), settings.getRetrySettings())) {
       // When retries are disabled, the total timeout can be treated as the rpc timeout.
       settings =
-          settings.toBuilder()
+          settings
+              .toBuilder()
               .setSimpleTimeoutNoRetriesDuration(
                   settings.getRetrySettings().getTotalTimeoutDuration())
               .build();

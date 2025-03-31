@@ -39,7 +39,6 @@ public interface CreateBlurbRequestOrBuilder
    * @return The parent.
    */
   java.lang.String getParent();
-
   /**
    *
    *
@@ -68,7 +67,6 @@ public interface CreateBlurbRequestOrBuilder
    * @return Whether the blurb field is set.
    */
   boolean hasBlurb();
-
   /**
    *
    *
@@ -81,7 +79,6 @@ public interface CreateBlurbRequestOrBuilder
    * @return The blurb.
    */
   com.google.showcase.v1beta1.Blurb getBlurb();
-
   /**
    *
    *

@@ -38,7 +38,6 @@ public interface ControlOrBuilder
    * @return The environment.
    */
   java.lang.String getEnvironment();
-
   /**
    *
    *
@@ -64,7 +63,6 @@ public interface ControlOrBuilder
    * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
    */
   java.util.List<com.google.api.MethodPolicy> getMethodPoliciesList();
-
   /**
    *
    *
@@ -75,7 +73,6 @@ public interface ControlOrBuilder
    * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
    */
   com.google.api.MethodPolicy getMethodPolicies(int index);
-
   /**
    *
    *
@@ -86,7 +83,6 @@ public interface ControlOrBuilder
    * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
    */
   int getMethodPoliciesCount();
-
   /**
    *
    *
@@ -97,7 +93,6 @@ public interface ControlOrBuilder
    * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
    */
   java.util.List<? extends com.google.api.MethodPolicyOrBuilder> getMethodPoliciesOrBuilderList();
-
   /**
    *
    *

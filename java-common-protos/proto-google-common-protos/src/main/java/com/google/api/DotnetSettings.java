@@ -33,7 +33,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.DotnetSettings)
     DotnetSettingsOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use DotnetSettings.newBuilder() to construct.
   private DotnetSettings(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -80,7 +79,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   private int bitField0_;
   public static final int COMMON_FIELD_NUMBER = 1;
   private com.google.api.CommonLanguageSettings common_;
-
   /**
    *
    *
@@ -96,7 +94,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   public boolean hasCommon() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -112,7 +109,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.CommonLanguageSettings getCommon() {
     return common_ == null ? com.google.api.CommonLanguageSettings.getDefaultInstance() : common_;
   }
-
   /**
    *
    *
@@ -155,7 +151,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   public int getRenamedServicesCount() {
     return internalGetRenamedServices().getMap().size();
   }
-
   /**
    *
    *
@@ -176,14 +171,12 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     }
     return internalGetRenamedServices().getMap().containsKey(key);
   }
-
   /** Use {@link #getRenamedServicesMap()} instead. */
   @java.lang.Override
   @java.lang.Deprecated
   public java.util.Map<java.lang.String, java.lang.String> getRenamedServices() {
     return getRenamedServicesMap();
   }
-
   /**
    *
    *
@@ -201,7 +194,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   public java.util.Map<java.lang.String, java.lang.String> getRenamedServicesMap() {
     return internalGetRenamedServices().getMap();
   }
-
   /**
    *
    *
@@ -226,7 +218,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedServices().getMap();
     return map.containsKey(key) ? map.get(key) : defaultValue;
   }
-
   /**
    *
    *
@@ -280,7 +271,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   public int getRenamedResourcesCount() {
     return internalGetRenamedResources().getMap().size();
   }
-
   /**
    *
    *
@@ -301,14 +291,12 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     }
     return internalGetRenamedResources().getMap().containsKey(key);
   }
-
   /** Use {@link #getRenamedResourcesMap()} instead. */
   @java.lang.Override
   @java.lang.Deprecated
   public java.util.Map<java.lang.String, java.lang.String> getRenamedResources() {
     return getRenamedResourcesMap();
   }
-
   /**
    *
    *
@@ -326,7 +314,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   public java.util.Map<java.lang.String, java.lang.String> getRenamedResourcesMap() {
     return internalGetRenamedResources().getMap();
   }
-
   /**
    *
    *
@@ -351,7 +338,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedResources().getMap();
     return map.containsKey(key) ? map.get(key) : defaultValue;
   }
-
   /**
    *
    *
@@ -382,7 +368,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList ignoredResources_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
-
   /**
    *
    *
@@ -401,7 +386,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.ProtocolStringList getIgnoredResourcesList() {
     return ignoredResources_;
   }
-
   /**
    *
    *
@@ -420,7 +404,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   public int getIgnoredResourcesCount() {
     return ignoredResources_.size();
   }
-
   /**
    *
    *
@@ -440,7 +423,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   public java.lang.String getIgnoredResources(int index) {
     return ignoredResources_.get(index);
   }
-
   /**
    *
    *
@@ -466,7 +448,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList forcedNamespaceAliases_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
-
   /**
    *
    *
@@ -482,7 +463,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.ProtocolStringList getForcedNamespaceAliasesList() {
     return forcedNamespaceAliases_;
   }
-
   /**
    *
    *
@@ -498,7 +478,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   public int getForcedNamespaceAliasesCount() {
     return forcedNamespaceAliases_.size();
   }
-
   /**
    *
    *
@@ -515,7 +494,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   public java.lang.String getForcedNamespaceAliases(int index) {
     return forcedNamespaceAliases_.get(index);
   }
-
   /**
    *
    *
@@ -538,7 +516,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList handwrittenSignatures_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
-
   /**
    *
    *
@@ -555,7 +532,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.ProtocolStringList getHandwrittenSignaturesList() {
     return handwrittenSignatures_;
   }
-
   /**
    *
    *
@@ -572,7 +548,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   public int getHandwrittenSignaturesCount() {
     return handwrittenSignatures_.size();
   }
-
   /**
    *
    *
@@ -590,7 +565,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   public java.lang.String getHandwrittenSignatures(int index) {
     return handwrittenSignatures_.get(index);
   }
-
   /**
    *
    *
@@ -856,7 +830,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -1185,7 +1158,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
             com.google.api.CommonLanguageSettings.Builder,
             com.google.api.CommonLanguageSettingsOrBuilder>
         commonBuilder_;
-
     /**
      *
      *
@@ -1200,7 +1172,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     public boolean hasCommon() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -1221,7 +1192,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
         return commonBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -1244,7 +1214,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1264,7 +1233,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1292,7 +1260,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1312,7 +1279,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1327,7 +1293,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getCommonFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1346,7 +1311,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
             : common_;
       }
     }
-
     /**
      *
      *
@@ -1402,7 +1366,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     public int getRenamedServicesCount() {
       return internalGetRenamedServices().getMap().size();
     }
-
     /**
      *
      *
@@ -1423,14 +1386,12 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       }
       return internalGetRenamedServices().getMap().containsKey(key);
     }
-
     /** Use {@link #getRenamedServicesMap()} instead. */
     @java.lang.Override
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getRenamedServices() {
       return getRenamedServicesMap();
     }
-
     /**
      *
      *
@@ -1448,7 +1409,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     public java.util.Map<java.lang.String, java.lang.String> getRenamedServicesMap() {
       return internalGetRenamedServices().getMap();
     }
-
     /**
      *
      *
@@ -1473,7 +1433,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedServices().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
-
     /**
      *
      *
@@ -1504,7 +1463,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       internalGetMutableRenamedServices().getMutableMap().clear();
       return this;
     }
-
     /**
      *
      *
@@ -1525,14 +1483,12 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       internalGetMutableRenamedServices().getMutableMap().remove(key);
       return this;
     }
-
     /** Use alternate mutation accessors instead. */
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getMutableRenamedServices() {
       bitField0_ |= 0x00000002;
       return internalGetMutableRenamedServices().getMutableMap();
     }
-
     /**
      *
      *
@@ -1557,7 +1513,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       bitField0_ |= 0x00000002;
       return this;
     }
-
     /**
      *
      *
@@ -1606,7 +1561,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     public int getRenamedResourcesCount() {
       return internalGetRenamedResources().getMap().size();
     }
-
     /**
      *
      *
@@ -1627,14 +1581,12 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       }
       return internalGetRenamedResources().getMap().containsKey(key);
     }
-
     /** Use {@link #getRenamedResourcesMap()} instead. */
     @java.lang.Override
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getRenamedResources() {
       return getRenamedResourcesMap();
     }
-
     /**
      *
      *
@@ -1652,7 +1604,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     public java.util.Map<java.lang.String, java.lang.String> getRenamedResourcesMap() {
       return internalGetRenamedResources().getMap();
     }
-
     /**
      *
      *
@@ -1678,7 +1629,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
           internalGetRenamedResources().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
-
     /**
      *
      *
@@ -1710,7 +1660,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       internalGetMutableRenamedResources().getMutableMap().clear();
       return this;
     }
-
     /**
      *
      *
@@ -1731,14 +1680,12 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       internalGetMutableRenamedResources().getMutableMap().remove(key);
       return this;
     }
-
     /** Use alternate mutation accessors instead. */
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getMutableRenamedResources() {
       bitField0_ |= 0x00000004;
       return internalGetMutableRenamedResources().getMutableMap();
     }
-
     /**
      *
      *
@@ -1763,7 +1710,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       bitField0_ |= 0x00000004;
       return this;
     }
-
     /**
      *
      *
@@ -1793,7 +1739,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ |= 0x00000008;
     }
-
     /**
      *
      *
@@ -1813,7 +1758,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       ignoredResources_.makeImmutable();
       return ignoredResources_;
     }
-
     /**
      *
      *
@@ -1832,7 +1776,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     public int getIgnoredResourcesCount() {
       return ignoredResources_.size();
     }
-
     /**
      *
      *
@@ -1852,7 +1795,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     public java.lang.String getIgnoredResources(int index) {
       return ignoredResources_.get(index);
     }
-
     /**
      *
      *
@@ -1872,7 +1814,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ByteString getIgnoredResourcesBytes(int index) {
       return ignoredResources_.getByteString(index);
     }
-
     /**
      *
      *
@@ -1900,7 +1841,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1927,7 +1867,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1951,7 +1890,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1974,7 +1912,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2013,7 +1950,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ |= 0x00000010;
     }
-
     /**
      *
      *
@@ -2030,7 +1966,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       forcedNamespaceAliases_.makeImmutable();
       return forcedNamespaceAliases_;
     }
-
     /**
      *
      *
@@ -2046,7 +1981,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     public int getForcedNamespaceAliasesCount() {
       return forcedNamespaceAliases_.size();
     }
-
     /**
      *
      *
@@ -2063,7 +1997,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     public java.lang.String getForcedNamespaceAliases(int index) {
       return forcedNamespaceAliases_.get(index);
     }
-
     /**
      *
      *
@@ -2080,7 +2013,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ByteString getForcedNamespaceAliasesBytes(int index) {
       return forcedNamespaceAliases_.getByteString(index);
     }
-
     /**
      *
      *
@@ -2105,7 +2037,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2129,7 +2060,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2150,7 +2080,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2170,7 +2099,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2206,7 +2134,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ |= 0x00000020;
     }
-
     /**
      *
      *
@@ -2224,7 +2151,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       handwrittenSignatures_.makeImmutable();
       return handwrittenSignatures_;
     }
-
     /**
      *
      *
@@ -2241,7 +2167,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     public int getHandwrittenSignaturesCount() {
       return handwrittenSignatures_.size();
     }
-
     /**
      *
      *
@@ -2259,7 +2184,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     public java.lang.String getHandwrittenSignatures(int index) {
       return handwrittenSignatures_.get(index);
     }
-
     /**
      *
      *
@@ -2277,7 +2201,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ByteString getHandwrittenSignaturesBytes(int index) {
       return handwrittenSignatures_.getByteString(index);
     }
-
     /**
      *
      *
@@ -2303,7 +2226,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2328,7 +2250,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2350,7 +2271,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2371,7 +2291,6 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

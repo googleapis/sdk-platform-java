@@ -62,7 +62,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.Columns)
     ColumnsOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Columns.newBuilder() to construct.
   private Columns(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -109,7 +108,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      * @return The enum numeric value on the wire for horizontalSizeStyle.
      */
     int getHorizontalSizeStyleValue();
-
     /**
      *
      *
@@ -137,7 +135,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      * @return The enum numeric value on the wire for horizontalAlignment.
      */
     int getHorizontalAlignmentValue();
-
     /**
      *
      *
@@ -165,7 +162,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      * @return The enum numeric value on the wire for verticalAlignment.
      */
     int getVerticalAlignmentValue();
-
     /**
      *
      *
@@ -191,7 +187,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
      */
     java.util.List<com.google.apps.card.v1.Columns.Column.Widgets> getWidgetsList();
-
     /**
      *
      *
@@ -203,7 +198,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
      */
     com.google.apps.card.v1.Columns.Column.Widgets getWidgets(int index);
-
     /**
      *
      *
@@ -215,7 +209,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Columns.Column.Widgets widgets = 4;</code>
      */
     int getWidgetsCount();
-
     /**
      *
      *
@@ -228,7 +221,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      */
     java.util.List<? extends com.google.apps.card.v1.Columns.Column.WidgetsOrBuilder>
         getWidgetsOrBuilderList();
-
     /**
      *
      *
@@ -241,7 +233,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
      */
     com.google.apps.card.v1.Columns.Column.WidgetsOrBuilder getWidgetsOrBuilder(int index);
   }
-
   /**
    *
    *
@@ -261,7 +252,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       // @@protoc_insertion_point(message_implements:google.apps.card.v1.Columns.Column)
       ColumnOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use Column.newBuilder() to construct.
     private Column(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -358,7 +348,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * <code>HORIZONTAL_SIZE_STYLE_UNSPECIFIED = 0;</code>
        */
       public static final int HORIZONTAL_SIZE_STYLE_UNSPECIFIED_VALUE = 0;
-
       /**
        *
        *
@@ -371,7 +360,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * <code>FILL_AVAILABLE_SPACE = 1;</code>
        */
       public static final int FILL_AVAILABLE_SPACE_VALUE = 1;
-
       /**
        *
        *
@@ -539,7 +527,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * <code>VERTICAL_ALIGNMENT_UNSPECIFIED = 0;</code>
        */
       public static final int VERTICAL_ALIGNMENT_UNSPECIFIED_VALUE = 0;
-
       /**
        *
        *
@@ -550,7 +537,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * <code>CENTER = 1;</code>
        */
       public static final int CENTER_VALUE = 1;
-
       /**
        *
        *
@@ -561,7 +547,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * <code>TOP = 2;</code>
        */
       public static final int TOP_VALUE = 2;
-
       /**
        *
        *
@@ -678,7 +663,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return Whether the textParagraph field is set.
        */
       boolean hasTextParagraph();
-
       /**
        *
        *
@@ -691,7 +675,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return The textParagraph.
        */
       com.google.apps.card.v1.TextParagraph getTextParagraph();
-
       /**
        *
        *
@@ -715,7 +698,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return Whether the image field is set.
        */
       boolean hasImage();
-
       /**
        *
        *
@@ -728,7 +710,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return The image.
        */
       com.google.apps.card.v1.Image getImage();
-
       /**
        *
        *
@@ -752,7 +733,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return Whether the decoratedText field is set.
        */
       boolean hasDecoratedText();
-
       /**
        *
        *
@@ -765,7 +745,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return The decoratedText.
        */
       com.google.apps.card.v1.DecoratedText getDecoratedText();
-
       /**
        *
        *
@@ -789,7 +768,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return Whether the buttonList field is set.
        */
       boolean hasButtonList();
-
       /**
        *
        *
@@ -802,7 +780,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return The buttonList.
        */
       com.google.apps.card.v1.ButtonList getButtonList();
-
       /**
        *
        *
@@ -826,7 +803,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return Whether the textInput field is set.
        */
       boolean hasTextInput();
-
       /**
        *
        *
@@ -839,7 +815,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return The textInput.
        */
       com.google.apps.card.v1.TextInput getTextInput();
-
       /**
        *
        *
@@ -863,7 +838,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return Whether the selectionInput field is set.
        */
       boolean hasSelectionInput();
-
       /**
        *
        *
@@ -876,7 +850,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return The selectionInput.
        */
       com.google.apps.card.v1.SelectionInput getSelectionInput();
-
       /**
        *
        *
@@ -900,7 +873,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return Whether the dateTimePicker field is set.
        */
       boolean hasDateTimePicker();
-
       /**
        *
        *
@@ -913,7 +885,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
        * @return The dateTimePicker.
        */
       com.google.apps.card.v1.DateTimePicker getDateTimePicker();
-
       /**
        *
        *
@@ -927,7 +898,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
 
       com.google.apps.card.v1.Columns.Column.Widgets.DataCase getDataCase();
     }
-
     /**
      *
      *
@@ -947,7 +917,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         // @@protoc_insertion_point(message_implements:google.apps.card.v1.Columns.Column.Widgets)
         WidgetsOrBuilder {
       private static final long serialVersionUID = 0L;
-
       // Use Widgets.newBuilder() to construct.
       private Widgets(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
         super(builder);
@@ -998,7 +967,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         private DataCase(int value) {
           this.value = value;
         }
-
         /**
          * @param value The number of the enum to look for.
          * @return The enum associated with the given number.
@@ -1042,7 +1010,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
 
       public static final int TEXT_PARAGRAPH_FIELD_NUMBER = 1;
-
       /**
        *
        *
@@ -1058,7 +1025,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       public boolean hasTextParagraph() {
         return dataCase_ == 1;
       }
-
       /**
        *
        *
@@ -1077,7 +1043,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         }
         return com.google.apps.card.v1.TextParagraph.getDefaultInstance();
       }
-
       /**
        *
        *
@@ -1096,7 +1061,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
 
       public static final int IMAGE_FIELD_NUMBER = 2;
-
       /**
        *
        *
@@ -1112,7 +1076,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       public boolean hasImage() {
         return dataCase_ == 2;
       }
-
       /**
        *
        *
@@ -1131,7 +1094,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         }
         return com.google.apps.card.v1.Image.getDefaultInstance();
       }
-
       /**
        *
        *
@@ -1150,7 +1112,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
 
       public static final int DECORATED_TEXT_FIELD_NUMBER = 3;
-
       /**
        *
        *
@@ -1166,7 +1127,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       public boolean hasDecoratedText() {
         return dataCase_ == 3;
       }
-
       /**
        *
        *
@@ -1185,7 +1145,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         }
         return com.google.apps.card.v1.DecoratedText.getDefaultInstance();
       }
-
       /**
        *
        *
@@ -1204,7 +1163,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
 
       public static final int BUTTON_LIST_FIELD_NUMBER = 4;
-
       /**
        *
        *
@@ -1220,7 +1178,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       public boolean hasButtonList() {
         return dataCase_ == 4;
       }
-
       /**
        *
        *
@@ -1239,7 +1196,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         }
         return com.google.apps.card.v1.ButtonList.getDefaultInstance();
       }
-
       /**
        *
        *
@@ -1258,7 +1214,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
 
       public static final int TEXT_INPUT_FIELD_NUMBER = 5;
-
       /**
        *
        *
@@ -1274,7 +1229,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       public boolean hasTextInput() {
         return dataCase_ == 5;
       }
-
       /**
        *
        *
@@ -1293,7 +1247,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         }
         return com.google.apps.card.v1.TextInput.getDefaultInstance();
       }
-
       /**
        *
        *
@@ -1312,7 +1265,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
 
       public static final int SELECTION_INPUT_FIELD_NUMBER = 6;
-
       /**
        *
        *
@@ -1328,7 +1280,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       public boolean hasSelectionInput() {
         return dataCase_ == 6;
       }
-
       /**
        *
        *
@@ -1347,7 +1298,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         }
         return com.google.apps.card.v1.SelectionInput.getDefaultInstance();
       }
-
       /**
        *
        *
@@ -1366,7 +1316,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
 
       public static final int DATE_TIME_PICKER_FIELD_NUMBER = 7;
-
       /**
        *
        *
@@ -1382,7 +1331,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       public boolean hasDateTimePicker() {
         return dataCase_ == 7;
       }
-
       /**
        *
        *
@@ -1401,7 +1349,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         }
         return com.google.apps.card.v1.DateTimePicker.getDefaultInstance();
       }
-
       /**
        *
        *
@@ -1684,7 +1631,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         Builder builder = new Builder(parent);
         return builder;
       }
-
       /**
        *
        *
@@ -2017,7 +1963,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
                 com.google.apps.card.v1.TextParagraph.Builder,
                 com.google.apps.card.v1.TextParagraphOrBuilder>
             textParagraphBuilder_;
-
         /**
          *
          *
@@ -2033,7 +1978,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         public boolean hasTextParagraph() {
           return dataCase_ == 1;
         }
-
         /**
          *
          *
@@ -2059,7 +2003,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             return com.google.apps.card.v1.TextParagraph.getDefaultInstance();
           }
         }
-
         /**
          *
          *
@@ -2082,7 +2025,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 1;
           return this;
         }
-
         /**
          *
          *
@@ -2103,7 +2045,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 1;
           return this;
         }
-
         /**
          *
          *
@@ -2136,7 +2077,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 1;
           return this;
         }
-
         /**
          *
          *
@@ -2162,7 +2102,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           }
           return this;
         }
-
         /**
          *
          *
@@ -2175,7 +2114,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         public com.google.apps.card.v1.TextParagraph.Builder getTextParagraphBuilder() {
           return getTextParagraphFieldBuilder().getBuilder();
         }
-
         /**
          *
          *
@@ -2196,7 +2134,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             return com.google.apps.card.v1.TextParagraph.getDefaultInstance();
           }
         }
-
         /**
          *
          *
@@ -2235,7 +2172,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
                 com.google.apps.card.v1.Image.Builder,
                 com.google.apps.card.v1.ImageOrBuilder>
             imageBuilder_;
-
         /**
          *
          *
@@ -2251,7 +2187,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         public boolean hasImage() {
           return dataCase_ == 2;
         }
-
         /**
          *
          *
@@ -2277,7 +2212,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             return com.google.apps.card.v1.Image.getDefaultInstance();
           }
         }
-
         /**
          *
          *
@@ -2300,7 +2234,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 2;
           return this;
         }
-
         /**
          *
          *
@@ -2320,7 +2253,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 2;
           return this;
         }
-
         /**
          *
          *
@@ -2351,7 +2283,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 2;
           return this;
         }
-
         /**
          *
          *
@@ -2377,7 +2308,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           }
           return this;
         }
-
         /**
          *
          *
@@ -2390,7 +2320,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         public com.google.apps.card.v1.Image.Builder getImageBuilder() {
           return getImageFieldBuilder().getBuilder();
         }
-
         /**
          *
          *
@@ -2411,7 +2340,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             return com.google.apps.card.v1.Image.getDefaultInstance();
           }
         }
-
         /**
          *
          *
@@ -2448,7 +2376,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
                 com.google.apps.card.v1.DecoratedText.Builder,
                 com.google.apps.card.v1.DecoratedTextOrBuilder>
             decoratedTextBuilder_;
-
         /**
          *
          *
@@ -2464,7 +2391,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         public boolean hasDecoratedText() {
           return dataCase_ == 3;
         }
-
         /**
          *
          *
@@ -2490,7 +2416,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             return com.google.apps.card.v1.DecoratedText.getDefaultInstance();
           }
         }
-
         /**
          *
          *
@@ -2513,7 +2438,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 3;
           return this;
         }
-
         /**
          *
          *
@@ -2534,7 +2458,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 3;
           return this;
         }
-
         /**
          *
          *
@@ -2567,7 +2490,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 3;
           return this;
         }
-
         /**
          *
          *
@@ -2593,7 +2515,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           }
           return this;
         }
-
         /**
          *
          *
@@ -2606,7 +2527,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         public com.google.apps.card.v1.DecoratedText.Builder getDecoratedTextBuilder() {
           return getDecoratedTextFieldBuilder().getBuilder();
         }
-
         /**
          *
          *
@@ -2627,7 +2547,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             return com.google.apps.card.v1.DecoratedText.getDefaultInstance();
           }
         }
-
         /**
          *
          *
@@ -2666,7 +2585,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
                 com.google.apps.card.v1.ButtonList.Builder,
                 com.google.apps.card.v1.ButtonListOrBuilder>
             buttonListBuilder_;
-
         /**
          *
          *
@@ -2682,7 +2600,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         public boolean hasButtonList() {
           return dataCase_ == 4;
         }
-
         /**
          *
          *
@@ -2708,7 +2625,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             return com.google.apps.card.v1.ButtonList.getDefaultInstance();
           }
         }
-
         /**
          *
          *
@@ -2731,7 +2647,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 4;
           return this;
         }
-
         /**
          *
          *
@@ -2751,7 +2666,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 4;
           return this;
         }
-
         /**
          *
          *
@@ -2784,7 +2698,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 4;
           return this;
         }
-
         /**
          *
          *
@@ -2810,7 +2723,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           }
           return this;
         }
-
         /**
          *
          *
@@ -2823,7 +2735,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         public com.google.apps.card.v1.ButtonList.Builder getButtonListBuilder() {
           return getButtonListFieldBuilder().getBuilder();
         }
-
         /**
          *
          *
@@ -2844,7 +2755,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             return com.google.apps.card.v1.ButtonList.getDefaultInstance();
           }
         }
-
         /**
          *
          *
@@ -2881,7 +2791,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
                 com.google.apps.card.v1.TextInput.Builder,
                 com.google.apps.card.v1.TextInputOrBuilder>
             textInputBuilder_;
-
         /**
          *
          *
@@ -2897,7 +2806,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         public boolean hasTextInput() {
           return dataCase_ == 5;
         }
-
         /**
          *
          *
@@ -2923,7 +2831,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             return com.google.apps.card.v1.TextInput.getDefaultInstance();
           }
         }
-
         /**
          *
          *
@@ -2946,7 +2853,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 5;
           return this;
         }
-
         /**
          *
          *
@@ -2966,7 +2872,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 5;
           return this;
         }
-
         /**
          *
          *
@@ -2998,7 +2903,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 5;
           return this;
         }
-
         /**
          *
          *
@@ -3024,7 +2928,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           }
           return this;
         }
-
         /**
          *
          *
@@ -3037,7 +2940,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         public com.google.apps.card.v1.TextInput.Builder getTextInputBuilder() {
           return getTextInputFieldBuilder().getBuilder();
         }
-
         /**
          *
          *
@@ -3058,7 +2960,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             return com.google.apps.card.v1.TextInput.getDefaultInstance();
           }
         }
-
         /**
          *
          *
@@ -3095,7 +2996,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
                 com.google.apps.card.v1.SelectionInput.Builder,
                 com.google.apps.card.v1.SelectionInputOrBuilder>
             selectionInputBuilder_;
-
         /**
          *
          *
@@ -3111,7 +3011,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         public boolean hasSelectionInput() {
           return dataCase_ == 6;
         }
-
         /**
          *
          *
@@ -3137,7 +3036,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             return com.google.apps.card.v1.SelectionInput.getDefaultInstance();
           }
         }
-
         /**
          *
          *
@@ -3160,7 +3058,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 6;
           return this;
         }
-
         /**
          *
          *
@@ -3181,7 +3078,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 6;
           return this;
         }
-
         /**
          *
          *
@@ -3214,7 +3110,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 6;
           return this;
         }
-
         /**
          *
          *
@@ -3240,7 +3135,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           }
           return this;
         }
-
         /**
          *
          *
@@ -3253,7 +3147,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         public com.google.apps.card.v1.SelectionInput.Builder getSelectionInputBuilder() {
           return getSelectionInputFieldBuilder().getBuilder();
         }
-
         /**
          *
          *
@@ -3274,7 +3167,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             return com.google.apps.card.v1.SelectionInput.getDefaultInstance();
           }
         }
-
         /**
          *
          *
@@ -3313,7 +3205,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
                 com.google.apps.card.v1.DateTimePicker.Builder,
                 com.google.apps.card.v1.DateTimePickerOrBuilder>
             dateTimePickerBuilder_;
-
         /**
          *
          *
@@ -3329,7 +3220,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         public boolean hasDateTimePicker() {
           return dataCase_ == 7;
         }
-
         /**
          *
          *
@@ -3355,7 +3245,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             return com.google.apps.card.v1.DateTimePicker.getDefaultInstance();
           }
         }
-
         /**
          *
          *
@@ -3378,7 +3267,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 7;
           return this;
         }
-
         /**
          *
          *
@@ -3399,7 +3287,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 7;
           return this;
         }
-
         /**
          *
          *
@@ -3432,7 +3319,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           dataCase_ = 7;
           return this;
         }
-
         /**
          *
          *
@@ -3458,7 +3344,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           }
           return this;
         }
-
         /**
          *
          *
@@ -3471,7 +3356,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         public com.google.apps.card.v1.DateTimePicker.Builder getDateTimePickerBuilder() {
           return getDateTimePickerFieldBuilder().getBuilder();
         }
-
         /**
          *
          *
@@ -3492,7 +3376,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             return com.google.apps.card.v1.DateTimePicker.getDefaultInstance();
           }
         }
-
         /**
          *
          *
@@ -3592,7 +3475,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
 
     public static final int HORIZONTAL_SIZE_STYLE_FIELD_NUMBER = 1;
     private int horizontalSizeStyle_ = 0;
-
     /**
      *
      *
@@ -3609,7 +3491,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
     public int getHorizontalSizeStyleValue() {
       return horizontalSizeStyle_;
     }
-
     /**
      *
      *
@@ -3634,7 +3515,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
 
     public static final int HORIZONTAL_ALIGNMENT_FIELD_NUMBER = 2;
     private int horizontalAlignment_ = 0;
-
     /**
      *
      *
@@ -3651,7 +3531,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
     public int getHorizontalAlignmentValue() {
       return horizontalAlignment_;
     }
-
     /**
      *
      *
@@ -3675,7 +3554,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
 
     public static final int VERTICAL_ALIGNMENT_FIELD_NUMBER = 3;
     private int verticalAlignment_ = 0;
-
     /**
      *
      *
@@ -3692,7 +3570,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
     public int getVerticalAlignmentValue() {
       return verticalAlignment_;
     }
-
     /**
      *
      *
@@ -3718,7 +3595,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private java.util.List<com.google.apps.card.v1.Columns.Column.Widgets> widgets_;
-
     /**
      *
      *
@@ -3733,7 +3609,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
     public java.util.List<com.google.apps.card.v1.Columns.Column.Widgets> getWidgetsList() {
       return widgets_;
     }
-
     /**
      *
      *
@@ -3749,7 +3624,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         getWidgetsOrBuilderList() {
       return widgets_;
     }
-
     /**
      *
      *
@@ -3764,7 +3638,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
     public int getWidgetsCount() {
       return widgets_.size();
     }
-
     /**
      *
      *
@@ -3779,7 +3652,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.Columns.Column.Widgets getWidgets(int index) {
       return widgets_.get(index);
     }
-
     /**
      *
      *
@@ -3997,7 +3869,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -4274,7 +4145,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       private int bitField0_;
 
       private int horizontalSizeStyle_ = 0;
-
       /**
        *
        *
@@ -4291,7 +4161,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       public int getHorizontalSizeStyleValue() {
         return horizontalSizeStyle_;
       }
-
       /**
        *
        *
@@ -4311,7 +4180,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -4333,7 +4201,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             ? com.google.apps.card.v1.Columns.Column.HorizontalSizeStyle.UNRECOGNIZED
             : result;
       }
-
       /**
        *
        *
@@ -4357,7 +4224,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -4378,7 +4244,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
 
       private int horizontalAlignment_ = 0;
-
       /**
        *
        *
@@ -4395,7 +4260,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       public int getHorizontalAlignmentValue() {
         return horizontalAlignment_;
       }
-
       /**
        *
        *
@@ -4415,7 +4279,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -4436,7 +4299,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             ? com.google.apps.card.v1.Widget.HorizontalAlignment.UNRECOGNIZED
             : result;
       }
-
       /**
        *
        *
@@ -4460,7 +4322,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -4481,7 +4342,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
 
       private int verticalAlignment_ = 0;
-
       /**
        *
        *
@@ -4498,7 +4358,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       public int getVerticalAlignmentValue() {
         return verticalAlignment_;
       }
-
       /**
        *
        *
@@ -4518,7 +4377,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -4539,7 +4397,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             ? com.google.apps.card.v1.Columns.Column.VerticalAlignment.UNRECOGNIZED
             : result;
       }
-
       /**
        *
        *
@@ -4563,7 +4420,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -4617,7 +4473,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           return widgetsBuilder_.getMessageList();
         }
       }
-
       /**
        *
        *
@@ -4635,7 +4490,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           return widgetsBuilder_.getCount();
         }
       }
-
       /**
        *
        *
@@ -4653,7 +4507,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           return widgetsBuilder_.getMessage(index);
         }
       }
-
       /**
        *
        *
@@ -4677,7 +4530,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -4699,7 +4551,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -4723,7 +4574,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -4747,7 +4597,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -4769,7 +4618,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -4791,7 +4639,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -4813,7 +4660,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -4834,7 +4680,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -4855,7 +4700,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -4869,7 +4713,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       public com.google.apps.card.v1.Columns.Column.Widgets.Builder getWidgetsBuilder(int index) {
         return getWidgetsFieldBuilder().getBuilder(index);
       }
-
       /**
        *
        *
@@ -4888,7 +4731,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           return widgetsBuilder_.getMessageOrBuilder(index);
         }
       }
-
       /**
        *
        *
@@ -4907,7 +4749,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           return java.util.Collections.unmodifiableList(widgets_);
         }
       }
-
       /**
        *
        *
@@ -4922,7 +4763,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         return getWidgetsFieldBuilder()
             .addBuilder(com.google.apps.card.v1.Columns.Column.Widgets.getDefaultInstance());
       }
-
       /**
        *
        *
@@ -4937,7 +4777,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         return getWidgetsFieldBuilder()
             .addBuilder(index, com.google.apps.card.v1.Columns.Column.Widgets.getDefaultInstance());
       }
-
       /**
        *
        *
@@ -5038,7 +4877,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.apps.card.v1.Columns.Column> columnItems_;
-
   /**
    *
    *
@@ -5052,7 +4890,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.apps.card.v1.Columns.Column> getColumnItemsList() {
     return columnItems_;
   }
-
   /**
    *
    *
@@ -5067,7 +4904,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       getColumnItemsOrBuilderList() {
     return columnItems_;
   }
-
   /**
    *
    *
@@ -5081,7 +4917,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
   public int getColumnItemsCount() {
     return columnItems_.size();
   }
-
   /**
    *
    *
@@ -5095,7 +4930,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
   public com.google.apps.card.v1.Columns.Column getColumnItems(int index) {
     return columnItems_.get(index);
   }
-
   /**
    *
    *
@@ -5269,7 +5103,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -5557,7 +5390,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         return columnItemsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -5574,7 +5406,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         return columnItemsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -5591,7 +5422,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         return columnItemsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -5614,7 +5444,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -5635,7 +5464,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -5658,7 +5486,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -5681,7 +5508,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -5701,7 +5527,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -5722,7 +5547,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -5743,7 +5567,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -5763,7 +5586,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -5783,7 +5605,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -5796,7 +5617,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.Columns.Column.Builder getColumnItemsBuilder(int index) {
       return getColumnItemsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -5813,7 +5633,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         return columnItemsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -5831,7 +5650,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(columnItems_);
       }
     }
-
     /**
      *
      *
@@ -5845,7 +5663,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       return getColumnItemsFieldBuilder()
           .addBuilder(com.google.apps.card.v1.Columns.Column.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -5859,7 +5676,6 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       return getColumnItemsFieldBuilder()
           .addBuilder(index, com.google.apps.card.v1.Columns.Column.getDefaultInstance());
     }
-
     /**
      *
      *

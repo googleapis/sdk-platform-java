@@ -38,7 +38,6 @@ public interface GetRoomRequestOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *

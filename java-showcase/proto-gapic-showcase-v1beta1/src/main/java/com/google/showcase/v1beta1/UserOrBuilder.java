@@ -36,7 +36,6 @@ public interface UserOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *
@@ -62,7 +61,6 @@ public interface UserOrBuilder
    * @return The displayName.
    */
   java.lang.String getDisplayName();
-
   /**
    *
    *
@@ -88,7 +86,6 @@ public interface UserOrBuilder
    * @return The email.
    */
   java.lang.String getEmail();
-
   /**
    *
    *
@@ -115,7 +112,6 @@ public interface UserOrBuilder
    * @return Whether the createTime field is set.
    */
   boolean hasCreateTime();
-
   /**
    *
    *
@@ -129,7 +125,6 @@ public interface UserOrBuilder
    * @return The createTime.
    */
   com.google.protobuf.Timestamp getCreateTime();
-
   /**
    *
    *
@@ -155,7 +150,6 @@ public interface UserOrBuilder
    * @return Whether the updateTime field is set.
    */
   boolean hasUpdateTime();
-
   /**
    *
    *
@@ -169,7 +163,6 @@ public interface UserOrBuilder
    * @return The updateTime.
    */
   com.google.protobuf.Timestamp getUpdateTime();
-
   /**
    *
    *
@@ -194,7 +187,6 @@ public interface UserOrBuilder
    * @return Whether the age field is set.
    */
   boolean hasAge();
-
   /**
    *
    *
@@ -220,7 +212,6 @@ public interface UserOrBuilder
    * @return Whether the heightFeet field is set.
    */
   boolean hasHeightFeet();
-
   /**
    *
    *
@@ -249,7 +240,6 @@ public interface UserOrBuilder
    * @return Whether the nickname field is set.
    */
   boolean hasNickname();
-
   /**
    *
    *
@@ -265,7 +255,6 @@ public interface UserOrBuilder
    * @return The nickname.
    */
   java.lang.String getNickname();
-
   /**
    *
    *
@@ -297,7 +286,6 @@ public interface UserOrBuilder
    * @return Whether the enableNotifications field is set.
    */
   boolean hasEnableNotifications();
-
   /**
    *
    *

@@ -34,7 +34,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.longrunning.Operation)
     OperationOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Operation.newBuilder() to construct.
   private Operation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -82,7 +81,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
     private ResultCase(int value) {
       this.value = value;
     }
-
     /**
      * @param value The number of the enum to look for.
      * @return The enum associated with the given number.
@@ -119,7 +117,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object name_ = "";
-
   /**
    *
    *
@@ -145,7 +142,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -174,7 +170,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
 
   public static final int METADATA_FIELD_NUMBER = 2;
   private com.google.protobuf.Any metadata_;
-
   /**
    *
    *
@@ -193,7 +188,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
   public boolean hasMetadata() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -212,7 +206,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.Any getMetadata() {
     return metadata_ == null ? com.google.protobuf.Any.getDefaultInstance() : metadata_;
   }
-
   /**
    *
    *
@@ -232,7 +225,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
 
   public static final int DONE_FIELD_NUMBER = 3;
   private boolean done_ = false;
-
   /**
    *
    *
@@ -252,7 +244,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ERROR_FIELD_NUMBER = 4;
-
   /**
    *
    *
@@ -268,7 +259,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
   public boolean hasError() {
     return resultCase_ == 4;
   }
-
   /**
    *
    *
@@ -287,7 +277,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.rpc.Status.getDefaultInstance();
   }
-
   /**
    *
    *
@@ -306,7 +295,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int RESPONSE_FIELD_NUMBER = 5;
-
   /**
    *
    *
@@ -329,7 +317,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
   public boolean hasResponse() {
     return resultCase_ == 5;
   }
-
   /**
    *
    *
@@ -355,7 +342,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.protobuf.Any.getDefaultInstance();
   }
-
   /**
    *
    *
@@ -599,7 +585,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -887,7 +872,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object name_ = "";
-
     /**
      *
      *
@@ -912,7 +896,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -937,7 +920,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -961,7 +943,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -981,7 +962,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1013,7 +993,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.Any.Builder,
             com.google.protobuf.AnyOrBuilder>
         metadataBuilder_;
-
     /**
      *
      *
@@ -1031,7 +1010,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
     public boolean hasMetadata() {
       return ((bitField0_ & 0x00000002) != 0);
     }
-
     /**
      *
      *
@@ -1053,7 +1031,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
         return metadataBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -1079,7 +1056,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1102,7 +1078,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1133,7 +1108,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1156,7 +1130,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1174,7 +1147,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getMetadataFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1194,7 +1166,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
         return metadata_ == null ? com.google.protobuf.Any.getDefaultInstance() : metadata_;
       }
     }
-
     /**
      *
      *
@@ -1224,7 +1195,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
     }
 
     private boolean done_;
-
     /**
      *
      *
@@ -1242,7 +1212,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
     public boolean getDone() {
       return done_;
     }
-
     /**
      *
      *
@@ -1264,7 +1233,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1288,7 +1256,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.rpc.Status, com.google.rpc.Status.Builder, com.google.rpc.StatusOrBuilder>
         errorBuilder_;
-
     /**
      *
      *
@@ -1304,7 +1271,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
     public boolean hasError() {
       return resultCase_ == 4;
     }
-
     /**
      *
      *
@@ -1330,7 +1296,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
         return com.google.rpc.Status.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1353,7 +1318,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
       resultCase_ = 4;
       return this;
     }
-
     /**
      *
      *
@@ -1373,7 +1337,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
       resultCase_ = 4;
       return this;
     }
-
     /**
      *
      *
@@ -1404,7 +1367,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
       resultCase_ = 4;
       return this;
     }
-
     /**
      *
      *
@@ -1430,7 +1392,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1443,7 +1404,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
     public com.google.rpc.Status.Builder getErrorBuilder() {
       return getErrorFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1464,7 +1424,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
         return com.google.rpc.Status.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1499,7 +1458,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.Any.Builder,
             com.google.protobuf.AnyOrBuilder>
         responseBuilder_;
-
     /**
      *
      *
@@ -1522,7 +1480,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
     public boolean hasResponse() {
       return resultCase_ == 5;
     }
-
     /**
      *
      *
@@ -1555,7 +1512,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
         return com.google.protobuf.Any.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1585,7 +1541,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
       resultCase_ = 5;
       return this;
     }
-
     /**
      *
      *
@@ -1612,7 +1567,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
       resultCase_ = 5;
       return this;
     }
-
     /**
      *
      *
@@ -1650,7 +1604,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
       resultCase_ = 5;
       return this;
     }
-
     /**
      *
      *
@@ -1683,7 +1636,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1703,7 +1655,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.Any.Builder getResponseBuilder() {
       return getResponseFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1731,7 +1682,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
         return com.google.protobuf.Any.getDefaultInstance();
       }
     }
-
     /**
      *
      *

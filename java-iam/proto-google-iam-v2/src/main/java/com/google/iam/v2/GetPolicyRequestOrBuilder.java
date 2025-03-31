@@ -45,7 +45,6 @@ public interface GetPolicyRequestOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *

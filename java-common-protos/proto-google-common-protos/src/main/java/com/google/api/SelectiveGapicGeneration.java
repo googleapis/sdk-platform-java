@@ -34,7 +34,6 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
     // @@protoc_insertion_point(message_implements:google.api.SelectiveGapicGeneration)
     SelectiveGapicGenerationOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use SelectiveGapicGeneration.newBuilder() to construct.
   private SelectiveGapicGeneration(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -70,7 +69,6 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList methods_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
-
   /**
    *
    *
@@ -86,7 +84,6 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
   public com.google.protobuf.ProtocolStringList getMethodsList() {
     return methods_;
   }
-
   /**
    *
    *
@@ -102,7 +99,6 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
   public int getMethodsCount() {
     return methods_.size();
   }
-
   /**
    *
    *
@@ -119,7 +115,6 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
   public java.lang.String getMethods(int index) {
     return methods_.get(index);
   }
-
   /**
    *
    *
@@ -139,7 +134,6 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
 
   public static final int GENERATE_OMITTED_AS_INTERNAL_FIELD_NUMBER = 2;
   private boolean generateOmittedAsInternal_ = false;
-
   /**
    *
    *
@@ -335,7 +329,6 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -548,7 +541,6 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
       }
       bitField0_ |= 0x00000001;
     }
-
     /**
      *
      *
@@ -565,7 +557,6 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
       methods_.makeImmutable();
       return methods_;
     }
-
     /**
      *
      *
@@ -581,7 +572,6 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
     public int getMethodsCount() {
       return methods_.size();
     }
-
     /**
      *
      *
@@ -598,7 +588,6 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
     public java.lang.String getMethods(int index) {
       return methods_.get(index);
     }
-
     /**
      *
      *
@@ -615,7 +604,6 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
     public com.google.protobuf.ByteString getMethodsBytes(int index) {
       return methods_.getByteString(index);
     }
-
     /**
      *
      *
@@ -640,7 +628,6 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -664,7 +651,6 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -685,7 +671,6 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -705,7 +690,6 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -732,7 +716,6 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
     }
 
     private boolean generateOmittedAsInternal_;
-
     /**
      *
      *
@@ -753,7 +736,6 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
     public boolean getGenerateOmittedAsInternal() {
       return generateOmittedAsInternal_;
     }
-
     /**
      *
      *
@@ -778,7 +760,6 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
       onChanged();
       return this;
     }
-
     /**
      *
      *

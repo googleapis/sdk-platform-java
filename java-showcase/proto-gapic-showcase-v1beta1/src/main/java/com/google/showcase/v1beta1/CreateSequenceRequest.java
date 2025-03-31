@@ -25,7 +25,6 @@ public final class CreateSequenceRequest extends com.google.protobuf.GeneratedMe
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.CreateSequenceRequest)
     CreateSequenceRequestOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use CreateSequenceRequest.newBuilder() to construct.
   private CreateSequenceRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -57,7 +56,6 @@ public final class CreateSequenceRequest extends com.google.protobuf.GeneratedMe
   private int bitField0_;
   public static final int SEQUENCE_FIELD_NUMBER = 1;
   private com.google.showcase.v1beta1.Sequence sequence_;
-
   /**
    * <code>.google.showcase.v1beta1.Sequence sequence = 1;</code>
    *
@@ -67,7 +65,6 @@ public final class CreateSequenceRequest extends com.google.protobuf.GeneratedMe
   public boolean hasSequence() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    * <code>.google.showcase.v1beta1.Sequence sequence = 1;</code>
    *
@@ -79,7 +76,6 @@ public final class CreateSequenceRequest extends com.google.protobuf.GeneratedMe
         ? com.google.showcase.v1beta1.Sequence.getDefaultInstance()
         : sequence_;
   }
-
   /** <code>.google.showcase.v1beta1.Sequence sequence = 1;</code> */
   @java.lang.Override
   public com.google.showcase.v1beta1.SequenceOrBuilder getSequenceOrBuilder() {
@@ -252,7 +248,6 @@ public final class CreateSequenceRequest extends com.google.protobuf.GeneratedMe
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /** Protobuf type {@code google.showcase.v1beta1.CreateSequenceRequest} */
   public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
       implements
@@ -448,7 +443,6 @@ public final class CreateSequenceRequest extends com.google.protobuf.GeneratedMe
             com.google.showcase.v1beta1.Sequence.Builder,
             com.google.showcase.v1beta1.SequenceOrBuilder>
         sequenceBuilder_;
-
     /**
      * <code>.google.showcase.v1beta1.Sequence sequence = 1;</code>
      *
@@ -457,7 +451,6 @@ public final class CreateSequenceRequest extends com.google.protobuf.GeneratedMe
     public boolean hasSequence() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      * <code>.google.showcase.v1beta1.Sequence sequence = 1;</code>
      *
@@ -472,7 +465,6 @@ public final class CreateSequenceRequest extends com.google.protobuf.GeneratedMe
         return sequenceBuilder_.getMessage();
       }
     }
-
     /** <code>.google.showcase.v1beta1.Sequence sequence = 1;</code> */
     public Builder setSequence(com.google.showcase.v1beta1.Sequence value) {
       if (sequenceBuilder_ == null) {
@@ -487,7 +479,6 @@ public final class CreateSequenceRequest extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /** <code>.google.showcase.v1beta1.Sequence sequence = 1;</code> */
     public Builder setSequence(com.google.showcase.v1beta1.Sequence.Builder builderForValue) {
       if (sequenceBuilder_ == null) {
@@ -499,7 +490,6 @@ public final class CreateSequenceRequest extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /** <code>.google.showcase.v1beta1.Sequence sequence = 1;</code> */
     public Builder mergeSequence(com.google.showcase.v1beta1.Sequence value) {
       if (sequenceBuilder_ == null) {
@@ -519,7 +509,6 @@ public final class CreateSequenceRequest extends com.google.protobuf.GeneratedMe
       }
       return this;
     }
-
     /** <code>.google.showcase.v1beta1.Sequence sequence = 1;</code> */
     public Builder clearSequence() {
       bitField0_ = (bitField0_ & ~0x00000001);
@@ -531,14 +520,12 @@ public final class CreateSequenceRequest extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /** <code>.google.showcase.v1beta1.Sequence sequence = 1;</code> */
     public com.google.showcase.v1beta1.Sequence.Builder getSequenceBuilder() {
       bitField0_ |= 0x00000001;
       onChanged();
       return getSequenceFieldBuilder().getBuilder();
     }
-
     /** <code>.google.showcase.v1beta1.Sequence sequence = 1;</code> */
     public com.google.showcase.v1beta1.SequenceOrBuilder getSequenceOrBuilder() {
       if (sequenceBuilder_ != null) {
@@ -549,7 +536,6 @@ public final class CreateSequenceRequest extends com.google.protobuf.GeneratedMe
             : sequence_;
       }
     }
-
     /** <code>.google.showcase.v1beta1.Sequence sequence = 1;</code> */
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.showcase.v1beta1.Sequence,
