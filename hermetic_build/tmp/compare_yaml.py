@@ -49,7 +49,7 @@ class DeepCopyRegexItem:
             return False
 
     def __str__(self):
-        return f"DeepCopyRegexItem(source={self.source}, dest={self.dest})"
+        return f"(source={self.source}, dest={self.dest})"
 
 
 class OwlBotConfig:
