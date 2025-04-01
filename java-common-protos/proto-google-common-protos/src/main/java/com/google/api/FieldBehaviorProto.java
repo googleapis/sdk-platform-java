@@ -31,6 +31,7 @@ public final class FieldBehaviorProto {
   }
 
   public static final int FIELD_BEHAVIOR_FIELD_NUMBER = 1052;
+
   /**
    *
    *

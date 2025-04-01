@@ -38,6 +38,7 @@ public interface DeleteRoomRequestOrBuilder
    * @return The name.
    */
   java.lang.String getName();
+
   /**
    *
    *

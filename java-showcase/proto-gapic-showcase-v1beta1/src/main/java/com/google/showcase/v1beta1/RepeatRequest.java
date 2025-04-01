@@ -25,6 +25,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.RepeatRequest)
     RepeatRequestOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use RepeatRequest.newBuilder() to construct.
   private RepeatRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -61,6 +62,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object name_ = "";
+
   /**
    * <code>string name = 1;</code>
    *
@@ -78,6 +80,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
+
   /**
    * <code>string name = 1;</code>
    *
@@ -98,6 +101,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
 
   public static final int INFO_FIELD_NUMBER = 2;
   private com.google.showcase.v1beta1.ComplianceData info_;
+
   /**
    * <code>.google.showcase.v1beta1.ComplianceData info = 2;</code>
    *
@@ -107,6 +111,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean hasInfo() {
     return ((bitField0_ & 0x00000001) != 0);
   }
+
   /**
    * <code>.google.showcase.v1beta1.ComplianceData info = 2;</code>
    *
@@ -116,6 +121,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
   public com.google.showcase.v1beta1.ComplianceData getInfo() {
     return info_ == null ? com.google.showcase.v1beta1.ComplianceData.getDefaultInstance() : info_;
   }
+
   /** <code>.google.showcase.v1beta1.ComplianceData info = 2;</code> */
   @java.lang.Override
   public com.google.showcase.v1beta1.ComplianceDataOrBuilder getInfoOrBuilder() {
@@ -124,6 +130,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
 
   public static final int SERVER_VERIFY_FIELD_NUMBER = 3;
   private boolean serverVerify_ = false;
+
   /**
    *
    *
@@ -145,6 +152,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object intendedBindingUri_ = "";
+
   /**
    *
    *
@@ -160,6 +168,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean hasIntendedBindingUri() {
     return ((bitField0_ & 0x00000002) != 0);
   }
+
   /**
    *
    *
@@ -183,6 +192,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
+
   /**
    *
    *
@@ -209,6 +219,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
 
   public static final int F_INT32_FIELD_NUMBER = 4;
   private int fInt32_ = 0;
+
   /**
    *
    *
@@ -228,6 +239,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
 
   public static final int F_INT64_FIELD_NUMBER = 5;
   private long fInt64_ = 0L;
+
   /**
    * <code>int64 f_int64 = 5;</code>
    *
@@ -240,6 +252,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
 
   public static final int F_DOUBLE_FIELD_NUMBER = 6;
   private double fDouble_ = 0D;
+
   /**
    * <code>double f_double = 6;</code>
    *
@@ -252,6 +265,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
 
   public static final int P_INT32_FIELD_NUMBER = 7;
   private int pInt32_ = 0;
+
   /**
    * <code>optional int32 p_int32 = 7;</code>
    *
@@ -261,6 +275,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean hasPInt32() {
     return ((bitField0_ & 0x00000004) != 0);
   }
+
   /**
    * <code>optional int32 p_int32 = 7;</code>
    *
@@ -273,6 +288,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
 
   public static final int P_INT64_FIELD_NUMBER = 8;
   private long pInt64_ = 0L;
+
   /**
    * <code>optional int64 p_int64 = 8;</code>
    *
@@ -282,6 +298,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean hasPInt64() {
     return ((bitField0_ & 0x00000008) != 0);
   }
+
   /**
    * <code>optional int64 p_int64 = 8;</code>
    *
@@ -294,6 +311,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
 
   public static final int P_DOUBLE_FIELD_NUMBER = 9;
   private double pDouble_ = 0D;
+
   /**
    * <code>optional double p_double = 9;</code>
    *
@@ -303,6 +321,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean hasPDouble() {
     return ((bitField0_ & 0x00000010) != 0);
   }
+
   /**
    * <code>optional double p_double = 9;</code>
    *
@@ -586,6 +605,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /** Protobuf type {@code google.showcase.v1beta1.RepeatRequest} */
   public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
       implements
@@ -900,6 +920,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object name_ = "";
+
     /**
      * <code>string name = 1;</code>
      *
@@ -916,6 +937,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
+
     /**
      * <code>string name = 1;</code>
      *
@@ -932,6 +954,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      * <code>string name = 1;</code>
      *
@@ -947,6 +970,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      * <code>string name = 1;</code>
      *
@@ -958,6 +982,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      * <code>string name = 1;</code>
      *
@@ -981,6 +1006,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
             com.google.showcase.v1beta1.ComplianceData.Builder,
             com.google.showcase.v1beta1.ComplianceDataOrBuilder>
         infoBuilder_;
+
     /**
      * <code>.google.showcase.v1beta1.ComplianceData info = 2;</code>
      *
@@ -989,6 +1015,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean hasInfo() {
       return ((bitField0_ & 0x00000002) != 0);
     }
+
     /**
      * <code>.google.showcase.v1beta1.ComplianceData info = 2;</code>
      *
@@ -1003,6 +1030,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
         return infoBuilder_.getMessage();
       }
     }
+
     /** <code>.google.showcase.v1beta1.ComplianceData info = 2;</code> */
     public Builder setInfo(com.google.showcase.v1beta1.ComplianceData value) {
       if (infoBuilder_ == null) {
@@ -1017,6 +1045,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /** <code>.google.showcase.v1beta1.ComplianceData info = 2;</code> */
     public Builder setInfo(com.google.showcase.v1beta1.ComplianceData.Builder builderForValue) {
       if (infoBuilder_ == null) {
@@ -1028,6 +1057,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /** <code>.google.showcase.v1beta1.ComplianceData info = 2;</code> */
     public Builder mergeInfo(com.google.showcase.v1beta1.ComplianceData value) {
       if (infoBuilder_ == null) {
@@ -1047,6 +1077,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /** <code>.google.showcase.v1beta1.ComplianceData info = 2;</code> */
     public Builder clearInfo() {
       bitField0_ = (bitField0_ & ~0x00000002);
@@ -1058,12 +1089,14 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /** <code>.google.showcase.v1beta1.ComplianceData info = 2;</code> */
     public com.google.showcase.v1beta1.ComplianceData.Builder getInfoBuilder() {
       bitField0_ |= 0x00000002;
       onChanged();
       return getInfoFieldBuilder().getBuilder();
     }
+
     /** <code>.google.showcase.v1beta1.ComplianceData info = 2;</code> */
     public com.google.showcase.v1beta1.ComplianceDataOrBuilder getInfoOrBuilder() {
       if (infoBuilder_ != null) {
@@ -1074,6 +1107,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
             : info_;
       }
     }
+
     /** <code>.google.showcase.v1beta1.ComplianceData info = 2;</code> */
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.showcase.v1beta1.ComplianceData,
@@ -1093,6 +1127,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private boolean serverVerify_;
+
     /**
      *
      *
@@ -1109,6 +1144,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean getServerVerify() {
       return serverVerify_;
     }
+
     /**
      *
      *
@@ -1129,6 +1165,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1149,6 +1186,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object intendedBindingUri_ = "";
+
     /**
      *
      *
@@ -1163,6 +1201,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean hasIntendedBindingUri() {
       return ((bitField0_ & 0x00000008) != 0);
     }
+
     /**
      *
      *
@@ -1185,6 +1224,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -1207,6 +1247,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -1228,6 +1269,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1245,6 +1287,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1269,6 +1312,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int fInt32_;
+
     /**
      *
      *
@@ -1285,6 +1329,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     public int getFInt32() {
       return fInt32_;
     }
+
     /**
      *
      *
@@ -1305,6 +1350,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1325,6 +1371,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private long fInt64_;
+
     /**
      * <code>int64 f_int64 = 5;</code>
      *
@@ -1334,6 +1381,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     public long getFInt64() {
       return fInt64_;
     }
+
     /**
      * <code>int64 f_int64 = 5;</code>
      *
@@ -1347,6 +1395,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      * <code>int64 f_int64 = 5;</code>
      *
@@ -1360,6 +1409,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private double fDouble_;
+
     /**
      * <code>double f_double = 6;</code>
      *
@@ -1369,6 +1419,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     public double getFDouble() {
       return fDouble_;
     }
+
     /**
      * <code>double f_double = 6;</code>
      *
@@ -1382,6 +1433,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      * <code>double f_double = 6;</code>
      *
@@ -1395,6 +1447,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int pInt32_;
+
     /**
      * <code>optional int32 p_int32 = 7;</code>
      *
@@ -1404,6 +1457,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean hasPInt32() {
       return ((bitField0_ & 0x00000080) != 0);
     }
+
     /**
      * <code>optional int32 p_int32 = 7;</code>
      *
@@ -1413,6 +1467,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     public int getPInt32() {
       return pInt32_;
     }
+
     /**
      * <code>optional int32 p_int32 = 7;</code>
      *
@@ -1426,6 +1481,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      * <code>optional int32 p_int32 = 7;</code>
      *
@@ -1439,6 +1495,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private long pInt64_;
+
     /**
      * <code>optional int64 p_int64 = 8;</code>
      *
@@ -1448,6 +1505,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean hasPInt64() {
       return ((bitField0_ & 0x00000100) != 0);
     }
+
     /**
      * <code>optional int64 p_int64 = 8;</code>
      *
@@ -1457,6 +1515,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     public long getPInt64() {
       return pInt64_;
     }
+
     /**
      * <code>optional int64 p_int64 = 8;</code>
      *
@@ -1470,6 +1529,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      * <code>optional int64 p_int64 = 8;</code>
      *
@@ -1483,6 +1543,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private double pDouble_;
+
     /**
      * <code>optional double p_double = 9;</code>
      *
@@ -1492,6 +1553,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean hasPDouble() {
       return ((bitField0_ & 0x00000200) != 0);
     }
+
     /**
      * <code>optional double p_double = 9;</code>
      *
@@ -1501,6 +1563,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     public double getPDouble() {
       return pDouble_;
     }
+
     /**
      * <code>optional double p_double = 9;</code>
      *
@@ -1514,6 +1577,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      * <code>optional double p_double = 9;</code>
      *

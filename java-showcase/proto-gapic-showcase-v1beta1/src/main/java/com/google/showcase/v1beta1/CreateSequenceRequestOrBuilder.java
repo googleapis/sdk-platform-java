@@ -30,12 +30,14 @@ public interface CreateSequenceRequestOrBuilder
    * @return Whether the sequence field is set.
    */
   boolean hasSequence();
+
   /**
    * <code>.google.showcase.v1beta1.Sequence sequence = 1;</code>
    *
    * @return The sequence.
    */
   com.google.showcase.v1beta1.Sequence getSequence();
+
   /** <code>.google.showcase.v1beta1.Sequence sequence = 1;</code> */
   com.google.showcase.v1beta1.SequenceOrBuilder getSequenceOrBuilder();
 }

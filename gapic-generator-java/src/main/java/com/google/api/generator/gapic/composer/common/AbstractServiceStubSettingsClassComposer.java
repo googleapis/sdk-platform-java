@@ -518,8 +518,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // Assign DEFAULT_SERVICE_SCOPES.
     statements.add(SettingsCommentComposer.DEFAULT_SCOPES_COMMENT);
     VariableExpr defaultServiceScopesDeclVarExpr =
-        DEFAULT_SERVICE_SCOPES_VAR_EXPR
-            .toBuilder()
+        DEFAULT_SERVICE_SCOPES_VAR_EXPR.toBuilder()
             .setIsDecl(true)
             .setScope(ScopeNode.PRIVATE)
             .setIsStatic(true)
@@ -826,8 +825,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // Declare and assign the variable.
     return AssignmentExpr.builder()
         .setVariableExpr(
-            pagedListDescVarExpr
-                .toBuilder()
+            pagedListDescVarExpr.toBuilder()
                 .setIsDecl(true)
                 .setScope(ScopeNode.PRIVATE)
                 .setIsStatic(true)
@@ -966,8 +964,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
     return AssignmentExpr.builder()
         .setVariableExpr(
-            pagedListResponseFactoryVarExpr
-                .toBuilder()
+            pagedListResponseFactoryVarExpr.toBuilder()
                 .setIsDecl(true)
                 .setScope(ScopeNode.PRIVATE)
                 .setIsStatic(true)
@@ -2208,7 +2205,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                     : ServerStreamingCallSettings.class);
         break;
       case CLIENT:
-        // Fall through.
+      // Fall through.
       case BIDI:
         callSettingsType =
             typeMakerFn.apply(
@@ -2217,7 +2214,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                     : StreamingCallSettings.class);
         break;
       case NONE:
-        // Fall through.
+      // Fall through.
       default:
         break;
     }
