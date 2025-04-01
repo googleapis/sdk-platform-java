@@ -386,6 +386,7 @@
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax</artifactId>
+      <version>2.63.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.google.api</groupId>
@@ -393,10 +394,12 @@
       <!-- import the test code, https://maven.apache.org/plugins/maven-jar-plugin/examples/create-test-jar.html -->
       <type>test-jar</type>
       <classifier>testlib</classifier>
+      <version>2.63.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax-grpc</artifactId>
+      <version>2.63.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.google.api</groupId>
@@ -404,10 +407,12 @@
       <!-- import the test code, https://maven.apache.org/plugins/maven-jar-plugin/examples/create-test-jar.html -->
       <type>test-jar</type>
       <classifier>testlib</classifier>
+      <version>2.63.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax-httpjson</artifactId>
+      <version>2.63.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.google.api</groupId>
@@ -415,6 +420,7 @@
       <!-- import the test code, https://maven.apache.org/plugins/maven-jar-plugin/examples/create-test-jar.html -->
       <type>test-jar</type>
       <classifier>testlib</classifier>
+      <version>2.63.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.google.auto.value</groupId>
@@ -424,6 +430,12 @@
     <dependency>
       <groupId>com.google.protobuf</groupId>
       <artifactId>protobuf-java-util</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>com.google.protobuf</groupId>
+          <artifactId>protobuf-java</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>io.grpc</groupId>
@@ -432,6 +444,17 @@
     <dependency>
       <groupId>io.grpc</groupId>
       <artifactId>grpc-protobuf</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>com.google.protobuf</groupId>
+          <artifactId>protobuf-java</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.example</groupId>
+      <artifactId>protobuf-sdk</artifactId>
+      <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.yaml</groupId>
