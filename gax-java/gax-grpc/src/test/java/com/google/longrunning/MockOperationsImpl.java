@@ -31,7 +31,6 @@ package com.google.longrunning;
 
 import com.google.api.core.BetaApi;
 import com.google.longrunning.OperationsGrpc.OperationsImplBase;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Empty;
 import com.google.protobuf.Message;
 import io.grpc.stub.StreamObserver;

@@ -39,7 +39,6 @@ import com.google.api.gax.grpc.testing.MockServiceHelper;
 import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.common.collect.Lists;
 import com.google.longrunning.OperationsClient.ListOperationsPagedResponse;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Duration;
 import com.google.protobuf.Empty;
 import com.google.protobuf.Message;
