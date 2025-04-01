@@ -22,6 +22,7 @@ import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.Method.SelectiveGapicType;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Sample;
@@ -29,6 +30,7 @@ import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.test.utils.LineFormatter;
 import com.google.protobuf.Descriptors;
+import com.google.selective.generate.v1beta1.SelectiveApiGenerationOuterClass;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import java.util.Arrays;
 import java.util.Collections;
@@ -42,6 +44,7 @@ import org.junit.jupiter.api.Test;
 
 class ServiceClientHeaderSampleComposerTest {
   private static final String SHOWCASE_PACKAGE_NAME = "com.google.showcase.v1beta1";
+  private static final String SELECTIVE_API_PACKAGE_NAME = "com.google.selective.generate.v1beta1";
   private static final String LRO_PACKAGE_NAME = "com.google.longrunning";
   private static final String PROTO_PACKAGE_NAME = "com.google.protobuf";
   private static final String PAGINATED_FIELD_NAME = "page_size";
@@ -286,6 +289,137 @@ class ServiceClientHeaderSampleComposerTest {
             "    // Do something when a response is received.\n",
             "  }\n",
             "}");
+    Assert.assertEquals(results, expected);
+  }
+
+  @Test
+  void composeClassHeaderSample_firstMethodIsInternal() {
+    Descriptors.FileDescriptor selectiveApiGenerationFileDescriptor =
+        SelectiveApiGenerationOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames =
+        Parser.parseResourceNames(selectiveApiGenerationFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(selectiveApiGenerationFileDescriptor);
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SELECTIVE_API_PACKAGE_NAME)
+                .build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SELECTIVE_API_PACKAGE_NAME)
+                .build());
+    Method internalMethod =
+        Method.builder()
+            .setName("ChatShouldGenerateAsInternal")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setSelectiveGapicType(SelectiveGapicType.INTERNAL)
+            .build();
+    Method publicMethod =
+        Method.builder()
+            .setName("ChatShouldGenerateAsPublic")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setSelectiveGapicType(SelectiveGapicType.PUBLIC)
+            .build();
+    Service service =
+        Service.builder()
+            .setName("EchoServiceShouldGeneratePartialPublic")
+            .setDefaultHost("localhost:7469")
+            .setOauthScopes(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"))
+            .setPakkage(SELECTIVE_API_PACKAGE_NAME)
+            .setProtoPakkage(SELECTIVE_API_PACKAGE_NAME)
+            .setOriginalJavaPackage(SELECTIVE_API_PACKAGE_NAME)
+            .setOverriddenName("EchoServiceShouldGeneratePartialPublic")
+            .setMethods(Arrays.asList(internalMethod, publicMethod))
+            .build();
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoServiceSelectiveApiClient")
+                .setPakkage(SELECTIVE_API_PACKAGE_NAME)
+                .build());
+    String results =
+        writeStatements(
+            ServiceClientHeaderSampleComposer.composeClassHeaderSample(
+                service, clientType, resourceNames, messageTypes));
+    String expected =
+        LineFormatter.lines(
+            "try (EchoServiceSelectiveApiClient echoServiceSelectiveApiClient =\n"
+                + "    EchoServiceSelectiveApiClient.create()) {\n"
+                + "  EchoRequest request =\n"
+                + "      EchoRequest.newBuilder()\n"
+                + "          .setName(FoobarName.of(\"[PROJECT]\", \"[FOOBAR]\").toString())\n"
+                + "          .setParent(\n"
+                + "              FoobarbazName.ofProjectFoobarbazName(\"[PROJECT]\", \"[FOOBARBAZ]\").toString())\n"
+                + "          .setFoobar(Foobar.newBuilder().build())\n"
+                + "          .build();\n"
+                + "  EchoResponse response = echoServiceSelectiveApiClient.chatShouldGenerateAsPublic(request);\n"
+                + "}");
+    Assert.assertEquals(results, expected);
+  }
+
+  @Test
+  void composeClassHeaderSample_allMethodsAreInternal() {
+    Descriptors.FileDescriptor selectiveApiGenerationFileDescriptor =
+        SelectiveApiGenerationOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames =
+        Parser.parseResourceNames(selectiveApiGenerationFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(selectiveApiGenerationFileDescriptor);
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SELECTIVE_API_PACKAGE_NAME)
+                .build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SELECTIVE_API_PACKAGE_NAME)
+                .build());
+    Method internalMethod1 =
+        Method.builder()
+            .setName("ChatShouldGenerateAsInternal")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setSelectiveGapicType(SelectiveGapicType.INTERNAL)
+            .build();
+    Method internalMethod2 =
+        Method.builder()
+            .setName("EchoShouldGenerateAsInternal")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setSelectiveGapicType(SelectiveGapicType.INTERNAL)
+            .build();
+    Service service =
+        Service.builder()
+            .setName("EchoServiceShouldGeneratePartialPublic")
+            .setDefaultHost("localhost:7469")
+            .setOauthScopes(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"))
+            .setPakkage(SELECTIVE_API_PACKAGE_NAME)
+            .setProtoPakkage(SELECTIVE_API_PACKAGE_NAME)
+            .setOriginalJavaPackage(SELECTIVE_API_PACKAGE_NAME)
+            .setOverriddenName("EchoServiceShouldGeneratePartialPublic")
+            .setMethods(Arrays.asList(internalMethod1, internalMethod2))
+            .build();
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoServiceSelectiveApiClient")
+                .setPakkage(SELECTIVE_API_PACKAGE_NAME)
+                .build());
+    String results =
+        writeStatements(
+            ServiceClientHeaderSampleComposer.composeClassHeaderSample(
+                service, clientType, resourceNames, messageTypes));
+    String expected =
+        LineFormatter.lines(
+            "try (EchoServiceSelectiveApiClient echoServiceSelectiveApiClient =\n"
+                + "    EchoServiceSelectiveApiClient.create()) {}");
     Assert.assertEquals(results, expected);
   }
 

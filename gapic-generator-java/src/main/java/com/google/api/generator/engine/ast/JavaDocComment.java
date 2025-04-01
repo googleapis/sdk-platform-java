@@ -51,6 +51,7 @@ public abstract class JavaDocComment implements Comment {
     String throwsType = null;
     String throwsDescription = null;
     String deprecated = null;
+    String internalOnly = null;
     String returnDescription = null;
     List<String> paramsList = new ArrayList<>();
     List<String> componentsList = new ArrayList<>();
@@ -67,6 +68,11 @@ public abstract class JavaDocComment implements Comment {
 
     public Builder setDeprecated(String deprecatedText) {
       deprecated = deprecatedText;
+      return this;
+    }
+
+    public Builder setInternalOnly(String internalOnlyText) {
+      internalOnly = internalOnlyText;
       return this;
     }
 
@@ -135,6 +141,7 @@ public abstract class JavaDocComment implements Comment {
       return Strings.isNullOrEmpty(throwsType)
           && Strings.isNullOrEmpty(throwsDescription)
           && Strings.isNullOrEmpty(deprecated)
+          && Strings.isNullOrEmpty(internalOnly)
           && Strings.isNullOrEmpty(returnDescription)
           && paramsList.isEmpty()
           && componentsList.isEmpty();
@@ -149,6 +156,9 @@ public abstract class JavaDocComment implements Comment {
       }
       if (!Strings.isNullOrEmpty(deprecated)) {
         componentsList.add(String.format("@deprecated %s", deprecated));
+      }
+      if (!Strings.isNullOrEmpty(internalOnly)) {
+        componentsList.add(String.format("@InternalApi %s", internalOnly));
       }
       if (!Strings.isNullOrEmpty(returnDescription)) {
         componentsList.add(String.format("@return %s", returnDescription));

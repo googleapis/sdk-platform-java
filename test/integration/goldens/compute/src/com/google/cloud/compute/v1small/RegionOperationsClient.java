@@ -209,7 +209,7 @@ public class RegionOperationsClient implements BackgroundResource {
    * @param project Project ID for this request.
    * @param region Name of the region for this request.
    * @param operation Name of the Operations resource to return.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Operation get(String project, String region, String operation) {
     GetRegionOperationRequest request =
@@ -245,7 +245,7 @@ public class RegionOperationsClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Operation get(GetRegionOperationRequest request) {
     return getCallable().call(request);
@@ -312,7 +312,7 @@ public class RegionOperationsClient implements BackgroundResource {
    * @param project Project ID for this request.
    * @param region Name of the region for this request.
    * @param operation Name of the Operations resource to return.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Operation wait(String project, String region, String operation) {
     WaitRegionOperationRequest request =
@@ -357,7 +357,7 @@ public class RegionOperationsClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Operation wait(WaitRegionOperationRequest request) {
     return waitCallable().call(request);

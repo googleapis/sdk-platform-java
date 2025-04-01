@@ -245,7 +245,7 @@ public class IdentityClient implements BackgroundResource {
    * @param parent
    * @param displayName
    * @param email
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final User createUser(String parent, String displayName, String email) {
     CreateUserRequest request =
@@ -287,7 +287,7 @@ public class IdentityClient implements BackgroundResource {
    * @param nickname
    * @param enableNotifications
    * @param heightFeet
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final User createUser(
       String parent,
@@ -359,7 +359,7 @@ public class IdentityClient implements BackgroundResource {
    * @param title
    * @param subject
    * @param artistName
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final User createUser(
       String parent,
@@ -424,7 +424,7 @@ public class IdentityClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final User createUser(CreateUserRequest request) {
     return createUserCallable().call(request);
@@ -473,7 +473,7 @@ public class IdentityClient implements BackgroundResource {
    * }</pre>
    *
    * @param name
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final User getUser(UserName name) {
     GetUserRequest request =
@@ -498,7 +498,7 @@ public class IdentityClient implements BackgroundResource {
    * }</pre>
    *
    * @param name
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final User getUser(String name) {
     GetUserRequest request = GetUserRequest.newBuilder().setName(name).build();
@@ -523,7 +523,7 @@ public class IdentityClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final User getUser(GetUserRequest request) {
     return getUserCallable().call(request);
@@ -570,7 +570,7 @@ public class IdentityClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final User updateUser(UpdateUserRequest request) {
     return updateUserCallable().call(request);
@@ -616,7 +616,7 @@ public class IdentityClient implements BackgroundResource {
    * }</pre>
    *
    * @param name
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final void deleteUser(UserName name) {
     DeleteUserRequest request =
@@ -641,7 +641,7 @@ public class IdentityClient implements BackgroundResource {
    * }</pre>
    *
    * @param name
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final void deleteUser(String name) {
     DeleteUserRequest request = DeleteUserRequest.newBuilder().setName(name).build();
@@ -666,7 +666,7 @@ public class IdentityClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final void deleteUser(DeleteUserRequest request) {
     deleteUserCallable().call(request);
@@ -718,7 +718,7 @@ public class IdentityClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListUsersPagedResponse listUsers(ListUsersRequest request) {
     return listUsersPagedCallable().call(request);

@@ -18,6 +18,7 @@ import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.api.core.BetaApi;
+import com.google.api.core.InternalApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.api.gax.paging.AbstractFixedSizeCollection;
@@ -70,6 +71,7 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.Method.SelectiveGapicType;
 import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
@@ -107,6 +109,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
   private static final String CALLABLE_NAME_PATTERN = "%sCallable";
   private static final String PAGED_CALLABLE_NAME_PATTERN = "%sPagedCallable";
   private static final String OPERATION_CALLABLE_NAME_PATTERN = "%sOperationCallable";
+  private static final String INTERNAL_API_WARNING =
+      "Internal API. This API is not intended for public consumption.";
 
   private static final Reference LIST_REFERENCE = ConcreteReference.withClazz(List.class);
   private static final Reference MAP_REFERENCE = ConcreteReference.withClazz(Map.class);
@@ -136,7 +140,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     GapicClass.Kind kind = Kind.MAIN;
     String pakkage = service.pakkage();
     boolean hasLroClient = service.hasStandardLroMethods();
-
     List<Sample> samples = new ArrayList<>();
     Map<String, List<String>> grpcRpcsToJavaMethodNames = new HashMap<>();
     Map<String, List<String>> methodVariantsForClientHeader = new HashMap<>();
@@ -802,11 +805,18 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             methodVariantBuilder.setReturnType(methodOutputType).setReturnExpr(rpcInvocationExpr);
       }
 
+      List<AnnotationNode> annotations = new ArrayList<>();
       if (method.isDeprecated()) {
-        methodVariantBuilder =
-            methodVariantBuilder.setAnnotations(
-                Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED)));
+        annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
       }
+
+      if (method.selectiveGapicType() == SelectiveGapicType.INTERNAL) {
+        annotations.add(
+            AnnotationNode.withTypeAndDescription(
+                typeStore.get("InternalApi"), INTERNAL_API_WARNING));
+      }
+
+      methodVariantBuilder = methodVariantBuilder.setAnnotations(annotations);
       methodVariantBuilder = methodVariantBuilder.setBody(statements);
       javaMethods.add(methodVariantBuilder.build());
     }
@@ -887,6 +897,12 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
 
     if (method.isDeprecated()) {
       annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
+    }
+
+    if (method.selectiveGapicType() == SelectiveGapicType.INTERNAL) {
+      annotations.add(
+          AnnotationNode.withTypeAndDescription(
+              typeStore.get("InternalApi"), INTERNAL_API_WARNING));
     }
 
     if (isProtoEmptyType(methodOutputType)) {
@@ -1039,11 +1055,17 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     }
 
     MethodDefinition.Builder methodDefBuilder = MethodDefinition.builder();
+    List<AnnotationNode> annotations = new ArrayList<>();
     if (method.isDeprecated()) {
-      methodDefBuilder =
-          methodDefBuilder.setAnnotations(
-              Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED)));
+      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
     }
+    if (method.selectiveGapicType() == SelectiveGapicType.INTERNAL) {
+      annotations.add(
+          AnnotationNode.withTypeAndDescription(
+              typeStore.get("InternalApi"), INTERNAL_API_WARNING));
+    }
+
+    methodDefBuilder = methodDefBuilder.setAnnotations(annotations);
 
     return methodDefBuilder
         .setHeaderCommentStatements(
@@ -1774,6 +1796,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             ApiFutures.class,
             BackgroundResource.class,
             BetaApi.class,
+            InternalApi.class,
             BidiStreamingCallable.class,
             ClientStreamingCallable.class,
             Generated.class,

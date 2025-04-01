@@ -22,6 +22,7 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.composer.utils.CommentFormatter;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.Method.SelectiveGapicType;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
@@ -37,7 +38,7 @@ public class ServiceClientCommentComposer {
   // Tokens.
   private static final String EMPTY_STRING = "";
   private static final String API_EXCEPTION_TYPE_NAME = "com.google.api.gax.rpc.ApiException";
-  private static final String EXCEPTION_CONDITION = "if the remote call fails";
+  private static final String EXCEPTION_CONDITION = "if the remote call fails.";
 
   // Constants.
   private static final String SERVICE_DESCRIPTION_INTRO_STRING =
@@ -202,6 +203,10 @@ public class ServiceClientCommentComposer {
       methodJavadocBuilder.setDeprecated(CommentComposer.DEPRECATED_METHOD_STRING);
     }
 
+    if (method.selectiveGapicType() == SelectiveGapicType.INTERNAL) {
+      methodJavadocBuilder.setInternalOnly(CommentComposer.INTERNAL_ONLY_METHOD_STRING);
+    }
+
     List<CommentStatement> comments = new ArrayList<>();
     comments.add(CommentComposer.AUTO_GENERATED_METHOD_COMMENT);
     if (!methodJavadocBuilder.emptyComments()) {
@@ -343,6 +348,10 @@ public class ServiceClientCommentComposer {
 
     if (method.isDeprecated()) {
       methodJavadocBuilder.setDeprecated(CommentComposer.DEPRECATED_METHOD_STRING);
+    }
+
+    if (method.selectiveGapicType() == SelectiveGapicType.INTERNAL) {
+      methodJavadocBuilder.setInternalOnly(CommentComposer.INTERNAL_ONLY_METHOD_STRING);
     }
 
     return Arrays.asList(

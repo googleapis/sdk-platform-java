@@ -178,7 +178,7 @@ public class DeprecatedServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final void fastFibonacci(FibonacciRequest request) {
     fastFibonacciCallable().call(request);
@@ -223,7 +223,7 @@ public class DeprecatedServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    * @deprecated This method is deprecated and will be removed in the next major version update.
    */
   @Deprecated
