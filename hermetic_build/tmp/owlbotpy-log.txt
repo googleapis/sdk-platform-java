@@ -1,0 +1,970 @@
+
+Python Differences in: java-os-login/owlbot.py
+- import shutil
+- s.replace('**/OsLoginServiceClient.java', 'PosixAccountName', 'ProjectName')
+- s.replace('**/OsLoginServiceClient.java', 'SshPublicKeyName',
+- 'FingerprintName')
+- s.replace('**/OsLoginServiceClientTest.java', 'PosixAccountName',
+- 'ProjectName')
+- s.replace('**/OsLoginServiceClientTest.java', 'SshPublicKeyName',
+- 'FingerprintName')
+- shutil.copy(
+- 'owl-bot-staging/v1/proto-google-cloud-os-login-v1/src/main/java/com/google/cloud/oslogin/common/UserName.java',
+- 'owl-bot-staging/v1/proto-google-cloud-os-login-v1/src/main/java/com/google/cloud/oslogin/v1/UserName.java')
+- s.replace(
+- 'owl-bot-staging/v1/proto-google-cloud-os-login-v1/src/main/java/com/google/cloud/oslogin/v1/UserName.java',
+- 'package com.google.cloud.oslogin.common;',
+- 'package com.google.cloud.oslogin.v1;')
+- s.replace('**/OsLoginServiceClient.java',
+- 'import com.google.cloud.oslogin.common.FingerprintName;',
+- 'import com.google.cloud.oslogin.v1.FingerprintName;')
+- s.replace('**/OsLoginServiceClient.java',
+- 'import com.google.cloud.oslogin.common.UserName;',
+- 'import com.google.cloud.oslogin.v1.UserName;')
+- s.replace('**/OsLoginServiceClient.java',
+- 'import com.google.cloud.oslogin.common.ProjectName;',
+- 'import com.google.cloud.oslogin.v1.ProjectName;')
+- s.replace('**/OsLoginServiceClientTest.java',
+- 'import com.google.cloud.oslogin.common.FingerprintName;',
+- 'import com.google.cloud.oslogin.v1.FingerprintName;')
+- s.replace('**/OsLoginServiceClientTest.java',
+- 'import com.google.cloud.oslogin.common.UserName;',
+- 'import com.google.cloud.oslogin.v1.UserName;')
+- s.replace('**/OsLoginServiceClientTest.java',
+- 'import com.google.cloud.oslogin.common.ProjectName;',
+- 'import com.google.cloud.oslogin.v1.ProjectName;')
+- s.replace('**/OsLoginServiceClientHttpJsonTest.java', 'PosixAccountName', 'ProjectName')
+- s.replace('**/OsLoginServiceClientHttpJsonTest.java', 'SshPublicKeyName',
+- 'FingerprintName')
+- s.replace('**/OsLoginServiceClientHttpJsonTest.java', 'PosixAccountName',
+- 'ProjectName')
+- s.replace('**/OsLoginServiceClientHttpJsonTest.java', 'SshPublicKeyName',
+- 'FingerprintName')
+- s.replace('**/OsLoginServiceClientHttpJsonTest.java',
+- 'import com.google.cloud.oslogin.common.FingerprintName;',
+- 'import com.google.cloud.oslogin.v1.FingerprintName;')
+- s.replace('**/OsLoginServiceClientHttpJsonTest.java',
+- 'import com.google.cloud.oslogin.common.UserName;',
+- 'import com.google.cloud.oslogin.v1.UserName;')
+- s.replace('**/OsLoginServiceClientHttpJsonTest.java',
+- 'import com.google.cloud.oslogin.common.ProjectName;',
+- 'import com.google.cloud.oslogin.v1.ProjectName;')
+- s.replace('**/OsLoginServiceClientHttpJsonTest.java',
+- 'import com.google.cloud.oslogin.common.FingerprintName;',
+- 'import com.google.cloud.oslogin.v1.FingerprintName;')
+- s.replace('**/OsLoginServiceClientHttpJsonTest.java',
+- 'import com.google.cloud.oslogin.common.UserName;',
+- 'import com.google.cloud.oslogin.v1.UserName;')
+- s.replace('**/OsLoginServiceClientHttpJsonTest.java',
+- 'import com.google.cloud.oslogin.common.ProjectName;',
+- 'import com.google.cloud.oslogin.v1.ProjectName;')
+Warning: Corresponding original file not found: /usr/local/google/home/zhumin/repos/java-test-output/java-shopping-merchant-notifications/owlbot.py
+
+Python Differences in: java-tasks/owlbot.py
+- GET_IAM_POLICY = """
+- public final Policy getIamPolicy(QueueName queueName) {
+- return getIamPolicy((ResourceName) queueName);
+- }
+- """
+- GET_IAM_POLICY_PREVIOUS = r'(\s+public final Policy getIamPolicy\(GetIamPolicyRequest request\) {\n\s+return .*\n\s+})'
+- SET_IAM_POLICY = """
+- public final Policy setIamPolicy(QueueName queue, Policy policy) {
+- return setIamPolicy((ResourceName) queue, policy);
+- }
+- """
+- SET_IAM_POLICY_PREVIOUS = r'(\s+public final Policy setIamPolicy\(SetIamPolicyRequest request\) {\n\s+return .*\n\s+})'
+- TEST_IAM_POLICY = """
+- public final TestIamPermissionsResponse testIamPermissions(
+- QueueName queue, List<String> permissions) {
+- return testIamPermissions((ResourceName) queue, permissions);
+- }
+- """
+- TEST_IAM_POLICY_PREVIOUS = r'(\spublic final TestIamPermissionsResponse testIamPermissions\(TestIamPermissionsRequest request\) {\n\s+return .*\n\s+})'
+- version = library.parts[len(library.parts) - 1]
+- service = 'tasks'
+- s.replace(
+- f'owl-bot-staging/{version}/google-cloud-{service}/src/main/java/com/google/cloud/tasks/{version}/CloudTasksClient.java',
+- GET_IAM_POLICY_PREVIOUS,
+- "\g<1>\n\n" + GET_IAM_POLICY
+- )
+- s.replace(
+- f'owl-bot-staging/{version}/google-cloud-{service}/src/main/java/com/google/cloud/tasks/{version}/CloudTasksClient.java',
+- SET_IAM_POLICY_PREVIOUS,
+- "\g<1>\n\n" + SET_IAM_POLICY
+- )
+- s.replace(
+- f'owl-bot-staging/{version}/google-cloud-{service}/src/main/java/com/google/cloud/tasks/{version}/CloudTasksClient.java',
+- TEST_IAM_POLICY_PREVIOUS,
+- "\g<1>\n\n" + TEST_IAM_POLICY
+- )
+
+Python Differences in: java-service-management/owlbot.py
+- file_name = "owl-bot-staging/v1/google-cloud-service-management/src/test/java/com/google/cloud/api/servicemanagement/v1/ServiceManagerClientHttpJsonTest.java"
+- s.replace(
+- file_name,
+- r'^import org.junit.Test;',
+- 'import org.junit.Ignore;\nimport org.junit.Test;'
+- )
+- s.replace(
+- file_name,
+- r"\s+@Test\n\s+public void setIamPolicyTest\(\) throws Exception.*",
+- '@Ignore("See: https://github.com/googleapis/sdk-platform-java/issues/1839")\n@Test\npublic void setIamPolicyTest() throws Exception {'
+- )
+- s.replace(
+- file_name,
+- r'\s+@Test\n\s+public void getIamPolicyTest\(\) throws Exception.*',
+- '@Ignore("See: https://github.com/googleapis/sdk-platform-java/issues/1839")\n@Test\npublic void getIamPolicyTest() throws Exception {'
+- )
+- s.replace(
+- file_name,
+- r'\s+@Test\n\s+public void testIamPermissionsTest\(\) throws Exception.*',
+- '@Ignore("See: https://github.com/googleapis/sdk-platform-java/issues/1839")@Test\npublic void testIamPermissionsTest() throws Exception {'
+- )
+
+Python Differences in: java-errorreporting/owlbot.py
+- import os
+- ERROR_GROUP_OVERLOAD = """
+- // Inserted by synthtool to preserve backwards-compatibility
+- /**
+- * Get the specified group.
+- *
+- * <p>Sample code:
+- *
+- * <pre><code>
+- * try (ErrorGroupServiceClient errorGroupServiceClient = ErrorGroupServiceClient.create()) {
+- * GroupName groupName = GroupName.of("[PROJECT]", "[GROUP]");
+- * ErrorGroup response = errorGroupServiceClient.getGroup(groupName);
+- * }
+- * </code></pre>
+- *
+- * @param groupName Required. The group resource name. Written as
+- * &lt;code&gt;projects/&lt;var&gt;projectID&lt;/var&gt;/groups/&lt;var&gt;group_name&lt;/var&gt;&lt;/code&gt;.
+- * Call &lt;a href="/error-reporting/reference/rest/v1beta1/projects.groupStats/list"&gt;
+- * &lt;code&gt;groupStats.list&lt;/code&gt;&lt;/a&gt; to return a list of groups belonging to
+- * this project.
+- * <p>Example: &lt;code&gt;projects/my-project-123/groups/my-group&lt;/code&gt;
+- * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+- * @deprecated Use ErrorGroupServiceClient
+- */
+- @Deprecated
+- public final ErrorGroup getGroup(GroupName groupName) {
+- GetGroupRequest request =
+- GetGroupRequest.newBuilder()
+- .setGroupName(groupName == null ? null : groupName.toString())
+- .build();
+- return getGroup(request);
+- }
+- """
+- ERROR_GROUP_OVERLOAD_PREVIOUS_METHOD = r'(\s+public ErrorGroupServiceStub getStub\(\) {\n\s+return stub;\n\s+})'
+- version = library.parts[len(library.parts) - 1]
+- service = 'errorreporting'
+- s.replace(
+- 'owl-bot-staging/v1beta1/google-cloud-errorreporting/src/**/ErrorGroupServiceClient.java',
+- ERROR_GROUP_OVERLOAD_PREVIOUS_METHOD,
+- "\g<1>\n\n" + ERROR_GROUP_OVERLOAD
+- )
+- s.replace(
+- 'owl-bot-staging/v1beta1/google-cloud-errorreporting/src/**/ErrorGroupServiceClient.java',
+- "import com.google.devtools.clouderrorreporting.v1beta1.ErrorGroupName;",
+- "import com.google.devtools.clouderrorreporting.v1beta1.ErrorGroupName;\nimport com.google.devtools.clouderrorreporting.v1beta1.GroupName;"
+- )
+
+Python Differences in: java-bigquerydatatransfer/owlbot.py
+- java.remove_method('owl-bot-staging/v1/proto-google-cloud-bigquerydatatransfer-v1/src/main/java/com/google/cloud/bigquery/datatransfer/v1/DataSourceName.java', 'public static List<DataSourceName> parseList(List<String> formattedStrings)')
+- java.remove_method('owl-bot-staging/v1/proto-google-cloud-bigquerydatatransfer-v1/src/main/java/com/google/cloud/bigquery/datatransfer/v1/DataSourceName.java', 'public static List<String> toStringList(List<DataSourceName> values)')
+- java.remove_method('owl-bot-staging/v1/proto-google-cloud-bigquerydatatransfer-v1/src/main/java/com/google/cloud/bigquery/datatransfer/v1/TransferConfigName.java', 'public static List<TransferConfigName> parseList(List<String> formattedStrings)')
+- java.remove_method('owl-bot-staging/v1/proto-google-cloud-bigquerydatatransfer-v1/src/main/java/com/google/cloud/bigquery/datatransfer/v1/TransferConfigName.java', 'public static List<String> toStringList(List<TransferConfigName> values)')
+- java.remove_method('owl-bot-staging/v1/proto-google-cloud-bigquerydatatransfer-v1/src/main/java/com/google/cloud/bigquery/datatransfer/v1/RunName.java', 'public static List<RunName> parseList(List<String> formattedStrings)')
+- java.remove_method('owl-bot-staging/v1/proto-google-cloud-bigquerydatatransfer-v1/src/main/java/com/google/cloud/bigquery/datatransfer/v1/RunName.java', 'public static List<String> toStringList(List<RunName> values)')
+
+Python Differences in: java-grafeas/owlbot.py
+- import glob
+- from datetime import datetime
+- license = f"""/*
+- * Copyright {datetime.now().year} The Grafeas Authors. All rights reserved.
+- *
+- * Licensed under the Apache License, Version 2.0 (the "License");
+- * you may not use this file except in compliance with the License.
+- * You may obtain a copy of the License at
+- *
+- * https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+- """
+- protobuf_header = "// Generated by the protocol buffer compiler. DO NOT EDIT!"
+- for file in glob.glob('owl-bot-staging/v1/src/**/*.java', recursive=True):
+- if " * Copyright 2021 Google LLC" not in open(file).read() \
+- and protobuf_header in open(file).read() \
+- and license not in open(file).read():
+- s.replace(
+- f'owl-bot-staging/v1/src/**/*.java',
+- protobuf_header,
+- f"{license}\n{protobuf_header}"
+- )
+- s.replace(
+- f'owl-bot-staging/v1/src/main/java/io/grafeas/v1/GrafeasGrpc.java',
+- f"package io.grafeas.v1;",
+- f"{license}\npackage io.grafeas.v1;"
+- )
+- s.replace(
+- f'owl-bot-staging/v1/src/**/GrafeasStubSettings.java',
+- r'^(.*)ImmutableList\.<String>builder\(\).add\(".*"\)\.build\(\);',
+- '\g<1>ImmutableList.of();'
+- )
+- s.replace(
+- f'owl-bot-staging/v1/src/**/GrafeasStubSettings.java',
+- ' return "containeranalysis.googleapis.com:443";',
+- ' return null;'
+- )
+- s.replace(
+- f'owl-bot-staging/v1/src/**/GrafeasStubSettings.java',
+- '\s+\*.*default service address.*\n\s+\*.*',
+- ''
+- )
+
+Python Differences in: java-iam/owlbot.py
+- """This script is used to synthesize generated parts of this library."""
+
+Python Differences in: java-securitycenter/owlbot.py
+- version = library.parts[len(library.parts) - 1]
+- s.replace(
+- [f"owl-bot-staging/{version}/proto-google-cloud-securitycenter-{version}/src/main/java/com/google/cloud/securitycenter/{version}/SecurityMarksName.java"],
+- "formatOrganizationAssetName\(",
+- "formatOrganizationAssetSecurityMarksName("
+- )
+- s.replace(
+- [f"owl-bot-staging/{version}/proto-google-cloud-securitycenter-{version}/src/main/java/com/google/cloud/securitycenter/{version}/SecurityMarksName.java"],
+- "formatOrganizationSourceFindingName\(",
+- "formatOrganizationSourceFindingSecurityMarksName("
+- )
+- s.replace(
+- [f"owl-bot-staging/{version}/proto-google-cloud-securitycenter-{version}/src/main/java/com/google/cloud/securitycenter/{version}/SecurityMarksName.java"],
+- "newOrganizationAssetBuilder\(",
+- "newOrganizationAssetSecurityMarksBuilder("
+- )
+- s.replace(
+- [f"owl-bot-staging/{version}/proto-google-cloud-securitycenter-{version}/src/main/java/com/google/cloud/securitycenter/{version}/SecurityMarksName.java"],
+- "newOrganizationSourceFindingBuilder\(",
+- "newOrganizationSourceFindingSecurityMarksBuilder("
+- )
+- s.replace(
+- [f"owl-bot-staging/{version}/proto-google-cloud-securitycenter-{version}/src/main/java/com/google/cloud/securitycenter/{version}/SecurityMarksName.java"],
+- "ofOrganizationAssetName\(",
+- "ofOrganizationAssetSecurityMarksName("
+- )
+- s.replace(
+- [f"owl-bot-staging/{version}/proto-google-cloud-securitycenter-{version}/src/main/java/com/google/cloud/securitycenter/{version}/SecurityMarksName.java"],
+- "ofOrganizationSourceFindingName\(",
+- "ofOrganizationSourceFindingSecurityMarksName("
+- )
+- s.replace(
+- [f"owl-bot-staging/{version}/proto-google-cloud-securitycenter-{version}/src/main/java/com/google/cloud/securitycenter/{version}/SecurityMarksName.java"],
+- "OrganizationSourceFindingBuilder",
+- "OrganizationSourceFindingSecurityMarksBuilder",
+- )
+- s.replace(
+- [f"owl-bot-staging/{version}/google-cloud-securitycenter/src/test/java/com/google/cloud/securitycenter/{version}/SecurityCenterClientTest.java"],
+- "SecurityMarksName.ofOrganizationAssetName",
+- "SecurityMarksName.ofOrganizationAssetSecurityMarksName"
+- )
+Warning: Corresponding original file not found: /usr/local/google/home/zhumin/repos/java-test-output/java-dns/owlbot.py
+Warning: Corresponding original file not found: /usr/local/google/home/zhumin/repos/java-test-output/java-notification/owlbot.py
+
+Python Differences in: java-dlp/owlbot.py
+- java.remove_method(
+- "owl-bot-staging/v2/proto-google-cloud-dlp-v2/src/main/java/com/google/privacy/dlp/v2/InspectTemplateName.java",
+- "public static List<InspectTemplateName> parseList(List<String> formattedStrings)"
+- )
+- java.remove_method(
+- "owl-bot-staging/v2/proto-google-cloud-dlp-v2/src/main/java/com/google/privacy/dlp/v2/InspectTemplateName.java",
+- "public static List<String> toStringList(List<InspectTemplateName> values)"
+- )
+- java.remove_method(
+- "owl-bot-staging/v2/proto-google-cloud-dlp-v2/src/main/java/com/google/privacy/dlp/v2/DeidentifyTemplateName.java",
+- "public static List<DeidentifyTemplateName> parseList(List<String> formattedStrings)"
+- )
+- java.remove_method(
+- "owl-bot-staging/v2/proto-google-cloud-dlp-v2/src/main/java/com/google/privacy/dlp/v2/DeidentifyTemplateName.java",
+- "public static List<String> toStringList(List<DeidentifyTemplateName> values)"
+- )
+- java.remove_method(
+- "owl-bot-staging/v2/proto-google-cloud-dlp-v2/src/main/java/com/google/privacy/dlp/v2/StoredInfoTypeName.java",
+- "public static List<StoredInfoTypeName> parseList(List<String> formattedStrings)"
+- )
+- java.remove_method(
+- "owl-bot-staging/v2/proto-google-cloud-dlp-v2/src/main/java/com/google/privacy/dlp/v2/StoredInfoTypeName.java",
+- "public static List<String> toStringList(List<StoredInfoTypeName> values)"
+- )
+
+Python Differences in: java-monitoring-dashboards/owlbot.py
+- import os
+- os.remove("owl-bot-staging/v1/proto-google-cloud-monitoring-dashboard-v1/src/main/java/com/google/monitoring/dashboard/v1/DrilldownsProto.java")
+- os.remove("owl-bot-staging/v1/proto-google-cloud-monitoring-dashboard-v1/src/main/java/com/google/monitoring/dashboard/v1/ServiceMonitoringProto.java")
+
+Python Differences in: java-monitoring/owlbot.py
+- def fix_resource(client, version, name):
+- s.replace(
+- [f'owl-bot-staging/{version}/google-cloud-monitoring/**/{version}/{client}.java'],
+- f'import com.google.monitoring.{version}.{name}',
+- 'import com.google.api.resourcenames.ResourceName',
+- )
+- s.replace(
+- [f'owl-bot-staging/{version}/google-cloud-monitoring/**/{version}/{client}.java'],
+- name,
+- 'ResourceName',
+- )
+- version='v3'
+- fix_resource('AlertPolicyServiceClient', version, 'FolderName')
+- fix_resource('GroupServiceClient', version, 'FolderName')
+- fix_resource('MetricServiceClient', version, 'FolderName')
+- fix_resource('NotificationChannelServiceClient', version, 'FolderName')
+- fix_resource('ServiceMonitoringServiceClient', version, 'FolderName')
+- fix_resource('UptimeCheckServiceClient', version, 'FolderName')
+
+Python Differences in: java-network-management/owlbot.py
+- v1_file_name = "owl-bot-staging/v1/google-cloud-network-management/src/test/java/com/google/cloud/networkmanagement/v1/ReachabilityServiceClientHttpJsonTest.java"
+- v1beta1_file_name = "owl-bot-staging/v1beta1/google-cloud-network-management/src/test/java/com/google/cloud/networkmanagement/v1beta1/ReachabilityServiceClientHttpJsonTest.java"
+- v1beta1_vpcflowlogs_file_name = "owl-bot-staging/v1beta1/google-cloud-network-management/src/test/java/com/google/cloud/networkmanagement/v1beta1/VpcFlowLogsServiceClientHttpJsonTest.java"
+- s.replace(
+- v1_file_name,
+- r'^import org.junit.Test;',
+- 'import org.junit.Ignore;\nimport org.junit.Test;'
+- )
+- s.replace(
+- v1_file_name,
+- r"\s+@Test\n\s+public void setIamPolicyTest\(\) throws Exception.*",
+- '@Ignore("See: https://github.com/googleapis/sdk-platform-java/issues/1839")\n@Test\npublic void setIamPolicyTest() throws Exception {'
+- )
+- s.replace(
+- v1_file_name,
+- r'\s+@Test\n\s+public void getIamPolicyTest\(\) throws Exception.*',
+- '@Ignore("See: https://github.com/googleapis/sdk-platform-java/issues/1839")\n@Test\npublic void getIamPolicyTest() throws Exception {'
+- )
+- s.replace(
+- v1_file_name,
+- r'\s+@Test\n\s+public void testIamPermissionsTest\(\) throws Exception.*',
+- '@Ignore("See: https://github.com/googleapis/sdk-platform-java/issues/1839")@Test\npublic void testIamPermissionsTest() throws Exception {'
+- )
+- s.replace(
+- v1_file_name,
+- r'\s+@Test\n\s+public void listConnectivityTestsTest\(\) throws Exception.*',
+- '@Ignore("See: https://github.com/googleapis/sdk-platform-java/issues/1839")@Test\npublic void listConnectivityTestsTest() throws Exception {'
+- )
+- s.replace(
+- v1_file_name,
+- r'\s+@Test\n\s+public void createConnectivityTestTest\(\) throws Exception.*',
+- '@Ignore("See: https://github.com/googleapis/sdk-platform-java/issues/1839")@Test\npublic void createConnectivityTestTest() throws Exception {'
+- )
+- s.replace(
+- v1beta1_file_name,
+- r'^import org.junit.Test;',
+- 'import org.junit.Ignore;\nimport org.junit.Test;'
+- )
+- s.replace(
+- v1beta1_file_name,
+- r"\s+@Test\n\s+public void setIamPolicyTest\(\) throws Exception.*",
+- '@Ignore("See: https://github.com/googleapis/sdk-platform-java/issues/1839")\n@Test\npublic void setIamPolicyTest() throws Exception {'
+- )
+- s.replace(
+- v1beta1_file_name,
+- r'\s+@Test\n\s+public void getIamPolicyTest\(\) throws Exception.*',
+- '@Ignore("See: https://github.com/googleapis/sdk-platform-java/issues/1839")\n@Test\npublic void getIamPolicyTest() throws Exception {'
+- )
+- s.replace(
+- v1beta1_file_name,
+- r'\s+@Test\n\s+public void testIamPermissionsTest\(\) throws Exception.*',
+- '@Ignore("See: https://github.com/googleapis/sdk-platform-java/issues/1839")@Test\npublic void testIamPermissionsTest() throws Exception {'
+- )
+- s.replace(
+- v1beta1_file_name,
+- r'\s+@Test\n\s+public void listConnectivityTestsTest\(\) throws Exception.*',
+- '@Ignore("See: https://github.com/googleapis/sdk-platform-java/issues/1839")@Test\npublic void listConnectivityTestsTest() throws Exception {'
+- )
+- s.replace(
+- v1beta1_file_name,
+- r'\s+@Test\n\s+public void createConnectivityTestTest\(\) throws Exception.*',
+- '@Ignore("See: https://github.com/googleapis/sdk-platform-java/issues/1839")@Test\npublic void createConnectivityTestTest() throws Exception {'
+- )
+- s.replace(
+- v1beta1_vpcflowlogs_file_name,
+- r'^import org.junit.Test;',
+- 'import org.junit.Ignore;\nimport org.junit.Test;'
+- )
+- s.replace(
+- v1beta1_vpcflowlogs_file_name,
+- r"\s+@Test\n\s+public void setIamPolicyTest\(\) throws Exception.*",
+- '@Ignore("See: https://github.com/googleapis/sdk-platform-java/issues/1839")\n@Test\npublic void setIamPolicyTest() throws Exception {'
+- )
+- s.replace(
+- v1beta1_vpcflowlogs_file_name,
+- r'\s+@Test\n\s+public void getIamPolicyTest\(\) throws Exception.*',
+- '@Ignore("See: https://github.com/googleapis/sdk-platform-java/issues/1839")\n@Test\npublic void getIamPolicyTest() throws Exception {'
+- )
+- s.replace(
+- v1beta1_vpcflowlogs_file_name,
+- r'\s+@Test\n\s+public void testIamPermissionsTest\(\) throws Exception.*',
+- '@Ignore("See: https://github.com/googleapis/sdk-platform-java/issues/1839")@Test\npublic void testIamPermissionsTest() throws Exception {'
+- )
+
+Python Differences in: java-dialogflow/owlbot.py
+- if 'formatProjectAgentName' not in open('owl-bot-staging/v2beta1/proto-google-cloud-dialogflow-v2beta1/src/main/java/com/google/cloud/dialogflow/v2beta1/AgentName.java').read():
+- s.replace(
+- 'owl-bot-staging/v2beta1/proto-google-cloud-dialogflow-v2beta1/src/main/java/com/google/cloud/dialogflow/v2beta1/AgentName.java',
+- 'public static String formatProjectName',
+- 'public static String formatProjectAgentName'
+- )
+- s.replace(
+- 'owl-bot-staging/v2beta1/proto-google-cloud-dialogflow-v2beta1/src/main/java/com/google/cloud/dialogflow/v2beta1/AgentName.java',
+- 'public static String formatProjectLocationName',
+- 'public static String formatProjectLocationAgentName'
+- )
+- s.replace(
+- 'owl-bot-staging/v2beta1/proto-google-cloud-dialogflow-v2beta1/src/main/java/com/google/cloud/dialogflow/v2beta1/AgentName.java',
+- 'ProjectBuilder',
+- 'ProjectAgentBuilder'
+- )
+- s.replace(
+- 'owl-bot-staging/v2beta1/proto-google-cloud-dialogflow-v2beta1/src/main/java/com/google/cloud/dialogflow/v2beta1/AgentName.java',
+- 'ProjectLocationBuilder',
+- 'ProjectLocationAgentBuilder'
+- )
+- DEPRECATION_JAVADOC = """Please use {{@link 
+- java.copy_and_rename_method(
+- 'owl-bot-staging/v2beta1/proto-google-cloud-dialogflow-v2beta1/src/main/java/com/google/cloud/dialogflow/v2beta1/AgentName.java',
+- 'public static AgentName ofProjectName(String project)',
+- 'ofProjectName',
+- 'ofProjectAgentName'
+- )
+- java.deprecate_method(
+- 'owl-bot-staging/v2beta1/proto-google-cloud-dialogflow-v2beta1/src/main/java/com/google/cloud/dialogflow/v2beta1/AgentName.java',
+- 'public static AgentName ofProjectAgentName(String project)',
+- DEPRECATION_JAVADOC.format(new_method='ofProjectName')
+- )
+- s.replace(
+- 'owl-bot-staging/v2beta1/proto-google-cloud-dialogflow-v2beta1/src/main/java/com/google/cloud/dialogflow/v2beta1/AgentName.java',
+- 'return ofProjectName',
+- 'return ofProjectAgentName'
+- )
+- s.replace(
+- 'owl-bot-staging/v2beta1/proto-google-cloud-dialogflow-v2beta1/src/main/java/com/google/cloud/dialogflow/v2beta1/AgentName.java',
+- 'return ofProjectLocationName',
+- 'return ofProjectLocationAgentName'
+- )
+- java.copy_and_rename_method(
+- 'owl-bot-staging/v2beta1/proto-google-cloud-dialogflow-v2beta1/src/main/java/com/google/cloud/dialogflow/v2beta1/AgentName.java',
+- 'public static AgentName ofProjectLocationName(String project, String location)',
+- 'ofProjectLocationName',
+- 'ofProjectLocationAgentName'
+- )
+- java.deprecate_method(
+- 'owl-bot-staging/v2beta1/proto-google-cloud-dialogflow-v2beta1/src/main/java/com/google/cloud/dialogflow/v2beta1/AgentName.java',
+- 'public static AgentName ofProjectLocationAgentName(String project, String location)',
+- DEPRECATION_JAVADOC.format(new_method='ofProjectLocationName')
+- )
+- s.replace(
+- [
+- 'owl-bot-staging/v2beta1/google-cloud-dialogflow/src/test/java/com/google/cloud/dialogflow/v2beta1/AgentsClientTest.java',
+- 'owl-bot-staging/v2beta1/google-cloud-dialogflow/src/test/java/com/google/cloud/dialogflow/v2beta1/EnvironmentsClientTest.java',
+- 'owl-bot-staging/v2beta1/google-cloud-dialogflow/src/test/java/com/google/cloud/dialogflow/v2beta1/EntityTypesClientTest.java',
+- 'owl-bot-staging/v2beta1/google-cloud-dialogflow/src/test/java/com/google/cloud/dialogflow/v2beta1/IntentsClientTest.java',
+- 'owl-bot-staging/v2beta1/google-cloud-dialogflow/src/test/java/com/google/cloud/dialogflow/v2beta1/VersionsClientTest.java'
+- ],
+- 'ofProjectName',
+- 'ofProjectAgentName'
+- )
+
+Python Differences in: java-containeranalysis/owlbot.py
+- get_grafeas_code = """
+- /**
+- * Returns a new GrafeasClient with the same configured settings.
+- *
+- * @throws IOException
+- */
+- public GrafeasClient getGrafeasClient() throws IOException {
+- return GrafeasClient.create(GrafeasUtils.transformSettings(settings));
+- }
+- """
+- s.replace(
+- f'owl-bot-staging/v1/google-cloud-containeranalysis/src/main/java/com/google/cloud/devtools/containeranalysis/v1/ContainerAnalysisClient.java',
+- 'import com.google.iam.v1.TestIamPermissionsResponse;',
+- 'import com.google.iam.v1.TestIamPermissionsResponse;\nimport io.grafeas.v1.GrafeasClient;'
+- )
+- s.replace(
+- f'owl-bot-staging/v1/google-cloud-containeranalysis/src/main/java/com/google/cloud/devtools/containeranalysis/v1/ContainerAnalysisClient.java',
+- r'(\s+private final ContainerAnalysisStub stub;.*)',
+- f'\g<1>{get_grafeas_code}'
+- )
+
+Python Differences in: java-vision/owlbot.py
+- DEPRECATED_RESOURCE_NAME_HELPERS = """
+- private static final PathTemplate LOCATION_PATH_TEMPLATE =
+- PathTemplate.createWithoutUrlEncoding("projects/{project}/locations/{location}");
+- private static final PathTemplate PRODUCT_PATH_TEMPLATE =
+- PathTemplate.createWithoutUrlEncoding(
+- "projects/{project}/locations/{location}/products/{product}");
+- private static final PathTemplate PRODUCT_SET_PATH_TEMPLATE =
+- PathTemplate.createWithoutUrlEncoding(
+- "projects/{project}/locations/{location}/productSets/{product_set}");
+- private static final PathTemplate REFERENCE_IMAGE_PATH_TEMPLATE =
+- PathTemplate.createWithoutUrlEncoding(
+- "projects/{project}/locations/{location}/products/{product}/referenceImages/{reference_image}");
+- /**
+- * Formats a string containing the fully-qualified path to represent a location resource.
+- *
+- * @deprecated Use the {@link LocationName} class instead.
+- */
+- @Deprecated
+- public static final String formatLocationName(String project, String location) {
+- return LOCATION_PATH_TEMPLATE.instantiate(
+- "project", project,
+- "location", location);
+- }
+- /**
+- * Formats a string containing the fully-qualified path to represent a product resource.
+- *
+- * @deprecated Use the {@link ProductName} class instead.
+- */
+- @Deprecated
+- public static final String formatProductName(String project, String location, String product) {
+- return PRODUCT_PATH_TEMPLATE.instantiate(
+- "project", project,
+- "location", location,
+- "product", product);
+- }
+- /**
+- * Formats a string containing the fully-qualified path to represent a product_set resource.
+- *
+- * @deprecated Use the {@link ProductSetName} class instead.
+- */
+- @Deprecated
+- public static final String formatProductSetName(
+- String project, String location, String productSet) {
+- return PRODUCT_SET_PATH_TEMPLATE.instantiate(
+- "project", project,
+- "location", location,
+- "product_set", productSet);
+- }
+- /**
+- * Formats a string containing the fully-qualified path to represent a reference_image resource.
+- *
+- * @deprecated Use the {@link ReferenceImageName} class instead.
+- */
+- @Deprecated
+- public static final String formatReferenceImageName(
+- String project, String location, String product, String referenceImage) {
+- return REFERENCE_IMAGE_PATH_TEMPLATE.instantiate(
+- "project", project,
+- "location", location,
+- "product", product,
+- "reference_image", referenceImage);
+- }
+- /**
+- * Parses the project from the given fully-qualified path which represents a location resource.
+- *
+- * @deprecated Use the {@link LocationName} class instead.
+- */
+- @Deprecated
+- public static final String parseProjectFromLocationName(String locationName) {
+- return LOCATION_PATH_TEMPLATE.parse(locationName).get("project");
+- }
+- /**
+- * Parses the location from the given fully-qualified path which represents a location resource.
+- *
+- * @deprecated Use the {@link LocationName} class instead.
+- */
+- @Deprecated
+- public static final String parseLocationFromLocationName(String locationName) {
+- return LOCATION_PATH_TEMPLATE.parse(locationName).get("location");
+- }
+- /**
+- * Parses the project from the given fully-qualified path which represents a product resource.
+- *
+- * @deprecated Use the {@link ProductName} class instead.
+- */
+- @Deprecated
+- public static final String parseProjectFromProductName(String productName) {
+- return PRODUCT_PATH_TEMPLATE.parse(productName).get("project");
+- }
+- /**
+- * Parses the location from the given fully-qualified path which represents a product resource.
+- *
+- * @deprecated Use the {@link ProductName} class instead.
+- */
+- @Deprecated
+- public static final String parseLocationFromProductName(String productName) {
+- return PRODUCT_PATH_TEMPLATE.parse(productName).get("location");
+- }
+- /**
+- * Parses the product from the given fully-qualified path which represents a product resource.
+- *
+- * @deprecated Use the {@link ProductName} class instead.
+- */
+- @Deprecated
+- public static final String parseProductFromProductName(String productName) {
+- return PRODUCT_PATH_TEMPLATE.parse(productName).get("product");
+- }
+- /**
+- * Parses the project from the given fully-qualified path which represents a product_set resource.
+- *
+- * @deprecated Use the {@link ProductSetName} class instead.
+- */
+- @Deprecated
+- public static final String parseProjectFromProductSetName(String productSetName) {
+- return PRODUCT_SET_PATH_TEMPLATE.parse(productSetName).get("project");
+- }
+- /**
+- * Parses the location from the given fully-qualified path which represents a product_set
+- * resource.
+- *
+- * @deprecated Use the {@link ProductSetName} class instead.
+- */
+- @Deprecated
+- public static final String parseLocationFromProductSetName(String productSetName) {
+- return PRODUCT_SET_PATH_TEMPLATE.parse(productSetName).get("location");
+- }
+- /**
+- * Parses the product_set from the given fully-qualified path which represents a product_set
+- * resource.
+- *
+- * @deprecated Use the {@link ProductSetName} class instead.
+- */
+- @Deprecated
+- public static final String parseProductSetFromProductSetName(String productSetName) {
+- return PRODUCT_SET_PATH_TEMPLATE.parse(productSetName).get("product_set");
+- }
+- /**
+- * Parses the project from the given fully-qualified path which represents a reference_image
+- * resource.
+- *
+- * @deprecated Use the {@link ReferenceImageName} class instead.
+- */
+- @Deprecated
+- public static final String parseProjectFromReferenceImageName(String referenceImageName) {
+- return REFERENCE_IMAGE_PATH_TEMPLATE.parse(referenceImageName).get("project");
+- }
+- /**
+- * Parses the location from the given fully-qualified path which represents a reference_image
+- * resource.
+- *
+- * @deprecated Use the {@link ReferenceImageName} class instead.
+- */
+- @Deprecated
+- public static final String parseLocationFromReferenceImageName(String referenceImageName) {
+- return REFERENCE_IMAGE_PATH_TEMPLATE.parse(referenceImageName).get("location");
+- }
+- /**
+- * Parses the product from the given fully-qualified path which represents a reference_image
+- * resource.
+- *
+- * @deprecated Use the {@link ReferenceImageName} class instead.
+- */
+- @Deprecated
+- public static final String parseProductFromReferenceImageName(String referenceImageName) {
+- return REFERENCE_IMAGE_PATH_TEMPLATE.parse(referenceImageName).get("product");
+- }
+- /**
+- * Parses the reference_image from the given fully-qualified path which represents a
+- * reference_image resource.
+- *
+- * @deprecated Use the {@link ReferenceImageName} class instead.
+- */
+- @Deprecated
+- public static final String parseReferenceImageFromReferenceImageName(String referenceImageName) {
+- return REFERENCE_IMAGE_PATH_TEMPLATE.parse(referenceImageName).get("reference_image");
+- }
+- """
+- s.replace(
+- "owl-bot-staging/v1/google-cloud-vision/src/main/java/com/google/cloud/vision/v1/ProductSearchClient.java",
+- "private final OperationsClient operationsClient;",
+- f"private final OperationsClient operationsClient;\n{DEPRECATED_RESOURCE_NAME_HELPERS}"
+- )
+- s.replace(
+- "owl-bot-staging/v1/google-cloud-vision/src/main/java/com/google/cloud/vision/v1/ProductSearchClient.java",
+- "import com.google.api.gax.rpc.UnaryCallable;",
+- "import com.google.api.gax.rpc.UnaryCallable;\nimport com.google.api.pathtemplate.PathTemplate;"
+- )
+
+Python Differences in: java-kms/owlbot.py
+- IMPLEMENTS_RESOURCE_NAME = "implements ResourceName"
+- EXTENDS_KEY_NAME = "extends KeyName"
+- ENCRYPT_INSERTION_POINT = r'(\s+public final EncryptResponse encrypt\(ResourceName.*\) {\n.*\n.*\n.*\n.*\n.*\n.*return encrypt\(request\);\n\s+})'
+- SET_IAM_INSERTION_POINT = r'(\s+public final Policy setIamPolicy\(SetIamPolicyRequest request\) {\n\s+return.*\n\s+})'
+- GET_IAM_INSERTION_POINT = r'(\s+public final Policy getIamPolicy\(GetIamPolicyRequest request\) {\n\s+return.*\n\s+})'
+- TEST_IAM_INSERTION_POINT = r'(\s+public final TestIamPermissionsResponse testIamPermissions\(TestIamPermissionsRequest request\) {\n\s+return.*\n\s+})'
+- ENCRYPT_METHOD = """
+- // ADDED BY SYNTH
+- /**
+- * Encrypts data, so that it can only be recovered by a call to
+- * [Decrypt][google.cloud.kms.v1.KeyManagementService.Decrypt]. The
+- * [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose] must be
+- * [ENCRYPT_DECRYPT][google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ENCRYPT_DECRYPT].
+- *
+- * <p>Sample code:
+- *
+- * <pre><code>
+- * try (KeyManagementServiceClient keyManagementServiceClient = KeyManagementServiceClient.create()) {
+- * CryptoKeyPathName name = CryptoKeyName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]", "[CRYPTO_KEY]");
+- * ByteString plaintext = ByteString.copyFromUtf8("");
+- * EncryptResponse response = keyManagementServiceClient.encrypt(name, plaintext);
+- * }
+- * </code></pre>
+- *
+- * @param name Required. The resource name of the [CryptoKey][google.cloud.kms.v1.CryptoKey] or
+- * [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] to use for encryption.
+- * <p>If a [CryptoKey][google.cloud.kms.v1.CryptoKey] is specified, the server will use its
+- * [primary version][google.cloud.kms.v1.CryptoKey.primary].
+- * @param plaintext Required. The data to encrypt. Must be no larger than 64KiB.
+- * <p>The maximum size depends on the key version's
+- * [protection_level][google.cloud.kms.v1.CryptoKeyVersionTemplate.protection_level]. For
+- * [SOFTWARE][google.cloud.kms.v1.ProtectionLevel.SOFTWARE] keys, the plaintext must be no
+- * larger than 64KiB. For [HSM][google.cloud.kms.v1.ProtectionLevel.HSM] keys, the combined
+- * length of the plaintext and additional_authenticated_data fields must be no larger than
+- * 8KiB.
+- * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+- */
+- public final EncryptResponse encrypt(CryptoKeyPathName name, ByteString plaintext) {
+- EncryptRequest request =
+- EncryptRequest.newBuilder()
+- .setName(name == null ? null : name.toString())
+- .setPlaintext(plaintext)
+- .build();
+- return encrypt(request);
+- }
+- """
+- SET_IAM_METHODS = """
+- // ADDED BY SYNTH
+- /**
+- * Sets the access control policy on the specified resource. Replaces any existing policy.
+- *
+- * <p>Can return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED
+- *
+- * <p>Sample code:
+- *
+- * <pre><code>
+- * try (KeyManagementServiceClient keyManagementServiceClient = KeyManagementServiceClient.create()) {
+- * KeyName resource = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
+- * Policy policy = Policy.newBuilder().build();
+- * Policy response = keyManagementServiceClient.setIamPolicy(resource, policy);
+- * }
+- * </code></pre>
+- *
+- * @param resource REQUIRED: The resource for which the policy is being specified. See the
+- * operation documentation for the appropriate value for this field.
+- * @param policy REQUIRED: The complete policy to be applied to the `resource`. The size of the
+- * policy is limited to a few 10s of KB. An empty policy is a valid policy but certain Cloud
+- * Platform services (such as Projects) might reject them.
+- * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+- */
+- public final Policy setIamPolicy(KeyName resource, Policy policy) {
+- SetIamPolicyRequest request =
+- SetIamPolicyRequest.newBuilder()
+- .setResource(resource == null ? null : resource.toString())
+- .setPolicy(policy)
+- .build();
+- return setIamPolicy(request);
+- }
+- // ADDED BY SYNTH
+- /**
+- * Sets the access control policy on the specified resource. Replaces any existing policy.
+- *
+- * <p>Can return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED
+- *
+- * <p>Sample code:
+- *
+- * <pre><code>
+- * try (KeyManagementServiceClient keyManagementServiceClient = KeyManagementServiceClient.create()) {
+- * KeyName resource = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
+- * Policy policy = Policy.newBuilder().build();
+- * Policy response = keyManagementServiceClient.setIamPolicy(resource.toString(), policy);
+- * }
+- * </code></pre>
+- *
+- * @param resource REQUIRED: The resource for which the policy is being specified. See the
+- * operation documentation for the appropriate value for this field.
+- * @param policy REQUIRED: The complete policy to be applied to the `resource`. The size of the
+- * policy is limited to a few 10s of KB. An empty policy is a valid policy but certain Cloud
+- * Platform services (such as Projects) might reject them.
+- * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+- */
+- public final Policy setIamPolicy(String resource, Policy policy) {
+- SetIamPolicyRequest request =
+- SetIamPolicyRequest.newBuilder().setResource(resource).setPolicy(policy).build();
+- return setIamPolicy(request);
+- }
+- """
+- GET_IAM_METHODS = """
+- // ADDED BY SYNTH
+- /**
+- * Gets the access control policy for a resource. Returns an empty policy if the resource exists
+- * and does not have a policy set.
+- *
+- * <p>Sample code:
+- *
+- * <pre><code>
+- * try (KeyManagementServiceClient keyManagementServiceClient = KeyManagementServiceClient.create()) {
+- * KeyName resource = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
+- * Policy response = keyManagementServiceClient.getIamPolicy(resource);
+- * }
+- * </code></pre>
+- *
+- * @param resource REQUIRED: The resource for which the policy is being requested. See the
+- * operation documentation for the appropriate value for this field.
+- * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+- */
+- public final Policy getIamPolicy(KeyName resource) {
+- GetIamPolicyRequest request =
+- GetIamPolicyRequest.newBuilder()
+- .setResource(resource == null ? null : resource.toString())
+- .build();
+- return getIamPolicy(request);
+- }
+- // ADDED BY SYNTH
+- /**
+- * Gets the access control policy for a resource. Returns an empty policy if the resource exists
+- * and does not have a policy set.
+- *
+- * <p>Sample code:
+- *
+- * <pre><code>
+- * try (KeyManagementServiceClient keyManagementServiceClient = KeyManagementServiceClient.create()) {
+- * KeyName resource = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
+- * Policy response = keyManagementServiceClient.getIamPolicy(resource.toString());
+- * }
+- * </code></pre>
+- *
+- * @param resource REQUIRED: The resource for which the policy is being requested. See the
+- * operation documentation for the appropriate value for this field.
+- * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+- */
+- public final Policy getIamPolicy(String resource) {
+- GetIamPolicyRequest request = GetIamPolicyRequest.newBuilder().setResource(resource).build();
+- return getIamPolicy(request);
+- }
+- """
+- TEST_IAM_METHODS = """
+- // ADDED BY SYNTH
+- /**
+- * Returns permissions that a caller has on the specified resource. If the resource does not
+- * exist, this will return an empty set of permissions, not a NOT_FOUND error.
+- *
+- * <p>Note: This operation is designed to be used for building permission-aware UIs and
+- * command-line tools, not for authorization checking. This operation may "fail open" without
+- * warning.
+- *
+- * <p>Sample code:
+- *
+- * <pre><code>
+- * try (KeyManagementServiceClient keyManagementServiceClient = KeyManagementServiceClient.create()) {
+- * KeyName resource = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
+- * List&lt;String&gt; permissions = new ArrayList&lt;&gt;();
+- * TestIamPermissionsResponse response = keyManagementServiceClient.testIamPermissions(resource, permissions);
+- * }
+- * </code></pre>
+- *
+- * @param resource REQUIRED: The resource for which the policy detail is being requested. See the
+- * operation documentation for the appropriate value for this field.
+- * @param permissions The set of permissions to check for the `resource`. Permissions with
+- * wildcards (such as '&
+- * [IAM Overview](https://cloud.google.com/iam/docs/overview
+- * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+- */
+- public final TestIamPermissionsResponse testIamPermissions(
+- KeyName resource, List<String> permissions) {
+- TestIamPermissionsRequest request =
+- TestIamPermissionsRequest.newBuilder()
+- .setResource(resource == null ? null : resource.toString())
+- .addAllPermissions(permissions)
+- .build();
+- return testIamPermissions(request);
+- }
+- // ADDED BY SYNTH
+- /**
+- * Returns permissions that a caller has on the specified resource. If the resource does not
+- * exist, this will return an empty set of permissions, not a NOT_FOUND error.
+- *
+- * <p>Note: This operation is designed to be used for building permission-aware UIs and
+- * command-line tools, not for authorization checking. This operation may "fail open" without
+- * warning.
+- *
+- * <p>Sample code:
+- *
+- * <pre><code>
+- * try (KeyManagementServiceClient keyManagementServiceClient = KeyManagementServiceClient.create()) {
+- * KeyName resource = KeyRingName.of("[PROJECT]", "[LOCATION]", "[KEY_RING]");
+- * List&lt;String&gt; permissions = new ArrayList&lt;&gt;();
+- * TestIamPermissionsResponse response = keyManagementServiceClient.testIamPermissions(resource.toString(), permissions);
+- * }
+- * </code></pre>
+- *
+- * @param resource REQUIRED: The resource for which the policy detail is being requested. See the
+- * operation documentation for the appropriate value for this field.
+- * @param permissions The set of permissions to check for the `resource`. Permissions with
+- * wildcards (such as '&
+- * [IAM Overview](https://cloud.google.com/iam/docs/overview
+- * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+- */
+- public final TestIamPermissionsResponse testIamPermissions(
+- String resource, List<String> permissions) {
+- TestIamPermissionsRequest request =
+- TestIamPermissionsRequest.newBuilder()
+- .setResource(resource)
+- .addAllPermissions(permissions)
+- .build();
+- return testIamPermissions(request);
+- }
+- """
+- s.replace(
+- "**/KeyManagementServiceClient.java",
+- ENCRYPT_INSERTION_POINT,
+- "\g<1>\n\n" + ENCRYPT_METHOD
+- )
+- s.replace(
+- "**/KeyManagementServiceClient.java",
+- GET_IAM_INSERTION_POINT,
+- "\g<1>\n\n" + GET_IAM_METHODS
+- )
+- s.replace(
+- "**/KeyManagementServiceClient.java",
+- SET_IAM_INSERTION_POINT,
+- "\g<1>\n\n" + SET_IAM_METHODS
+- )
+- s.replace(
+- "**/KeyManagementServiceClient.java",
+- TEST_IAM_INSERTION_POINT,
+- "\g<1>\n\n" + TEST_IAM_METHODS
+- )
+- s.replace(
+- "**/KeyRingName.java",
+- IMPLEMENTS_RESOURCE_NAME,
+- EXTENDS_KEY_NAME
+- )
+- s.replace(
+- "**/CryptoKeyName.java",
+- IMPLEMENTS_RESOURCE_NAME,
+- EXTENDS_KEY_NAME)
+Files with Python differences (relative to 'input'):
+java-os-login/owlbot.py
+java-tasks/owlbot.py
+java-service-management/owlbot.py
+java-errorreporting/owlbot.py
+java-bigquerydatatransfer/owlbot.py
+java-grafeas/owlbot.py
+java-iam/owlbot.py
+java-securitycenter/owlbot.py
+java-dlp/owlbot.py
+java-monitoring-dashboards/owlbot.py
+java-monitoring/owlbot.py
+java-network-management/owlbot.py
+java-dialogflow/owlbot.py
+java-containeranalysis/owlbot.py
+java-vision/owlbot.py
+java-kms/owlbot.py
+
+Total Python differences found: 16
+
+Total files compared: 207
