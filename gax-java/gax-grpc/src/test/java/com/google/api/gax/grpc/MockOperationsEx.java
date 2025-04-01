@@ -31,7 +31,6 @@ package com.google.api.gax.grpc;
 
 import com.google.api.core.BetaApi;
 import com.google.api.gax.grpc.testing.MockGrpcService;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Message;
 import io.grpc.ServerServiceDefinition;
 import java.util.List;
