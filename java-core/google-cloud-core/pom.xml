@@ -150,7 +150,7 @@
               <relocations>
                 <relocation>
                   <pattern>com.google.protobuf</pattern>
-                  <shadedPattern>com.shaded.google.protobuf.common-protos</shadedPattern>
+                  <shadedPattern>com.shaded.google.protobuf.core</shadedPattern>
                   <excludes>
                     <exclude>com.google.protobuf.AbstractMessage</exclude>
                     <exclude>com.google.protobuf.AbstractMessageLite</exclude>
