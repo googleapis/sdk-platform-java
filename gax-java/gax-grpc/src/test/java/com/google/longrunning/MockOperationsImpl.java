@@ -33,6 +33,7 @@ import com.google.api.core.BetaApi;
 import com.google.longrunning.OperationsGrpc.OperationsImplBase;
 import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Empty;
+import com.google.protobuf.Message;
 import io.grpc.stub.StreamObserver;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -41,7 +42,7 @@ import java.util.Queue;
 
 @BetaApi
 public class MockOperationsImpl extends OperationsImplBase {
-  private List<AbstractMessage> requests;
+  private List<Message> requests;
   private Queue<Object> responses;
 
   public MockOperationsImpl() {
@@ -49,15 +50,15 @@ public class MockOperationsImpl extends OperationsImplBase {
     responses = new LinkedList<>();
   }
 
-  public List<AbstractMessage> getRequests() {
+  public List<Message> getRequests() {
     return requests;
   }
 
-  public void addResponse(AbstractMessage response) {
+  public void addResponse(Message response) {
     responses.add(response);
   }
 
-  public void setResponses(List<AbstractMessage> responses) {
+  public void setResponses(List<Message> responses) {
     this.responses = new LinkedList<Object>(responses);
   }
 
