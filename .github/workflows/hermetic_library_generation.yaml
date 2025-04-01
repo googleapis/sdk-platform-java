@@ -15,7 +15,8 @@
 # downstream client libraries before they are released.
 name: Hermetic library generation upon generation config change through pull requests
 on:
-  pull_request:
+  # TODO: uncomment this before merging to prevent a formatting regression
+  #pull_request:
   workflow_dispatch:
 
 env:
