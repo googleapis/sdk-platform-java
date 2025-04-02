@@ -15,7 +15,8 @@
 # install gapic-generator-java in a separate layer so we don't overload the image
 # with the transferred source code and jars
 
-FROM docker.io/library/maven:3.9.9-eclipse-temurin-11-alpine@sha256:456f60c1643cf70e3c1d630884387fbfa207ad5975d17b0323cc36030dc13c40 AS ggj-build
+
+FROM docker.io/library/maven:3.9.9-eclipse-temurin-17-alpine@sha256:969014ee8852c9910ff5ef09de17541c2587819364b79d7dc044634dfb8a3388 AS ggj-build
 
 WORKDIR /sdk-platform-java
 COPY . .
@@ -35,7 +36,7 @@ RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_
 
 FROM docker.io/library/alpine:3.21.2@sha256:56fa17d2a7e7f168a043a2712e63aed1f8543aeafdcee47c58dcffe38ed51099 as glibc-compat
 
-RUN apk add git sudo
+RUN apk update && apk add git sudo
 # This SHA is the latest known-to-work version of this binary compatibility tool
 ARG GLIB_MUS_SHA=e94aca542e3ab08b42aa0b0d6e72478b935bb8e8
 WORKDIR /home
@@ -62,7 +63,7 @@ ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
 
 # install OS tools
-RUN apk update && apk add unzip curl rsync openjdk11 jq bash nodejs npm git
+RUN apk update && apk add unzip curl rsync openjdk17 jq bash nodejs npm git
 
 SHELL [ "/bin/bash", "-c" ]
 

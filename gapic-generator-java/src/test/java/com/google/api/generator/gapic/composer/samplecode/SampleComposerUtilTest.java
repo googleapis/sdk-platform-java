@@ -106,8 +106,7 @@ class SampleComposerUtilTest {
         VariableExpr.withVariable(
             Variable.builder().setName("echoClient2").setType(clientType).build());
     Sample echoClientSampleDiffVarName =
-        echoClientSample
-            .toBuilder()
+        echoClientSample.toBuilder()
             .setBody(
                 Arrays.asList(
                     ExprStatement.withExpr(

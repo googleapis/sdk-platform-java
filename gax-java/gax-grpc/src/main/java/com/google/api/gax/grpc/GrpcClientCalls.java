@@ -57,7 +57,8 @@ import java.util.logging.Logger;
 class GrpcClientCalls {
   private static final Logger LOGGER = Logger.getLogger(GrpcDirectCallable.class.getName());
 
-  private GrpcClientCalls() {};
+  private GrpcClientCalls() {}
+  ;
 
   public static <RequestT, ResponseT> ClientCall<RequestT, ResponseT> newCall(
       MethodDescriptor<RequestT, ResponseT> descriptor, ApiCallContext context) {

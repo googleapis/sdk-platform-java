@@ -19,6 +19,7 @@ steps:
 - name: gcr.io/cloud-builders/docker
   args: [
       "build",
+      "--no-cache",
       "-t", "${_TEST_IMAGE}",
       "-f", ".cloudbuild/library_generation/library_generation_airlock.Dockerfile",
       "."
@@ -48,7 +49,6 @@ steps:
     cd /workspace
     git clone https://github.com/googleapis/google-cloud-java
     cd google-cloud-java
-    git switch 113a378d5aad5018876ec0a8cbfd4d6a4f746809
     git checkout chore/test-hermetic-build
     mkdir ../golden
     cd ../golden
@@ -68,10 +68,10 @@ steps:
   - |
     mvn dependency:copy \
       -B -ntp \
-      -Dartifact=com.google.api:gapic-generator-java:2.38.1 \
+      -Dartifact=com.google.api:gapic-generator-java:2.55.1 \
       -DoutputDirectory=/workspace
     cd /workspace
-    mv gapic-generator-java-2.38.1.jar gapic-generator-java.jar
+    mv gapic-generator-java-2.55.1.jar gapic-generator-java.jar
   id: prepare-generator-jar
   waitFor: [ "-" ]
 

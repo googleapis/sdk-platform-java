@@ -76,7 +76,9 @@ public abstract class DynamicFlowControlSettings {
   @Nullable
   public abstract Long getMinOutstandingRequestBytes();
 
-  /** @see FlowControlSettings#getLimitExceededBehavior() */
+  /**
+   * @see FlowControlSettings#getLimitExceededBehavior()
+   */
   public abstract LimitExceededBehavior getLimitExceededBehavior();
 
   public abstract Builder toBuilder();

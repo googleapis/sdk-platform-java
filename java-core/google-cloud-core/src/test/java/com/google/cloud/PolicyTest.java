@@ -81,8 +81,7 @@ class PolicyTest {
     assertNull(policy.getEtag());
     assertEquals(0, policy.getVersion());
     policy =
-        policy
-            .toBuilder()
+        policy.toBuilder()
             .removeIdentity(VIEWER, USER, ALL_USERS)
             .addIdentity(VIEWER, DOMAIN, GROUP)
             .build();
