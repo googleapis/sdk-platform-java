@@ -34,6 +34,7 @@ public interface ListPoliciesResponseOrBuilder
    * <code>repeated .google.iam.v2.Policy policies = 1;</code>
    */
   java.util.List<com.google.iam.v2.Policy> getPoliciesList();
+
   /**
    *
    *
@@ -44,6 +45,7 @@ public interface ListPoliciesResponseOrBuilder
    * <code>repeated .google.iam.v2.Policy policies = 1;</code>
    */
   com.google.iam.v2.Policy getPolicies(int index);
+
   /**
    *
    *
@@ -54,6 +56,7 @@ public interface ListPoliciesResponseOrBuilder
    * <code>repeated .google.iam.v2.Policy policies = 1;</code>
    */
   int getPoliciesCount();
+
   /**
    *
    *
@@ -64,6 +67,7 @@ public interface ListPoliciesResponseOrBuilder
    * <code>repeated .google.iam.v2.Policy policies = 1;</code>
    */
   java.util.List<? extends com.google.iam.v2.PolicyOrBuilder> getPoliciesOrBuilderList();
+
   /**
    *
    *
@@ -88,6 +92,7 @@ public interface ListPoliciesResponseOrBuilder
    * @return The nextPageToken.
    */
   java.lang.String getNextPageToken();
+
   /**
    *
    *

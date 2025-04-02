@@ -36,6 +36,7 @@ public final class Destination extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.shopping.type.Destination)
     DestinationOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use Destination.newBuilder() to construct.
   private Destination(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -159,6 +160,7 @@ public final class Destination extends com.google.protobuf.GeneratedMessageV3
      * <code>DESTINATION_ENUM_UNSPECIFIED = 0;</code>
      */
     public static final int DESTINATION_ENUM_UNSPECIFIED_VALUE = 0;
+
     /**
      *
      *
@@ -169,6 +171,7 @@ public final class Destination extends com.google.protobuf.GeneratedMessageV3
      * <code>SHOPPING_ADS = 1;</code>
      */
     public static final int SHOPPING_ADS_VALUE = 1;
+
     /**
      *
      *
@@ -179,6 +182,7 @@ public final class Destination extends com.google.protobuf.GeneratedMessageV3
      * <code>DISPLAY_ADS = 2;</code>
      */
     public static final int DISPLAY_ADS_VALUE = 2;
+
     /**
      *
      *
@@ -190,6 +194,7 @@ public final class Destination extends com.google.protobuf.GeneratedMessageV3
      * <code>LOCAL_INVENTORY_ADS = 3;</code>
      */
     public static final int LOCAL_INVENTORY_ADS_VALUE = 3;
+
     /**
      *
      *
@@ -200,6 +205,7 @@ public final class Destination extends com.google.protobuf.GeneratedMessageV3
      * <code>FREE_LISTINGS = 4;</code>
      */
     public static final int FREE_LISTINGS_VALUE = 4;
+
     /**
      *
      *
@@ -211,6 +217,7 @@ public final class Destination extends com.google.protobuf.GeneratedMessageV3
      * <code>FREE_LOCAL_LISTINGS = 5;</code>
      */
     public static final int FREE_LOCAL_LISTINGS_VALUE = 5;
+
     /**
      *
      *
@@ -463,6 +470,7 @@ public final class Destination extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *

@@ -125,6 +125,7 @@ public final class Watchdog implements Runnable, BackgroundResource {
     return watchDuration(
         innerObserver, toJavaTimeDuration(waitTimeout), toJavaTimeDuration(idleTimeout));
   }
+
   /** Wraps the target observer with timing constraints. */
   public <ResponseT> ResponseObserver<ResponseT> watchDuration(
       ResponseObserver<ResponseT> innerObserver,

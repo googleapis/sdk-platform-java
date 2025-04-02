@@ -36,6 +36,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.OpenLink)
     OpenLinkOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use OpenLink.newBuilder() to construct.
   private OpenLink(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -119,6 +120,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
      * <code>FULL_SIZE = 0;</code>
      */
     public static final int FULL_SIZE_VALUE = 0;
+
     /**
      *
      *
@@ -268,6 +270,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
      * <code>NOTHING = 0;</code>
      */
     public static final int NOTHING_VALUE = 0;
+
     /**
      *
      *
@@ -369,6 +372,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object url_ = "";
+
   /**
    *
    *
@@ -392,6 +396,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
+
   /**
    *
    *
@@ -418,6 +423,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
 
   public static final int OPEN_AS_FIELD_NUMBER = 2;
   private int openAs_ = 0;
+
   /**
    *
    *
@@ -436,6 +442,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
   public int getOpenAsValue() {
     return openAs_;
   }
+
   /**
    *
    *
@@ -459,6 +466,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
 
   public static final int ON_CLOSE_FIELD_NUMBER = 3;
   private int onClose_ = 0;
+
   /**
    *
    *
@@ -478,6 +486,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
   public int getOnCloseValue() {
     return onClose_;
   }
+
   /**
    *
    *
@@ -675,6 +684,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -886,6 +896,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object url_ = "";
+
     /**
      *
      *
@@ -908,6 +919,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -930,6 +942,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -951,6 +964,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -968,6 +982,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -992,6 +1007,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int openAs_ = 0;
+
     /**
      *
      *
@@ -1010,6 +1026,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
     public int getOpenAsValue() {
       return openAs_;
     }
+
     /**
      *
      *
@@ -1031,6 +1048,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1051,6 +1069,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
           com.google.apps.card.v1.OpenLink.OpenAs.forNumber(openAs_);
       return result == null ? com.google.apps.card.v1.OpenLink.OpenAs.UNRECOGNIZED : result;
     }
+
     /**
      *
      *
@@ -1075,6 +1094,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1097,6 +1117,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int onClose_ = 0;
+
     /**
      *
      *
@@ -1116,6 +1137,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
     public int getOnCloseValue() {
       return onClose_;
     }
+
     /**
      *
      *
@@ -1138,6 +1160,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1159,6 +1182,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
           com.google.apps.card.v1.OpenLink.OnClose.forNumber(onClose_);
       return result == null ? com.google.apps.card.v1.OpenLink.OnClose.UNRECOGNIZED : result;
     }
+
     /**
      *
      *
@@ -1184,6 +1208,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *

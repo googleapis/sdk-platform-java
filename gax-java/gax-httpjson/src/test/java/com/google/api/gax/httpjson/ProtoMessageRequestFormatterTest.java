@@ -160,8 +160,7 @@ class ProtoMessageRequestFormatterTest {
 
     // Test toBuilder() case
     path =
-        formatter
-            .toBuilder()
+        formatter.toBuilder()
             .build()
             .getPathTemplate()
             .instantiate(Collections.singletonMap("name", "field_name1"));
@@ -179,8 +178,7 @@ class ProtoMessageRequestFormatterTest {
 
     // Test toBuilder() case
     path =
-        formatter
-            .toBuilder()
+        formatter.toBuilder()
             .build()
             .getAdditionalPathTemplates()
             .get(0)

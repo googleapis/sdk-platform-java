@@ -31,6 +31,7 @@ public final class FieldInfoProto {
   }
 
   public static final int FIELD_INFO_FIELD_NUMBER = 291403980;
+
   /**
    *
    *

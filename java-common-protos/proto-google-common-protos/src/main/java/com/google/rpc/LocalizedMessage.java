@@ -34,6 +34,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
     // @@protoc_insertion_point(message_implements:google.rpc.LocalizedMessage)
     LocalizedMessageOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use LocalizedMessage.newBuilder() to construct.
   private LocalizedMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -67,6 +68,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object locale_ = "";
+
   /**
    *
    *
@@ -92,6 +94,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
       return s;
     }
   }
+
   /**
    *
    *
@@ -122,6 +125,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object message_ = "";
+
   /**
    *
    *
@@ -145,6 +149,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
       return s;
     }
   }
+
   /**
    *
    *
@@ -335,6 +340,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -532,6 +538,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
     private int bitField0_;
 
     private java.lang.Object locale_ = "";
+
     /**
      *
      *
@@ -556,6 +563,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -580,6 +588,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -603,6 +612,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -622,6 +632,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -648,6 +659,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
     }
 
     private java.lang.Object message_ = "";
+
     /**
      *
      *
@@ -670,6 +682,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -692,6 +705,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -713,6 +727,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -730,6 +745,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
+
     /**
      *
      *

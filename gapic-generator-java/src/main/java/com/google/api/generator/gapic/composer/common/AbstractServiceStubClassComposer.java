@@ -171,7 +171,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
         returnType = typeStore.get("BidiStreamingCallable");
         break;
       case NONE:
-        // Fall through.
+      // Fall through.
       default:
         returnType = typeStore.get(isLroCallable ? "OperationCallable" : "UnaryCallable");
     }

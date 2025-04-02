@@ -37,6 +37,7 @@ public interface AuditLogOrBuilder
    * @return The serviceName.
    */
   java.lang.String getServiceName();
+
   /**
    *
    *
@@ -68,6 +69,7 @@ public interface AuditLogOrBuilder
    * @return The methodName.
    */
   java.lang.String getMethodName();
+
   /**
    *
    *
@@ -103,6 +105,7 @@ public interface AuditLogOrBuilder
    * @return The resourceName.
    */
   java.lang.String getResourceName();
+
   /**
    *
    *
@@ -133,6 +136,7 @@ public interface AuditLogOrBuilder
    * @return Whether the resourceLocation field is set.
    */
   boolean hasResourceLocation();
+
   /**
    *
    *
@@ -145,6 +149,7 @@ public interface AuditLogOrBuilder
    * @return The resourceLocation.
    */
   com.google.cloud.audit.ResourceLocation getResourceLocation();
+
   /**
    *
    *
@@ -174,6 +179,7 @@ public interface AuditLogOrBuilder
    * @return Whether the resourceOriginalState field is set.
    */
   boolean hasResourceOriginalState();
+
   /**
    *
    *
@@ -192,6 +198,7 @@ public interface AuditLogOrBuilder
    * @return The resourceOriginalState.
    */
   com.google.protobuf.Struct getResourceOriginalState();
+
   /**
    *
    *
@@ -235,6 +242,7 @@ public interface AuditLogOrBuilder
    * @return Whether the status field is set.
    */
   boolean hasStatus();
+
   /**
    *
    *
@@ -247,6 +255,7 @@ public interface AuditLogOrBuilder
    * @return The status.
    */
   com.google.rpc.Status getStatus();
+
   /**
    *
    *
@@ -270,6 +279,7 @@ public interface AuditLogOrBuilder
    * @return Whether the authenticationInfo field is set.
    */
   boolean hasAuthenticationInfo();
+
   /**
    *
    *
@@ -282,6 +292,7 @@ public interface AuditLogOrBuilder
    * @return The authenticationInfo.
    */
   com.google.cloud.audit.AuthenticationInfo getAuthenticationInfo();
+
   /**
    *
    *
@@ -305,6 +316,7 @@ public interface AuditLogOrBuilder
    * <code>repeated .google.cloud.audit.AuthorizationInfo authorization_info = 9;</code>
    */
   java.util.List<com.google.cloud.audit.AuthorizationInfo> getAuthorizationInfoList();
+
   /**
    *
    *
@@ -317,6 +329,7 @@ public interface AuditLogOrBuilder
    * <code>repeated .google.cloud.audit.AuthorizationInfo authorization_info = 9;</code>
    */
   com.google.cloud.audit.AuthorizationInfo getAuthorizationInfo(int index);
+
   /**
    *
    *
@@ -329,6 +342,7 @@ public interface AuditLogOrBuilder
    * <code>repeated .google.cloud.audit.AuthorizationInfo authorization_info = 9;</code>
    */
   int getAuthorizationInfoCount();
+
   /**
    *
    *
@@ -342,6 +356,7 @@ public interface AuditLogOrBuilder
    */
   java.util.List<? extends com.google.cloud.audit.AuthorizationInfoOrBuilder>
       getAuthorizationInfoOrBuilderList();
+
   /**
    *
    *
@@ -369,6 +384,7 @@ public interface AuditLogOrBuilder
    * @return Whether the policyViolationInfo field is set.
    */
   boolean hasPolicyViolationInfo();
+
   /**
    *
    *
@@ -383,6 +399,7 @@ public interface AuditLogOrBuilder
    * @return The policyViolationInfo.
    */
   com.google.cloud.audit.PolicyViolationInfo getPolicyViolationInfo();
+
   /**
    *
    *
@@ -408,6 +425,7 @@ public interface AuditLogOrBuilder
    * @return Whether the requestMetadata field is set.
    */
   boolean hasRequestMetadata();
+
   /**
    *
    *
@@ -420,6 +438,7 @@ public interface AuditLogOrBuilder
    * @return The requestMetadata.
    */
   com.google.cloud.audit.RequestMetadata getRequestMetadata();
+
   /**
    *
    *
@@ -448,6 +467,7 @@ public interface AuditLogOrBuilder
    * @return Whether the request field is set.
    */
   boolean hasRequest();
+
   /**
    *
    *
@@ -465,6 +485,7 @@ public interface AuditLogOrBuilder
    * @return The request.
    */
   com.google.protobuf.Struct getRequest();
+
   /**
    *
    *
@@ -498,6 +519,7 @@ public interface AuditLogOrBuilder
    * @return Whether the response field is set.
    */
   boolean hasResponse();
+
   /**
    *
    *
@@ -515,6 +537,7 @@ public interface AuditLogOrBuilder
    * @return The response.
    */
   com.google.protobuf.Struct getResponse();
+
   /**
    *
    *
@@ -544,6 +567,7 @@ public interface AuditLogOrBuilder
    * @return Whether the metadata field is set.
    */
   boolean hasMetadata();
+
   /**
    *
    *
@@ -557,6 +581,7 @@ public interface AuditLogOrBuilder
    * @return The metadata.
    */
   com.google.protobuf.Struct getMetadata();
+
   /**
    *
    *
@@ -586,6 +611,7 @@ public interface AuditLogOrBuilder
    */
   @java.lang.Deprecated
   boolean hasServiceData();
+
   /**
    *
    *
@@ -603,6 +629,7 @@ public interface AuditLogOrBuilder
    */
   @java.lang.Deprecated
   com.google.protobuf.Any getServiceData();
+
   /**
    *
    *

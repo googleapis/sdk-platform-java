@@ -222,8 +222,7 @@ public abstract class AbstractRetryingExecutorTest {
   void testTotalTimeoutExceeded(boolean withCustomRetrySettings) throws Exception {
     setUp(withCustomRetrySettings);
     RetrySettings retrySettings =
-        FAST_RETRY_SETTINGS
-            .toBuilder()
+        FAST_RETRY_SETTINGS.toBuilder()
             .setInitialRetryDelayDuration(java.time.Duration.ofMillis(Integer.MAX_VALUE))
             .setMaxRetryDelayDuration(java.time.Duration.ofMillis(Integer.MAX_VALUE))
             .build();
@@ -262,8 +261,7 @@ public abstract class AbstractRetryingExecutorTest {
     FailingCallable callable = new FailingCallable(0, "request", "FAILURE", tracer);
 
     RetrySettings retrySettings =
-        FAST_RETRY_SETTINGS
-            .toBuilder()
+        FAST_RETRY_SETTINGS.toBuilder()
             .setInitialRetryDelayDuration(java.time.Duration.ofMillis(1_000L))
             .setMaxRetryDelayDuration(java.time.Duration.ofMillis(1_000L))
             .setTotalTimeoutDuration(java.time.Duration.ofMillis(10_000L))
@@ -343,8 +341,7 @@ public abstract class AbstractRetryingExecutorTest {
   void testPollExceptionByPollAlgorithm(boolean withCustomRetrySettings) throws Exception {
     setUp(withCustomRetrySettings);
     RetrySettings retrySettings =
-        FAST_RETRY_SETTINGS
-            .toBuilder()
+        FAST_RETRY_SETTINGS.toBuilder()
             .setInitialRetryDelayDuration(java.time.Duration.ofMillis(Integer.MAX_VALUE))
             .setMaxRetryDelayDuration(java.time.Duration.ofMillis(Integer.MAX_VALUE))
             .build();

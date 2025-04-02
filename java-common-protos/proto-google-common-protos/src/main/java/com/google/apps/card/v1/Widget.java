@@ -36,6 +36,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.Widget)
     WidgetOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use Widget.newBuilder() to construct.
   private Widget(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -113,6 +114,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * <code>SQUARE = 0;</code>
      */
     public static final int SQUARE_VALUE = 0;
+
     /**
      *
      *
@@ -275,6 +277,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * <code>HORIZONTAL_ALIGNMENT_UNSPECIFIED = 0;</code>
      */
     public static final int HORIZONTAL_ALIGNMENT_UNSPECIFIED_VALUE = 0;
+
     /**
      *
      *
@@ -287,6 +290,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * <code>START = 1;</code>
      */
     public static final int START_VALUE = 1;
+
     /**
      *
      *
@@ -297,6 +301,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * <code>CENTER = 2;</code>
      */
     public static final int CENTER_VALUE = 2;
+
     /**
      *
      *
@@ -423,6 +428,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     private DataCase(int value) {
       this.value = value;
     }
+
     /**
      * @param value The number of the enum to look for.
      * @return The enum associated with the given number.
@@ -472,6 +478,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int TEXT_PARAGRAPH_FIELD_NUMBER = 1;
+
   /**
    *
    *
@@ -501,6 +508,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   public boolean hasTextParagraph() {
     return dataCase_ == 1;
   }
+
   /**
    *
    *
@@ -533,6 +541,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.apps.card.v1.TextParagraph.getDefaultInstance();
   }
+
   /**
    *
    *
@@ -565,6 +574,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int IMAGE_FIELD_NUMBER = 2;
+
   /**
    *
    *
@@ -589,6 +599,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   public boolean hasImage() {
     return dataCase_ == 2;
   }
+
   /**
    *
    *
@@ -616,6 +627,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.apps.card.v1.Image.getDefaultInstance();
   }
+
   /**
    *
    *
@@ -643,6 +655,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DECORATED_TEXT_FIELD_NUMBER = 3;
+
   /**
    *
    *
@@ -677,6 +690,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   public boolean hasDecoratedText() {
     return dataCase_ == 3;
   }
+
   /**
    *
    *
@@ -714,6 +728,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.apps.card.v1.DecoratedText.getDefaultInstance();
   }
+
   /**
    *
    *
@@ -751,6 +766,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int BUTTON_LIST_FIELD_NUMBER = 4;
+
   /**
    *
    *
@@ -797,6 +813,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   public boolean hasButtonList() {
     return dataCase_ == 4;
   }
+
   /**
    *
    *
@@ -846,6 +863,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.apps.card.v1.ButtonList.getDefaultInstance();
   }
+
   /**
    *
    *
@@ -895,6 +913,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int TEXT_INPUT_FIELD_NUMBER = 5;
+
   /**
    *
    *
@@ -945,6 +964,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   public boolean hasTextInput() {
     return dataCase_ == 5;
   }
+
   /**
    *
    *
@@ -998,6 +1018,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.apps.card.v1.TextInput.getDefaultInstance();
   }
+
   /**
    *
    *
@@ -1051,6 +1072,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SELECTION_INPUT_FIELD_NUMBER = 6;
+
   /**
    *
    *
@@ -1100,6 +1122,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   public boolean hasSelectionInput() {
     return dataCase_ == 6;
   }
+
   /**
    *
    *
@@ -1152,6 +1175,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.apps.card.v1.SelectionInput.getDefaultInstance();
   }
+
   /**
    *
    *
@@ -1204,6 +1228,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DATE_TIME_PICKER_FIELD_NUMBER = 7;
+
   /**
    *
    *
@@ -1232,6 +1257,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   public boolean hasDateTimePicker() {
     return dataCase_ == 7;
   }
+
   /**
    *
    *
@@ -1263,6 +1289,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.apps.card.v1.DateTimePicker.getDefaultInstance();
   }
+
   /**
    *
    *
@@ -1294,6 +1321,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DIVIDER_FIELD_NUMBER = 9;
+
   /**
    *
    *
@@ -1315,6 +1343,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   public boolean hasDivider() {
     return dataCase_ == 9;
   }
+
   /**
    *
    *
@@ -1339,6 +1368,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.apps.card.v1.Divider.getDefaultInstance();
   }
+
   /**
    *
    *
@@ -1363,6 +1393,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int GRID_FIELD_NUMBER = 10;
+
   /**
    *
    *
@@ -1420,6 +1451,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   public boolean hasGrid() {
     return dataCase_ == 10;
   }
+
   /**
    *
    *
@@ -1480,6 +1512,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.apps.card.v1.Grid.getDefaultInstance();
   }
+
   /**
    *
    *
@@ -1540,6 +1573,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int COLUMNS_FIELD_NUMBER = 11;
+
   /**
    *
    *
@@ -1591,6 +1625,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   public boolean hasColumns() {
     return dataCase_ == 11;
   }
+
   /**
    *
    *
@@ -1645,6 +1680,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.apps.card.v1.Columns.getDefaultInstance();
   }
+
   /**
    *
    *
@@ -1700,6 +1736,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
 
   public static final int HORIZONTAL_ALIGNMENT_FIELD_NUMBER = 8;
   private int horizontalAlignment_ = 0;
+
   /**
    *
    *
@@ -1715,6 +1752,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
   public int getHorizontalAlignmentValue() {
     return horizontalAlignment_;
   }
+
   /**
    *
    *
@@ -2055,6 +2093,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -2439,6 +2478,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.TextParagraph.Builder,
             com.google.apps.card.v1.TextParagraphOrBuilder>
         textParagraphBuilder_;
+
     /**
      *
      *
@@ -2468,6 +2508,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public boolean hasTextParagraph() {
       return dataCase_ == 1;
     }
+
     /**
      *
      *
@@ -2507,6 +2548,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.TextParagraph.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -2543,6 +2585,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 1;
       return this;
     }
+
     /**
      *
      *
@@ -2576,6 +2619,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 1;
       return this;
     }
+
     /**
      *
      *
@@ -2621,6 +2665,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 1;
       return this;
     }
+
     /**
      *
      *
@@ -2660,6 +2705,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -2686,6 +2732,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.TextParagraph.Builder getTextParagraphBuilder() {
       return getTextParagraphFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -2720,6 +2767,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.TextParagraph.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -2770,6 +2818,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.Image.Builder,
             com.google.apps.card.v1.ImageOrBuilder>
         imageBuilder_;
+
     /**
      *
      *
@@ -2794,6 +2843,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public boolean hasImage() {
       return dataCase_ == 2;
     }
+
     /**
      *
      *
@@ -2828,6 +2878,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.Image.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -2859,6 +2910,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 2;
       return this;
     }
+
     /**
      *
      *
@@ -2887,6 +2939,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 2;
       return this;
     }
+
     /**
      *
      *
@@ -2926,6 +2979,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 2;
       return this;
     }
+
     /**
      *
      *
@@ -2960,6 +3014,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -2981,6 +3036,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.Image.Builder getImageBuilder() {
       return getImageFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -3010,6 +3066,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.Image.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -3055,6 +3112,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.DecoratedText.Builder,
             com.google.apps.card.v1.DecoratedTextOrBuilder>
         decoratedTextBuilder_;
+
     /**
      *
      *
@@ -3089,6 +3147,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public boolean hasDecoratedText() {
       return dataCase_ == 3;
     }
+
     /**
      *
      *
@@ -3133,6 +3192,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.DecoratedText.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -3174,6 +3234,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 3;
       return this;
     }
+
     /**
      *
      *
@@ -3212,6 +3273,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 3;
       return this;
     }
+
     /**
      *
      *
@@ -3262,6 +3324,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 3;
       return this;
     }
+
     /**
      *
      *
@@ -3306,6 +3369,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -3337,6 +3401,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.DecoratedText.Builder getDecoratedTextBuilder() {
       return getDecoratedTextFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -3376,6 +3441,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.DecoratedText.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -3431,6 +3497,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.ButtonList.Builder,
             com.google.apps.card.v1.ButtonListOrBuilder>
         buttonListBuilder_;
+
     /**
      *
      *
@@ -3477,6 +3544,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public boolean hasButtonList() {
       return dataCase_ == 4;
     }
+
     /**
      *
      *
@@ -3533,6 +3601,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.ButtonList.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -3586,6 +3655,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 4;
       return this;
     }
+
     /**
      *
      *
@@ -3636,6 +3706,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 4;
       return this;
     }
+
     /**
      *
      *
@@ -3698,6 +3769,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 4;
       return this;
     }
+
     /**
      *
      *
@@ -3754,6 +3826,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -3797,6 +3870,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.ButtonList.Builder getButtonListBuilder() {
       return getButtonListFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -3848,6 +3922,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.ButtonList.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -3915,6 +3990,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.TextInput.Builder,
             com.google.apps.card.v1.TextInputOrBuilder>
         textInputBuilder_;
+
     /**
      *
      *
@@ -3965,6 +4041,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public boolean hasTextInput() {
       return dataCase_ == 5;
     }
+
     /**
      *
      *
@@ -4025,6 +4102,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.TextInput.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -4082,6 +4160,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 5;
       return this;
     }
+
     /**
      *
      *
@@ -4136,6 +4215,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 5;
       return this;
     }
+
     /**
      *
      *
@@ -4202,6 +4282,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 5;
       return this;
     }
+
     /**
      *
      *
@@ -4262,6 +4343,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -4309,6 +4391,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.TextInput.Builder getTextInputBuilder() {
       return getTextInputFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -4364,6 +4447,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.TextInput.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -4435,6 +4519,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.SelectionInput.Builder,
             com.google.apps.card.v1.SelectionInputOrBuilder>
         selectionInputBuilder_;
+
     /**
      *
      *
@@ -4484,6 +4569,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public boolean hasSelectionInput() {
       return dataCase_ == 6;
     }
+
     /**
      *
      *
@@ -4543,6 +4629,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.SelectionInput.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -4599,6 +4686,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 6;
       return this;
     }
+
     /**
      *
      *
@@ -4653,6 +4741,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 6;
       return this;
     }
+
     /**
      *
      *
@@ -4719,6 +4808,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 6;
       return this;
     }
+
     /**
      *
      *
@@ -4778,6 +4868,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -4824,6 +4915,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.SelectionInput.Builder getSelectionInputBuilder() {
       return getSelectionInputFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -4878,6 +4970,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.SelectionInput.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -4948,6 +5041,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.DateTimePicker.Builder,
             com.google.apps.card.v1.DateTimePickerOrBuilder>
         dateTimePickerBuilder_;
+
     /**
      *
      *
@@ -4976,6 +5070,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public boolean hasDateTimePicker() {
       return dataCase_ == 7;
     }
+
     /**
      *
      *
@@ -5014,6 +5109,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.DateTimePicker.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -5049,6 +5145,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 7;
       return this;
     }
+
     /**
      *
      *
@@ -5082,6 +5179,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 7;
       return this;
     }
+
     /**
      *
      *
@@ -5127,6 +5225,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 7;
       return this;
     }
+
     /**
      *
      *
@@ -5165,6 +5264,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -5190,6 +5290,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.DateTimePicker.Builder getDateTimePickerBuilder() {
       return getDateTimePickerFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -5223,6 +5324,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.DateTimePicker.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -5272,6 +5374,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.Divider.Builder,
             com.google.apps.card.v1.DividerOrBuilder>
         dividerBuilder_;
+
     /**
      *
      *
@@ -5293,6 +5396,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public boolean hasDivider() {
       return dataCase_ == 9;
     }
+
     /**
      *
      *
@@ -5324,6 +5428,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.Divider.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -5352,6 +5457,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 9;
       return this;
     }
+
     /**
      *
      *
@@ -5377,6 +5483,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 9;
       return this;
     }
+
     /**
      *
      *
@@ -5413,6 +5520,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 9;
       return this;
     }
+
     /**
      *
      *
@@ -5444,6 +5552,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -5462,6 +5571,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.Divider.Builder getDividerBuilder() {
       return getDividerFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -5488,6 +5598,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.Divider.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -5530,6 +5641,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.Grid.Builder,
             com.google.apps.card.v1.GridOrBuilder>
         gridBuilder_;
+
     /**
      *
      *
@@ -5587,6 +5699,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public boolean hasGrid() {
       return dataCase_ == 10;
     }
+
     /**
      *
      *
@@ -5654,6 +5767,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.Grid.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -5718,6 +5832,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 10;
       return this;
     }
+
     /**
      *
      *
@@ -5779,6 +5894,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 10;
       return this;
     }
+
     /**
      *
      *
@@ -5851,6 +5967,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 10;
       return this;
     }
+
     /**
      *
      *
@@ -5918,6 +6035,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -5972,6 +6090,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.Grid.Builder getGridBuilder() {
       return getGridFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -6034,6 +6153,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.Grid.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -6112,6 +6232,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.Columns.Builder,
             com.google.apps.card.v1.ColumnsOrBuilder>
         columnsBuilder_;
+
     /**
      *
      *
@@ -6163,6 +6284,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public boolean hasColumns() {
       return dataCase_ == 11;
     }
+
     /**
      *
      *
@@ -6224,6 +6346,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.Columns.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -6282,6 +6405,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 11;
       return this;
     }
+
     /**
      *
      *
@@ -6337,6 +6461,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 11;
       return this;
     }
+
     /**
      *
      *
@@ -6403,6 +6528,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 11;
       return this;
     }
+
     /**
      *
      *
@@ -6464,6 +6590,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -6512,6 +6639,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.Columns.Builder getColumnsBuilder() {
       return getColumnsFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -6568,6 +6696,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.Columns.getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -6636,6 +6765,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int horizontalAlignment_ = 0;
+
     /**
      *
      *
@@ -6651,6 +6781,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     public int getHorizontalAlignmentValue() {
       return horizontalAlignment_;
     }
+
     /**
      *
      *
@@ -6669,6 +6800,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -6688,6 +6820,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
           ? com.google.apps.card.v1.Widget.HorizontalAlignment.UNRECOGNIZED
           : result;
     }
+
     /**
      *
      *
@@ -6710,6 +6843,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *

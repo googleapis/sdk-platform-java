@@ -43,6 +43,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.rpc.QuotaFailure)
     QuotaFailureOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use QuotaFailure.newBuilder() to construct.
   private QuotaFailure(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -90,6 +91,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
      * @return The subject.
      */
     java.lang.String getSubject();
+
     /**
      *
      *
@@ -123,6 +125,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
      * @return The description.
      */
     java.lang.String getDescription();
+
     /**
      *
      *
@@ -142,6 +145,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
      */
     com.google.protobuf.ByteString getDescriptionBytes();
   }
+
   /**
    *
    *
@@ -157,6 +161,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
       // @@protoc_insertion_point(message_implements:google.rpc.QuotaFailure.Violation)
       ViolationOrBuilder {
     private static final long serialVersionUID = 0L;
+
     // Use Violation.newBuilder() to construct.
     private Violation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -192,6 +197,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object subject_ = "";
+
     /**
      *
      *
@@ -217,6 +223,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
+
     /**
      *
      *
@@ -247,6 +254,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object description_ = "";
+
     /**
      *
      *
@@ -276,6 +284,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
+
     /**
      *
      *
@@ -474,6 +483,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
       Builder builder = new Builder(parent);
       return builder;
     }
+
     /**
      *
      *
@@ -676,6 +686,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
       private int bitField0_;
 
       private java.lang.Object subject_ = "";
+
       /**
        *
        *
@@ -700,6 +711,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
+
       /**
        *
        *
@@ -724,6 +736,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
+
       /**
        *
        *
@@ -747,6 +760,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -766,6 +780,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -792,6 +807,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
       }
 
       private java.lang.Object description_ = "";
+
       /**
        *
        *
@@ -820,6 +836,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
+
       /**
        *
        *
@@ -848,6 +865,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
+
       /**
        *
        *
@@ -875,6 +893,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -898,6 +917,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -995,6 +1015,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.rpc.QuotaFailure.Violation> violations_;
+
   /**
    *
    *
@@ -1008,6 +1029,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.rpc.QuotaFailure.Violation> getViolationsList() {
     return violations_;
   }
+
   /**
    *
    *
@@ -1022,6 +1044,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
       getViolationsOrBuilderList() {
     return violations_;
   }
+
   /**
    *
    *
@@ -1035,6 +1058,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
   public int getViolationsCount() {
     return violations_.size();
   }
+
   /**
    *
    *
@@ -1048,6 +1072,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
   public com.google.rpc.QuotaFailure.Violation getViolations(int index) {
     return violations_.get(index);
   }
+
   /**
    *
    *
@@ -1221,6 +1246,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -1486,6 +1512,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
         return violationsBuilder_.getMessageList();
       }
     }
+
     /**
      *
      *
@@ -1502,6 +1529,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
         return violationsBuilder_.getCount();
       }
     }
+
     /**
      *
      *
@@ -1518,6 +1546,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
         return violationsBuilder_.getMessage(index);
       }
     }
+
     /**
      *
      *
@@ -1540,6 +1569,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1560,6 +1590,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1582,6 +1613,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1604,6 +1636,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1623,6 +1656,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1643,6 +1677,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1663,6 +1698,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1682,6 +1718,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1701,6 +1738,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1713,6 +1751,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
     public com.google.rpc.QuotaFailure.Violation.Builder getViolationsBuilder(int index) {
       return getViolationsFieldBuilder().getBuilder(index);
     }
+
     /**
      *
      *
@@ -1729,6 +1768,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
         return violationsBuilder_.getMessageOrBuilder(index);
       }
     }
+
     /**
      *
      *
@@ -1746,6 +1786,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(violations_);
       }
     }
+
     /**
      *
      *
@@ -1759,6 +1800,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
       return getViolationsFieldBuilder()
           .addBuilder(com.google.rpc.QuotaFailure.Violation.getDefaultInstance());
     }
+
     /**
      *
      *
@@ -1772,6 +1814,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
       return getViolationsFieldBuilder()
           .addBuilder(index, com.google.rpc.QuotaFailure.Violation.getDefaultInstance());
     }
+
     /**
      *
      *

@@ -44,6 +44,7 @@ public interface TypeReferenceOrBuilder
    * @return The typeName.
    */
   java.lang.String getTypeName();
+
   /**
    *
    *

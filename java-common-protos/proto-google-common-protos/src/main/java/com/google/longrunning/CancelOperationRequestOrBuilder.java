@@ -36,6 +36,7 @@ public interface CancelOperationRequestOrBuilder
    * @return The name.
    */
   java.lang.String getName();
+
   /**
    *
    *

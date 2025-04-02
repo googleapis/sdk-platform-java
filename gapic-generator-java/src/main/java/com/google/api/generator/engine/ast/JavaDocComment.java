@@ -54,6 +54,7 @@ public abstract class JavaDocComment implements Comment {
     String returnDescription = null;
     List<String> paramsList = new ArrayList<>();
     List<String> componentsList = new ArrayList<>();
+
     // Private accessor, set complete and consolidated comment.
     abstract Builder setComment(String comment);
 

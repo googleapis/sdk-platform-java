@@ -53,6 +53,7 @@ public interface StatusOrBuilder
    * @return The message.
    */
   java.lang.String getMessage();
+
   /**
    *
    *
@@ -80,6 +81,7 @@ public interface StatusOrBuilder
    * <code>repeated .google.protobuf.Any details = 3;</code>
    */
   java.util.List<com.google.protobuf.Any> getDetailsList();
+
   /**
    *
    *
@@ -91,6 +93,7 @@ public interface StatusOrBuilder
    * <code>repeated .google.protobuf.Any details = 3;</code>
    */
   com.google.protobuf.Any getDetails(int index);
+
   /**
    *
    *
@@ -102,6 +105,7 @@ public interface StatusOrBuilder
    * <code>repeated .google.protobuf.Any details = 3;</code>
    */
   int getDetailsCount();
+
   /**
    *
    *
@@ -113,6 +117,7 @@ public interface StatusOrBuilder
    * <code>repeated .google.protobuf.Any details = 3;</code>
    */
   java.util.List<? extends com.google.protobuf.AnyOrBuilder> getDetailsOrBuilderList();
+
   /**
    *
    *

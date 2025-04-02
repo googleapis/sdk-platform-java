@@ -36,6 +36,7 @@ public interface StreamBlurbsResponseOrBuilder
    * @return Whether the blurb field is set.
    */
   boolean hasBlurb();
+
   /**
    *
    *
@@ -48,6 +49,7 @@ public interface StreamBlurbsResponseOrBuilder
    * @return The blurb.
    */
   com.google.showcase.v1beta1.Blurb getBlurb();
+
   /**
    *
    *
@@ -71,6 +73,7 @@ public interface StreamBlurbsResponseOrBuilder
    * @return The enum numeric value on the wire for action.
    */
   int getActionValue();
+
   /**
    *
    *

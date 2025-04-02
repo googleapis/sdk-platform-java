@@ -34,6 +34,7 @@ public interface PolicyDeltaOrBuilder
    * <code>repeated .google.iam.v1.BindingDelta binding_deltas = 1;</code>
    */
   java.util.List<com.google.iam.v1.BindingDelta> getBindingDeltasList();
+
   /**
    *
    *
@@ -44,6 +45,7 @@ public interface PolicyDeltaOrBuilder
    * <code>repeated .google.iam.v1.BindingDelta binding_deltas = 1;</code>
    */
   com.google.iam.v1.BindingDelta getBindingDeltas(int index);
+
   /**
    *
    *
@@ -54,6 +56,7 @@ public interface PolicyDeltaOrBuilder
    * <code>repeated .google.iam.v1.BindingDelta binding_deltas = 1;</code>
    */
   int getBindingDeltasCount();
+
   /**
    *
    *
@@ -64,6 +67,7 @@ public interface PolicyDeltaOrBuilder
    * <code>repeated .google.iam.v1.BindingDelta binding_deltas = 1;</code>
    */
   java.util.List<? extends com.google.iam.v1.BindingDeltaOrBuilder> getBindingDeltasOrBuilderList();
+
   /**
    *
    *
@@ -85,6 +89,7 @@ public interface PolicyDeltaOrBuilder
    * <code>repeated .google.iam.v1.AuditConfigDelta audit_config_deltas = 2;</code>
    */
   java.util.List<com.google.iam.v1.AuditConfigDelta> getAuditConfigDeltasList();
+
   /**
    *
    *
@@ -95,6 +100,7 @@ public interface PolicyDeltaOrBuilder
    * <code>repeated .google.iam.v1.AuditConfigDelta audit_config_deltas = 2;</code>
    */
   com.google.iam.v1.AuditConfigDelta getAuditConfigDeltas(int index);
+
   /**
    *
    *
@@ -105,6 +111,7 @@ public interface PolicyDeltaOrBuilder
    * <code>repeated .google.iam.v1.AuditConfigDelta audit_config_deltas = 2;</code>
    */
   int getAuditConfigDeltasCount();
+
   /**
    *
    *
@@ -116,6 +123,7 @@ public interface PolicyDeltaOrBuilder
    */
   java.util.List<? extends com.google.iam.v1.AuditConfigDeltaOrBuilder>
       getAuditConfigDeltasOrBuilderList();
+
   /**
    *
    *

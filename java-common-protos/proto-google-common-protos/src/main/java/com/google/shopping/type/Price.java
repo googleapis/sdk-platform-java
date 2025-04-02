@@ -33,6 +33,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.shopping.type.Price)
     PriceOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use Price.newBuilder() to construct.
   private Price(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -65,6 +66,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
   private int bitField0_;
   public static final int AMOUNT_MICROS_FIELD_NUMBER = 1;
   private long amountMicros_ = 0L;
+
   /**
    *
    *
@@ -82,6 +84,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
   public boolean hasAmountMicros() {
     return ((bitField0_ & 0x00000001) != 0);
   }
+
   /**
    *
    *
@@ -104,6 +107,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object currencyCode_ = "";
+
   /**
    *
    *
@@ -120,6 +124,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
   public boolean hasCurrencyCode() {
     return ((bitField0_ & 0x00000002) != 0);
   }
+
   /**
    *
    *
@@ -144,6 +149,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
+
   /**
    *
    *
@@ -345,6 +351,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -543,6 +550,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private long amountMicros_;
+
     /**
      *
      *
@@ -560,6 +568,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
     public boolean hasAmountMicros() {
       return ((bitField0_ & 0x00000001) != 0);
     }
+
     /**
      *
      *
@@ -577,6 +586,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
     public long getAmountMicros() {
       return amountMicros_;
     }
+
     /**
      *
      *
@@ -598,6 +608,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -619,6 +630,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object currencyCode_ = "";
+
     /**
      *
      *
@@ -634,6 +646,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
     public boolean hasCurrencyCode() {
       return ((bitField0_ & 0x00000002) != 0);
     }
+
     /**
      *
      *
@@ -657,6 +670,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -680,6 +694,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -702,6 +717,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -720,6 +736,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *

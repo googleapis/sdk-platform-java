@@ -230,8 +230,7 @@ public class BatchingDescriptorComposer {
             .setStatements(
                 Arrays.asList(
                     ExprStatement.withExpr(
-                        builderVarExpr
-                            .toBuilder()
+                        builderVarExpr.toBuilder()
                             .setIsDecl(true)
                             .setScope(ScopeNode.PRIVATE)
                             .build())))

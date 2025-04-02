@@ -201,8 +201,7 @@ class ChannelPoolTest {
 
     pool =
         ChannelPool.create(
-            ChannelPoolSettings.staticallySized(2)
-                .toBuilder()
+            ChannelPoolSettings.staticallySized(2).toBuilder()
                 .setPreemptiveRefreshEnabled(true)
                 .build(),
             new FakeChannelFactory(Arrays.asList(channel1, channel2), mockChannelPrimer));
@@ -239,8 +238,7 @@ class ChannelPoolTest {
 
     pool =
         new ChannelPool(
-            ChannelPoolSettings.staticallySized(1)
-                .toBuilder()
+            ChannelPoolSettings.staticallySized(1).toBuilder()
                 .setPreemptiveRefreshEnabled(true)
                 .build(),
             channelFactory,
@@ -416,8 +414,7 @@ class ChannelPoolTest {
         new FakeChannelFactory(ImmutableList.of(underlyingChannel1, underlyingChannel2));
     pool =
         new ChannelPool(
-            ChannelPoolSettings.staticallySized(1)
-                .toBuilder()
+            ChannelPoolSettings.staticallySized(1).toBuilder()
                 .setPreemptiveRefreshEnabled(true)
                 .build(),
             channelFactory,

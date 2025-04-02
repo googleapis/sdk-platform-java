@@ -64,6 +64,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.Billing)
     BillingOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use Billing.newBuilder() to construct.
   private Billing(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -110,6 +111,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
      * @return The monitoredResource.
      */
     java.lang.String getMonitoredResource();
+
     /**
      *
      *
@@ -139,6 +141,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the metrics.
      */
     java.util.List<java.lang.String> getMetricsList();
+
     /**
      *
      *
@@ -153,6 +156,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
      * @return The count of metrics.
      */
     int getMetricsCount();
+
     /**
      *
      *
@@ -168,6 +172,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
      * @return The metrics at the given index.
      */
     java.lang.String getMetrics(int index);
+
     /**
      *
      *
@@ -184,6 +189,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
      */
     com.google.protobuf.ByteString getMetricsBytes(int index);
   }
+
   /**
    *
    *
@@ -199,6 +205,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
       // @@protoc_insertion_point(message_implements:google.api.Billing.BillingDestination)
       BillingDestinationOrBuilder {
     private static final long serialVersionUID = 0L;
+
     // Use BillingDestination.newBuilder() to construct.
     private BillingDestination(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -234,6 +241,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object monitoredResource_ = "";
+
     /**
      *
      *
@@ -259,6 +267,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
+
     /**
      *
      *
@@ -290,6 +299,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
     @SuppressWarnings("serial")
     private com.google.protobuf.LazyStringArrayList metrics_ =
         com.google.protobuf.LazyStringArrayList.emptyList();
+
     /**
      *
      *
@@ -306,6 +316,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ProtocolStringList getMetricsList() {
       return metrics_;
     }
+
     /**
      *
      *
@@ -322,6 +333,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
     public int getMetricsCount() {
       return metrics_.size();
     }
+
     /**
      *
      *
@@ -339,6 +351,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
     public java.lang.String getMetrics(int index) {
       return metrics_.get(index);
     }
+
     /**
      *
      *
@@ -533,6 +546,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
       Builder builder = new Builder(parent);
       return builder;
     }
+
     /**
      *
      *
@@ -742,6 +756,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
       private int bitField0_;
 
       private java.lang.Object monitoredResource_ = "";
+
       /**
        *
        *
@@ -766,6 +781,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
+
       /**
        *
        *
@@ -790,6 +806,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
+
       /**
        *
        *
@@ -813,6 +830,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -832,6 +850,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -866,6 +885,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         }
         bitField0_ |= 0x00000002;
       }
+
       /**
        *
        *
@@ -883,6 +903,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         metrics_.makeImmutable();
         return metrics_;
       }
+
       /**
        *
        *
@@ -899,6 +920,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
       public int getMetricsCount() {
         return metrics_.size();
       }
+
       /**
        *
        *
@@ -916,6 +938,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
       public java.lang.String getMetrics(int index) {
         return metrics_.get(index);
       }
+
       /**
        *
        *
@@ -933,6 +956,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
       public com.google.protobuf.ByteString getMetricsBytes(int index) {
         return metrics_.getByteString(index);
       }
+
       /**
        *
        *
@@ -958,6 +982,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -982,6 +1007,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -1003,6 +1029,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -1023,6 +1050,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -1117,6 +1145,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.Billing.BillingDestination> consumerDestinations_;
+
   /**
    *
    *
@@ -1133,6 +1162,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.api.Billing.BillingDestination> getConsumerDestinationsList() {
     return consumerDestinations_;
   }
+
   /**
    *
    *
@@ -1150,6 +1180,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
       getConsumerDestinationsOrBuilderList() {
     return consumerDestinations_;
   }
+
   /**
    *
    *
@@ -1166,6 +1197,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
   public int getConsumerDestinationsCount() {
     return consumerDestinations_.size();
   }
+
   /**
    *
    *
@@ -1182,6 +1214,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.Billing.BillingDestination getConsumerDestinations(int index) {
     return consumerDestinations_.get(index);
   }
+
   /**
    *
    *
@@ -1360,6 +1393,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -1650,6 +1684,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         return consumerDestinationsBuilder_.getMessageList();
       }
     }
+
     /**
      *
      *
@@ -1669,6 +1704,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         return consumerDestinationsBuilder_.getCount();
       }
     }
+
     /**
      *
      *
@@ -1688,6 +1724,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         return consumerDestinationsBuilder_.getMessage(index);
       }
     }
+
     /**
      *
      *
@@ -1714,6 +1751,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1737,6 +1775,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1762,6 +1801,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1788,6 +1828,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1811,6 +1852,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1834,6 +1876,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1857,6 +1900,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1879,6 +1923,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1901,6 +1946,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1917,6 +1963,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         int index) {
       return getConsumerDestinationsFieldBuilder().getBuilder(index);
     }
+
     /**
      *
      *
@@ -1937,6 +1984,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         return consumerDestinationsBuilder_.getMessageOrBuilder(index);
       }
     }
+
     /**
      *
      *
@@ -1957,6 +2005,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(consumerDestinations_);
       }
     }
+
     /**
      *
      *
@@ -1973,6 +2022,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
       return getConsumerDestinationsFieldBuilder()
           .addBuilder(com.google.api.Billing.BillingDestination.getDefaultInstance());
     }
+
     /**
      *
      *
@@ -1990,6 +2040,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
       return getConsumerDestinationsFieldBuilder()
           .addBuilder(index, com.google.api.Billing.BillingDestination.getDefaultInstance());
     }
+
     /**
      *
      *

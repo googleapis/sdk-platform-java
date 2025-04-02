@@ -36,6 +36,7 @@ public interface CreateUserRequestOrBuilder
    * @return Whether the user field is set.
    */
   boolean hasUser();
+
   /**
    *
    *
@@ -48,6 +49,7 @@ public interface CreateUserRequestOrBuilder
    * @return The user.
    */
   com.google.showcase.v1beta1.User getUser();
+
   /**
    *
    *

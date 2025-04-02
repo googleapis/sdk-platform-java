@@ -35,6 +35,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.Http)
     HttpOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use Http.newBuilder() to construct.
   private Http(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -66,6 +67,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.HttpRule> rules_;
+
   /**
    *
    *
@@ -81,6 +83,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.api.HttpRule> getRulesList() {
     return rules_;
   }
+
   /**
    *
    *
@@ -96,6 +99,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<? extends com.google.api.HttpRuleOrBuilder> getRulesOrBuilderList() {
     return rules_;
   }
+
   /**
    *
    *
@@ -111,6 +115,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
   public int getRulesCount() {
     return rules_.size();
   }
+
   /**
    *
    *
@@ -126,6 +131,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.HttpRule getRules(int index) {
     return rules_.get(index);
   }
+
   /**
    *
    *
@@ -144,6 +150,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
 
   public static final int FULLY_DECODE_RESERVED_EXPANSION_FIELD_NUMBER = 2;
   private boolean fullyDecodeReservedExpansion_ = false;
+
   /**
    *
    *
@@ -335,6 +342,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -604,6 +612,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
         return rulesBuilder_.getMessageList();
       }
     }
+
     /**
      *
      *
@@ -622,6 +631,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
         return rulesBuilder_.getCount();
       }
     }
+
     /**
      *
      *
@@ -640,6 +650,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
         return rulesBuilder_.getMessage(index);
       }
     }
+
     /**
      *
      *
@@ -664,6 +675,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -685,6 +697,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -709,6 +722,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -733,6 +747,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -754,6 +769,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -775,6 +791,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -796,6 +813,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -817,6 +835,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -838,6 +857,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -852,6 +872,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.HttpRule.Builder getRulesBuilder(int index) {
       return getRulesFieldBuilder().getBuilder(index);
     }
+
     /**
      *
      *
@@ -870,6 +891,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
         return rulesBuilder_.getMessageOrBuilder(index);
       }
     }
+
     /**
      *
      *
@@ -888,6 +910,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(rules_);
       }
     }
+
     /**
      *
      *
@@ -902,6 +925,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.HttpRule.Builder addRulesBuilder() {
       return getRulesFieldBuilder().addBuilder(com.google.api.HttpRule.getDefaultInstance());
     }
+
     /**
      *
      *
@@ -916,6 +940,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.HttpRule.Builder addRulesBuilder(int index) {
       return getRulesFieldBuilder().addBuilder(index, com.google.api.HttpRule.getDefaultInstance());
     }
+
     /**
      *
      *
@@ -949,6 +974,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
     }
 
     private boolean fullyDecodeReservedExpansion_;
+
     /**
      *
      *
@@ -969,6 +995,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
     public boolean getFullyDecodeReservedExpansion() {
       return fullyDecodeReservedExpansion_;
     }
+
     /**
      *
      *
@@ -993,6 +1020,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *

@@ -34,6 +34,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.ListRoomsResponse)
     ListRoomsResponseOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use ListRoomsResponse.newBuilder() to construct.
   private ListRoomsResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -69,6 +70,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.showcase.v1beta1.Room> rooms_;
+
   /**
    *
    *
@@ -82,6 +84,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
   public java.util.List<com.google.showcase.v1beta1.Room> getRoomsList() {
     return rooms_;
   }
+
   /**
    *
    *
@@ -96,6 +99,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
       getRoomsOrBuilderList() {
     return rooms_;
   }
+
   /**
    *
    *
@@ -109,6 +113,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
   public int getRoomsCount() {
     return rooms_.size();
   }
+
   /**
    *
    *
@@ -122,6 +127,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
   public com.google.showcase.v1beta1.Room getRooms(int index) {
     return rooms_.get(index);
   }
+
   /**
    *
    *
@@ -140,6 +146,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object nextPageToken_ = "";
+
   /**
    *
    *
@@ -166,6 +173,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
       return s;
     }
   }
+
   /**
    *
    *
@@ -363,6 +371,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -637,6 +646,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
         return roomsBuilder_.getMessageList();
       }
     }
+
     /**
      *
      *
@@ -653,6 +663,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
         return roomsBuilder_.getCount();
       }
     }
+
     /**
      *
      *
@@ -669,6 +680,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
         return roomsBuilder_.getMessage(index);
       }
     }
+
     /**
      *
      *
@@ -691,6 +703,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
+
     /**
      *
      *
@@ -710,6 +723,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
+
     /**
      *
      *
@@ -732,6 +746,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
+
     /**
      *
      *
@@ -754,6 +769,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
+
     /**
      *
      *
@@ -773,6 +789,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
+
     /**
      *
      *
@@ -792,6 +809,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
+
     /**
      *
      *
@@ -812,6 +830,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
+
     /**
      *
      *
@@ -831,6 +850,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
+
     /**
      *
      *
@@ -850,6 +870,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
       }
       return this;
     }
+
     /**
      *
      *
@@ -862,6 +883,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
     public com.google.showcase.v1beta1.Room.Builder getRoomsBuilder(int index) {
       return getRoomsFieldBuilder().getBuilder(index);
     }
+
     /**
      *
      *
@@ -878,6 +900,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
         return roomsBuilder_.getMessageOrBuilder(index);
       }
     }
+
     /**
      *
      *
@@ -895,6 +918,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
         return java.util.Collections.unmodifiableList(rooms_);
       }
     }
+
     /**
      *
      *
@@ -908,6 +932,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
       return getRoomsFieldBuilder()
           .addBuilder(com.google.showcase.v1beta1.Room.getDefaultInstance());
     }
+
     /**
      *
      *
@@ -921,6 +946,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
       return getRoomsFieldBuilder()
           .addBuilder(index, com.google.showcase.v1beta1.Room.getDefaultInstance());
     }
+
     /**
      *
      *
@@ -952,6 +978,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
     }
 
     private java.lang.Object nextPageToken_ = "";
+
     /**
      *
      *
@@ -977,6 +1004,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -1002,6 +1030,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -1026,6 +1055,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1046,6 +1076,7 @@ public final class ListRoomsResponse extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
+
     /**
      *
      *

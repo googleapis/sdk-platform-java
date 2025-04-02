@@ -39,6 +39,7 @@ public interface RoutingRuleOrBuilder
    * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
    */
   java.util.List<com.google.api.RoutingParameter> getRoutingParametersList();
+
   /**
    *
    *
@@ -54,6 +55,7 @@ public interface RoutingRuleOrBuilder
    * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
    */
   com.google.api.RoutingParameter getRoutingParameters(int index);
+
   /**
    *
    *
@@ -69,6 +71,7 @@ public interface RoutingRuleOrBuilder
    * <code>repeated .google.api.RoutingParameter routing_parameters = 2;</code>
    */
   int getRoutingParametersCount();
+
   /**
    *
    *
@@ -85,6 +88,7 @@ public interface RoutingRuleOrBuilder
    */
   java.util.List<? extends com.google.api.RoutingParameterOrBuilder>
       getRoutingParametersOrBuilderList();
+
   /**
    *
    *

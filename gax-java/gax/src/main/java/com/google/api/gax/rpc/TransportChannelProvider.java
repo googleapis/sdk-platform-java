@@ -73,7 +73,9 @@ public interface TransportChannelProvider {
   /** Sets the executor to use when constructing a new {@link TransportChannel}. */
   TransportChannelProvider withExecutor(Executor executor);
 
-  /** @deprecated Please use {@link #withExecutor(Executor)}. */
+  /**
+   * @deprecated Please use {@link #withExecutor(Executor)}.
+   */
   @Deprecated
   TransportChannelProvider withExecutor(ScheduledExecutorService executor);
 

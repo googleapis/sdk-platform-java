@@ -135,6 +135,7 @@ public interface DateTimeOrBuilder
    * @return Whether the utcOffset field is set.
    */
   boolean hasUtcOffset();
+
   /**
    *
    *
@@ -149,6 +150,7 @@ public interface DateTimeOrBuilder
    * @return The utcOffset.
    */
   com.google.protobuf.Duration getUtcOffset();
+
   /**
    *
    *
@@ -174,6 +176,7 @@ public interface DateTimeOrBuilder
    * @return Whether the timeZone field is set.
    */
   boolean hasTimeZone();
+
   /**
    *
    *
@@ -186,6 +189,7 @@ public interface DateTimeOrBuilder
    * @return The timeZone.
    */
   com.google.type.TimeZone getTimeZone();
+
   /**
    *
    *

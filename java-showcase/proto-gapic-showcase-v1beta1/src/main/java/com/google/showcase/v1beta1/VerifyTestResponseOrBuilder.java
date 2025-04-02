@@ -36,6 +36,7 @@ public interface VerifyTestResponseOrBuilder
    * @return Whether the issue field is set.
    */
   boolean hasIssue();
+
   /**
    *
    *
@@ -48,6 +49,7 @@ public interface VerifyTestResponseOrBuilder
    * @return The issue.
    */
   com.google.showcase.v1beta1.Issue getIssue();
+
   /**
    *
    *

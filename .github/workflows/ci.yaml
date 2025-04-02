@@ -35,7 +35,7 @@ jobs:
       - run: bazelisk version
       - name: Install Maven modules
         run: |
-          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip -Dfmt.skip
       - name: Integration Tests
         run: |
           bazelisk --batch test //test/integration/...
@@ -150,7 +150,7 @@ jobs:
       - name: Install all modules using Java 11
         shell: bash
         run: |
-          mvn -V -B -ntp clean install -DskipTests
+          mvn -V -B -ntp clean install -DskipTests -Dfmt.skip
       - uses: actions/setup-java@v3
         with:
           java-version: 8
@@ -190,7 +190,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          java-version: 11
+          java-version: 17
           distribution: temurin
           cache: maven
       - run: java -version
@@ -211,7 +211,7 @@ jobs:
       - name: Compatibility check
         #  package jar so that gapic-generator-java module can use
         #  testlib modules of gax
-        run: mvn package clirr:check -DskipTests
+        run: mvn package clirr:check -DskipTests -Dfmt.skip
 
   showcase:
     runs-on: ubuntu-22.04
@@ -227,8 +227,9 @@ jobs:
       - run: mvn -version
       - name: Install Maven modules
         run: |
-          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip -Dfmt.skip
       - name: Java Linter
+        if: matrix.java >= 17
         working-directory: java-showcase
         run: |
           mvn -B -ntp fmt:check
@@ -329,7 +330,7 @@ jobs:
         cache: maven
     - name: Install Maven modules to local Maven repository
       run: |
-        mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+        mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip -Dfmt.skip
     - name: Validate gapic-generator-java-bom
       uses: googleapis/java-cloud-bom/tests/validate-bom@47ad868794c5d38ee7eb95d69371a7a79f84d890
       with:
@@ -352,7 +353,7 @@ jobs:
       working-directory: java-shared-dependencies/unmanaged-dependency-check
     - name: Install Maven modules
       run: |
-        mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+        mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip -Dfmt.skip
     - name: Unmanaged dependency check
       uses: ./java-shared-dependencies/unmanaged-dependency-check
       with:

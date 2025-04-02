@@ -45,6 +45,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.ImageCropStyle)
     ImageCropStyleOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use ImageCropStyle.newBuilder() to construct.
   private ImageCropStyle(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -152,6 +153,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
      * <code>IMAGE_CROP_TYPE_UNSPECIFIED = 0;</code>
      */
     public static final int IMAGE_CROP_TYPE_UNSPECIFIED_VALUE = 0;
+
     /**
      *
      *
@@ -162,6 +164,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
      * <code>SQUARE = 1;</code>
      */
     public static final int SQUARE_VALUE = 1;
+
     /**
      *
      *
@@ -172,6 +175,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
      * <code>CIRCLE = 2;</code>
      */
     public static final int CIRCLE_VALUE = 2;
+
     /**
      *
      *
@@ -183,6 +187,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
      * <code>RECTANGLE_CUSTOM = 3;</code>
      */
     public static final int RECTANGLE_CUSTOM_VALUE = 3;
+
     /**
      *
      *
@@ -283,6 +288,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
 
   public static final int TYPE_FIELD_NUMBER = 1;
   private int type_ = 0;
+
   /**
    *
    *
@@ -298,6 +304,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
   public int getTypeValue() {
     return type_;
   }
+
   /**
    *
    *
@@ -320,6 +327,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
 
   public static final int ASPECT_RATIO_FIELD_NUMBER = 2;
   private double aspectRatio_ = 0D;
+
   /**
    *
    *
@@ -520,6 +528,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -726,6 +735,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private int type_ = 0;
+
     /**
      *
      *
@@ -741,6 +751,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
     public int getTypeValue() {
       return type_;
     }
+
     /**
      *
      *
@@ -759,6 +770,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -778,6 +790,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
           ? com.google.apps.card.v1.ImageCropStyle.ImageCropType.UNRECOGNIZED
           : result;
     }
+
     /**
      *
      *
@@ -799,6 +812,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -818,6 +832,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
     }
 
     private double aspectRatio_;
+
     /**
      *
      *
@@ -842,6 +857,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
     public double getAspectRatio() {
       return aspectRatio_;
     }
+
     /**
      *
      *
@@ -870,6 +886,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *

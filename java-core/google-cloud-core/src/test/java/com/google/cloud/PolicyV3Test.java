@@ -106,8 +106,7 @@ class PolicyV3Test {
     assertEquals(1, FULL_POLICY_V3_WITH_VERSION_1.getVersion());
     assertEquals("etag", FULL_POLICY_V3_WITH_VERSION_1.getEtag());
     Policy policy =
-        FULL_POLICY_V3_WITH_VERSION_1
-            .toBuilder()
+        FULL_POLICY_V3_WITH_VERSION_1.toBuilder()
             .setBindings(BINDINGS_WITH_CONDITIONS)
             .setVersion(3)
             .build();
@@ -185,8 +184,7 @@ class PolicyV3Test {
       assertEquals("Null role", ex.getMessage());
     }
     try {
-      FULL_POLICY_V3
-          .toBuilder()
+      FULL_POLICY_V3.toBuilder()
           .setBindings(
               Arrays.asList(
                   Binding.newBuilder()

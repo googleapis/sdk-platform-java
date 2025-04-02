@@ -38,6 +38,7 @@ public interface ListBlurbsRequestOrBuilder
    * @return The parent.
    */
   java.lang.String getParent();
+
   /**
    *
    *
@@ -82,6 +83,7 @@ public interface ListBlurbsRequestOrBuilder
    * @return The pageToken.
    */
   java.lang.String getPageToken();
+
   /**
    *
    *
