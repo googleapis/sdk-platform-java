@@ -82,6 +82,15 @@ class LibraryConfig:
         self.distribution_name = self.__get_distribution_name(distribution_name)
         self.transport = self.__validate_transport(transport)
 
+    def set_gapic_configs(self, gapic_configs: list[GapicConfig]) -> None:
+        """
+        Sets the gapic_configs for the library.
+
+        Args:
+            gapic_configs: The new list of GapicConfig objects.
+        """
+        self.gapic_configs = gapic_configs
+
     def get_library_name(self) -> str:
         """
         Return the library name of a given LibraryConfig object
