@@ -33,6 +33,7 @@ public final class GetPolicyOptions extends com.google.protobuf.GeneratedMessage
     // @@protoc_insertion_point(message_implements:google.iam.v1.GetPolicyOptions)
     GetPolicyOptionsOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use GetPolicyOptions.newBuilder() to construct.
   private GetPolicyOptions(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -62,6 +63,7 @@ public final class GetPolicyOptions extends com.google.protobuf.GeneratedMessage
 
   public static final int REQUESTED_POLICY_VERSION_FIELD_NUMBER = 1;
   private int requestedPolicyVersion_ = 0;
+
   /**
    *
    *
@@ -252,6 +254,7 @@ public final class GetPolicyOptions extends com.google.protobuf.GeneratedMessage
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -432,6 +435,7 @@ public final class GetPolicyOptions extends com.google.protobuf.GeneratedMessage
     private int bitField0_;
 
     private int requestedPolicyVersion_;
+
     /**
      *
      *
@@ -464,6 +468,7 @@ public final class GetPolicyOptions extends com.google.protobuf.GeneratedMessage
     public int getRequestedPolicyVersion() {
       return requestedPolicyVersion_;
     }
+
     /**
      *
      *
@@ -500,6 +505,7 @@ public final class GetPolicyOptions extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
+
     /**
      *
      *

@@ -38,6 +38,7 @@ public interface TestRunOrBuilder
    * @return The test.
    */
   java.lang.String getTest();
+
   /**
    *
    *
@@ -65,6 +66,7 @@ public interface TestRunOrBuilder
    * @return Whether the issue field is set.
    */
   boolean hasIssue();
+
   /**
    *
    *
@@ -77,6 +79,7 @@ public interface TestRunOrBuilder
    * @return The issue.
    */
   com.google.showcase.v1beta1.Issue getIssue();
+
   /**
    *
    *

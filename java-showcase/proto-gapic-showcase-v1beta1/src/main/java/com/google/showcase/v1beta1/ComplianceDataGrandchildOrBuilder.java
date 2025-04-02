@@ -30,6 +30,7 @@ public interface ComplianceDataGrandchildOrBuilder
    * @return The fString.
    */
   java.lang.String getFString();
+
   /**
    * <code>string f_string = 1;</code>
    *

@@ -34,6 +34,7 @@ public interface ListBlurbsResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.Blurb blurbs = 1;</code>
    */
   java.util.List<com.google.showcase.v1beta1.Blurb> getBlurbsList();
+
   /**
    *
    *
@@ -44,6 +45,7 @@ public interface ListBlurbsResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.Blurb blurbs = 1;</code>
    */
   com.google.showcase.v1beta1.Blurb getBlurbs(int index);
+
   /**
    *
    *
@@ -54,6 +56,7 @@ public interface ListBlurbsResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.Blurb blurbs = 1;</code>
    */
   int getBlurbsCount();
+
   /**
    *
    *
@@ -64,6 +67,7 @@ public interface ListBlurbsResponseOrBuilder
    * <code>repeated .google.showcase.v1beta1.Blurb blurbs = 1;</code>
    */
   java.util.List<? extends com.google.showcase.v1beta1.BlurbOrBuilder> getBlurbsOrBuilderList();
+
   /**
    *
    *
@@ -90,6 +94,7 @@ public interface ListBlurbsResponseOrBuilder
    * @return The nextPageToken.
    */
   java.lang.String getNextPageToken();
+
   /**
    *
    *

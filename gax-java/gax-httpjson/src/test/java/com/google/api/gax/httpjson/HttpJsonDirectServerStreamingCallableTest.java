@@ -172,8 +172,7 @@ class HttpJsonDirectServerStreamingCallableTest {
         HttpJsonCallableFactory.createServerStreamingCallable(
             HttpJsonCallSettings.create(this.methodServerStreamingRecognize),
             streamingCallSettings,
-            clientContext
-                .toBuilder()
+            clientContext.toBuilder()
                 .setDefaultCallContext(FakeCallContext.createDefault())
                 .build());
 

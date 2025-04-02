@@ -34,6 +34,7 @@ public final class ListRoomsRequest extends com.google.protobuf.GeneratedMessage
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.ListRoomsRequest)
     ListRoomsRequestOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use ListRoomsRequest.newBuilder() to construct.
   private ListRoomsRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -66,6 +67,7 @@ public final class ListRoomsRequest extends com.google.protobuf.GeneratedMessage
 
   public static final int PAGE_SIZE_FIELD_NUMBER = 1;
   private int pageSize_ = 0;
+
   /**
    *
    *
@@ -87,6 +89,7 @@ public final class ListRoomsRequest extends com.google.protobuf.GeneratedMessage
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object pageToken_ = "";
+
   /**
    *
    *
@@ -112,6 +115,7 @@ public final class ListRoomsRequest extends com.google.protobuf.GeneratedMessage
       return s;
     }
   }
+
   /**
    *
    *
@@ -306,6 +310,7 @@ public final class ListRoomsRequest extends com.google.protobuf.GeneratedMessage
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -503,6 +508,7 @@ public final class ListRoomsRequest extends com.google.protobuf.GeneratedMessage
     private int bitField0_;
 
     private int pageSize_;
+
     /**
      *
      *
@@ -519,6 +525,7 @@ public final class ListRoomsRequest extends com.google.protobuf.GeneratedMessage
     public int getPageSize() {
       return pageSize_;
     }
+
     /**
      *
      *
@@ -539,6 +546,7 @@ public final class ListRoomsRequest extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -559,6 +567,7 @@ public final class ListRoomsRequest extends com.google.protobuf.GeneratedMessage
     }
 
     private java.lang.Object pageToken_ = "";
+
     /**
      *
      *
@@ -583,6 +592,7 @@ public final class ListRoomsRequest extends com.google.protobuf.GeneratedMessage
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -607,6 +617,7 @@ public final class ListRoomsRequest extends com.google.protobuf.GeneratedMessage
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -630,6 +641,7 @@ public final class ListRoomsRequest extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -649,6 +661,7 @@ public final class ListRoomsRequest extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
+
     /**
      *
      *

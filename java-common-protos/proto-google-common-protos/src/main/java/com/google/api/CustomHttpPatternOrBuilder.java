@@ -36,6 +36,7 @@ public interface CustomHttpPatternOrBuilder
    * @return The kind.
    */
   java.lang.String getKind();
+
   /**
    *
    *
@@ -61,6 +62,7 @@ public interface CustomHttpPatternOrBuilder
    * @return The path.
    */
   java.lang.String getPath();
+
   /**
    *
    *

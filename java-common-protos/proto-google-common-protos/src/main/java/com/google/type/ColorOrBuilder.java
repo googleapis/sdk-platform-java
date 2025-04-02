@@ -85,6 +85,7 @@ public interface ColorOrBuilder
    * @return Whether the alpha field is set.
    */
   boolean hasAlpha();
+
   /**
    *
    *
@@ -107,6 +108,7 @@ public interface ColorOrBuilder
    * @return The alpha.
    */
   com.google.protobuf.FloatValue getAlpha();
+
   /**
    *
    *

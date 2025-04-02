@@ -94,7 +94,8 @@ public class MockSequenceServiceImpl extends SequenceServiceImplBase {
       responseObserver.onError(
           new IllegalArgumentException(
               String.format(
-                  "Unrecognized response type %s for method CreateStreamingSequence, expected %s or %s",
+                  "Unrecognized response type %s for method CreateStreamingSequence, expected %s or"
+                      + " %s",
                   response == null ? "null" : response.getClass().getName(),
                   StreamingSequence.class.getName(),
                   Exception.class.getName())));
@@ -137,7 +138,8 @@ public class MockSequenceServiceImpl extends SequenceServiceImplBase {
       responseObserver.onError(
           new IllegalArgumentException(
               String.format(
-                  "Unrecognized response type %s for method GetStreamingSequenceReport, expected %s or %s",
+                  "Unrecognized response type %s for method GetStreamingSequenceReport, expected %s"
+                      + " or %s",
                   response == null ? "null" : response.getClass().getName(),
                   StreamingSequenceReport.class.getName(),
                   Exception.class.getName())));
@@ -180,7 +182,8 @@ public class MockSequenceServiceImpl extends SequenceServiceImplBase {
       responseObserver.onError(
           new IllegalArgumentException(
               String.format(
-                  "Unrecognized response type %s for method AttemptStreamingSequence, expected %s or %s",
+                  "Unrecognized response type %s for method AttemptStreamingSequence, expected %s"
+                      + " or %s",
                   response == null ? "null" : response.getClass().getName(),
                   AttemptStreamingSequenceResponse.class.getName(),
                   Exception.class.getName())));

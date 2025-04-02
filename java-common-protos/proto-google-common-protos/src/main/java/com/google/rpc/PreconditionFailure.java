@@ -37,6 +37,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
     // @@protoc_insertion_point(message_implements:google.rpc.PreconditionFailure)
     PreconditionFailureOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use PreconditionFailure.newBuilder() to construct.
   private PreconditionFailure(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -86,6 +87,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      * @return The type.
      */
     java.lang.String getType();
+
     /**
      *
      *
@@ -115,6 +117,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      * @return The subject.
      */
     java.lang.String getSubject();
+
     /**
      *
      *
@@ -145,6 +148,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      * @return The description.
      */
     java.lang.String getDescription();
+
     /**
      *
      *
@@ -161,6 +165,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      */
     com.google.protobuf.ByteString getDescriptionBytes();
   }
+
   /**
    *
    *
@@ -175,6 +180,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       // @@protoc_insertion_point(message_implements:google.rpc.PreconditionFailure.Violation)
       ViolationOrBuilder {
     private static final long serialVersionUID = 0L;
+
     // Use Violation.newBuilder() to construct.
     private Violation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -211,6 +217,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object type_ = "";
+
     /**
      *
      *
@@ -236,6 +243,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
         return s;
       }
     }
+
     /**
      *
      *
@@ -266,6 +274,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object subject_ = "";
+
     /**
      *
      *
@@ -291,6 +300,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
         return s;
       }
     }
+
     /**
      *
      *
@@ -321,6 +331,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object description_ = "";
+
     /**
      *
      *
@@ -347,6 +358,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
         return s;
       }
     }
+
     /**
      *
      *
@@ -552,6 +564,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       Builder builder = new Builder(parent);
       return builder;
     }
+
     /**
      *
      *
@@ -768,6 +781,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       private int bitField0_;
 
       private java.lang.Object type_ = "";
+
       /**
        *
        *
@@ -792,6 +806,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
           return (java.lang.String) ref;
         }
       }
+
       /**
        *
        *
@@ -816,6 +831,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
           return (com.google.protobuf.ByteString) ref;
         }
       }
+
       /**
        *
        *
@@ -839,6 +855,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -858,6 +875,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -884,6 +902,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       }
 
       private java.lang.Object subject_ = "";
+
       /**
        *
        *
@@ -908,6 +927,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
           return (java.lang.String) ref;
         }
       }
+
       /**
        *
        *
@@ -932,6 +952,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
           return (com.google.protobuf.ByteString) ref;
         }
       }
+
       /**
        *
        *
@@ -955,6 +976,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -974,6 +996,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -1000,6 +1023,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       }
 
       private java.lang.Object description_ = "";
+
       /**
        *
        *
@@ -1025,6 +1049,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
           return (java.lang.String) ref;
         }
       }
+
       /**
        *
        *
@@ -1050,6 +1075,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
           return (com.google.protobuf.ByteString) ref;
         }
       }
+
       /**
        *
        *
@@ -1074,6 +1100,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -1094,6 +1121,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -1188,6 +1216,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.rpc.PreconditionFailure.Violation> violations_;
+
   /**
    *
    *
@@ -1201,6 +1230,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
   public java.util.List<com.google.rpc.PreconditionFailure.Violation> getViolationsList() {
     return violations_;
   }
+
   /**
    *
    *
@@ -1215,6 +1245,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       getViolationsOrBuilderList() {
     return violations_;
   }
+
   /**
    *
    *
@@ -1228,6 +1259,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
   public int getViolationsCount() {
     return violations_.size();
   }
+
   /**
    *
    *
@@ -1241,6 +1273,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
   public com.google.rpc.PreconditionFailure.Violation getViolations(int index) {
     return violations_.get(index);
   }
+
   /**
    *
    *
@@ -1414,6 +1447,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -1677,6 +1711,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
         return violationsBuilder_.getMessageList();
       }
     }
+
     /**
      *
      *
@@ -1693,6 +1728,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
         return violationsBuilder_.getCount();
       }
     }
+
     /**
      *
      *
@@ -1709,6 +1745,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
         return violationsBuilder_.getMessage(index);
       }
     }
+
     /**
      *
      *
@@ -1731,6 +1768,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
+
     /**
      *
      *
@@ -1751,6 +1789,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
+
     /**
      *
      *
@@ -1773,6 +1812,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
+
     /**
      *
      *
@@ -1795,6 +1835,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
+
     /**
      *
      *
@@ -1815,6 +1856,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
+
     /**
      *
      *
@@ -1835,6 +1877,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
+
     /**
      *
      *
@@ -1855,6 +1898,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
+
     /**
      *
      *
@@ -1874,6 +1918,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
+
     /**
      *
      *
@@ -1893,6 +1938,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       }
       return this;
     }
+
     /**
      *
      *
@@ -1905,6 +1951,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
     public com.google.rpc.PreconditionFailure.Violation.Builder getViolationsBuilder(int index) {
       return getViolationsFieldBuilder().getBuilder(index);
     }
+
     /**
      *
      *
@@ -1921,6 +1968,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
         return violationsBuilder_.getMessageOrBuilder(index);
       }
     }
+
     /**
      *
      *
@@ -1938,6 +1986,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
         return java.util.Collections.unmodifiableList(violations_);
       }
     }
+
     /**
      *
      *
@@ -1951,6 +2000,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       return getViolationsFieldBuilder()
           .addBuilder(com.google.rpc.PreconditionFailure.Violation.getDefaultInstance());
     }
+
     /**
      *
      *
@@ -1964,6 +2014,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       return getViolationsFieldBuilder()
           .addBuilder(index, com.google.rpc.PreconditionFailure.Violation.getDefaultInstance());
     }
+
     /**
      *
      *

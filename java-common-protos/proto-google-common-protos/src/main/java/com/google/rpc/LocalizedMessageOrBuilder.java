@@ -38,6 +38,7 @@ public interface LocalizedMessageOrBuilder
    * @return The locale.
    */
   java.lang.String getLocale();
+
   /**
    *
    *
@@ -65,6 +66,7 @@ public interface LocalizedMessageOrBuilder
    * @return The message.
    */
   java.lang.String getMessage();
+
   /**
    *
    *

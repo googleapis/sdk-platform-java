@@ -215,8 +215,7 @@ public class MethodSignatureParser {
                       r -> r.type(),
                       r ->
                           // Contruct a new field using the parent resource.
-                          field
-                              .toBuilder()
+                          field.toBuilder()
                               .setResourceReference(
                                   ResourceReference.withType(r.resourceTypeString()))
                               .build())));

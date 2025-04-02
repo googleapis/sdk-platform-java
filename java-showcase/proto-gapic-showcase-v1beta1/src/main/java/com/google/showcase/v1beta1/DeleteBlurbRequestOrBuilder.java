@@ -38,6 +38,7 @@ public interface DeleteBlurbRequestOrBuilder
    * @return The name.
    */
   java.lang.String getName();
+
   /**
    *
    *

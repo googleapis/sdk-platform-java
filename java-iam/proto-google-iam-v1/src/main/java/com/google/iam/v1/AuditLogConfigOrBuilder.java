@@ -36,6 +36,7 @@ public interface AuditLogConfigOrBuilder
    * @return The enum numeric value on the wire for logType.
    */
   int getLogTypeValue();
+
   /**
    *
    *
@@ -64,6 +65,7 @@ public interface AuditLogConfigOrBuilder
    * @return A list containing the exemptedMembers.
    */
   java.util.List<java.lang.String> getExemptedMembersList();
+
   /**
    *
    *
@@ -79,6 +81,7 @@ public interface AuditLogConfigOrBuilder
    * @return The count of exemptedMembers.
    */
   int getExemptedMembersCount();
+
   /**
    *
    *
@@ -95,6 +98,7 @@ public interface AuditLogConfigOrBuilder
    * @return The exemptedMembers at the given index.
    */
   java.lang.String getExemptedMembers(int index);
+
   /**
    *
    *

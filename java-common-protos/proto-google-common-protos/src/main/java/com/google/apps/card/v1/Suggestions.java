@@ -50,6 +50,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.Suggestions)
     SuggestionsOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use Suggestions.newBuilder() to construct.
   private Suggestions(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -98,6 +99,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the text field is set.
      */
     boolean hasText();
+
     /**
      *
      *
@@ -111,6 +113,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
      * @return The text.
      */
     java.lang.String getText();
+
     /**
      *
      *
@@ -127,6 +130,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
 
     com.google.apps.card.v1.Suggestions.SuggestionItem.ContentCase getContentCase();
   }
+
   /**
    *
    *
@@ -144,6 +148,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
       // @@protoc_insertion_point(message_implements:google.apps.card.v1.Suggestions.SuggestionItem)
       SuggestionItemOrBuilder {
     private static final long serialVersionUID = 0L;
+
     // Use SuggestionItem.newBuilder() to construct.
     private SuggestionItem(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -188,6 +193,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
       private ContentCase(int value) {
         this.value = value;
       }
+
       /**
        * @param value The number of the enum to look for.
        * @return The enum associated with the given number.
@@ -219,6 +225,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
     }
 
     public static final int TEXT_FIELD_NUMBER = 1;
+
     /**
      *
      *
@@ -234,6 +241,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
     public boolean hasText() {
       return contentCase_ == 1;
     }
+
     /**
      *
      *
@@ -262,6 +270,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
+
     /**
      *
      *
@@ -464,6 +473,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
       Builder builder = new Builder(parent);
       return builder;
     }
+
     /**
      *
      *
@@ -696,6 +706,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
       public boolean hasText() {
         return contentCase_ == 1;
       }
+
       /**
        *
        *
@@ -725,6 +736,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
+
       /**
        *
        *
@@ -754,6 +766,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
+
       /**
        *
        *
@@ -776,6 +789,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -796,6 +810,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
+
       /**
        *
        *
@@ -888,6 +903,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.apps.card.v1.Suggestions.SuggestionItem> items_;
+
   /**
    *
    *
@@ -902,6 +918,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.apps.card.v1.Suggestions.SuggestionItem> getItemsList() {
     return items_;
   }
+
   /**
    *
    *
@@ -917,6 +934,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
       getItemsOrBuilderList() {
     return items_;
   }
+
   /**
    *
    *
@@ -931,6 +949,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
   public int getItemsCount() {
     return items_.size();
   }
+
   /**
    *
    *
@@ -945,6 +964,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
   public com.google.apps.card.v1.Suggestions.SuggestionItem getItems(int index) {
     return items_.get(index);
   }
+
   /**
    *
    *
@@ -1119,6 +1139,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -1397,6 +1418,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
         return itemsBuilder_.getMessageList();
       }
     }
+
     /**
      *
      *
@@ -1414,6 +1436,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
         return itemsBuilder_.getCount();
       }
     }
+
     /**
      *
      *
@@ -1431,6 +1454,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
         return itemsBuilder_.getMessage(index);
       }
     }
+
     /**
      *
      *
@@ -1454,6 +1478,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1475,6 +1500,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1498,6 +1524,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1521,6 +1548,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1542,6 +1570,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1563,6 +1592,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1584,6 +1614,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1604,6 +1635,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1624,6 +1656,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1637,6 +1670,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.Suggestions.SuggestionItem.Builder getItemsBuilder(int index) {
       return getItemsFieldBuilder().getBuilder(index);
     }
+
     /**
      *
      *
@@ -1655,6 +1689,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
         return itemsBuilder_.getMessageOrBuilder(index);
       }
     }
+
     /**
      *
      *
@@ -1673,6 +1708,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(items_);
       }
     }
+
     /**
      *
      *
@@ -1687,6 +1723,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
       return getItemsFieldBuilder()
           .addBuilder(com.google.apps.card.v1.Suggestions.SuggestionItem.getDefaultInstance());
     }
+
     /**
      *
      *
@@ -1702,6 +1739,7 @@ public final class Suggestions extends com.google.protobuf.GeneratedMessageV3
           .addBuilder(
               index, com.google.apps.card.v1.Suggestions.SuggestionItem.getDefaultInstance());
     }
+
     /**
      *
      *

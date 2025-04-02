@@ -42,6 +42,7 @@ public interface IconOrBuilder
    * @return Whether the knownIcon field is set.
    */
   boolean hasKnownIcon();
+
   /**
    *
    *
@@ -60,6 +61,7 @@ public interface IconOrBuilder
    * @return The knownIcon.
    */
   java.lang.String getKnownIcon();
+
   /**
    *
    *
@@ -100,6 +102,7 @@ public interface IconOrBuilder
    * @return Whether the iconUrl field is set.
    */
   boolean hasIconUrl();
+
   /**
    *
    *
@@ -121,6 +124,7 @@ public interface IconOrBuilder
    * @return The iconUrl.
    */
   java.lang.String getIconUrl();
+
   /**
    *
    *
@@ -167,6 +171,7 @@ public interface IconOrBuilder
    * @return Whether the materialIcon field is set.
    */
   boolean hasMaterialIcon();
+
   /**
    *
    *
@@ -191,6 +196,7 @@ public interface IconOrBuilder
    * @return The materialIcon.
    */
   com.google.apps.card.v1.MaterialIcon getMaterialIcon();
+
   /**
    *
    *
@@ -235,6 +241,7 @@ public interface IconOrBuilder
    * @return The altText.
    */
   java.lang.String getAltText();
+
   /**
    *
    *
@@ -271,6 +278,7 @@ public interface IconOrBuilder
    * @return The enum numeric value on the wire for imageType.
    */
   int getImageTypeValue();
+
   /**
    *
    *

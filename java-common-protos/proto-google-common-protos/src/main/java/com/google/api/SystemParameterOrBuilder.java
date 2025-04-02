@@ -36,6 +36,7 @@ public interface SystemParameterOrBuilder
    * @return The name.
    */
   java.lang.String getName();
+
   /**
    *
    *
@@ -62,6 +63,7 @@ public interface SystemParameterOrBuilder
    * @return The httpHeader.
    */
   java.lang.String getHttpHeader();
+
   /**
    *
    *
@@ -89,6 +91,7 @@ public interface SystemParameterOrBuilder
    * @return The urlQueryParameter.
    */
   java.lang.String getUrlQueryParameter();
+
   /**
    *
    *

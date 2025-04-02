@@ -38,14 +38,19 @@ public enum Continent implements com.google.protobuf.ProtocolMessageEnum {
 
   /** <code>CONTINENT_UNSPECIFIED = 0;</code> */
   public static final int CONTINENT_UNSPECIFIED_VALUE = 0;
+
   /** <code>AFRICA = 1;</code> */
   public static final int AFRICA_VALUE = 1;
+
   /** <code>AMERICA = 2;</code> */
   public static final int AMERICA_VALUE = 2;
+
   /** <code>ANTARTICA = 3;</code> */
   public static final int ANTARTICA_VALUE = 3;
+
   /** <code>AUSTRALIA = 4;</code> */
   public static final int AUSTRALIA_VALUE = 4;
+
   /** <code>EUROPE = 5;</code> */
   public static final int EUROPE_VALUE = 5;
 

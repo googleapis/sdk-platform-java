@@ -36,6 +36,7 @@ public interface RetryInfoOrBuilder
    * @return Whether the retryDelay field is set.
    */
   boolean hasRetryDelay();
+
   /**
    *
    *
@@ -48,6 +49,7 @@ public interface RetryInfoOrBuilder
    * @return The retryDelay.
    */
   com.google.protobuf.Duration getRetryDelay();
+
   /**
    *
    *

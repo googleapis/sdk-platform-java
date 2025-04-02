@@ -36,6 +36,7 @@ public interface ViolationInfoOrBuilder
    * @return The constraint.
    */
   java.lang.String getConstraint();
+
   /**
    *
    *
@@ -61,6 +62,7 @@ public interface ViolationInfoOrBuilder
    * @return The errorMessage.
    */
   java.lang.String getErrorMessage();
+
   /**
    *
    *
@@ -88,6 +90,7 @@ public interface ViolationInfoOrBuilder
    * @return The checkedValue.
    */
   java.lang.String getCheckedValue();
+
   /**
    *
    *
@@ -117,6 +120,7 @@ public interface ViolationInfoOrBuilder
    * @return The enum numeric value on the wire for policyType.
    */
   int getPolicyTypeValue();
+
   /**
    *
    *

@@ -65,7 +65,9 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     return stubSettings;
   }
 
-  /** @deprecated Please use {@link #getBackgroundExecutorProvider()} */
+  /**
+   * @deprecated Please use {@link #getBackgroundExecutorProvider()}
+   */
   @Deprecated
   public final ExecutorProvider getExecutorProvider() {
     return stubSettings.getExecutorProvider();

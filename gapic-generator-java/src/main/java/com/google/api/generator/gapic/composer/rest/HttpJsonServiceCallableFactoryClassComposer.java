@@ -99,14 +99,14 @@ public class HttpJsonServiceCallableFactoryClassComposer
         createGenericCallableMethod(
             service,
             typeStore,
-            /*methodTemplateNames=*/ methodTemplateNames,
-            /*returnCallableKindName=*/ methodVariantName,
-            /*returnCallableTemplateNames=*/ methodTemplateNames,
-            /*methodVariantName=*/ methodVariantName,
-            /*httpJsonCallSettingsTemplateObjects=*/ Arrays.asList(
+            /* methodTemplateNames= */ methodTemplateNames,
+            /* returnCallableKindName= */ methodVariantName,
+            /* returnCallableTemplateNames= */ methodTemplateNames,
+            /* methodVariantName= */ methodVariantName,
+            /* httpJsonCallSettingsTemplateObjects= */ Arrays.asList(
                 requestTemplateName, operationType),
-            /*callSettingsVariantName=*/ methodVariantName,
-            /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
+            /* callSettingsVariantName= */ methodVariantName,
+            /* callSettingsTemplateObjects= */ methodTemplateNames.stream()
                 .map(n -> (Object) n)
                 .collect(Collectors.toList()),
             Collections.emptyList());
@@ -223,8 +223,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
             .build();
 
     // Add body and return statement to method
-    return method
-        .toBuilder()
+    return method.toBuilder()
         .setBody(createOperationCallableBody)
         .setReturnExpr(createOperationCallable)
         .build();

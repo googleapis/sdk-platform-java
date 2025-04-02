@@ -39,6 +39,7 @@ public interface HttpRuleOrBuilder
    * @return The selector.
    */
   java.lang.String getSelector();
+
   /**
    *
    *
@@ -68,6 +69,7 @@ public interface HttpRuleOrBuilder
    * @return Whether the get field is set.
    */
   boolean hasGet();
+
   /**
    *
    *
@@ -81,6 +83,7 @@ public interface HttpRuleOrBuilder
    * @return The get.
    */
   java.lang.String getGet();
+
   /**
    *
    *
@@ -107,6 +110,7 @@ public interface HttpRuleOrBuilder
    * @return Whether the put field is set.
    */
   boolean hasPut();
+
   /**
    *
    *
@@ -119,6 +123,7 @@ public interface HttpRuleOrBuilder
    * @return The put.
    */
   java.lang.String getPut();
+
   /**
    *
    *
@@ -144,6 +149,7 @@ public interface HttpRuleOrBuilder
    * @return Whether the post field is set.
    */
   boolean hasPost();
+
   /**
    *
    *
@@ -156,6 +162,7 @@ public interface HttpRuleOrBuilder
    * @return The post.
    */
   java.lang.String getPost();
+
   /**
    *
    *
@@ -181,6 +188,7 @@ public interface HttpRuleOrBuilder
    * @return Whether the delete field is set.
    */
   boolean hasDelete();
+
   /**
    *
    *
@@ -193,6 +201,7 @@ public interface HttpRuleOrBuilder
    * @return The delete.
    */
   java.lang.String getDelete();
+
   /**
    *
    *
@@ -218,6 +227,7 @@ public interface HttpRuleOrBuilder
    * @return Whether the patch field is set.
    */
   boolean hasPatch();
+
   /**
    *
    *
@@ -230,6 +240,7 @@ public interface HttpRuleOrBuilder
    * @return The patch.
    */
   java.lang.String getPatch();
+
   /**
    *
    *
@@ -258,6 +269,7 @@ public interface HttpRuleOrBuilder
    * @return Whether the custom field is set.
    */
   boolean hasCustom();
+
   /**
    *
    *
@@ -273,6 +285,7 @@ public interface HttpRuleOrBuilder
    * @return The custom.
    */
   com.google.api.CustomHttpPattern getCustom();
+
   /**
    *
    *
@@ -304,6 +317,7 @@ public interface HttpRuleOrBuilder
    * @return The body.
    */
   java.lang.String getBody();
+
   /**
    *
    *
@@ -339,6 +353,7 @@ public interface HttpRuleOrBuilder
    * @return The responseBody.
    */
   java.lang.String getResponseBody();
+
   /**
    *
    *
@@ -369,6 +384,7 @@ public interface HttpRuleOrBuilder
    * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
    */
   java.util.List<com.google.api.HttpRule> getAdditionalBindingsList();
+
   /**
    *
    *
@@ -381,6 +397,7 @@ public interface HttpRuleOrBuilder
    * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
    */
   com.google.api.HttpRule getAdditionalBindings(int index);
+
   /**
    *
    *
@@ -393,6 +410,7 @@ public interface HttpRuleOrBuilder
    * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
    */
   int getAdditionalBindingsCount();
+
   /**
    *
    *
@@ -405,6 +423,7 @@ public interface HttpRuleOrBuilder
    * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
    */
   java.util.List<? extends com.google.api.HttpRuleOrBuilder> getAdditionalBindingsOrBuilderList();
+
   /**
    *
    *

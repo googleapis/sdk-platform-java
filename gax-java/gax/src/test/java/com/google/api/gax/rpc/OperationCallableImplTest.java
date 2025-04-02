@@ -474,8 +474,7 @@ class OperationCallableImplTest {
     String opName = "testFutureCallPollRPCTimeout";
     pollingAlgorithm =
         OperationTimedPollAlgorithm.create(
-            FAST_RECHECKING_SETTINGS
-                .toBuilder()
+            FAST_RECHECKING_SETTINGS.toBuilder()
                 // Update the polling algorithm to set per-RPC timeouts instead of the default zero.
                 //
                 // This is non-standard, as these fields have been documented as "should be ignored"
@@ -588,8 +587,7 @@ class OperationCallableImplTest {
 
     pollingAlgorithm =
         OperationTimedPollAlgorithm.create(
-            FAST_RECHECKING_SETTINGS
-                .toBuilder()
+            FAST_RECHECKING_SETTINGS.toBuilder()
                 .setTotalTimeoutDuration(java.time.Duration.ofMillis(iterationsCount))
                 .build(),
             clock);
@@ -698,8 +696,7 @@ class OperationCallableImplTest {
 
     pollingAlgorithm =
         OperationTimedPollAlgorithm.create(
-            FAST_RECHECKING_SETTINGS
-                .toBuilder()
+            FAST_RECHECKING_SETTINGS.toBuilder()
                 .setTotalTimeoutDuration(java.time.Duration.ofMillis(1000L))
                 .build(),
             clock);
@@ -1261,48 +1258,48 @@ class OperationCallableImplTest {
       case CANCELLED:
         expectedClass = CancelledException.class;
         break;
-        //      case NOT_FOUND:
-        //        expectedClass = NotFoundException.class;
-        //        break;
+      //      case NOT_FOUND:
+      //        expectedClass = NotFoundException.class;
+      //        break;
       case UNKNOWN:
         expectedClass = UnknownException.class;
         break;
-        //      case INVALID_ARGUMENT:
-        //        expectedClass = InvalidArgumentException.class;
-        //        break;
+      //      case INVALID_ARGUMENT:
+      //        expectedClass = InvalidArgumentException.class;
+      //        break;
       case DEADLINE_EXCEEDED:
         expectedClass = DeadlineExceededException.class;
         break;
       case ALREADY_EXISTS:
         expectedClass = AlreadyExistsException.class;
         break;
-        //      case PERMISSION_DENIED:
-        //        expectedClass = PermissionDeniedException.class;
-        //        break;
-        //      case RESOURCE_EXHAUSTED:
-        //        expectedClass = ResourceExhaustedException.class;
-        //        break;
+      //      case PERMISSION_DENIED:
+      //        expectedClass = PermissionDeniedException.class;
+      //        break;
+      //      case RESOURCE_EXHAUSTED:
+      //        expectedClass = ResourceExhaustedException.class;
+      //        break;
       case FAILED_PRECONDITION:
         expectedClass = FailedPreconditionException.class;
         break;
-        //      case ABORTED:
-        //        expectedClass = AbortedException.class;
-        //        break;
-        //      case OUT_OF_RANGE:
-        //        expectedClass = OutOfRangeException.class;
-        //        break;
-        //      case INTERNAL:
-        //        expectedClass = InternalException.class;
-        //        break;
+      //      case ABORTED:
+      //        expectedClass = AbortedException.class;
+      //        break;
+      //      case OUT_OF_RANGE:
+      //        expectedClass = OutOfRangeException.class;
+      //        break;
+      //      case INTERNAL:
+      //        expectedClass = InternalException.class;
+      //        break;
       case UNAVAILABLE:
         expectedClass = UnavailableException.class;
         break;
-        //      case DATA_LOSS:
-        //        expectedClass = DataLossException.class;
-        //        break;
-        //      case UNAUTHENTICATED:
-        //        expectedClass = UnauthenticatedException.class;
-        //        break;
+      //      case DATA_LOSS:
+      //        expectedClass = DataLossException.class;
+      //        break;
+      //      case UNAUTHENTICATED:
+      //        expectedClass = UnauthenticatedException.class;
+      //        break;
 
       default:
         expectedClass = ApiException.class;

@@ -375,6 +375,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
       batch.cancel();
     }
   }
+
   /** {@inheritDoc} */
   @Override
   public void close() throws InterruptedException {

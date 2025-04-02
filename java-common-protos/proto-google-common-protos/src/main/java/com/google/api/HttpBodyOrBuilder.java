@@ -36,6 +36,7 @@ public interface HttpBodyOrBuilder
    * @return The contentType.
    */
   java.lang.String getContentType();
+
   /**
    *
    *
@@ -73,6 +74,7 @@ public interface HttpBodyOrBuilder
    * <code>repeated .google.protobuf.Any extensions = 3;</code>
    */
   java.util.List<com.google.protobuf.Any> getExtensionsList();
+
   /**
    *
    *
@@ -84,6 +86,7 @@ public interface HttpBodyOrBuilder
    * <code>repeated .google.protobuf.Any extensions = 3;</code>
    */
   com.google.protobuf.Any getExtensions(int index);
+
   /**
    *
    *
@@ -95,6 +98,7 @@ public interface HttpBodyOrBuilder
    * <code>repeated .google.protobuf.Any extensions = 3;</code>
    */
   int getExtensionsCount();
+
   /**
    *
    *
@@ -106,6 +110,7 @@ public interface HttpBodyOrBuilder
    * <code>repeated .google.protobuf.Any extensions = 3;</code>
    */
   java.util.List<? extends com.google.protobuf.AnyOrBuilder> getExtensionsOrBuilderList();
+
   /**
    *
    *

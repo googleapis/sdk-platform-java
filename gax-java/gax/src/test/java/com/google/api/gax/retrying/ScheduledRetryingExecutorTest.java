@@ -76,8 +76,7 @@ class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest {
   @Test
   void testSuccessWithFailuresPeekAttempt() throws Exception {
     RetrySettings retrySettings =
-        FAST_RETRY_SETTINGS
-            .toBuilder()
+        FAST_RETRY_SETTINGS.toBuilder()
             .setTotalTimeoutDuration(java.time.Duration.ofMillis(1000L))
             .setMaxAttempts(100)
             .build();
@@ -127,8 +126,7 @@ class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest {
   void testSuccessWithFailuresGetAttempt() throws Exception {
     int maxRetries = 100;
     RetrySettings retrySettings =
-        FAST_RETRY_SETTINGS
-            .toBuilder()
+        FAST_RETRY_SETTINGS.toBuilder()
             .setTotalTimeoutDuration(java.time.Duration.ofMillis(1000L))
             .setMaxAttempts(maxRetries)
             .build();
@@ -181,8 +179,7 @@ class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest {
   void testCancelGetAttempt() throws Exception {
     int maxRetries = 100;
     RetrySettings retrySettings =
-        FAST_RETRY_SETTINGS
-            .toBuilder()
+        FAST_RETRY_SETTINGS.toBuilder()
             .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(50L))
             .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(50L))
             .setTotalTimeoutDuration(java.time.Duration.ofMillis(5000L))
@@ -233,8 +230,7 @@ class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest {
   @Test
   void testCancelOuterFutureAfterStart() throws Exception {
     RetrySettings retrySettings =
-        FAST_RETRY_SETTINGS
-            .toBuilder()
+        FAST_RETRY_SETTINGS.toBuilder()
             // These params were selected to ensure that future tries to run and fail (at least
             // once) but does not complete before it is cancelled. Assuming no computation time,
             // it would take 2500 + 10000 + 10000 + 10000 = 32500ms for the future to complete,
@@ -286,8 +282,7 @@ class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest {
   @Test
   void testCancelProxiedFutureAfterStart() throws Exception {
     RetrySettings retrySettings =
-        FAST_RETRY_SETTINGS
-            .toBuilder()
+        FAST_RETRY_SETTINGS.toBuilder()
             .setInitialRetryDelayDuration(java.time.Duration.ofMillis(1_000L))
             .setMaxRetryDelayDuration(java.time.Duration.ofMillis(1_000L))
             .setTotalTimeoutDuration(java.time.Duration.ofMillis(10_0000L))

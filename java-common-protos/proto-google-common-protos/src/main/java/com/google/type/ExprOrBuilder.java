@@ -37,6 +37,7 @@ public interface ExprOrBuilder
    * @return The expression.
    */
   java.lang.String getExpression();
+
   /**
    *
    *
@@ -65,6 +66,7 @@ public interface ExprOrBuilder
    * @return The title.
    */
   java.lang.String getTitle();
+
   /**
    *
    *
@@ -93,6 +95,7 @@ public interface ExprOrBuilder
    * @return The description.
    */
   java.lang.String getDescription();
+
   /**
    *
    *
@@ -120,6 +123,7 @@ public interface ExprOrBuilder
    * @return The location.
    */
   java.lang.String getLocation();
+
   /**
    *
    *

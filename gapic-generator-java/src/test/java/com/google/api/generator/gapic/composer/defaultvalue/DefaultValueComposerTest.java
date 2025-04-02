@@ -288,7 +288,7 @@ class DefaultValueComposerTest {
             false,
             Collections.emptyList(),
             fallbackField,
-            /* allowAnonResourceNameClass = */ false,
+            /* allowAnonResourceNameClass= */ false,
             null);
     expr.accept(writerVisitor);
     assertEquals(
@@ -327,7 +327,7 @@ class DefaultValueComposerTest {
             false,
             Arrays.asList(resourceName, extraResourceName),
             fallbackField,
-            /* allowAnonResourceNameClass = */ false,
+            /* allowAnonResourceNameClass= */ false,
             bindings);
     expr.accept(writerVisitor);
     assertEquals("TopicName.ofProjectTopicName(\"[PROJECT]\", \"[TOPIC]\")", writerVisitor.write());
@@ -365,7 +365,7 @@ class DefaultValueComposerTest {
             false,
             Arrays.asList(resourceName, extraResourceName),
             fallbackField,
-            /* allowAnonResourceNameClass = */ false,
+            /* allowAnonResourceNameClass= */ false,
             bindings);
     expr.accept(writerVisitor);
     assertEquals(

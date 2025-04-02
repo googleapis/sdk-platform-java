@@ -31,6 +31,7 @@ public final class OperationsProto {
   }
 
   public static final int OPERATION_INFO_FIELD_NUMBER = 1049;
+
   /**
    *
    *

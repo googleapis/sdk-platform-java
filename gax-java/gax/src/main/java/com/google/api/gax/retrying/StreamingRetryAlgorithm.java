@@ -102,8 +102,7 @@ public final class StreamingRetryAlgorithm<ResponseT> extends RetryAlgorithm<Res
       // If we have made progress in the last attempt, then reset the delays
       if (attemptException.hasSeenResponses()) {
         previousSettings =
-            createFirstAttempt(context)
-                .toBuilder()
+            createFirstAttempt(context).toBuilder()
                 .setFirstAttemptStartTimeNanos(previousSettings.getFirstAttemptStartTimeNanos())
                 .setOverallAttemptCount(previousSettings.getOverallAttemptCount())
                 .build();

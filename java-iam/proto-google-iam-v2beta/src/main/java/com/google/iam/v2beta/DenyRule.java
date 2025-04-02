@@ -33,6 +33,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.iam.v2beta.DenyRule)
     DenyRuleOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use DenyRule.newBuilder() to construct.
   private DenyRule(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -71,6 +72,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList deniedPrincipals_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
+
   /**
    *
    *
@@ -124,6 +126,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.ProtocolStringList getDeniedPrincipalsList() {
     return deniedPrincipals_;
   }
+
   /**
    *
    *
@@ -177,6 +180,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   public int getDeniedPrincipalsCount() {
     return deniedPrincipals_.size();
   }
+
   /**
    *
    *
@@ -231,6 +235,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   public java.lang.String getDeniedPrincipals(int index) {
     return deniedPrincipals_.get(index);
   }
+
   /**
    *
    *
@@ -291,6 +296,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList exceptionPrincipals_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
+
   /**
    *
    *
@@ -312,6 +318,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.ProtocolStringList getExceptionPrincipalsList() {
     return exceptionPrincipals_;
   }
+
   /**
    *
    *
@@ -333,6 +340,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   public int getExceptionPrincipalsCount() {
     return exceptionPrincipals_.size();
   }
+
   /**
    *
    *
@@ -355,6 +363,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   public java.lang.String getExceptionPrincipals(int index) {
     return exceptionPrincipals_.get(index);
   }
+
   /**
    *
    *
@@ -383,6 +392,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList deniedPermissions_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
+
   /**
    *
    *
@@ -400,6 +410,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.ProtocolStringList getDeniedPermissionsList() {
     return deniedPermissions_;
   }
+
   /**
    *
    *
@@ -417,6 +428,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   public int getDeniedPermissionsCount() {
     return deniedPermissions_.size();
   }
+
   /**
    *
    *
@@ -435,6 +447,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   public java.lang.String getDeniedPermissions(int index) {
     return deniedPermissions_.get(index);
   }
+
   /**
    *
    *
@@ -459,6 +472,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList exceptionPermissions_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
+
   /**
    *
    *
@@ -479,6 +493,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.ProtocolStringList getExceptionPermissionsList() {
     return exceptionPermissions_;
   }
+
   /**
    *
    *
@@ -499,6 +514,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   public int getExceptionPermissionsCount() {
     return exceptionPermissions_.size();
   }
+
   /**
    *
    *
@@ -520,6 +536,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   public java.lang.String getExceptionPermissions(int index) {
     return exceptionPermissions_.get(index);
   }
+
   /**
    *
    *
@@ -544,6 +561,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
 
   public static final int DENIAL_CONDITION_FIELD_NUMBER = 5;
   private com.google.type.Expr denialCondition_;
+
   /**
    *
    *
@@ -569,6 +587,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   public boolean hasDenialCondition() {
     return ((bitField0_ & 0x00000001) != 0);
   }
+
   /**
    *
    *
@@ -594,6 +613,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   public com.google.type.Expr getDenialCondition() {
     return denialCondition_ == null ? com.google.type.Expr.getDefaultInstance() : denialCondition_;
   }
+
   /**
    *
    *
@@ -845,6 +865,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -1137,6 +1158,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ |= 0x00000001;
     }
+
     /**
      *
      *
@@ -1191,6 +1213,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       deniedPrincipals_.makeImmutable();
       return deniedPrincipals_;
     }
+
     /**
      *
      *
@@ -1244,6 +1267,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     public int getDeniedPrincipalsCount() {
       return deniedPrincipals_.size();
     }
+
     /**
      *
      *
@@ -1298,6 +1322,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     public java.lang.String getDeniedPrincipals(int index) {
       return deniedPrincipals_.get(index);
     }
+
     /**
      *
      *
@@ -1352,6 +1377,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ByteString getDeniedPrincipalsBytes(int index) {
       return deniedPrincipals_.getByteString(index);
     }
+
     /**
      *
      *
@@ -1414,6 +1440,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1475,6 +1502,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1533,6 +1561,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1590,6 +1619,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1662,6 +1692,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ |= 0x00000002;
     }
+
     /**
      *
      *
@@ -1684,6 +1715,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       exceptionPrincipals_.makeImmutable();
       return exceptionPrincipals_;
     }
+
     /**
      *
      *
@@ -1705,6 +1737,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     public int getExceptionPrincipalsCount() {
       return exceptionPrincipals_.size();
     }
+
     /**
      *
      *
@@ -1727,6 +1760,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     public java.lang.String getExceptionPrincipals(int index) {
       return exceptionPrincipals_.get(index);
     }
+
     /**
      *
      *
@@ -1749,6 +1783,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ByteString getExceptionPrincipalsBytes(int index) {
       return exceptionPrincipals_.getByteString(index);
     }
+
     /**
      *
      *
@@ -1779,6 +1814,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1808,6 +1844,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1834,6 +1871,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1859,6 +1897,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1899,6 +1938,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ |= 0x00000004;
     }
+
     /**
      *
      *
@@ -1917,6 +1957,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       deniedPermissions_.makeImmutable();
       return deniedPermissions_;
     }
+
     /**
      *
      *
@@ -1934,6 +1975,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     public int getDeniedPermissionsCount() {
       return deniedPermissions_.size();
     }
+
     /**
      *
      *
@@ -1952,6 +1994,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     public java.lang.String getDeniedPermissions(int index) {
       return deniedPermissions_.get(index);
     }
+
     /**
      *
      *
@@ -1970,6 +2013,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ByteString getDeniedPermissionsBytes(int index) {
       return deniedPermissions_.getByteString(index);
     }
+
     /**
      *
      *
@@ -1996,6 +2040,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2021,6 +2066,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2043,6 +2089,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2064,6 +2111,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2100,6 +2148,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ |= 0x00000008;
     }
+
     /**
      *
      *
@@ -2121,6 +2170,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       exceptionPermissions_.makeImmutable();
       return exceptionPermissions_;
     }
+
     /**
      *
      *
@@ -2141,6 +2191,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     public int getExceptionPermissionsCount() {
       return exceptionPermissions_.size();
     }
+
     /**
      *
      *
@@ -2162,6 +2213,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     public java.lang.String getExceptionPermissions(int index) {
       return exceptionPermissions_.get(index);
     }
+
     /**
      *
      *
@@ -2183,6 +2235,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ByteString getExceptionPermissionsBytes(int index) {
       return exceptionPermissions_.getByteString(index);
     }
+
     /**
      *
      *
@@ -2212,6 +2265,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2240,6 +2294,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2265,6 +2320,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2289,6 +2345,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2323,6 +2380,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.type.Expr, com.google.type.Expr.Builder, com.google.type.ExprOrBuilder>
         denialConditionBuilder_;
+
     /**
      *
      *
@@ -2347,6 +2405,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     public boolean hasDenialCondition() {
       return ((bitField0_ & 0x00000010) != 0);
     }
+
     /**
      *
      *
@@ -2377,6 +2436,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
         return denialConditionBuilder_.getMessage();
       }
     }
+
     /**
      *
      *
@@ -2409,6 +2469,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2438,6 +2499,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2475,6 +2537,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -2504,6 +2567,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2528,6 +2592,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getDenialConditionFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -2556,6 +2621,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
             : denialCondition_;
       }
     }
+
     /**
      *
      *

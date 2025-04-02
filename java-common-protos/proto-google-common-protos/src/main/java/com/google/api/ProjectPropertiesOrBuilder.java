@@ -34,6 +34,7 @@ public interface ProjectPropertiesOrBuilder
    * <code>repeated .google.api.Property properties = 1;</code>
    */
   java.util.List<com.google.api.Property> getPropertiesList();
+
   /**
    *
    *
@@ -44,6 +45,7 @@ public interface ProjectPropertiesOrBuilder
    * <code>repeated .google.api.Property properties = 1;</code>
    */
   com.google.api.Property getProperties(int index);
+
   /**
    *
    *
@@ -54,6 +56,7 @@ public interface ProjectPropertiesOrBuilder
    * <code>repeated .google.api.Property properties = 1;</code>
    */
   int getPropertiesCount();
+
   /**
    *
    *
@@ -64,6 +67,7 @@ public interface ProjectPropertiesOrBuilder
    * <code>repeated .google.api.Property properties = 1;</code>
    */
   java.util.List<? extends com.google.api.PropertyOrBuilder> getPropertiesOrBuilderList();
+
   /**
    *
    *

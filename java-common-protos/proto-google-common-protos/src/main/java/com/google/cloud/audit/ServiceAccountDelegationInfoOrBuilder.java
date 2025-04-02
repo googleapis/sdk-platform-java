@@ -41,6 +41,7 @@ public interface ServiceAccountDelegationInfoOrBuilder
    * @return The principalSubject.
    */
   java.lang.String getPrincipalSubject();
+
   /**
    *
    *
@@ -73,6 +74,7 @@ public interface ServiceAccountDelegationInfoOrBuilder
    * @return Whether the firstPartyPrincipal field is set.
    */
   boolean hasFirstPartyPrincipal();
+
   /**
    *
    *
@@ -87,6 +89,7 @@ public interface ServiceAccountDelegationInfoOrBuilder
    * @return The firstPartyPrincipal.
    */
   com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal getFirstPartyPrincipal();
+
   /**
    *
    *
@@ -115,6 +118,7 @@ public interface ServiceAccountDelegationInfoOrBuilder
    * @return Whether the thirdPartyPrincipal field is set.
    */
   boolean hasThirdPartyPrincipal();
+
   /**
    *
    *
@@ -129,6 +133,7 @@ public interface ServiceAccountDelegationInfoOrBuilder
    * @return The thirdPartyPrincipal.
    */
   com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal getThirdPartyPrincipal();
+
   /**
    *
    *

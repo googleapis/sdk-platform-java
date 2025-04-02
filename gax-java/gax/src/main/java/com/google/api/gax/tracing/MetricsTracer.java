@@ -243,7 +243,8 @@ public class MetricsTracer implements ApiTracer {
    */
   public void addAttributes(String key, String value) {
     attributes.put(key, value);
-  };
+  }
+  ;
 
   /**
    * Add attributes that will be attached to all metrics. This is expected to be called by
@@ -252,7 +253,8 @@ public class MetricsTracer implements ApiTracer {
    */
   public void addAttributes(Map<String, String> attributes) {
     this.attributes.putAll(attributes);
-  };
+  }
+  ;
 
   @VisibleForTesting
   Map<String, String> getAttributes() {

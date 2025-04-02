@@ -38,6 +38,7 @@ public interface ResourceInfoOrBuilder
    * @return The resourceType.
    */
   java.lang.String getResourceType();
+
   /**
    *
    *
@@ -68,6 +69,7 @@ public interface ResourceInfoOrBuilder
    * @return The resourceName.
    */
   java.lang.String getResourceName();
+
   /**
    *
    *
@@ -98,6 +100,7 @@ public interface ResourceInfoOrBuilder
    * @return The owner.
    */
   java.lang.String getOwner();
+
   /**
    *
    *
@@ -127,6 +130,7 @@ public interface ResourceInfoOrBuilder
    * @return The description.
    */
   java.lang.String getDescription();
+
   /**
    *
    *

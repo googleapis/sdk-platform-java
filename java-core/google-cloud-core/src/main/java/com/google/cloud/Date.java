@@ -52,7 +52,9 @@ public final class Date implements Comparable<Date>, Serializable {
     return new Date(year, month, dayOfMonth);
   }
 
-  /** @param date Data in RFC 3339 date format (yyyy-mm-dd). */
+  /**
+   * @param date Data in RFC 3339 date format (yyyy-mm-dd).
+   */
   public static Date parseDate(String date) {
     Preconditions.checkNotNull(date);
     final String invalidDate = "Invalid date: " + date;

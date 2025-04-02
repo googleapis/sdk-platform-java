@@ -36,6 +36,7 @@ public interface PhpSettingsOrBuilder
    * @return Whether the common field is set.
    */
   boolean hasCommon();
+
   /**
    *
    *
@@ -48,6 +49,7 @@ public interface PhpSettingsOrBuilder
    * @return The common.
    */
   com.google.api.CommonLanguageSettings getCommon();
+
   /**
    *
    *

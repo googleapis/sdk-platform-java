@@ -37,6 +37,7 @@ public interface SearchBlurbsRequestOrBuilder
    * @return The query.
    */
   java.lang.String getQuery();
+
   /**
    *
    *
@@ -64,6 +65,7 @@ public interface SearchBlurbsRequestOrBuilder
    * @return The parent.
    */
   java.lang.String getParent();
+
   /**
    *
    *
@@ -108,6 +110,7 @@ public interface SearchBlurbsRequestOrBuilder
    * @return The pageToken.
    */
   java.lang.String getPageToken();
+
   /**
    *
    *

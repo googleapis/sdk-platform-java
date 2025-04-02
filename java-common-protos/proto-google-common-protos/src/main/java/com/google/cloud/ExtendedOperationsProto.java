@@ -35,6 +35,7 @@ public final class ExtendedOperationsProto {
   }
 
   public static final int OPERATION_FIELD_FIELD_NUMBER = 1149;
+
   /**
    *
    *
@@ -54,6 +55,7 @@ public final class ExtendedOperationsProto {
               com.google.cloud.OperationResponseMapping.class, null);
 
   public static final int OPERATION_REQUEST_FIELD_FIELD_NUMBER = 1150;
+
   /**
    *
    *
@@ -78,6 +80,7 @@ public final class ExtendedOperationsProto {
               java.lang.String.class, null);
 
   public static final int OPERATION_RESPONSE_FIELD_FIELD_NUMBER = 1151;
+
   /**
    *
    *
@@ -102,6 +105,7 @@ public final class ExtendedOperationsProto {
               java.lang.String.class, null);
 
   public static final int OPERATION_SERVICE_FIELD_NUMBER = 1249;
+
   /**
    *
    *
@@ -122,6 +126,7 @@ public final class ExtendedOperationsProto {
               java.lang.String.class, null);
 
   public static final int OPERATION_POLLING_METHOD_FIELD_NUMBER = 1250;
+
   /**
    *
    *

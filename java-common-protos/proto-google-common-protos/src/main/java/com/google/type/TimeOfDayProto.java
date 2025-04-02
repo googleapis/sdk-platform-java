@@ -41,10 +41,14 @@ public final class TimeOfDayProto {
 
   static {
     java.lang.String[] descriptorData = {
-      "\n\033google/type/timeofday.proto\022\013google.ty"
-          + "pe\"K\n\tTimeOfDay\022\r\n\005hours\030\001 \001(\005\022\017\n\007minute"
-          + "s\030\002 \001(\005\022\017\n\007seconds\030\003 \001(\005\022\r\n\005nanos\030\004 \001(\005B"
-          + "l\n\017com.google.typeB\016TimeOfDayProtoP\001Z>go"
+      "\n"
+          + "\033google/type/timeofday.proto\022\013google.type\"K\n"
+          + "\tTimeOfDay\022\r\n"
+          + "\005hours\030\001 \001(\005\022\017\n"
+          + "\007minutes\030\002 \001(\005\022\017\n"
+          + "\007seconds\030\003 \001(\005\022\r\n"
+          + "\005nanos\030\004 \001(\005Bl\n"
+          + "\017com.google.typeB\016TimeOfDayProtoP\001Z>go"
           + "ogle.golang.org/genproto/googleapis/type"
           + "/timeofday;timeofday\370\001\001\242\002\003GTPb\006proto3"
     };

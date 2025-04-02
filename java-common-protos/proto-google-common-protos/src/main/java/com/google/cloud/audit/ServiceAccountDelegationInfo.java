@@ -33,6 +33,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     // @@protoc_insertion_point(message_implements:google.cloud.audit.ServiceAccountDelegationInfo)
     ServiceAccountDelegationInfoOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use ServiceAccountDelegationInfo.newBuilder() to construct.
   private ServiceAccountDelegationInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -80,6 +81,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * @return The principalEmail.
      */
     java.lang.String getPrincipalEmail();
+
     /**
      *
      *
@@ -105,6 +107,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * @return Whether the serviceMetadata field is set.
      */
     boolean hasServiceMetadata();
+
     /**
      *
      *
@@ -117,6 +120,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * @return The serviceMetadata.
      */
     com.google.protobuf.Struct getServiceMetadata();
+
     /**
      *
      *
@@ -128,6 +132,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      */
     com.google.protobuf.StructOrBuilder getServiceMetadataOrBuilder();
   }
+
   /**
    *
    *
@@ -142,6 +147,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       // @@protoc_insertion_point(message_implements:google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal)
       FirstPartyPrincipalOrBuilder {
     private static final long serialVersionUID = 0L;
+
     // Use FirstPartyPrincipal.newBuilder() to construct.
     private FirstPartyPrincipal(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -178,6 +184,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object principalEmail_ = "";
+
     /**
      *
      *
@@ -201,6 +208,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         return s;
       }
     }
+
     /**
      *
      *
@@ -227,6 +235,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
 
     public static final int SERVICE_METADATA_FIELD_NUMBER = 2;
     private com.google.protobuf.Struct serviceMetadata_;
+
     /**
      *
      *
@@ -242,6 +251,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     public boolean hasServiceMetadata() {
       return ((bitField0_ & 0x00000001) != 0);
     }
+
     /**
      *
      *
@@ -259,6 +269,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
           ? com.google.protobuf.Struct.getDefaultInstance()
           : serviceMetadata_;
     }
+
     /**
      *
      *
@@ -452,6 +463,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       Builder builder = new Builder(parent);
       return builder;
     }
+
     /**
      *
      *
@@ -681,6 +693,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       private int bitField0_;
 
       private java.lang.Object principalEmail_ = "";
+
       /**
        *
        *
@@ -703,6 +716,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
           return (java.lang.String) ref;
         }
       }
+
       /**
        *
        *
@@ -725,6 +739,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
           return (com.google.protobuf.ByteString) ref;
         }
       }
+
       /**
        *
        *
@@ -746,6 +761,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -763,6 +779,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -792,6 +809,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
               com.google.protobuf.Struct.Builder,
               com.google.protobuf.StructOrBuilder>
           serviceMetadataBuilder_;
+
       /**
        *
        *
@@ -806,6 +824,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       public boolean hasServiceMetadata() {
         return ((bitField0_ & 0x00000002) != 0);
       }
+
       /**
        *
        *
@@ -826,6 +845,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
           return serviceMetadataBuilder_.getMessage();
         }
       }
+
       /**
        *
        *
@@ -848,6 +868,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -867,6 +888,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -894,6 +916,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         }
         return this;
       }
+
       /**
        *
        *
@@ -913,6 +936,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -927,6 +951,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         onChanged();
         return getServiceMetadataFieldBuilder().getBuilder();
       }
+
       /**
        *
        *
@@ -945,6 +970,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
               : serviceMetadata_;
         }
       }
+
       /**
        *
        *
@@ -1056,6 +1082,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * @return Whether the thirdPartyClaims field is set.
      */
     boolean hasThirdPartyClaims();
+
     /**
      *
      *
@@ -1068,6 +1095,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      * @return The thirdPartyClaims.
      */
     com.google.protobuf.Struct getThirdPartyClaims();
+
     /**
      *
      *
@@ -1079,6 +1107,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
      */
     com.google.protobuf.StructOrBuilder getThirdPartyClaimsOrBuilder();
   }
+
   /**
    *
    *
@@ -1093,6 +1122,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       // @@protoc_insertion_point(message_implements:google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal)
       ThirdPartyPrincipalOrBuilder {
     private static final long serialVersionUID = 0L;
+
     // Use ThirdPartyPrincipal.newBuilder() to construct.
     private ThirdPartyPrincipal(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -1125,6 +1155,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     private int bitField0_;
     public static final int THIRD_PARTY_CLAIMS_FIELD_NUMBER = 1;
     private com.google.protobuf.Struct thirdPartyClaims_;
+
     /**
      *
      *
@@ -1140,6 +1171,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     public boolean hasThirdPartyClaims() {
       return ((bitField0_ & 0x00000001) != 0);
     }
+
     /**
      *
      *
@@ -1157,6 +1189,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
           ? com.google.protobuf.Struct.getDefaultInstance()
           : thirdPartyClaims_;
     }
+
     /**
      *
      *
@@ -1341,6 +1374,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       Builder builder = new Builder(parent);
       return builder;
     }
+
     /**
      *
      *
@@ -1562,6 +1596,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
               com.google.protobuf.Struct.Builder,
               com.google.protobuf.StructOrBuilder>
           thirdPartyClaimsBuilder_;
+
       /**
        *
        *
@@ -1576,6 +1611,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       public boolean hasThirdPartyClaims() {
         return ((bitField0_ & 0x00000001) != 0);
       }
+
       /**
        *
        *
@@ -1596,6 +1632,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
           return thirdPartyClaimsBuilder_.getMessage();
         }
       }
+
       /**
        *
        *
@@ -1618,6 +1655,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -1637,6 +1675,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -1664,6 +1703,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         }
         return this;
       }
+
       /**
        *
        *
@@ -1683,6 +1723,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -1697,6 +1738,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         onChanged();
         return getThirdPartyClaimsFieldBuilder().getBuilder();
       }
+
       /**
        *
        *
@@ -1715,6 +1757,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
               : thirdPartyClaims_;
         }
       }
+
       /**
        *
        *
@@ -1826,6 +1869,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     private AuthorityCase(int value) {
       this.value = value;
     }
+
     /**
      * @param value The number of the enum to look for.
      * @return The enum associated with the given number.
@@ -1862,6 +1906,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object principalSubject_ = "";
+
   /**
    *
    *
@@ -1890,6 +1935,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       return s;
     }
   }
+
   /**
    *
    *
@@ -1920,6 +1966,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
   }
 
   public static final int FIRST_PARTY_PRINCIPAL_FIELD_NUMBER = 1;
+
   /**
    *
    *
@@ -1937,6 +1984,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
   public boolean hasFirstPartyPrincipal() {
     return authorityCase_ == 1;
   }
+
   /**
    *
    *
@@ -1959,6 +2007,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     return com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal
         .getDefaultInstance();
   }
+
   /**
    *
    *
@@ -1981,6 +2030,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
   }
 
   public static final int THIRD_PARTY_PRINCIPAL_FIELD_NUMBER = 2;
+
   /**
    *
    *
@@ -1998,6 +2048,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
   public boolean hasThirdPartyPrincipal() {
     return authorityCase_ == 2;
   }
+
   /**
    *
    *
@@ -2020,6 +2071,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     return com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal
         .getDefaultInstance();
   }
+
   /**
    *
    *
@@ -2243,6 +2295,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -2491,6 +2544,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     private int bitField0_;
 
     private java.lang.Object principalSubject_ = "";
+
     /**
      *
      *
@@ -2518,6 +2572,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -2545,6 +2600,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -2571,6 +2627,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2593,6 +2650,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -2626,6 +2684,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
             com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipal.Builder,
             com.google.cloud.audit.ServiceAccountDelegationInfo.FirstPartyPrincipalOrBuilder>
         firstPartyPrincipalBuilder_;
+
     /**
      *
      *
@@ -2643,6 +2702,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     public boolean hasFirstPartyPrincipal() {
       return authorityCase_ == 1;
     }
+
     /**
      *
      *
@@ -2674,6 +2734,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
             .getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -2699,6 +2760,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       authorityCase_ = 1;
       return this;
     }
+
     /**
      *
      *
@@ -2722,6 +2784,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       authorityCase_ = 1;
       return this;
     }
+
     /**
      *
      *
@@ -2760,6 +2823,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       authorityCase_ = 1;
       return this;
     }
+
     /**
      *
      *
@@ -2787,6 +2851,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       }
       return this;
     }
+
     /**
      *
      *
@@ -2802,6 +2867,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         getFirstPartyPrincipalBuilder() {
       return getFirstPartyPrincipalFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -2827,6 +2893,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
             .getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -2870,6 +2937,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
             com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipal.Builder,
             com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipalOrBuilder>
         thirdPartyPrincipalBuilder_;
+
     /**
      *
      *
@@ -2887,6 +2955,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     public boolean hasThirdPartyPrincipal() {
       return authorityCase_ == 2;
     }
+
     /**
      *
      *
@@ -2918,6 +2987,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
             .getDefaultInstance();
       }
     }
+
     /**
      *
      *
@@ -2943,6 +3013,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       authorityCase_ = 2;
       return this;
     }
+
     /**
      *
      *
@@ -2966,6 +3037,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       authorityCase_ = 2;
       return this;
     }
+
     /**
      *
      *
@@ -3004,6 +3076,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       authorityCase_ = 2;
       return this;
     }
+
     /**
      *
      *
@@ -3031,6 +3104,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       }
       return this;
     }
+
     /**
      *
      *
@@ -3046,6 +3120,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
         getThirdPartyPrincipalBuilder() {
       return getThirdPartyPrincipalFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -3071,6 +3146,7 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
             .getDefaultInstance();
       }
     }
+
     /**
      *
      *

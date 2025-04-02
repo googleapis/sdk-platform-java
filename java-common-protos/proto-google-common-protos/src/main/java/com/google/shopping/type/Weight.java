@@ -33,6 +33,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.shopping.type.Weight)
     WeightOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use Weight.newBuilder() to construct.
   private Weight(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -115,6 +116,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
      * <code>WEIGHT_UNIT_UNSPECIFIED = 0;</code>
      */
     public static final int WEIGHT_UNIT_UNSPECIFIED_VALUE = 0;
+
     /**
      *
      *
@@ -125,6 +127,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
      * <code>POUND = 1;</code>
      */
     public static final int POUND_VALUE = 1;
+
     /**
      *
      *
@@ -222,6 +225,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
   private int bitField0_;
   public static final int AMOUNT_MICROS_FIELD_NUMBER = 1;
   private long amountMicros_ = 0L;
+
   /**
    *
    *
@@ -241,6 +245,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
   public boolean hasAmountMicros() {
     return ((bitField0_ & 0x00000001) != 0);
   }
+
   /**
    *
    *
@@ -263,6 +268,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
 
   public static final int UNIT_FIELD_NUMBER = 2;
   private int unit_ = 0;
+
   /**
    *
    *
@@ -279,6 +285,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
   public int getUnitValue() {
     return unit_;
   }
+
   /**
    *
    *
@@ -469,6 +476,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -664,6 +672,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private long amountMicros_;
+
     /**
      *
      *
@@ -683,6 +692,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
     public boolean hasAmountMicros() {
       return ((bitField0_ & 0x00000001) != 0);
     }
+
     /**
      *
      *
@@ -702,6 +712,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
     public long getAmountMicros() {
       return amountMicros_;
     }
+
     /**
      *
      *
@@ -725,6 +736,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -748,6 +760,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int unit_ = 0;
+
     /**
      *
      *
@@ -764,6 +777,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
     public int getUnitValue() {
       return unit_;
     }
+
     /**
      *
      *
@@ -783,6 +797,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -801,6 +816,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
           com.google.shopping.type.Weight.WeightUnit.forNumber(unit_);
       return result == null ? com.google.shopping.type.Weight.WeightUnit.UNRECOGNIZED : result;
     }
+
     /**
      *
      *
@@ -823,6 +839,7 @@ public final class Weight extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *

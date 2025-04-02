@@ -85,7 +85,8 @@ public abstract class RetrySettings implements Serializable {
   @ObsoleteApi("Use getTotalTimeoutDuration() instead")
   public org.threeten.bp.Duration getTotalTimeout() {
     return toThreetenDuration(getTotalTimeoutDuration());
-  };
+  }
+  ;
 
   /**
    * TotalTimeout has ultimate control over how long the logic should keep trying the remote call

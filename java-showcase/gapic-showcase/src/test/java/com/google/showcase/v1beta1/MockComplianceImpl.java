@@ -135,7 +135,8 @@ public class MockComplianceImpl extends ComplianceImplBase {
       responseObserver.onError(
           new IllegalArgumentException(
               String.format(
-                  "Unrecognized response type %s for method RepeatDataSimplePath, expected %s or %s",
+                  "Unrecognized response type %s for method RepeatDataSimplePath, expected %s or"
+                      + " %s",
                   response == null ? "null" : response.getClass().getName(),
                   RepeatResponse.class.getName(),
                   Exception.class.getName())));
@@ -156,7 +157,8 @@ public class MockComplianceImpl extends ComplianceImplBase {
       responseObserver.onError(
           new IllegalArgumentException(
               String.format(
-                  "Unrecognized response type %s for method RepeatDataPathResource, expected %s or %s",
+                  "Unrecognized response type %s for method RepeatDataPathResource, expected %s or"
+                      + " %s",
                   response == null ? "null" : response.getClass().getName(),
                   RepeatResponse.class.getName(),
                   Exception.class.getName())));
@@ -177,7 +179,8 @@ public class MockComplianceImpl extends ComplianceImplBase {
       responseObserver.onError(
           new IllegalArgumentException(
               String.format(
-                  "Unrecognized response type %s for method RepeatDataPathTrailingResource, expected %s or %s",
+                  "Unrecognized response type %s for method RepeatDataPathTrailingResource,"
+                      + " expected %s or %s",
                   response == null ? "null" : response.getClass().getName(),
                   RepeatResponse.class.getName(),
                   Exception.class.getName())));

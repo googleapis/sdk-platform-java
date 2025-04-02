@@ -30,12 +30,14 @@ public interface EchoErrorDetailsResponseOrBuilder
    * @return Whether the singleDetail field is set.
    */
   boolean hasSingleDetail();
+
   /**
    * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail single_detail = 1;</code>
    *
    * @return The singleDetail.
    */
   com.google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail getSingleDetail();
+
   /**
    * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.SingleDetail single_detail = 1;</code>
    */
@@ -49,6 +51,7 @@ public interface EchoErrorDetailsResponseOrBuilder
    * @return Whether the multipleDetails field is set.
    */
   boolean hasMultipleDetails();
+
   /**
    * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails multiple_details = 2;
    * </code>
@@ -56,6 +59,7 @@ public interface EchoErrorDetailsResponseOrBuilder
    * @return The multipleDetails.
    */
   com.google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails getMultipleDetails();
+
   /**
    * <code>.google.showcase.v1beta1.EchoErrorDetailsResponse.MultipleDetails multiple_details = 2;
    * </code>

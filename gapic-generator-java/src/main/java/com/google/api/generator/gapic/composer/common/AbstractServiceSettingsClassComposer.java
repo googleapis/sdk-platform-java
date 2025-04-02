@@ -915,7 +915,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     } else {
       switch (protoMethod.stream()) {
         case CLIENT:
-          // Fall through.
+        // Fall through.
         case BIDI:
           callSettingsClazz =
               isBuilder ? StreamingCallSettings.Builder.class : StreamingCallSettings.class;
@@ -927,7 +927,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                   : ServerStreamingCallSettings.class;
           break;
         case NONE:
-          // Fall through
+        // Fall through
         default:
           // Fall through
       }

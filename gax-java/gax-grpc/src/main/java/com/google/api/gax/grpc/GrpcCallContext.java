@@ -597,6 +597,7 @@ public final class GrpcCallContext implements ApiCallContext {
   public org.threeten.bp.Duration getStreamIdleTimeout() {
     return toThreetenDuration(getStreamIdleTimeoutDuration());
   }
+
   /**
    * The stream idle timeout set for this context.
    *

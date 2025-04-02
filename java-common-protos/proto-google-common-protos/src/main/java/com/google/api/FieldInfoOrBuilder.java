@@ -38,6 +38,7 @@ public interface FieldInfoOrBuilder
    * @return The enum numeric value on the wire for format.
    */
   int getFormatValue();
+
   /**
    *
    *
@@ -66,6 +67,7 @@ public interface FieldInfoOrBuilder
    * <code>repeated .google.api.TypeReference referenced_types = 2;</code>
    */
   java.util.List<com.google.api.TypeReference> getReferencedTypesList();
+
   /**
    *
    *
@@ -79,6 +81,7 @@ public interface FieldInfoOrBuilder
    * <code>repeated .google.api.TypeReference referenced_types = 2;</code>
    */
   com.google.api.TypeReference getReferencedTypes(int index);
+
   /**
    *
    *
@@ -92,6 +95,7 @@ public interface FieldInfoOrBuilder
    * <code>repeated .google.api.TypeReference referenced_types = 2;</code>
    */
   int getReferencedTypesCount();
+
   /**
    *
    *
@@ -105,6 +109,7 @@ public interface FieldInfoOrBuilder
    * <code>repeated .google.api.TypeReference referenced_types = 2;</code>
    */
   java.util.List<? extends com.google.api.TypeReferenceOrBuilder> getReferencedTypesOrBuilderList();
+
   /**
    *
    *

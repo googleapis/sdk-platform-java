@@ -104,8 +104,7 @@ class ITCrud {
         ImmutableList.of(
             createDefaultUser(),
             createUser(
-                DEFAULT_USER
-                    .toBuilder()
+                DEFAULT_USER.toBuilder()
                     .setNickname("John Smith")
                     .setEmail("johnsmith@example.com")
                     .build()));
@@ -131,8 +130,7 @@ class ITCrud {
     // Update multiple fields in the User. Age + Nickname are not included in the FieldMask
     // userResponse's enableNotifications field is populated from the server
     User updateUser =
-        userResponse
-            .toBuilder()
+        userResponse.toBuilder()
             .setAge(50)
             .setNickname("Smith")
             .setEmail("janedoe@jane.com")

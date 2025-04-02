@@ -36,6 +36,7 @@ public interface UpdateBlurbRequestOrBuilder
    * @return Whether the blurb field is set.
    */
   boolean hasBlurb();
+
   /**
    *
    *
@@ -48,6 +49,7 @@ public interface UpdateBlurbRequestOrBuilder
    * @return The blurb.
    */
   com.google.showcase.v1beta1.Blurb getBlurb();
+
   /**
    *
    *
@@ -72,6 +74,7 @@ public interface UpdateBlurbRequestOrBuilder
    * @return Whether the updateMask field is set.
    */
   boolean hasUpdateMask();
+
   /**
    *
    *
@@ -85,6 +88,7 @@ public interface UpdateBlurbRequestOrBuilder
    * @return The updateMask.
    */
   com.google.protobuf.FieldMask getUpdateMask();
+
   /**
    *
    *
