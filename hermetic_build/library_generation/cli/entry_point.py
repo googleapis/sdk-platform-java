@@ -66,7 +66,7 @@ def main(ctx):
     The library name of a library is the value of library_name or api_shortname,
     if library_name is not specified, in the generation configuration.
     
-    If neither this or --api-path specified, all libraries in the 
+    If neither --library-names  or --api-path specified, all libraries in the 
     generation configuration will be generated.
     """,
 )
@@ -82,7 +82,7 @@ def main(ctx):
     API directory, e.g. google/cloud/functions/v2.
 
     Takes precedence over --library-names when specidied. 
-    If neither this or --api-path specified, all libraries in the 
+    If neither --library-names  or --api-path specified, all libraries in the 
     generation configuration will be generated.
     """,
 )

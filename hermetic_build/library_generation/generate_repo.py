@@ -126,8 +126,8 @@ def _get_target_libraries_from_api_path(
 ) -> list[LibraryConfig]:
     """
     Retrieves a copy of the LibraryConfig objects that contain the specified
-    target API path, removed other proto_path versions from LibraryConfig if any.
-    proto_path that is dependency, not another version is kept.
+    target API path, without other proto_path versions that were not specified.
+    dependency proto_paths are kept.
 
     :param config: The GenerationConfig object.
     :param target_api_path: The target proto path to search for.
