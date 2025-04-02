@@ -18,7 +18,7 @@ import click as click
 import shutil
 from pathlib import Path
 from library_generation.generate_repo import generate_from_yaml
-from common.model.generation_config import from_yaml, GenerationConfig
+from common.model.generation_config import GenerationConfig
 
 
 @click.group(invoke_without_command=False)
@@ -57,6 +57,7 @@ def main(ctx):
 )
 @click.option(
     "--library-names",
+    required=False,
     type=str,
     default=None,
     show_default=True,
@@ -64,6 +65,25 @@ def main(ctx):
     A list of library names that will be generated, separated by comma.
     The library name of a library is the value of library_name or api_shortname,
     if library_name is not specified, in the generation configuration.
+    
+    If neither --library-names  or --api-path specified, all libraries in the 
+    generation configuration will be generated.
+    """,
+)
+@click.option(
+    "--api-path",
+    required=False,
+    type=str,
+    default=None,
+    show_default=True,
+    help="""
+    Path within the API root (e.g. googleapis) to the API to 
+    generate/build/configure etc. This is expected to be a major-versioned 
+    API directory, e.g. google/cloud/functions/v2.
+
+    Takes precedence over --library-names when specidied. 
+    If neither --library-names  or --api-path specified, all libraries in the 
+    generation configuration will be generated.
     """,
 )
 @click.option(
@@ -95,6 +115,7 @@ def generate(
     generation_config_path: Optional[str],
     generation_input: Optional[str],
     library_names: Optional[str],
+    api_path: Optional[str],
     repository_path: str,
     api_definitions_path: str,
 ):
@@ -116,6 +137,7 @@ def generate(
         generation_config_path=generation_config_path,
         generation_input=generation_input,
         library_names=library_names,
+        api_path=api_path,
         repository_path=repository_path,
         api_definitions_path=api_definitions_path,
     )
@@ -123,10 +145,11 @@ def generate(
 
 def __generate_repo_impl(
     generation_config_path: Optional[str],
+    generation_input: Optional[str],
     library_names: Optional[str],
+    api_path: Optional[str],
     repository_path: str,
     api_definitions_path: str,
-    generation_input: Optional[str],
 ):
     """
     Implementation method for generate().
@@ -156,7 +179,7 @@ def __generate_repo_impl(
         )
     repository_path = os.path.abspath(repository_path)
     api_definitions_path = os.path.abspath(api_definitions_path)
-    generation_config = from_yaml(generation_config_path)
+    generation_config = GenerationConfig.from_yaml(generation_config_path)
     include_library_names = _parse_library_name_from(
         includes=library_names, generation_config=generation_config
     )
@@ -165,6 +188,7 @@ def __generate_repo_impl(
         repository_path=repository_path,
         api_definitions_path=api_definitions_path,
         target_library_names=include_library_names,
+        target_api_path=api_path,
     )
 
 
@@ -192,6 +216,7 @@ def _copy_versions_file(generation_input_path, repository_path):
         print(f"Copied '{source_file}' to '{destination_file}'")
     except Exception as e:
         print(f"An error occurred while copying the versions.txt: {e}")
+        raise  # Re-raises the caught exception
 
 
 def _needs_full_repo_generation(generation_config: GenerationConfig) -> bool:
@@ -230,7 +255,7 @@ def validate_generation_config(generation_config_path: str) -> None:
     if generation_config_path is None:
         generation_config_path = "generation_config.yaml"
     try:
-        from_yaml(os.path.abspath(generation_config_path))
+        GenerationConfig.from_yaml(os.path.abspath(generation_config_path))
         print(f"{generation_config_path} is validated without any errors.")
     except ValueError as err:
         print(err)

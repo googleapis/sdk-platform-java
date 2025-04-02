@@ -31,3 +31,21 @@ def find_versioned_proto_path(proto_path: str) -> str:
             idx = proto_path.find(version)
             return proto_path[:idx] + version
     return proto_path
+
+
+def ends_with_version(proto_path: str) -> bool:
+    """
+    Checks if a given proto_path string ends with a version identifier.
+
+    :param proto_path: The proto_path string to check.
+
+    :return:
+        True if the proto_path ends with a version, False otherwise.
+    """
+    version_regex = re.compile(r"^v[1-9].*")
+    parts = proto_path.rsplit("/", 1)
+    if len(parts) > 1:
+        last_part = parts[1]
+    else:
+        last_part = parts[0]
+    return bool(version_regex.match(last_part))

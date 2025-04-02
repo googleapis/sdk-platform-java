@@ -15,7 +15,7 @@ import os
 from typing import Optional
 import click as click
 from release_note_generation.generate_pr_description import generate_pr_descriptions
-from common.model.generation_config import from_yaml
+from common.model.generation_config import GenerationConfig
 from common.utils.generation_config_comparator import compare_config
 
 
@@ -86,8 +86,8 @@ def generate(
         )
         return
     config_change = compare_config(
-        baseline_config=from_yaml(baseline_generation_config_path),
-        current_config=from_yaml(current_generation_config_path),
+        baseline_config=GenerationConfig.from_yaml(baseline_generation_config_path),
+        current_config=GenerationConfig.from_yaml(current_generation_config_path),
     )
     generate_pr_descriptions(
         config_change=config_change,
