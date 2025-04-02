@@ -406,7 +406,7 @@ public class TopicAdminClient implements BackgroundResource {
    *     letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`),
    *     tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3 and 255 characters in
    *     length, and it must not start with `"goog"`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Topic createTopic(TopicName name) {
     Topic request = Topic.newBuilder().setName(name == null ? null : name.toString()).build();
@@ -437,7 +437,7 @@ public class TopicAdminClient implements BackgroundResource {
    *     letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`),
    *     tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3 and 255 characters in
    *     length, and it must not start with `"goog"`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Topic createTopic(String name) {
     Topic request = Topic.newBuilder().setName(name).build();
@@ -473,7 +473,7 @@ public class TopicAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Topic createTopic(Topic request) {
     return createTopicCallable().call(request);
@@ -536,7 +536,7 @@ public class TopicAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Topic updateTopic(UpdateTopicRequest request) {
     return updateTopicCallable().call(request);
@@ -592,7 +592,7 @@ public class TopicAdminClient implements BackgroundResource {
    * @param topic Required. The messages in the request will be published on this topic. Format is
    *     `projects/{project}/topics/{topic}`.
    * @param messages Required. The messages to publish.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final PublishResponse publish(TopicName topic, List<PubsubMessage> messages) {
     PublishRequest request =
@@ -625,7 +625,7 @@ public class TopicAdminClient implements BackgroundResource {
    * @param topic Required. The messages in the request will be published on this topic. Format is
    *     `projects/{project}/topics/{topic}`.
    * @param messages Required. The messages to publish.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final PublishResponse publish(String topic, List<PubsubMessage> messages) {
     PublishRequest request =
@@ -656,7 +656,7 @@ public class TopicAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final PublishResponse publish(PublishRequest request) {
     return publishCallable().call(request);
@@ -710,7 +710,7 @@ public class TopicAdminClient implements BackgroundResource {
    *
    * @param topic Required. The name of the topic to get. Format is
    *     `projects/{project}/topics/{topic}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Topic getTopic(TopicName topic) {
     GetTopicRequest request =
@@ -738,7 +738,7 @@ public class TopicAdminClient implements BackgroundResource {
    *
    * @param topic Required. The name of the topic to get. Format is
    *     `projects/{project}/topics/{topic}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Topic getTopic(String topic) {
     GetTopicRequest request = GetTopicRequest.newBuilder().setTopic(topic).build();
@@ -767,7 +767,7 @@ public class TopicAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Topic getTopic(GetTopicRequest request) {
     return getTopicCallable().call(request);
@@ -822,7 +822,7 @@ public class TopicAdminClient implements BackgroundResource {
    *
    * @param project Required. The name of the project in which to list topics. Format is
    *     `projects/{project-id}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListTopicsPagedResponse listTopics(ProjectName project) {
     ListTopicsRequest request =
@@ -854,7 +854,7 @@ public class TopicAdminClient implements BackgroundResource {
    *
    * @param project Required. The name of the project in which to list topics. Format is
    *     `projects/{project-id}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListTopicsPagedResponse listTopics(String project) {
     ListTopicsRequest request = ListTopicsRequest.newBuilder().setProject(project).build();
@@ -887,7 +887,7 @@ public class TopicAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListTopicsPagedResponse listTopics(ListTopicsRequest request) {
     return listTopicsPagedCallable().call(request);
@@ -984,7 +984,7 @@ public class TopicAdminClient implements BackgroundResource {
    *
    * @param topic Required. The name of the topic that subscriptions are attached to. Format is
    *     `projects/{project}/topics/{topic}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListTopicSubscriptionsPagedResponse listTopicSubscriptions(TopicName topic) {
     ListTopicSubscriptionsRequest request =
@@ -1016,7 +1016,7 @@ public class TopicAdminClient implements BackgroundResource {
    *
    * @param topic Required. The name of the topic that subscriptions are attached to. Format is
    *     `projects/{project}/topics/{topic}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListTopicSubscriptionsPagedResponse listTopicSubscriptions(String topic) {
     ListTopicSubscriptionsRequest request =
@@ -1050,7 +1050,7 @@ public class TopicAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListTopicSubscriptionsPagedResponse listTopicSubscriptions(
       ListTopicSubscriptionsRequest request) {
@@ -1155,7 +1155,7 @@ public class TopicAdminClient implements BackgroundResource {
    *
    * @param topic Required. The name of the topic that snapshots are attached to. Format is
    *     `projects/{project}/topics/{topic}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListTopicSnapshotsPagedResponse listTopicSnapshots(TopicName topic) {
     ListTopicSnapshotsRequest request =
@@ -1190,7 +1190,7 @@ public class TopicAdminClient implements BackgroundResource {
    *
    * @param topic Required. The name of the topic that snapshots are attached to. Format is
    *     `projects/{project}/topics/{topic}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListTopicSnapshotsPagedResponse listTopicSnapshots(String topic) {
     ListTopicSnapshotsRequest request =
@@ -1227,7 +1227,7 @@ public class TopicAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListTopicSnapshotsPagedResponse listTopicSnapshots(
       ListTopicSnapshotsRequest request) {
@@ -1336,7 +1336,7 @@ public class TopicAdminClient implements BackgroundResource {
    *
    * @param topic Required. Name of the topic to delete. Format is
    *     `projects/{project}/topics/{topic}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteTopic(TopicName topic) {
     DeleteTopicRequest request =
@@ -1367,7 +1367,7 @@ public class TopicAdminClient implements BackgroundResource {
    *
    * @param topic Required. Name of the topic to delete. Format is
    *     `projects/{project}/topics/{topic}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteTopic(String topic) {
     DeleteTopicRequest request = DeleteTopicRequest.newBuilder().setTopic(topic).build();
@@ -1399,7 +1399,7 @@ public class TopicAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteTopic(DeleteTopicRequest request) {
     deleteTopicCallable().call(request);
@@ -1459,7 +1459,7 @@ public class TopicAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final DetachSubscriptionResponse detachSubscription(DetachSubscriptionRequest request) {
     return detachSubscriptionCallable().call(request);
@@ -1522,7 +1522,7 @@ public class TopicAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Policy setIamPolicy(SetIamPolicyRequest request) {
     return setIamPolicyCallable().call(request);
@@ -1583,7 +1583,7 @@ public class TopicAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Policy getIamPolicy(GetIamPolicyRequest request) {
     return getIamPolicyCallable().call(request);
@@ -1646,7 +1646,7 @@ public class TopicAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final TestIamPermissionsResponse testIamPermissions(TestIamPermissionsRequest request) {
     return testIamPermissionsCallable().call(request);

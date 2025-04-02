@@ -277,7 +277,7 @@ public class MetricsClient implements BackgroundResource {
    *
    * @param parent Required. The name of the project containing the metrics:
    *     <p>"projects/[PROJECT_ID]"
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListLogMetricsPagedResponse listLogMetrics(ProjectName parent) {
     ListLogMetricsRequest request =
@@ -309,7 +309,7 @@ public class MetricsClient implements BackgroundResource {
    *
    * @param parent Required. The name of the project containing the metrics:
    *     <p>"projects/[PROJECT_ID]"
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListLogMetricsPagedResponse listLogMetrics(String parent) {
     ListLogMetricsRequest request = ListLogMetricsRequest.newBuilder().setParent(parent).build();
@@ -342,7 +342,7 @@ public class MetricsClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListLogMetricsPagedResponse listLogMetrics(ListLogMetricsRequest request) {
     return listLogMetricsPagedCallable().call(request);
@@ -439,7 +439,7 @@ public class MetricsClient implements BackgroundResource {
    *
    * @param metricName Required. The resource name of the desired metric:
    *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogMetric getLogMetric(LogMetricName metricName) {
     GetLogMetricRequest request =
@@ -469,7 +469,7 @@ public class MetricsClient implements BackgroundResource {
    *
    * @param metricName Required. The resource name of the desired metric:
    *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogMetric getLogMetric(String metricName) {
     GetLogMetricRequest request =
@@ -499,7 +499,7 @@ public class MetricsClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogMetric getLogMetric(GetLogMetricRequest request) {
     return getLogMetricCallable().call(request);
@@ -556,7 +556,7 @@ public class MetricsClient implements BackgroundResource {
    *     <p>The new metric must be provided in the request.
    * @param metric Required. The new logs-based metric, which must not have an identifier that
    *     already exists.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogMetric createLogMetric(ProjectName parent, LogMetric metric) {
     CreateLogMetricRequest request =
@@ -591,7 +591,7 @@ public class MetricsClient implements BackgroundResource {
    *     <p>The new metric must be provided in the request.
    * @param metric Required. The new logs-based metric, which must not have an identifier that
    *     already exists.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogMetric createLogMetric(String parent, LogMetric metric) {
     CreateLogMetricRequest request =
@@ -622,7 +622,7 @@ public class MetricsClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogMetric createLogMetric(CreateLogMetricRequest request) {
     return createLogMetricCallable().call(request);
@@ -681,7 +681,7 @@ public class MetricsClient implements BackgroundResource {
    *     same as `[METRIC_ID]` If the metric does not exist in `[PROJECT_ID]`, then a new metric is
    *     created.
    * @param metric Required. The updated metric.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogMetric updateLogMetric(LogMetricName metricName, LogMetric metric) {
     UpdateLogMetricRequest request =
@@ -717,7 +717,7 @@ public class MetricsClient implements BackgroundResource {
    *     same as `[METRIC_ID]` If the metric does not exist in `[PROJECT_ID]`, then a new metric is
    *     created.
    * @param metric Required. The updated metric.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogMetric updateLogMetric(String metricName, LogMetric metric) {
     UpdateLogMetricRequest request =
@@ -748,7 +748,7 @@ public class MetricsClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogMetric updateLogMetric(UpdateLogMetricRequest request) {
     return updateLogMetricCallable().call(request);
@@ -802,7 +802,7 @@ public class MetricsClient implements BackgroundResource {
    *
    * @param metricName Required. The resource name of the metric to delete:
    *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteLogMetric(LogMetricName metricName) {
     DeleteLogMetricRequest request =
@@ -832,7 +832,7 @@ public class MetricsClient implements BackgroundResource {
    *
    * @param metricName Required. The resource name of the metric to delete:
    *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteLogMetric(String metricName) {
     DeleteLogMetricRequest request =
@@ -862,7 +862,7 @@ public class MetricsClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteLogMetric(DeleteLogMetricRequest request) {
     deleteLogMetricCallable().call(request);

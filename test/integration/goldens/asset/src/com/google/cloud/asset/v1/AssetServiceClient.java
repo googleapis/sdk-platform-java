@@ -590,7 +590,7 @@ public class AssetServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final OperationFuture<ExportAssetsResponse, ExportAssetsRequest> exportAssetsAsync(
       ExportAssetsRequest request) {
@@ -701,7 +701,7 @@ public class AssetServiceClient implements BackgroundResource {
    *     Format: "organizations/[organization-number]" (such as "organizations/123"),
    *     "projects/[project-id]" (such as "projects/my-project-id"), "projects/[project-number]"
    *     (such as "projects/12345"), or "folders/[folder-number]" (such as "folders/12345").
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListAssetsPagedResponse listAssets(ResourceName parent) {
     ListAssetsRequest request =
@@ -733,7 +733,7 @@ public class AssetServiceClient implements BackgroundResource {
    *     Format: "organizations/[organization-number]" (such as "organizations/123"),
    *     "projects/[project-id]" (such as "projects/my-project-id"), "projects/[project-number]"
    *     (such as "projects/12345"), or "folders/[folder-number]" (such as "folders/12345").
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListAssetsPagedResponse listAssets(String parent) {
     ListAssetsRequest request = ListAssetsRequest.newBuilder().setParent(parent).build();
@@ -770,7 +770,7 @@ public class AssetServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListAssetsPagedResponse listAssets(ListAssetsRequest request) {
     return listAssetsPagedCallable().call(request);
@@ -883,7 +883,7 @@ public class AssetServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final BatchGetAssetsHistoryResponse batchGetAssetsHistory(
       BatchGetAssetsHistoryRequest request) {
@@ -949,7 +949,7 @@ public class AssetServiceClient implements BackgroundResource {
    *     created in. It can only be an organization number (such as "organizations/123"), a folder
    *     number (such as "folders/123"), a project ID (such as "projects/my-project-id")", or a
    *     project number (such as "projects/12345").
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Feed createFeed(String parent) {
     CreateFeedRequest request = CreateFeedRequest.newBuilder().setParent(parent).build();
@@ -980,7 +980,7 @@ public class AssetServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Feed createFeed(CreateFeedRequest request) {
     return createFeedCallable().call(request);
@@ -1036,7 +1036,7 @@ public class AssetServiceClient implements BackgroundResource {
    * @param name Required. The name of the Feed and it must be in the format of:
    *     projects/project_number/feeds/feed_id folders/folder_number/feeds/feed_id
    *     organizations/organization_number/feeds/feed_id
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Feed getFeed(FeedName name) {
     GetFeedRequest request =
@@ -1065,7 +1065,7 @@ public class AssetServiceClient implements BackgroundResource {
    * @param name Required. The name of the Feed and it must be in the format of:
    *     projects/project_number/feeds/feed_id folders/folder_number/feeds/feed_id
    *     organizations/organization_number/feeds/feed_id
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Feed getFeed(String name) {
     GetFeedRequest request = GetFeedRequest.newBuilder().setName(name).build();
@@ -1094,7 +1094,7 @@ public class AssetServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Feed getFeed(GetFeedRequest request) {
     return getFeedCallable().call(request);
@@ -1148,7 +1148,7 @@ public class AssetServiceClient implements BackgroundResource {
    * @param parent Required. The parent project/folder/organization whose feeds are to be listed. It
    *     can only be using project/folder/organization number (such as "folders/12345")", or a
    *     project ID (such as "projects/my-project-id").
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListFeedsResponse listFeeds(String parent) {
     ListFeedsRequest request = ListFeedsRequest.newBuilder().setParent(parent).build();
@@ -1175,7 +1175,7 @@ public class AssetServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListFeedsResponse listFeeds(ListFeedsRequest request) {
     return listFeedsCallable().call(request);
@@ -1228,7 +1228,7 @@ public class AssetServiceClient implements BackgroundResource {
    * @param feed Required. The new values of feed details. It must match an existing feed and the
    *     field `name` must be in the format of: projects/project_number/feeds/feed_id or
    *     folders/folder_number/feeds/feed_id or organizations/organization_number/feeds/feed_id.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Feed updateFeed(Feed feed) {
     UpdateFeedRequest request = UpdateFeedRequest.newBuilder().setFeed(feed).build();
@@ -1258,7 +1258,7 @@ public class AssetServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Feed updateFeed(UpdateFeedRequest request) {
     return updateFeedCallable().call(request);
@@ -1313,7 +1313,7 @@ public class AssetServiceClient implements BackgroundResource {
    * @param name Required. The name of the feed and it must be in the format of:
    *     projects/project_number/feeds/feed_id folders/folder_number/feeds/feed_id
    *     organizations/organization_number/feeds/feed_id
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteFeed(FeedName name) {
     DeleteFeedRequest request =
@@ -1342,7 +1342,7 @@ public class AssetServiceClient implements BackgroundResource {
    * @param name Required. The name of the feed and it must be in the format of:
    *     projects/project_number/feeds/feed_id folders/folder_number/feeds/feed_id
    *     organizations/organization_number/feeds/feed_id
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteFeed(String name) {
     DeleteFeedRequest request = DeleteFeedRequest.newBuilder().setName(name).build();
@@ -1371,7 +1371,7 @@ public class AssetServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteFeed(DeleteFeedRequest request) {
     deleteFeedCallable().call(request);
@@ -1500,7 +1500,7 @@ public class AssetServiceClient implements BackgroundResource {
    *     <p>See [RE2](https://github.com/google/re2/wiki/Syntax) for all supported regular
    *     expression syntax. If the regular expression does not match any supported asset type, an
    *     INVALID_ARGUMENT error will be returned.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SearchAllResourcesPagedResponse searchAllResources(
       String scope, String query, List<String> assetTypes) {
@@ -1546,7 +1546,7 @@ public class AssetServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SearchAllResourcesPagedResponse searchAllResources(
       SearchAllResourcesRequest request) {
@@ -1712,7 +1712,7 @@ public class AssetServiceClient implements BackgroundResource {
    *           "user".
    *     </ul>
    *
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SearchAllIamPoliciesPagedResponse searchAllIamPolicies(String scope, String query) {
     SearchAllIamPoliciesRequest request =
@@ -1752,7 +1752,7 @@ public class AssetServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SearchAllIamPoliciesPagedResponse searchAllIamPolicies(
       SearchAllIamPoliciesRequest request) {
@@ -1866,7 +1866,7 @@ public class AssetServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final AnalyzeIamPolicyResponse analyzeIamPolicy(AnalyzeIamPolicyRequest request) {
     return analyzeIamPolicyCallable().call(request);
@@ -1935,7 +1935,7 @@ public class AssetServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final OperationFuture<
           AnalyzeIamPolicyLongrunningResponse, AnalyzeIamPolicyLongrunningMetadata>
@@ -2049,7 +2049,7 @@ public class AssetServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final AnalyzeMoveResponse analyzeMove(AnalyzeMoveRequest request) {
     return analyzeMoveCallable().call(request);
@@ -2124,7 +2124,7 @@ public class AssetServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final QueryAssetsResponse queryAssets(QueryAssetsRequest request) {
     return queryAssetsCallable().call(request);
@@ -2204,7 +2204,7 @@ public class AssetServiceClient implements BackgroundResource {
    *     <p>This value should be 4-63 characters, and valid characters are /[a-z][0-9]-/.
    *     <p>Notice that this field is required in the saved query creation, and the `name` field of
    *     the `saved_query` will be ignored.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SavedQuery createSavedQuery(
       FolderName parent, SavedQuery savedQuery, String savedQueryId) {
@@ -2248,7 +2248,7 @@ public class AssetServiceClient implements BackgroundResource {
    *     <p>This value should be 4-63 characters, and valid characters are /[a-z][0-9]-/.
    *     <p>Notice that this field is required in the saved query creation, and the `name` field of
    *     the `saved_query` will be ignored.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SavedQuery createSavedQuery(
       OrganizationName parent, SavedQuery savedQuery, String savedQueryId) {
@@ -2292,7 +2292,7 @@ public class AssetServiceClient implements BackgroundResource {
    *     <p>This value should be 4-63 characters, and valid characters are /[a-z][0-9]-/.
    *     <p>Notice that this field is required in the saved query creation, and the `name` field of
    *     the `saved_query` will be ignored.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SavedQuery createSavedQuery(
       ProjectName parent, SavedQuery savedQuery, String savedQueryId) {
@@ -2336,7 +2336,7 @@ public class AssetServiceClient implements BackgroundResource {
    *     <p>This value should be 4-63 characters, and valid characters are /[a-z][0-9]-/.
    *     <p>Notice that this field is required in the saved query creation, and the `name` field of
    *     the `saved_query` will be ignored.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SavedQuery createSavedQuery(
       String parent, SavedQuery savedQuery, String savedQueryId) {
@@ -2373,7 +2373,7 @@ public class AssetServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SavedQuery createSavedQuery(CreateSavedQueryRequest request) {
     return createSavedQueryCallable().call(request);
@@ -2434,7 +2434,7 @@ public class AssetServiceClient implements BackgroundResource {
    *       <li>organizations/organization_number/savedQueries/saved_query_id
    *     </ul>
    *
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SavedQuery getSavedQuery(SavedQueryName name) {
     GetSavedQueryRequest request =
@@ -2467,7 +2467,7 @@ public class AssetServiceClient implements BackgroundResource {
    *       <li>organizations/organization_number/savedQueries/saved_query_id
    *     </ul>
    *
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SavedQuery getSavedQuery(String name) {
     GetSavedQueryRequest request = GetSavedQueryRequest.newBuilder().setName(name).build();
@@ -2497,7 +2497,7 @@ public class AssetServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SavedQuery getSavedQuery(GetSavedQueryRequest request) {
     return getSavedQueryCallable().call(request);
@@ -2554,7 +2554,7 @@ public class AssetServiceClient implements BackgroundResource {
    * @param parent Required. The parent project/folder/organization whose savedQueries are to be
    *     listed. It can only be using project/folder/organization number (such as "folders/12345")",
    *     or a project ID (such as "projects/my-project-id").
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListSavedQueriesPagedResponse listSavedQueries(FolderName parent) {
     ListSavedQueriesRequest request =
@@ -2587,7 +2587,7 @@ public class AssetServiceClient implements BackgroundResource {
    * @param parent Required. The parent project/folder/organization whose savedQueries are to be
    *     listed. It can only be using project/folder/organization number (such as "folders/12345")",
    *     or a project ID (such as "projects/my-project-id").
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListSavedQueriesPagedResponse listSavedQueries(OrganizationName parent) {
     ListSavedQueriesRequest request =
@@ -2620,7 +2620,7 @@ public class AssetServiceClient implements BackgroundResource {
    * @param parent Required. The parent project/folder/organization whose savedQueries are to be
    *     listed. It can only be using project/folder/organization number (such as "folders/12345")",
    *     or a project ID (such as "projects/my-project-id").
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListSavedQueriesPagedResponse listSavedQueries(ProjectName parent) {
     ListSavedQueriesRequest request =
@@ -2653,7 +2653,7 @@ public class AssetServiceClient implements BackgroundResource {
    * @param parent Required. The parent project/folder/organization whose savedQueries are to be
    *     listed. It can only be using project/folder/organization number (such as "folders/12345")",
    *     or a project ID (such as "projects/my-project-id").
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListSavedQueriesPagedResponse listSavedQueries(String parent) {
     ListSavedQueriesRequest request =
@@ -2688,7 +2688,7 @@ public class AssetServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListSavedQueriesPagedResponse listSavedQueries(ListSavedQueriesRequest request) {
     return listSavedQueriesPagedCallable().call(request);
@@ -2798,7 +2798,7 @@ public class AssetServiceClient implements BackgroundResource {
    *     </ul>
    *
    * @param updateMask Required. The list of fields to update.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SavedQuery updateSavedQuery(SavedQuery savedQuery, FieldMask updateMask) {
     UpdateSavedQueryRequest request =
@@ -2832,7 +2832,7 @@ public class AssetServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SavedQuery updateSavedQuery(UpdateSavedQueryRequest request) {
     return updateSavedQueryCallable().call(request);
@@ -2892,7 +2892,7 @@ public class AssetServiceClient implements BackgroundResource {
    *       <li>organizations/organization_number/savedQueries/saved_query_id
    *     </ul>
    *
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteSavedQuery(SavedQueryName name) {
     DeleteSavedQueryRequest request =
@@ -2925,7 +2925,7 @@ public class AssetServiceClient implements BackgroundResource {
    *       <li>organizations/organization_number/savedQueries/saved_query_id
    *     </ul>
    *
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteSavedQuery(String name) {
     DeleteSavedQueryRequest request = DeleteSavedQueryRequest.newBuilder().setName(name).build();
@@ -2955,7 +2955,7 @@ public class AssetServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteSavedQuery(DeleteSavedQueryRequest request) {
     deleteSavedQueryCallable().call(request);
@@ -3013,7 +3013,7 @@ public class AssetServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final BatchGetEffectiveIamPoliciesResponse batchGetEffectiveIamPolicies(
       BatchGetEffectiveIamPoliciesRequest request) {

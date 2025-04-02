@@ -382,7 +382,7 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * @param mutations Required. Changes to be atomically applied to the specified row. Entries are
    *     applied in order, meaning that earlier mutations can be masked by later ones. Must contain
    *     at least one entry and at most 100000.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final MutateRowResponse mutateRow(
       TableName tableName, ByteString rowKey, List<Mutation> mutations) {
@@ -423,7 +423,7 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * @param mutations Required. Changes to be atomically applied to the specified row. Entries are
    *     applied in order, meaning that earlier mutations can be masked by later ones. Must contain
    *     at least one entry and at most 100000.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final MutateRowResponse mutateRow(
       String tableName, ByteString rowKey, List<Mutation> mutations) {
@@ -468,7 +468,7 @@ public class BaseBigtableDataClient implements BackgroundResource {
    *     at least one entry and at most 100000.
    * @param appProfileId This value specifies routing for replication. If not specified, the
    *     "default" application profile will be used.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final MutateRowResponse mutateRow(
       TableName tableName, ByteString rowKey, List<Mutation> mutations, String appProfileId) {
@@ -514,7 +514,7 @@ public class BaseBigtableDataClient implements BackgroundResource {
    *     at least one entry and at most 100000.
    * @param appProfileId This value specifies routing for replication. If not specified, the
    *     "default" application profile will be used.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final MutateRowResponse mutateRow(
       String tableName, ByteString rowKey, List<Mutation> mutations, String appProfileId) {
@@ -554,7 +554,7 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final MutateRowResponse mutateRow(MutateRowRequest request) {
     return mutateRowCallable().call(request);
@@ -663,7 +663,7 @@ public class BaseBigtableDataClient implements BackgroundResource {
    *     `predicate_filter` does not yield any cells when applied to `row_key`. Entries are applied
    *     in order, meaning that earlier mutations can be masked by later ones. Must contain at least
    *     one entry if `true_mutations` is empty, and at most 100000.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final CheckAndMutateRowResponse checkAndMutateRow(
       TableName tableName,
@@ -721,7 +721,7 @@ public class BaseBigtableDataClient implements BackgroundResource {
    *     `predicate_filter` does not yield any cells when applied to `row_key`. Entries are applied
    *     in order, meaning that earlier mutations can be masked by later ones. Must contain at least
    *     one entry if `true_mutations` is empty, and at most 100000.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final CheckAndMutateRowResponse checkAndMutateRow(
       String tableName,
@@ -782,7 +782,7 @@ public class BaseBigtableDataClient implements BackgroundResource {
    *     one entry if `true_mutations` is empty, and at most 100000.
    * @param appProfileId This value specifies routing for replication. If not specified, the
    *     "default" application profile will be used.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final CheckAndMutateRowResponse checkAndMutateRow(
       TableName tableName,
@@ -845,7 +845,7 @@ public class BaseBigtableDataClient implements BackgroundResource {
    *     one entry if `true_mutations` is empty, and at most 100000.
    * @param appProfileId This value specifies routing for replication. If not specified, the
    *     "default" application profile will be used.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final CheckAndMutateRowResponse checkAndMutateRow(
       String tableName,
@@ -893,7 +893,7 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final CheckAndMutateRowResponse checkAndMutateRow(CheckAndMutateRowRequest request) {
     return checkAndMutateRowCallable().call(request);
@@ -954,7 +954,7 @@ public class BaseBigtableDataClient implements BackgroundResource {
    *
    * @param name Required. The unique name of the instance to check permissions for as well as
    *     respond. Values are of the form `projects/&lt;project&gt;/instances/&lt;instance&gt;`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final PingAndWarmResponse pingAndWarm(InstanceName name) {
     PingAndWarmRequest request =
@@ -983,7 +983,7 @@ public class BaseBigtableDataClient implements BackgroundResource {
    *
    * @param name Required. The unique name of the instance to check permissions for as well as
    *     respond. Values are of the form `projects/&lt;project&gt;/instances/&lt;instance&gt;`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final PingAndWarmResponse pingAndWarm(String name) {
     PingAndWarmRequest request = PingAndWarmRequest.newBuilder().setName(name).build();
@@ -1014,7 +1014,7 @@ public class BaseBigtableDataClient implements BackgroundResource {
    *     respond. Values are of the form `projects/&lt;project&gt;/instances/&lt;instance&gt;`.
    * @param appProfileId This value specifies routing for replication. If not specified, the
    *     "default" application profile will be used.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final PingAndWarmResponse pingAndWarm(InstanceName name, String appProfileId) {
     PingAndWarmRequest request =
@@ -1049,7 +1049,7 @@ public class BaseBigtableDataClient implements BackgroundResource {
    *     respond. Values are of the form `projects/&lt;project&gt;/instances/&lt;instance&gt;`.
    * @param appProfileId This value specifies routing for replication. If not specified, the
    *     "default" application profile will be used.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final PingAndWarmResponse pingAndWarm(String name, String appProfileId) {
     PingAndWarmRequest request =
@@ -1081,7 +1081,7 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final PingAndWarmResponse pingAndWarm(PingAndWarmRequest request) {
     return pingAndWarmCallable().call(request);
@@ -1149,7 +1149,7 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * @param rules Required. Rules specifying how the specified row's contents are to be transformed
    *     into writes. Entries are applied in order, meaning that earlier rules will affect the
    *     results of later ones.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ReadModifyWriteRowResponse readModifyWriteRow(
       TableName tableName, ByteString rowKey, List<ReadModifyWriteRule> rules) {
@@ -1194,7 +1194,7 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * @param rules Required. Rules specifying how the specified row's contents are to be transformed
    *     into writes. Entries are applied in order, meaning that earlier rules will affect the
    *     results of later ones.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ReadModifyWriteRowResponse readModifyWriteRow(
       String tableName, ByteString rowKey, List<ReadModifyWriteRule> rules) {
@@ -1242,7 +1242,7 @@ public class BaseBigtableDataClient implements BackgroundResource {
    *     results of later ones.
    * @param appProfileId This value specifies routing for replication. If not specified, the
    *     "default" application profile will be used.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ReadModifyWriteRowResponse readModifyWriteRow(
       TableName tableName,
@@ -1294,7 +1294,7 @@ public class BaseBigtableDataClient implements BackgroundResource {
    *     results of later ones.
    * @param appProfileId This value specifies routing for replication. If not specified, the
    *     "default" application profile will be used.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ReadModifyWriteRowResponse readModifyWriteRow(
       String tableName, ByteString rowKey, List<ReadModifyWriteRule> rules, String appProfileId) {
@@ -1336,7 +1336,7 @@ public class BaseBigtableDataClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ReadModifyWriteRowResponse readModifyWriteRow(ReadModifyWriteRowRequest request) {
     return readModifyWriteRowCallable().call(request);

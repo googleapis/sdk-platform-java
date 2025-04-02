@@ -587,7 +587,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     the push endpoint.
    *     <p>If the subscriber never acknowledges the message, the Pub/Sub system will eventually
    *     redeliver the message.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Subscription createSubscription(
       SubscriptionName name, TopicName topic, PushConfig pushConfig, int ackDeadlineSeconds) {
@@ -658,7 +658,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     the push endpoint.
    *     <p>If the subscriber never acknowledges the message, the Pub/Sub system will eventually
    *     redeliver the message.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Subscription createSubscription(
       SubscriptionName name, String topic, PushConfig pushConfig, int ackDeadlineSeconds) {
@@ -729,7 +729,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     the push endpoint.
    *     <p>If the subscriber never acknowledges the message, the Pub/Sub system will eventually
    *     redeliver the message.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Subscription createSubscription(
       String name, TopicName topic, PushConfig pushConfig, int ackDeadlineSeconds) {
@@ -800,7 +800,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     the push endpoint.
    *     <p>If the subscriber never acknowledges the message, the Pub/Sub system will eventually
    *     redeliver the message.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Subscription createSubscription(
       String name, String topic, PushConfig pushConfig, int ackDeadlineSeconds) {
@@ -860,7 +860,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Subscription createSubscription(Subscription request) {
     return createSubscriptionCallable().call(request);
@@ -938,7 +938,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *
    * @param subscription Required. The name of the subscription to get. Format is
    *     `projects/{project}/subscriptions/{sub}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Subscription getSubscription(SubscriptionName subscription) {
     GetSubscriptionRequest request =
@@ -968,7 +968,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *
    * @param subscription Required. The name of the subscription to get. Format is
    *     `projects/{project}/subscriptions/{sub}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Subscription getSubscription(String subscription) {
     GetSubscriptionRequest request =
@@ -998,7 +998,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Subscription getSubscription(GetSubscriptionRequest request) {
     return getSubscriptionCallable().call(request);
@@ -1056,7 +1056,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Subscription updateSubscription(UpdateSubscriptionRequest request) {
     return updateSubscriptionCallable().call(request);
@@ -1114,7 +1114,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *
    * @param project Required. The name of the project in which to list subscriptions. Format is
    *     `projects/{project-id}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListSubscriptionsPagedResponse listSubscriptions(ProjectName project) {
     ListSubscriptionsRequest request =
@@ -1146,7 +1146,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *
    * @param project Required. The name of the project in which to list subscriptions. Format is
    *     `projects/{project-id}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListSubscriptionsPagedResponse listSubscriptions(String project) {
     ListSubscriptionsRequest request =
@@ -1180,7 +1180,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListSubscriptionsPagedResponse listSubscriptions(ListSubscriptionsRequest request) {
     return listSubscriptionsPagedCallable().call(request);
@@ -1282,7 +1282,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *
    * @param subscription Required. The subscription to delete. Format is
    *     `projects/{project}/subscriptions/{sub}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteSubscription(SubscriptionName subscription) {
     DeleteSubscriptionRequest request =
@@ -1315,7 +1315,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *
    * @param subscription Required. The subscription to delete. Format is
    *     `projects/{project}/subscriptions/{sub}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteSubscription(String subscription) {
     DeleteSubscriptionRequest request =
@@ -1348,7 +1348,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteSubscription(DeleteSubscriptionRequest request) {
     deleteSubscriptionCallable().call(request);
@@ -1418,7 +1418,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     typically results in an increase in the rate of message redeliveries (that is, duplicates).
    *     The minimum deadline you can specify is 0 seconds. The maximum deadline you can specify is
    *     600 seconds (10 minutes).
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void modifyAckDeadline(
       SubscriptionName subscription, List<String> ackIds, int ackDeadlineSeconds) {
@@ -1464,7 +1464,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     typically results in an increase in the rate of message redeliveries (that is, duplicates).
    *     The minimum deadline you can specify is 0 seconds. The maximum deadline you can specify is
    *     600 seconds (10 minutes).
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void modifyAckDeadline(
       String subscription, List<String> ackIds, int ackDeadlineSeconds) {
@@ -1504,7 +1504,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void modifyAckDeadline(ModifyAckDeadlineRequest request) {
     modifyAckDeadlineCallable().call(request);
@@ -1570,7 +1570,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     `projects/{project}/subscriptions/{sub}`.
    * @param ackIds Required. The acknowledgment ID for the messages being acknowledged that was
    *     returned by the Pub/Sub system in the `Pull` response. Must not be empty.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void acknowledge(SubscriptionName subscription, List<String> ackIds) {
     AcknowledgeRequest request =
@@ -1608,7 +1608,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     `projects/{project}/subscriptions/{sub}`.
    * @param ackIds Required. The acknowledgment ID for the messages being acknowledged that was
    *     returned by the Pub/Sub system in the `Pull` response. Must not be empty.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void acknowledge(String subscription, List<String> ackIds) {
     AcknowledgeRequest request =
@@ -1643,7 +1643,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void acknowledge(AcknowledgeRequest request) {
     acknowledgeCallable().call(request);
@@ -1705,7 +1705,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     `projects/{project}/subscriptions/{sub}`.
    * @param maxMessages Required. The maximum number of messages to return for this request. Must be
    *     a positive integer. The Pub/Sub system may return fewer than the number specified.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final PullResponse pull(SubscriptionName subscription, int maxMessages) {
     PullRequest request =
@@ -1740,7 +1740,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     `projects/{project}/subscriptions/{sub}`.
    * @param maxMessages Required. The maximum number of messages to return for this request. Must be
    *     a positive integer. The Pub/Sub system may return fewer than the number specified.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final PullResponse pull(String subscription, int maxMessages) {
     PullRequest request =
@@ -1780,7 +1780,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     that users do not set this field.
    * @param maxMessages Required. The maximum number of messages to return for this request. Must be
    *     a positive integer. The Pub/Sub system may return fewer than the number specified.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final PullResponse pull(
       SubscriptionName subscription, boolean returnImmediately, int maxMessages) {
@@ -1825,7 +1825,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     that users do not set this field.
    * @param maxMessages Required. The maximum number of messages to return for this request. Must be
    *     a positive integer. The Pub/Sub system may return fewer than the number specified.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final PullResponse pull(String subscription, boolean returnImmediately, int maxMessages) {
     PullRequest request =
@@ -1862,7 +1862,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final PullResponse pull(PullRequest request) {
     return pullCallable().call(request);
@@ -1971,7 +1971,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     <p>An empty `pushConfig` indicates that the Pub/Sub system should stop pushing messages
    *     from the given subscription and allow messages to be pulled and acknowledged - effectively
    *     pausing the subscription if `Pull` or `StreamingPull` is not called.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void modifyPushConfig(SubscriptionName subscription, PushConfig pushConfig) {
     ModifyPushConfigRequest request =
@@ -2012,7 +2012,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     <p>An empty `pushConfig` indicates that the Pub/Sub system should stop pushing messages
    *     from the given subscription and allow messages to be pulled and acknowledged - effectively
    *     pausing the subscription if `Pull` or `StreamingPull` is not called.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void modifyPushConfig(String subscription, PushConfig pushConfig) {
     ModifyPushConfigRequest request =
@@ -2051,7 +2051,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void modifyPushConfig(ModifyPushConfigRequest request) {
     modifyPushConfigCallable().call(request);
@@ -2114,7 +2114,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *
    * @param snapshot Required. The name of the snapshot to get. Format is
    *     `projects/{project}/snapshots/{snap}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Snapshot getSnapshot(SnapshotName snapshot) {
     GetSnapshotRequest request =
@@ -2147,7 +2147,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *
    * @param snapshot Required. The name of the snapshot to get. Format is
    *     `projects/{project}/snapshots/{snap}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Snapshot getSnapshot(String snapshot) {
     GetSnapshotRequest request = GetSnapshotRequest.newBuilder().setSnapshot(snapshot).build();
@@ -2179,7 +2179,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Snapshot getSnapshot(GetSnapshotRequest request) {
     return getSnapshotCallable().call(request);
@@ -2241,7 +2241,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *
    * @param project Required. The name of the project in which to list snapshots. Format is
    *     `projects/{project-id}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListSnapshotsPagedResponse listSnapshots(ProjectName project) {
     ListSnapshotsRequest request =
@@ -2276,7 +2276,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *
    * @param project Required. The name of the project in which to list snapshots. Format is
    *     `projects/{project-id}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListSnapshotsPagedResponse listSnapshots(String project) {
     ListSnapshotsRequest request = ListSnapshotsRequest.newBuilder().setProject(project).build();
@@ -2312,7 +2312,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListSnapshotsPagedResponse listSnapshots(ListSnapshotsRequest request) {
     return listSnapshotsPagedCallable().call(request);
@@ -2438,7 +2438,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     well as: (b) Any messages published to the subscription's topic following the successful
    *     completion of the CreateSnapshot request. Format is
    *     `projects/{project}/subscriptions/{sub}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Snapshot createSnapshot(SnapshotName name, SubscriptionName subscription) {
     CreateSnapshotRequest request =
@@ -2491,7 +2491,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     well as: (b) Any messages published to the subscription's topic following the successful
    *     completion of the CreateSnapshot request. Format is
    *     `projects/{project}/subscriptions/{sub}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Snapshot createSnapshot(SnapshotName name, String subscription) {
     CreateSnapshotRequest request =
@@ -2544,7 +2544,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     well as: (b) Any messages published to the subscription's topic following the successful
    *     completion of the CreateSnapshot request. Format is
    *     `projects/{project}/subscriptions/{sub}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Snapshot createSnapshot(String name, SubscriptionName subscription) {
     CreateSnapshotRequest request =
@@ -2597,7 +2597,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *     well as: (b) Any messages published to the subscription's topic following the successful
    *     completion of the CreateSnapshot request. Format is
    *     `projects/{project}/subscriptions/{sub}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Snapshot createSnapshot(String name, String subscription) {
     CreateSnapshotRequest request =
@@ -2640,7 +2640,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Snapshot createSnapshot(CreateSnapshotRequest request) {
     return createSnapshotCallable().call(request);
@@ -2713,7 +2713,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Snapshot updateSnapshot(UpdateSnapshotRequest request) {
     return updateSnapshotCallable().call(request);
@@ -2777,7 +2777,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *
    * @param snapshot Required. The name of the snapshot to delete. Format is
    *     `projects/{project}/snapshots/{snap}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteSnapshot(SnapshotName snapshot) {
     DeleteSnapshotRequest request =
@@ -2813,7 +2813,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    *
    * @param snapshot Required. The name of the snapshot to delete. Format is
    *     `projects/{project}/snapshots/{snap}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteSnapshot(String snapshot) {
     DeleteSnapshotRequest request =
@@ -2849,7 +2849,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteSnapshot(DeleteSnapshotRequest request) {
     deleteSnapshotCallable().call(request);
@@ -2916,7 +2916,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SeekResponse seek(SeekRequest request) {
     return seekCallable().call(request);
@@ -2980,7 +2980,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Policy setIamPolicy(SetIamPolicyRequest request) {
     return setIamPolicyCallable().call(request);
@@ -3041,7 +3041,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Policy getIamPolicy(GetIamPolicyRequest request) {
     return getIamPolicyCallable().call(request);
@@ -3104,7 +3104,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final TestIamPermissionsResponse testIamPermissions(TestIamPermissionsRequest request) {
     return testIamPermissionsCallable().call(request);

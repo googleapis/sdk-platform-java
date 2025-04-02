@@ -288,7 +288,7 @@ public class IamCredentialsClient implements BackgroundResource {
    * @param lifetime The desired lifetime duration of the access token in seconds. Must be set to a
    *     value less than or equal to 3600 (1 hour). If a value is not specified, the token's
    *     lifetime will be set to a default value of one hour.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final GenerateAccessTokenResponse generateAccessToken(
       ServiceAccountName name, List<String> delegates, List<String> scope, Duration lifetime) {
@@ -342,7 +342,7 @@ public class IamCredentialsClient implements BackgroundResource {
    * @param lifetime The desired lifetime duration of the access token in seconds. Must be set to a
    *     value less than or equal to 3600 (1 hour). If a value is not specified, the token's
    *     lifetime will be set to a default value of one hour.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final GenerateAccessTokenResponse generateAccessToken(
       String name, List<String> delegates, List<String> scope, Duration lifetime) {
@@ -381,7 +381,7 @@ public class IamCredentialsClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final GenerateAccessTokenResponse generateAccessToken(GenerateAccessTokenRequest request) {
     return generateAccessTokenCallable().call(request);
@@ -457,7 +457,7 @@ public class IamCredentialsClient implements BackgroundResource {
    *     token grants access to.
    * @param includeEmail Include the service account email in the token. If set to `true`, the token
    *     will contain `email` and `email_verified` claims.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final GenerateIdTokenResponse generateIdToken(
       ServiceAccountName name, List<String> delegates, String audience, boolean includeEmail) {
@@ -509,7 +509,7 @@ public class IamCredentialsClient implements BackgroundResource {
    *     token grants access to.
    * @param includeEmail Include the service account email in the token. If set to `true`, the token
    *     will contain `email` and `email_verified` claims.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final GenerateIdTokenResponse generateIdToken(
       String name, List<String> delegates, String audience, boolean includeEmail) {
@@ -548,7 +548,7 @@ public class IamCredentialsClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final GenerateIdTokenResponse generateIdToken(GenerateIdTokenRequest request) {
     return generateIdTokenCallable().call(request);
@@ -619,7 +619,7 @@ public class IamCredentialsClient implements BackgroundResource {
    *     `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard character is
    *     required; replacing it with a project ID is invalid.
    * @param payload Required. The bytes to sign.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SignBlobResponse signBlob(
       ServiceAccountName name, List<String> delegates, ByteString payload) {
@@ -665,7 +665,7 @@ public class IamCredentialsClient implements BackgroundResource {
    *     `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard character is
    *     required; replacing it with a project ID is invalid.
    * @param payload Required. The bytes to sign.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SignBlobResponse signBlob(String name, List<String> delegates, ByteString payload) {
     SignBlobRequest request =
@@ -701,7 +701,7 @@ public class IamCredentialsClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SignBlobResponse signBlob(SignBlobRequest request) {
     return signBlobCallable().call(request);
@@ -770,7 +770,7 @@ public class IamCredentialsClient implements BackgroundResource {
    *     `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard character is
    *     required; replacing it with a project ID is invalid.
    * @param payload Required. The JWT payload to sign: a JSON object that contains a JWT Claims Set.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SignJwtResponse signJwt(
       ServiceAccountName name, List<String> delegates, String payload) {
@@ -816,7 +816,7 @@ public class IamCredentialsClient implements BackgroundResource {
    *     `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard character is
    *     required; replacing it with a project ID is invalid.
    * @param payload Required. The JWT payload to sign: a JSON object that contains a JWT Claims Set.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SignJwtResponse signJwt(String name, List<String> delegates, String payload) {
     SignJwtRequest request =
@@ -852,7 +852,7 @@ public class IamCredentialsClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SignJwtResponse signJwt(SignJwtRequest request) {
     return signJwtCallable().call(request);

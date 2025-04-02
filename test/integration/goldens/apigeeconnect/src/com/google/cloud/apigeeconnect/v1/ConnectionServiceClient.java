@@ -214,7 +214,7 @@ public class ConnectionServiceClient implements BackgroundResource {
    *
    * @param parent Required. Parent name of the form: `projects/{project_number or
    *     project_id}/endpoints/{endpoint}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListConnectionsPagedResponse listConnections(EndpointName parent) {
     ListConnectionsRequest request =
@@ -246,7 +246,7 @@ public class ConnectionServiceClient implements BackgroundResource {
    *
    * @param parent Required. Parent name of the form: `projects/{project_number or
    *     project_id}/endpoints/{endpoint}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListConnectionsPagedResponse listConnections(String parent) {
     ListConnectionsRequest request = ListConnectionsRequest.newBuilder().setParent(parent).build();
@@ -279,7 +279,7 @@ public class ConnectionServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListConnectionsPagedResponse listConnections(ListConnectionsRequest request) {
     return listConnectionsPagedCallable().call(request);
