@@ -53,7 +53,6 @@ import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
-import com.google.protobuf.AbstractMessage;
 import io.grpc.StatusRuntimeException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -378,7 +377,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
                         ConcreteReference.builder()
                             .setClazz(List.class)
                             .setGenerics(
-                                Arrays.asList(ConcreteReference.withClazz(AbstractMessage.class)))
+                                Arrays.asList(ConcreteReference.withClazz(com.google.protobuf.Message.class)))
                             .build()))
                 .setName("actualRequests")
                 .build());
@@ -416,7 +415,7 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
             .setArguments(
                 ValueExpr.withValue(
                     PrimitiveValue.builder().setType(TypeNode.INT).setValue("0").build()))
-            .setReturnType(FIXED_TYPESTORE.get("AbstractMessage"))
+            .setReturnType(FIXED_TYPESTORE.get("Message"))
             .build();
     getFirstRequestExpr =
         CastExpr.builder().setType(method.inputType()).setExpr(getFirstRequestExpr).build();
