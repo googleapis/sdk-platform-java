@@ -233,7 +233,7 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final EchoResponse echoShouldGenerateAsPublic() {
     EchoRequest request = EchoRequest.newBuilder().build();
@@ -259,7 +259,7 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * }</pre>
    *
    * @param name
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final EchoResponse echoShouldGenerateAsPublic(FoobarName name) {
     EchoRequest request =
@@ -286,7 +286,7 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * }</pre>
    *
    * @param name
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final EchoResponse echoShouldGenerateAsPublic(String name) {
     EchoRequest request = EchoRequest.newBuilder().setName(name).build();
@@ -317,7 +317,7 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final EchoResponse echoShouldGenerateAsPublic(EchoRequest request) {
     return echoShouldGenerateAsPublicCallable().call(request);
@@ -438,7 +438,7 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails. @InternalApi This method
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails @InternalApi This method
    *     is internal used only. Please do not use directly.
    */
   @InternalApi("Internal API. This API is not intended for public consumption.")
@@ -466,7 +466,7 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * }</pre>
    *
    * @param name
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails. @InternalApi This method
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails @InternalApi This method
    *     is internal used only. Please do not use directly.
    */
   @InternalApi("Internal API. This API is not intended for public consumption.")
@@ -495,7 +495,7 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * }</pre>
    *
    * @param name
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails. @InternalApi This method
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails @InternalApi This method
    *     is internal used only. Please do not use directly.
    */
   @InternalApi("Internal API. This API is not intended for public consumption.")
@@ -528,7 +528,7 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails. @InternalApi This method
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails @InternalApi This method
    *     is internal used only. Please do not use directly.
    */
   @InternalApi("Internal API. This API is not intended for public consumption.")

@@ -322,7 +322,7 @@ public class EchoClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final EchoResponse echo() {
     EchoRequest request = EchoRequest.newBuilder().build();
@@ -346,7 +346,7 @@ public class EchoClient implements BackgroundResource {
    * }</pre>
    *
    * @param parent
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final EchoResponse echo(ResourceName parent) {
     EchoRequest request =
@@ -371,7 +371,7 @@ public class EchoClient implements BackgroundResource {
    * }</pre>
    *
    * @param error
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final EchoResponse echo(Status error) {
     EchoRequest request = EchoRequest.newBuilder().setError(error).build();
@@ -395,7 +395,7 @@ public class EchoClient implements BackgroundResource {
    * }</pre>
    *
    * @param name
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final EchoResponse echo(FoobarName name) {
     EchoRequest request =
@@ -420,7 +420,7 @@ public class EchoClient implements BackgroundResource {
    * }</pre>
    *
    * @param content
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final EchoResponse echo(String content) {
     EchoRequest request = EchoRequest.newBuilder().setContent(content).build();
@@ -444,7 +444,7 @@ public class EchoClient implements BackgroundResource {
    * }</pre>
    *
    * @param name
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final EchoResponse echo(String name) {
     EchoRequest request = EchoRequest.newBuilder().setName(name).build();
@@ -468,7 +468,7 @@ public class EchoClient implements BackgroundResource {
    * }</pre>
    *
    * @param parent
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final EchoResponse echo(String parent) {
     EchoRequest request = EchoRequest.newBuilder().setParent(parent).build();
@@ -494,7 +494,7 @@ public class EchoClient implements BackgroundResource {
    *
    * @param content
    * @param severity
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final EchoResponse echo(String content, Severity severity) {
     EchoRequest request =
@@ -525,7 +525,7 @@ public class EchoClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final EchoResponse echo(EchoRequest request) {
     return echoCallable().call(request);
@@ -712,7 +712,7 @@ public class EchoClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final PagedExpandPagedResponse pagedExpand(PagedExpandRequest request) {
     return pagedExpandPagedCallable().call(request);
@@ -802,7 +802,7 @@ public class EchoClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SimplePagedExpandPagedResponse simplePagedExpand() {
     PagedExpandRequest request = PagedExpandRequest.newBuilder().build();
@@ -833,7 +833,7 @@ public class EchoClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SimplePagedExpandPagedResponse simplePagedExpand(PagedExpandRequest request) {
     return simplePagedExpandPagedCallable().call(request);
@@ -923,7 +923,7 @@ public class EchoClient implements BackgroundResource {
    * }</pre>
    *
    * @param ttl
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final OperationFuture<WaitResponse, WaitMetadata> waitAsync(Duration ttl) {
     WaitRequest request = WaitRequest.newBuilder().setTtl(ttl).build();
@@ -947,7 +947,7 @@ public class EchoClient implements BackgroundResource {
    * }</pre>
    *
    * @param endTime
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final OperationFuture<WaitResponse, WaitMetadata> waitAsync(Timestamp endTime) {
     WaitRequest request = WaitRequest.newBuilder().setEndTime(endTime).build();
@@ -971,7 +971,7 @@ public class EchoClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final OperationFuture<WaitResponse, WaitMetadata> waitAsync(WaitRequest request) {
     return waitOperationCallable().futureCall(request);
@@ -1039,7 +1039,7 @@ public class EchoClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final BlockResponse block(BlockRequest request) {
     return blockCallable().call(request);
@@ -1090,7 +1090,7 @@ public class EchoClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Object collideName(EchoRequest request) {
     return collideNameCallable().call(request);

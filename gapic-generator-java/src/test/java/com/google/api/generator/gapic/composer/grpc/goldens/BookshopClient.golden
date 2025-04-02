@@ -166,7 +166,7 @@ public class BookshopClient implements BackgroundResource {
    *
    * @param booksCount
    * @param books
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Book getBook(int booksCount, List<Book> books) {
     GetBookRequest request =
@@ -193,7 +193,7 @@ public class BookshopClient implements BackgroundResource {
    *
    * @param booksList
    * @param books
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Book getBook(String booksList, List<Book> books) {
     GetBookRequest request =
@@ -223,7 +223,7 @@ public class BookshopClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Book getBook(GetBookRequest request) {
     return getBookCallable().call(request);

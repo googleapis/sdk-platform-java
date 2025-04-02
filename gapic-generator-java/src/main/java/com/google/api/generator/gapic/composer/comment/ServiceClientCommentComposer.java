@@ -38,7 +38,7 @@ public class ServiceClientCommentComposer {
   // Tokens.
   private static final String EMPTY_STRING = "";
   private static final String API_EXCEPTION_TYPE_NAME = "com.google.api.gax.rpc.ApiException";
-  private static final String EXCEPTION_CONDITION = "if the remote call fails.";
+  private static final String EXCEPTION_CONDITION = "if the remote call fails";
 
   // Constants.
   private static final String SERVICE_DESCRIPTION_INTRO_STRING =
