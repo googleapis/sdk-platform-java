@@ -35,6 +35,7 @@ public interface SuggestionsOrBuilder
    * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
    */
   java.util.List<com.google.apps.card.v1.Suggestions.SuggestionItem> getItemsList();
+
   /**
    *
    *
@@ -46,6 +47,7 @@ public interface SuggestionsOrBuilder
    * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
    */
   com.google.apps.card.v1.Suggestions.SuggestionItem getItems(int index);
+
   /**
    *
    *
@@ -57,6 +59,7 @@ public interface SuggestionsOrBuilder
    * <code>repeated .google.apps.card.v1.Suggestions.SuggestionItem items = 1;</code>
    */
   int getItemsCount();
+
   /**
    *
    *
@@ -69,6 +72,7 @@ public interface SuggestionsOrBuilder
    */
   java.util.List<? extends com.google.apps.card.v1.Suggestions.SuggestionItemOrBuilder>
       getItemsOrBuilderList();
+
   /**
    *
    *

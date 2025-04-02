@@ -36,6 +36,7 @@ public interface UpdateRoomRequestOrBuilder
    * @return Whether the room field is set.
    */
   boolean hasRoom();
+
   /**
    *
    *
@@ -48,6 +49,7 @@ public interface UpdateRoomRequestOrBuilder
    * @return The room.
    */
   com.google.showcase.v1beta1.Room getRoom();
+
   /**
    *
    *
@@ -72,6 +74,7 @@ public interface UpdateRoomRequestOrBuilder
    * @return Whether the updateMask field is set.
    */
   boolean hasUpdateMask();
+
   /**
    *
    *
@@ -85,6 +88,7 @@ public interface UpdateRoomRequestOrBuilder
    * @return The updateMask.
    */
   com.google.protobuf.FieldMask getUpdateMask();
+
   /**
    *
    *

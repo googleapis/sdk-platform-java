@@ -30,6 +30,7 @@ public interface StreamingSequenceReportOrBuilder
    * @return The name.
    */
   java.lang.String getName();
+
   /**
    * <code>string name = 1 [(.google.api.field_behavior) = OUTPUT_ONLY];</code>
    *
@@ -47,6 +48,7 @@ public interface StreamingSequenceReportOrBuilder
    * <code>repeated .google.showcase.v1beta1.StreamingSequenceReport.Attempt attempts = 2;</code>
    */
   java.util.List<com.google.showcase.v1beta1.StreamingSequenceReport.Attempt> getAttemptsList();
+
   /**
    *
    *
@@ -57,6 +59,7 @@ public interface StreamingSequenceReportOrBuilder
    * <code>repeated .google.showcase.v1beta1.StreamingSequenceReport.Attempt attempts = 2;</code>
    */
   com.google.showcase.v1beta1.StreamingSequenceReport.Attempt getAttempts(int index);
+
   /**
    *
    *
@@ -67,6 +70,7 @@ public interface StreamingSequenceReportOrBuilder
    * <code>repeated .google.showcase.v1beta1.StreamingSequenceReport.Attempt attempts = 2;</code>
    */
   int getAttemptsCount();
+
   /**
    *
    *
@@ -78,6 +82,7 @@ public interface StreamingSequenceReportOrBuilder
    */
   java.util.List<? extends com.google.showcase.v1beta1.StreamingSequenceReport.AttemptOrBuilder>
       getAttemptsOrBuilderList();
+
   /**
    *
    *

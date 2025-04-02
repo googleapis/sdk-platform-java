@@ -952,7 +952,8 @@ public class HttpJsonEchoStub extends EchoStub {
   @Override
   public ClientStreamingCallable<EchoRequest, EchoResponse> collectCallable() {
     throw new UnsupportedOperationException(
-        "Not implemented: collectCallable(). REST transport is not implemented for this method yet.");
+        "Not implemented: collectCallable(). REST transport is not implemented for this method"
+            + " yet.");
   }
 
   @Override

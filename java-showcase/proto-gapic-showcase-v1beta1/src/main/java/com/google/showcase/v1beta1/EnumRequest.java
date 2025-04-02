@@ -25,6 +25,7 @@ public final class EnumRequest extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.EnumRequest)
     EnumRequestOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use EnumRequest.newBuilder() to construct.
   private EnumRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -55,6 +56,7 @@ public final class EnumRequest extends com.google.protobuf.GeneratedMessageV3
 
   public static final int UNKNOWN_ENUM_FIELD_NUMBER = 1;
   private boolean unknownEnum_ = false;
+
   /**
    *
    *
@@ -229,6 +231,7 @@ public final class EnumRequest extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /** Protobuf type {@code google.showcase.v1beta1.EnumRequest} */
   public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
       implements
@@ -402,6 +405,7 @@ public final class EnumRequest extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private boolean unknownEnum_;
+
     /**
      *
      *
@@ -417,6 +421,7 @@ public final class EnumRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean getUnknownEnum() {
       return unknownEnum_;
     }
+
     /**
      *
      *
@@ -436,6 +441,7 @@ public final class EnumRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *

@@ -150,8 +150,7 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
     return ExprStatement.withExpr(
         AssignmentExpr.builder()
             .setVariableExpr(
-                methodDescriptorVarExpr
-                    .toBuilder()
+                methodDescriptorVarExpr.toBuilder()
                     .setIsDecl(true)
                     .setScope(ScopeNode.PRIVATE)
                     .setIsStatic(true)
@@ -174,7 +173,7 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
         enumName = "BIDI_STREAMING";
         break;
       case NONE:
-        // Fall through.
+      // Fall through.
       default:
         enumName = "UNARY";
     }
