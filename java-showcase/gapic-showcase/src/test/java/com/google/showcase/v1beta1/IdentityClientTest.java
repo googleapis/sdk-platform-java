@@ -39,11 +39,11 @@ import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Empty;
 import com.google.protobuf.FieldMask;
+import com.google.protobuf.Message;
 import com.google.protobuf.Timestamp;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
@@ -125,7 +125,7 @@ public class IdentityClientTest {
     User actualResponse = client.createUser(displayName, email);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIdentity.getRequests();
+    List<Message> actualRequests = mockIdentity.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateUserRequest actualRequest = ((CreateUserRequest) actualRequests.get(0));
 
@@ -179,7 +179,7 @@ public class IdentityClientTest {
         client.createUser(displayName, email, age, nickname, enableNotifications, heightFeet);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIdentity.getRequests();
+    List<Message> actualRequests = mockIdentity.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateUserRequest actualRequest = ((CreateUserRequest) actualRequests.get(0));
 
@@ -235,7 +235,7 @@ public class IdentityClientTest {
     User actualResponse = client.getUser(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIdentity.getRequests();
+    List<Message> actualRequests = mockIdentity.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetUserRequest actualRequest = ((GetUserRequest) actualRequests.get(0));
 
@@ -281,7 +281,7 @@ public class IdentityClientTest {
     User actualResponse = client.getUser(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIdentity.getRequests();
+    List<Message> actualRequests = mockIdentity.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetUserRequest actualRequest = ((GetUserRequest) actualRequests.get(0));
 
@@ -331,7 +331,7 @@ public class IdentityClientTest {
     User actualResponse = client.updateUser(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIdentity.getRequests();
+    List<Message> actualRequests = mockIdentity.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateUserRequest actualRequest = ((UpdateUserRequest) actualRequests.get(0));
 
@@ -370,7 +370,7 @@ public class IdentityClientTest {
 
     client.deleteUser(name);
 
-    List<AbstractMessage> actualRequests = mockIdentity.getRequests();
+    List<Message> actualRequests = mockIdentity.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteUserRequest actualRequest = ((DeleteUserRequest) actualRequests.get(0));
 
@@ -404,7 +404,7 @@ public class IdentityClientTest {
 
     client.deleteUser(name);
 
-    List<AbstractMessage> actualRequests = mockIdentity.getRequests();
+    List<Message> actualRequests = mockIdentity.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteUserRequest actualRequest = ((DeleteUserRequest) actualRequests.get(0));
 
@@ -452,7 +452,7 @@ public class IdentityClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getUsersList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockIdentity.getRequests();
+    List<Message> actualRequests = mockIdentity.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListUsersRequest actualRequest = ((ListUsersRequest) actualRequests.get(0));
 
@@ -507,7 +507,7 @@ public class IdentityClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockLocations.getRequests();
+    List<Message> actualRequests = mockLocations.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListLocationsRequest actualRequest = ((ListLocationsRequest) actualRequests.get(0));
 
@@ -558,7 +558,7 @@ public class IdentityClientTest {
     Location actualResponse = client.getLocation(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLocations.getRequests();
+    List<Message> actualRequests = mockLocations.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetLocationRequest actualRequest = ((GetLocationRequest) actualRequests.get(0));
 
@@ -604,7 +604,7 @@ public class IdentityClientTest {
     Policy actualResponse = client.setIamPolicy(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     SetIamPolicyRequest actualRequest = ((SetIamPolicyRequest) actualRequests.get(0));
 
@@ -656,7 +656,7 @@ public class IdentityClientTest {
     Policy actualResponse = client.getIamPolicy(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetIamPolicyRequest actualRequest = ((GetIamPolicyRequest) actualRequests.get(0));
 
@@ -701,7 +701,7 @@ public class IdentityClientTest {
     TestIamPermissionsResponse actualResponse = client.testIamPermissions(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     TestIamPermissionsRequest actualRequest = ((TestIamPermissionsRequest) actualRequests.get(0));
 
