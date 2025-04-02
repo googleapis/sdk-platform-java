@@ -49,7 +49,6 @@ steps:
     cd /workspace
     git clone https://github.com/googleapis/google-cloud-java
     cd google-cloud-java
-    git switch f580186103e80bf34ee050e4933e94c2501d62ab
     git checkout chore/test-hermetic-build
     mkdir ../golden
     cd ../golden
