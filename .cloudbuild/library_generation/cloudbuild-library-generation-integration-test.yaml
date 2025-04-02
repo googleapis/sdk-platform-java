@@ -72,7 +72,7 @@ steps:
       -Dartifact=com.google.api:gapic-generator-java:2.55.1 \
       -DoutputDirectory=/workspace
     cd /workspace
-    mv gapic-generator-java-2.38.1.jar gapic-generator-java.jar
+    mv gapic-generator-java-2.55.1.jar gapic-generator-java.jar
   id: prepare-generator-jar
   waitFor: [ "-" ]
 
