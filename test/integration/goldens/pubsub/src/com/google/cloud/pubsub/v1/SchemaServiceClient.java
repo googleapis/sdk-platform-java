@@ -437,7 +437,7 @@ public class SchemaServiceClient implements BackgroundResource {
    *     schema's resource name.
    *     <p>See https://cloud.google.com/pubsub/docs/admin#resource_names for resource name
    *     constraints.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Schema createSchema(ProjectName parent, Schema schema, String schemaId) {
     CreateSchemaRequest request =
@@ -478,7 +478,7 @@ public class SchemaServiceClient implements BackgroundResource {
    *     schema's resource name.
    *     <p>See https://cloud.google.com/pubsub/docs/admin#resource_names for resource name
    *     constraints.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Schema createSchema(String parent, Schema schema, String schemaId) {
     CreateSchemaRequest request =
@@ -514,7 +514,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Schema createSchema(CreateSchemaRequest request) {
     return createSchemaCallable().call(request);
@@ -569,7 +569,7 @@ public class SchemaServiceClient implements BackgroundResource {
    *
    * @param name Required. The name of the schema to get. Format is
    *     `projects/{project}/schemas/{schema}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Schema getSchema(SchemaName name) {
     GetSchemaRequest request =
@@ -597,7 +597,7 @@ public class SchemaServiceClient implements BackgroundResource {
    *
    * @param name Required. The name of the schema to get. Format is
    *     `projects/{project}/schemas/{schema}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Schema getSchema(String name) {
     GetSchemaRequest request = GetSchemaRequest.newBuilder().setName(name).build();
@@ -627,7 +627,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Schema getSchema(GetSchemaRequest request) {
     return getSchemaCallable().call(request);
@@ -683,7 +683,7 @@ public class SchemaServiceClient implements BackgroundResource {
    *
    * @param parent Required. The name of the project in which to list schemas. Format is
    *     `projects/{project-id}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListSchemasPagedResponse listSchemas(ProjectName parent) {
     ListSchemasRequest request =
@@ -715,7 +715,7 @@ public class SchemaServiceClient implements BackgroundResource {
    *
    * @param parent Required. The name of the project in which to list schemas. Format is
    *     `projects/{project-id}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListSchemasPagedResponse listSchemas(String parent) {
     ListSchemasRequest request = ListSchemasRequest.newBuilder().setParent(parent).build();
@@ -749,7 +749,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListSchemasPagedResponse listSchemas(ListSchemasRequest request) {
     return listSchemasPagedCallable().call(request);
@@ -848,7 +848,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param name Required. The name of the schema to list revisions for.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListSchemaRevisionsPagedResponse listSchemaRevisions(SchemaName name) {
     ListSchemaRevisionsRequest request =
@@ -879,7 +879,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param name Required. The name of the schema to list revisions for.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListSchemaRevisionsPagedResponse listSchemaRevisions(String name) {
     ListSchemaRevisionsRequest request =
@@ -914,7 +914,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListSchemaRevisionsPagedResponse listSchemaRevisions(
       ListSchemaRevisionsRequest request) {
@@ -1018,7 +1018,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * @param name Required. The name of the schema we are revising. Format is
    *     `projects/{project}/schemas/{schema}`.
    * @param schema Required. The schema revision to commit.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Schema commitSchema(SchemaName name, Schema schema) {
     CommitSchemaRequest request =
@@ -1051,7 +1051,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * @param name Required. The name of the schema we are revising. Format is
    *     `projects/{project}/schemas/{schema}`.
    * @param schema Required. The schema revision to commit.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Schema commitSchema(String name, Schema schema) {
     CommitSchemaRequest request =
@@ -1082,7 +1082,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Schema commitSchema(CommitSchemaRequest request) {
     return commitSchemaCallable().call(request);
@@ -1139,7 +1139,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * @param revisionId Required. The revision ID to roll back to. It must be a revision of the same
    *     schema.
    *     <p>Example: c7cfa2a8
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Schema rollbackSchema(SchemaName name, String revisionId) {
     RollbackSchemaRequest request =
@@ -1173,7 +1173,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * @param revisionId Required. The revision ID to roll back to. It must be a revision of the same
    *     schema.
    *     <p>Example: c7cfa2a8
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Schema rollbackSchema(String name, String revisionId) {
     RollbackSchemaRequest request =
@@ -1204,7 +1204,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Schema rollbackSchema(RollbackSchemaRequest request) {
     return rollbackSchemaCallable().call(request);
@@ -1263,7 +1263,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * @param revisionId Required. The revision ID to roll back to. It must be a revision of the same
    *     schema.
    *     <p>Example: c7cfa2a8
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Schema deleteSchemaRevision(SchemaName name, String revisionId) {
     DeleteSchemaRevisionRequest request =
@@ -1299,7 +1299,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * @param revisionId Required. The revision ID to roll back to. It must be a revision of the same
    *     schema.
    *     <p>Example: c7cfa2a8
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Schema deleteSchemaRevision(String name, String revisionId) {
     DeleteSchemaRevisionRequest request =
@@ -1330,7 +1330,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Schema deleteSchemaRevision(DeleteSchemaRevisionRequest request) {
     return deleteSchemaRevisionCallable().call(request);
@@ -1385,7 +1385,7 @@ public class SchemaServiceClient implements BackgroundResource {
    *
    * @param name Required. Name of the schema to delete. Format is
    *     `projects/{project}/schemas/{schema}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final void deleteSchema(SchemaName name) {
     DeleteSchemaRequest request =
@@ -1413,7 +1413,7 @@ public class SchemaServiceClient implements BackgroundResource {
    *
    * @param name Required. Name of the schema to delete. Format is
    *     `projects/{project}/schemas/{schema}`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final void deleteSchema(String name) {
     DeleteSchemaRequest request = DeleteSchemaRequest.newBuilder().setName(name).build();
@@ -1442,7 +1442,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final void deleteSchema(DeleteSchemaRequest request) {
     deleteSchemaCallable().call(request);
@@ -1497,7 +1497,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * @param parent Required. The name of the project in which to validate schemas. Format is
    *     `projects/{project-id}`.
    * @param schema Required. The schema object to validate.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ValidateSchemaResponse validateSchema(ProjectName parent, Schema schema) {
     ValidateSchemaRequest request =
@@ -1530,7 +1530,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * @param parent Required. The name of the project in which to validate schemas. Format is
    *     `projects/{project-id}`.
    * @param schema Required. The schema object to validate.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ValidateSchemaResponse validateSchema(String parent, Schema schema) {
     ValidateSchemaRequest request =
@@ -1561,7 +1561,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ValidateSchemaResponse validateSchema(ValidateSchemaRequest request) {
     return validateSchemaCallable().call(request);
@@ -1621,7 +1621,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ValidateMessageResponse validateMessage(ValidateMessageRequest request) {
     return validateMessageCallable().call(request);
@@ -1684,7 +1684,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Policy setIamPolicy(SetIamPolicyRequest request) {
     return setIamPolicyCallable().call(request);
@@ -1745,7 +1745,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Policy getIamPolicy(GetIamPolicyRequest request) {
     return getIamPolicyCallable().call(request);
@@ -1808,7 +1808,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final TestIamPermissionsResponse testIamPermissions(TestIamPermissionsRequest request) {
     return testIamPermissionsCallable().call(request);

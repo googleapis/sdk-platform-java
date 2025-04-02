@@ -238,7 +238,7 @@ public class IAMPolicyClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Policy setIamPolicy(SetIamPolicyRequest request) {
     return setIamPolicyCallable().call(request);
@@ -299,7 +299,7 @@ public class IAMPolicyClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Policy getIamPolicy(GetIamPolicyRequest request) {
     return getIamPolicyCallable().call(request);
@@ -362,7 +362,7 @@ public class IAMPolicyClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final TestIamPermissionsResponse testIamPermissions(TestIamPermissionsRequest request) {
     return testIamPermissionsCallable().call(request);

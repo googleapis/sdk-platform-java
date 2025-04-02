@@ -420,7 +420,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param shelf The shelf to create.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Shelf createShelf(Shelf shelf) {
     CreateShelfRequest request = CreateShelfRequest.newBuilder().setShelf(shelf).build();
@@ -447,7 +447,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Shelf createShelf(CreateShelfRequest request) {
     return createShelfCallable().call(request);
@@ -497,7 +497,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param name The name of the shelf to retrieve.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Shelf getShelf(ShelfName name) {
     GetShelfRequest request =
@@ -524,7 +524,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param name The name of the shelf to retrieve.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Shelf getShelf(String name) {
     GetShelfRequest request = GetShelfRequest.newBuilder().setName(name).build();
@@ -551,7 +551,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Shelf getShelf(GetShelfRequest request) {
     return getShelfCallable().call(request);
@@ -608,7 +608,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListShelvesPagedResponse listShelves(ListShelvesRequest request) {
     return listShelvesPagedCallable().call(request);
@@ -703,7 +703,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param name The name of the shelf to delete.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final void deleteShelf(ShelfName name) {
     DeleteShelfRequest request =
@@ -730,7 +730,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param name The name of the shelf to delete.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final void deleteShelf(String name) {
     DeleteShelfRequest request = DeleteShelfRequest.newBuilder().setName(name).build();
@@ -757,7 +757,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final void deleteShelf(DeleteShelfRequest request) {
     deleteShelfCallable().call(request);
@@ -814,7 +814,7 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * @param name The name of the shelf we're adding books to.
    * @param otherShelf The name of the shelf we're removing books from and deleting.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Shelf mergeShelves(ShelfName name, ShelfName otherShelf) {
     MergeShelvesRequest request =
@@ -851,7 +851,7 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * @param name The name of the shelf we're adding books to.
    * @param otherShelf The name of the shelf we're removing books from and deleting.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Shelf mergeShelves(ShelfName name, String otherShelf) {
     MergeShelvesRequest request =
@@ -888,7 +888,7 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * @param name The name of the shelf we're adding books to.
    * @param otherShelf The name of the shelf we're removing books from and deleting.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Shelf mergeShelves(String name, ShelfName otherShelf) {
     MergeShelvesRequest request =
@@ -925,7 +925,7 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * @param name The name of the shelf we're adding books to.
    * @param otherShelf The name of the shelf we're removing books from and deleting.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Shelf mergeShelves(String name, String otherShelf) {
     MergeShelvesRequest request =
@@ -961,7 +961,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Shelf mergeShelves(MergeShelvesRequest request) {
     return mergeShelvesCallable().call(request);
@@ -1021,7 +1021,7 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * @param parent The name of the shelf in which the book is created.
    * @param book The book to create.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Book createBook(ShelfName parent, Book book) {
     CreateBookRequest request =
@@ -1053,7 +1053,7 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * @param parent The name of the shelf in which the book is created.
    * @param book The book to create.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Book createBook(String parent, Book book) {
     CreateBookRequest request =
@@ -1084,7 +1084,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Book createBook(CreateBookRequest request) {
     return createBookCallable().call(request);
@@ -1137,7 +1137,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param name The name of the book to retrieve.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Book getBook(BookName name) {
     GetBookRequest request =
@@ -1164,7 +1164,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param name The name of the book to retrieve.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Book getBook(String name) {
     GetBookRequest request = GetBookRequest.newBuilder().setName(name).build();
@@ -1191,7 +1191,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Book getBook(GetBookRequest request) {
     return getBookCallable().call(request);
@@ -1245,7 +1245,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param parent The name of the shelf whose books we'd like to list.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListBooksPagedResponse listBooks(ShelfName parent) {
     ListBooksRequest request =
@@ -1276,7 +1276,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param parent The name of the shelf whose books we'd like to list.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListBooksPagedResponse listBooks(String parent) {
     ListBooksRequest request = ListBooksRequest.newBuilder().setParent(parent).build();
@@ -1311,7 +1311,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListBooksPagedResponse listBooks(ListBooksRequest request) {
     return listBooksPagedCallable().call(request);
@@ -1409,7 +1409,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param name The name of the book to delete.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final void deleteBook(BookName name) {
     DeleteBookRequest request =
@@ -1436,7 +1436,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param name The name of the book to delete.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final void deleteBook(String name) {
     DeleteBookRequest request = DeleteBookRequest.newBuilder().setName(name).build();
@@ -1465,7 +1465,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final void deleteBook(DeleteBookRequest request) {
     deleteBookCallable().call(request);
@@ -1520,7 +1520,7 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * @param book The name of the book to update.
    * @param updateMask Required. Mask of fields to update.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Book updateBook(Book book, FieldMask updateMask) {
     UpdateBookRequest request =
@@ -1552,7 +1552,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Book updateBook(UpdateBookRequest request) {
     return updateBookCallable().call(request);
@@ -1609,7 +1609,7 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * @param name The name of the book to move.
    * @param otherShelfName The name of the destination shelf.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Book moveBook(BookName name, ShelfName otherShelfName) {
     MoveBookRequest request =
@@ -1642,7 +1642,7 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * @param name The name of the book to move.
    * @param otherShelfName The name of the destination shelf.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Book moveBook(BookName name, String otherShelfName) {
     MoveBookRequest request =
@@ -1675,7 +1675,7 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * @param name The name of the book to move.
    * @param otherShelfName The name of the destination shelf.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Book moveBook(String name, ShelfName otherShelfName) {
     MoveBookRequest request =
@@ -1708,7 +1708,7 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * @param name The name of the book to move.
    * @param otherShelfName The name of the destination shelf.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Book moveBook(String name, String otherShelfName) {
     MoveBookRequest request =
@@ -1740,7 +1740,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Book moveBook(MoveBookRequest request) {
     return moveBookCallable().call(request);

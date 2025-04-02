@@ -703,7 +703,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param parent Required. The resource name of the location associated with the
    *     [KeyRings][google.cloud.kms.v1.KeyRing], in the format `projects/&#42;/locations/&#42;`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListKeyRingsPagedResponse listKeyRings(LocationName parent) {
     ListKeyRingsRequest request =
@@ -736,7 +736,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param parent Required. The resource name of the location associated with the
    *     [KeyRings][google.cloud.kms.v1.KeyRing], in the format `projects/&#42;/locations/&#42;`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListKeyRingsPagedResponse listKeyRings(String parent) {
     ListKeyRingsRequest request = ListKeyRingsRequest.newBuilder().setParent(parent).build();
@@ -772,7 +772,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListKeyRingsPagedResponse listKeyRings(ListKeyRingsRequest request) {
     return listKeyRingsPagedCallable().call(request);
@@ -879,7 +879,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param parent Required. The resource name of the [KeyRing][google.cloud.kms.v1.KeyRing] to
    *     list, in the format `projects/&#42;/locations/&#42;/keyRings/&#42;`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListCryptoKeysPagedResponse listCryptoKeys(KeyRingName parent) {
     ListCryptoKeysRequest request =
@@ -912,7 +912,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param parent Required. The resource name of the [KeyRing][google.cloud.kms.v1.KeyRing] to
    *     list, in the format `projects/&#42;/locations/&#42;/keyRings/&#42;`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListCryptoKeysPagedResponse listCryptoKeys(String parent) {
     ListCryptoKeysRequest request = ListCryptoKeysRequest.newBuilder().setParent(parent).build();
@@ -948,7 +948,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListCryptoKeysPagedResponse listCryptoKeys(ListCryptoKeysRequest request) {
     return listCryptoKeysPagedCallable().call(request);
@@ -1058,7 +1058,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param parent Required. The resource name of the [CryptoKey][google.cloud.kms.v1.CryptoKey] to
    *     list, in the format `projects/&#42;/locations/&#42;/keyRings/&#42;/cryptoKeys/&#42;`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListCryptoKeyVersionsPagedResponse listCryptoKeyVersions(CryptoKeyName parent) {
     ListCryptoKeyVersionsRequest request =
@@ -1093,7 +1093,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param parent Required. The resource name of the [CryptoKey][google.cloud.kms.v1.CryptoKey] to
    *     list, in the format `projects/&#42;/locations/&#42;/keyRings/&#42;/cryptoKeys/&#42;`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListCryptoKeyVersionsPagedResponse listCryptoKeyVersions(String parent) {
     ListCryptoKeyVersionsRequest request =
@@ -1133,7 +1133,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListCryptoKeyVersionsPagedResponse listCryptoKeyVersions(
       ListCryptoKeyVersionsRequest request) {
@@ -1246,7 +1246,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param parent Required. The resource name of the [KeyRing][google.cloud.kms.v1.KeyRing] to
    *     list, in the format `projects/&#42;/locations/&#42;/keyRings/&#42;`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListImportJobsPagedResponse listImportJobs(KeyRingName parent) {
     ListImportJobsRequest request =
@@ -1279,7 +1279,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param parent Required. The resource name of the [KeyRing][google.cloud.kms.v1.KeyRing] to
    *     list, in the format `projects/&#42;/locations/&#42;/keyRings/&#42;`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListImportJobsPagedResponse listImportJobs(String parent) {
     ListImportJobsRequest request = ListImportJobsRequest.newBuilder().setParent(parent).build();
@@ -1315,7 +1315,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListImportJobsPagedResponse listImportJobs(ListImportJobsRequest request) {
     return listImportJobsPagedCallable().call(request);
@@ -1421,7 +1421,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param name Required. The [name][google.cloud.kms.v1.KeyRing.name] of the
    *     [KeyRing][google.cloud.kms.v1.KeyRing] to get.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final KeyRing getKeyRing(KeyRingName name) {
     GetKeyRingRequest request =
@@ -1450,7 +1450,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param name Required. The [name][google.cloud.kms.v1.KeyRing.name] of the
    *     [KeyRing][google.cloud.kms.v1.KeyRing] to get.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final KeyRing getKeyRing(String name) {
     GetKeyRingRequest request = GetKeyRingRequest.newBuilder().setName(name).build();
@@ -1480,7 +1480,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final KeyRing getKeyRing(GetKeyRingRequest request) {
     return getKeyRingCallable().call(request);
@@ -1539,7 +1539,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param name Required. The [name][google.cloud.kms.v1.CryptoKey.name] of the
    *     [CryptoKey][google.cloud.kms.v1.CryptoKey] to get.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKey getCryptoKey(CryptoKeyName name) {
     GetCryptoKeyRequest request =
@@ -1571,7 +1571,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param name Required. The [name][google.cloud.kms.v1.CryptoKey.name] of the
    *     [CryptoKey][google.cloud.kms.v1.CryptoKey] to get.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKey getCryptoKey(String name) {
     GetCryptoKeyRequest request = GetCryptoKeyRequest.newBuilder().setName(name).build();
@@ -1605,7 +1605,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKey getCryptoKey(GetCryptoKeyRequest request) {
     return getCryptoKeyCallable().call(request);
@@ -1667,7 +1667,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param name Required. The [name][google.cloud.kms.v1.CryptoKeyVersion.name] of the
    *     [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] to get.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKeyVersion getCryptoKeyVersion(CryptoKeyVersionName name) {
     GetCryptoKeyVersionRequest request =
@@ -1701,7 +1701,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param name Required. The [name][google.cloud.kms.v1.CryptoKeyVersion.name] of the
    *     [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] to get.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKeyVersion getCryptoKeyVersion(String name) {
     GetCryptoKeyVersionRequest request =
@@ -1739,7 +1739,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKeyVersion getCryptoKeyVersion(GetCryptoKeyVersionRequest request) {
     return getCryptoKeyVersionCallable().call(request);
@@ -1808,7 +1808,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param name Required. The [name][google.cloud.kms.v1.CryptoKeyVersion.name] of the
    *     [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] public key to get.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final PublicKey getPublicKey(CryptoKeyVersionName name) {
     GetPublicKeyRequest request =
@@ -1843,7 +1843,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param name Required. The [name][google.cloud.kms.v1.CryptoKeyVersion.name] of the
    *     [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] public key to get.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final PublicKey getPublicKey(String name) {
     GetPublicKeyRequest request = GetPublicKeyRequest.newBuilder().setName(name).build();
@@ -1883,7 +1883,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final PublicKey getPublicKey(GetPublicKeyRequest request) {
     return getPublicKeyCallable().call(request);
@@ -1950,7 +1950,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param name Required. The [name][google.cloud.kms.v1.ImportJob.name] of the
    *     [ImportJob][google.cloud.kms.v1.ImportJob] to get.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ImportJob getImportJob(ImportJobName name) {
     GetImportJobRequest request =
@@ -1980,7 +1980,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param name Required. The [name][google.cloud.kms.v1.ImportJob.name] of the
    *     [ImportJob][google.cloud.kms.v1.ImportJob] to get.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ImportJob getImportJob(String name) {
     GetImportJobRequest request = GetImportJobRequest.newBuilder().setName(name).build();
@@ -2012,7 +2012,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ImportJob getImportJob(GetImportJobRequest request) {
     return getImportJobCallable().call(request);
@@ -2075,7 +2075,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * @param keyRingId Required. It must be unique within a location and match the regular expression
    *     `[a-zA-Z0-9_-]{1,63}`
    * @param keyRing Required. A [KeyRing][google.cloud.kms.v1.KeyRing] with initial field values.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final KeyRing createKeyRing(LocationName parent, String keyRingId, KeyRing keyRing) {
     CreateKeyRingRequest request =
@@ -2113,7 +2113,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * @param keyRingId Required. It must be unique within a location and match the regular expression
    *     `[a-zA-Z0-9_-]{1,63}`
    * @param keyRing Required. A [KeyRing][google.cloud.kms.v1.KeyRing] with initial field values.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final KeyRing createKeyRing(String parent, String keyRingId, KeyRing keyRing) {
     CreateKeyRingRequest request =
@@ -2150,7 +2150,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final KeyRing createKeyRing(CreateKeyRingRequest request) {
     return createKeyRingCallable().call(request);
@@ -2220,7 +2220,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     expression `[a-zA-Z0-9_-]{1,63}`
    * @param cryptoKey Required. A [CryptoKey][google.cloud.kms.v1.CryptoKey] with initial field
    *     values.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKey createCryptoKey(
       KeyRingName parent, String cryptoKeyId, CryptoKey cryptoKey) {
@@ -2266,7 +2266,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     expression `[a-zA-Z0-9_-]{1,63}`
    * @param cryptoKey Required. A [CryptoKey][google.cloud.kms.v1.CryptoKey] with initial field
    *     values.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKey createCryptoKey(String parent, String cryptoKeyId, CryptoKey cryptoKey) {
     CreateCryptoKeyRequest request =
@@ -2309,7 +2309,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKey createCryptoKey(CreateCryptoKeyRequest request) {
     return createCryptoKeyCallable().call(request);
@@ -2384,7 +2384,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     [CryptoKeyVersions][google.cloud.kms.v1.CryptoKeyVersion].
    * @param cryptoKeyVersion Required. A [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]
    *     with initial field values.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKeyVersion createCryptoKeyVersion(
       CryptoKeyName parent, CryptoKeyVersion cryptoKeyVersion) {
@@ -2428,7 +2428,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     [CryptoKeyVersions][google.cloud.kms.v1.CryptoKeyVersion].
    * @param cryptoKeyVersion Required. A [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]
    *     with initial field values.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKeyVersion createCryptoKeyVersion(
       String parent, CryptoKeyVersion cryptoKeyVersion) {
@@ -2471,7 +2471,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKeyVersion createCryptoKeyVersion(CreateCryptoKeyVersionRequest request) {
     return createCryptoKeyVersionCallable().call(request);
@@ -2546,7 +2546,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKeyVersion importCryptoKeyVersion(ImportCryptoKeyVersionRequest request) {
     return importCryptoKeyVersionCallable().call(request);
@@ -2622,7 +2622,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     expression `[a-zA-Z0-9_-]{1,63}`
    * @param importJob Required. An [ImportJob][google.cloud.kms.v1.ImportJob] with initial field
    *     values.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ImportJob createImportJob(
       KeyRingName parent, String importJobId, ImportJob importJob) {
@@ -2667,7 +2667,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     expression `[a-zA-Z0-9_-]{1,63}`
    * @param importJob Required. An [ImportJob][google.cloud.kms.v1.ImportJob] with initial field
    *     values.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ImportJob createImportJob(String parent, String importJobId, ImportJob importJob) {
     CreateImportJobRequest request =
@@ -2707,7 +2707,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ImportJob createImportJob(CreateImportJobRequest request) {
     return createImportJobCallable().call(request);
@@ -2769,7 +2769,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param cryptoKey Required. [CryptoKey][google.cloud.kms.v1.CryptoKey] with updated values.
    * @param updateMask Required. List of fields to be updated in this request.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKey updateCryptoKey(CryptoKey cryptoKey, FieldMask updateMask) {
     UpdateCryptoKeyRequest request =
@@ -2804,7 +2804,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKey updateCryptoKey(UpdateCryptoKeyRequest request) {
     return updateCryptoKeyCallable().call(request);
@@ -2872,7 +2872,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * @param cryptoKeyVersion Required. [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] with
    *     updated values.
    * @param updateMask Required. List of fields to be updated in this request.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKeyVersion updateCryptoKeyVersion(
       CryptoKeyVersion cryptoKeyVersion, FieldMask updateMask) {
@@ -2916,7 +2916,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKeyVersion updateCryptoKeyVersion(UpdateCryptoKeyVersionRequest request) {
     return updateCryptoKeyVersionCallable().call(request);
@@ -2995,7 +2995,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     larger than 64KiB. For [HSM][google.cloud.kms.v1.ProtectionLevel.HSM] keys, the combined
    *     length of the plaintext and additional_authenticated_data fields must be no larger than
    *     8KiB.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final EncryptResponse encrypt(ResourceName name, ByteString plaintext) {
     EncryptRequest request =
@@ -3041,7 +3041,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     larger than 64KiB. For [HSM][google.cloud.kms.v1.ProtectionLevel.HSM] keys, the combined
    *     length of the plaintext and additional_authenticated_data fields must be no larger than
    *     8KiB.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final EncryptResponse encrypt(String name, ByteString plaintext) {
     EncryptRequest request =
@@ -3081,7 +3081,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final EncryptResponse encrypt(EncryptRequest request) {
     return encryptCallable().call(request);
@@ -3153,7 +3153,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     use for decryption. The server will choose the appropriate version.
    * @param ciphertext Required. The encrypted data originally returned in
    *     [EncryptResponse.ciphertext][google.cloud.kms.v1.EncryptResponse.ciphertext].
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final DecryptResponse decrypt(CryptoKeyName name, ByteString ciphertext) {
     DecryptRequest request =
@@ -3192,7 +3192,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     use for decryption. The server will choose the appropriate version.
    * @param ciphertext Required. The encrypted data originally returned in
    *     [EncryptResponse.ciphertext][google.cloud.kms.v1.EncryptResponse.ciphertext].
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final DecryptResponse decrypt(String name, ByteString ciphertext) {
     DecryptRequest request =
@@ -3232,7 +3232,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final DecryptResponse decrypt(DecryptRequest request) {
     return decryptCallable().call(request);
@@ -3306,7 +3306,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * @param digest Required. The digest of the data to sign. The digest must be produced with the
    *     same digest algorithm as specified by the key version's
    *     [algorithm][google.cloud.kms.v1.CryptoKeyVersion.algorithm].
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final AsymmetricSignResponse asymmetricSign(CryptoKeyVersionName name, Digest digest) {
     AsymmetricSignRequest request =
@@ -3348,7 +3348,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * @param digest Required. The digest of the data to sign. The digest must be produced with the
    *     same digest algorithm as specified by the key version's
    *     [algorithm][google.cloud.kms.v1.CryptoKeyVersion.algorithm].
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final AsymmetricSignResponse asymmetricSign(String name, Digest digest) {
     AsymmetricSignRequest request =
@@ -3391,7 +3391,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final AsymmetricSignResponse asymmetricSign(AsymmetricSignRequest request) {
     return asymmetricSignCallable().call(request);
@@ -3469,7 +3469,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] to use for decryption.
    * @param ciphertext Required. The data encrypted with the named
    *     [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]'s public key using OAEP.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final AsymmetricDecryptResponse asymmetricDecrypt(
       CryptoKeyVersionName name, ByteString ciphertext) {
@@ -3512,7 +3512,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] to use for decryption.
    * @param ciphertext Required. The data encrypted with the named
    *     [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]'s public key using OAEP.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final AsymmetricDecryptResponse asymmetricDecrypt(String name, ByteString ciphertext) {
     AsymmetricDecryptRequest request =
@@ -3555,7 +3555,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final AsymmetricDecryptResponse asymmetricDecrypt(AsymmetricDecryptRequest request) {
     return asymmetricDecryptCallable().call(request);
@@ -3632,7 +3632,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     update.
    * @param cryptoKeyVersionId Required. The id of the child
    *     [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] to use as primary.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKey updateCryptoKeyPrimaryVersion(
       CryptoKeyName name, String cryptoKeyVersionId) {
@@ -3673,7 +3673,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *     update.
    * @param cryptoKeyVersionId Required. The id of the child
    *     [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] to use as primary.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKey updateCryptoKeyPrimaryVersion(String name, String cryptoKeyVersionId) {
     UpdateCryptoKeyPrimaryVersionRequest request =
@@ -3713,7 +3713,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKey updateCryptoKeyPrimaryVersion(
       UpdateCryptoKeyPrimaryVersionRequest request) {
@@ -3792,7 +3792,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param name Required. The resource name of the
    *     [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] to destroy.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKeyVersion destroyCryptoKeyVersion(CryptoKeyVersionName name) {
     DestroyCryptoKeyVersionRequest request =
@@ -3839,7 +3839,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param name Required. The resource name of the
    *     [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] to destroy.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKeyVersion destroyCryptoKeyVersion(String name) {
     DestroyCryptoKeyVersionRequest request =
@@ -3890,7 +3890,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKeyVersion destroyCryptoKeyVersion(DestroyCryptoKeyVersionRequest request) {
     return destroyCryptoKeyVersionCallable().call(request);
@@ -3976,7 +3976,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param name Required. The resource name of the
    *     [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] to restore.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKeyVersion restoreCryptoKeyVersion(CryptoKeyVersionName name) {
     RestoreCryptoKeyVersionRequest request =
@@ -4017,7 +4017,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    *
    * @param name Required. The resource name of the
    *     [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] to restore.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKeyVersion restoreCryptoKeyVersion(String name) {
     RestoreCryptoKeyVersionRequest request =
@@ -4062,7 +4062,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final CryptoKeyVersion restoreCryptoKeyVersion(RestoreCryptoKeyVersionRequest request) {
     return restoreCryptoKeyVersionCallable().call(request);
@@ -4139,7 +4139,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Policy getIamPolicy(GetIamPolicyRequest request) {
     return getIamPolicyCallable().call(request);
@@ -4206,7 +4206,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListLocationsPagedResponse listLocations(ListLocationsRequest request) {
     return listLocationsPagedCallable().call(request);
@@ -4308,7 +4308,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final Location getLocation(GetLocationRequest request) {
     return getLocationCallable().call(request);
@@ -4367,7 +4367,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final TestIamPermissionsResponse testIamPermissions(TestIamPermissionsRequest request) {
     return testIamPermissionsCallable().call(request);

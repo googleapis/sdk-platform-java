@@ -307,7 +307,7 @@ public class LoggingClient implements BackgroundResource {
    *     <p>`[LOG_ID]` must be URL-encoded. For example, `"projects/my-project-id/logs/syslog"`,
    *     `"organizations/123/logs/cloudaudit.googleapis.com%2Factivity"`.
    *     <p>For more information about log names, see [LogEntry][google.logging.v2.LogEntry].
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final void deleteLog(LogName logName) {
     DeleteLogRequest request =
@@ -348,7 +348,7 @@ public class LoggingClient implements BackgroundResource {
    *     <p>`[LOG_ID]` must be URL-encoded. For example, `"projects/my-project-id/logs/syslog"`,
    *     `"organizations/123/logs/cloudaudit.googleapis.com%2Factivity"`.
    *     <p>For more information about log names, see [LogEntry][google.logging.v2.LogEntry].
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final void deleteLog(String logName) {
     DeleteLogRequest request = DeleteLogRequest.newBuilder().setLogName(logName).build();
@@ -380,7 +380,7 @@ public class LoggingClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final void deleteLog(DeleteLogRequest request) {
     deleteLogCallable().call(request);
@@ -483,7 +483,7 @@ public class LoggingClient implements BackgroundResource {
    *     limit](https://cloud.google.com/logging/quotas) for calls to `entries.write`, you should
    *     try to include several log entries in this list, rather than calling this method for each
    *     individual log entry.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final WriteLogEntriesResponse writeLogEntries(
       LogName logName,
@@ -567,7 +567,7 @@ public class LoggingClient implements BackgroundResource {
    *     limit](https://cloud.google.com/logging/quotas) for calls to `entries.write`, you should
    *     try to include several log entries in this list, rather than calling this method for each
    *     individual log entry.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final WriteLogEntriesResponse writeLogEntries(
       String logName,
@@ -614,7 +614,7 @@ public class LoggingClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final WriteLogEntriesResponse writeLogEntries(WriteLogEntriesRequest request) {
     return writeLogEntriesCallable().call(request);
@@ -709,7 +709,7 @@ public class LoggingClient implements BackgroundResource {
    *     order of increasing values of `LogEntry.timestamp` (oldest first), and the second option
    *     returns entries in order of decreasing timestamps (newest first). Entries with equal
    *     timestamps are returned in order of their `insert_id` values.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListLogEntriesPagedResponse listLogEntries(
       List<String> resourceNames, String filter, String orderBy) {
@@ -752,7 +752,7 @@ public class LoggingClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListLogEntriesPagedResponse listLogEntries(ListLogEntriesRequest request) {
     return listLogEntriesPagedCallable().call(request);
@@ -863,7 +863,7 @@ public class LoggingClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListMonitoredResourceDescriptorsPagedResponse listMonitoredResourceDescriptors(
       ListMonitoredResourceDescriptorsRequest request) {
@@ -972,7 +972,7 @@ public class LoggingClient implements BackgroundResource {
    *       <li>`folders/[FOLDER_ID]`
    *     </ul>
    *
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListLogsPagedResponse listLogs(BillingAccountName parent) {
     ListLogsRequest request =
@@ -1009,7 +1009,7 @@ public class LoggingClient implements BackgroundResource {
    *       <li>`folders/[FOLDER_ID]`
    *     </ul>
    *
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListLogsPagedResponse listLogs(FolderName parent) {
     ListLogsRequest request =
@@ -1046,7 +1046,7 @@ public class LoggingClient implements BackgroundResource {
    *       <li>`folders/[FOLDER_ID]`
    *     </ul>
    *
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListLogsPagedResponse listLogs(OrganizationName parent) {
     ListLogsRequest request =
@@ -1083,7 +1083,7 @@ public class LoggingClient implements BackgroundResource {
    *       <li>`folders/[FOLDER_ID]`
    *     </ul>
    *
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListLogsPagedResponse listLogs(ProjectName parent) {
     ListLogsRequest request =
@@ -1120,7 +1120,7 @@ public class LoggingClient implements BackgroundResource {
    *       <li>`folders/[FOLDER_ID]`
    *     </ul>
    *
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListLogsPagedResponse listLogs(String parent) {
     ListLogsRequest request = ListLogsRequest.newBuilder().setParent(parent).build();
@@ -1155,7 +1155,7 @@ public class LoggingClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
    */
   public final ListLogsPagedResponse listLogs(ListLogsRequest request) {
     return listLogsPagedCallable().call(request);
