@@ -44,9 +44,9 @@ import com.google.example.library.v1.MoveBookRequest;
 import com.google.example.library.v1.Shelf;
 import com.google.example.library.v1.ShelfName;
 import com.google.example.library.v1.UpdateBookRequest;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Empty;
 import com.google.protobuf.FieldMask;
+import com.google.protobuf.Message;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
 import java.util.Arrays;
@@ -112,7 +112,7 @@ public class LibraryServiceClientTest {
     Shelf actualResponse = client.createShelf(shelf);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateShelfRequest actualRequest = ((CreateShelfRequest) actualRequests.get(0));
 
@@ -151,7 +151,7 @@ public class LibraryServiceClientTest {
     Shelf actualResponse = client.getShelf(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetShelfRequest actualRequest = ((GetShelfRequest) actualRequests.get(0));
 
@@ -190,7 +190,7 @@ public class LibraryServiceClientTest {
     Shelf actualResponse = client.getShelf(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetShelfRequest actualRequest = ((GetShelfRequest) actualRequests.get(0));
 
@@ -238,7 +238,7 @@ public class LibraryServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getShelvesList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListShelvesRequest actualRequest = ((ListShelvesRequest) actualRequests.get(0));
 
@@ -277,7 +277,7 @@ public class LibraryServiceClientTest {
 
     client.deleteShelf(name);
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteShelfRequest actualRequest = ((DeleteShelfRequest) actualRequests.get(0));
 
@@ -311,7 +311,7 @@ public class LibraryServiceClientTest {
 
     client.deleteShelf(name);
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteShelfRequest actualRequest = ((DeleteShelfRequest) actualRequests.get(0));
 
@@ -351,7 +351,7 @@ public class LibraryServiceClientTest {
     Shelf actualResponse = client.mergeShelves(name, otherShelf);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     MergeShelvesRequest actualRequest = ((MergeShelvesRequest) actualRequests.get(0));
 
@@ -393,7 +393,7 @@ public class LibraryServiceClientTest {
     Shelf actualResponse = client.mergeShelves(name, otherShelf);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     MergeShelvesRequest actualRequest = ((MergeShelvesRequest) actualRequests.get(0));
 
@@ -435,7 +435,7 @@ public class LibraryServiceClientTest {
     Shelf actualResponse = client.mergeShelves(name, otherShelf);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     MergeShelvesRequest actualRequest = ((MergeShelvesRequest) actualRequests.get(0));
 
@@ -477,7 +477,7 @@ public class LibraryServiceClientTest {
     Shelf actualResponse = client.mergeShelves(name, otherShelf);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     MergeShelvesRequest actualRequest = ((MergeShelvesRequest) actualRequests.get(0));
 
@@ -521,7 +521,7 @@ public class LibraryServiceClientTest {
     Book actualResponse = client.createBook(parent, book);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateBookRequest actualRequest = ((CreateBookRequest) actualRequests.get(0));
 
@@ -565,7 +565,7 @@ public class LibraryServiceClientTest {
     Book actualResponse = client.createBook(parent, book);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateBookRequest actualRequest = ((CreateBookRequest) actualRequests.get(0));
 
@@ -608,7 +608,7 @@ public class LibraryServiceClientTest {
     Book actualResponse = client.getBook(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetBookRequest actualRequest = ((GetBookRequest) actualRequests.get(0));
 
@@ -649,7 +649,7 @@ public class LibraryServiceClientTest {
     Book actualResponse = client.getBook(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetBookRequest actualRequest = ((GetBookRequest) actualRequests.get(0));
 
@@ -693,7 +693,7 @@ public class LibraryServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getBooksList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListBooksRequest actualRequest = ((ListBooksRequest) actualRequests.get(0));
 
@@ -737,7 +737,7 @@ public class LibraryServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getBooksList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListBooksRequest actualRequest = ((ListBooksRequest) actualRequests.get(0));
 
@@ -771,7 +771,7 @@ public class LibraryServiceClientTest {
 
     client.deleteBook(name);
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteBookRequest actualRequest = ((DeleteBookRequest) actualRequests.get(0));
 
@@ -805,7 +805,7 @@ public class LibraryServiceClientTest {
 
     client.deleteBook(name);
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteBookRequest actualRequest = ((DeleteBookRequest) actualRequests.get(0));
 
@@ -847,7 +847,7 @@ public class LibraryServiceClientTest {
     Book actualResponse = client.updateBook(book, updateMask);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateBookRequest actualRequest = ((UpdateBookRequest) actualRequests.get(0));
 
@@ -891,7 +891,7 @@ public class LibraryServiceClientTest {
     Book actualResponse = client.moveBook(name, otherShelfName);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     MoveBookRequest actualRequest = ((MoveBookRequest) actualRequests.get(0));
 
@@ -935,7 +935,7 @@ public class LibraryServiceClientTest {
     Book actualResponse = client.moveBook(name, otherShelfName);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     MoveBookRequest actualRequest = ((MoveBookRequest) actualRequests.get(0));
 
@@ -979,7 +979,7 @@ public class LibraryServiceClientTest {
     Book actualResponse = client.moveBook(name, otherShelfName);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     MoveBookRequest actualRequest = ((MoveBookRequest) actualRequests.get(0));
 
@@ -1023,7 +1023,7 @@ public class LibraryServiceClientTest {
     Book actualResponse = client.moveBook(name, otherShelfName);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLibraryService.getRequests();
+    List<Message> actualRequests = mockLibraryService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     MoveBookRequest actualRequest = ((MoveBookRequest) actualRequests.get(0));
 

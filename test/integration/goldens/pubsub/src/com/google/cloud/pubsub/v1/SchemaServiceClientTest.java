@@ -35,10 +35,10 @@ import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Empty;
 import com.google.protobuf.FieldMask;
+import com.google.protobuf.Message;
 import com.google.protobuf.Timestamp;
 import com.google.pubsub.v1.CommitSchemaRequest;
 import com.google.pubsub.v1.CreateSchemaRequest;
@@ -132,7 +132,7 @@ public class SchemaServiceClientTest {
     Schema actualResponse = client.createSchema(parent, schema, schemaId);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockSchemaService.getRequests();
+    List<Message> actualRequests = mockSchemaService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateSchemaRequest actualRequest = ((CreateSchemaRequest) actualRequests.get(0));
 
@@ -179,7 +179,7 @@ public class SchemaServiceClientTest {
     Schema actualResponse = client.createSchema(parent, schema, schemaId);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockSchemaService.getRequests();
+    List<Message> actualRequests = mockSchemaService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateSchemaRequest actualRequest = ((CreateSchemaRequest) actualRequests.get(0));
 
@@ -224,7 +224,7 @@ public class SchemaServiceClientTest {
     Schema actualResponse = client.getSchema(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockSchemaService.getRequests();
+    List<Message> actualRequests = mockSchemaService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetSchemaRequest actualRequest = ((GetSchemaRequest) actualRequests.get(0));
 
@@ -265,7 +265,7 @@ public class SchemaServiceClientTest {
     Schema actualResponse = client.getSchema(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockSchemaService.getRequests();
+    List<Message> actualRequests = mockSchemaService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetSchemaRequest actualRequest = ((GetSchemaRequest) actualRequests.get(0));
 
@@ -309,7 +309,7 @@ public class SchemaServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getSchemasList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockSchemaService.getRequests();
+    List<Message> actualRequests = mockSchemaService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListSchemasRequest actualRequest = ((ListSchemasRequest) actualRequests.get(0));
 
@@ -353,7 +353,7 @@ public class SchemaServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getSchemasList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockSchemaService.getRequests();
+    List<Message> actualRequests = mockSchemaService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListSchemasRequest actualRequest = ((ListSchemasRequest) actualRequests.get(0));
 
@@ -397,7 +397,7 @@ public class SchemaServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getSchemasList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockSchemaService.getRequests();
+    List<Message> actualRequests = mockSchemaService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListSchemaRevisionsRequest actualRequest = ((ListSchemaRevisionsRequest) actualRequests.get(0));
 
@@ -441,7 +441,7 @@ public class SchemaServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getSchemasList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockSchemaService.getRequests();
+    List<Message> actualRequests = mockSchemaService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListSchemaRevisionsRequest actualRequest = ((ListSchemaRevisionsRequest) actualRequests.get(0));
 
@@ -483,7 +483,7 @@ public class SchemaServiceClientTest {
     Schema actualResponse = client.commitSchema(name, schema);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockSchemaService.getRequests();
+    List<Message> actualRequests = mockSchemaService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CommitSchemaRequest actualRequest = ((CommitSchemaRequest) actualRequests.get(0));
 
@@ -527,7 +527,7 @@ public class SchemaServiceClientTest {
     Schema actualResponse = client.commitSchema(name, schema);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockSchemaService.getRequests();
+    List<Message> actualRequests = mockSchemaService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CommitSchemaRequest actualRequest = ((CommitSchemaRequest) actualRequests.get(0));
 
@@ -571,7 +571,7 @@ public class SchemaServiceClientTest {
     Schema actualResponse = client.rollbackSchema(name, revisionId);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockSchemaService.getRequests();
+    List<Message> actualRequests = mockSchemaService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     RollbackSchemaRequest actualRequest = ((RollbackSchemaRequest) actualRequests.get(0));
 
@@ -615,7 +615,7 @@ public class SchemaServiceClientTest {
     Schema actualResponse = client.rollbackSchema(name, revisionId);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockSchemaService.getRequests();
+    List<Message> actualRequests = mockSchemaService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     RollbackSchemaRequest actualRequest = ((RollbackSchemaRequest) actualRequests.get(0));
 
@@ -659,7 +659,7 @@ public class SchemaServiceClientTest {
     Schema actualResponse = client.deleteSchemaRevision(name, revisionId);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockSchemaService.getRequests();
+    List<Message> actualRequests = mockSchemaService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteSchemaRevisionRequest actualRequest =
         ((DeleteSchemaRevisionRequest) actualRequests.get(0));
@@ -704,7 +704,7 @@ public class SchemaServiceClientTest {
     Schema actualResponse = client.deleteSchemaRevision(name, revisionId);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockSchemaService.getRequests();
+    List<Message> actualRequests = mockSchemaService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteSchemaRevisionRequest actualRequest =
         ((DeleteSchemaRevisionRequest) actualRequests.get(0));
@@ -741,7 +741,7 @@ public class SchemaServiceClientTest {
 
     client.deleteSchema(name);
 
-    List<AbstractMessage> actualRequests = mockSchemaService.getRequests();
+    List<Message> actualRequests = mockSchemaService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteSchemaRequest actualRequest = ((DeleteSchemaRequest) actualRequests.get(0));
 
@@ -775,7 +775,7 @@ public class SchemaServiceClientTest {
 
     client.deleteSchema(name);
 
-    List<AbstractMessage> actualRequests = mockSchemaService.getRequests();
+    List<Message> actualRequests = mockSchemaService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteSchemaRequest actualRequest = ((DeleteSchemaRequest) actualRequests.get(0));
 
@@ -811,7 +811,7 @@ public class SchemaServiceClientTest {
     ValidateSchemaResponse actualResponse = client.validateSchema(parent, schema);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockSchemaService.getRequests();
+    List<Message> actualRequests = mockSchemaService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ValidateSchemaRequest actualRequest = ((ValidateSchemaRequest) actualRequests.get(0));
 
@@ -849,7 +849,7 @@ public class SchemaServiceClientTest {
     ValidateSchemaResponse actualResponse = client.validateSchema(parent, schema);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockSchemaService.getRequests();
+    List<Message> actualRequests = mockSchemaService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ValidateSchemaRequest actualRequest = ((ValidateSchemaRequest) actualRequests.get(0));
 
@@ -891,7 +891,7 @@ public class SchemaServiceClientTest {
     ValidateMessageResponse actualResponse = client.validateMessage(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockSchemaService.getRequests();
+    List<Message> actualRequests = mockSchemaService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ValidateMessageRequest actualRequest = ((ValidateMessageRequest) actualRequests.get(0));
 
@@ -946,7 +946,7 @@ public class SchemaServiceClientTest {
     Policy actualResponse = client.setIamPolicy(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     SetIamPolicyRequest actualRequest = ((SetIamPolicyRequest) actualRequests.get(0));
 
@@ -998,7 +998,7 @@ public class SchemaServiceClientTest {
     Policy actualResponse = client.getIamPolicy(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetIamPolicyRequest actualRequest = ((GetIamPolicyRequest) actualRequests.get(0));
 
@@ -1043,7 +1043,7 @@ public class SchemaServiceClientTest {
     TestIamPermissionsResponse actualResponse = client.testIamPermissions(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     TestIamPermissionsRequest actualRequest = ((TestIamPermissionsRequest) actualRequests.get(0));
 

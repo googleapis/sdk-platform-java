@@ -42,11 +42,11 @@ import com.google.iam.v1.GetPolicyOptions;
 import com.google.iam.v1.Policy;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.FieldMask;
 import com.google.protobuf.Int64Value;
+import com.google.protobuf.Message;
 import com.google.protobuf.Timestamp;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
@@ -125,7 +125,7 @@ public class KeyManagementServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getKeyRingsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListKeyRingsRequest actualRequest = ((ListKeyRingsRequest) actualRequests.get(0));
 
@@ -169,7 +169,7 @@ public class KeyManagementServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getKeyRingsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListKeyRingsRequest actualRequest = ((ListKeyRingsRequest) actualRequests.get(0));
 
@@ -213,7 +213,7 @@ public class KeyManagementServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getCryptoKeysList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListCryptoKeysRequest actualRequest = ((ListCryptoKeysRequest) actualRequests.get(0));
 
@@ -257,7 +257,7 @@ public class KeyManagementServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getCryptoKeysList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListCryptoKeysRequest actualRequest = ((ListCryptoKeysRequest) actualRequests.get(0));
 
@@ -302,7 +302,7 @@ public class KeyManagementServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getCryptoKeyVersionsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListCryptoKeyVersionsRequest actualRequest =
         ((ListCryptoKeyVersionsRequest) actualRequests.get(0));
@@ -348,7 +348,7 @@ public class KeyManagementServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getCryptoKeyVersionsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListCryptoKeyVersionsRequest actualRequest =
         ((ListCryptoKeyVersionsRequest) actualRequests.get(0));
@@ -393,7 +393,7 @@ public class KeyManagementServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getImportJobsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListImportJobsRequest actualRequest = ((ListImportJobsRequest) actualRequests.get(0));
 
@@ -437,7 +437,7 @@ public class KeyManagementServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getImportJobsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListImportJobsRequest actualRequest = ((ListImportJobsRequest) actualRequests.get(0));
 
@@ -476,7 +476,7 @@ public class KeyManagementServiceClientTest {
     KeyRing actualResponse = client.getKeyRing(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetKeyRingRequest actualRequest = ((GetKeyRingRequest) actualRequests.get(0));
 
@@ -515,7 +515,7 @@ public class KeyManagementServiceClientTest {
     KeyRing actualResponse = client.getKeyRing(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetKeyRingRequest actualRequest = ((GetKeyRingRequest) actualRequests.get(0));
 
@@ -560,7 +560,7 @@ public class KeyManagementServiceClientTest {
     CryptoKey actualResponse = client.getCryptoKey(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetCryptoKeyRequest actualRequest = ((GetCryptoKeyRequest) actualRequests.get(0));
 
@@ -606,7 +606,7 @@ public class KeyManagementServiceClientTest {
     CryptoKey actualResponse = client.getCryptoKey(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetCryptoKeyRequest actualRequest = ((GetCryptoKeyRequest) actualRequests.get(0));
 
@@ -663,7 +663,7 @@ public class KeyManagementServiceClientTest {
     CryptoKeyVersion actualResponse = client.getCryptoKeyVersion(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetCryptoKeyVersionRequest actualRequest = ((GetCryptoKeyVersionRequest) actualRequests.get(0));
 
@@ -720,7 +720,7 @@ public class KeyManagementServiceClientTest {
     CryptoKeyVersion actualResponse = client.getCryptoKeyVersion(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetCryptoKeyVersionRequest actualRequest = ((GetCryptoKeyVersionRequest) actualRequests.get(0));
 
@@ -762,7 +762,7 @@ public class KeyManagementServiceClientTest {
     PublicKey actualResponse = client.getPublicKey(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetPublicKeyRequest actualRequest = ((GetPublicKeyRequest) actualRequests.get(0));
 
@@ -804,7 +804,7 @@ public class KeyManagementServiceClientTest {
     PublicKey actualResponse = client.getPublicKey(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetPublicKeyRequest actualRequest = ((GetPublicKeyRequest) actualRequests.get(0));
 
@@ -851,7 +851,7 @@ public class KeyManagementServiceClientTest {
     ImportJob actualResponse = client.getImportJob(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetImportJobRequest actualRequest = ((GetImportJobRequest) actualRequests.get(0));
 
@@ -899,7 +899,7 @@ public class KeyManagementServiceClientTest {
     ImportJob actualResponse = client.getImportJob(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetImportJobRequest actualRequest = ((GetImportJobRequest) actualRequests.get(0));
 
@@ -940,7 +940,7 @@ public class KeyManagementServiceClientTest {
     KeyRing actualResponse = client.createKeyRing(parent, keyRingId, keyRing);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateKeyRingRequest actualRequest = ((CreateKeyRingRequest) actualRequests.get(0));
 
@@ -985,7 +985,7 @@ public class KeyManagementServiceClientTest {
     KeyRing actualResponse = client.createKeyRing(parent, keyRingId, keyRing);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateKeyRingRequest actualRequest = ((CreateKeyRingRequest) actualRequests.get(0));
 
@@ -1036,7 +1036,7 @@ public class KeyManagementServiceClientTest {
     CryptoKey actualResponse = client.createCryptoKey(parent, cryptoKeyId, cryptoKey);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateCryptoKeyRequest actualRequest = ((CreateCryptoKeyRequest) actualRequests.get(0));
 
@@ -1087,7 +1087,7 @@ public class KeyManagementServiceClientTest {
     CryptoKey actualResponse = client.createCryptoKey(parent, cryptoKeyId, cryptoKey);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateCryptoKeyRequest actualRequest = ((CreateCryptoKeyRequest) actualRequests.get(0));
 
@@ -1148,7 +1148,7 @@ public class KeyManagementServiceClientTest {
     CryptoKeyVersion actualResponse = client.createCryptoKeyVersion(parent, cryptoKeyVersion);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateCryptoKeyVersionRequest actualRequest =
         ((CreateCryptoKeyVersionRequest) actualRequests.get(0));
@@ -1208,7 +1208,7 @@ public class KeyManagementServiceClientTest {
     CryptoKeyVersion actualResponse = client.createCryptoKeyVersion(parent, cryptoKeyVersion);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateCryptoKeyVersionRequest actualRequest =
         ((CreateCryptoKeyVersionRequest) actualRequests.get(0));
@@ -1272,7 +1272,7 @@ public class KeyManagementServiceClientTest {
     CryptoKeyVersion actualResponse = client.importCryptoKeyVersion(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ImportCryptoKeyVersionRequest actualRequest =
         ((ImportCryptoKeyVersionRequest) actualRequests.get(0));
@@ -1331,7 +1331,7 @@ public class KeyManagementServiceClientTest {
     ImportJob actualResponse = client.createImportJob(parent, importJobId, importJob);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateImportJobRequest actualRequest = ((CreateImportJobRequest) actualRequests.get(0));
 
@@ -1384,7 +1384,7 @@ public class KeyManagementServiceClientTest {
     ImportJob actualResponse = client.createImportJob(parent, importJobId, importJob);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateImportJobRequest actualRequest = ((CreateImportJobRequest) actualRequests.get(0));
 
@@ -1434,7 +1434,7 @@ public class KeyManagementServiceClientTest {
     CryptoKey actualResponse = client.updateCryptoKey(cryptoKey, updateMask);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateCryptoKeyRequest actualRequest = ((UpdateCryptoKeyRequest) actualRequests.get(0));
 
@@ -1492,7 +1492,7 @@ public class KeyManagementServiceClientTest {
     CryptoKeyVersion actualResponse = client.updateCryptoKeyVersion(cryptoKeyVersion, updateMask);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateCryptoKeyVersionRequest actualRequest =
         ((UpdateCryptoKeyVersionRequest) actualRequests.get(0));
@@ -1538,7 +1538,7 @@ public class KeyManagementServiceClientTest {
     EncryptResponse actualResponse = client.encrypt(name, plaintext);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     EncryptRequest actualRequest = ((EncryptRequest) actualRequests.get(0));
 
@@ -1583,7 +1583,7 @@ public class KeyManagementServiceClientTest {
     EncryptResponse actualResponse = client.encrypt(name, plaintext);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     EncryptRequest actualRequest = ((EncryptRequest) actualRequests.get(0));
 
@@ -1625,7 +1625,7 @@ public class KeyManagementServiceClientTest {
     DecryptResponse actualResponse = client.decrypt(name, ciphertext);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DecryptRequest actualRequest = ((DecryptRequest) actualRequests.get(0));
 
@@ -1668,7 +1668,7 @@ public class KeyManagementServiceClientTest {
     DecryptResponse actualResponse = client.decrypt(name, ciphertext);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DecryptRequest actualRequest = ((DecryptRequest) actualRequests.get(0));
 
@@ -1714,7 +1714,7 @@ public class KeyManagementServiceClientTest {
     AsymmetricSignResponse actualResponse = client.asymmetricSign(name, digest);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     AsymmetricSignRequest actualRequest = ((AsymmetricSignRequest) actualRequests.get(0));
 
@@ -1760,7 +1760,7 @@ public class KeyManagementServiceClientTest {
     AsymmetricSignResponse actualResponse = client.asymmetricSign(name, digest);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     AsymmetricSignRequest actualRequest = ((AsymmetricSignRequest) actualRequests.get(0));
 
@@ -1805,7 +1805,7 @@ public class KeyManagementServiceClientTest {
     AsymmetricDecryptResponse actualResponse = client.asymmetricDecrypt(name, ciphertext);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     AsymmetricDecryptRequest actualRequest = ((AsymmetricDecryptRequest) actualRequests.get(0));
 
@@ -1850,7 +1850,7 @@ public class KeyManagementServiceClientTest {
     AsymmetricDecryptResponse actualResponse = client.asymmetricDecrypt(name, ciphertext);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     AsymmetricDecryptRequest actualRequest = ((AsymmetricDecryptRequest) actualRequests.get(0));
 
@@ -1898,7 +1898,7 @@ public class KeyManagementServiceClientTest {
     CryptoKey actualResponse = client.updateCryptoKeyPrimaryVersion(name, cryptoKeyVersionId);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateCryptoKeyPrimaryVersionRequest actualRequest =
         ((UpdateCryptoKeyPrimaryVersionRequest) actualRequests.get(0));
@@ -1948,7 +1948,7 @@ public class KeyManagementServiceClientTest {
     CryptoKey actualResponse = client.updateCryptoKeyPrimaryVersion(name, cryptoKeyVersionId);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateCryptoKeyPrimaryVersionRequest actualRequest =
         ((UpdateCryptoKeyPrimaryVersionRequest) actualRequests.get(0));
@@ -2008,7 +2008,7 @@ public class KeyManagementServiceClientTest {
     CryptoKeyVersion actualResponse = client.destroyCryptoKeyVersion(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DestroyCryptoKeyVersionRequest actualRequest =
         ((DestroyCryptoKeyVersionRequest) actualRequests.get(0));
@@ -2066,7 +2066,7 @@ public class KeyManagementServiceClientTest {
     CryptoKeyVersion actualResponse = client.destroyCryptoKeyVersion(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DestroyCryptoKeyVersionRequest actualRequest =
         ((DestroyCryptoKeyVersionRequest) actualRequests.get(0));
@@ -2124,7 +2124,7 @@ public class KeyManagementServiceClientTest {
     CryptoKeyVersion actualResponse = client.restoreCryptoKeyVersion(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     RestoreCryptoKeyVersionRequest actualRequest =
         ((RestoreCryptoKeyVersionRequest) actualRequests.get(0));
@@ -2182,7 +2182,7 @@ public class KeyManagementServiceClientTest {
     CryptoKeyVersion actualResponse = client.restoreCryptoKeyVersion(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     RestoreCryptoKeyVersionRequest actualRequest =
         ((RestoreCryptoKeyVersionRequest) actualRequests.get(0));
@@ -2230,7 +2230,7 @@ public class KeyManagementServiceClientTest {
     Policy actualResponse = client.getIamPolicy(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockKeyManagementService.getRequests();
+    List<Message> actualRequests = mockKeyManagementService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetIamPolicyRequest actualRequest = ((GetIamPolicyRequest) actualRequests.get(0));
 
@@ -2287,7 +2287,7 @@ public class KeyManagementServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockLocations.getRequests();
+    List<Message> actualRequests = mockLocations.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListLocationsRequest actualRequest = ((ListLocationsRequest) actualRequests.get(0));
 
@@ -2338,7 +2338,7 @@ public class KeyManagementServiceClientTest {
     Location actualResponse = client.getLocation(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLocations.getRequests();
+    List<Message> actualRequests = mockLocations.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetLocationRequest actualRequest = ((GetLocationRequest) actualRequests.get(0));
 
@@ -2380,7 +2380,7 @@ public class KeyManagementServiceClientTest {
     TestIamPermissionsResponse actualResponse = client.testIamPermissions(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     TestIamPermissionsRequest actualRequest = ((TestIamPermissionsRequest) actualRequests.get(0));
 
