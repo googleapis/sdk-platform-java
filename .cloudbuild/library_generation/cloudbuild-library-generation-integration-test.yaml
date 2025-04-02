@@ -19,6 +19,7 @@ steps:
 - name: gcr.io/cloud-builders/docker
   args: [
       "build",
+      "--no-cache",
       "-t", "${_TEST_IMAGE}",
       "-f", ".cloudbuild/library_generation/library_generation_airlock.Dockerfile",
       "."
