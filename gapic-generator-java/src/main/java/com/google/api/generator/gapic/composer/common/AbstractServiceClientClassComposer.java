@@ -966,7 +966,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
           rawCallableReturnType = typeStore.get("BidiStreamingCallable");
           break;
         case NONE:
-          // Fall through.
+        // Fall through.
         default:
           rawCallableReturnType = typeStore.get("UnaryCallable");
       }

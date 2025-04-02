@@ -129,6 +129,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   private final HeaderProvider headerProvider;
   private final boolean useS2A;
   private final String endpoint;
+  private final String mtlsEndpoint;
   // TODO: remove. envProvider currently provides DirectPath environment variable, and is only used
   // during initial rollout for DirectPath. This provider will be removed once the DirectPath
   // environment is not used.
@@ -179,6 +180,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     this.headerProvider = builder.headerProvider;
     this.useS2A = builder.useS2A;
     this.endpoint = builder.endpoint;
+    this.mtlsEndpoint = builder.mtlsEndpoint;
     this.allowedHardBoundTokenTypes = builder.allowedHardBoundTokenTypes;
     this.mtlsProvider = builder.mtlsProvider;
     this.s2aConfigProvider = builder.s2aConfigProvider;
@@ -258,6 +260,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return endpoint == null;
   }
 
+  @InternalApi("This public method is used by Gax to help configure the MTLS endpoint for S2A")
+  @Override
+  public boolean needsMtlsEndpoint() {
+    return mtlsEndpoint == null;
+  }
+
   /**
    * Specify the endpoint the channel should connect to.
    *
@@ -273,6 +281,22 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   /**
+   * Specify the mTLS endpoint the channel should connect to when using S2A.
+   *
+   * <p>The value of {@code mtlsEndpoint} must be of the form {@code host:port}.
+   *
+   * @param mtlsEndpoint The mtTLS endpoint to connect to
+   * @return A new {@link InstantiatingGrpcChannelProvider} with the specified mTLS endpoint
+   *     configured
+   */
+  @InternalApi("This public method is used by Gax to help configure the MTLS endpoint for S2A")
+  @Override
+  public TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint) {
+    validateEndpoint(mtlsEndpoint);
+    return toBuilder().setMtlsEndpoint(mtlsEndpoint).build();
+  }
+
+  /**
    * Specify whether or not to use S2A.
    *
    * @param useS2A
@@ -283,14 +307,18 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return toBuilder().setUseS2A(useS2A).build();
   }
 
-  /** @deprecated Please modify pool settings via {@link #toBuilder()} */
+  /**
+   * @deprecated Please modify pool settings via {@link #toBuilder()}
+   */
   @Deprecated
   @Override
   public boolean acceptsPoolSize() {
     return true;
   }
 
-  /** @deprecated Please modify pool settings via {@link #toBuilder()} */
+  /**
+   * @deprecated Please modify pool settings via {@link #toBuilder()}
+   */
   @Deprecated
   @Override
   public TransportChannelProvider withPoolSize(int size) {
@@ -666,7 +694,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
             channelCredentials =
                 CompositeChannelCredentials.create(channelCredentials, mtlsS2ACallCredentials);
           }
-          builder = Grpc.newChannelBuilder(endpoint, channelCredentials);
+          // Connect to the MTLS endpoint when using S2A because S2A is used to perform an MTLS
+          // handshake.
+          builder = Grpc.newChannelBuilder(mtlsEndpoint, channelCredentials);
         } else {
           // Use default if we cannot initialize channel credentials via DCA or S2A.
           builder = ManagedChannelBuilder.forAddress(serviceAddress, port);
@@ -819,6 +849,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     private Executor executor;
     private HeaderProvider headerProvider;
     private String endpoint;
+    private String mtlsEndpoint;
     private boolean useS2A;
     private EnvironmentProvider envProvider;
     private SecureSessionAgent s2aConfigProvider = SecureSessionAgent.create();
@@ -901,7 +932,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return this;
     }
 
-    /** @deprecated Please use {@link #setExecutor(Executor)}. */
+    /**
+     * @deprecated Please use {@link #setExecutor(Executor)}.
+     */
     @Deprecated
     public Builder setExecutorProvider(ExecutorProvider executorProvider) {
       return setExecutor((Executor) executorProvider.getExecutor());
@@ -923,6 +956,14 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     public Builder setEndpoint(String endpoint) {
       validateEndpoint(endpoint);
       this.endpoint = endpoint;
+      return this;
+    }
+
+    /** Sets the mTLS Endpoint used to reach the service, eg "localhost:8080". */
+    @InternalApi("This public method is used by Gax to help configure the MTLS endpoint for S2A")
+    public Builder setMtlsEndpoint(String mtlsEndpoint) {
+      validateEndpoint(mtlsEndpoint);
+      this.mtlsEndpoint = mtlsEndpoint;
       return this;
     }
 
@@ -1063,26 +1104,34 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return keepAliveWithoutCalls;
     }
 
-    /** @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)} */
+    /**
+     * @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)}
+     */
     @Deprecated
     public int getPoolSize() {
       return channelPoolSettings.getInitialChannelCount();
     }
 
-    /** @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)} */
+    /**
+     * @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)}
+     */
     @Deprecated
     public Builder setPoolSize(int poolSize) {
       channelPoolSettings = ChannelPoolSettings.staticallySized(poolSize);
       return this;
     }
 
-    /** @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)} */
+    /**
+     * @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)}
+     */
     @Deprecated
     public Builder setChannelsPerCpu(double multiplier) {
       return setChannelsPerCpu(multiplier, 100);
     }
 
-    /** @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)} */
+    /**
+     * @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)}
+     */
     @Deprecated
     public Builder setChannelsPerCpu(double multiplier, int maxChannels) {
       Preconditions.checkArgument(multiplier > 0, "multiplier must be positive");

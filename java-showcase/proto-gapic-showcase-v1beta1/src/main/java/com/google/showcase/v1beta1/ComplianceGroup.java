@@ -35,6 +35,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.ComplianceGroup)
     ComplianceGroupOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use ComplianceGroup.newBuilder() to construct.
   private ComplianceGroup(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -71,6 +72,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object name_ = "";
+
   /**
    * <code>string name = 1;</code>
    *
@@ -88,6 +90,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
       return s;
     }
   }
+
   /**
    * <code>string name = 1;</code>
    *
@@ -111,6 +114,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList rpcs_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
+
   /**
    * <code>repeated string rpcs = 2;</code>
    *
@@ -119,6 +123,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
   public com.google.protobuf.ProtocolStringList getRpcsList() {
     return rpcs_;
   }
+
   /**
    * <code>repeated string rpcs = 2;</code>
    *
@@ -127,6 +132,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
   public int getRpcsCount() {
     return rpcs_.size();
   }
+
   /**
    * <code>repeated string rpcs = 2;</code>
    *
@@ -136,6 +142,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
   public java.lang.String getRpcs(int index) {
     return rpcs_.get(index);
   }
+
   /**
    * <code>repeated string rpcs = 2;</code>
    *
@@ -150,27 +157,32 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.showcase.v1beta1.RepeatRequest> requests_;
+
   /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
   @java.lang.Override
   public java.util.List<com.google.showcase.v1beta1.RepeatRequest> getRequestsList() {
     return requests_;
   }
+
   /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
   @java.lang.Override
   public java.util.List<? extends com.google.showcase.v1beta1.RepeatRequestOrBuilder>
       getRequestsOrBuilderList() {
     return requests_;
   }
+
   /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
   @java.lang.Override
   public int getRequestsCount() {
     return requests_.size();
   }
+
   /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
   @java.lang.Override
   public com.google.showcase.v1beta1.RepeatRequest getRequests(int index) {
     return requests_.get(index);
   }
+
   /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
   @java.lang.Override
   public com.google.showcase.v1beta1.RepeatRequestOrBuilder getRequestsOrBuilder(int index) {
@@ -363,6 +375,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -630,6 +643,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
     private int bitField0_;
 
     private java.lang.Object name_ = "";
+
     /**
      * <code>string name = 1;</code>
      *
@@ -646,6 +660,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
         return (java.lang.String) ref;
       }
     }
+
     /**
      * <code>string name = 1;</code>
      *
@@ -662,6 +677,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      * <code>string name = 1;</code>
      *
@@ -677,6 +693,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
       onChanged();
       return this;
     }
+
     /**
      * <code>string name = 1;</code>
      *
@@ -688,6 +705,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
       onChanged();
       return this;
     }
+
     /**
      * <code>string name = 1;</code>
      *
@@ -714,6 +732,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
       }
       bitField0_ |= 0x00000002;
     }
+
     /**
      * <code>repeated string rpcs = 2;</code>
      *
@@ -723,6 +742,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
       rpcs_.makeImmutable();
       return rpcs_;
     }
+
     /**
      * <code>repeated string rpcs = 2;</code>
      *
@@ -731,6 +751,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
     public int getRpcsCount() {
       return rpcs_.size();
     }
+
     /**
      * <code>repeated string rpcs = 2;</code>
      *
@@ -740,6 +761,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
     public java.lang.String getRpcs(int index) {
       return rpcs_.get(index);
     }
+
     /**
      * <code>repeated string rpcs = 2;</code>
      *
@@ -749,6 +771,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
     public com.google.protobuf.ByteString getRpcsBytes(int index) {
       return rpcs_.getByteString(index);
     }
+
     /**
      * <code>repeated string rpcs = 2;</code>
      *
@@ -766,6 +789,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
       onChanged();
       return this;
     }
+
     /**
      * <code>repeated string rpcs = 2;</code>
      *
@@ -782,6 +806,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
       onChanged();
       return this;
     }
+
     /**
      * <code>repeated string rpcs = 2;</code>
      *
@@ -795,6 +820,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
       onChanged();
       return this;
     }
+
     /**
      * <code>repeated string rpcs = 2;</code>
      *
@@ -807,6 +833,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
       onChanged();
       return this;
     }
+
     /**
      * <code>repeated string rpcs = 2;</code>
      *
@@ -849,6 +876,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
         return requestsBuilder_.getMessageList();
       }
     }
+
     /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
     public int getRequestsCount() {
       if (requestsBuilder_ == null) {
@@ -857,6 +885,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
         return requestsBuilder_.getCount();
       }
     }
+
     /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
     public com.google.showcase.v1beta1.RepeatRequest getRequests(int index) {
       if (requestsBuilder_ == null) {
@@ -865,6 +894,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
         return requestsBuilder_.getMessage(index);
       }
     }
+
     /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
     public Builder setRequests(int index, com.google.showcase.v1beta1.RepeatRequest value) {
       if (requestsBuilder_ == null) {
@@ -879,6 +909,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
       }
       return this;
     }
+
     /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
     public Builder setRequests(
         int index, com.google.showcase.v1beta1.RepeatRequest.Builder builderForValue) {
@@ -891,6 +922,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
       }
       return this;
     }
+
     /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
     public Builder addRequests(com.google.showcase.v1beta1.RepeatRequest value) {
       if (requestsBuilder_ == null) {
@@ -905,6 +937,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
       }
       return this;
     }
+
     /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
     public Builder addRequests(int index, com.google.showcase.v1beta1.RepeatRequest value) {
       if (requestsBuilder_ == null) {
@@ -919,6 +952,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
       }
       return this;
     }
+
     /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
     public Builder addRequests(com.google.showcase.v1beta1.RepeatRequest.Builder builderForValue) {
       if (requestsBuilder_ == null) {
@@ -930,6 +964,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
       }
       return this;
     }
+
     /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
     public Builder addRequests(
         int index, com.google.showcase.v1beta1.RepeatRequest.Builder builderForValue) {
@@ -942,6 +977,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
       }
       return this;
     }
+
     /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
     public Builder addAllRequests(
         java.lang.Iterable<? extends com.google.showcase.v1beta1.RepeatRequest> values) {
@@ -954,6 +990,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
       }
       return this;
     }
+
     /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
     public Builder clearRequests() {
       if (requestsBuilder_ == null) {
@@ -965,6 +1002,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
       }
       return this;
     }
+
     /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
     public Builder removeRequests(int index) {
       if (requestsBuilder_ == null) {
@@ -976,10 +1014,12 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
       }
       return this;
     }
+
     /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
     public com.google.showcase.v1beta1.RepeatRequest.Builder getRequestsBuilder(int index) {
       return getRequestsFieldBuilder().getBuilder(index);
     }
+
     /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
     public com.google.showcase.v1beta1.RepeatRequestOrBuilder getRequestsOrBuilder(int index) {
       if (requestsBuilder_ == null) {
@@ -988,6 +1028,7 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
         return requestsBuilder_.getMessageOrBuilder(index);
       }
     }
+
     /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
     public java.util.List<? extends com.google.showcase.v1beta1.RepeatRequestOrBuilder>
         getRequestsOrBuilderList() {
@@ -997,16 +1038,19 @@ public final class ComplianceGroup extends com.google.protobuf.GeneratedMessageV
         return java.util.Collections.unmodifiableList(requests_);
       }
     }
+
     /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
     public com.google.showcase.v1beta1.RepeatRequest.Builder addRequestsBuilder() {
       return getRequestsFieldBuilder()
           .addBuilder(com.google.showcase.v1beta1.RepeatRequest.getDefaultInstance());
     }
+
     /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
     public com.google.showcase.v1beta1.RepeatRequest.Builder addRequestsBuilder(int index) {
       return getRequestsFieldBuilder()
           .addBuilder(index, com.google.showcase.v1beta1.RepeatRequest.getDefaultInstance());
     }
+
     /** <code>repeated .google.showcase.v1beta1.RepeatRequest requests = 3;</code> */
     public java.util.List<com.google.showcase.v1beta1.RepeatRequest.Builder>
         getRequestsBuilderList() {

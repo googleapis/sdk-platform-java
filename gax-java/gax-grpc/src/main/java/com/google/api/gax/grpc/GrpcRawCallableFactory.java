@@ -99,6 +99,7 @@ public class GrpcRawCallableFactory {
     }
     return new GrpcExceptionServerStreamingCallable<>(callable, retryableCodes);
   }
+
   /**
    * Create a client-streaming callable object with grpc-specific functionality. Designed for use by
    * generated code.

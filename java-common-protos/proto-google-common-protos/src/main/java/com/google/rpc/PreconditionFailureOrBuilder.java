@@ -34,6 +34,7 @@ public interface PreconditionFailureOrBuilder
    * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
    */
   java.util.List<com.google.rpc.PreconditionFailure.Violation> getViolationsList();
+
   /**
    *
    *
@@ -44,6 +45,7 @@ public interface PreconditionFailureOrBuilder
    * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
    */
   com.google.rpc.PreconditionFailure.Violation getViolations(int index);
+
   /**
    *
    *
@@ -54,6 +56,7 @@ public interface PreconditionFailureOrBuilder
    * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
    */
   int getViolationsCount();
+
   /**
    *
    *
@@ -65,6 +68,7 @@ public interface PreconditionFailureOrBuilder
    */
   java.util.List<? extends com.google.rpc.PreconditionFailure.ViolationOrBuilder>
       getViolationsOrBuilderList();
+
   /**
    *
    *

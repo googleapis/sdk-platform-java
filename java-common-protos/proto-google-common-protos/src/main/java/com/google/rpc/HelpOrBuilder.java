@@ -34,6 +34,7 @@ public interface HelpOrBuilder
    * <code>repeated .google.rpc.Help.Link links = 1;</code>
    */
   java.util.List<com.google.rpc.Help.Link> getLinksList();
+
   /**
    *
    *
@@ -44,6 +45,7 @@ public interface HelpOrBuilder
    * <code>repeated .google.rpc.Help.Link links = 1;</code>
    */
   com.google.rpc.Help.Link getLinks(int index);
+
   /**
    *
    *
@@ -54,6 +56,7 @@ public interface HelpOrBuilder
    * <code>repeated .google.rpc.Help.Link links = 1;</code>
    */
   int getLinksCount();
+
   /**
    *
    *
@@ -64,6 +67,7 @@ public interface HelpOrBuilder
    * <code>repeated .google.rpc.Help.Link links = 1;</code>
    */
   java.util.List<? extends com.google.rpc.Help.LinkOrBuilder> getLinksOrBuilderList();
+
   /**
    *
    *

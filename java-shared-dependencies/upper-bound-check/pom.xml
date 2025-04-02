@@ -16,7 +16,7 @@
     <groupId>com.google.cloud</groupId>
     <!-- The shared config has RequireUpperBoundDeps enforcer rule -->
     <artifactId>google-cloud-shared-config</artifactId>
-    <version>1.15.0</version>
+    <version>1.15.1</version>
     <relativePath/>
   </parent>
 
@@ -213,6 +213,15 @@
     <dependency>
       <groupId>com.google.http-client</groupId>
       <artifactId>google-http-client-xml</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.httpcomponents.core5</groupId>
+      <artifactId>httpcore5</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
     </dependency>
 
     <dependency>
