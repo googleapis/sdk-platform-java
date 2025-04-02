@@ -717,7 +717,7 @@ public class ConfigClient implements BackgroundResource {
    *     "folders/[FOLDER_ID]/locations/[LOCATION_ID]"
    *     <p>Note: The locations portion of the resource must be specified, but supplying the
    *     character `-` in place of [LOCATION_ID] will return all buckets.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListBucketsPagedResponse listBuckets(BillingAccountLocationName parent) {
     ListBucketsRequest request =
@@ -754,7 +754,7 @@ public class ConfigClient implements BackgroundResource {
    *     "folders/[FOLDER_ID]/locations/[LOCATION_ID]"
    *     <p>Note: The locations portion of the resource must be specified, but supplying the
    *     character `-` in place of [LOCATION_ID] will return all buckets.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListBucketsPagedResponse listBuckets(FolderLocationName parent) {
     ListBucketsRequest request =
@@ -791,7 +791,7 @@ public class ConfigClient implements BackgroundResource {
    *     "folders/[FOLDER_ID]/locations/[LOCATION_ID]"
    *     <p>Note: The locations portion of the resource must be specified, but supplying the
    *     character `-` in place of [LOCATION_ID] will return all buckets.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListBucketsPagedResponse listBuckets(LocationName parent) {
     ListBucketsRequest request =
@@ -828,7 +828,7 @@ public class ConfigClient implements BackgroundResource {
    *     "folders/[FOLDER_ID]/locations/[LOCATION_ID]"
    *     <p>Note: The locations portion of the resource must be specified, but supplying the
    *     character `-` in place of [LOCATION_ID] will return all buckets.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListBucketsPagedResponse listBuckets(OrganizationLocationName parent) {
     ListBucketsRequest request =
@@ -865,7 +865,7 @@ public class ConfigClient implements BackgroundResource {
    *     "folders/[FOLDER_ID]/locations/[LOCATION_ID]"
    *     <p>Note: The locations portion of the resource must be specified, but supplying the
    *     character `-` in place of [LOCATION_ID] will return all buckets.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListBucketsPagedResponse listBuckets(String parent) {
     ListBucketsRequest request = ListBucketsRequest.newBuilder().setParent(parent).build();
@@ -898,7 +898,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListBucketsPagedResponse listBuckets(ListBucketsRequest request) {
     return listBucketsPagedCallable().call(request);
@@ -998,7 +998,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogBucket getBucket(GetBucketRequest request) {
     return getBucketCallable().call(request);
@@ -1058,7 +1058,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogBucket createBucket(CreateBucketRequest request) {
     return createBucketCallable().call(request);
@@ -1129,7 +1129,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogBucket updateBucket(UpdateBucketRequest request) {
     return updateBucketCallable().call(request);
@@ -1202,7 +1202,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteBucket(DeleteBucketRequest request) {
     deleteBucketCallable().call(request);
@@ -1265,7 +1265,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void undeleteBucket(UndeleteBucketRequest request) {
     undeleteBucketCallable().call(request);
@@ -1323,7 +1323,7 @@ public class ConfigClient implements BackgroundResource {
    *
    * @param parent Required. The bucket whose views are to be listed:
    *     <p>"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListViewsPagedResponse listViews(String parent) {
     ListViewsRequest request = ListViewsRequest.newBuilder().setParent(parent).build();
@@ -1356,7 +1356,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListViewsPagedResponse listViews(ListViewsRequest request) {
     return listViewsPagedCallable().call(request);
@@ -1456,7 +1456,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogView getView(GetViewRequest request) {
     return getViewCallable().call(request);
@@ -1516,7 +1516,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogView createView(CreateViewRequest request) {
     return createViewCallable().call(request);
@@ -1578,7 +1578,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogView updateView(UpdateViewRequest request) {
     return updateViewCallable().call(request);
@@ -1643,7 +1643,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteView(DeleteViewRequest request) {
     deleteViewCallable().call(request);
@@ -1704,7 +1704,7 @@ public class ConfigClient implements BackgroundResource {
    * @param parent Required. The parent resource whose sinks are to be listed:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListSinksPagedResponse listSinks(BillingAccountName parent) {
     ListSinksRequest request =
@@ -1735,7 +1735,7 @@ public class ConfigClient implements BackgroundResource {
    * @param parent Required. The parent resource whose sinks are to be listed:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListSinksPagedResponse listSinks(FolderName parent) {
     ListSinksRequest request =
@@ -1766,7 +1766,7 @@ public class ConfigClient implements BackgroundResource {
    * @param parent Required. The parent resource whose sinks are to be listed:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListSinksPagedResponse listSinks(OrganizationName parent) {
     ListSinksRequest request =
@@ -1797,7 +1797,7 @@ public class ConfigClient implements BackgroundResource {
    * @param parent Required. The parent resource whose sinks are to be listed:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListSinksPagedResponse listSinks(ProjectName parent) {
     ListSinksRequest request =
@@ -1828,7 +1828,7 @@ public class ConfigClient implements BackgroundResource {
    * @param parent Required. The parent resource whose sinks are to be listed:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListSinksPagedResponse listSinks(String parent) {
     ListSinksRequest request = ListSinksRequest.newBuilder().setParent(parent).build();
@@ -1861,7 +1861,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListSinksPagedResponse listSinks(ListSinksRequest request) {
     return listSinksPagedCallable().call(request);
@@ -1961,7 +1961,7 @@ public class ConfigClient implements BackgroundResource {
    *     "folders/[FOLDER_ID]/sinks/[SINK_ID]"
    *     <p>For example:
    *     <p>`"projects/my-project/sinks/my-sink"`
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink getSink(LogSinkName sinkName) {
     GetSinkRequest request =
@@ -1996,7 +1996,7 @@ public class ConfigClient implements BackgroundResource {
    *     "folders/[FOLDER_ID]/sinks/[SINK_ID]"
    *     <p>For example:
    *     <p>`"projects/my-project/sinks/my-sink"`
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink getSink(String sinkName) {
     GetSinkRequest request = GetSinkRequest.newBuilder().setSinkName(sinkName).build();
@@ -2025,7 +2025,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink getSink(GetSinkRequest request) {
     return getSinkCallable().call(request);
@@ -2087,7 +2087,7 @@ public class ConfigClient implements BackgroundResource {
    *     <p>`"projects/my-project"` `"organizations/123456789"`
    * @param sink Required. The new sink, whose `name` parameter is a sink identifier that is not
    *     already in use.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink createSink(BillingAccountName parent, LogSink sink) {
     CreateSinkRequest request =
@@ -2127,7 +2127,7 @@ public class ConfigClient implements BackgroundResource {
    *     <p>`"projects/my-project"` `"organizations/123456789"`
    * @param sink Required. The new sink, whose `name` parameter is a sink identifier that is not
    *     already in use.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink createSink(FolderName parent, LogSink sink) {
     CreateSinkRequest request =
@@ -2167,7 +2167,7 @@ public class ConfigClient implements BackgroundResource {
    *     <p>`"projects/my-project"` `"organizations/123456789"`
    * @param sink Required. The new sink, whose `name` parameter is a sink identifier that is not
    *     already in use.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink createSink(OrganizationName parent, LogSink sink) {
     CreateSinkRequest request =
@@ -2207,7 +2207,7 @@ public class ConfigClient implements BackgroundResource {
    *     <p>`"projects/my-project"` `"organizations/123456789"`
    * @param sink Required. The new sink, whose `name` parameter is a sink identifier that is not
    *     already in use.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink createSink(ProjectName parent, LogSink sink) {
     CreateSinkRequest request =
@@ -2247,7 +2247,7 @@ public class ConfigClient implements BackgroundResource {
    *     <p>`"projects/my-project"` `"organizations/123456789"`
    * @param sink Required. The new sink, whose `name` parameter is a sink identifier that is not
    *     already in use.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink createSink(String parent, LogSink sink) {
     CreateSinkRequest request =
@@ -2282,7 +2282,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink createSink(CreateSinkRequest request) {
     return createSinkCallable().call(request);
@@ -2353,7 +2353,7 @@ public class ConfigClient implements BackgroundResource {
    *     <p>`"projects/my-project/sinks/my-sink"`
    * @param sink Required. The updated sink, whose name is the same identifier that appears as part
    *     of `sink_name`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink updateSink(LogSinkName sinkName, LogSink sink) {
     UpdateSinkRequest request =
@@ -2397,7 +2397,7 @@ public class ConfigClient implements BackgroundResource {
    *     <p>`"projects/my-project/sinks/my-sink"`
    * @param sink Required. The updated sink, whose name is the same identifier that appears as part
    *     of `sink_name`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink updateSink(String sinkName, LogSink sink) {
     UpdateSinkRequest request =
@@ -2450,7 +2450,7 @@ public class ConfigClient implements BackgroundResource {
    *     <p>For a detailed `FieldMask` definition, see
    *     https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMask
    *     <p>For example: `updateMask=filter`
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink updateSink(LogSinkName sinkName, LogSink sink, FieldMask updateMask) {
     UpdateSinkRequest request =
@@ -2507,7 +2507,7 @@ public class ConfigClient implements BackgroundResource {
    *     <p>For a detailed `FieldMask` definition, see
    *     https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMask
    *     <p>For example: `updateMask=filter`
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink updateSink(String sinkName, LogSink sink, FieldMask updateMask) {
     UpdateSinkRequest request =
@@ -2548,7 +2548,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink updateSink(UpdateSinkRequest request) {
     return updateSinkCallable().call(request);
@@ -2615,7 +2615,7 @@ public class ConfigClient implements BackgroundResource {
    *     "folders/[FOLDER_ID]/sinks/[SINK_ID]"
    *     <p>For example:
    *     <p>`"projects/my-project/sinks/my-sink"`
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteSink(LogSinkName sinkName) {
     DeleteSinkRequest request =
@@ -2652,7 +2652,7 @@ public class ConfigClient implements BackgroundResource {
    *     "folders/[FOLDER_ID]/sinks/[SINK_ID]"
    *     <p>For example:
    *     <p>`"projects/my-project/sinks/my-sink"`
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteSink(String sinkName) {
     DeleteSinkRequest request = DeleteSinkRequest.newBuilder().setSinkName(sinkName).build();
@@ -2682,7 +2682,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteSink(DeleteSinkRequest request) {
     deleteSinkCallable().call(request);
@@ -2739,7 +2739,7 @@ public class ConfigClient implements BackgroundResource {
    * @param parent Required. The parent resource whose exclusions are to be listed.
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListExclusionsPagedResponse listExclusions(BillingAccountName parent) {
     ListExclusionsRequest request =
@@ -2772,7 +2772,7 @@ public class ConfigClient implements BackgroundResource {
    * @param parent Required. The parent resource whose exclusions are to be listed.
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListExclusionsPagedResponse listExclusions(FolderName parent) {
     ListExclusionsRequest request =
@@ -2805,7 +2805,7 @@ public class ConfigClient implements BackgroundResource {
    * @param parent Required. The parent resource whose exclusions are to be listed.
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListExclusionsPagedResponse listExclusions(OrganizationName parent) {
     ListExclusionsRequest request =
@@ -2838,7 +2838,7 @@ public class ConfigClient implements BackgroundResource {
    * @param parent Required. The parent resource whose exclusions are to be listed.
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListExclusionsPagedResponse listExclusions(ProjectName parent) {
     ListExclusionsRequest request =
@@ -2871,7 +2871,7 @@ public class ConfigClient implements BackgroundResource {
    * @param parent Required. The parent resource whose exclusions are to be listed.
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListExclusionsPagedResponse listExclusions(String parent) {
     ListExclusionsRequest request = ListExclusionsRequest.newBuilder().setParent(parent).build();
@@ -2904,7 +2904,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListExclusionsPagedResponse listExclusions(ListExclusionsRequest request) {
     return listExclusionsPagedCallable().call(request);
@@ -3007,7 +3007,7 @@ public class ConfigClient implements BackgroundResource {
    *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]"
    *     <p>For example:
    *     <p>`"projects/my-project/exclusions/my-exclusion"`
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogExclusion getExclusion(LogExclusionName name) {
     GetExclusionRequest request =
@@ -3040,7 +3040,7 @@ public class ConfigClient implements BackgroundResource {
    *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]"
    *     <p>For example:
    *     <p>`"projects/my-project/exclusions/my-exclusion"`
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogExclusion getExclusion(String name) {
     GetExclusionRequest request = GetExclusionRequest.newBuilder().setName(name).build();
@@ -3070,7 +3070,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogExclusion getExclusion(GetExclusionRequest request) {
     return getExclusionCallable().call(request);
@@ -3131,7 +3131,7 @@ public class ConfigClient implements BackgroundResource {
    *     <p>`"projects/my-logging-project"` `"organizations/123456789"`
    * @param exclusion Required. The new exclusion, whose `name` parameter is an exclusion name that
    *     is not already used in the parent resource.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogExclusion createExclusion(BillingAccountName parent, LogExclusion exclusion) {
     CreateExclusionRequest request =
@@ -3169,7 +3169,7 @@ public class ConfigClient implements BackgroundResource {
    *     <p>`"projects/my-logging-project"` `"organizations/123456789"`
    * @param exclusion Required. The new exclusion, whose `name` parameter is an exclusion name that
    *     is not already used in the parent resource.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogExclusion createExclusion(FolderName parent, LogExclusion exclusion) {
     CreateExclusionRequest request =
@@ -3207,7 +3207,7 @@ public class ConfigClient implements BackgroundResource {
    *     <p>`"projects/my-logging-project"` `"organizations/123456789"`
    * @param exclusion Required. The new exclusion, whose `name` parameter is an exclusion name that
    *     is not already used in the parent resource.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogExclusion createExclusion(OrganizationName parent, LogExclusion exclusion) {
     CreateExclusionRequest request =
@@ -3245,7 +3245,7 @@ public class ConfigClient implements BackgroundResource {
    *     <p>`"projects/my-logging-project"` `"organizations/123456789"`
    * @param exclusion Required. The new exclusion, whose `name` parameter is an exclusion name that
    *     is not already used in the parent resource.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogExclusion createExclusion(ProjectName parent, LogExclusion exclusion) {
     CreateExclusionRequest request =
@@ -3283,7 +3283,7 @@ public class ConfigClient implements BackgroundResource {
    *     <p>`"projects/my-logging-project"` `"organizations/123456789"`
    * @param exclusion Required. The new exclusion, whose `name` parameter is an exclusion name that
    *     is not already used in the parent resource.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogExclusion createExclusion(String parent, LogExclusion exclusion) {
     CreateExclusionRequest request =
@@ -3315,7 +3315,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogExclusion createExclusion(CreateExclusionRequest request) {
     return createExclusionCallable().call(request);
@@ -3385,7 +3385,7 @@ public class ConfigClient implements BackgroundResource {
    *     mentioned in `update_mask` are not changed and are ignored in the request.
    *     <p>For example, to change the filter and description of an exclusion, specify an
    *     `update_mask` of `"filter,description"`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogExclusion updateExclusion(
       LogExclusionName name, LogExclusion exclusion, FieldMask updateMask) {
@@ -3433,7 +3433,7 @@ public class ConfigClient implements BackgroundResource {
    *     mentioned in `update_mask` are not changed and are ignored in the request.
    *     <p>For example, to change the filter and description of an exclusion, specify an
    *     `update_mask` of `"filter,description"`.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogExclusion updateExclusion(
       String name, LogExclusion exclusion, FieldMask updateMask) {
@@ -3471,7 +3471,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogExclusion updateExclusion(UpdateExclusionRequest request) {
     return updateExclusionCallable().call(request);
@@ -3532,7 +3532,7 @@ public class ConfigClient implements BackgroundResource {
    *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]"
    *     <p>For example:
    *     <p>`"projects/my-project/exclusions/my-exclusion"`
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteExclusion(LogExclusionName name) {
     DeleteExclusionRequest request =
@@ -3565,7 +3565,7 @@ public class ConfigClient implements BackgroundResource {
    *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]"
    *     <p>For example:
    *     <p>`"projects/my-project/exclusions/my-exclusion"`
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteExclusion(String name) {
     DeleteExclusionRequest request = DeleteExclusionRequest.newBuilder().setName(name).build();
@@ -3595,7 +3595,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteExclusion(DeleteExclusionRequest request) {
     deleteExclusionCallable().call(request);
@@ -3658,7 +3658,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final CmekSettings getCmekSettings(GetCmekSettingsRequest request) {
     return getCmekSettingsCallable().call(request);
@@ -3734,7 +3734,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final CmekSettings updateCmekSettings(UpdateCmekSettingsRequest request) {
     return updateCmekSettingsCallable().call(request);
@@ -3817,7 +3817,7 @@ public class ConfigClient implements BackgroundResource {
    *     organizations and billing accounts. Currently it can only be configured for organizations.
    *     Once configured for an organization, it applies to all projects and folders in the Google
    *     Cloud organization.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Settings getSettings(SettingsName name) {
     GetSettingsRequest request =
@@ -3860,7 +3860,7 @@ public class ConfigClient implements BackgroundResource {
    *     organizations and billing accounts. Currently it can only be configured for organizations.
    *     Once configured for an organization, it applies to all projects and folders in the Google
    *     Cloud organization.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Settings getSettings(String name) {
     GetSettingsRequest request = GetSettingsRequest.newBuilder().setName(name).build();
@@ -3897,7 +3897,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Settings getSettings(GetSettingsRequest request) {
     return getSettingsCallable().call(request);
@@ -3978,7 +3978,7 @@ public class ConfigClient implements BackgroundResource {
    *     fields cannot be updated.
    *     <p>See [FieldMask][google.protobuf.FieldMask] for more information.
    *     <p>For example: `"updateMask=kmsKeyName"`
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Settings updateSettings(Settings settings, FieldMask updateMask) {
     UpdateSettingsRequest request =
@@ -4022,7 +4022,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Settings updateSettings(UpdateSettingsRequest request) {
     return updateSettingsCallable().call(request);
@@ -4093,7 +4093,7 @@ public class ConfigClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final OperationFuture<CopyLogEntriesResponse, CopyLogEntriesMetadata> copyLogEntriesAsync(
       CopyLogEntriesRequest request) {

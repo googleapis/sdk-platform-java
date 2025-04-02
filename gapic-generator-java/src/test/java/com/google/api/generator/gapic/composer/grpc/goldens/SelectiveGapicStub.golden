@@ -1,0 +1,252 @@
+package com.google.selective.generate.v1beta1.stub;
+
+import com.google.api.core.BetaApi;
+import com.google.api.gax.core.BackgroundResource;
+import com.google.api.gax.core.BackgroundResourceAggregation;
+import com.google.api.gax.grpc.GrpcCallSettings;
+import com.google.api.gax.grpc.GrpcStubCallableFactory;
+import com.google.api.gax.rpc.BidiStreamingCallable;
+import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.UnaryCallable;
+import com.google.longrunning.stub.GrpcOperationsStub;
+import com.google.selective.generate.v1beta1.EchoRequest;
+import com.google.selective.generate.v1beta1.EchoResponse;
+import io.grpc.MethodDescriptor;
+import io.grpc.protobuf.ProtoUtils;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+import javax.annotation.Generated;
+
+// AUTO-GENERATED DOCUMENTATION AND CLASS.
+/**
+ * gRPC stub implementation for the EchoServiceShouldGeneratePartialPublic service API.
+ *
+ * <p>This class is for advanced usage and reflects the underlying API directly.
+ */
+@BetaApi
+@Generated("by gapic-generator-java")
+public class GrpcEchoServiceShouldGeneratePartialPublicStub
+    extends EchoServiceShouldGeneratePartialPublicStub {
+  private static final MethodDescriptor<EchoRequest, EchoResponse>
+      echoShouldGenerateAsPublicMethodDescriptor =
+          MethodDescriptor.<EchoRequest, EchoResponse>newBuilder()
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(
+                  "google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialPublic/EchoShouldGenerateAsPublic")
+              .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
+              .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+              .build();
+
+  private static final MethodDescriptor<EchoRequest, EchoResponse>
+      chatShouldGenerateAsPublicMethodDescriptor =
+          MethodDescriptor.<EchoRequest, EchoResponse>newBuilder()
+              .setType(MethodDescriptor.MethodType.BIDI_STREAMING)
+              .setFullMethodName(
+                  "google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialPublic/ChatShouldGenerateAsPublic")
+              .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
+              .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+              .build();
+
+  private static final MethodDescriptor<EchoRequest, EchoResponse>
+      chatAgainShouldGenerateAsPublicMethodDescriptor =
+          MethodDescriptor.<EchoRequest, EchoResponse>newBuilder()
+              .setType(MethodDescriptor.MethodType.BIDI_STREAMING)
+              .setFullMethodName(
+                  "google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialPublic/ChatAgainShouldGenerateAsPublic")
+              .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
+              .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+              .build();
+
+  private static final MethodDescriptor<EchoRequest, EchoResponse>
+      chatShouldGenerateAsInternalMethodDescriptor =
+          MethodDescriptor.<EchoRequest, EchoResponse>newBuilder()
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(
+                  "google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialPublic/ChatShouldGenerateAsInternal")
+              .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
+              .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+              .build();
+
+  private static final MethodDescriptor<EchoRequest, EchoResponse>
+      echoShouldGenerateAsInternalMethodDescriptor =
+          MethodDescriptor.<EchoRequest, EchoResponse>newBuilder()
+              .setType(MethodDescriptor.MethodType.BIDI_STREAMING)
+              .setFullMethodName(
+                  "google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialPublic/EchoShouldGenerateAsInternal")
+              .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
+              .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+              .build();
+
+  private final UnaryCallable<EchoRequest, EchoResponse> echoShouldGenerateAsPublicCallable;
+  private final BidiStreamingCallable<EchoRequest, EchoResponse> chatShouldGenerateAsPublicCallable;
+  private final BidiStreamingCallable<EchoRequest, EchoResponse>
+      chatAgainShouldGenerateAsPublicCallable;
+  private final UnaryCallable<EchoRequest, EchoResponse> chatShouldGenerateAsInternalCallable;
+  private final BidiStreamingCallable<EchoRequest, EchoResponse>
+      echoShouldGenerateAsInternalCallable;
+
+  private final BackgroundResource backgroundResources;
+  private final GrpcOperationsStub operationsStub;
+  private final GrpcStubCallableFactory callableFactory;
+
+  public static final GrpcEchoServiceShouldGeneratePartialPublicStub create(
+      EchoServiceShouldGeneratePartialPublicStubSettings settings) throws IOException {
+    return new GrpcEchoServiceShouldGeneratePartialPublicStub(
+        settings, ClientContext.create(settings));
+  }
+
+  public static final GrpcEchoServiceShouldGeneratePartialPublicStub create(
+      ClientContext clientContext) throws IOException {
+    return new GrpcEchoServiceShouldGeneratePartialPublicStub(
+        EchoServiceShouldGeneratePartialPublicStubSettings.newBuilder().build(), clientContext);
+  }
+
+  public static final GrpcEchoServiceShouldGeneratePartialPublicStub create(
+      ClientContext clientContext, GrpcStubCallableFactory callableFactory) throws IOException {
+    return new GrpcEchoServiceShouldGeneratePartialPublicStub(
+        EchoServiceShouldGeneratePartialPublicStubSettings.newBuilder().build(),
+        clientContext,
+        callableFactory);
+  }
+
+  /**
+   * Constructs an instance of GrpcEchoServiceShouldGeneratePartialPublicStub, using the given
+   * settings. This is protected so that it is easy to make a subclass, but otherwise, the static
+   * factory methods should be preferred.
+   */
+  protected GrpcEchoServiceShouldGeneratePartialPublicStub(
+      EchoServiceShouldGeneratePartialPublicStubSettings settings, ClientContext clientContext)
+      throws IOException {
+    this(settings, clientContext, new GrpcEchoServiceShouldGeneratePartialPublicCallableFactory());
+  }
+
+  /**
+   * Constructs an instance of GrpcEchoServiceShouldGeneratePartialPublicStub, using the given
+   * settings. This is protected so that it is easy to make a subclass, but otherwise, the static
+   * factory methods should be preferred.
+   */
+  protected GrpcEchoServiceShouldGeneratePartialPublicStub(
+      EchoServiceShouldGeneratePartialPublicStubSettings settings,
+      ClientContext clientContext,
+      GrpcStubCallableFactory callableFactory)
+      throws IOException {
+    this.callableFactory = callableFactory;
+    this.operationsStub = GrpcOperationsStub.create(clientContext, callableFactory);
+
+    GrpcCallSettings<EchoRequest, EchoResponse> echoShouldGenerateAsPublicTransportSettings =
+        GrpcCallSettings.<EchoRequest, EchoResponse>newBuilder()
+            .setMethodDescriptor(echoShouldGenerateAsPublicMethodDescriptor)
+            .build();
+    GrpcCallSettings<EchoRequest, EchoResponse> chatShouldGenerateAsPublicTransportSettings =
+        GrpcCallSettings.<EchoRequest, EchoResponse>newBuilder()
+            .setMethodDescriptor(chatShouldGenerateAsPublicMethodDescriptor)
+            .build();
+    GrpcCallSettings<EchoRequest, EchoResponse> chatAgainShouldGenerateAsPublicTransportSettings =
+        GrpcCallSettings.<EchoRequest, EchoResponse>newBuilder()
+            .setMethodDescriptor(chatAgainShouldGenerateAsPublicMethodDescriptor)
+            .build();
+    GrpcCallSettings<EchoRequest, EchoResponse> chatShouldGenerateAsInternalTransportSettings =
+        GrpcCallSettings.<EchoRequest, EchoResponse>newBuilder()
+            .setMethodDescriptor(chatShouldGenerateAsInternalMethodDescriptor)
+            .build();
+    GrpcCallSettings<EchoRequest, EchoResponse> echoShouldGenerateAsInternalTransportSettings =
+        GrpcCallSettings.<EchoRequest, EchoResponse>newBuilder()
+            .setMethodDescriptor(echoShouldGenerateAsInternalMethodDescriptor)
+            .build();
+
+    this.echoShouldGenerateAsPublicCallable =
+        callableFactory.createUnaryCallable(
+            echoShouldGenerateAsPublicTransportSettings,
+            settings.echoShouldGenerateAsPublicSettings(),
+            clientContext);
+    this.chatShouldGenerateAsPublicCallable =
+        callableFactory.createBidiStreamingCallable(
+            chatShouldGenerateAsPublicTransportSettings,
+            settings.chatShouldGenerateAsPublicSettings(),
+            clientContext);
+    this.chatAgainShouldGenerateAsPublicCallable =
+        callableFactory.createBidiStreamingCallable(
+            chatAgainShouldGenerateAsPublicTransportSettings,
+            settings.chatAgainShouldGenerateAsPublicSettings(),
+            clientContext);
+    this.chatShouldGenerateAsInternalCallable =
+        callableFactory.createUnaryCallable(
+            chatShouldGenerateAsInternalTransportSettings,
+            settings.chatShouldGenerateAsInternalSettings(),
+            clientContext);
+    this.echoShouldGenerateAsInternalCallable =
+        callableFactory.createBidiStreamingCallable(
+            echoShouldGenerateAsInternalTransportSettings,
+            settings.echoShouldGenerateAsInternalSettings(),
+            clientContext);
+
+    this.backgroundResources =
+        new BackgroundResourceAggregation(clientContext.getBackgroundResources());
+  }
+
+  public GrpcOperationsStub getOperationsStub() {
+    return operationsStub;
+  }
+
+  @Override
+  public UnaryCallable<EchoRequest, EchoResponse> echoShouldGenerateAsPublicCallable() {
+    return echoShouldGenerateAsPublicCallable;
+  }
+
+  @Override
+  public BidiStreamingCallable<EchoRequest, EchoResponse> chatShouldGenerateAsPublicCallable() {
+    return chatShouldGenerateAsPublicCallable;
+  }
+
+  @Override
+  public BidiStreamingCallable<EchoRequest, EchoResponse>
+      chatAgainShouldGenerateAsPublicCallable() {
+    return chatAgainShouldGenerateAsPublicCallable;
+  }
+
+  @Override
+  public UnaryCallable<EchoRequest, EchoResponse> chatShouldGenerateAsInternalCallable() {
+    return chatShouldGenerateAsInternalCallable;
+  }
+
+  @Override
+  public BidiStreamingCallable<EchoRequest, EchoResponse> echoShouldGenerateAsInternalCallable() {
+    return echoShouldGenerateAsInternalCallable;
+  }
+
+  @Override
+  public final void close() {
+    try {
+      backgroundResources.close();
+    } catch (RuntimeException e) {
+      throw e;
+    } catch (Exception e) {
+      throw new IllegalStateException("Failed to close resource", e);
+    }
+  }
+
+  @Override
+  public void shutdown() {
+    backgroundResources.shutdown();
+  }
+
+  @Override
+  public boolean isShutdown() {
+    return backgroundResources.isShutdown();
+  }
+
+  @Override
+  public boolean isTerminated() {
+    return backgroundResources.isTerminated();
+  }
+
+  @Override
+  public void shutdownNow() {
+    backgroundResources.shutdownNow();
+  }
+
+  @Override
+  public boolean awaitTermination(long duration, TimeUnit unit) throws InterruptedException {
+    return backgroundResources.awaitTermination(duration, unit);
+  }
+}

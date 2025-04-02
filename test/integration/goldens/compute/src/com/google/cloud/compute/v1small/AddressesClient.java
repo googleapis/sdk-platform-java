@@ -256,7 +256,7 @@ public class AddressesClient implements BackgroundResource {
    * }</pre>
    *
    * @param project Project ID for this request.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final AggregatedListPagedResponse aggregatedList(String project) {
     AggregatedListAddressesRequest request =
@@ -294,7 +294,7 @@ public class AddressesClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final AggregatedListPagedResponse aggregatedList(AggregatedListAddressesRequest request) {
     return aggregatedListPagedCallable().call(request);
@@ -401,7 +401,7 @@ public class AddressesClient implements BackgroundResource {
    * @param project Project ID for this request.
    * @param region Name of the region for this request.
    * @param address Name of the address resource to delete.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final OperationFuture<Operation, Operation> deleteAsync(
       String project, String region, String address) {
@@ -439,7 +439,7 @@ public class AddressesClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final OperationFuture<Operation, Operation> deleteAsync(DeleteAddressRequest request) {
     return deleteOperationCallable().futureCall(request);
@@ -530,7 +530,7 @@ public class AddressesClient implements BackgroundResource {
    * @param project Project ID for this request.
    * @param region Name of the region for this request.
    * @param addressResource The body resource for this request
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final OperationFuture<Operation, Operation> insertAsync(
       String project, String region, Address addressResource) {
@@ -568,7 +568,7 @@ public class AddressesClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final OperationFuture<Operation, Operation> insertAsync(InsertAddressRequest request) {
     return insertOperationCallable().futureCall(request);
@@ -667,7 +667,7 @@ public class AddressesClient implements BackgroundResource {
    *     in reverse chronological order (newest result first). Use this to sort resources like
    *     operations so that the newest operation is returned first.
    *     <p>Currently, only sorting by name or creationTimestamp desc is supported.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListPagedResponse list(String project, String region, String orderBy) {
     ListAddressesRequest request =
@@ -708,7 +708,7 @@ public class AddressesClient implements BackgroundResource {
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
-   * @throws com.google.api.gax.rpc.ApiException if the remote call fails.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListPagedResponse list(ListAddressesRequest request) {
     return listPagedCallable().call(request);
