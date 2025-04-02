@@ -49,7 +49,8 @@ public class GaxProperties {
   private static final String GAX_VERSION = getLibraryVersion(GaxProperties.class, "version.gax");
   private static final String JAVA_VERSION = getRuntimeVersion();
   private static final String PROTOBUF_VERSION =
-      getProtobufVersion(Any.class, "com.google.protobuf.RuntimeVersion");;
+      getProtobufVersion(Any.class, "com.google.protobuf.RuntimeVersion");
+  ;
 
   private GaxProperties() {}
 

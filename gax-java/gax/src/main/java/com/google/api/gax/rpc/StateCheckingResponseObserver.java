@@ -84,15 +84,23 @@ public abstract class StateCheckingResponseObserver<V> implements ResponseObserv
     onErrorImpl(t);
   }
 
-  /** @see #onStart(StreamController) */
+  /**
+   * @see #onStart(StreamController)
+   */
   protected abstract void onStartImpl(StreamController controller);
 
-  /** @see #onResponse(Object) */
+  /**
+   * @see #onResponse(Object)
+   */
   protected abstract void onResponseImpl(V response);
 
-  /** @see #onErrorImpl(Throwable) */
+  /**
+   * @see #onErrorImpl(Throwable)
+   */
   protected abstract void onErrorImpl(Throwable t);
 
-  /** @see #onComplete() */
+  /**
+   * @see #onComplete()
+   */
   protected abstract void onCompleteImpl();
 }

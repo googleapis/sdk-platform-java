@@ -136,8 +136,7 @@ class TimeoutTest {
             .build();
     java.time.Duration newTimeout = java.time.Duration.ofSeconds(5);
     RetrySettings contextRetrySettings =
-        retrySettings
-            .toBuilder()
+        retrySettings.toBuilder()
             .setInitialRpcTimeoutDuration(newTimeout)
             .setMaxRpcTimeoutDuration(newTimeout)
             .setMaxAttempts(3)
@@ -251,8 +250,7 @@ class TimeoutTest {
             .build();
     java.time.Duration newTimeout = java.time.Duration.ofSeconds(5);
     RetrySettings contextRetrySettings =
-        retrySettings
-            .toBuilder()
+        retrySettings.toBuilder()
             .setInitialRpcTimeoutDuration(newTimeout)
             .setMaxRpcTimeoutDuration(newTimeout)
             .setMaxAttempts(3)

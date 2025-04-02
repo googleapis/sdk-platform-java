@@ -78,4 +78,5 @@ public class TestApiTracer implements ApiTracer {
     attemptsFailed.incrementAndGet();
     retriesExhausted.set(true);
   }
-};
+}
+;

@@ -36,6 +36,7 @@ public interface PolicyViolationInfoOrBuilder
    * @return Whether the orgPolicyViolationInfo field is set.
    */
   boolean hasOrgPolicyViolationInfo();
+
   /**
    *
    *
@@ -48,6 +49,7 @@ public interface PolicyViolationInfoOrBuilder
    * @return The orgPolicyViolationInfo.
    */
   com.google.cloud.audit.OrgPolicyViolationInfo getOrgPolicyViolationInfo();
+
   /**
    *
    *

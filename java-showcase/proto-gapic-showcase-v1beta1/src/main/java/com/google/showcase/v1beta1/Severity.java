@@ -42,10 +42,13 @@ public enum Severity implements com.google.protobuf.ProtocolMessageEnum {
 
   /** <code>UNNECESSARY = 0;</code> */
   public static final int UNNECESSARY_VALUE = 0;
+
   /** <code>NECESSARY = 1;</code> */
   public static final int NECESSARY_VALUE = 1;
+
   /** <code>URGENT = 2;</code> */
   public static final int URGENT_VALUE = 2;
+
   /** <code>CRITICAL = 3;</code> */
   public static final int CRITICAL_VALUE = 3;
 

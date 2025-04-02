@@ -25,6 +25,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
     // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.VerifyTestRequest)
     VerifyTestRequestOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use VerifyTestRequest.newBuilder() to construct.
   private VerifyTestRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -61,6 +62,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object name_ = "";
+
   /**
    *
    *
@@ -84,6 +86,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
       return s;
     }
   }
+
   /**
    *
    *
@@ -110,6 +113,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
 
   public static final int ANSWER_FIELD_NUMBER = 2;
   private com.google.protobuf.ByteString answer_ = com.google.protobuf.ByteString.EMPTY;
+
   /**
    *
    *
@@ -131,6 +135,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
   @SuppressWarnings("serial")
   private com.google.protobuf.Internal.ProtobufList<com.google.protobuf.ByteString> answers_ =
       emptyList(com.google.protobuf.ByteString.class);
+
   /**
    *
    *
@@ -146,6 +151,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
   public java.util.List<com.google.protobuf.ByteString> getAnswersList() {
     return answers_;
   }
+
   /**
    *
    *
@@ -160,6 +166,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
   public int getAnswersCount() {
     return answers_.size();
   }
+
   /**
    *
    *
@@ -360,6 +367,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /** Protobuf type {@code google.showcase.v1beta1.VerifyTestRequest} */
   public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
       implements
@@ -571,6 +579,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
     private int bitField0_;
 
     private java.lang.Object name_ = "";
+
     /**
      *
      *
@@ -593,6 +602,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -615,6 +625,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -636,6 +647,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -653,6 +665,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -677,6 +690,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
     }
 
     private com.google.protobuf.ByteString answer_ = com.google.protobuf.ByteString.EMPTY;
+
     /**
      *
      *
@@ -692,6 +706,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
     public com.google.protobuf.ByteString getAnswer() {
       return answer_;
     }
+
     /**
      *
      *
@@ -713,6 +728,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -740,6 +756,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
       }
       bitField0_ |= 0x00000004;
     }
+
     /**
      *
      *
@@ -755,6 +772,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
       answers_.makeImmutable();
       return answers_;
     }
+
     /**
      *
      *
@@ -769,6 +787,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
     public int getAnswersCount() {
       return answers_.size();
     }
+
     /**
      *
      *
@@ -784,6 +803,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
     public com.google.protobuf.ByteString getAnswers(int index) {
       return answers_.get(index);
     }
+
     /**
      *
      *
@@ -807,6 +827,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -829,6 +850,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -849,6 +871,7 @@ public final class VerifyTestRequest extends com.google.protobuf.GeneratedMessag
       onChanged();
       return this;
     }
+
     /**
      *
      *
