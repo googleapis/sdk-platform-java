@@ -58,10 +58,9 @@ RUN sh compile-x86_64-alpine-linux.sh
 # 3.12.7-alpine3.20
 FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python@sha256:b83d5ec7274bee17d2f4bd0bfbb082f156241e4513f0a37c70500e1763b1d90d as final
 
-ARG OWLBOT_CLI_COMMITTISH=8b7d94b4a8ad0345aeefd6a7ec9c5afcbeb8e2d7
+ARG OWLBOT_CLI_COMMITTISH=3a68a9c0de318784b3aefadcc502a6521b3f1bc5
 ARG PROTOC_VERSION=25.5
-ARG GRPC_VERSION=1.69.0
-ARG JAVA_FORMAT_VERSION=1.7
+ARG GRPC_VERSION=1.70.0
 ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
 
@@ -84,6 +83,8 @@ COPY --from=glibc-compat /lib/libc.* /lib/
 COPY --from=glibc-compat /usr/lib/libgcc* /usr/lib/
 COPY --from=glibc-compat /usr/lib/libstdc* /usr/lib/
 COPY --from=glibc-compat /usr/lib/libobstack* /usr/lib/
+COPY --from=glibc-compat /lib/libm.so.6 /usr/lib/
+COPY --from=glibc-compat /usr/lib/libucontext.so.1 /usr/lib/
 
 
 # copy source code
@@ -104,14 +105,6 @@ RUN source /src/library_generation/utils/utilities.sh \
 	&& download_grpc_plugin "${GRPC_VERSION}" "${OS_ARCHITECTURE}"
 # similar to protoc, we indicate grpc is available in the container via env vars
 ENV DOCKER_GRPC_LOCATION="/grpc/protoc-gen-grpc-java.exe"
-
-# Here we transfer gapic-generator-java from the previous stage.
-# Note that the destination is a well-known location that will be assumed at runtime
-# We hard-code the location string to avoid making it configurable (via ARG) as
-# well as to avoid it making it overridable at runtime (via ENV).
-COPY --from=ggj-build "/sdk-platform-java/gapic-generator-java.jar" "${HOME}/.library_generation/gapic-generator-java.jar"
-RUN chmod 755 "${HOME}/.library_generation/gapic-generator-java.jar"
-ENV GAPIC_GENERATOR_LOCATION="${HOME}/.library_generation/gapic-generator-java.jar"
 
 RUN python -m pip install --upgrade pip
 
@@ -136,6 +129,14 @@ RUN apk del -r npm && apk cache clean
 COPY --from=ggj-build "/google-java-format.jar" "${HOME}"/.library_generation/google-java-format.jar
 RUN chmod 755 "${HOME}"/.library_generation/google-java-format.jar
 ENV JAVA_FORMATTER_LOCATION="${HOME}/.library_generation/google-java-format.jar"
+
+# Here we transfer gapic-generator-java from the previous stage.
+# Note that the destination is a well-known location that will be assumed at runtime
+# We hard-code the location string to avoid making it configurable (via ARG) as
+# well as to avoid it making it overridable at runtime (via ENV).
+COPY --from=ggj-build "/sdk-platform-java/gapic-generator-java.jar" "${HOME}/.library_generation/gapic-generator-java.jar"
+RUN chmod 755 "${HOME}/.library_generation/gapic-generator-java.jar"
+ENV GAPIC_GENERATOR_LOCATION="${HOME}/.library_generation/gapic-generator-java.jar"
 
 # allow users to access the script folders
 RUN chmod -R o+rx /src
