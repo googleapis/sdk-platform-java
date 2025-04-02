@@ -377,7 +377,8 @@ public class ServiceClientTestClassComposer extends AbstractServiceClientTestCla
                         ConcreteReference.builder()
                             .setClazz(List.class)
                             .setGenerics(
-                                Arrays.asList(ConcreteReference.withClazz(com.google.protobuf.Message.class)))
+                                Arrays.asList(
+                                    ConcreteReference.withClazz(com.google.protobuf.Message.class)))
                             .build()))
                 .setName("actualRequests")
                 .build());
