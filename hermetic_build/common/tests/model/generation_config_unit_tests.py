@@ -14,7 +14,7 @@
 import os
 import unittest
 from pathlib import Path
-from common.model.generation_config import from_yaml, GenerationConfig
+from common.model.generation_config import GenerationConfig
 from common.model.library_config import LibraryConfig
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -72,7 +72,7 @@ class GenerationConfigTest(unittest.TestCase):
         os.environ.pop("GENERATOR_VERSION")
 
     def test_from_yaml_succeeds(self):
-        config = from_yaml(f"{test_config_dir}/generation_config.yaml")
+        config = GenerationConfig.from_yaml(f"{test_config_dir}/generation_config.yaml")
         self.assertEqual("2.34.0", config.gapic_generator_version)
         self.assertEqual(
             "1a45bf7393b52407188c82e63101db7dc9c72026", config.googleapis_commitish
@@ -105,7 +105,7 @@ class GenerationConfigTest(unittest.TestCase):
         self.assertEqual("google/cloud/asset/v1p7beta1", gapics[4].proto_path)
 
     def test_get_proto_path_to_library_name_success(self):
-        paths = from_yaml(
+        paths = GenerationConfig.from_yaml(
             f"{test_config_dir}/generation_config.yaml"
         ).get_proto_path_to_library_name()
         self.assertEqual(
@@ -181,7 +181,7 @@ class GenerationConfigTest(unittest.TestCase):
         self.assertRaisesRegex(
             ValueError,
             "Repo level parameter, googleapis_commitish",
-            from_yaml,
+            GenerationConfig.from_yaml,
             f"{test_config_dir}/config_without_googleapis.yaml",
         )
 
@@ -189,7 +189,7 @@ class GenerationConfigTest(unittest.TestCase):
         self.assertRaisesRegex(
             ValueError,
             "Repo level parameter, libraries",
-            from_yaml,
+            GenerationConfig.from_yaml,
             f"{test_config_dir}/config_without_libraries.yaml",
         )
 
@@ -197,7 +197,7 @@ class GenerationConfigTest(unittest.TestCase):
         self.assertRaisesRegex(
             ValueError,
             "Library level parameter, api_shortname",
-            from_yaml,
+            GenerationConfig.from_yaml,
             f"{test_config_dir}/config_without_api_shortname.yaml",
         )
 
@@ -205,7 +205,7 @@ class GenerationConfigTest(unittest.TestCase):
         self.assertRaisesRegex(
             ValueError,
             r"Library level parameter, api_description.*'api_shortname': 'apigeeconnect'.*",
-            from_yaml,
+            GenerationConfig.from_yaml,
             f"{test_config_dir}/config_without_api_description.yaml",
         )
 
@@ -213,7 +213,7 @@ class GenerationConfigTest(unittest.TestCase):
         self.assertRaisesRegex(
             ValueError,
             r"Library level parameter, name_pretty.*'api_shortname': 'apigeeconnect'.*",
-            from_yaml,
+            GenerationConfig.from_yaml,
             f"{test_config_dir}/config_without_name_pretty.yaml",
         )
 
@@ -221,7 +221,7 @@ class GenerationConfigTest(unittest.TestCase):
         self.assertRaisesRegex(
             ValueError,
             r"Library level parameter, product_documentation.*'api_shortname': 'apigeeconnect'.*",
-            from_yaml,
+            GenerationConfig.from_yaml,
             f"{test_config_dir}/config_without_product_docs.yaml",
         )
 
@@ -229,7 +229,7 @@ class GenerationConfigTest(unittest.TestCase):
         self.assertRaisesRegex(
             ValueError,
             "Library level parameter, GAPICs.*'api_shortname': 'apigeeconnect'.*",
-            from_yaml,
+            GenerationConfig.from_yaml,
             f"{test_config_dir}/config_without_gapics_key.yaml",
         )
 
@@ -237,7 +237,7 @@ class GenerationConfigTest(unittest.TestCase):
         self.assertRaisesRegex(
             ValueError,
             "GAPIC level parameter, proto_path",
-            from_yaml,
+            GenerationConfig.from_yaml,
             f"{test_config_dir}/config_without_proto_path.yaml",
         )
 
@@ -245,7 +245,7 @@ class GenerationConfigTest(unittest.TestCase):
         self.assertRaisesRegex(
             ValueError,
             "Library is None",
-            from_yaml,
+            GenerationConfig.from_yaml,
             f"{test_config_dir}/config_without_library_value.yaml",
         )
 
@@ -253,6 +253,6 @@ class GenerationConfigTest(unittest.TestCase):
         self.assertRaisesRegex(
             ValueError,
             r"GAPICs is None in.*'api_shortname': 'apigeeconnect'.*",
-            from_yaml,
+            GenerationConfig.from_yaml,
             f"{test_config_dir}/config_without_gapics_value.yaml",
         )
