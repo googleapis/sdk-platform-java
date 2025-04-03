@@ -47,11 +47,11 @@ import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
 import com.google.longrunning.Operation;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Duration;
 import com.google.protobuf.FieldMask;
+import com.google.protobuf.Message;
 import com.google.rpc.Status;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
@@ -137,7 +137,7 @@ public class EchoClientTest {
     EchoResponse actualResponse = client.echo(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockEcho.getRequests();
+    List<Message> actualRequests = mockEcho.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     EchoRequest actualRequest = ((EchoRequest) actualRequests.get(0));
 
@@ -193,7 +193,7 @@ public class EchoClientTest {
     EchoErrorDetailsResponse actualResponse = client.echoErrorDetails(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockEcho.getRequests();
+    List<Message> actualRequests = mockEcho.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     EchoErrorDetailsRequest actualRequest = ((EchoErrorDetailsRequest) actualRequests.get(0));
 
@@ -424,7 +424,7 @@ public class EchoClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getResponsesList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockEcho.getRequests();
+    List<Message> actualRequests = mockEcho.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     PagedExpandRequest actualRequest = ((PagedExpandRequest) actualRequests.get(0));
 
@@ -475,7 +475,7 @@ public class EchoClientTest {
     PagedExpandResponse actualResponse = client.pagedExpandLegacy(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockEcho.getRequests();
+    List<Message> actualRequests = mockEcho.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     PagedExpandLegacyRequest actualRequest = ((PagedExpandLegacyRequest) actualRequests.get(0));
 
@@ -534,7 +534,7 @@ public class EchoClientTest {
     Assert.assertEquals(
         expectedResponse.getAlphabetizedMap().entrySet().iterator().next(), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockEcho.getRequests();
+    List<Message> actualRequests = mockEcho.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     PagedExpandRequest actualRequest = ((PagedExpandRequest) actualRequests.get(0));
 
@@ -583,7 +583,7 @@ public class EchoClientTest {
     WaitResponse actualResponse = client.waitAsync(request).get();
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockEcho.getRequests();
+    List<Message> actualRequests = mockEcho.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     WaitRequest actualRequest = ((WaitRequest) actualRequests.get(0));
 
@@ -625,7 +625,7 @@ public class EchoClientTest {
     BlockResponse actualResponse = client.block(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockEcho.getRequests();
+    List<Message> actualRequests = mockEcho.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     BlockRequest actualRequest = ((BlockRequest) actualRequests.get(0));
 
@@ -678,7 +678,7 @@ public class EchoClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockLocations.getRequests();
+    List<Message> actualRequests = mockLocations.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListLocationsRequest actualRequest = ((ListLocationsRequest) actualRequests.get(0));
 
@@ -729,7 +729,7 @@ public class EchoClientTest {
     Location actualResponse = client.getLocation(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLocations.getRequests();
+    List<Message> actualRequests = mockLocations.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetLocationRequest actualRequest = ((GetLocationRequest) actualRequests.get(0));
 
@@ -775,7 +775,7 @@ public class EchoClientTest {
     Policy actualResponse = client.setIamPolicy(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     SetIamPolicyRequest actualRequest = ((SetIamPolicyRequest) actualRequests.get(0));
 
@@ -827,7 +827,7 @@ public class EchoClientTest {
     Policy actualResponse = client.getIamPolicy(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetIamPolicyRequest actualRequest = ((GetIamPolicyRequest) actualRequests.get(0));
 
@@ -872,7 +872,7 @@ public class EchoClientTest {
     TestIamPermissionsResponse actualResponse = client.testIamPermissions(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     TestIamPermissionsRequest actualRequest = ((TestIamPermissionsRequest) actualRequests.get(0));
 

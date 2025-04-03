@@ -47,11 +47,11 @@ import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
 import com.google.longrunning.Operation;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Empty;
 import com.google.protobuf.FieldMask;
+import com.google.protobuf.Message;
 import com.google.protobuf.Timestamp;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
@@ -130,7 +130,7 @@ public class MessagingClientTest {
     Room actualResponse = client.createRoom(displayName, description);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateRoomRequest actualRequest = ((CreateRoomRequest) actualRequests.get(0));
 
@@ -174,7 +174,7 @@ public class MessagingClientTest {
     Room actualResponse = client.getRoom(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetRoomRequest actualRequest = ((GetRoomRequest) actualRequests.get(0));
 
@@ -216,7 +216,7 @@ public class MessagingClientTest {
     Room actualResponse = client.getRoom(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetRoomRequest actualRequest = ((GetRoomRequest) actualRequests.get(0));
 
@@ -262,7 +262,7 @@ public class MessagingClientTest {
     Room actualResponse = client.updateRoom(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateRoomRequest actualRequest = ((UpdateRoomRequest) actualRequests.get(0));
 
@@ -301,7 +301,7 @@ public class MessagingClientTest {
 
     client.deleteRoom(name);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteRoomRequest actualRequest = ((DeleteRoomRequest) actualRequests.get(0));
 
@@ -335,7 +335,7 @@ public class MessagingClientTest {
 
     client.deleteRoom(name);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteRoomRequest actualRequest = ((DeleteRoomRequest) actualRequests.get(0));
 
@@ -383,7 +383,7 @@ public class MessagingClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getRoomsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListRoomsRequest actualRequest = ((ListRoomsRequest) actualRequests.get(0));
 
@@ -433,7 +433,7 @@ public class MessagingClientTest {
     Blurb actualResponse = client.createBlurb(parent, user, image);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
@@ -482,7 +482,7 @@ public class MessagingClientTest {
     Blurb actualResponse = client.createBlurb(parent, user, text);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
@@ -531,7 +531,7 @@ public class MessagingClientTest {
     Blurb actualResponse = client.createBlurb(parent, user, image);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
@@ -580,7 +580,7 @@ public class MessagingClientTest {
     Blurb actualResponse = client.createBlurb(parent, user, text);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
@@ -629,7 +629,7 @@ public class MessagingClientTest {
     Blurb actualResponse = client.createBlurb(parent, user, image);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
@@ -678,7 +678,7 @@ public class MessagingClientTest {
     Blurb actualResponse = client.createBlurb(parent, user, text);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
@@ -727,7 +727,7 @@ public class MessagingClientTest {
     Blurb actualResponse = client.createBlurb(parent, user, image);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
@@ -776,7 +776,7 @@ public class MessagingClientTest {
     Blurb actualResponse = client.createBlurb(parent, user, text);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
@@ -825,7 +825,7 @@ public class MessagingClientTest {
     Blurb actualResponse = client.createBlurb(parent, user, image);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
@@ -874,7 +874,7 @@ public class MessagingClientTest {
     Blurb actualResponse = client.createBlurb(parent, user, text);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
@@ -923,7 +923,7 @@ public class MessagingClientTest {
     Blurb actualResponse = client.createBlurb(parent, user, image);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
@@ -972,7 +972,7 @@ public class MessagingClientTest {
     Blurb actualResponse = client.createBlurb(parent, user, text);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
@@ -1017,7 +1017,7 @@ public class MessagingClientTest {
     Blurb actualResponse = client.getBlurb(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetBlurbRequest actualRequest = ((GetBlurbRequest) actualRequests.get(0));
 
@@ -1058,7 +1058,7 @@ public class MessagingClientTest {
     Blurb actualResponse = client.getBlurb(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetBlurbRequest actualRequest = ((GetBlurbRequest) actualRequests.get(0));
 
@@ -1103,7 +1103,7 @@ public class MessagingClientTest {
     Blurb actualResponse = client.updateBlurb(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateBlurbRequest actualRequest = ((UpdateBlurbRequest) actualRequests.get(0));
 
@@ -1142,7 +1142,7 @@ public class MessagingClientTest {
 
     client.deleteBlurb(name);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteBlurbRequest actualRequest = ((DeleteBlurbRequest) actualRequests.get(0));
 
@@ -1176,7 +1176,7 @@ public class MessagingClientTest {
 
     client.deleteBlurb(name);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteBlurbRequest actualRequest = ((DeleteBlurbRequest) actualRequests.get(0));
 
@@ -1220,7 +1220,7 @@ public class MessagingClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getBlurbsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListBlurbsRequest actualRequest = ((ListBlurbsRequest) actualRequests.get(0));
 
@@ -1264,7 +1264,7 @@ public class MessagingClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getBlurbsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListBlurbsRequest actualRequest = ((ListBlurbsRequest) actualRequests.get(0));
 
@@ -1308,7 +1308,7 @@ public class MessagingClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getBlurbsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListBlurbsRequest actualRequest = ((ListBlurbsRequest) actualRequests.get(0));
 
@@ -1354,7 +1354,7 @@ public class MessagingClientTest {
     SearchBlurbsResponse actualResponse = client.searchBlurbsAsync(parent, query).get();
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     SearchBlurbsRequest actualRequest = ((SearchBlurbsRequest) actualRequests.get(0));
 
@@ -1404,7 +1404,7 @@ public class MessagingClientTest {
     SearchBlurbsResponse actualResponse = client.searchBlurbsAsync(parent, query).get();
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     SearchBlurbsRequest actualRequest = ((SearchBlurbsRequest) actualRequests.get(0));
 
@@ -1454,7 +1454,7 @@ public class MessagingClientTest {
     SearchBlurbsResponse actualResponse = client.searchBlurbsAsync(parent, query).get();
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockMessaging.getRequests();
+    List<Message> actualRequests = mockMessaging.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     SearchBlurbsRequest actualRequest = ((SearchBlurbsRequest) actualRequests.get(0));
 
@@ -1656,7 +1656,7 @@ public class MessagingClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockLocations.getRequests();
+    List<Message> actualRequests = mockLocations.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListLocationsRequest actualRequest = ((ListLocationsRequest) actualRequests.get(0));
 
@@ -1707,7 +1707,7 @@ public class MessagingClientTest {
     Location actualResponse = client.getLocation(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLocations.getRequests();
+    List<Message> actualRequests = mockLocations.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetLocationRequest actualRequest = ((GetLocationRequest) actualRequests.get(0));
 
@@ -1753,7 +1753,7 @@ public class MessagingClientTest {
     Policy actualResponse = client.setIamPolicy(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     SetIamPolicyRequest actualRequest = ((SetIamPolicyRequest) actualRequests.get(0));
 
@@ -1805,7 +1805,7 @@ public class MessagingClientTest {
     Policy actualResponse = client.getIamPolicy(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetIamPolicyRequest actualRequest = ((GetIamPolicyRequest) actualRequests.get(0));
 
@@ -1850,7 +1850,7 @@ public class MessagingClientTest {
     TestIamPermissionsResponse actualResponse = client.testIamPermissions(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     TestIamPermissionsRequest actualRequest = ((TestIamPermissionsRequest) actualRequests.get(0));
 

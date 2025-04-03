@@ -7,8 +7,8 @@ import com.google.api.gax.grpc.testing.MockGrpcService;
 import com.google.api.gax.grpc.testing.MockServiceHelper;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.InvalidArgumentException;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Empty;
+import com.google.protobuf.Message;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
 import java.util.Arrays;
@@ -69,7 +69,7 @@ public class DeprecatedServiceClientTest {
 
     client.fastFibonacci(request);
 
-    List<AbstractMessage> actualRequests = mockDeprecatedService.getRequests();
+    List<Message> actualRequests = mockDeprecatedService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     FibonacciRequest actualRequest = ((FibonacciRequest) actualRequests.get(0));
 
@@ -103,7 +103,7 @@ public class DeprecatedServiceClientTest {
 
     client.slowFibonacci(request);
 
-    List<AbstractMessage> actualRequests = mockDeprecatedService.getRequests();
+    List<Message> actualRequests = mockDeprecatedService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     FibonacciRequest actualRequest = ((FibonacciRequest) actualRequests.get(0));
 
