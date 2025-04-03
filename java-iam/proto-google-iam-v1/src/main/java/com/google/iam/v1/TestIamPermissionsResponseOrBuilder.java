@@ -37,6 +37,7 @@ public interface TestIamPermissionsResponseOrBuilder
    * @return A list containing the permissions.
    */
   java.util.List<java.lang.String> getPermissionsList();
+
   /**
    *
    *
@@ -50,6 +51,7 @@ public interface TestIamPermissionsResponseOrBuilder
    * @return The count of permissions.
    */
   int getPermissionsCount();
+
   /**
    *
    *
@@ -64,6 +66,7 @@ public interface TestIamPermissionsResponseOrBuilder
    * @return The permissions at the given index.
    */
   java.lang.String getPermissions(int index);
+
   /**
    *
    *

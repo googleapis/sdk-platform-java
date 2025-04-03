@@ -36,6 +36,7 @@ public interface ExpandRequestOrBuilder
    * @return The content.
    */
   java.lang.String getContent();
+
   /**
    *
    *
@@ -61,6 +62,7 @@ public interface ExpandRequestOrBuilder
    * @return Whether the error field is set.
    */
   boolean hasError();
+
   /**
    *
    *
@@ -73,6 +75,7 @@ public interface ExpandRequestOrBuilder
    * @return The error.
    */
   com.google.rpc.Status getError();
+
   /**
    *
    *
@@ -96,6 +99,7 @@ public interface ExpandRequestOrBuilder
    * @return Whether the streamWaitTime field is set.
    */
   boolean hasStreamWaitTime();
+
   /**
    *
    *
@@ -108,6 +112,7 @@ public interface ExpandRequestOrBuilder
    * @return The streamWaitTime.
    */
   com.google.protobuf.Duration getStreamWaitTime();
+
   /**
    *
    *

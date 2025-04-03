@@ -132,7 +132,9 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     }
   }
 
-  /** @deprecated Please use {@link #getBackgroundExecutorProvider()}. */
+  /**
+   * @deprecated Please use {@link #getBackgroundExecutorProvider()}.
+   */
   @Deprecated
   public final ExecutorProvider getExecutorProvider() {
     return deprecatedExecutorProviderSet ? backgroundExecutorProvider : null;
@@ -174,17 +176,23 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return "";
   }
 
-  /** @return the fully resolved universe domain used by the client */
+  /**
+   * @return the fully resolved universe domain used by the client
+   */
   public final String getUniverseDomain() {
     return endpointContext.resolvedUniverseDomain();
   }
 
-  /** @return the fully resolved endpoint used by the client */
+  /**
+   * @return the fully resolved endpoint used by the client
+   */
   public String getEndpoint() {
     return endpointContext.resolvedEndpoint();
   }
 
-  /** @return the newly created EndpointContext */
+  /**
+   * @return the newly created EndpointContext
+   */
   @InternalApi
   final EndpointContext getEndpointContext() {
     return endpointContext;
@@ -600,7 +608,9 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return self();
     }
 
-    /** @deprecated Please use {@link #getBackgroundExecutorProvider()}. */
+    /**
+     * @deprecated Please use {@link #getBackgroundExecutorProvider()}.
+     */
     @Deprecated
     public ExecutorProvider getExecutorProvider() {
       return deprecatedExecutorProviderSet ? backgroundExecutorProvider : null;
