@@ -1,0 +1,27 @@
+type: google.api.Service
+config_version: 3
+name: selective_api_generation_testing.googleapis.com
+title: Selective Generation Testing API
+
+publishing:
+  # ...
+  library_settings:
+  - version: google.selective.generate.v1beta1
+    java_settings:
+      common:
+        selective_gapic_generation:
+          methods:
+          - google.selective.generate.v1beta1.EchoServiceShouldGenerateAllPublic.EchoShouldGenerateAsPublic
+          - google.selective.generate.v1beta1.EchoServiceShouldGenerateAllPublic.ChatShouldGenerateAsPublic
+          - google.selective.generate.v1beta1.EchoServiceShouldGenerateAllPublic.ChatAgainShouldGenerateAsPublic
+          - google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialPublic.EchoShouldGenerateAsPublic
+          - google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialPublic.ChatShouldGenerateAsPublic
+          - google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialPublic.ChatAgainShouldGenerateAsPublic
+          generate_omitted_as_internal: true
+        reference_docs_uri: www.abc.net
+        destinations:
+        - PACKAGE_MANAGER
+    python_settings:
+      common:
+        destinations:
+        - PACKAGE_MANAGER

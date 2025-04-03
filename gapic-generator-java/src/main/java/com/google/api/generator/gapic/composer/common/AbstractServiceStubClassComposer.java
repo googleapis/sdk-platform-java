@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.composer.common;
 
 import com.google.api.core.BetaApi;
+import com.google.api.core.InternalApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientStreamingCallable;
@@ -40,6 +41,7 @@ import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.Method.SelectiveGapicType;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.collect.ImmutableList;
@@ -55,6 +57,8 @@ import javax.annotation.Generated;
 
 public abstract class AbstractServiceStubClassComposer implements ClassComposer {
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
+  private static final String INTERNAL_API_WARNING =
+      "Internal API. This API is not intended for public consumption.";
 
   private final TransportContext transportContext;
 
@@ -195,10 +199,15 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
       genericRefs.add(method.outputType().reference());
     }
 
-    List<AnnotationNode> annotations =
-        method.isDeprecated()
-            ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
-            : Collections.emptyList();
+    List<AnnotationNode> annotations = new ArrayList<>();
+    if (method.isDeprecated()) {
+      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
+    }
+    if (method.selectiveGapicType() == SelectiveGapicType.INTERNAL) {
+      annotations.add(
+          AnnotationNode.withTypeAndDescription(
+              typeStore.get("InternalApi"), INTERNAL_API_WARNING));
+    }
 
     returnType = TypeNode.withReference(returnType.reference().copyAndSetGenerics(genericRefs));
 
@@ -256,6 +265,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
         Arrays.asList(
             BackgroundResource.class,
             BetaApi.class,
+            InternalApi.class,
             BidiStreamingCallable.class,
             ClientStreamingCallable.class,
             Generated.class,

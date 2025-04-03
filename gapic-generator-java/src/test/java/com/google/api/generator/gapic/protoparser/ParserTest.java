@@ -35,6 +35,7 @@ import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.Method.SelectiveGapicType;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
@@ -738,7 +739,7 @@ class ParserTest {
   }
 
   @Test
-  void selectiveGenerationTest_shouldGenerateOnlySelectiveMethods() {
+  void selectiveGenerationTest_shouldGenerateOnlySelectiveMethodsWithGenerateOmittedFalse() {
     FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
@@ -756,15 +757,61 @@ class ParserTest {
         Parser.parseService(
             fileDescriptor, messageTypes, resourceNames, serviceYamlOpt, new HashSet<>());
     assertEquals(1, services.size());
-    assertEquals("EchoServiceShouldGeneratePartial", services.get(0).overriddenName());
+    assertEquals("EchoServiceShouldGeneratePartialPublic", services.get(0).overriddenName());
     assertEquals(3, services.get(0).methods().size());
     for (Method method : services.get(0).methods()) {
-      assertTrue(method.name().contains("ShouldInclude"));
+      assertTrue(method.name().contains("ShouldGenerate"));
+      assertTrue(method.selectiveGapicType().equals(SelectiveGapicType.PUBLIC));
     }
   }
 
   @Test
-  void selectiveGenerationTest_shouldGenerateAllIfNoPublishingSectionInServiceYaml() {
+  void selectiveGenerationTest_shouldGenerateOmittedAsInternalWithGenerateOmittedTrue() {
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
+
+    // test with service yaml file to show usage of this feature, test itself
+    // can be done without this file and build a Service object from code.
+    String serviceYamlFilename = "selective_api_generation_generate_omitted_v1beta1.yaml";
+    String testFilesDirectory = "src/test/resources/";
+    Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
+    Optional<com.google.api.Service> serviceYamlOpt =
+        ServiceYamlParser.parse(serviceYamlPath.toString());
+    Assert.assertTrue(serviceYamlOpt.isPresent());
+
+    List<com.google.api.generator.gapic.model.Service> services =
+        Parser.parseService(
+            fileDescriptor, messageTypes, resourceNames, serviceYamlOpt, new HashSet<>());
+
+    assertEquals(3, services.size());
+    // Tests a service with public methods only.
+    assertEquals("EchoServiceShouldGenerateAllPublic", services.get(0).overriddenName());
+    assertEquals(3, services.get(0).methods().size());
+    for (Method method : services.get(0).methods()) {
+      assertTrue(method.selectiveGapicType().equals(SelectiveGapicType.PUBLIC));
+    }
+
+    // Tests a service with partial public methods and partial internal methods.
+    assertEquals("EchoServiceShouldGeneratePartialPublic", services.get(1).overriddenName());
+    assertEquals(5, services.get(1).methods().size());
+    for (Method method : services.get(1).methods()) {
+      if (method.name().contains("ShouldGenerateAsPublic")) {
+        assertTrue(method.selectiveGapicType().equals(SelectiveGapicType.PUBLIC));
+      } else {
+        assertTrue(method.selectiveGapicType().equals(SelectiveGapicType.INTERNAL));
+      }
+    }
+    // Tests a service with internal methods only.
+    assertEquals("EchoServiceShouldGenerateAllInternal", services.get(2).overriddenName());
+    assertEquals(2, services.get(2).methods().size());
+    for (Method method : services.get(2).methods()) {
+      assertTrue(method.selectiveGapicType().equals(SelectiveGapicType.INTERNAL));
+    }
+  }
+
+  @Test
+  void selectiveGenerationTest_shouldGenerateAsPublicIfNoPublishingSectionInServiceYaml() {
     Service service =
         Service.newBuilder()
             .setTitle("Selective generation testing with no publishing section")
@@ -776,12 +823,13 @@ class ParserTest {
     List<MethodDescriptor> methods = fileDescriptor.getServices().get(0).getMethods();
     String protoPackage = "google.selective.generate.v1beta1";
 
-    assertTrue(
-        Parser.shouldIncludeMethodInGeneration(methods.get(0), Optional.of(service), protoPackage));
+    assertEquals(
+        Parser.getMethodSelectiveGapicType(methods.get(0), Optional.of(service), protoPackage),
+        SelectiveGapicType.PUBLIC);
   }
 
   @Test
-  void selectiveGenerationTest_shouldIncludeMethodInGenerationWhenProtoPackageMismatch() {
+  void selectiveGenerationTest_shouldGenerateAsPublicWhenProtoPackageMismatch() {
     String protoPackage = "google.selective.generate.v1beta1";
 
     // situation where service yaml has different version stated
@@ -800,12 +848,13 @@ class ParserTest {
     FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
     List<MethodDescriptor> methods = fileDescriptor.getServices().get(0).getMethods();
 
-    assertTrue(
-        Parser.shouldIncludeMethodInGeneration(methods.get(0), Optional.of(service), protoPackage));
+    assertEquals(
+        Parser.getMethodSelectiveGapicType(methods.get(0), Optional.of(service), protoPackage),
+        SelectiveGapicType.PUBLIC);
   }
 
   @Test
-  void selectiveGenerationTest_shouldGenerateAllIfNoJavaSectionInServiceYaml() {
+  void selectiveGenerationTest_shouldGenerateAsPublicIfNoJavaSectionInServiceYaml() {
     String protoPackage = "google.selective.generate.v1beta1";
 
     // situation where service yaml has other language settings but no
@@ -830,8 +879,9 @@ class ParserTest {
     FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
     List<MethodDescriptor> methods = fileDescriptor.getServices().get(0).getMethods();
 
-    assertTrue(
-        Parser.shouldIncludeMethodInGeneration(methods.get(0), Optional.of(service), protoPackage));
+    assertEquals(
+        Parser.getMethodSelectiveGapicType(methods.get(0), Optional.of(service), protoPackage),
+        SelectiveGapicType.PUBLIC);
   }
 
   private void assertMethodArgumentEquals(

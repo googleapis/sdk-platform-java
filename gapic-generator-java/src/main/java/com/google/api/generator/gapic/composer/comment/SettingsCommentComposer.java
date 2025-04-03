@@ -120,11 +120,11 @@ public class SettingsCommentComposer {
   }
 
   public static CommentStatement createCallSettingsGetterComment(
-      String javaMethodName, boolean isMethodDeprecated) {
-    String methodComment = String.format(CALL_SETTINGS_METHOD_DOC_PATTERN, javaMethodName);
-    return isMethodDeprecated
-        ? toDeprecatedSimpleComment(methodComment)
-        : toSimpleComment(methodComment);
+      String javaMethodName, boolean isMethodDeprecated, boolean isMethodInternal) {
+    return toDeprecatedInternalSimpleComment(
+        String.format(CALL_SETTINGS_METHOD_DOC_PATTERN, javaMethodName),
+        isMethodDeprecated,
+        isMethodInternal);
   }
 
   public static CommentStatement createBuilderClassComment(String outerClassName) {
@@ -132,10 +132,10 @@ public class SettingsCommentComposer {
   }
 
   public static CommentStatement createCallSettingsBuilderGetterComment(
-      String javaMethodName, boolean isMethodDeprecated) {
+      String javaMethodName, boolean isMethodDeprecated, boolean isMethodInternal) {
     String methodComment = String.format(CALL_SETTINGS_BUILDER_METHOD_DOC_PATTERN, javaMethodName);
-    return isMethodDeprecated
-        ? toDeprecatedSimpleComment(methodComment)
+    return isMethodDeprecated || isMethodInternal
+        ? toDeprecatedInternalSimpleComment(methodComment, isMethodDeprecated, isMethodInternal)
         : toSimpleComment(methodComment);
   }
 
@@ -205,11 +205,17 @@ public class SettingsCommentComposer {
     return CommentStatement.withComment(JavaDocComment.withComment(comment));
   }
 
-  private static CommentStatement toDeprecatedSimpleComment(String comment) {
-    return CommentStatement.withComment(
-        JavaDocComment.builder()
-            .addComment(comment)
-            .setDeprecated(CommentComposer.DEPRECATED_METHOD_STRING)
-            .build());
+  private static CommentStatement toDeprecatedInternalSimpleComment(
+      String comment, boolean isDeprecated, boolean isInternal) {
+    JavaDocComment.Builder docBuilder = JavaDocComment.builder().addComment(comment);
+    docBuilder =
+        isDeprecated
+            ? docBuilder.setDeprecated(CommentComposer.DEPRECATED_METHOD_STRING)
+            : docBuilder;
+    docBuilder =
+        isInternal
+            ? docBuilder.setInternalOnly(CommentComposer.INTERNAL_ONLY_METHOD_STRING)
+            : docBuilder;
+    return CommentStatement.withComment(docBuilder.build());
   }
 }

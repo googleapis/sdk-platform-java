@@ -33,27 +33,38 @@ class ServiceClientClassComposerTest {
             "EchoClient",
             GrpcTestProtoLoader.instance().parseShowcaseEcho(),
             "localhost:7469",
-            "v1beta1"),
+            "v1beta1",
+            0),
         Arguments.of(
             "DeprecatedServiceClient",
             GrpcTestProtoLoader.instance().parseDeprecatedService(),
             "localhost:7469",
-            "v1"),
+            "v1",
+            0),
         Arguments.of(
             "IdentityClient",
             GrpcTestProtoLoader.instance().parseShowcaseIdentity(),
             "localhost:7469",
-            "v1beta1"),
+            "v1beta1",
+            0),
         Arguments.of(
             "BookshopClient",
             GrpcTestProtoLoader.instance().parseBookshopService(),
             "localhost:2665",
-            "v1beta1"),
+            "v1beta1",
+            0),
         Arguments.of(
             "MessagingClient",
             GrpcTestProtoLoader.instance().parseShowcaseMessaging(),
             "localhost:7469",
-            "v1beta1"));
+            "v1beta1",
+            0),
+        Arguments.of(
+            "EchoServiceSelectiveGapicClient",
+            GrpcTestProtoLoader.instance().parseSelectiveGenerationTesting(),
+            "localhost:7469",
+            "v1beta1",
+            1));
   }
 
   @ParameterizedTest
@@ -62,8 +73,9 @@ class ServiceClientClassComposerTest {
       String name,
       GapicContext context,
       String apiShortNameExpected,
-      String packageVersionExpected) {
-    Service service = context.services().get(0);
+      String packageVersionExpected,
+      int serviceIndex) {
+    Service service = context.services().get(serviceIndex);
     GapicClass clazz = ServiceClientClassComposer.instance().generate(context, service);
 
     Assert.assertGoldenClass(this.getClass(), clazz, name + ".golden");

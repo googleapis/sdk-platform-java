@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.composer.common;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
+import com.google.api.core.InternalApi;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
@@ -60,6 +61,7 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.Method.SelectiveGapicType;
 import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
@@ -85,6 +87,8 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
 
   private static final String OPERATION_SETTINGS_LITERAL = "OperationSettings";
   private static final String SETTINGS_LITERAL = "Settings";
+  private static final String INTERNAL_API_WARNING =
+      "Internal API. This API is not intended for public consumption.";
   protected static final TypeStore FIXED_TYPESTORE = createStaticTypes();
 
   private final TransportContext transportContext;
@@ -133,16 +137,21 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
 
   private static List<CommentStatement> createClassHeaderComments(
       Service service, TypeNode classType, List<Sample> samples) {
-    // Pick the first pure unary rpc method, if no such method exists, then pick the first in the
+    // Pick the first public pure unary rpc method, if no such method exists, then pick the first
+    // public in the
     // list.
+    List<Method> publicMethods =
+        service.methods().stream()
+            .filter(m -> m.selectiveGapicType() == SelectiveGapicType.PUBLIC)
+            .collect(Collectors.toList());
     Optional<Method> methodOpt =
-        service.methods().isEmpty()
+        publicMethods.isEmpty()
             ? Optional.empty()
             : Optional.of(
-                service.methods().stream()
+                publicMethods.stream()
                     .filter(m -> m.stream() == Stream.NONE && !m.hasLro() && !m.isPaged())
                     .findFirst()
-                    .orElse(service.methods().get(0)));
+                    .orElse(publicMethods.get(0)));
     Optional<String> methodNameOpt =
         methodOpt.isPresent() ? Optional.of(methodOpt.get().name()) : Optional.empty();
     Optional<Sample> sampleCode =
@@ -156,9 +165,9 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     // Create a sample for a LRO method using LRO-specific RetrySettings, if one exists in the
     // service.
     Optional<Method> lroMethodOpt =
-        service.methods().isEmpty()
+        publicMethods.isEmpty()
             ? Optional.empty()
-            : service.methods().stream()
+            : publicMethods.stream()
                 .filter(m -> m.stream() == Stream.NONE && m.hasLro())
                 .findFirst();
     Optional<String> lroMethodNameOpt =
@@ -270,38 +279,42 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method protoMethod : service.methods()) {
       String javaStyleName = JavaStyle.toLowerCamelCase(protoMethod.name());
-      String javaMethodName =
-          String.format("%sSettings", JavaStyle.toLowerCamelCase(protoMethod.name()));
+      String javaMethodName = String.format("%sSettings", javaStyleName);
       MethodDefinition.Builder methodBuilder =
           methodMakerFn.apply(getCallSettingsType(protoMethod, typeStore), javaMethodName);
-      javaMethods.add(
-          methodBuilder
-              .setHeaderCommentStatements(
-                  SettingsCommentComposer.createCallSettingsGetterComment(
-                      getMethodNameFromSettingsVarName(javaMethodName), protoMethod.isDeprecated()))
-              .setAnnotations(
-                  protoMethod.isDeprecated()
-                      ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
-                      : Collections.emptyList())
-              .build());
+      javaMethods.add(methodBuilderHelper(protoMethod, methodBuilder, javaMethodName));
       if (protoMethod.hasLro()) {
         javaMethodName = String.format("%sOperationSettings", javaStyleName);
         methodBuilder =
             methodMakerFn.apply(getOperationCallSettingsType(protoMethod), javaMethodName);
-        javaMethods.add(
-            methodBuilder
-                .setHeaderCommentStatements(
-                    SettingsCommentComposer.createCallSettingsGetterComment(
-                        getMethodNameFromSettingsVarName(javaMethodName),
-                        protoMethod.isDeprecated()))
-                .setAnnotations(
-                    protoMethod.isDeprecated()
-                        ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
-                        : Collections.emptyList())
-                .build());
+        javaMethods.add(methodBuilderHelper(protoMethod, methodBuilder, javaMethodName));
       }
     }
     return javaMethods;
+  }
+
+  // Add method header comment statements and annotations.
+  private static MethodDefinition methodBuilderHelper(
+      Method protoMethod, MethodDefinition.Builder methodBuilder, String javaMethodName) {
+    List<AnnotationNode> annotations = new ArrayList<>();
+    if (protoMethod.isDeprecated()) {
+      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
+    }
+
+    if (protoMethod.selectiveGapicType() == SelectiveGapicType.INTERNAL) {
+      annotations.add(
+          AnnotationNode.withTypeAndDescription(
+              FIXED_TYPESTORE.get("InternalApi"), INTERNAL_API_WARNING));
+    }
+
+    return methodBuilder
+        .setHeaderCommentStatements(
+            SettingsCommentComposer.createCallSettingsGetterComment(
+                getMethodNameFromSettingsVarName(javaMethodName),
+                protoMethod.isDeprecated(),
+                protoMethod.selectiveGapicType() == SelectiveGapicType.INTERNAL))
+        .setAnnotations(annotations)
+        .build();
   }
 
   private static MethodDefinition createCreatorMethod(Service service, TypeStore typeStore) {
@@ -771,7 +784,9 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
           methodBuilder
               .setHeaderCommentStatements(
                   SettingsCommentComposer.createCallSettingsBuilderGetterComment(
-                      getMethodNameFromSettingsVarName(javaMethodName), protoMethod.isDeprecated()))
+                      getMethodNameFromSettingsVarName(javaMethodName),
+                      protoMethod.isDeprecated(),
+                      protoMethod.selectiveGapicType() == SelectiveGapicType.INTERNAL))
               .setAnnotations(
                   protoMethod.isDeprecated()
                       ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
@@ -787,7 +802,8 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                 .setHeaderCommentStatements(
                     SettingsCommentComposer.createCallSettingsBuilderGetterComment(
                         getMethodNameFromSettingsVarName(javaMethodName),
-                        protoMethod.isDeprecated()))
+                        protoMethod.isDeprecated(),
+                        protoMethod.selectiveGapicType() == SelectiveGapicType.INTERNAL))
                 .setAnnotations(
                     protoMethod.isDeprecated()
                         ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
@@ -822,6 +838,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
             ApiClientHeaderProvider.class,
             ApiFunction.class,
             BetaApi.class,
+            InternalApi.class,
             ClientContext.class,
             ClientSettings.class,
             Generated.class,
