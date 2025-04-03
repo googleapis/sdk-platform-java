@@ -4,13 +4,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>{{module.group_id}}</groupId>
   <artifactId>{{module.artifact_id}}</artifactId>
-  <version>{{module.version}}</version><!-- {x-version-update:{{module.artifact_id}}:current} -->
+  <version>protobuf-shading-v1</version><!-- {x-version-update:{{module.artifact_id}}:current} -->
   <name>{{module.artifact_id}}</name>
   <description>GRPC library for {{main_module.artifact_id}}</description>
   <parent>
     <groupId>{{parent_module.group_id}}</groupId>
     <artifactId>{{parent_module.artifact_id}}</artifactId>
-    <version>{{parent_module.version}}</version><!-- {x-version-update:{{main_module.artifact_id}}:current} -->
+    <version>protobuf-shading-v1</version><!-- {x-version-update:{{main_module.artifact_id}}:current} -->
   </parent>
   <dependencies>
     <dependency>
@@ -24,18 +24,27 @@
     <dependency>
       <groupId>io.grpc</groupId>
       <artifactId>grpc-protobuf</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>com.google.protobuf</groupId>
+          <artifactId>protobuf-java</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
-      <groupId>com.google.protobuf</groupId>
-      <artifactId>protobuf-java</artifactId>
+      <groupId>org.example</groupId>
+      <artifactId>protobuf-api</artifactId>
+      <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>proto-google-common-protos</artifactId>
+      <version>protobuf-shading-v1</version>
     </dependency>
     <dependency>
       <groupId>{{proto_module.group_id}}</groupId>
       <artifactId>{{proto_module.artifact_id}}</artifactId>
+      <version>protobuf-shading-v1</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>

@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>{{module.group_id}}</groupId>
   <artifactId>{{module.artifact_id}}</artifactId>
-  <version>{{module.version}}</version><!-- {x-version-update:{{module.artifact_id}}:current} -->
+  <version>protobuf-shading-v1</version><!-- {x-version-update:{{module.artifact_id}}:current} -->
   <packaging>jar</packaging>
   <name>Google {{name}}</name>
   {%- if not monorepo %}
@@ -13,7 +13,7 @@
   <parent>
     <groupId>{{parent_module.group_id}}</groupId>
     <artifactId>{{parent_module.artifact_id}}</artifactId>
-    <version>{{parent_module.version}}</version><!-- {x-version-update:{{module.artifact_id}}:current} -->
+    <version>protobuf-shading-v1</version><!-- {x-version-update:{{module.artifact_id}}:current} -->
   </parent>
   <properties>
     <site.installationModule>{{module.artifact_id}}</site.installationModule>
@@ -30,23 +30,32 @@
     <dependency>
       <groupId>io.grpc</groupId>
       <artifactId>grpc-protobuf</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>com.google.protobuf</groupId>
+          <artifactId>protobuf-java</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>api-common</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.google.protobuf</groupId>
-      <artifactId>protobuf-java</artifactId>
+      <groupId>org.example</groupId>
+      <artifactId>protobuf-api</artifactId>
+      <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>proto-google-common-protos</artifactId>
+      <version>protobuf-shading-v1</version>
     </dependency>
 {% for module in proto_modules %}
     <dependency>
       <groupId>{{module.group_id}}</groupId>
       <artifactId>{{module.artifact_id}}</artifactId>
+      <version>protobuf-shading-v1</version>
     </dependency>{% endfor %}
     <dependency>
       <groupId>com.google.guava</groupId>
@@ -55,27 +64,33 @@
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax</artifactId>
+      <version>protobuf-shading-v1</version>
     </dependency>
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax-grpc</artifactId>
+      <version>protobuf-shading-v1</version>
     </dependency>
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax-httpjson</artifactId>
+      <version>protobuf-shading-v1</version>
     </dependency>
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>proto-google-iam-v1</artifactId>
+      <version>protobuf-shading-v1</version>
     </dependency>
 {%- if not monorepo %}
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>grpc-google-common-protos</artifactId>
+      <version>protobuf-shading-v1</version>
     </dependency>
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>grpc-google-iam-v1</artifactId>
+      <version>protobuf-shading-v1</version>
     </dependency>
 {%- endif %}
     <dependency>
@@ -88,11 +103,13 @@
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>grpc-google-common-protos</artifactId>
+      <version>protobuf-shading-v1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>grpc-google-iam-v1</artifactId>
+      <version>protobuf-shading-v1</version>
       <scope>test</scope>
     </dependency>
 {%- endif %}
@@ -105,6 +122,7 @@
     <dependency>
       <groupId>{{module.group_id}}</groupId>
       <artifactId>{{module.artifact_id}}</artifactId>
+      <version>protobuf-shading-v1</version>
       <scope>test</scope>
     </dependency>{% endfor %}
     <!-- Need testing utility classes for generated gRPC clients tests -->
@@ -112,18 +130,21 @@
       <groupId>com.google.api</groupId>
       <artifactId>gax</artifactId>
       <classifier>testlib</classifier>
+      <version>protobuf-shading-v1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax-grpc</artifactId>
       <classifier>testlib</classifier>
+      <version>protobuf-shading-v1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax-httpjson</artifactId>
       <classifier>testlib</classifier>
+      <version>protobuf-shading-v1</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
