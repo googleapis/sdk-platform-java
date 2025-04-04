@@ -32,8 +32,10 @@ public abstract class MethodDefinition implements AstNode {
 
   // Required.
   public abstract ScopeNode scope();
+
   // Required.
   public abstract TypeNode returnType();
+
   // Required.
   public abstract IdentifierNode methodIdentifier();
 

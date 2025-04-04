@@ -37,6 +37,7 @@ public interface ConnectRequestOrBuilder
    * @return Whether the config field is set.
    */
   boolean hasConfig();
+
   /**
    *
    *
@@ -50,6 +51,7 @@ public interface ConnectRequestOrBuilder
    * @return The config.
    */
   com.google.showcase.v1beta1.ConnectRequest.ConnectConfig getConfig();
+
   /**
    *
    *
@@ -74,6 +76,7 @@ public interface ConnectRequestOrBuilder
    * @return Whether the blurb field is set.
    */
   boolean hasBlurb();
+
   /**
    *
    *
@@ -86,6 +89,7 @@ public interface ConnectRequestOrBuilder
    * @return The blurb.
    */
   com.google.showcase.v1beta1.Blurb getBlurb();
+
   /**
    *
    *

@@ -36,6 +36,7 @@ public interface EchoResponseOrBuilder
    * @return The content.
    */
   java.lang.String getContent();
+
   /**
    *
    *
@@ -61,6 +62,7 @@ public interface EchoResponseOrBuilder
    * @return The enum numeric value on the wire for severity.
    */
   int getSeverityValue();
+
   /**
    *
    *
@@ -86,6 +88,7 @@ public interface EchoResponseOrBuilder
    * @return The requestId.
    */
   java.lang.String getRequestId();
+
   /**
    *
    *
@@ -111,6 +114,7 @@ public interface EchoResponseOrBuilder
    * @return The otherRequestId.
    */
   java.lang.String getOtherRequestId();
+
   /**
    *
    *

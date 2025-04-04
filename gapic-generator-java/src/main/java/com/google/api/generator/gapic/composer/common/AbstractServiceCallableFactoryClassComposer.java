@@ -134,15 +134,15 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
     return createGenericCallableMethod(
         service,
         typeStore,
-        /*methodTemplateNames=*/ methodTemplateNames,
-        /*returnCallableKindName=*/ methodVariantName,
-        /*returnCallableTemplateNames=*/ methodTemplateNames,
-        /*methodVariantName=*/ methodVariantName,
-        /*transportCallSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /* methodTemplateNames= */ methodTemplateNames,
+        /* returnCallableKindName= */ methodVariantName,
+        /* returnCallableTemplateNames= */ methodTemplateNames,
+        /* methodVariantName= */ methodVariantName,
+        /* transportCallSettingsTemplateObjects= */ methodTemplateNames.stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()),
-        /*callSettingsVariantName=*/ methodVariantName,
-        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /* callSettingsVariantName= */ methodVariantName,
+        /* callSettingsTemplateObjects= */ methodTemplateNames.stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
   }
@@ -157,15 +157,15 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
     return createGenericCallableMethod(
         service,
         typeStore,
-        /*methodTemplateNames=*/ methodTemplateNames,
-        /*returnCallableKindName=*/ "Unary",
-        /*returnCallableTemplateNames=*/ Arrays.asList(
+        /* methodTemplateNames= */ methodTemplateNames,
+        /* returnCallableKindName= */ "Unary",
+        /* returnCallableTemplateNames= */ Arrays.asList(
             requestTemplateName, pagedResponseTemplateName),
-        /*methodVariantName=*/ methodVariantName,
-        /*transportCallSettingsTemplateObjects=*/ Arrays.asList(
+        /* methodVariantName= */ methodVariantName,
+        /* transportCallSettingsTemplateObjects= */ Arrays.asList(
             requestTemplateName, responseTemplateName),
-        /*callSettingsVariantName=*/ methodVariantName,
-        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /* callSettingsVariantName= */ methodVariantName,
+        /* callSettingsTemplateObjects= */ methodTemplateNames.stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
   }
@@ -178,15 +178,15 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
     return createGenericCallableMethod(
         service,
         typeStore,
-        /*methodTemplateNames=*/ methodTemplateNames,
-        /*returnCallableKindName=*/ "Unary",
-        /*returnCallableTemplateNames=*/ methodTemplateNames,
-        /*methodVariantName=*/ methodVariantName,
-        /*transportCallSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /* methodTemplateNames= */ methodTemplateNames,
+        /* returnCallableKindName= */ "Unary",
+        /* returnCallableTemplateNames= */ methodTemplateNames,
+        /* methodVariantName= */ methodVariantName,
+        /* transportCallSettingsTemplateObjects= */ methodTemplateNames.stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()),
-        /*callSettingsVariantName=*/ methodVariantName,
-        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /* callSettingsVariantName= */ methodVariantName,
+        /* callSettingsTemplateObjects= */ methodTemplateNames.stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
   }
@@ -203,15 +203,15 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
     return createGenericCallableMethod(
         service,
         typeStore,
-        /*methodTemplateNames=*/ methodTemplateNames,
-        /*returnCallableKindName=*/ methodVariantName,
-        /*returnCallableTemplateNames=*/ methodTemplateNames,
-        /*methodVariantName=*/ methodVariantName,
-        /*grpcCallSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /* methodTemplateNames= */ methodTemplateNames,
+        /* returnCallableKindName= */ methodVariantName,
+        /* returnCallableTemplateNames= */ methodTemplateNames,
+        /* methodVariantName= */ methodVariantName,
+        /* grpcCallSettingsTemplateObjects= */ methodTemplateNames.stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()),
-        /*callSettingsVariantName=*/ methodVariantName,
-        /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
+        /* callSettingsVariantName= */ methodVariantName,
+        /* callSettingsTemplateObjects= */ methodTemplateNames.stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
   }

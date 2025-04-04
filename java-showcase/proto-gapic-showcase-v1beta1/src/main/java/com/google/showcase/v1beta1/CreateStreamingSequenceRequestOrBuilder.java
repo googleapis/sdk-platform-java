@@ -30,12 +30,14 @@ public interface CreateStreamingSequenceRequestOrBuilder
    * @return Whether the streamingSequence field is set.
    */
   boolean hasStreamingSequence();
+
   /**
    * <code>.google.showcase.v1beta1.StreamingSequence streaming_sequence = 1;</code>
    *
    * @return The streamingSequence.
    */
   com.google.showcase.v1beta1.StreamingSequence getStreamingSequence();
+
   /** <code>.google.showcase.v1beta1.StreamingSequence streaming_sequence = 1;</code> */
   com.google.showcase.v1beta1.StreamingSequenceOrBuilder getStreamingSequenceOrBuilder();
 }

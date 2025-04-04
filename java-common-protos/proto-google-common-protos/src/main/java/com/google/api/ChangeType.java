@@ -86,6 +86,7 @@ public enum ChangeType implements com.google.protobuf.ProtocolMessageEnum {
    * <code>CHANGE_TYPE_UNSPECIFIED = 0;</code>
    */
   public static final int CHANGE_TYPE_UNSPECIFIED_VALUE = 0;
+
   /**
    *
    *
@@ -97,6 +98,7 @@ public enum ChangeType implements com.google.protobuf.ProtocolMessageEnum {
    * <code>ADDED = 1;</code>
    */
   public static final int ADDED_VALUE = 1;
+
   /**
    *
    *
@@ -108,6 +110,7 @@ public enum ChangeType implements com.google.protobuf.ProtocolMessageEnum {
    * <code>REMOVED = 2;</code>
    */
   public static final int REMOVED_VALUE = 2;
+
   /**
    *
    *
