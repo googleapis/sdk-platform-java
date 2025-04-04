@@ -39,6 +39,9 @@ class GapicConfig:
     def get_version(self):
         return self.version
 
+    def to_dict(self):
+        return {"proto_path": self.proto_path}
+
     def __parse_version(self) -> Optional[str]:
         version_regex = re.compile(r"^v[1-9]+(p[1-9]+)*(alpha|beta)?.*")
         for directory in self.proto_path.split("/"):

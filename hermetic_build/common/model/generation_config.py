@@ -77,6 +77,23 @@ class GenerationConfig:
                     break
         return self.__contains_common_protos
 
+    def to_dict(self):
+        return {
+            "gapic_generator_version": self.gapic_generator_version,
+            "googleapis_commitish": self.googleapis_commitish,
+            "libraries_bom_version": self.libraries_bom_version,
+            "libraries": [library.to_dict() for library in self.libraries],
+        }
+
+    def write_object_to_yaml(self, file_path):
+        """Writes a Python object to a YAML file."""
+        try:
+            with open(file_path, "w") as file:
+                yaml.dump(self.to_dict(), file, indent=2, sort_keys=False)
+            print(f"Object written to {file_path}")
+        except Exception as e:
+            print(f"Error writing to YAML file: {e}")
+
     @staticmethod
     def __set_generator_version(gapic_generator_version: Optional[str]) -> str:
         if gapic_generator_version is not None:
