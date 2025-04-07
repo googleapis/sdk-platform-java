@@ -30,7 +30,6 @@ import com.google.api.generator.gapic.composer.defaultvalue.DefaultValueComposer
 import com.google.api.generator.gapic.model.HttpBindings;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
-import com.google.api.generator.gapic.model.Method.SelectiveGapicType;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.RegionTag;
 import com.google.api.generator.gapic.model.ResourceName;
@@ -53,28 +52,25 @@ public class ServiceClientHeaderSampleComposer {
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
-    // If all generated methods are INTERNAL, generate an empty service sample.
-    if (service.methods().stream()
-            .filter(m -> m.selectiveGapicType() == SelectiveGapicType.PUBLIC)
-            .count()
-        == 0) {
-      return ServiceClientMethodSampleComposer.composeEmptyServiceSample(clientType, service);
-    }
-    // Use the first public pure unary RPC method's sample code as showcase, if no such method
-    // exists, use
-    // the first public method in the service's methods list.
     List<Method> publicMethods =
         service.methods().stream()
-            .filter(m -> m.selectiveGapicType() == SelectiveGapicType.PUBLIC)
+            .filter(m -> m.isPublic() == true)
             .collect(Collectors.toList());
+
+    // If all generated methods are INTERNAL, generate an empty service sample.
+    if (publicMethods.isEmpty()) {
+      return ServiceClientMethodSampleComposer.composeEmptyServiceSample(clientType, service);
+    }
+
+    // Use the first public pure unary RPC method's sample code as showcase, if no such method
+    // exists, use the first public method in the service's methods list.
     Method method =
         publicMethods.stream()
             .filter(
                 m ->
                     m.stream() == Method.Stream.NONE
                         && !m.hasLro()
-                        && !m.isPaged()
-                        && m.selectiveGapicType() != SelectiveGapicType.INTERNAL)
+                        && !m.isPaged())
             .findFirst()
             .orElse(publicMethods.get(0));
 

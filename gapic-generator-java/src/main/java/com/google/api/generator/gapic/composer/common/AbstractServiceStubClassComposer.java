@@ -41,7 +41,6 @@ import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
-import com.google.api.generator.gapic.model.Method.SelectiveGapicType;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.collect.ImmutableList;
@@ -203,7 +202,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     if (method.isDeprecated()) {
       annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
     }
-    if (method.selectiveGapicType() == SelectiveGapicType.INTERNAL) {
+    if (method.isPublic() == false) {
       annotations.add(
           AnnotationNode.withTypeAndDescription(
               typeStore.get("InternalApi"), INTERNAL_API_WARNING));

@@ -92,7 +92,6 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
-import com.google.api.generator.gapic.model.Method.SelectiveGapicType;
 import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
@@ -425,7 +424,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // list.
     List<Method> publicMethods =
         service.methods().stream()
-            .filter(m -> m.selectiveGapicType() == SelectiveGapicType.PUBLIC)
+            .filter(m -> m.isPublic() == true)
             .collect(Collectors.toList());
     Optional<Method> methodOpt =
         publicMethods.isEmpty()
@@ -505,7 +504,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       if (method.isDeprecated()) {
         deprecatedSettingVarNames.add(varName);
       }
-      if (method.selectiveGapicType() == SelectiveGapicType.INTERNAL) {
+      if (method.isPublic() == false) {
         internalSettingVarNames.add(varName);
       }
       varExprs.put(

@@ -71,7 +71,6 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
-import com.google.api.generator.gapic.model.Method.SelectiveGapicType;
 import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
@@ -810,7 +809,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
         annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
       }
 
-      if (method.selectiveGapicType() == SelectiveGapicType.INTERNAL) {
+      if (method.isPublic() == false) {
         annotations.add(
             AnnotationNode.withTypeAndDescription(
                 typeStore.get("InternalApi"), INTERNAL_API_WARNING));
@@ -899,7 +898,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
     }
 
-    if (method.selectiveGapicType() == SelectiveGapicType.INTERNAL) {
+    if (method.isPublic() == false) {
       annotations.add(
           AnnotationNode.withTypeAndDescription(
               typeStore.get("InternalApi"), INTERNAL_API_WARNING));
@@ -1059,7 +1058,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     if (method.isDeprecated()) {
       annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
     }
-    if (method.selectiveGapicType() == SelectiveGapicType.INTERNAL) {
+    if (method.isPublic() == false) {
       annotations.add(
           AnnotationNode.withTypeAndDescription(
               typeStore.get("InternalApi"), INTERNAL_API_WARNING));

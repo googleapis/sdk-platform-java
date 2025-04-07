@@ -22,7 +22,6 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.composer.utils.CommentFormatter;
 import com.google.api.generator.gapic.model.Method;
-import com.google.api.generator.gapic.model.Method.SelectiveGapicType;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
@@ -203,7 +202,7 @@ public class ServiceClientCommentComposer {
       methodJavadocBuilder.setDeprecated(CommentComposer.DEPRECATED_METHOD_STRING);
     }
 
-    if (method.selectiveGapicType() == SelectiveGapicType.INTERNAL) {
+    if (method.isPublic() == false) {
       methodJavadocBuilder.setInternalOnly(CommentComposer.INTERNAL_ONLY_METHOD_STRING);
     }
 
@@ -350,7 +349,7 @@ public class ServiceClientCommentComposer {
       methodJavadocBuilder.setDeprecated(CommentComposer.DEPRECATED_METHOD_STRING);
     }
 
-    if (method.selectiveGapicType() == SelectiveGapicType.INTERNAL) {
+    if (method.isPublic() == false) {
       methodJavadocBuilder.setInternalOnly(CommentComposer.INTERNAL_ONLY_METHOD_STRING);
     }
 

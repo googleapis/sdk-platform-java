@@ -61,7 +61,6 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Method;
-import com.google.api.generator.gapic.model.Method.SelectiveGapicType;
 import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
@@ -142,7 +141,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     // list.
     List<Method> publicMethods =
         service.methods().stream()
-            .filter(m -> m.selectiveGapicType() == SelectiveGapicType.PUBLIC)
+            .filter(m -> m.isPublic() == true)
             .collect(Collectors.toList());
     Optional<Method> methodOpt =
         publicMethods.isEmpty()
@@ -301,7 +300,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
       annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
     }
 
-    if (protoMethod.selectiveGapicType() == SelectiveGapicType.INTERNAL) {
+    if (protoMethod.isPublic() == false) {
       annotations.add(
           AnnotationNode.withTypeAndDescription(
               FIXED_TYPESTORE.get("InternalApi"), INTERNAL_API_WARNING));
@@ -312,7 +311,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
             SettingsCommentComposer.createCallSettingsGetterComment(
                 getMethodNameFromSettingsVarName(javaMethodName),
                 protoMethod.isDeprecated(),
-                protoMethod.selectiveGapicType() == SelectiveGapicType.INTERNAL))
+                protoMethod.isPublic() == false))
         .setAnnotations(annotations)
         .build();
   }
@@ -786,7 +785,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                   SettingsCommentComposer.createCallSettingsBuilderGetterComment(
                       getMethodNameFromSettingsVarName(javaMethodName),
                       protoMethod.isDeprecated(),
-                      protoMethod.selectiveGapicType() == SelectiveGapicType.INTERNAL))
+                      protoMethod.isPublic() == false))
               .setAnnotations(
                   protoMethod.isDeprecated()
                       ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
@@ -803,7 +802,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                     SettingsCommentComposer.createCallSettingsBuilderGetterComment(
                         getMethodNameFromSettingsVarName(javaMethodName),
                         protoMethod.isDeprecated(),
-                        protoMethod.selectiveGapicType() == SelectiveGapicType.INTERNAL))
+                        protoMethod.isPublic() == false))
                 .setAnnotations(
                     protoMethod.isDeprecated()
                         ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))

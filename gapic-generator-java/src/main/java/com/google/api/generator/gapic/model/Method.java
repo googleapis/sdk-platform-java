@@ -30,12 +30,6 @@ public abstract class Method {
     BIDI
   };
 
-  public enum SelectiveGapicType {
-    PUBLIC,
-    HIDDEN,
-    INTERNAL
-  }
-
   public abstract String name();
 
   public abstract Stream stream();
@@ -44,7 +38,7 @@ public abstract class Method {
 
   public abstract TypeNode outputType();
 
-  public abstract SelectiveGapicType selectiveGapicType();
+  public abstract boolean isPublic();
 
   public abstract boolean isBatching();
 
@@ -144,7 +138,7 @@ public abstract class Method {
         .setStream(Stream.NONE)
         .setAutoPopulatedFields(new ArrayList<>())
         .setMethodSignatures(ImmutableList.of())
-        .setSelectiveGapicType(SelectiveGapicType.PUBLIC)
+        .setIsPublic(false)
         .setIsBatching(false)
         .setIsDeprecated(false)
         .setOperationPollingMethod(false);
@@ -170,8 +164,7 @@ public abstract class Method {
     public abstract Builder setInputType(TypeNode inputType);
 
     public abstract Builder setOutputType(TypeNode outputType);
-
-    public abstract Builder setSelectiveGapicType(SelectiveGapicType gapicType);
+    public abstract Builder setIsPublic(boolean isPublic);
 
     public abstract Builder setStream(Stream stream);
 

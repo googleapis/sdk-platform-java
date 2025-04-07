@@ -22,7 +22,6 @@ import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
-import com.google.api.generator.gapic.model.Method.SelectiveGapicType;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Sample;
@@ -217,6 +216,7 @@ class ServiceClientHeaderSampleComposerTest {
         writeStatements(
             ServiceClientHeaderSampleComposer.composeClassHeaderSample(
                 service, clientType, resourceNames, messageTypes));
+    System.out.println("results:  " + results);
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -231,6 +231,7 @@ class ServiceClientHeaderSampleComposerTest {
             "          .build();\n",
             "  EchoResponse response = echoClient.echo(request);\n",
             "}");
+    System.out.println("results:  " + expected);
     Assert.assertEquals(results, expected);
   }
 
@@ -316,14 +317,14 @@ class ServiceClientHeaderSampleComposerTest {
             .setName("ChatShouldGenerateAsInternal")
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setSelectiveGapicType(SelectiveGapicType.INTERNAL)
+            .setIsPublic(false)
             .build();
     Method publicMethod =
         Method.builder()
             .setName("ChatShouldGenerateAsPublic")
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setSelectiveGapicType(SelectiveGapicType.PUBLIC)
+            .setIsPublic(true)
             .build();
     Service service =
         Service.builder()
@@ -386,14 +387,14 @@ class ServiceClientHeaderSampleComposerTest {
             .setName("ChatShouldGenerateAsInternal")
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setSelectiveGapicType(SelectiveGapicType.INTERNAL)
+            .setIsPublic(false)
             .build();
     Method internalMethod2 =
         Method.builder()
             .setName("EchoShouldGenerateAsInternal")
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setSelectiveGapicType(SelectiveGapicType.INTERNAL)
+            .setIsPublic(false)
             .build();
     Service service =
         Service.builder()

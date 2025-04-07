@@ -38,7 +38,6 @@ import com.google.api.generator.gapic.model.HttpBindings;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
-import com.google.api.generator.gapic.model.Method.SelectiveGapicType;
 import com.google.api.generator.gapic.model.OperationResponse;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
@@ -93,7 +92,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Parser {
-
+  enum SelectiveGapicType {
+    PUBLIC,
+    HIDDEN,
+    INTERNAL
+  }
   private static final Logger LOGGER = Logger.getLogger(Parser.class.getName());
   private static final String COMMA = ",";
   private static final String COLON = ":";
@@ -846,7 +849,7 @@ public class Parser {
               .setName(protoMethod.getName())
               .setInputType(inputType)
               .setOutputType(TypeParser.parseType(protoMethod.getOutputType()))
-              .setSelectiveGapicType(methodSelectiveGapicType)
+              .setIsPublic(methodSelectiveGapicType == SelectiveGapicType.PUBLIC)
               .setStream(
                   Method.toStream(protoMethod.isClientStreaming(), protoMethod.isServerStreaming()))
               .setLro(parseLro(servicePackage, protoMethod, messageTypes))

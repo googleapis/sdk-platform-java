@@ -35,11 +35,11 @@ import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
-import com.google.api.generator.gapic.model.Method.SelectiveGapicType;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.api.generator.gapic.model.Transport;
+import com.google.api.generator.gapic.protoparser.Parser.SelectiveGapicType;
 import com.google.api.version.test.ApiVersionTestingOuterClass;
 import com.google.auto.populate.field.AutoPopulateFieldTestingOuterClass;
 import com.google.bookshop.v1beta1.BookshopProto;
@@ -761,7 +761,7 @@ class ParserTest {
     assertEquals(3, services.get(0).methods().size());
     for (Method method : services.get(0).methods()) {
       assertTrue(method.name().contains("ShouldGenerate"));
-      assertTrue(method.selectiveGapicType().equals(SelectiveGapicType.PUBLIC));
+      assertTrue(method.isPublic());
     }
   }
 
@@ -789,7 +789,7 @@ class ParserTest {
     assertEquals("EchoServiceShouldGenerateAllPublic", services.get(0).overriddenName());
     assertEquals(3, services.get(0).methods().size());
     for (Method method : services.get(0).methods()) {
-      assertTrue(method.selectiveGapicType().equals(SelectiveGapicType.PUBLIC));
+      assertTrue(method.isPublic());
     }
 
     // Tests a service with partial public methods and partial internal methods.
@@ -797,16 +797,16 @@ class ParserTest {
     assertEquals(5, services.get(1).methods().size());
     for (Method method : services.get(1).methods()) {
       if (method.name().contains("ShouldGenerateAsPublic")) {
-        assertTrue(method.selectiveGapicType().equals(SelectiveGapicType.PUBLIC));
+        assertTrue(method.isPublic());
       } else {
-        assertTrue(method.selectiveGapicType().equals(SelectiveGapicType.INTERNAL));
+        assertFalse(method.isPublic());
       }
     }
     // Tests a service with internal methods only.
     assertEquals("EchoServiceShouldGenerateAllInternal", services.get(2).overriddenName());
     assertEquals(2, services.get(2).methods().size());
     for (Method method : services.get(2).methods()) {
-      assertTrue(method.selectiveGapicType().equals(SelectiveGapicType.INTERNAL));
+      assertFalse(method.isPublic());
     }
   }
 
