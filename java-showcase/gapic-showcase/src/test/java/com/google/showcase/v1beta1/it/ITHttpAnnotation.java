@@ -118,13 +118,14 @@ class ITHttpAnnotation {
 
   @Test
   void verifyByteSizeOfExtremePayload() throws IOException {
-    InputStreamReader streamReader = new InputStreamReader(
-        Objects.requireNonNull(
-            ITHttpAnnotation.class
-                .getClassLoader()
-                .getResourceAsStream("compliance_suite.json")));
+    InputStreamReader streamReader =
+        new InputStreamReader(
+            Objects.requireNonNull(
+                ITHttpAnnotation.class
+                    .getClassLoader()
+                    .getResourceAsStream("compliance_suite.json")));
     int count = 0;
-    while(streamReader.ready()) {
+    while (streamReader.ready()) {
       count += streamReader.read();
     }
     assertThat(count).isEqualTo(434436);
