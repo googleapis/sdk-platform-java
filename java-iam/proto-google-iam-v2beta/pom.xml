@@ -17,6 +17,12 @@
       <groupId>org.example</groupId>
       <artifactId>protobuf-sdk</artifactId>
       <version>1.0-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.example</groupId>
+      <artifactId>protobuf-sdk</artifactId>
+      <version>1.0-SNAPSHOT</version>
       <classifier>protobuf-shaded</classifier>
     </dependency>
     <dependency>
@@ -44,7 +50,7 @@
             </goals>
             <configuration>
               <artifactSet>
-                <includes>*:proto-google-cloud-kmsinventory-v1:*</includes>
+                <includes>*:proto-google-iam-v2beta:*</includes>
               </artifactSet>
               <relocations>
                 <relocation>

@@ -44,7 +44,7 @@
             </goals>
             <configuration>
               <artifactSet>
-                <includes>*:proto-google-cloud-kmsinventory-v1:*</includes>
+                <includes>*:proto-google-common-protos:*</includes>
               </artifactSet>
               <relocations>
                 <relocation>
