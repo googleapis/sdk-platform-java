@@ -53,9 +53,7 @@ public class ServiceClientHeaderSampleComposer {
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
     List<Method> publicMethods =
-        service.methods().stream()
-            .filter(m -> m.isPublic() == true)
-            .collect(Collectors.toList());
+        service.methods().stream().filter(m -> m.isPublic() == true).collect(Collectors.toList());
 
     // If all generated methods are INTERNAL, generate an empty service sample.
     if (publicMethods.isEmpty()) {
@@ -66,11 +64,7 @@ public class ServiceClientHeaderSampleComposer {
     // exists, use the first public method in the service's methods list.
     Method method =
         publicMethods.stream()
-            .filter(
-                m ->
-                    m.stream() == Method.Stream.NONE
-                        && !m.hasLro()
-                        && !m.isPaged())
+            .filter(m -> m.stream() == Method.Stream.NONE && !m.hasLro() && !m.isPaged())
             .findFirst()
             .orElse(publicMethods.get(0));
 

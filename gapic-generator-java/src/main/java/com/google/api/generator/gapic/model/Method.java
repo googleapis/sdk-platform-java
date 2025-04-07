@@ -164,6 +164,7 @@ public abstract class Method {
     public abstract Builder setInputType(TypeNode inputType);
 
     public abstract Builder setOutputType(TypeNode outputType);
+
     public abstract Builder setIsPublic(boolean isPublic);
 
     public abstract Builder setStream(Stream stream);

@@ -423,9 +423,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // public in the
     // list.
     List<Method> publicMethods =
-        service.methods().stream()
-            .filter(m -> m.isPublic() == true)
-            .collect(Collectors.toList());
+        service.methods().stream().filter(m -> m.isPublic() == true).collect(Collectors.toList());
     Optional<Method> methodOpt =
         publicMethods.isEmpty()
             ? Optional.empty()

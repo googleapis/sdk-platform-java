@@ -97,6 +97,7 @@ public class Parser {
     HIDDEN,
     INTERNAL
   }
+
   private static final Logger LOGGER = Logger.getLogger(Parser.class.getName());
   private static final String COMMA = ",";
   private static final String COLON = ":";
