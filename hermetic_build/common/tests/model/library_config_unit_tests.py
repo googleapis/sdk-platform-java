@@ -120,3 +120,26 @@ class LibraryConfigTest(unittest.TestCase):
             "com.example:baremetalsolution", library.get_maven_coordinate()
         )
         self.assertEqual("baremetalsolution", library.get_artifact_id())
+
+    def test_to_dict_some_values(self):
+        library = LibraryConfig(
+            api_shortname="secret",
+            name_pretty="",
+            product_documentation="",
+            api_description="",
+            gapic_configs=[GapicConfig("test/proto/path")],
+            library_name="secretmanager",
+        )
+
+        expected_dict = {
+            "api_shortname": "secret",
+            "name_pretty": "",
+            "product_documentation": "",
+            "api_description": "",
+            "library_name": "secretmanager",
+            "GAPICs": [{"proto_path": "test/proto/path"}],
+            # calculated at init
+            "distribution_name": "com.google.cloud:google-cloud-secretmanager",
+            "release_level": "preview",
+        }
+        self.assertEqual(library.to_dict(), expected_dict)
