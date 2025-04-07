@@ -120,9 +120,9 @@ class ITHttpAnnotation {
   void verifyByteSizeOfExtremePayload() {
     RepeatRequest request = complianceSuite.getGroup(0).getRequests(3);
     assertThat(request.getName()).isEqualTo("Extreme values");
+    System.out.println(request.getInfo().getFString());
     int fStringCount = request.getInfo().getFString().length();
     assertThat(fStringCount).isEqualTo(69);
-    System.out.println(request.getInfo().getFString());
     int fStringBytes = request.getInfo().getFStringBytes().size();
     assertThat(fStringBytes).isEqualTo(77);
     int requestBytes = request.getSerializedSize();
