@@ -42,6 +42,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -113,6 +114,19 @@ class ITHttpAnnotation {
     httpjsonClient.close();
     httpjsonClient.awaitTermination(
         TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+  }
+
+  @Test
+  void verifyByteSizeOfExtremePayload() {
+    RepeatRequest request = complianceSuite.getGroup(0).getRequests(3);
+    assertThat(request.getName()).isEqualTo("Extreme values");
+    int fStringCount = request.getInfo().getFString().length();
+    assertThat(fStringCount).isEqualTo(69);
+    System.out.println(request.getInfo().getFString());
+    int fStringBytes = request.getInfo().getFStringBytes().size();
+    assertThat(fStringBytes).isEqualTo(77);
+    int requestBytes = request.getSerializedSize();
+    assertThat(requestBytes).isEqualTo(222);
   }
 
   // Verify that the input's info is the same as the response's info
