@@ -20,7 +20,7 @@ from common.model.library_config import LibraryConfig
 from common.model.gapic_config import GapicConfig
 from common.model.owlbot_yaml_config import (
     OwlbotYamlConfig,
-    OwlbotYamlAdditionRemove,
+    OwlbotYamlAdditionRemoval,
     DeepCopyRegexItem,
 )
 
@@ -217,7 +217,7 @@ def _optional(config: dict, key: str, default: any):
     return config[key]
 
 
-def _owlbot_yaml_addition_remove_from_yaml(data: dict) -> OwlbotYamlAdditionRemove:
+def _owlbot_yaml_addition_remove_from_yaml(data: dict) -> OwlbotYamlAdditionRemoval:
     """
     Parses the addition or remove section from owlbot_yaml data.
     """
@@ -231,7 +231,7 @@ def _owlbot_yaml_addition_remove_from_yaml(data: dict) -> OwlbotYamlAdditionRemo
             _deep_copy_regex_item_from_yaml(item) for item in deep_copy_regex
         ]
 
-    return OwlbotYamlAdditionRemove(
+    return OwlbotYamlAdditionRemoval(
         deep_copy_regex=parsed_deep_copy_regex,
         deep_remove_regex=deep_remove_regex,
         deep_preserve_regex=deep_preserve_regex,
@@ -265,9 +265,9 @@ def _owlbot_yaml_config_from_yaml(
     remove = None
 
     if addition_data:
-        addition = _owlbot_yaml_addition_remove_from_yaml(addition_data)
+        additions = _owlbot_yaml_addition_remove_from_yaml(addition_data)
 
-    if remove_data:
-        remove = _owlbot_yaml_addition_remove_from_yaml(remove_data)
+    if removal_data:
+        removals = _owlbot_yaml_addition_remove_from_yaml(removal_data)
 
-    return OwlbotYamlConfig(addition=addition, remove=remove)
+    return OwlbotYamlConfig(additions=additions, removals=removals)

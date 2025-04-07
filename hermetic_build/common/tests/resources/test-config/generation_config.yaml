@@ -22,7 +22,7 @@ libraries:
       - proto_path: google/cloud/asset/v1p5beta1
       - proto_path: google/cloud/asset/v1p7beta1
     owlbot_yaml:
-      addition:
+      additions:
         deep_preserve_regex:
         - /java-asset/google-cloud-.*/src/test/java/com/google/cloud/.*/it
         - /java-asset/google-cloud-asset/src/test/java/com/google/cloud/asset/v1/VPCServiceControlTest.java
@@ -30,6 +30,6 @@ libraries:
         deep_copy_regex:
         - source: /google/identity/accesscontextmanager/type/.*-java/proto-google-.*/src
           dest: /owl-bot-staging/java-accesscontextmanager/type/proto-google-identity-accesscontextmanager-type/src
-      remove:
+      removals:
         deep_preserve_regex:
         - /java-asset/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java

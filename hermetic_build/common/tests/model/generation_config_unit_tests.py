@@ -109,8 +109,8 @@ class GenerationConfigTest(unittest.TestCase):
         self.assertEqual("google/cloud/asset/v1p5beta1", gapics[3].proto_path)
         self.assertEqual("google/cloud/asset/v1p7beta1", gapics[4].proto_path)
 
-        owlbot_yaml_addition = library.owlbot_yaml.addition
-        owlbot_yaml_removal = library.owlbot_yaml.remove
+        owlbot_yaml_addition = library.owlbot_yaml.additions
+        owlbot_yaml_removal = library.owlbot_yaml.removals
         self.assertEqual(
             "/java-asset/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java",
             owlbot_yaml_removal.deep_preserve_regex[0],

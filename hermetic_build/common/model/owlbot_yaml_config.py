@@ -27,7 +27,7 @@ class DeepCopyRegexItem:
         }
 
 
-class OwlbotYamlAdditionRemove:
+class OwlbotYamlAdditionRemoval:
     def __init__(
         self,
         deep_copy_regex: Optional[List[DeepCopyRegexItem]] = None,
@@ -52,16 +52,16 @@ class OwlbotYamlAdditionRemove:
 class OwlbotYamlConfig:
     def __init__(
         self,
-        addition: Optional[OwlbotYamlAdditionRemove] = None,
-        remove: Optional[OwlbotYamlAdditionRemove] = None,
+        additions: Optional[OwlbotYamlAdditionRemoval] = None,
+        removals: Optional[OwlbotYamlAdditionRemoval] = None,
     ):
-        self.addition = addition
-        self.remove = remove
+        self.additions = additions
+        self.removals = removals
 
     def to_dict(self):
         data = {}
-        if self.addition:
-            data["addition"] = self.addition.to_dict()
-        if self.remove:
-            data["remove"] = self.remove.to_dict()
+        if self.additions:
+            data["additions"] = self.additions.to_dict()
+        if self.removals:
+            data["removals"] = self.removals.to_dict()
         return data
