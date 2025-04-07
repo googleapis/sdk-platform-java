@@ -131,7 +131,7 @@ class ITHttpAnnotation {
                     .getResourceAsStream("compliance_suite.json")),
             StandardCharsets.UTF_8);
     int count = 0;
-    while(streamReader.ready()) {
+    while (streamReader.ready()) {
       count += streamReader.read();
     }
     assertThat(count).isEqualTo(434636);
