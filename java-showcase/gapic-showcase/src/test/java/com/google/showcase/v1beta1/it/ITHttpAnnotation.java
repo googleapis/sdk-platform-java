@@ -19,6 +19,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
+import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.util.JsonFormat;
 import com.google.showcase.v1beta1.ComplianceClient;
@@ -31,6 +32,8 @@ import com.google.showcase.v1beta1.RepeatResponse;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.Map;
@@ -74,7 +77,8 @@ class ITHttpAnnotation {
                 Objects.requireNonNull(
                     ITHttpAnnotation.class
                         .getClassLoader()
-                        .getResourceAsStream("compliance_suite.json"))),
+                        .getResourceAsStream("compliance_suite.json")),
+                StandardCharsets.UTF_8),
             builder);
     complianceSuite = builder.build();
 
@@ -118,16 +122,19 @@ class ITHttpAnnotation {
 
   @Test
   void verifyByteSizeOfExtremePayload() throws IOException {
-    InputStreamReader streamReader = new InputStreamReader(
-        Objects.requireNonNull(
-            ITHttpAnnotation.class
-                .getClassLoader()
-                .getResourceAsStream("compliance_suite.json")));
+    System.out.println(System.getProperty("file.encoding"));
+    InputStreamReader streamReader =
+        new InputStreamReader(
+            Objects.requireNonNull(
+                ITHttpAnnotation.class
+                    .getClassLoader()
+                    .getResourceAsStream("compliance_suite.json")),
+            StandardCharsets.UTF_8);
     int count = 0;
     while(streamReader.ready()) {
       count += streamReader.read();
     }
-    assertThat(count).isEqualTo(434436);
+    assertThat(count).isEqualTo(434636);
   }
 
   // Verify that the input's info is the same as the response's info
