@@ -138,7 +138,7 @@ public abstract class Method {
         .setStream(Stream.NONE)
         .setAutoPopulatedFields(new ArrayList<>())
         .setMethodSignatures(ImmutableList.of())
-        .setIsPublic(false)
+        .setIsPublic(true)
         .setIsBatching(false)
         .setIsDeprecated(false)
         .setOperationPollingMethod(false);
