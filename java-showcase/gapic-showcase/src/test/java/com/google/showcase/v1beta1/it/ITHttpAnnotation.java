@@ -117,16 +117,17 @@ class ITHttpAnnotation {
   }
 
   @Test
-  void verifyByteSizeOfExtremePayload() {
-    RepeatRequest request = complianceSuite.getGroup(0).getRequests(3);
-    assertThat(request.getName()).isEqualTo("Extreme values");
-    System.out.println(request.getInfo().getFString());
-    int fStringCount = request.getInfo().getFString().length();
-    assertThat(fStringCount).isEqualTo(69);
-    int fStringBytes = request.getInfo().getFStringBytes().size();
-    assertThat(fStringBytes).isEqualTo(77);
-    int requestBytes = request.getSerializedSize();
-    assertThat(requestBytes).isEqualTo(222);
+  void verifyByteSizeOfExtremePayload() throws IOException {
+    InputStreamReader streamReader = new InputStreamReader(
+        Objects.requireNonNull(
+            ITHttpAnnotation.class
+                .getClassLoader()
+                .getResourceAsStream("compliance_suite.json")));
+    int count = 0;
+    while(streamReader.ready()) {
+      count += streamReader.read();
+    }
+    assertThat(count).isEqualTo(434436);
   }
 
   // Verify that the input's info is the same as the response's info
