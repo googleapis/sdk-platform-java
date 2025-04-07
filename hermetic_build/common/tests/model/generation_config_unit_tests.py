@@ -109,6 +109,21 @@ class GenerationConfigTest(unittest.TestCase):
         self.assertEqual("google/cloud/asset/v1p5beta1", gapics[3].proto_path)
         self.assertEqual("google/cloud/asset/v1p7beta1", gapics[4].proto_path)
 
+        owlbot_yaml_addition = library.owlbot_yaml.addition
+        owlbot_yaml_removal = library.owlbot_yaml.remove
+        self.assertEqual(
+            "/java-asset/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java",
+            owlbot_yaml_removal.deep_preserve_regex[0],
+        )
+        self.assertEqual(
+            "/owl-bot-staging/java-accesscontextmanager/type/proto-google-identity-accesscontextmanager-type/src",
+            owlbot_yaml_addition.deep_copy_regex[0].dest,
+        )
+        self.assertEqual(
+            "/google/identity/accesscontextmanager/type/.*-java/proto-google-.*/src",
+            owlbot_yaml_addition.deep_copy_regex[0].source,
+        )
+
     def test_get_proto_path_to_library_name_success(self):
         paths = GenerationConfig.from_yaml(
             f"{test_config_dir}/generation_config.yaml"
