@@ -4,7 +4,7 @@
   <groupId>com.google.cloud</groupId>
   <artifactId>google-iam-parent</artifactId>
   <packaging>pom</packaging>
-  <version>1.49.2-SNAPSHOT</version><!-- {x-version-update:proto-google-iam-v1:current} -->
+  <version>protobuf-shaded-jar-v1</version><!-- {x-version-update:proto-google-iam-v1:current} -->
   <name>Google IAM Parent</name>
   <description>
     Java idiomatic client for Google Cloud Platform services.
