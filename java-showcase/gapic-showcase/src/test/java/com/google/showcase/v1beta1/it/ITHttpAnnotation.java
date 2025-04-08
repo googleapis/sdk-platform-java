@@ -31,6 +31,7 @@ import com.google.showcase.v1beta1.RepeatResponse;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.Map;
@@ -73,7 +74,8 @@ class ITHttpAnnotation {
                 Objects.requireNonNull(
                     ITHttpAnnotation.class
                         .getClassLoader()
-                        .getResourceAsStream("compliance_suite.json"))),
+                        .getResourceAsStream("compliance_suite.json")),
+                StandardCharsets.UTF_8),
             builder);
     complianceSuite = builder.build();
 
