@@ -26,6 +26,11 @@ from common.model.gapic_config import GapicConfig
 from common.model.gapic_inputs import GapicInputs
 from common.model.generation_config import GenerationConfig
 from common.model.library_config import LibraryConfig
+from common.model.owlbot_yaml_config import (
+    OwlbotYamlConfig,
+    OwlbotYamlAdditionRemoval,
+    DeepCopyRegexItem,
+)
 from library_generation.tests.test_utils import FileComparator
 from library_generation.tests.test_utils import cleanup
 
@@ -72,6 +77,18 @@ class UtilitiesTest(unittest.TestCase):
     """
     Unit tests for utilities.py
     """
+
+    content = """
+deep-remove-regex:
+- "/java-connectgateway/proto-google-.*/src"
+- "/java-connectgateway/google-.*/src"
+deep-preserve-regex:
+- "/java-connectgateway/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java"
+deep-copy-regex:
+- source: "/google/cloud/gkeconnect/gateway/(v.*)/.*-java/proto-google-.*/src"
+  dest: "/owl-bot-staging/java-connectgateway/$1/proto-google-cloud-connectgateway-$1/src"
+api-name: connectgateway
+"""
 
     CONFIGURATION_YAML_PATH = os.path.join(
         script_dir,
@@ -301,6 +318,104 @@ class UtilitiesTest(unittest.TestCase):
         library_path = sorted([Path(key).name for key in repo_config.libraries])
         self.assertEqual(["misc"], library_path)
         shutil.rmtree(repo_config.output_folder)
+
+    def test_apply_owlbot_config_remove_deep_remove_and_preserve(self):
+        config = OwlbotYamlConfig(
+            removals=OwlbotYamlAdditionRemoval(
+                deep_remove_regex=["/java-connectgateway/proto-google-.*/src"],
+                deep_preserve_regex=[
+                    "/java-connectgateway/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java"
+                ],
+            )
+        )
+        expected_content = """
+deep-remove-regex:
+- "/java-connectgateway/google-.*/src"
+deep-preserve-regex:
+deep-copy-regex:
+- source: "/google/cloud/gkeconnect/gateway/(v.*)/.*-java/proto-google-.*/src"
+  dest: "/owl-bot-staging/java-connectgateway/$1/proto-google-cloud-connectgateway-$1/src"
+api-name: connectgateway
+"""
+        self.assertEqual(
+            util.apply_owlbot_config(self.content, config), expected_content
+        )
+
+    def test_apply_owlbot_config_remove_deep_copy_regex(self):
+        item1 = DeepCopyRegexItem(
+            source="/google/cloud/gkeconnect/gateway/(v.*)/.*-java/proto-google-.*/src",
+            dest="/owl-bot-staging/java-connectgateway/$1/proto-google-cloud-connectgateway-$1/src",
+        )
+
+        config = OwlbotYamlConfig(
+            removals=OwlbotYamlAdditionRemoval(deep_copy_regex=[item1])
+        )
+        expected_content = """
+deep-remove-regex:
+- "/java-connectgateway/proto-google-.*/src"
+- "/java-connectgateway/google-.*/src"
+deep-preserve-regex:
+- "/java-connectgateway/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java"
+deep-copy-regex:
+api-name: connectgateway
+"""
+        self.assertEqual(
+            util.apply_owlbot_config(self.content, config), expected_content
+        )
+
+    def test_apply_owlbot_config_add_deep_remove_and_preserve(self):
+        config = OwlbotYamlConfig(
+            additions=OwlbotYamlAdditionRemoval(
+                deep_remove_regex=["/new/path"],
+                deep_preserve_regex=["/new/path/to/preserve"],
+            )
+        )
+        expected_content = """
+deep-remove-regex:
+- "/new/path"
+- "/java-connectgateway/proto-google-.*/src"
+- "/java-connectgateway/google-.*/src"
+deep-preserve-regex:
+- "/new/path/to/preserve"
+- "/java-connectgateway/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java"
+deep-copy-regex:
+- source: "/google/cloud/gkeconnect/gateway/(v.*)/.*-java/proto-google-.*/src"
+  dest: "/owl-bot-staging/java-connectgateway/$1/proto-google-cloud-connectgateway-$1/src"
+api-name: connectgateway
+"""
+        self.assertEqual(
+            util.apply_owlbot_config(self.content, config), expected_content
+        )
+
+    def test_apply_owlbot_config_add_deep_copy_regex(self):
+
+        item1 = DeepCopyRegexItem(source="/path/to/copy", dest="/dest/to/copy")
+        config = OwlbotYamlConfig(
+            additions=OwlbotYamlAdditionRemoval(deep_copy_regex=[item1])
+        )
+        expected_content = """
+deep-remove-regex:
+- "/java-connectgateway/proto-google-.*/src"
+- "/java-connectgateway/google-.*/src"
+deep-preserve-regex:
+- "/java-connectgateway/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java"
+deep-copy-regex:
+- source: "/path/to/copy"
+  dest: "/dest/to/copy"
+- source: "/google/cloud/gkeconnect/gateway/(v.*)/.*-java/proto-google-.*/src"
+  dest: "/owl-bot-staging/java-connectgateway/$1/proto-google-cloud-connectgateway-$1/src"
+api-name: connectgateway
+"""
+        self.assertEqual(
+            util.apply_owlbot_config(self.content, config), expected_content
+        )
+
+    def test_apply_owlbot_config_no_config(self):
+        config = None
+        expected_content = self.content
+        self.assertEqual(
+            util.apply_owlbot_config(self.content, config), expected_content
+        )
 
     def __setup_postprocessing_prerequisite_files(
         self,
