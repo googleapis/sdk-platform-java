@@ -259,7 +259,7 @@ def _owlbot_yaml_config_from_yaml(
         return None
 
     addition_data = _optional(owlbot_yaml_data, "addition", None)
-    remove_data = _optional(owlbot_yaml_data, "remove", None)
+    removal_data = _optional(owlbot_yaml_data, "remove", None)
 
     addition = None
     remove = None
