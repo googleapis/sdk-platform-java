@@ -850,7 +850,7 @@ public class Parser {
               .setName(protoMethod.getName())
               .setInputType(inputType)
               .setOutputType(TypeParser.parseType(protoMethod.getOutputType()))
-              .setIsPublic(methodSelectiveGapicType == SelectiveGapicType.PUBLIC)
+              .setIsInternalApi(methodSelectiveGapicType == SelectiveGapicType.INTERNAL)
               .setStream(
                   Method.toStream(protoMethod.isClientStreaming(), protoMethod.isServerStreaming()))
               .setLro(parseLro(servicePackage, protoMethod, messageTypes))

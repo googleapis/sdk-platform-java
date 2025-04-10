@@ -202,7 +202,7 @@ public class ServiceClientCommentComposer {
       methodJavadocBuilder.setDeprecated(CommentComposer.DEPRECATED_METHOD_STRING);
     }
 
-    if (method.isPublic() == false) {
+    if (method.isInternalApi()) {
       methodJavadocBuilder.setInternalOnly(CommentComposer.INTERNAL_ONLY_METHOD_STRING);
     }
 
@@ -349,7 +349,7 @@ public class ServiceClientCommentComposer {
       methodJavadocBuilder.setDeprecated(CommentComposer.DEPRECATED_METHOD_STRING);
     }
 
-    if (method.isPublic() == false) {
+    if (method.isInternalApi()) {
       methodJavadocBuilder.setInternalOnly(CommentComposer.INTERNAL_ONLY_METHOD_STRING);
     }
 

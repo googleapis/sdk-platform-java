@@ -761,7 +761,7 @@ class ParserTest {
     assertEquals(3, services.get(0).methods().size());
     for (Method method : services.get(0).methods()) {
       assertTrue(method.name().contains("ShouldGenerate"));
-      assertTrue(method.isPublic());
+      assertFalse(method.isInternalApi());
     }
   }
 
@@ -789,7 +789,7 @@ class ParserTest {
     assertEquals("EchoServiceShouldGenerateAllPublic", services.get(0).overriddenName());
     assertEquals(3, services.get(0).methods().size());
     for (Method method : services.get(0).methods()) {
-      assertTrue(method.isPublic());
+      assertFalse(method.isInternalApi());
     }
 
     // Tests a service with partial public methods and partial internal methods.
@@ -797,16 +797,16 @@ class ParserTest {
     assertEquals(5, services.get(1).methods().size());
     for (Method method : services.get(1).methods()) {
       if (method.name().contains("ShouldGenerateAsPublic")) {
-        assertTrue(method.isPublic());
+        assertFalse(method.isInternalApi());
       } else {
-        assertFalse(method.isPublic());
+        assertTrue(method.isInternalApi());
       }
     }
     // Tests a service with internal methods only.
     assertEquals("EchoServiceShouldGenerateAllInternal", services.get(2).overriddenName());
     assertEquals(2, services.get(2).methods().size());
     for (Method method : services.get(2).methods()) {
-      assertFalse(method.isPublic());
+      assertTrue(method.isInternalApi());
     }
   }
 

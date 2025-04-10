@@ -423,7 +423,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // public in the
     // list.
     List<Method> publicMethods =
-        service.methods().stream().filter(m -> m.isPublic() == true).collect(Collectors.toList());
+        service.methods().stream().filter(m -> m.isInternalApi() == false).collect(Collectors.toList());
     Optional<Method> methodOpt =
         publicMethods.isEmpty()
             ? Optional.empty()
@@ -502,7 +502,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       if (method.isDeprecated()) {
         deprecatedSettingVarNames.add(varName);
       }
-      if (method.isPublic() == false) {
+      if (method.isInternalApi()) {
         internalSettingVarNames.add(varName);
       }
       varExprs.put(

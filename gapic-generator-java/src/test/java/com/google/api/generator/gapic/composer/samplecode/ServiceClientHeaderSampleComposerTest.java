@@ -317,14 +317,14 @@ class ServiceClientHeaderSampleComposerTest {
             .setName("ChatShouldGenerateAsInternal")
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setIsPublic(false)
+            .setIsInternalApi(true)
             .build();
     Method publicMethod =
         Method.builder()
             .setName("ChatShouldGenerateAsPublic")
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setIsPublic(true)
+            .setIsInternalApi(false)
             .build();
     Service service =
         Service.builder()
@@ -387,14 +387,14 @@ class ServiceClientHeaderSampleComposerTest {
             .setName("ChatShouldGenerateAsInternal")
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setIsPublic(false)
+            .setIsInternalApi(true)
             .build();
     Method internalMethod2 =
         Method.builder()
             .setName("EchoShouldGenerateAsInternal")
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setIsPublic(false)
+            .setIsInternalApi(true)
             .build();
     Service service =
         Service.builder()
@@ -421,7 +421,7 @@ class ServiceClientHeaderSampleComposerTest {
         LineFormatter.lines(
             "try (EchoServiceSelectiveApiClient echoServiceSelectiveApiClient =\n"
                 + "    EchoServiceSelectiveApiClient.create()) {}");
-    Assert.assertEquals(results, expected);
+    Assert.assertEquals(expected, results);
   }
 
   /*Testing composeSetCredentialsSample*/

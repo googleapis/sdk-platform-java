@@ -202,7 +202,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     if (method.isDeprecated()) {
       annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
     }
-    if (method.isPublic() == false) {
+    if (method.isInternalApi()) {
       annotations.add(
           AnnotationNode.withTypeAndDescription(
               typeStore.get("InternalApi"), INTERNAL_API_WARNING));

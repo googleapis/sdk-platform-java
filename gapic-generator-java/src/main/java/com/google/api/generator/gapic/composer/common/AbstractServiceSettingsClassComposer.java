@@ -140,7 +140,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     // public in the
     // list.
     List<Method> publicMethods =
-        service.methods().stream().filter(m -> m.isPublic() == true).collect(Collectors.toList());
+        service.methods().stream().filter(m -> m.isInternalApi() == false).collect(Collectors.toList());
     Optional<Method> methodOpt =
         publicMethods.isEmpty()
             ? Optional.empty()
@@ -298,7 +298,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
       annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
     }
 
-    if (protoMethod.isPublic() == false) {
+    if (protoMethod.isInternalApi()) {
       annotations.add(
           AnnotationNode.withTypeAndDescription(
               FIXED_TYPESTORE.get("InternalApi"), INTERNAL_API_WARNING));
@@ -309,7 +309,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
             SettingsCommentComposer.createCallSettingsGetterComment(
                 getMethodNameFromSettingsVarName(javaMethodName),
                 protoMethod.isDeprecated(),
-                protoMethod.isPublic() == false))
+                protoMethod.isInternalApi()))
         .setAnnotations(annotations)
         .build();
   }
@@ -783,7 +783,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                   SettingsCommentComposer.createCallSettingsBuilderGetterComment(
                       getMethodNameFromSettingsVarName(javaMethodName),
                       protoMethod.isDeprecated(),
-                      protoMethod.isPublic() == false))
+                      protoMethod.isInternalApi()))
               .setAnnotations(
                   protoMethod.isDeprecated()
                       ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
@@ -800,7 +800,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                     SettingsCommentComposer.createCallSettingsBuilderGetterComment(
                         getMethodNameFromSettingsVarName(javaMethodName),
                         protoMethod.isDeprecated(),
-                        protoMethod.isPublic() == false))
+                        protoMethod.isInternalApi()))
                 .setAnnotations(
                     protoMethod.isDeprecated()
                         ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
