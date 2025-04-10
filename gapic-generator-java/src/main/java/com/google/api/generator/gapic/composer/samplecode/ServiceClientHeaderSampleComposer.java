@@ -53,7 +53,9 @@ public class ServiceClientHeaderSampleComposer {
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
     List<Method> publicMethods =
-        service.methods().stream().filter(m -> m.isInternalApi() == false).collect(Collectors.toList());
+        service.methods().stream()
+            .filter(m -> m.isInternalApi() == false)
+            .collect(Collectors.toList());
 
     // If all generated methods are INTERNAL, generate an empty service sample.
     if (publicMethods.isEmpty()) {
