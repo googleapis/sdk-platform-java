@@ -27,7 +27,6 @@ setup(
             "owlbot/templates/java_library/.github/**/*",
             "owlbot/templates/java_library/**/*",
             "owlbot/templates/java_library/.kokoro/build.sh",
-            "owlbot/templates/java_library/.kokoro/common.cfg",
             "owlbot/templates/java_library/.kokoro/presubmit/graalvm-*.cfg",
         ],
         "synthtool": ["owlbot/synthtool/**/*"],
