@@ -30,19 +30,36 @@
 
 package com.google.api.gax.rpc.mtls;
 
-import com.google.api.client.json.GenericJson;
-import com.google.api.client.util.Key;
-import com.google.common.collect.ImmutableList;
-import java.util.List;
+import java.io.IOException;
 
-/** Data class representing context_aware_metadata.json file. */
-public class ContextAwareMetadataJson extends GenericJson {
-  /** Cert provider command */
-  @Key("cert_provider_command")
-  private List<String> commands;
+public class DefaultMtlsProviderFactory {
 
-  /** Returns the cert provider command. */
-  public final ImmutableList<String> getCommands() {
-    return ImmutableList.copyOf(commands);
+  /**
+   * Creates an instance of {@link MtlsProvider}. It first attempts to create an {@link
+   * com.google.auth.mtls.X509Provider}. If the certificate source is unavailable, it falls back to
+   * creating a {@link SecureConnectProvider}. If the secure connect provider also fails, it throws
+   * the original {@link com.google.auth.mtls.CertificateSourceUnavailableException}.
+   *
+   * @return an instance of {@link MtlsProvider}.
+   * @throws com.google.auth.mtls.CertificateSourceUnavailableException if neither provider can be
+   *     created.
+   * @throws IOException if an I/O error occurs during provider creation.
+   */
+  public static com.google.api.gax.rpc.mtls.v2.MtlsProvider create() throws IOException {
+    com.google.api.gax.rpc.mtls.v2.MtlsProvider mtlsProvider;
+    try {
+      mtlsProvider = new X509Provider();
+      mtlsProvider.getKeyStore();
+      return mtlsProvider;
+    } catch (CertificateSourceUnavailableException e) {
+      try {
+        mtlsProvider = new SecureConnectProvider();
+        mtlsProvider.getKeyStore();
+        return mtlsProvider;
+      } catch (CertificateSourceUnavailableException ex) {
+        throw new CertificateSourceUnavailableException(
+            "No MtlsSource is available on this device.");
+      }
+    }
   }
 }

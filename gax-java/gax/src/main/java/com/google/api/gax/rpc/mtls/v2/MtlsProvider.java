@@ -28,21 +28,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.api.gax.rpc.mtls;
+package com.google.api.gax.rpc.mtls.v2;
 
-import com.google.api.client.json.GenericJson;
-import com.google.api.client.util.Key;
-import com.google.common.collect.ImmutableList;
-import java.util.List;
+import java.io.IOException;
+import java.security.KeyStore;
 
-/** Data class representing context_aware_metadata.json file. */
-public class ContextAwareMetadataJson extends GenericJson {
-  /** Cert provider command */
-  @Key("cert_provider_command")
-  private List<String> commands;
-
-  /** Returns the cert provider command. */
-  public final ImmutableList<String> getCommands() {
-    return ImmutableList.copyOf(commands);
-  }
+public interface MtlsProvider {
+  /** Returns the mutual TLS key store. */
+  KeyStore getKeyStore() throws IOException;
 }

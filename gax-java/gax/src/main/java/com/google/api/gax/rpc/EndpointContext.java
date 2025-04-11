@@ -31,7 +31,9 @@ package com.google.api.gax.rpc;
 
 import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.internal.EnvironmentProvider;
-import com.google.api.gax.rpc.mtls.MtlsProvider;
+import com.google.api.gax.rpc.mtls.CertificateBasedAccess;
+import com.google.api.gax.rpc.mtls.DefaultMtlsProviderFactory;
+import com.google.api.gax.rpc.mtls.v2.MtlsProvider;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auto.value.AutoValue;
@@ -116,6 +118,9 @@ public abstract class EndpointContext {
 
   @Nullable
   public abstract MtlsProvider mtlsProvider();
+
+  @Nullable
+  public abstract CertificateBasedAccess certificateBasedAccess();
 
   public abstract boolean usingGDCH();
 
@@ -210,7 +215,11 @@ public abstract class EndpointContext {
 
     public abstract Builder setSwitchToMtlsEndpointAllowed(boolean switchToMtlsEndpointAllowed);
 
-    public abstract Builder setMtlsProvider(MtlsProvider mtlsProvider);
+    public abstract Builder setMtlsProvider(
+        com.google.api.gax.rpc.mtls.v2.MtlsProvider mtlsProvider);
+
+    public abstract Builder setCertificateBasedAccess(
+        CertificateBasedAccess certificateBasedAccess);
 
     public abstract Builder setUsingGDCH(boolean usingGDCH);
 
@@ -238,7 +247,10 @@ public abstract class EndpointContext {
 
     abstract boolean switchToMtlsEndpointAllowed();
 
+    @Nullable
     abstract MtlsProvider mtlsProvider();
+
+    abstract CertificateBasedAccess certificateBasedAccess();
 
     abstract boolean usingGDCH();
 
@@ -272,7 +284,18 @@ public abstract class EndpointContext {
 
     /** Determines the fully resolved endpoint and universe domain values */
     private String determineEndpoint() throws IOException {
-      MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
+      MtlsProvider mtlsProvider = mtlsProvider();
+      if (mtlsProvider == null) {
+        try {
+          mtlsProvider = DefaultMtlsProviderFactory.create();
+        } catch (IOException e) {
+          // throw e;
+        }
+      }
+      CertificateBasedAccess cba =
+          certificateBasedAccess() == null
+              ? CertificateBasedAccess.createWithSystemEnv()
+              : certificateBasedAccess();
       // TransportChannelProvider's endpoint will override the ClientSettings' endpoint
       String customEndpoint =
           transportChannelProviderEndpoint() == null
@@ -294,7 +317,7 @@ public abstract class EndpointContext {
 
       String endpoint =
           mtlsEndpointResolver(
-              customEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed(), mtlsProvider);
+              customEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed(), mtlsProvider, cba);
 
       // Check if mTLS is configured with non-GDU
       if (endpoint.equals(mtlsEndpoint())
@@ -347,16 +370,17 @@ public abstract class EndpointContext {
         String endpoint,
         String mtlsEndpoint,
         boolean switchToMtlsEndpointAllowed,
-        MtlsProvider mtlsProvider)
+        MtlsProvider mtlsProvider,
+        CertificateBasedAccess cba)
         throws IOException {
       if (switchToMtlsEndpointAllowed && mtlsProvider != null) {
-        switch (mtlsProvider.getMtlsEndpointUsagePolicy()) {
+        switch (cba.getMtlsEndpointUsagePolicy()) {
           case ALWAYS:
             return mtlsEndpoint;
           case NEVER:
             return endpoint;
           default:
-            if (mtlsProvider.useMtlsClientCertificate() && mtlsProvider.getKeyStore() != null) {
+            if (cba.useMtlsClientCertificate() && mtlsProvider.getKeyStore() != null) {
               return mtlsEndpoint;
             }
             return endpoint;

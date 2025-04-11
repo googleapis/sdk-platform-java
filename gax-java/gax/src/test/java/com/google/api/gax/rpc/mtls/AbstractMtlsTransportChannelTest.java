@@ -35,7 +35,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.google.api.gax.rpc.mtls.MtlsProvider.MtlsEndpointUsagePolicy;
 import com.google.api.gax.rpc.testing.FakeMtlsProvider;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -48,42 +47,47 @@ public abstract class AbstractMtlsTransportChannelTest {
    * GrpcTransportChannel, the mTLS object is the ChannelCredentials. The transport channel is mTLS
    * if and only if the related mTLS object is not null.
    */
-  protected abstract Object getMtlsObjectFromTransportChannel(MtlsProvider provider)
+  protected abstract Object getMtlsObjectFromTransportChannel(
+      com.google.api.gax.rpc.mtls.v2.MtlsProvider provider, CertificateBasedAccess cba)
       throws IOException, GeneralSecurityException;
 
   @Test
   void testNotUseClientCertificate() throws IOException, GeneralSecurityException {
-    MtlsProvider provider =
-        new FakeMtlsProvider(false, MtlsEndpointUsagePolicy.AUTO, null, "", false);
-    assertNull(getMtlsObjectFromTransportChannel(provider));
+    CertificateBasedAccess cba =
+        new CertificateBasedAccess(
+            name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "auto" : "false");
+    com.google.api.gax.rpc.mtls.v2.MtlsProvider provider = new FakeMtlsProvider(null, "", false);
+    assertNull(getMtlsObjectFromTransportChannel(provider, cba));
   }
 
   @Test
   void testUseClientCertificate() throws IOException, GeneralSecurityException {
-    MtlsProvider provider =
-        new FakeMtlsProvider(
-            true,
-            MtlsEndpointUsagePolicy.AUTO,
-            FakeMtlsProvider.createTestMtlsKeyStore(),
-            "",
-            false);
-    assertNotNull(getMtlsObjectFromTransportChannel(provider));
+    CertificateBasedAccess cba =
+        new CertificateBasedAccess(
+            name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "auto" : "true");
+    com.google.api.gax.rpc.mtls.v2.MtlsProvider provider =
+        new FakeMtlsProvider(FakeMtlsProvider.createTestMtlsKeyStore(), "", false);
+    assertNotNull(getMtlsObjectFromTransportChannel(provider, cba));
   }
 
   @Test
   void testNoClientCertificate() throws IOException, GeneralSecurityException {
-    MtlsProvider provider =
-        new FakeMtlsProvider(true, MtlsEndpointUsagePolicy.AUTO, null, "", false);
-    assertNull(getMtlsObjectFromTransportChannel(provider));
+    CertificateBasedAccess cba =
+        new CertificateBasedAccess(
+            name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "auto" : "true");
+    com.google.api.gax.rpc.mtls.v2.MtlsProvider provider = new FakeMtlsProvider(null, "", false);
+    assertNull(getMtlsObjectFromTransportChannel(provider, cba));
   }
 
   @Test
   void testGetKeyStoreThrows() throws GeneralSecurityException {
     // Test the case where provider.getKeyStore() throws.
-    MtlsProvider provider =
-        new FakeMtlsProvider(true, MtlsEndpointUsagePolicy.AUTO, null, "", true);
+    CertificateBasedAccess cba =
+        new CertificateBasedAccess(
+            name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "auto" : "true");
+    com.google.api.gax.rpc.mtls.v2.MtlsProvider provider = new FakeMtlsProvider(null, "", true);
     IOException actual =
-        assertThrows(IOException.class, () -> getMtlsObjectFromTransportChannel(provider));
+        assertThrows(IOException.class, () -> getMtlsObjectFromTransportChannel(provider, cba));
     assertTrue(actual.getMessage().contains("getKeyStore throws exception"));
   }
 }

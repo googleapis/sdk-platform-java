@@ -35,7 +35,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.mtls.AbstractMtlsTransportChannelTest;
-import com.google.api.gax.rpc.mtls.MtlsProvider;
+import com.google.api.gax.rpc.mtls.CertificateBasedAccess;
+import com.google.api.gax.rpc.mtls.v2.MtlsProvider;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
@@ -43,6 +44,7 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -50,13 +52,22 @@ class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransportChan
 
   private static final String DEFAULT_ENDPOINT = "localhost:8080";
   private static final Map<String, String> DEFAULT_HEADER_MAP = Collections.emptyMap();
+  private CertificateBasedAccess cba;
+
+  @BeforeEach
+  public void setup() throws IOException {
+    cba =
+        new CertificateBasedAccess(
+            name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "never" : "false");
+  }
 
   @Test
   void basicTest() throws IOException {
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();
 
-    TransportChannelProvider provider = InstantiatingHttpJsonChannelProvider.newBuilder().build();
+    TransportChannelProvider provider =
+        InstantiatingHttpJsonChannelProvider.newBuilder().setCertificateBasedAccess(cba).build();
 
     assertThat(provider.needsEndpoint()).isTrue();
     provider = provider.withEndpoint(DEFAULT_ENDPOINT);
@@ -108,7 +119,10 @@ class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransportChan
   @Test
   void managedChannelUsesDefaultChannelExecutor() throws IOException {
     InstantiatingHttpJsonChannelProvider instantiatingHttpJsonChannelProvider =
-        InstantiatingHttpJsonChannelProvider.newBuilder().setEndpoint(DEFAULT_ENDPOINT).build();
+        InstantiatingHttpJsonChannelProvider.newBuilder()
+            .setEndpoint(DEFAULT_ENDPOINT)
+            .setCertificateBasedAccess(cba)
+            .build();
     instantiatingHttpJsonChannelProvider =
         (InstantiatingHttpJsonChannelProvider)
             instantiatingHttpJsonChannelProvider.withHeaders(DEFAULT_HEADER_MAP);
@@ -140,6 +154,7 @@ class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransportChan
         InstantiatingHttpJsonChannelProvider.newBuilder()
             .setEndpoint(DEFAULT_ENDPOINT)
             .setExecutor(executor)
+            .setCertificateBasedAccess(cba)
             .build();
     instantiatingHttpJsonChannelProvider =
         (InstantiatingHttpJsonChannelProvider)
@@ -164,12 +179,14 @@ class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransportChan
   }
 
   @Override
-  protected Object getMtlsObjectFromTransportChannel(MtlsProvider provider)
+  protected Object getMtlsObjectFromTransportChannel(
+      MtlsProvider provider, CertificateBasedAccess cba)
       throws IOException, GeneralSecurityException {
     InstantiatingHttpJsonChannelProvider channelProvider =
         InstantiatingHttpJsonChannelProvider.newBuilder()
             .setEndpoint("localhost:8080")
             .setMtlsProvider(provider)
+            .setCertificateBasedAccess(cba)
             .setHeaderProvider(Mockito.mock(HeaderProvider.class))
             .setExecutor(Mockito.mock(Executor.class))
             .build();

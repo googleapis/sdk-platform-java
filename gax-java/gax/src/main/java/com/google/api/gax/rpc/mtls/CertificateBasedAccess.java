@@ -30,19 +30,46 @@
 
 package com.google.api.gax.rpc.mtls;
 
-import com.google.api.client.json.GenericJson;
-import com.google.api.client.util.Key;
-import com.google.common.collect.ImmutableList;
-import java.util.List;
+import com.google.api.gax.rpc.internal.EnvironmentProvider;
 
-/** Data class representing context_aware_metadata.json file. */
-public class ContextAwareMetadataJson extends GenericJson {
-  /** Cert provider command */
-  @Key("cert_provider_command")
-  private List<String> commands;
+/** Utility class for handling certificate-based access configurations. */
+public class CertificateBasedAccess {
 
-  /** Returns the cert provider command. */
-  public final ImmutableList<String> getCommands() {
-    return ImmutableList.copyOf(commands);
+  private final EnvironmentProvider envProvider;
+
+  public CertificateBasedAccess(EnvironmentProvider envProvider) {
+    this.envProvider = envProvider;
+  }
+
+  public static CertificateBasedAccess createWithSystemEnv() {
+    return new CertificateBasedAccess(System::getenv);
+  }
+
+  /**
+   * The policy for mutual TLS endpoint usage. NEVER means always use regular endpoint; ALWAYS means
+   * always use mTLS endpoint; AUTO means auto switch to mTLS endpoint if client certificate exists
+   * and should be used.
+   */
+  public enum MtlsEndpointUsagePolicy {
+    NEVER,
+    AUTO,
+    ALWAYS;
+  }
+
+  /** Returns if mutual TLS client certificate should be used. */
+  public boolean useMtlsClientCertificate() {
+    String useClientCertificate = envProvider.getenv("GOOGLE_API_USE_CLIENT_CERTIFICATE");
+    return "true".equals(useClientCertificate);
+  }
+
+  /** Returns the current mutual TLS endpoint usage policy. */
+  public MtlsEndpointUsagePolicy getMtlsEndpointUsagePolicy() {
+    String mtlsEndpointUsagePolicy = envProvider.getenv("GOOGLE_API_USE_MTLS_ENDPOINT");
+    if ("never".equals(mtlsEndpointUsagePolicy)) {
+      return MtlsEndpointUsagePolicy.NEVER;
+    } else if ("always".equals(mtlsEndpointUsagePolicy)) {
+      return MtlsEndpointUsagePolicy.ALWAYS;
+    }
+    return MtlsEndpointUsagePolicy.AUTO;
   }
 }

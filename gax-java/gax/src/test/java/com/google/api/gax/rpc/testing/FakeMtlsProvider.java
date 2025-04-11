@@ -32,40 +32,22 @@ package com.google.api.gax.rpc.testing;
 
 import com.google.api.client.util.SecurityUtils;
 import com.google.api.core.InternalApi;
-import com.google.api.gax.rpc.mtls.MtlsProvider;
+import com.google.api.gax.rpc.mtls.v2.MtlsProvider;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 
 @InternalApi("for testing")
-public class FakeMtlsProvider extends MtlsProvider {
-  private boolean useClientCertificate;
-  private MtlsEndpointUsagePolicy mtlsEndpointUsagePolicy;
+public class FakeMtlsProvider implements MtlsProvider {
   private KeyStore keyStore;
   private boolean throwExceptionForGetKeyStore;
 
   public FakeMtlsProvider(
-      boolean useClientCertificate,
-      MtlsEndpointUsagePolicy mtlsEndpointUsagePolicy,
-      KeyStore keystore,
-      String keyStorePassword,
-      boolean throwExceptionForGetKeyStore) {
+      KeyStore keystore, String keyStorePassword, boolean throwExceptionForGetKeyStore) {
     super();
-    this.useClientCertificate = useClientCertificate;
-    this.mtlsEndpointUsagePolicy = mtlsEndpointUsagePolicy;
     this.keyStore = keystore;
     this.throwExceptionForGetKeyStore = throwExceptionForGetKeyStore;
-  }
-
-  @Override
-  public boolean useMtlsClientCertificate() {
-    return useClientCertificate;
-  }
-
-  @Override
-  public MtlsEndpointUsagePolicy getMtlsEndpointUsagePolicy() {
-    return mtlsEndpointUsagePolicy;
   }
 
   @Override

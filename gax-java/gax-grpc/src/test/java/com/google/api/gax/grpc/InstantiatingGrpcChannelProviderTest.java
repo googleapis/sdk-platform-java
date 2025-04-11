@@ -46,7 +46,8 @@ import com.google.api.gax.rpc.TransportChannel;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.internal.EnvironmentProvider;
 import com.google.api.gax.rpc.mtls.AbstractMtlsTransportChannelTest;
-import com.google.api.gax.rpc.mtls.MtlsProvider;
+import com.google.api.gax.rpc.mtls.CertificateBasedAccess;
+import com.google.api.gax.rpc.mtls.v2.MtlsProvider;
 import com.google.auth.ApiKeyCredentials;
 import com.google.auth.Credentials;
 import com.google.auth.http.AuthHttpConstants;
@@ -92,6 +93,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   private static final String API_KEY_AUTH_HEADER_KEY = "x-goog-api-key";
   private static String originalOSName;
   private ComputeEngineCredentials computeEngineCredentials;
+  private CertificateBasedAccess cba;
 
   @BeforeAll
   public static void setupClass() {
@@ -101,6 +103,9 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   @BeforeEach
   public void setup() throws IOException {
     computeEngineCredentials = Mockito.mock(ComputeEngineCredentials.class);
+    cba =
+        new CertificateBasedAccess(
+            name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "never" : "false");
   }
 
   @AfterEach
@@ -208,6 +213,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
     TransportChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
+            .setCertificateBasedAccess(cba)
             .build()
             .withExecutor((Executor) executor)
             .withHeaders(Collections.<String, String>emptyMap())
@@ -277,6 +283,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
     InstantiatingGrpcChannelProvider channelProvider =
         InstantiatingGrpcChannelProvider.newBuilder()
+            .setCertificateBasedAccess(cba)
             .setEndpoint("localhost:8080")
             .setPoolSize(numChannels)
             .setHeaderProvider(Mockito.mock(HeaderProvider.class))
@@ -310,6 +317,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
     // Invoke the provider
     InstantiatingGrpcChannelProvider.newBuilder()
+        .setCertificateBasedAccess(cba)
         .setEndpoint("localhost:8080")
         .setHeaderProvider(Mockito.mock(HeaderProvider.class))
         .setExecutor(Mockito.mock(Executor.class))
@@ -331,6 +339,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
     TransportChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
+            .setCertificateBasedAccess(cba)
             .setAttemptDirectPath(true)
             .build()
             .withExecutor((Executor) executor)
@@ -414,6 +423,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
             .setChannelConfigurator(channelConfigurator)
+            .setCertificateBasedAccess(cba)
             .build()
             .withExecutor((Executor) executor)
             .withHeaders(Collections.<String, String>emptyMap())
@@ -442,6 +452,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(false)
             .setChannelConfigurator(channelConfigurator)
+            .setCertificateBasedAccess(cba)
             .build()
             .withExecutor((Executor) executor)
             .withHeaders(Collections.<String, String>emptyMap())
@@ -469,6 +480,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     TransportChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setChannelConfigurator(channelConfigurator)
+            .setCertificateBasedAccess(cba)
             .build()
             .withExecutor((Executor) executor)
             .withHeaders(Collections.<String, String>emptyMap())
@@ -488,6 +500,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
     TransportChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
+            .setCertificateBasedAccess(cba)
             .build()
             .withExecutor((Executor) executor)
             .withHeaders(Collections.<String, String>emptyMap())
@@ -513,6 +526,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
               .setHeaderProvider(Mockito.mock(HeaderProvider.class))
               .setExecutor(Mockito.mock(Executor.class))
               .setChannelPrimer(mockChannelPrimer)
+              .setCertificateBasedAccess(cba)
               .build();
 
       provider.getTransportChannel().shutdownNow();
@@ -526,7 +540,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   @Test
   void testWithDefaultDirectPathServiceConfig() {
     InstantiatingGrpcChannelProvider provider =
-        InstantiatingGrpcChannelProvider.newBuilder().build();
+        InstantiatingGrpcChannelProvider.newBuilder().setCertificateBasedAccess(cba).build();
 
     ImmutableMap<String, ?> defaultServiceConfig = provider.directPathServiceConfig;
 
@@ -591,6 +605,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setDirectPathServiceConfig(passedServiceConfig)
+            .setCertificateBasedAccess(cba)
             .build();
 
     ImmutableMap<String, ?> defaultServiceConfig = provider.directPathServiceConfig;
@@ -598,12 +613,14 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   }
 
   @Override
-  protected Object getMtlsObjectFromTransportChannel(MtlsProvider provider)
+  protected Object getMtlsObjectFromTransportChannel(
+      MtlsProvider provider, CertificateBasedAccess cba)
       throws IOException, GeneralSecurityException {
     InstantiatingGrpcChannelProvider channelProvider =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setEndpoint("localhost:8080")
             .setMtlsProvider(provider)
+            .setCertificateBasedAccess(cba)
             .setHeaderProvider(Mockito.mock(HeaderProvider.class))
             .setExecutor(Mockito.mock(Executor.class))
             .build();
@@ -632,7 +649,10 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     FakeLogHandler logHandler = new FakeLogHandler();
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
     InstantiatingGrpcChannelProvider provider =
-        createChannelProviderBuilderForDirectPathLogTests().setAttemptDirectPathXds().build();
+        createChannelProviderBuilderForDirectPathLogTests()
+            .setAttemptDirectPathXds()
+            .setCertificateBasedAccess(cba)
+            .build();
     createAndCloseTransportChannel(provider);
     assertThat(logHandler.getAllMessages())
         .contains(
@@ -647,7 +667,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
 
     InstantiatingGrpcChannelProvider provider =
-        createChannelProviderBuilderForDirectPathLogTests().build();
+        createChannelProviderBuilderForDirectPathLogTests().setCertificateBasedAccess(cba).build();
     createAndCloseTransportChannel(provider);
     assertThat(logHandler.getAllMessages())
         .contains(
@@ -663,6 +683,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     InstantiatingGrpcChannelProvider.newBuilder()
         .setAttemptDirectPathXds()
         .setAttemptDirectPath(true)
+        .setCertificateBasedAccess(cba)
         .build();
 
     assertThat(logHandler.getAllMessages()).isEmpty();
@@ -680,6 +701,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setHeaderProvider(Mockito.mock(HeaderProvider.class))
             .setExecutor(Mockito.mock(Executor.class))
             .setEndpoint(DEFAULT_ENDPOINT)
+            .setCertificateBasedAccess(cba)
             .build();
 
     TransportChannel transportChannel = provider.getTransportChannel();
@@ -706,6 +728,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setHeaderProvider(Mockito.mock(HeaderProvider.class))
             .setExecutor(Mockito.mock(Executor.class))
             .setEndpoint(DEFAULT_ENDPOINT)
+            .setCertificateBasedAccess(cba)
             .build();
 
     TransportChannel transportChannel = provider.getTransportChannel();
@@ -731,6 +754,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         .thenReturn("false");
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
+            .setCertificateBasedAccess(cba)
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
             .setEndpoint(DEFAULT_ENDPOINT)
@@ -758,6 +782,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         .thenReturn("false");
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
+            .setCertificateBasedAccess(cba)
             .setAttemptDirectPath(true)
             .setAllowHardBoundTokenTypes(Collections.singletonList(HardBoundTokenTypes.ALTS))
             .setCredentials(credentials)
@@ -782,6 +807,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         .thenReturn(ComputeEngineCredentials.newBuilder());
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
+            .setCertificateBasedAccess(cba)
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
             .setAllowHardBoundTokenTypes(Collections.singletonList(HardBoundTokenTypes.ALTS))
@@ -809,6 +835,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         .thenReturn("true");
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
+            .setCertificateBasedAccess(cba)
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
             .setEndpoint(DEFAULT_ENDPOINT)
@@ -829,6 +856,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     System.setProperty("os.name", "Linux");
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
+            .setCertificateBasedAccess(cba)
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
             .setEndpoint(DEFAULT_ENDPOINT);
@@ -842,6 +870,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     System.setProperty("os.name", "Linux");
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
+            .setCertificateBasedAccess(cba)
             .setAttemptDirectPath(false)
             .setCredentials(computeEngineCredentials)
             .setEndpoint(DEFAULT_ENDPOINT);
@@ -861,6 +890,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         .thenReturn("false");
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
+            .setCertificateBasedAccess(cba)
             .setAttemptDirectPath(true)
             .setCredentials(credentials)
             .setEndpoint(DEFAULT_ENDPOINT)
@@ -880,6 +910,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         .thenReturn("false");
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
+            .setCertificateBasedAccess(cba)
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
             .setEndpoint(DEFAULT_ENDPOINT)
@@ -899,6 +930,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         .thenReturn("false");
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
+            .setCertificateBasedAccess(cba)
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
             .setEndpoint(DEFAULT_ENDPOINT)
@@ -921,6 +953,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
             .setEndpoint(DEFAULT_ENDPOINT)
+            .setCertificateBasedAccess(cba)
             .setEnvProvider(envProvider);
     InstantiatingGrpcChannelProvider provider = new InstantiatingGrpcChannelProvider(builder, "");
     Truth.assertThat(provider.canUseDirectPath()).isFalse();
@@ -937,6 +970,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     String nonGDUEndpoint = "test.random.com:443";
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
+            .setCertificateBasedAccess(cba)
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
             .setEndpoint(nonGDUEndpoint)
@@ -966,6 +1000,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     ApiKeyCredentials apiKeyCredentials = ApiKeyCredentials.create(correctApiKey);
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
+            .setCertificateBasedAccess(cba)
             .setCredentials(apiKeyCredentials)
             .setHeaderProvider(getHeaderProviderWithApiKeyHeader())
             .setEndpoint("test.random.com:443");
@@ -983,6 +1018,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     header.put(AuthHttpConstants.AUTHORIZATION, authProvidedHeader);
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
+            .setCertificateBasedAccess(cba)
             .setCredentials(computeEngineCredentials)
             .setHeaderProvider(FixedHeaderProvider.create(header))
             .setEndpoint("test.random.com:443");
@@ -1011,6 +1047,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     Mockito.when(credentials.getRequestMetadata()).thenReturn(null);
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
+            .setCertificateBasedAccess(cba)
             .setHeaderProvider(getHeaderProviderWithApiKeyHeader())
             .setEndpoint("test.random.com:443");
 
@@ -1028,6 +1065,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         .thenThrow(new IOException("Error getting request metadata"));
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
+            .setCertificateBasedAccess(cba)
             .setHeaderProvider(getHeaderProviderWithApiKeyHeader())
             .setEndpoint("test.random.com:443");
     InstantiatingGrpcChannelProvider provider = builder.build();

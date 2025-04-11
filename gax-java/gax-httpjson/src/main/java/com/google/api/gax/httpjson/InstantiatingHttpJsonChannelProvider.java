@@ -36,7 +36,8 @@ import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
-import com.google.api.gax.rpc.mtls.MtlsProvider;
+import com.google.api.gax.rpc.mtls.CertificateBasedAccess;
+import com.google.api.gax.rpc.mtls.v2.MtlsProvider;
 import com.google.auth.Credentials;
 import com.google.common.annotations.VisibleForTesting;
 import java.io.IOException;
@@ -67,6 +68,7 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   private final String endpoint;
   private final HttpTransport httpTransport;
   private final MtlsProvider mtlsProvider;
+  private final CertificateBasedAccess certificateBasedAccess;
 
   private InstantiatingHttpJsonChannelProvider(
       Executor executor,
@@ -74,13 +76,15 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
       HttpJsonInterceptorProvider interceptorProvider,
       String endpoint,
       HttpTransport httpTransport,
-      MtlsProvider mtlsProvider) {
+      MtlsProvider mtlsProvider,
+      CertificateBasedAccess certificateBasedAccess) {
     this.executor = executor;
     this.headerProvider = headerProvider;
     this.interceptorProvider = interceptorProvider;
     this.endpoint = endpoint;
     this.httpTransport = httpTransport;
     this.mtlsProvider = mtlsProvider;
+    this.certificateBasedAccess = certificateBasedAccess;
   }
 
   /**
@@ -173,7 +177,7 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   }
 
   HttpTransport createHttpTransport() throws IOException, GeneralSecurityException {
-    if (mtlsProvider.useMtlsClientCertificate()) {
+    if (certificateBasedAccess.useMtlsClientCertificate()) {
       KeyStore mtlsKeyStore = mtlsProvider.getKeyStore();
       if (mtlsKeyStore != null) {
         return new NetHttpTransport.Builder().trustCertificates(null, mtlsKeyStore, "").build();
@@ -237,7 +241,8 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
     private HttpJsonInterceptorProvider interceptorProvider;
     private String endpoint;
     private HttpTransport httpTransport;
-    private MtlsProvider mtlsProvider = new MtlsProvider();
+    private MtlsProvider mtlsProvider = null;
+    private CertificateBasedAccess certificateBasedAccess;
 
     private Builder() {}
 
@@ -247,6 +252,7 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
       this.endpoint = provider.endpoint;
       this.httpTransport = provider.httpTransport;
       this.mtlsProvider = provider.mtlsProvider;
+      this.certificateBasedAccess = provider.certificateBasedAccess;
       this.interceptorProvider = provider.interceptorProvider;
     }
 
@@ -317,9 +323,21 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
       return this;
     }
 
+    @VisibleForTesting
+    Builder setCertificateBasedAccess(CertificateBasedAccess certificateBasedAccess) {
+      this.certificateBasedAccess = certificateBasedAccess;
+      return this;
+    }
+
     public InstantiatingHttpJsonChannelProvider build() {
       return new InstantiatingHttpJsonChannelProvider(
-          executor, headerProvider, interceptorProvider, endpoint, httpTransport, mtlsProvider);
+          executor,
+          headerProvider,
+          interceptorProvider,
+          endpoint,
+          httpTransport,
+          mtlsProvider,
+          certificateBasedAccess);
     }
   }
 }
