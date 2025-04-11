@@ -32,6 +32,8 @@
     <codec.version>1.18.0</codec.version>
     <httpcomponents.httpcore.version>4.4.16</httpcomponents.httpcore.version>
     <httpcomponents.httpclient.version>4.5.14</httpcomponents.httpclient.version>
+    <apache-httpclient-5.version>5.3.1</apache-httpclient-5.version>
+    <apache-httpcore-5.version>5.2.5</apache-httpcore-5.version>
     <!-- ensure checker-qual version matches what Guava uses -->
     <checker-qual.version>3.49.0</checker-qual.version>
     <perfmark-api.version>0.27.0</perfmark-api.version>
@@ -71,6 +73,16 @@
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpclient</artifactId>
         <version>${httpcomponents.httpclient.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.httpcomponents.core5</groupId>
+        <artifactId>httpcore5</artifactId>
+        <version>${apache-httpcore-5.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.httpcomponents.client5</groupId>
+        <artifactId>httpclient5</artifactId>
+        <version>${apache-httpclient-5.version}</version>
       </dependency>
       <dependency>
         <groupId>org.threeten</groupId>
