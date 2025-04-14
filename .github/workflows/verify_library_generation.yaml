@@ -78,6 +78,8 @@ jobs:
         scandir: 'hermetic_build'
         format: tty
         severity: error
+        ignore_paths: 
+          .kokoro
   library-generation-lint-python:
     runs-on: ubuntu-22.04
     needs: should-run-library-generation-tests
