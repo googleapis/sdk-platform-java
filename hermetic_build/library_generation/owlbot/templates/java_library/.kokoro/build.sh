@@ -73,6 +73,8 @@ integration)
       -DtrimStackTrace=false \
       -Dclirr.skip=true \
       -Denforcer.skip=true \
+      -Dcheckstyle.skip=true \
+      -DskipUnitTests=true \
       -fae \
       verify
     RETURN_CODE=$?
@@ -130,7 +132,7 @@ bash .kokoro/coerce_logs.sh
 if [[ "${ENABLE_FLAKYBOT}" == "true" ]]
 then
     chmod +x ${KOKORO_GFILE_DIR}/linux_amd64/flakybot
-    ${KOKORO_GFILE_DIR}/linux_amd64/flakybot -repo=googleapis/java-storage
+    ${KOKORO_GFILE_DIR}/linux_amd64/flakybot -repo=googleapis/java-{{ metadata['repo']['api_shortname'] }}
 fi
 
 echo "exiting with ${RETURN_CODE}"
