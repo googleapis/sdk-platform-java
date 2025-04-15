@@ -49,8 +49,9 @@ branchProtectionRules:
   - "Kokoro - Test: Integration"
   - "cla/google"
   - "OwlBot Post Processor"
-  - "Kokoro - Test: Java GraalVM Native Image"
-  - "Kokoro - Test: Java 17 GraalVM Native Image"
+  - "Kokoro - Test: Java GraalVM Native Image A"
+  - "Kokoro - Test: Java GraalVM Native Image B"
+  - "Kokoro - Test: Java GraalVM Native Image C"
 # List of explicit permissions to add (additive only)
 permissionRules:
 - team: yoshi-admins
