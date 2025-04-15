@@ -198,7 +198,6 @@
                     <exclude>com.google.protobuf.StructProto</exclude>
                     <exclude>com.google.protobuf.StructuralMessageInfo</exclude>
                     <exclude>com.google.protobuf.Syntax</exclude>
-                    <exclude>com.google.protobuf.TextFormat</exclude>
                     <exclude>com.google.protobuf.TextFormatEscaper</exclude>
                     <exclude>com.google.protobuf.TextFormatParseInfoTree</exclude>
                     <exclude>com.google.protobuf.TextFormatParseLocation</exclude>
@@ -371,7 +370,6 @@
                     <exclude>com.google.protobuf.StructProto$*</exclude>
                     <exclude>com.google.protobuf.StructuralMessageInfo$*</exclude>
                     <exclude>com.google.protobuf.Syntax$*</exclude>
-                    <exclude>com.google.protobuf.TextFormat$*</exclude>
                     <exclude>com.google.protobuf.TextFormatEscaper$*</exclude>
                     <exclude>com.google.protobuf.TextFormatParseInfoTree$*</exclude>
                     <exclude>com.google.protobuf.TextFormatParseLocation$*</exclude>
