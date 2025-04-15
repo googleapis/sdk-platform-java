@@ -36,7 +36,7 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
-import com.google.protobuf.AbstractMessage;
+import com.google.protobuf.Message;
 import io.grpc.ServerServiceDefinition;
 import java.util.Arrays;
 import java.util.List;
@@ -130,7 +130,7 @@ public class MockServiceClassComposer implements ClassComposer {
         TypeNode.withReference(
             ConcreteReference.builder()
                 .setClazz(List.class)
-                .setGenerics(Arrays.asList(typeStore.get("AbstractMessage").reference()))
+                .setGenerics(Arrays.asList(typeStore.get("Message").reference()))
                 .build());
     String methodName = "getRequests";
     Expr returnExpr =
@@ -153,10 +153,7 @@ public class MockServiceClassComposer implements ClassComposer {
     String methodName = "addResponse";
     VariableExpr responseArgExpr =
         VariableExpr.withVariable(
-            Variable.builder()
-                .setName("response")
-                .setType(typeStore.get("AbstractMessage"))
-                .build());
+            Variable.builder().setName("response").setType(typeStore.get("Message")).build());
 
     Expr methodInvocationExpr =
         MethodInvocationExpr.builder()
@@ -235,8 +232,7 @@ public class MockServiceClassComposer implements ClassComposer {
 
   private static TypeStore createTypes(Service service) {
     List<Class<?>> concreteClazzes =
-        Arrays.asList(
-            AbstractMessage.class, BetaApi.class, Generated.class, ServerServiceDefinition.class);
+        Arrays.asList(Message.class, BetaApi.class, Generated.class, ServerServiceDefinition.class);
     TypeStore typeStore = new TypeStore(concreteClazzes);
 
     typeStore.put("com.google.api.gax.grpc.testing", "MockGrpcService");
