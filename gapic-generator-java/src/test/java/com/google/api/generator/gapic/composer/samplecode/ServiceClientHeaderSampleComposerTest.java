@@ -321,20 +321,20 @@ class ServiceClientHeaderSampleComposerTest {
             .build();
     Method publicMethod =
         Method.builder()
-            .setName("ChatShouldGenerateAsPublic")
+            .setName("ChatShouldGenerateAsUsual")
             .setInputType(inputType)
             .setOutputType(outputType)
             .setIsInternalApi(false)
             .build();
     Service service =
         Service.builder()
-            .setName("EchoServiceShouldGeneratePartialPublic")
+            .setName("EchoServiceShouldGeneratePartialUsual")
             .setDefaultHost("localhost:7469")
             .setOauthScopes(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"))
             .setPakkage(SELECTIVE_API_PACKAGE_NAME)
             .setProtoPakkage(SELECTIVE_API_PACKAGE_NAME)
             .setOriginalJavaPackage(SELECTIVE_API_PACKAGE_NAME)
-            .setOverriddenName("EchoServiceShouldGeneratePartialPublic")
+            .setOverriddenName("EchoServiceShouldGeneratePartialUsual")
             .setMethods(Arrays.asList(internalMethod, publicMethod))
             .build();
     TypeNode clientType =
@@ -358,7 +358,7 @@ class ServiceClientHeaderSampleComposerTest {
                 + "              FoobarbazName.ofProjectFoobarbazName(\"[PROJECT]\", \"[FOOBARBAZ]\").toString())\n"
                 + "          .setFoobar(Foobar.newBuilder().build())\n"
                 + "          .build();\n"
-                + "  EchoResponse response = echoServiceSelectiveApiClient.chatShouldGenerateAsPublic(request);\n"
+                + "  EchoResponse response = echoServiceSelectiveApiClient.chatShouldGenerateAsUsual(request);\n"
                 + "}");
     Assert.assertEquals(results, expected);
   }
@@ -398,13 +398,13 @@ class ServiceClientHeaderSampleComposerTest {
             .build();
     Service service =
         Service.builder()
-            .setName("EchoServiceShouldGeneratePartialPublic")
+            .setName("EchoServiceShouldGeneratePartialUsual")
             .setDefaultHost("localhost:7469")
             .setOauthScopes(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"))
             .setPakkage(SELECTIVE_API_PACKAGE_NAME)
             .setProtoPakkage(SELECTIVE_API_PACKAGE_NAME)
             .setOriginalJavaPackage(SELECTIVE_API_PACKAGE_NAME)
-            .setOverriddenName("EchoServiceShouldGeneratePartialPublic")
+            .setOverriddenName("EchoServiceShouldGeneratePartialUsual")
             .setMethods(Arrays.asList(internalMethod1, internalMethod2))
             .build();
     TypeNode clientType =

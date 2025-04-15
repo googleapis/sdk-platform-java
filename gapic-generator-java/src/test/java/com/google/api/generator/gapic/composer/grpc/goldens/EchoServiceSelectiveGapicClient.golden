@@ -5,8 +5,8 @@ import com.google.api.core.InternalApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.selective.generate.v1beta1.stub.EchoServiceShouldGeneratePartialPublicStub;
-import com.google.selective.generate.v1beta1.stub.EchoServiceShouldGeneratePartialPublicStubSettings;
+import com.google.selective.generate.v1beta1.stub.EchoServiceShouldGeneratePartialUsualStub;
+import com.google.selective.generate.v1beta1.stub.EchoServiceShouldGeneratePartialUsualStubSettings;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
@@ -22,14 +22,14 @@ import javax.annotation.Generated;
  * // - It may require correct/in-range values for request initialization.
  * // - It may require specifying regional endpoints when creating the service client as shown in
  * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
- * try (EchoServiceShouldGeneratePartialPublicClient echoServiceShouldGeneratePartialPublicClient =
- *     EchoServiceShouldGeneratePartialPublicClient.create()) {
+ * try (EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
+ *     EchoServiceShouldGeneratePartialUsualClient.create()) {
  *   EchoResponse response =
- *       echoServiceShouldGeneratePartialPublicClient.echoShouldGenerateAsPublic();
+ *       echoServiceShouldGeneratePartialUsualClient.echoShouldGenerateAsUsual();
  * }
  * }</pre>
  *
- * <p>Note: close() needs to be called on the EchoServiceShouldGeneratePartialPublicClient object to
+ * <p>Note: close() needs to be called on the EchoServiceShouldGeneratePartialUsualClient object to
  * clean up resources such as threads. In the example above, try-with-resources is used, which
  * automatically calls close().
  *
@@ -41,42 +41,42 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    </tr>
  *    <tr>
- *      <td><p> EchoShouldGenerateAsPublic</td>
+ *      <td><p> EchoShouldGenerateAsUsual</td>
  *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *           <li><p> echoShouldGenerateAsPublic(EchoRequest request)
+ *           <li><p> echoShouldGenerateAsUsual(EchoRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *           <li><p> echoShouldGenerateAsPublic()
- *           <li><p> echoShouldGenerateAsPublic(FoobarName name)
- *           <li><p> echoShouldGenerateAsPublic(String name)
+ *           <li><p> echoShouldGenerateAsUsual()
+ *           <li><p> echoShouldGenerateAsUsual(FoobarName name)
+ *           <li><p> echoShouldGenerateAsUsual(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *           <li><p> echoShouldGenerateAsPublicCallable()
- *      </ul>
- *       </td>
- *    </tr>
- *    <tr>
- *      <td><p> ChatShouldGenerateAsPublic</td>
- *      <td><p> </td>
- *      <td>
- *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *           <li><p> chatShouldGenerateAsPublicCallable()
+ *           <li><p> echoShouldGenerateAsUsualCallable()
  *      </ul>
  *       </td>
  *    </tr>
  *    <tr>
- *      <td><p> ChatAgainShouldGenerateAsPublic</td>
+ *      <td><p> ChatShouldGenerateAsUsual</td>
  *      <td><p> </td>
  *      <td>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *           <li><p> chatAgainShouldGenerateAsPublicCallable()
+ *           <li><p> chatShouldGenerateAsUsualCallable()
+ *      </ul>
+ *       </td>
+ *    </tr>
+ *    <tr>
+ *      <td><p> ChatAgainShouldGenerateAsUsual</td>
+ *      <td><p> </td>
+ *      <td>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *           <li><p> chatAgainShouldGenerateAsUsualCallable()
  *      </ul>
  *       </td>
  *    </tr>
@@ -119,7 +119,7 @@ import javax.annotation.Generated;
  * method to extract the individual identifiers contained within names that are returned.
  *
  * <p>This class can be customized by passing in a custom instance of
- * EchoServiceShouldGeneratePartialPublicSettings to create(). For example:
+ * EchoServiceShouldGeneratePartialUsualSettings to create(). For example:
  *
  * <p>To customize credentials:
  *
@@ -129,13 +129,13 @@ import javax.annotation.Generated;
  * // - It may require correct/in-range values for request initialization.
  * // - It may require specifying regional endpoints when creating the service client as shown in
  * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
- * EchoServiceShouldGeneratePartialPublicSettings echoServiceShouldGeneratePartialPublicSettings =
- *     EchoServiceShouldGeneratePartialPublicSettings.newBuilder()
+ * EchoServiceShouldGeneratePartialUsualSettings echoServiceShouldGeneratePartialUsualSettings =
+ *     EchoServiceShouldGeneratePartialUsualSettings.newBuilder()
  *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
  *         .build();
- * EchoServiceShouldGeneratePartialPublicClient echoServiceShouldGeneratePartialPublicClient =
- *     EchoServiceShouldGeneratePartialPublicClient.create(
- *         echoServiceShouldGeneratePartialPublicSettings);
+ * EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
+ *     EchoServiceShouldGeneratePartialUsualClient.create(
+ *         echoServiceShouldGeneratePartialUsualSettings);
  * }</pre>
  *
  * <p>To customize the endpoint:
@@ -146,72 +146,72 @@ import javax.annotation.Generated;
  * // - It may require correct/in-range values for request initialization.
  * // - It may require specifying regional endpoints when creating the service client as shown in
  * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
- * EchoServiceShouldGeneratePartialPublicSettings echoServiceShouldGeneratePartialPublicSettings =
- *     EchoServiceShouldGeneratePartialPublicSettings.newBuilder().setEndpoint(myEndpoint).build();
- * EchoServiceShouldGeneratePartialPublicClient echoServiceShouldGeneratePartialPublicClient =
- *     EchoServiceShouldGeneratePartialPublicClient.create(
- *         echoServiceShouldGeneratePartialPublicSettings);
+ * EchoServiceShouldGeneratePartialUsualSettings echoServiceShouldGeneratePartialUsualSettings =
+ *     EchoServiceShouldGeneratePartialUsualSettings.newBuilder().setEndpoint(myEndpoint).build();
+ * EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
+ *     EchoServiceShouldGeneratePartialUsualClient.create(
+ *         echoServiceShouldGeneratePartialUsualSettings);
  * }</pre>
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
  */
 @BetaApi
 @Generated("by gapic-generator-java")
-public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundResource {
-  private final EchoServiceShouldGeneratePartialPublicSettings settings;
-  private final EchoServiceShouldGeneratePartialPublicStub stub;
+public class EchoServiceShouldGeneratePartialUsualClient implements BackgroundResource {
+  private final EchoServiceShouldGeneratePartialUsualSettings settings;
+  private final EchoServiceShouldGeneratePartialUsualStub stub;
 
   /**
-   * Constructs an instance of EchoServiceShouldGeneratePartialPublicClient with default settings.
+   * Constructs an instance of EchoServiceShouldGeneratePartialUsualClient with default settings.
    */
-  public static final EchoServiceShouldGeneratePartialPublicClient create() throws IOException {
-    return create(EchoServiceShouldGeneratePartialPublicSettings.newBuilder().build());
+  public static final EchoServiceShouldGeneratePartialUsualClient create() throws IOException {
+    return create(EchoServiceShouldGeneratePartialUsualSettings.newBuilder().build());
   }
 
   /**
-   * Constructs an instance of EchoServiceShouldGeneratePartialPublicClient, using the given
+   * Constructs an instance of EchoServiceShouldGeneratePartialUsualClient, using the given
    * settings. The channels are created based on the settings passed in, or defaults for any
    * settings that are not set.
    */
-  public static final EchoServiceShouldGeneratePartialPublicClient create(
-      EchoServiceShouldGeneratePartialPublicSettings settings) throws IOException {
-    return new EchoServiceShouldGeneratePartialPublicClient(settings);
+  public static final EchoServiceShouldGeneratePartialUsualClient create(
+      EchoServiceShouldGeneratePartialUsualSettings settings) throws IOException {
+    return new EchoServiceShouldGeneratePartialUsualClient(settings);
   }
 
   /**
-   * Constructs an instance of EchoServiceShouldGeneratePartialPublicClient, using the given stub
-   * for making calls. This is for advanced usage - prefer using
-   * create(EchoServiceShouldGeneratePartialPublicSettings).
+   * Constructs an instance of EchoServiceShouldGeneratePartialUsualClient, using the given stub for
+   * making calls. This is for advanced usage - prefer using
+   * create(EchoServiceShouldGeneratePartialUsualSettings).
    */
-  public static final EchoServiceShouldGeneratePartialPublicClient create(
-      EchoServiceShouldGeneratePartialPublicStub stub) {
-    return new EchoServiceShouldGeneratePartialPublicClient(stub);
+  public static final EchoServiceShouldGeneratePartialUsualClient create(
+      EchoServiceShouldGeneratePartialUsualStub stub) {
+    return new EchoServiceShouldGeneratePartialUsualClient(stub);
   }
 
   /**
-   * Constructs an instance of EchoServiceShouldGeneratePartialPublicClient, using the given
+   * Constructs an instance of EchoServiceShouldGeneratePartialUsualClient, using the given
    * settings. This is protected so that it is easy to make a subclass, but otherwise, the static
    * factory methods should be preferred.
    */
-  protected EchoServiceShouldGeneratePartialPublicClient(
-      EchoServiceShouldGeneratePartialPublicSettings settings) throws IOException {
+  protected EchoServiceShouldGeneratePartialUsualClient(
+      EchoServiceShouldGeneratePartialUsualSettings settings) throws IOException {
     this.settings = settings;
     this.stub =
-        ((EchoServiceShouldGeneratePartialPublicStubSettings) settings.getStubSettings())
+        ((EchoServiceShouldGeneratePartialUsualStubSettings) settings.getStubSettings())
             .createStub();
   }
 
-  protected EchoServiceShouldGeneratePartialPublicClient(
-      EchoServiceShouldGeneratePartialPublicStub stub) {
+  protected EchoServiceShouldGeneratePartialUsualClient(
+      EchoServiceShouldGeneratePartialUsualStub stub) {
     this.settings = null;
     this.stub = stub;
   }
 
-  public final EchoServiceShouldGeneratePartialPublicSettings getSettings() {
+  public final EchoServiceShouldGeneratePartialUsualSettings getSettings() {
     return settings;
   }
 
-  public EchoServiceShouldGeneratePartialPublicStub getStub() {
+  public EchoServiceShouldGeneratePartialUsualStub getStub() {
     return stub;
   }
 
@@ -225,19 +225,19 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * // - It may require correct/in-range values for request initialization.
    * // - It may require specifying regional endpoints when creating the service client as shown in
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-   * try (EchoServiceShouldGeneratePartialPublicClient echoServiceShouldGeneratePartialPublicClient =
-   *     EchoServiceShouldGeneratePartialPublicClient.create()) {
+   * try (EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
+   *     EchoServiceShouldGeneratePartialUsualClient.create()) {
    *   EchoResponse response =
-   *       echoServiceShouldGeneratePartialPublicClient.echoShouldGenerateAsPublic();
+   *       echoServiceShouldGeneratePartialUsualClient.echoShouldGenerateAsUsual();
    * }
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final EchoResponse echoShouldGenerateAsPublic() {
+  public final EchoResponse echoShouldGenerateAsUsual() {
     EchoRequest request = EchoRequest.newBuilder().build();
-    return echoShouldGenerateAsPublic(request);
+    return echoShouldGenerateAsUsual(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -250,21 +250,21 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * // - It may require correct/in-range values for request initialization.
    * // - It may require specifying regional endpoints when creating the service client as shown in
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-   * try (EchoServiceShouldGeneratePartialPublicClient echoServiceShouldGeneratePartialPublicClient =
-   *     EchoServiceShouldGeneratePartialPublicClient.create()) {
+   * try (EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
+   *     EchoServiceShouldGeneratePartialUsualClient.create()) {
    *   FoobarName name = FoobarName.of("[PROJECT]", "[FOOBAR]");
    *   EchoResponse response =
-   *       echoServiceShouldGeneratePartialPublicClient.echoShouldGenerateAsPublic(name);
+   *       echoServiceShouldGeneratePartialUsualClient.echoShouldGenerateAsUsual(name);
    * }
    * }</pre>
    *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final EchoResponse echoShouldGenerateAsPublic(FoobarName name) {
+  public final EchoResponse echoShouldGenerateAsUsual(FoobarName name) {
     EchoRequest request =
         EchoRequest.newBuilder().setName(name == null ? null : name.toString()).build();
-    return echoShouldGenerateAsPublic(request);
+    return echoShouldGenerateAsUsual(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -277,20 +277,20 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * // - It may require correct/in-range values for request initialization.
    * // - It may require specifying regional endpoints when creating the service client as shown in
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-   * try (EchoServiceShouldGeneratePartialPublicClient echoServiceShouldGeneratePartialPublicClient =
-   *     EchoServiceShouldGeneratePartialPublicClient.create()) {
+   * try (EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
+   *     EchoServiceShouldGeneratePartialUsualClient.create()) {
    *   String name = FoobarName.of("[PROJECT]", "[FOOBAR]").toString();
    *   EchoResponse response =
-   *       echoServiceShouldGeneratePartialPublicClient.echoShouldGenerateAsPublic(name);
+   *       echoServiceShouldGeneratePartialUsualClient.echoShouldGenerateAsUsual(name);
    * }
    * }</pre>
    *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final EchoResponse echoShouldGenerateAsPublic(String name) {
+  public final EchoResponse echoShouldGenerateAsUsual(String name) {
     EchoRequest request = EchoRequest.newBuilder().setName(name).build();
-    return echoShouldGenerateAsPublic(request);
+    return echoShouldGenerateAsUsual(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -303,8 +303,8 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * // - It may require correct/in-range values for request initialization.
    * // - It may require specifying regional endpoints when creating the service client as shown in
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-   * try (EchoServiceShouldGeneratePartialPublicClient echoServiceShouldGeneratePartialPublicClient =
-   *     EchoServiceShouldGeneratePartialPublicClient.create()) {
+   * try (EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
+   *     EchoServiceShouldGeneratePartialUsualClient.create()) {
    *   EchoRequest request =
    *       EchoRequest.newBuilder()
    *           .setName(FoobarName.of("[PROJECT]", "[FOOBAR]").toString())
@@ -312,15 +312,15 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    *           .setFoobar(Foobar.newBuilder().build())
    *           .build();
    *   EchoResponse response =
-   *       echoServiceShouldGeneratePartialPublicClient.echoShouldGenerateAsPublic(request);
+   *       echoServiceShouldGeneratePartialUsualClient.echoShouldGenerateAsUsual(request);
    * }
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final EchoResponse echoShouldGenerateAsPublic(EchoRequest request) {
-    return echoShouldGenerateAsPublicCallable().call(request);
+  public final EchoResponse echoShouldGenerateAsUsual(EchoRequest request) {
+    return echoShouldGenerateAsUsualCallable().call(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -333,8 +333,8 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * // - It may require correct/in-range values for request initialization.
    * // - It may require specifying regional endpoints when creating the service client as shown in
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-   * try (EchoServiceShouldGeneratePartialPublicClient echoServiceShouldGeneratePartialPublicClient =
-   *     EchoServiceShouldGeneratePartialPublicClient.create()) {
+   * try (EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
+   *     EchoServiceShouldGeneratePartialUsualClient.create()) {
    *   EchoRequest request =
    *       EchoRequest.newBuilder()
    *           .setName(FoobarName.of("[PROJECT]", "[FOOBAR]").toString())
@@ -342,16 +342,16 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    *           .setFoobar(Foobar.newBuilder().build())
    *           .build();
    *   ApiFuture<EchoResponse> future =
-   *       echoServiceShouldGeneratePartialPublicClient
-   *           .echoShouldGenerateAsPublicCallable()
+   *       echoServiceShouldGeneratePartialUsualClient
+   *           .echoShouldGenerateAsUsualCallable()
    *           .futureCall(request);
    *   // Do something.
    *   EchoResponse response = future.get();
    * }
    * }</pre>
    */
-  public final UnaryCallable<EchoRequest, EchoResponse> echoShouldGenerateAsPublicCallable() {
-    return stub.echoShouldGenerateAsPublicCallable();
+  public final UnaryCallable<EchoRequest, EchoResponse> echoShouldGenerateAsUsualCallable() {
+    return stub.echoShouldGenerateAsUsualCallable();
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -364,10 +364,10 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * // - It may require correct/in-range values for request initialization.
    * // - It may require specifying regional endpoints when creating the service client as shown in
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-   * try (EchoServiceShouldGeneratePartialPublicClient echoServiceShouldGeneratePartialPublicClient =
-   *     EchoServiceShouldGeneratePartialPublicClient.create()) {
+   * try (EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
+   *     EchoServiceShouldGeneratePartialUsualClient.create()) {
    *   BidiStream<EchoRequest, EchoResponse> bidiStream =
-   *       echoServiceShouldGeneratePartialPublicClient.chatShouldGenerateAsPublicCallable().call();
+   *       echoServiceShouldGeneratePartialUsualClient.chatShouldGenerateAsUsualCallable().call();
    *   EchoRequest request =
    *       EchoRequest.newBuilder()
    *           .setName(FoobarName.of("[PROJECT]", "[FOOBAR]").toString())
@@ -382,8 +382,8 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * }</pre>
    */
   public final BidiStreamingCallable<EchoRequest, EchoResponse>
-      chatShouldGenerateAsPublicCallable() {
-    return stub.chatShouldGenerateAsPublicCallable();
+      chatShouldGenerateAsUsualCallable() {
+    return stub.chatShouldGenerateAsUsualCallable();
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -396,11 +396,11 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * // - It may require correct/in-range values for request initialization.
    * // - It may require specifying regional endpoints when creating the service client as shown in
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-   * try (EchoServiceShouldGeneratePartialPublicClient echoServiceShouldGeneratePartialPublicClient =
-   *     EchoServiceShouldGeneratePartialPublicClient.create()) {
+   * try (EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
+   *     EchoServiceShouldGeneratePartialUsualClient.create()) {
    *   BidiStream<EchoRequest, EchoResponse> bidiStream =
-   *       echoServiceShouldGeneratePartialPublicClient
-   *           .chatAgainShouldGenerateAsPublicCallable()
+   *       echoServiceShouldGeneratePartialUsualClient
+   *           .chatAgainShouldGenerateAsUsualCallable()
    *           .call();
    *   EchoRequest request =
    *       EchoRequest.newBuilder()
@@ -416,8 +416,8 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * }</pre>
    */
   public final BidiStreamingCallable<EchoRequest, EchoResponse>
-      chatAgainShouldGenerateAsPublicCallable() {
-    return stub.chatAgainShouldGenerateAsPublicCallable();
+      chatAgainShouldGenerateAsUsualCallable() {
+    return stub.chatAgainShouldGenerateAsUsualCallable();
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -430,10 +430,10 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * // - It may require correct/in-range values for request initialization.
    * // - It may require specifying regional endpoints when creating the service client as shown in
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-   * try (EchoServiceShouldGeneratePartialPublicClient echoServiceShouldGeneratePartialPublicClient =
-   *     EchoServiceShouldGeneratePartialPublicClient.create()) {
+   * try (EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
+   *     EchoServiceShouldGeneratePartialUsualClient.create()) {
    *   EchoResponse response =
-   *       echoServiceShouldGeneratePartialPublicClient.chatShouldGenerateAsInternal();
+   *       echoServiceShouldGeneratePartialUsualClient.chatShouldGenerateAsInternal();
    * }
    * }</pre>
    *
@@ -457,11 +457,11 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * // - It may require correct/in-range values for request initialization.
    * // - It may require specifying regional endpoints when creating the service client as shown in
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-   * try (EchoServiceShouldGeneratePartialPublicClient echoServiceShouldGeneratePartialPublicClient =
-   *     EchoServiceShouldGeneratePartialPublicClient.create()) {
+   * try (EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
+   *     EchoServiceShouldGeneratePartialUsualClient.create()) {
    *   FoobarName name = FoobarName.of("[PROJECT]", "[FOOBAR]");
    *   EchoResponse response =
-   *       echoServiceShouldGeneratePartialPublicClient.chatShouldGenerateAsInternal(name);
+   *       echoServiceShouldGeneratePartialUsualClient.chatShouldGenerateAsInternal(name);
    * }
    * }</pre>
    *
@@ -486,11 +486,11 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * // - It may require correct/in-range values for request initialization.
    * // - It may require specifying regional endpoints when creating the service client as shown in
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-   * try (EchoServiceShouldGeneratePartialPublicClient echoServiceShouldGeneratePartialPublicClient =
-   *     EchoServiceShouldGeneratePartialPublicClient.create()) {
+   * try (EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
+   *     EchoServiceShouldGeneratePartialUsualClient.create()) {
    *   String name = FoobarName.of("[PROJECT]", "[FOOBAR]").toString();
    *   EchoResponse response =
-   *       echoServiceShouldGeneratePartialPublicClient.chatShouldGenerateAsInternal(name);
+   *       echoServiceShouldGeneratePartialUsualClient.chatShouldGenerateAsInternal(name);
    * }
    * }</pre>
    *
@@ -514,8 +514,8 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * // - It may require correct/in-range values for request initialization.
    * // - It may require specifying regional endpoints when creating the service client as shown in
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-   * try (EchoServiceShouldGeneratePartialPublicClient echoServiceShouldGeneratePartialPublicClient =
-   *     EchoServiceShouldGeneratePartialPublicClient.create()) {
+   * try (EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
+   *     EchoServiceShouldGeneratePartialUsualClient.create()) {
    *   EchoRequest request =
    *       EchoRequest.newBuilder()
    *           .setName(FoobarName.of("[PROJECT]", "[FOOBAR]").toString())
@@ -523,7 +523,7 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    *           .setFoobar(Foobar.newBuilder().build())
    *           .build();
    *   EchoResponse response =
-   *       echoServiceShouldGeneratePartialPublicClient.chatShouldGenerateAsInternal(request);
+   *       echoServiceShouldGeneratePartialUsualClient.chatShouldGenerateAsInternal(request);
    * }
    * }</pre>
    *
@@ -546,8 +546,8 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * // - It may require correct/in-range values for request initialization.
    * // - It may require specifying regional endpoints when creating the service client as shown in
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-   * try (EchoServiceShouldGeneratePartialPublicClient echoServiceShouldGeneratePartialPublicClient =
-   *     EchoServiceShouldGeneratePartialPublicClient.create()) {
+   * try (EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
+   *     EchoServiceShouldGeneratePartialUsualClient.create()) {
    *   EchoRequest request =
    *       EchoRequest.newBuilder()
    *           .setName(FoobarName.of("[PROJECT]", "[FOOBAR]").toString())
@@ -555,7 +555,7 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    *           .setFoobar(Foobar.newBuilder().build())
    *           .build();
    *   ApiFuture<EchoResponse> future =
-   *       echoServiceShouldGeneratePartialPublicClient
+   *       echoServiceShouldGeneratePartialUsualClient
    *           .chatShouldGenerateAsInternalCallable()
    *           .futureCall(request);
    *   // Do something.
@@ -580,12 +580,10 @@ public class EchoServiceShouldGeneratePartialPublicClient implements BackgroundR
    * // - It may require correct/in-range values for request initialization.
    * // - It may require specifying regional endpoints when creating the service client as shown in
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-   * try (EchoServiceShouldGeneratePartialPublicClient echoServiceShouldGeneratePartialPublicClient =
-   *     EchoServiceShouldGeneratePartialPublicClient.create()) {
+   * try (EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
+   *     EchoServiceShouldGeneratePartialUsualClient.create()) {
    *   BidiStream<EchoRequest, EchoResponse> bidiStream =
-   *       echoServiceShouldGeneratePartialPublicClient
-   *           .echoShouldGenerateAsInternalCallable()
-   *           .call();
+   *       echoServiceShouldGeneratePartialUsualClient.echoShouldGenerateAsInternalCallable().call();
    *   EchoRequest request =
    *       EchoRequest.newBuilder()
    *           .setName(FoobarName.of("[PROJECT]", "[FOOBAR]").toString())

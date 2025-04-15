@@ -42,10 +42,7 @@ import org.junit.jupiter.api.Test;
 
 class ComposerTest {
   private final GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseEcho();
-  private final GapicContext selectiveGapicContext =
-      GrpcTestProtoLoader.instance().parseSelectiveGenerationTesting();
   private final Service echoProtoService = context.services().get(0);
-  private final Service selctiveGapicService = selectiveGapicContext.services().get(1);
   private final List<GapicClass> clazzes =
       Arrays.asList(
           GrpcServiceCallableFactoryClassComposer.instance()

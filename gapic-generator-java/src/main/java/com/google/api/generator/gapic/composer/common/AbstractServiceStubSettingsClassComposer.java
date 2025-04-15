@@ -1016,6 +1016,18 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     return javaMethods;
   }
 
+  private static List<AnnotationNode> createMethodAnnotation(boolean isDeprecated, boolean isInternal) {
+    List<AnnotationNode> annotations = new ArrayList<>();
+    if (isDeprecated) {
+      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
+    }
+    if (isInternal) {
+      annotations.add(
+          AnnotationNode.withTypeAndDescription(
+              FIXED_TYPESTORE.get("InternalApi"), INTERNAL_API_WARNING));
+    }
+    return annotations;
+  }
   private static List<MethodDefinition> createMethodSettingsGetterMethods(
       Map<String, VariableExpr> methodSettingsMemberVarExprs,
       final Set<String> deprecatedSettingVarNames,
@@ -1024,20 +1036,11 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         e -> {
           boolean isDeprecated = deprecatedSettingVarNames.contains(e.getKey());
           boolean isInternal = internalSettingVarNames.contains(e.getKey());
-          List<AnnotationNode> annotations = new ArrayList<>();
-          if (isDeprecated) {
-            annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
-          }
-          if (isInternal) {
-            annotations.add(
-                AnnotationNode.withTypeAndDescription(
-                    FIXED_TYPESTORE.get("InternalApi"), INTERNAL_API_WARNING));
-          }
           return MethodDefinition.builder()
               .setHeaderCommentStatements(
                   SettingsCommentComposer.createCallSettingsGetterComment(
                       getMethodNameFromSettingsVarName(e.getKey()), isDeprecated, isInternal))
-              .setAnnotations(annotations)
+              .setAnnotations(createMethodAnnotation(isDeprecated, isInternal))
               .setScope(ScopeNode.PUBLIC)
               .setReturnType(e.getValue().type())
               .setName(e.getKey())
@@ -2007,34 +2010,22 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             t.reference()
                 .copyAndSetGenerics(ImmutableList.of())
                 .equals(operationCallSettingsBuilderRef);
-    AnnotationNode deprecatedAnnotation = AnnotationNode.withType(TypeNode.DEPRECATED);
-    AnnotationNode internalAnnotation =
-        AnnotationNode.withTypeAndDescription(
-            FIXED_TYPESTORE.get("InternalApi"), INTERNAL_API_WARNING);
 
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Map.Entry<String, VariableExpr> settingsVarEntry :
         nestedMethodSettingsMemberVarExprs.entrySet()) {
       String varName = settingsVarEntry.getKey();
       VariableExpr settingsVarExpr = settingsVarEntry.getValue();
-      List<AnnotationNode> annotations = new ArrayList<>();
 
       boolean isDeprecated = nestedDeprecatedSettingVarNames.contains(varName);
-      if (isDeprecated) {
-        annotations.add(deprecatedAnnotation);
-      }
-
       boolean isInternal = nestedInternalSettingVarNames.contains(varName);
-      if (isInternal) {
-        annotations.add(internalAnnotation);
-      }
 
       javaMethods.add(
           MethodDefinition.builder()
               .setHeaderCommentStatements(
                   SettingsCommentComposer.createCallSettingsBuilderGetterComment(
                       getMethodNameFromSettingsVarName(varName), isDeprecated, isInternal))
-              .setAnnotations(annotations)
+              .setAnnotations(createMethodAnnotation(isDeprecated, isInternal))
               .setScope(ScopeNode.PUBLIC)
               .setReturnType(settingsVarExpr.type())
               .setName(settingsVarExpr.variable().identifier().name())

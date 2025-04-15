@@ -130,6 +130,22 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     return transportContext;
   }
 
+  private static List<AnnotationNode> addMethodAnnotations(Method method, TypeStore typeStore)
+  {
+    List<AnnotationNode> annotations = new ArrayList<>();
+    if (method.isDeprecated()) {
+      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
+    }
+
+    if (method.isInternalApi()) {
+      annotations.add(
+          AnnotationNode.withTypeAndDescription(
+              typeStore.get("InternalApi"), INTERNAL_API_WARNING));
+    }
+
+    return annotations;
+  }
+
   @Override
   public GapicClass generate(GapicContext context, Service service) {
     Map<String, ResourceName> resourceNames = context.helperResourceNames();
@@ -804,18 +820,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             methodVariantBuilder.setReturnType(methodOutputType).setReturnExpr(rpcInvocationExpr);
       }
 
-      List<AnnotationNode> annotations = new ArrayList<>();
-      if (method.isDeprecated()) {
-        annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
-      }
-
-      if (method.isInternalApi()) {
-        annotations.add(
-            AnnotationNode.withTypeAndDescription(
-                typeStore.get("InternalApi"), INTERNAL_API_WARNING));
-      }
-
-      methodVariantBuilder = methodVariantBuilder.setAnnotations(annotations);
+      methodVariantBuilder = methodVariantBuilder.setAnnotations(addMethodAnnotations(method, typeStore));
       methodVariantBuilder = methodVariantBuilder.setBody(statements);
       javaMethods.add(methodVariantBuilder.build());
     }
@@ -837,7 +842,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
         method.isPaged()
             ? typeStore.get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
             : method.outputType();
-    List<AnnotationNode> annotations = new ArrayList<>();
     if (method.hasLro()) {
       LongrunningOperation lro = method.lro();
       methodOutputType =
@@ -894,15 +898,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setName(String.format(method.hasLro() ? "%sAsync" : "%s", methodName))
             .setArguments(Arrays.asList(requestArgVarExpr));
 
-    if (method.isDeprecated()) {
-      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
-    }
-
-    if (method.isInternalApi()) {
-      annotations.add(
-          AnnotationNode.withTypeAndDescription(
-              typeStore.get("InternalApi"), INTERNAL_API_WARNING));
-    }
 
     if (isProtoEmptyType(methodOutputType)) {
       methodBuilder =
@@ -914,8 +909,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
           methodBuilder.setReturnExpr(callableMethodExpr).setReturnType(methodOutputType);
     }
 
-    methodBuilder.setAnnotations(annotations);
-
+    methodBuilder.setAnnotations(addMethodAnnotations(method, typeStore));
     return methodBuilder.build();
   }
 
@@ -1054,17 +1048,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     }
 
     MethodDefinition.Builder methodDefBuilder = MethodDefinition.builder();
-    List<AnnotationNode> annotations = new ArrayList<>();
-    if (method.isDeprecated()) {
-      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
-    }
-    if (method.isInternalApi()) {
-      annotations.add(
-          AnnotationNode.withTypeAndDescription(
-              typeStore.get("InternalApi"), INTERNAL_API_WARNING));
-    }
 
-    methodDefBuilder = methodDefBuilder.setAnnotations(annotations);
+    methodDefBuilder = methodDefBuilder.setAnnotations(addMethodAnnotations(method, typeStore));
 
     return methodDefBuilder
         .setHeaderCommentStatements(

@@ -44,10 +44,10 @@ option (google.api.resource_definition) = {
 // This proto should be tested side-by-side with yaml files:
 //  - selective_api_generation_v1beta1.yaml or  - selective_api_generation_generate_omitted_v1beta1.yaml
 
-service EchoServiceShouldGenerateAllPublic {
+service EchoServiceShouldGenerateAllAsUsual {
   option (google.api.default_host) = "localhost:7469";
 
-  rpc EchoShouldGenerateAsPublic(EchoRequest) returns (EchoResponse) {
+  rpc EchoShouldGenerateAsUsual(EchoRequest) returns (EchoResponse) {
     option (google.api.http) = {
       post: "/v1beta1/echo:echo"
       body: "*"
@@ -56,17 +56,17 @@ service EchoServiceShouldGenerateAllPublic {
     option (google.api.method_signature) = "";
   }
 
-  rpc ChatShouldGenerateAsPublic(stream EchoRequest) returns (stream EchoResponse);
+  rpc ChatShouldGenerateAsUsual(stream EchoRequest) returns (stream EchoResponse);
 
-  rpc ChatAgainShouldGenerateAsPublic(stream EchoRequest) returns (stream EchoResponse) {
+  rpc ChatAgainShouldGenerateAsUsual(stream EchoRequest) returns (stream EchoResponse) {
     option (google.api.method_signature) = "content";
   }
 }
 
-service EchoServiceShouldGeneratePartialPublic {
+service EchoServiceShouldGeneratePartialUsual {
   option (google.api.default_host) = "localhost:7469";
 
-  rpc EchoShouldGenerateAsPublic(EchoRequest) returns (EchoResponse) {
+  rpc EchoShouldGenerateAsUsual(EchoRequest) returns (EchoResponse) {
     option (google.api.http) = {
       post: "/v1beta1/echo:echo"
       body: "*"
@@ -75,9 +75,9 @@ service EchoServiceShouldGeneratePartialPublic {
     option (google.api.method_signature) = "";
   }
 
-  rpc ChatShouldGenerateAsPublic(stream EchoRequest) returns (stream EchoResponse);
+  rpc ChatShouldGenerateAsUsual(stream EchoRequest) returns (stream EchoResponse);
 
-  rpc ChatAgainShouldGenerateAsPublic(stream EchoRequest) returns (stream EchoResponse) {
+  rpc ChatAgainShouldGenerateAsUsual(stream EchoRequest) returns (stream EchoResponse) {
     option (google.api.method_signature) = "content";
   }
 

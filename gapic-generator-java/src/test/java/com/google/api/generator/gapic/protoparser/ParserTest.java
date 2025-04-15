@@ -757,7 +757,7 @@ class ParserTest {
         Parser.parseService(
             fileDescriptor, messageTypes, resourceNames, serviceYamlOpt, new HashSet<>());
     assertEquals(1, services.size());
-    assertEquals("EchoServiceShouldGeneratePartialPublic", services.get(0).overriddenName());
+    assertEquals("EchoServiceShouldGeneratePartialUsual", services.get(0).overriddenName());
     assertEquals(3, services.get(0).methods().size());
     for (Method method : services.get(0).methods()) {
       assertTrue(method.name().contains("ShouldGenerate"));
@@ -786,17 +786,17 @@ class ParserTest {
 
     assertEquals(3, services.size());
     // Tests a service with public methods only.
-    assertEquals("EchoServiceShouldGenerateAllPublic", services.get(0).overriddenName());
+    assertEquals("EchoServiceShouldGenerateAllAsUsual", services.get(0).overriddenName());
     assertEquals(3, services.get(0).methods().size());
     for (Method method : services.get(0).methods()) {
       assertFalse(method.isInternalApi());
     }
 
     // Tests a service with partial public methods and partial internal methods.
-    assertEquals("EchoServiceShouldGeneratePartialPublic", services.get(1).overriddenName());
+    assertEquals("EchoServiceShouldGeneratePartialUsual", services.get(1).overriddenName());
     assertEquals(5, services.get(1).methods().size());
     for (Method method : services.get(1).methods()) {
-      if (method.name().contains("ShouldGenerateAsPublic")) {
+      if (method.name().contains("ShouldGenerateAsUsual")) {
         assertFalse(method.isInternalApi());
       } else {
         assertTrue(method.isInternalApi());

@@ -11,12 +11,12 @@ publishing:
       common:
         selective_gapic_generation:
           methods:
-          - google.selective.generate.v1beta1.EchoServiceShouldGenerateAllPublic.EchoShouldGenerateAsPublic
-          - google.selective.generate.v1beta1.EchoServiceShouldGenerateAllPublic.ChatShouldGenerateAsPublic
-          - google.selective.generate.v1beta1.EchoServiceShouldGenerateAllPublic.ChatAgainShouldGenerateAsPublic
-          - google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialPublic.EchoShouldGenerateAsPublic
-          - google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialPublic.ChatShouldGenerateAsPublic
-          - google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialPublic.ChatAgainShouldGenerateAsPublic
+          - google.selective.generate.v1beta1.EchoServiceShouldGenerateAllAsUsual.EchoShouldGenerateAsUsual
+          - google.selective.generate.v1beta1.EchoServiceShouldGenerateAllAsUsual.ChatShouldGenerateAsUsual
+          - google.selective.generate.v1beta1.EchoServiceShouldGenerateAllAsUsual.ChatAgainShouldGenerateAsUsual
+          - google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsual.EchoShouldGenerateAsUsual
+          - google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsual.ChatShouldGenerateAsUsual
+          - google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsual.ChatAgainShouldGenerateAsUsual
           generate_omitted_as_internal: true
         reference_docs_uri: www.abc.net
         destinations:

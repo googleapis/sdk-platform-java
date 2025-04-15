@@ -368,7 +368,7 @@ public class TestProtoLoader {
     ServiceDescriptor selectiveGenerationServiceDescriptor =
         selectiveGenerationFileDescriptor.getServices().get(1);
     assertEquals(
-        "EchoServiceShouldGeneratePartialPublic", selectiveGenerationServiceDescriptor.getName());
+        "EchoServiceShouldGeneratePartialUsual", selectiveGenerationServiceDescriptor.getName());
 
     String serviceYamlFilename = "selective_api_generation_generate_omitted_v1beta1.yaml";
     Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);

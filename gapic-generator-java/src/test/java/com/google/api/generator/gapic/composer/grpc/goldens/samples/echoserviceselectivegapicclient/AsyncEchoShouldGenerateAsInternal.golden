@@ -16,11 +16,11 @@
 
 package com.google.selective.generate.v1beta1.samples;
 
-// [START goldensample_generated_EchoServiceShouldGeneratePartialPublic_EchoShouldGenerateAsInternal_async]
+// [START goldensample_generated_EchoServiceShouldGeneratePartialUsual_EchoShouldGenerateAsInternal_async]
 import com.google.api.gax.rpc.BidiStream;
 import com.google.selective.generate.v1beta1.EchoRequest;
 import com.google.selective.generate.v1beta1.EchoResponse;
-import com.google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialPublicClient;
+import com.google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsualClient;
 import com.google.selective.generate.v1beta1.Foobar;
 import com.google.selective.generate.v1beta1.FoobarName;
 
@@ -36,12 +36,10 @@ public class AsyncEchoShouldGenerateAsInternal {
     // - It may require correct/in-range values for request initialization.
     // - It may require specifying regional endpoints when creating the service client as shown in
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-    try (EchoServiceShouldGeneratePartialPublicClient echoServiceShouldGeneratePartialPublicClient =
-        EchoServiceShouldGeneratePartialPublicClient.create()) {
+    try (EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
+        EchoServiceShouldGeneratePartialUsualClient.create()) {
       BidiStream<EchoRequest, EchoResponse> bidiStream =
-          echoServiceShouldGeneratePartialPublicClient
-              .echoShouldGenerateAsInternalCallable()
-              .call();
+          echoServiceShouldGeneratePartialUsualClient.echoShouldGenerateAsInternalCallable().call();
       EchoRequest request =
           EchoRequest.newBuilder()
               .setName(FoobarName.of("[PROJECT]", "[FOOBAR]").toString())
@@ -55,4 +53,4 @@ public class AsyncEchoShouldGenerateAsInternal {
     }
   }
 }
-// [END goldensample_generated_EchoServiceShouldGeneratePartialPublic_EchoShouldGenerateAsInternal_async]
+// [END goldensample_generated_EchoServiceShouldGeneratePartialUsual_EchoShouldGenerateAsInternal_async]

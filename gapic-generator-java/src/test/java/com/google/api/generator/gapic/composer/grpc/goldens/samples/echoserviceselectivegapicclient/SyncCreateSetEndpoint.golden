@@ -16,9 +16,9 @@
 
 package com.google.selective.generate.v1beta1.samples;
 
-// [START goldensample_generated_EchoServiceShouldGeneratePartialPublic_Create_SetEndpoint_sync]
-import com.google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialPublicClient;
-import com.google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialPublicSettings;
+// [START goldensample_generated_EchoServiceShouldGeneratePartialUsual_Create_SetEndpoint_sync]
+import com.google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsualClient;
+import com.google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsualSettings;
 import com.google.selective.generate.v1beta1.myEndpoint;
 
 public class SyncCreateSetEndpoint {
@@ -33,11 +33,11 @@ public class SyncCreateSetEndpoint {
     // - It may require correct/in-range values for request initialization.
     // - It may require specifying regional endpoints when creating the service client as shown in
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-    EchoServiceShouldGeneratePartialPublicSettings echoServiceShouldGeneratePartialPublicSettings =
-        EchoServiceShouldGeneratePartialPublicSettings.newBuilder().setEndpoint(myEndpoint).build();
-    EchoServiceShouldGeneratePartialPublicClient echoServiceShouldGeneratePartialPublicClient =
-        EchoServiceShouldGeneratePartialPublicClient.create(
-            echoServiceShouldGeneratePartialPublicSettings);
+    EchoServiceShouldGeneratePartialUsualSettings echoServiceShouldGeneratePartialUsualSettings =
+        EchoServiceShouldGeneratePartialUsualSettings.newBuilder().setEndpoint(myEndpoint).build();
+    EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
+        EchoServiceShouldGeneratePartialUsualClient.create(
+            echoServiceShouldGeneratePartialUsualSettings);
   }
 }
-// [END goldensample_generated_EchoServiceShouldGeneratePartialPublic_Create_SetEndpoint_sync]
+// [END goldensample_generated_EchoServiceShouldGeneratePartialUsual_Create_SetEndpoint_sync]

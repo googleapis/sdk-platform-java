@@ -16,20 +16,21 @@
 
 package com.google.selective.generate.v1beta1.samples;
 
-// [START goldensample_generated_EchoServiceShouldGeneratePartialUsual_ChatShouldGenerateAsInternal_sync]
+// [START goldensample_generated_EchoServiceShouldGeneratePartialUsual_ChatShouldGenerateAsUsual_async]
+import com.google.api.gax.rpc.BidiStream;
 import com.google.selective.generate.v1beta1.EchoRequest;
 import com.google.selective.generate.v1beta1.EchoResponse;
 import com.google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsualClient;
 import com.google.selective.generate.v1beta1.Foobar;
 import com.google.selective.generate.v1beta1.FoobarName;
 
-public class SyncChatShouldGenerateAsInternal {
+public class AsyncChatShouldGenerateAsUsual {
 
   public static void main(String[] args) throws Exception {
-    syncChatShouldGenerateAsInternal();
+    asyncChatShouldGenerateAsUsual();
   }
 
-  public static void syncChatShouldGenerateAsInternal() throws Exception {
+  public static void asyncChatShouldGenerateAsUsual() throws Exception {
     // This snippet has been automatically generated and should be regarded as a code template only.
     // It will require modifications to work:
     // - It may require correct/in-range values for request initialization.
@@ -37,15 +38,19 @@ public class SyncChatShouldGenerateAsInternal {
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
     try (EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
         EchoServiceShouldGeneratePartialUsualClient.create()) {
+      BidiStream<EchoRequest, EchoResponse> bidiStream =
+          echoServiceShouldGeneratePartialUsualClient.chatShouldGenerateAsUsualCallable().call();
       EchoRequest request =
           EchoRequest.newBuilder()
               .setName(FoobarName.of("[PROJECT]", "[FOOBAR]").toString())
               .setParent(FoobarName.of("[PROJECT]", "[FOOBAR]").toString())
               .setFoobar(Foobar.newBuilder().build())
               .build();
-      EchoResponse response =
-          echoServiceShouldGeneratePartialUsualClient.chatShouldGenerateAsInternal(request);
+      bidiStream.send(request);
+      for (EchoResponse response : bidiStream) {
+        // Do something when a response is received.
+      }
     }
   }
 }
-// [END goldensample_generated_EchoServiceShouldGeneratePartialUsual_ChatShouldGenerateAsInternal_sync]
+// [END goldensample_generated_EchoServiceShouldGeneratePartialUsual_ChatShouldGenerateAsUsual_async]

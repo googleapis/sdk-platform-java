@@ -94,16 +94,6 @@ class GrpcServiceStubClassComposerTest {
   }
 
   @Test
-  void generateGrpcServiceStubClass_selectiveGeneration() {
-    GapicContext context = GrpcTestProtoLoader.instance().parseSelectiveGenerationTesting();
-    Service service = context.services().get(1);
-    GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
-
-    Assert.assertGoldenClass(this.getClass(), clazz, "SelectiveGapicStub.golden");
-    Assert.assertEmptySamples(clazz.samples());
-  }
-
-  @Test
   void generateGrpcServiceStubClass_callableNameType() {
     GapicContext context = GrpcTestProtoLoader.instance().parseCallabeNameType();
     Service service = context.services().get(0);

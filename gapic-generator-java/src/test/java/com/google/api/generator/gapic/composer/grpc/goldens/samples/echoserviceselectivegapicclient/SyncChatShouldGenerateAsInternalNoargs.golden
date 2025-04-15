@@ -16,9 +16,9 @@
 
 package com.google.selective.generate.v1beta1.samples;
 
-// [START goldensample_generated_EchoServiceShouldGeneratePartialPublic_ChatShouldGenerateAsInternal_Noargs_sync]
+// [START goldensample_generated_EchoServiceShouldGeneratePartialUsual_ChatShouldGenerateAsInternal_Noargs_sync]
 import com.google.selective.generate.v1beta1.EchoResponse;
-import com.google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialPublicClient;
+import com.google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsualClient;
 
 public class SyncChatShouldGenerateAsInternalNoargs {
 
@@ -32,11 +32,11 @@ public class SyncChatShouldGenerateAsInternalNoargs {
     // - It may require correct/in-range values for request initialization.
     // - It may require specifying regional endpoints when creating the service client as shown in
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-    try (EchoServiceShouldGeneratePartialPublicClient echoServiceShouldGeneratePartialPublicClient =
-        EchoServiceShouldGeneratePartialPublicClient.create()) {
+    try (EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
+        EchoServiceShouldGeneratePartialUsualClient.create()) {
       EchoResponse response =
-          echoServiceShouldGeneratePartialPublicClient.chatShouldGenerateAsInternal();
+          echoServiceShouldGeneratePartialUsualClient.chatShouldGenerateAsInternal();
     }
   }
 }
-// [END goldensample_generated_EchoServiceShouldGeneratePartialPublic_ChatShouldGenerateAsInternal_Noargs_sync]
+// [END goldensample_generated_EchoServiceShouldGeneratePartialUsual_ChatShouldGenerateAsInternal_Noargs_sync]

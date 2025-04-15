@@ -16,20 +16,18 @@
 
 package com.google.selective.generate.v1beta1.samples;
 
-// [START goldensample_generated_EchoServiceShouldGeneratePartialUsual_ChatShouldGenerateAsInternal_sync]
-import com.google.selective.generate.v1beta1.EchoRequest;
+// [START goldensample_generated_EchoServiceShouldGeneratePartialUsual_EchoShouldGenerateAsUsual_String_sync]
 import com.google.selective.generate.v1beta1.EchoResponse;
 import com.google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsualClient;
-import com.google.selective.generate.v1beta1.Foobar;
 import com.google.selective.generate.v1beta1.FoobarName;
 
-public class SyncChatShouldGenerateAsInternal {
+public class SyncEchoShouldGenerateAsUsualString {
 
   public static void main(String[] args) throws Exception {
-    syncChatShouldGenerateAsInternal();
+    syncEchoShouldGenerateAsUsualString();
   }
 
-  public static void syncChatShouldGenerateAsInternal() throws Exception {
+  public static void syncEchoShouldGenerateAsUsualString() throws Exception {
     // This snippet has been automatically generated and should be regarded as a code template only.
     // It will require modifications to work:
     // - It may require correct/in-range values for request initialization.
@@ -37,15 +35,10 @@ public class SyncChatShouldGenerateAsInternal {
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
     try (EchoServiceShouldGeneratePartialUsualClient echoServiceShouldGeneratePartialUsualClient =
         EchoServiceShouldGeneratePartialUsualClient.create()) {
-      EchoRequest request =
-          EchoRequest.newBuilder()
-              .setName(FoobarName.of("[PROJECT]", "[FOOBAR]").toString())
-              .setParent(FoobarName.of("[PROJECT]", "[FOOBAR]").toString())
-              .setFoobar(Foobar.newBuilder().build())
-              .build();
+      String name = FoobarName.of("[PROJECT]", "[FOOBAR]").toString();
       EchoResponse response =
-          echoServiceShouldGeneratePartialUsualClient.chatShouldGenerateAsInternal(request);
+          echoServiceShouldGeneratePartialUsualClient.echoShouldGenerateAsUsual(name);
     }
   }
 }
-// [END goldensample_generated_EchoServiceShouldGeneratePartialUsual_ChatShouldGenerateAsInternal_sync]
+// [END goldensample_generated_EchoServiceShouldGeneratePartialUsual_EchoShouldGenerateAsUsual_String_sync]

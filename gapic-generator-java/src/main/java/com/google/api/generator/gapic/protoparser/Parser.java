@@ -93,8 +93,11 @@ import java.util.stream.IntStream;
 
 public class Parser {
   enum SelectiveGapicType {
+    // Methods will be generated and exposed externally as usual.
     PUBLIC,
+    // Methods will not be generated.
     HIDDEN,
+    // Methods will be generated and tagged @InternalApi (internal use) during generation.
     INTERNAL
   }
 
@@ -474,9 +477,16 @@ public class Parser {
     // is in the allow list.
     // Otherwise, generate this method as INTERNAL or HIDDEN based on GenerateOmittedAsInternal
     // flag.
-    if (includeMethodsList.isEmpty() && generateOmittedAsInternal == false
-        || includeMethodsList.contains(method.getFullName())) return SelectiveGapicType.PUBLIC;
-    else return generateOmittedAsInternal ? SelectiveGapicType.INTERNAL : SelectiveGapicType.HIDDEN;
+    if (includeMethodsList.isEmpty() && generateOmittedAsInternal == false || includeMethodsList.contains(method.getFullName())) {
+      return SelectiveGapicType.PUBLIC;
+    }
+    else if (generateOmittedAsInternal)
+    {
+      return SelectiveGapicType.INTERNAL;
+    }
+    else {
+      return SelectiveGapicType.HIDDEN;
+    }
   }
 
   // A service is considered empty if it contains no methods, or only methods marked as HIDDEN.
