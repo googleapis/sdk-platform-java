@@ -283,10 +283,13 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
           methodMakerFn.apply(getCallSettingsType(protoMethod, typeStore), javaMethodName);
       javaMethods.add(methodBuilderHelper(protoMethod, methodBuilder, javaMethodName));
       if (protoMethod.hasLro()) {
-        String javaOperationSettingsMethodName = String.format("%sOperationSettings", javaStyleName);
+        String javaOperationSettingsMethodName =
+            String.format("%sOperationSettings", javaStyleName);
         methodBuilder =
-            methodMakerFn.apply(getOperationCallSettingsType(protoMethod), javaOperationSettingsMethodName);
-        javaMethods.add(methodBuilderHelper(protoMethod, methodBuilder, javaOperationSettingsMethodName));
+            methodMakerFn.apply(
+                getOperationCallSettingsType(protoMethod), javaOperationSettingsMethodName);
+        javaMethods.add(
+            methodBuilderHelper(protoMethod, methodBuilder, javaOperationSettingsMethodName));
       }
     }
     return javaMethods;

@@ -130,8 +130,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     return transportContext;
   }
 
-  private static List<AnnotationNode> addMethodAnnotations(Method method, TypeStore typeStore)
-  {
+  private static List<AnnotationNode> addMethodAnnotations(Method method, TypeStore typeStore) {
     List<AnnotationNode> annotations = new ArrayList<>();
     if (method.isDeprecated()) {
       annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
@@ -820,7 +819,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             methodVariantBuilder.setReturnType(methodOutputType).setReturnExpr(rpcInvocationExpr);
       }
 
-      methodVariantBuilder = methodVariantBuilder.setAnnotations(addMethodAnnotations(method, typeStore));
+      methodVariantBuilder =
+          methodVariantBuilder.setAnnotations(addMethodAnnotations(method, typeStore));
       methodVariantBuilder = methodVariantBuilder.setBody(statements);
       javaMethods.add(methodVariantBuilder.build());
     }
@@ -897,7 +897,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setIsFinal(true)
             .setName(String.format(method.hasLro() ? "%sAsync" : "%s", methodName))
             .setArguments(Arrays.asList(requestArgVarExpr));
-
 
     if (isProtoEmptyType(methodOutputType)) {
       methodBuilder =

@@ -477,14 +477,12 @@ public class Parser {
     // is in the allow list.
     // Otherwise, generate this method as INTERNAL or HIDDEN based on GenerateOmittedAsInternal
     // flag.
-    if (includeMethodsList.isEmpty() && generateOmittedAsInternal == false || includeMethodsList.contains(method.getFullName())) {
+    if (includeMethodsList.isEmpty() && generateOmittedAsInternal == false
+        || includeMethodsList.contains(method.getFullName())) {
       return SelectiveGapicType.PUBLIC;
-    }
-    else if (generateOmittedAsInternal)
-    {
+    } else if (generateOmittedAsInternal) {
       return SelectiveGapicType.INTERNAL;
-    }
-    else {
+    } else {
       return SelectiveGapicType.HIDDEN;
     }
   }

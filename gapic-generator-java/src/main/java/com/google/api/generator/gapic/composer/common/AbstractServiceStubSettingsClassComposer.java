@@ -1016,7 +1016,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     return javaMethods;
   }
 
-  private static List<AnnotationNode> createMethodAnnotation(boolean isDeprecated, boolean isInternal) {
+  private static List<AnnotationNode> createMethodAnnotation(
+      boolean isDeprecated, boolean isInternal) {
     List<AnnotationNode> annotations = new ArrayList<>();
     if (isDeprecated) {
       annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
@@ -1028,6 +1029,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     }
     return annotations;
   }
+
   private static List<MethodDefinition> createMethodSettingsGetterMethods(
       Map<String, VariableExpr> methodSettingsMemberVarExprs,
       final Set<String> deprecatedSettingVarNames,

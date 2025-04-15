@@ -103,7 +103,8 @@ public class SettingsCommentComposer {
 
   public SettingsCommentComposer(String transportPrefix) {
     this.newTransportBuilderMethodComment =
-        toCommentStatement(String.format("Returns a new %s builder for this class.", transportPrefix));
+        toCommentStatement(
+            String.format("Returns a new %s builder for this class.", transportPrefix));
     this.transportProviderBuilderMethodComment =
         toCommentStatement(
             String.format(
