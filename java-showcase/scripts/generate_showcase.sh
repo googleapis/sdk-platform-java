@@ -53,7 +53,7 @@ popd
 append_showcase_to_api_defs "${api_def_dir}"
 
 echo "building docker image"
-DOCKER_BUILDKIT=1 docker build --file .cloudbuild/library_generation/library_generation.Dockerfile --iidfile image-id .
+DOCKER_BUILDKIT=1 docker build --no-cache --file .cloudbuild/library_generation/library_generation.Dockerfile --iidfile image-id .
 
 if [[ "${replace}" == "true" ]]; then
   generated_files_dir="${ROOT_DIR}"
