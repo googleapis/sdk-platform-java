@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.api.grpc</groupId>
   <artifactId>proto-gapic-showcase-v1beta1</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>protobuf-shading-v1</version>
   <name>proto-gapic-showcase-v1beta1</name>
   <description>PROTO library for proto-gapic-showcase-v1beta1</description>
   <parent>
@@ -68,7 +68,7 @@
               <relocations>
                 <relocation>
                   <pattern>com.google.protobuf</pattern>
-                  <shadedPattern>com.shaded.google.protobuf.iam.v1</shadedPattern>
+                  <shadedPattern>com.shaded.google.protobuf.showcase.v1</shadedPattern>
                   <excludes>
                     <exclude>com.google.protobuf.AbstractMessageLite</exclude>
                     <exclude>com.google.protobuf.AbstractParser</exclude>

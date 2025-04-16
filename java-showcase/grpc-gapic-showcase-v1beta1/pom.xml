@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.api.grpc</groupId>
   <artifactId>grpc-gapic-showcase-v1beta1</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>protobuf-shading-v1</version>
   <name>grpc-gapic-showcase-v1beta1</name>
   <description>GRPC library for grpc-google-cloud-iot-v1</description>
   <parent>
@@ -48,6 +48,7 @@
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>proto-gapic-showcase-v1beta1</artifactId>
+      <version>protobuf-shading-v1</version>
     </dependency>
     <dependency>
       <groupId>com.google.api.grpc</groupId>
