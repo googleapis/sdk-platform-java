@@ -149,7 +149,7 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public JavaDocComment build() {
-      // @param, @throws, @return, @deprecated and @InternalApi should always get printed at the
+      // @param, @throws, @return, @deprecated and @internalApi should always get printed at the
       // end.
       componentsList.addAll(paramsList);
       if (!Strings.isNullOrEmpty(throwsType)) {
