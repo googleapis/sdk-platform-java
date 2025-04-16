@@ -10,6 +10,7 @@
         ".cloudbuild/graalvm/cloudbuild.yaml",
         ".cloudbuild/graalvm/cloudbuild-test-a.yaml",
         ".cloudbuild/graalvm/cloudbuild-test-b.yaml",
+        ".cloudbuild/graalvm/cloudbuild-test-c.yaml",
         ".cloudbuild/library_generation/cloudbuild-library-generation-push.yaml",
         ".cloudbuild/library_generation/library_generation.Dockerfile",
         ".cloudbuild/library_generation/library_generation_airlock.Dockerfile"
