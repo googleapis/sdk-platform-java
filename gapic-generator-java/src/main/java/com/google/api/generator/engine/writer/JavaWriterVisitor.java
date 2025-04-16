@@ -1020,6 +1020,15 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     if (!classDefinition.isNested()) {
       String formattedClazz = JavaFormatter.format(buffer.toString());
 
+      // fixing @InternalApi comment after formatting
+      // formatter removes the line break before @InternalApi comment.
+      // See https://github.com/google/google-java-format/issues/1249
+      // Ensures '@InternalApi' Javadoc comment has a line break and a standard '* ' prefix.
+      formattedClazz =
+          formattedClazz.replaceAll(
+              "(?s)(/\\*\\*.*?)(@InternalApi[^\r\n]*)(?:\\r?\\n\\h*\\*\\h+)((?!@|\\*/)[^\r\n]*)(.*?\\*/)",
+              "$1 \n   * $2 $3$4");
+
       // fixing region tag after formatting
       // formatter splits long region tags on multiple lines and moves the end tag up - doesn't meet
       // tag requirements. See https://github.com/google/google-java-format/issues/137

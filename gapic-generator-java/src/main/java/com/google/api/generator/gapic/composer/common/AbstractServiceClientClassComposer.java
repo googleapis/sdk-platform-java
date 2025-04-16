@@ -130,7 +130,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     return transportContext;
   }
 
-  private static List<AnnotationNode> addMethodAnnotations(Method method, TypeStore typeStore) {
+  private static List<AnnotationNode> createMethodAnnotations(Method method, TypeStore typeStore) {
     List<AnnotationNode> annotations = new ArrayList<>();
     if (method.isDeprecated()) {
       annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
@@ -820,7 +820,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       }
 
       methodVariantBuilder =
-          methodVariantBuilder.setAnnotations(addMethodAnnotations(method, typeStore));
+          methodVariantBuilder.setAnnotations(createMethodAnnotations(method, typeStore));
       methodVariantBuilder = methodVariantBuilder.setBody(statements);
       javaMethods.add(methodVariantBuilder.build());
     }
@@ -908,7 +908,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
           methodBuilder.setReturnExpr(callableMethodExpr).setReturnType(methodOutputType);
     }
 
-    methodBuilder.setAnnotations(addMethodAnnotations(method, typeStore));
+    methodBuilder.setAnnotations(createMethodAnnotations(method, typeStore));
     return methodBuilder.build();
   }
 
@@ -1048,7 +1048,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
 
     MethodDefinition.Builder methodDefBuilder = MethodDefinition.builder();
 
-    methodDefBuilder = methodDefBuilder.setAnnotations(addMethodAnnotations(method, typeStore));
+    methodDefBuilder = methodDefBuilder.setAnnotations(createMethodAnnotations(method, typeStore));
 
     return methodDefBuilder
         .setHeaderCommentStatements(

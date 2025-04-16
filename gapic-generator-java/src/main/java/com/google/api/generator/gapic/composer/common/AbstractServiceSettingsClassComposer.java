@@ -71,7 +71,6 @@ import com.google.longrunning.Operation;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -98,6 +97,21 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
 
   protected TransportContext getTransportContext() {
     return transportContext;
+  }
+
+  private static List<AnnotationNode> createMethodAnnotations(Method method) {
+    List<AnnotationNode> annotations = new ArrayList<>();
+    if (method.isDeprecated()) {
+      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
+    }
+
+    if (method.isInternalApi()) {
+      annotations.add(
+          AnnotationNode.withTypeAndDescription(
+              FIXED_TYPESTORE.get("InternalApi"), INTERNAL_API_WARNING));
+    }
+
+    return annotations;
   }
 
   @Override
@@ -298,24 +312,13 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
   // Add method header comment statements and annotations.
   private static MethodDefinition methodBuilderHelper(
       Method protoMethod, MethodDefinition.Builder methodBuilder, String javaMethodName) {
-    List<AnnotationNode> annotations = new ArrayList<>();
-    if (protoMethod.isDeprecated()) {
-      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
-    }
-
-    if (protoMethod.isInternalApi()) {
-      annotations.add(
-          AnnotationNode.withTypeAndDescription(
-              FIXED_TYPESTORE.get("InternalApi"), INTERNAL_API_WARNING));
-    }
-
     return methodBuilder
         .setHeaderCommentStatements(
             SettingsCommentComposer.createCallSettingsGetterComment(
                 getMethodNameFromSettingsVarName(javaMethodName),
                 protoMethod.isDeprecated(),
                 protoMethod.isInternalApi()))
-        .setAnnotations(annotations)
+        .setAnnotations(createMethodAnnotations(protoMethod))
         .build();
   }
 
@@ -789,10 +792,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                       getMethodNameFromSettingsVarName(javaMethodName),
                       protoMethod.isDeprecated(),
                       protoMethod.isInternalApi()))
-              .setAnnotations(
-                  protoMethod.isDeprecated()
-                      ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
-                      : Collections.emptyList())
+              .setAnnotations(createMethodAnnotations(protoMethod))
               .build());
 
       if (protoMethod.hasLro()) {
@@ -806,10 +806,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                         getMethodNameFromSettingsVarName(javaMethodName),
                         protoMethod.isDeprecated(),
                         protoMethod.isInternalApi()))
-                .setAnnotations(
-                    protoMethod.isDeprecated()
-                        ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
-                        : Collections.emptyList())
+                .setAnnotations(createMethodAnnotations(protoMethod))
                 .build());
       }
     }

@@ -95,8 +95,8 @@ public class EchoServiceShouldGeneratePartialUsualSettings
 
   /**
    * Returns the object with the settings used for calls to
-   * chatShouldGenerateAsInternal. @InternalApi This method is internal used only. Please do not use
-   * directly.
+   * chatShouldGenerateAsInternal.  
+   * @InternalApi This method is internal used only. Please do not use directly.
    */
   @InternalApi("Internal API. This API is not intended for public consumption.")
   public UnaryCallSettings<EchoRequest, EchoResponse> chatShouldGenerateAsInternalSettings() {
@@ -106,8 +106,8 @@ public class EchoServiceShouldGeneratePartialUsualSettings
 
   /**
    * Returns the object with the settings used for calls to
-   * echoShouldGenerateAsInternal. @InternalApi This method is internal used only. Please do not use
-   * directly.
+   * echoShouldGenerateAsInternal.  
+   * @InternalApi This method is internal used only. Please do not use directly.
    */
   @InternalApi("Internal API. This API is not intended for public consumption.")
   public StreamingCallSettings<EchoRequest, EchoResponse> echoShouldGenerateAsInternalSettings() {
@@ -234,9 +234,10 @@ public class EchoServiceShouldGeneratePartialUsualSettings
 
     /**
      * Returns the builder for the settings used for calls to
-     * chatShouldGenerateAsInternal. @InternalApi This method is internal used only. Please do not
-     * use directly.
+     * chatShouldGenerateAsInternal.  
+   * @InternalApi This method is internal used only. Please do not use directly.
      */
+    @InternalApi("Internal API. This API is not intended for public consumption.")
     public UnaryCallSettings.Builder<EchoRequest, EchoResponse>
         chatShouldGenerateAsInternalSettings() {
       return getStubSettingsBuilder().chatShouldGenerateAsInternalSettings();
@@ -244,9 +245,10 @@ public class EchoServiceShouldGeneratePartialUsualSettings
 
     /**
      * Returns the builder for the settings used for calls to
-     * echoShouldGenerateAsInternal. @InternalApi This method is internal used only. Please do not
-     * use directly.
+     * echoShouldGenerateAsInternal.  
+   * @InternalApi This method is internal used only. Please do not use directly.
      */
+    @InternalApi("Internal API. This API is not intended for public consumption.")
     public StreamingCallSettings.Builder<EchoRequest, EchoResponse>
         echoShouldGenerateAsInternalSettings() {
       return getStubSettingsBuilder().echoShouldGenerateAsInternalSettings();
