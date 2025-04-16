@@ -160,7 +160,7 @@ public abstract class JavaDocComment implements Comment {
         componentsList.add(String.format("@deprecated %s", deprecated));
       }
       if (!Strings.isNullOrEmpty(internalOnly)) {
-        componentsList.add(String.format("@InternalApi %s", internalOnly));
+        componentsList.add(String.format("@internalApi %s", internalOnly));
       }
       if (!Strings.isNullOrEmpty(returnDescription)) {
         componentsList.add(String.format("@return %s", returnDescription));

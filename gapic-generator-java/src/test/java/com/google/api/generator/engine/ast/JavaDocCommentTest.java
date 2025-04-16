@@ -219,7 +219,7 @@ class JavaDocCommentTest {
         LineFormatter.lines(
             "@throws java.lang.RuntimeException if the remote call fails.\n",
             "@deprecated Use the {@link ShelfBookName} class instead.\n",
-            "@InternalApi This method is internal used only. Please do not use directly.\n",
+            "@internalApi This method is internal used only. Please do not use directly.\n",
             "@return This is the correct method return text.");
     assertEquals(expected, javaDocComment.comment());
   }
@@ -278,7 +278,7 @@ class JavaDocCommentTest {
             "@param shelf The shelf to create.\n",
             "@throws com.google.api.gax.rpc.ApiException if the remote call fails.\n",
             "@deprecated Use the {@link ArchivedBookName} class instead.\n",
-            "@InternalApi This method is internal used only. Please do not use directly.\n",
+            "@internalApi This method is internal used only. Please do not use directly.\n",
             "@return This is the method return text.");
     assertEquals(expected, javaDocComment.comment());
   }
