@@ -16,6 +16,7 @@ branchProtectionRules:
       - compatibility
       - graalvm-presubmit-sdk-platform-java-a (java-graalvm-ci-prod)
       - graalvm-presubmit-sdk-platform-java-b (java-graalvm-ci-prod)
+      - graalvm-presubmit-sdk-platform-java-c (java-graalvm-ci-prod)
       - >-
         graalvm-presubmit-sdk-platform-java-a-downstream-kms
         (java-graalvm-ci-prod)
@@ -23,10 +24,16 @@ branchProtectionRules:
         graalvm-presubmit-sdk-platform-java-b-downstream-kms
         (java-graalvm-ci-prod)
       - >-
+        graalvm-presubmit-sdk-platform-java-c-downstream-kms
+        (java-graalvm-ci-prod)
+      - >-
         graalvm-presubmit-sdk-platform-java-a-downstream-kmsinventory
         (java-graalvm-ci-prod)
       - >-
         graalvm-presubmit-sdk-platform-java-b-downstream-kmsinventory
+        (java-graalvm-ci-prod)
+      - >-
+        graalvm-presubmit-sdk-platform-java-c-downstream-kmsinventory
         (java-graalvm-ci-prod)
       - library_generation
       - library-generation-integration-test (java-hermetic-build-prod)
