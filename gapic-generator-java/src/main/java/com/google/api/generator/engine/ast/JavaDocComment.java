@@ -51,6 +51,7 @@ public abstract class JavaDocComment implements Comment {
     String throwsType = null;
     String throwsDescription = null;
     String deprecated = null;
+    String internalOnly = null;
     String returnDescription = null;
     List<String> paramsList = new ArrayList<>();
     List<String> componentsList = new ArrayList<>();
@@ -68,6 +69,11 @@ public abstract class JavaDocComment implements Comment {
 
     public Builder setDeprecated(String deprecatedText) {
       deprecated = deprecatedText;
+      return this;
+    }
+
+    public Builder setInternalOnly(String internalOnlyText) {
+      internalOnly = internalOnlyText;
       return this;
     }
 
@@ -136,13 +142,20 @@ public abstract class JavaDocComment implements Comment {
       return Strings.isNullOrEmpty(throwsType)
           && Strings.isNullOrEmpty(throwsDescription)
           && Strings.isNullOrEmpty(deprecated)
+          && Strings.isNullOrEmpty(internalOnly)
           && Strings.isNullOrEmpty(returnDescription)
           && paramsList.isEmpty()
           && componentsList.isEmpty();
     }
 
     public JavaDocComment build() {
-      // @param, @throws, @return, and @deprecated should always get printed at the end.
+      // Add additional descriptive text before block tags.
+      if (!Strings.isNullOrEmpty(internalOnly)) {
+        componentsList.add(
+            String.format("<p> <b>Warning: </b>%s", HtmlEscaper.process(internalOnly)));
+      }
+      // @param, @throws, @return and @deprecated should always get printed at the
+      // end.
       componentsList.addAll(paramsList);
       if (!Strings.isNullOrEmpty(throwsType)) {
         componentsList.add(
