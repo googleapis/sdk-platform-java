@@ -39,6 +39,7 @@ import com.google.logging.v2.LoggingProto;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.pubsub.v1.PubsubProto;
+import com.google.selective.generate.v1beta1.SelectiveApiGenerationOuterClass;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.IdentityOuterClass;
 import com.google.showcase.v1beta1.MessagingOuterClass;
@@ -357,6 +358,49 @@ public class TestProtoLoader {
         .setResourceNames(resourceNames)
         .setServices(services)
         .setHelperResourceNames(outputResourceNames)
+        .setTransport(transport)
+        .build();
+  }
+
+  public GapicContext parseSelectiveGenerationTesting() {
+    FileDescriptor selectiveGenerationFileDescriptor =
+        SelectiveApiGenerationOuterClass.getDescriptor();
+    ServiceDescriptor selectiveGenerationServiceDescriptor =
+        selectiveGenerationFileDescriptor.getServices().get(1);
+    assertEquals(
+        "EchoServiceShouldGeneratePartialUsual", selectiveGenerationServiceDescriptor.getName());
+
+    String serviceYamlFilename = "selective_api_generation_generate_omitted_v1beta1.yaml";
+    Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
+    Optional<com.google.api.Service> serviceYamlOpt =
+        ServiceYamlParser.parse(serviceYamlPath.toString());
+    assertTrue(serviceYamlOpt.isPresent());
+
+    Map<String, Message> messageTypes = Parser.parseMessages(selectiveGenerationFileDescriptor);
+    Map<String, ResourceName> resourceNames =
+        Parser.parseResourceNames(selectiveGenerationFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            selectiveGenerationFileDescriptor,
+            messageTypes,
+            resourceNames,
+            serviceYamlOpt,
+            outputResourceNames);
+
+    String jsonFilename = "selective_api_generation_grpc_service_config.json";
+    Path jsonPath = Paths.get(testFilesDirectory, jsonFilename);
+    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(configOpt.isPresent());
+    GapicServiceConfig config = configOpt.get();
+    return GapicContext.builder()
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
+        .setHelperResourceNames(outputResourceNames)
+        .setServiceYamlProto(serviceYamlOpt.orElse(null))
+        .setGapicMetadataEnabled(true)
+        .setServiceConfig(config)
         .setTransport(transport)
         .build();
   }

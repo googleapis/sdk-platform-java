@@ -188,8 +188,9 @@ class JavaDocCommentTest {
   }
 
   @Test
-  void createJavaDocComment_throwsAndDeprecatedAndReturn() {
-    // No matter how many times or order `setThrows`, `setDeprecated`, `setReturn` are called,
+  void createJavaDocComment_throwsAndDeprecatedAndInternalAndReturn() {
+    // No matter how many times or order `setThrows`, `setDeprecated`, `setInternalOnly`,
+    // `setReturn` are called,
     // only one @throws, @deprecated, and @return will be printed.
     String throwsType = "com.google.api.gax.rpc.ApiException";
     String throwsDescription = "if the remote call fails.";
@@ -199,6 +200,9 @@ class JavaDocCommentTest {
     String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
     String deprecatedText_print = "Use the {@link ShelfBookName} class instead.";
 
+    String internalOnlyText =
+        "This method is for internal use only. Please do not use it directly.";
+
     String returnText = "This is the incorrect method return text.";
     String returnText_print = "This is the correct method return text.";
 
@@ -207,12 +211,14 @@ class JavaDocCommentTest {
             .setThrows(throwsType, throwsDescription)
             .setDeprecated(deprecatedText)
             .setReturn(returnText)
+            .setInternalOnly(internalOnlyText)
             .setThrows(throwsType_print, throwsDescription_print)
             .setDeprecated(deprecatedText_print)
             .setReturn(returnText_print)
             .build();
     String expected =
         LineFormatter.lines(
+            "<p> <b>Warning: </b>This method is for internal use only. Please do not use it directly.\n",
             "@throws java.lang.RuntimeException if the remote call fails.\n",
             "@deprecated Use the {@link ShelfBookName} class instead.\n",
             "@return This is the correct method return text.");
@@ -223,10 +229,13 @@ class JavaDocCommentTest {
   void createJavaDocComment_allComponents() {
     // No matter what order `setThrows`, `setDeprecated`, and `setReturn` are called,
     // They will be printed at the end. And `@param` should be grouped,
-    // they should always be printed right before `@throws`, `@deprecated`, and `@return`.
+    // they should always be printed right before `@throws`, `@deprecated` and
+    // `@return`.
     // All other add methods should keep the order of how they are added.
     String content = "this is a test comment";
     String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
+    String internalOnlyText =
+        "This method is for internal use only. Please do not use it directly.";
     String returnText = "This is the method return text.";
     String paramName1 = "shelfName";
     String paramDescription1 = "The name of the shelf where books are published to.";
@@ -253,6 +262,7 @@ class JavaDocCommentTest {
             .addParagraph(paragraph2)
             .addOrderedList(orderedList)
             .addParam(paramName2, paramDescription2)
+            .setInternalOnly(internalOnlyText)
             .build();
     String expected =
         LineFormatter.lines(
@@ -266,6 +276,7 @@ class JavaDocCommentTest {
             "<li> A request object method.\n",
             "<li> A callable method.\n",
             "</ol>\n",
+            "<p> <b>Warning: </b>This method is for internal use only. Please do not use it directly.\n",
             "@param shelfName The name of the shelf where books are published to.\n",
             "@param shelf The shelf to create.\n",
             "@throws com.google.api.gax.rpc.ApiException if the remote call fails.\n",

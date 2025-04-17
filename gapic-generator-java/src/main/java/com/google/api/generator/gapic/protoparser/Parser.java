@@ -25,6 +25,7 @@ import com.google.api.HttpRule;
 import com.google.api.MethodSettings;
 import com.google.api.ResourceDescriptor;
 import com.google.api.ResourceProto;
+import com.google.api.SelectiveGapicGeneration;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
@@ -91,6 +92,14 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Parser {
+  enum SelectiveGapicType {
+    // Methods will be generated and exposed externally as usual.
+    PUBLIC,
+    // Methods will not be generated.
+    HIDDEN,
+    // Methods will be generated and tagged @InternalApi (internal use) during generation.
+    INTERNAL
+  }
 
   private static final Logger LOGGER = Logger.getLogger(Parser.class.getName());
   private static final String COMMA = ",";
@@ -427,14 +436,14 @@ public class Parser {
         Transport.GRPC);
   }
 
-  static boolean shouldIncludeMethodInGeneration(
+  static SelectiveGapicType getMethodSelectiveGapicType(
       MethodDescriptor method,
       Optional<com.google.api.Service> serviceYamlProtoOpt,
       String protoPackage) {
     // default to include all when no service yaml or no library setting section.
     if (!serviceYamlProtoOpt.isPresent()
         || serviceYamlProtoOpt.get().getPublishing().getLibrarySettingsCount() == 0) {
-      return true;
+      return SelectiveGapicType.PUBLIC;
     }
     List<ClientLibrarySettings> librarySettingsList =
         serviceYamlProtoOpt.get().getPublishing().getLibrarySettingsList();
@@ -451,45 +460,55 @@ public class Parser {
                     + "Disregarding selective generation settings.",
                 librarySettingsList.get(0).getVersion(), protoPackage));
       }
-      return true;
+      return SelectiveGapicType.PUBLIC;
     }
     // librarySettingsList is technically a list, but is processed upstream and
     // only leave with 1 element. Otherwise, it is a misconfiguration and
     // should be caught upstream.
-    List<String> includeMethodsList =
-        librarySettingsList
-            .get(0)
-            .getJavaSettings()
-            .getCommon()
-            .getSelectiveGapicGeneration()
-            .getMethodsList();
-    // default to include all when nothing specified, this could be no java section
-    // specified in library setting, or the method list is empty
-    if (includeMethodsList.isEmpty()) {
-      return true;
+    SelectiveGapicGeneration selectiveGapicGenerationConfig =
+        librarySettingsList.get(0).getJavaSettings().getCommon().getSelectiveGapicGeneration();
+
+    List<String> includeMethodsList = selectiveGapicGenerationConfig.getMethodsList();
+
+    Boolean generateOmittedAsInternal =
+        selectiveGapicGenerationConfig.getGenerateOmittedAsInternal();
+
+    // Set method to PUBLIC if no SelectiveGapicGeneration Configuration is configured and
+    // GenerateOmittedAsInternal is false.
+    if (includeMethodsList.isEmpty() && generateOmittedAsInternal == false) {
+      return SelectiveGapicType.PUBLIC;
     }
 
-    return includeMethodsList.contains(method.getFullName());
+    // Set method to PUBLIC if the method is in the allow list.
+    if (includeMethodsList.contains(method.getFullName())) {
+      return SelectiveGapicType.PUBLIC;
+    }
+    // Otherwise, generate this method as INTERNAL or HIDDEN based on GenerateOmittedAsInternal
+    // flag.
+
+    return generateOmittedAsInternal ? SelectiveGapicType.INTERNAL : SelectiveGapicType.HIDDEN;
   }
 
+  // A service is considered empty if it contains no methods, or only methods marked as HIDDEN.
   private static boolean isEmptyService(
       ServiceDescriptor serviceDescriptor,
       Optional<com.google.api.Service> serviceYamlProtoOpt,
       String protoPackage) {
     List<MethodDescriptor> methodsList = serviceDescriptor.getMethods();
-    List<MethodDescriptor> methodListSelected =
+    List<MethodDescriptor> methodListNotHidden =
         methodsList.stream()
             .filter(
                 method ->
-                    shouldIncludeMethodInGeneration(method, serviceYamlProtoOpt, protoPackage))
+                    getMethodSelectiveGapicType(method, serviceYamlProtoOpt, protoPackage)
+                        != SelectiveGapicType.HIDDEN)
             .collect(Collectors.toList());
-    if (methodListSelected.isEmpty()) {
+    if (methodListNotHidden.isEmpty()) {
       LOGGER.log(
           Level.WARNING,
-          "Service {0} has no RPC methods and will not be generated",
+          "Service {0} has no public or internal RPC methods and will not be generated",
           serviceDescriptor.getName());
     }
-    return methodListSelected.isEmpty();
+    return methodListNotHidden.isEmpty();
   }
 
   public static List<Service> parseService(
@@ -785,7 +804,10 @@ public class Parser {
     Map<String, List<String>> autoPopulatedMethodsWithFields =
         parseAutoPopulatedMethodsAndFields(serviceYamlProtoOpt);
     for (MethodDescriptor protoMethod : serviceDescriptor.getMethods()) {
-      if (!shouldIncludeMethodInGeneration(protoMethod, serviceYamlProtoOpt, protoPackage)) {
+      SelectiveGapicType methodSelectiveGapicType =
+          getMethodSelectiveGapicType(protoMethod, serviceYamlProtoOpt, protoPackage);
+      // Skip generation for methods marked as HIDDEN
+      if (methodSelectiveGapicType == SelectiveGapicType.HIDDEN) {
         continue;
       }
       // Parse the method.
@@ -838,6 +860,7 @@ public class Parser {
               .setName(protoMethod.getName())
               .setInputType(inputType)
               .setOutputType(TypeParser.parseType(protoMethod.getOutputType()))
+              .setIsInternalApi(methodSelectiveGapicType == SelectiveGapicType.INTERNAL)
               .setStream(
                   Method.toStream(protoMethod.isClientStreaming(), protoMethod.isServerStreaming()))
               .setLro(parseLro(servicePackage, protoMethod, messageTypes))

@@ -47,6 +47,7 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.defaultvalue.DefaultValueComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
+import com.google.api.generator.gapic.composer.utils.CommonStrings;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
@@ -86,7 +87,6 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
 
   protected static final String CLIENT_VAR_NAME = "client";
   private static final String MOCK_SERVICE_VAR_NAME_PATTERN = "mock%s";
-  private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
 
   protected static final TypeStore FIXED_TYPESTORE = createStaticTypes();
   protected static final AnnotationNode TEST_ANNOTATION =
@@ -943,7 +943,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
         service.pakkage(),
         service.methods().stream()
             .filter(m -> m.isPaged())
-            .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
+            .map(m -> String.format(CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),
         true,
         ClassNames.getServiceClientClassName(service));
@@ -955,7 +955,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
         }
         typeStore.put(
             service.pakkage(),
-            String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, mixinMethod.name()),
+            String.format(CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, mixinMethod.name()),
             true,
             ClassNames.getServiceClientClassName(service));
       }
@@ -994,7 +994,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
   private static TypeNode getPagedResponseType(Method method, Service service) {
     return TypeNode.withReference(
         VaporReference.builder()
-            .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
+            .setName(String.format(CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
             .setPakkage(service.pakkage())
             .setEnclosingClassNames(ClassNames.getServiceClientClassName(service))
             .setIsStaticImport(true)

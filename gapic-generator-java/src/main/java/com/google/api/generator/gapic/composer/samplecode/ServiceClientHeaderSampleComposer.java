@@ -52,13 +52,23 @@ public class ServiceClientHeaderSampleComposer {
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
-    // Use the first pure unary RPC method's sample code as showcase, if no such method exists, use
-    // the first method in the service's methods list.
-    Method method =
+    List<Method> publicMethods =
         service.methods().stream()
+            .filter(m -> m.isInternalApi() == false)
+            .collect(Collectors.toList());
+
+    // If all generated methods are INTERNAL, generate an empty service sample.
+    if (publicMethods.isEmpty()) {
+      return ServiceClientMethodSampleComposer.composeEmptyServiceSample(clientType, service);
+    }
+
+    // Use the first public pure unary RPC method's sample code as showcase, if no such method
+    // exists, use the first public method in the service's methods list.
+    Method method =
+        publicMethods.stream()
             .filter(m -> m.stream() == Method.Stream.NONE && !m.hasLro() && !m.isPaged())
             .findFirst()
-            .orElse(service.methods().get(0));
+            .orElse(publicMethods.get(0));
 
     if (method.stream() == Method.Stream.NONE) {
       if (method.methodSignatures().isEmpty()) {
