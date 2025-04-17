@@ -40,11 +40,11 @@ import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Empty;
 import com.google.protobuf.FieldMask;
+import com.google.protobuf.Message;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -115,7 +115,7 @@ public class TestingClientTest {
     Session actualResponse = client.createSession(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockTesting.getRequests();
+    List<Message> actualRequests = mockTesting.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateSessionRequest actualRequest = ((CreateSessionRequest) actualRequests.get(0));
 
@@ -153,7 +153,7 @@ public class TestingClientTest {
     Session actualResponse = client.getSession(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockTesting.getRequests();
+    List<Message> actualRequests = mockTesting.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetSessionRequest actualRequest = ((GetSessionRequest) actualRequests.get(0));
 
@@ -202,7 +202,7 @@ public class TestingClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getSessionsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockTesting.getRequests();
+    List<Message> actualRequests = mockTesting.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListSessionsRequest actualRequest = ((ListSessionsRequest) actualRequests.get(0));
 
@@ -242,7 +242,7 @@ public class TestingClientTest {
 
     client.deleteSession(request);
 
-    List<AbstractMessage> actualRequests = mockTesting.getRequests();
+    List<Message> actualRequests = mockTesting.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteSessionRequest actualRequest = ((DeleteSessionRequest) actualRequests.get(0));
 
@@ -280,7 +280,7 @@ public class TestingClientTest {
     ReportSessionResponse actualResponse = client.reportSession(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockTesting.getRequests();
+    List<Message> actualRequests = mockTesting.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ReportSessionRequest actualRequest = ((ReportSessionRequest) actualRequests.get(0));
 
@@ -332,7 +332,7 @@ public class TestingClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getTestsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockTesting.getRequests();
+    List<Message> actualRequests = mockTesting.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListTestsRequest actualRequest = ((ListTestsRequest) actualRequests.get(0));
 
@@ -376,7 +376,7 @@ public class TestingClientTest {
 
     client.deleteTest(request);
 
-    List<AbstractMessage> actualRequests = mockTesting.getRequests();
+    List<Message> actualRequests = mockTesting.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteTestRequest actualRequest = ((DeleteTestRequest) actualRequests.get(0));
 
@@ -420,7 +420,7 @@ public class TestingClientTest {
     VerifyTestResponse actualResponse = client.verifyTest(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockTesting.getRequests();
+    List<Message> actualRequests = mockTesting.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     VerifyTestRequest actualRequest = ((VerifyTestRequest) actualRequests.get(0));
 
@@ -477,7 +477,7 @@ public class TestingClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockLocations.getRequests();
+    List<Message> actualRequests = mockLocations.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListLocationsRequest actualRequest = ((ListLocationsRequest) actualRequests.get(0));
 
@@ -528,7 +528,7 @@ public class TestingClientTest {
     Location actualResponse = client.getLocation(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLocations.getRequests();
+    List<Message> actualRequests = mockLocations.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetLocationRequest actualRequest = ((GetLocationRequest) actualRequests.get(0));
 
@@ -574,7 +574,7 @@ public class TestingClientTest {
     Policy actualResponse = client.setIamPolicy(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     SetIamPolicyRequest actualRequest = ((SetIamPolicyRequest) actualRequests.get(0));
 
@@ -626,7 +626,7 @@ public class TestingClientTest {
     Policy actualResponse = client.getIamPolicy(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetIamPolicyRequest actualRequest = ((GetIamPolicyRequest) actualRequests.get(0));
 
@@ -671,7 +671,7 @@ public class TestingClientTest {
     TestIamPermissionsResponse actualResponse = client.testIamPermissions(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     TestIamPermissionsRequest actualRequest = ((TestIamPermissionsRequest) actualRequests.get(0));
 

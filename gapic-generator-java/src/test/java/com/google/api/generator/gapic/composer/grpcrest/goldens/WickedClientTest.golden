@@ -12,7 +12,7 @@ import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientStreamingCallable;
 import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.StatusCode;
-import com.google.protobuf.AbstractMessage;
+import com.google.protobuf.Message;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
 import java.util.Arrays;
@@ -77,7 +77,7 @@ public class WickedClientTest {
     EvilResponse actualResponse = client.craftEvilPlan(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockWicked.getRequests();
+    List<Message> actualRequests = mockWicked.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     EvilRequest actualRequest = ((EvilRequest) actualRequests.get(0));
 

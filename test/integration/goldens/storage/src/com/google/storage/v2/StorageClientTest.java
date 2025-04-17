@@ -42,10 +42,10 @@ import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Empty;
 import com.google.protobuf.FieldMask;
+import com.google.protobuf.Message;
 import com.google.protobuf.Timestamp;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
@@ -110,7 +110,7 @@ public class StorageClientTest {
 
     client.deleteBucket(name);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteBucketRequest actualRequest = ((DeleteBucketRequest) actualRequests.get(0));
 
@@ -144,7 +144,7 @@ public class StorageClientTest {
 
     client.deleteBucket(name);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteBucketRequest actualRequest = ((DeleteBucketRequest) actualRequests.get(0));
 
@@ -209,7 +209,7 @@ public class StorageClientTest {
     Bucket actualResponse = client.getBucket(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetBucketRequest actualRequest = ((GetBucketRequest) actualRequests.get(0));
 
@@ -274,7 +274,7 @@ public class StorageClientTest {
     Bucket actualResponse = client.getBucket(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetBucketRequest actualRequest = ((GetBucketRequest) actualRequests.get(0));
 
@@ -341,7 +341,7 @@ public class StorageClientTest {
     Bucket actualResponse = client.createBucket(parent, bucket, bucketId);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateBucketRequest actualRequest = ((CreateBucketRequest) actualRequests.get(0));
 
@@ -412,7 +412,7 @@ public class StorageClientTest {
     Bucket actualResponse = client.createBucket(parent, bucket, bucketId);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateBucketRequest actualRequest = ((CreateBucketRequest) actualRequests.get(0));
 
@@ -460,7 +460,7 @@ public class StorageClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getBucketsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListBucketsRequest actualRequest = ((ListBucketsRequest) actualRequests.get(0));
 
@@ -504,7 +504,7 @@ public class StorageClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getBucketsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListBucketsRequest actualRequest = ((ListBucketsRequest) actualRequests.get(0));
 
@@ -569,7 +569,7 @@ public class StorageClientTest {
     Bucket actualResponse = client.lockBucketRetentionPolicy(bucket);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     LockBucketRetentionPolicyRequest actualRequest =
         ((LockBucketRetentionPolicyRequest) actualRequests.get(0));
@@ -635,7 +635,7 @@ public class StorageClientTest {
     Bucket actualResponse = client.lockBucketRetentionPolicy(bucket);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     LockBucketRetentionPolicyRequest actualRequest =
         ((LockBucketRetentionPolicyRequest) actualRequests.get(0));
@@ -678,7 +678,7 @@ public class StorageClientTest {
     Policy actualResponse = client.getIamPolicy(resource);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetIamPolicyRequest actualRequest = ((GetIamPolicyRequest) actualRequests.get(0));
 
@@ -720,7 +720,7 @@ public class StorageClientTest {
     Policy actualResponse = client.getIamPolicy(resource);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetIamPolicyRequest actualRequest = ((GetIamPolicyRequest) actualRequests.get(0));
 
@@ -763,7 +763,7 @@ public class StorageClientTest {
     Policy actualResponse = client.setIamPolicy(resource, policy);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     SetIamPolicyRequest actualRequest = ((SetIamPolicyRequest) actualRequests.get(0));
 
@@ -808,7 +808,7 @@ public class StorageClientTest {
     Policy actualResponse = client.setIamPolicy(resource, policy);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     SetIamPolicyRequest actualRequest = ((SetIamPolicyRequest) actualRequests.get(0));
 
@@ -848,7 +848,7 @@ public class StorageClientTest {
     TestIamPermissionsResponse actualResponse = client.testIamPermissions(resource, permissions);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     TestIamPermissionsRequest actualRequest = ((TestIamPermissionsRequest) actualRequests.get(0));
 
@@ -888,7 +888,7 @@ public class StorageClientTest {
     TestIamPermissionsResponse actualResponse = client.testIamPermissions(resource, permissions);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     TestIamPermissionsRequest actualRequest = ((TestIamPermissionsRequest) actualRequests.get(0));
 
@@ -956,7 +956,7 @@ public class StorageClientTest {
     Bucket actualResponse = client.updateBucket(bucket, updateMask);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateBucketRequest actualRequest = ((UpdateBucketRequest) actualRequests.get(0));
 
@@ -992,7 +992,7 @@ public class StorageClientTest {
 
     client.deleteNotification(name);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteNotificationRequest actualRequest = ((DeleteNotificationRequest) actualRequests.get(0));
 
@@ -1026,7 +1026,7 @@ public class StorageClientTest {
 
     client.deleteNotification(name);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteNotificationRequest actualRequest = ((DeleteNotificationRequest) actualRequests.get(0));
 
@@ -1070,7 +1070,7 @@ public class StorageClientTest {
     Notification actualResponse = client.getNotification(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetNotificationRequest actualRequest = ((GetNotificationRequest) actualRequests.get(0));
 
@@ -1114,7 +1114,7 @@ public class StorageClientTest {
     Notification actualResponse = client.getNotification(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetNotificationRequest actualRequest = ((GetNotificationRequest) actualRequests.get(0));
 
@@ -1159,7 +1159,7 @@ public class StorageClientTest {
     Notification actualResponse = client.createNotification(parent, notification);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateNotificationRequest actualRequest = ((CreateNotificationRequest) actualRequests.get(0));
 
@@ -1206,7 +1206,7 @@ public class StorageClientTest {
     Notification actualResponse = client.createNotification(parent, notification);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateNotificationRequest actualRequest = ((CreateNotificationRequest) actualRequests.get(0));
 
@@ -1252,7 +1252,7 @@ public class StorageClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getNotificationsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListNotificationsRequest actualRequest = ((ListNotificationsRequest) actualRequests.get(0));
 
@@ -1296,7 +1296,7 @@ public class StorageClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getNotificationsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListNotificationsRequest actualRequest = ((ListNotificationsRequest) actualRequests.get(0));
 
@@ -1374,7 +1374,7 @@ public class StorageClientTest {
     Object actualResponse = client.composeObject(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ComposeObjectRequest actualRequest = ((ComposeObjectRequest) actualRequests.get(0));
 
@@ -1431,7 +1431,7 @@ public class StorageClientTest {
 
     client.deleteObject(bucket, object);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteObjectRequest actualRequest = ((DeleteObjectRequest) actualRequests.get(0));
 
@@ -1469,7 +1469,7 @@ public class StorageClientTest {
 
     client.deleteObject(bucket, object, generation);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteObjectRequest actualRequest = ((DeleteObjectRequest) actualRequests.get(0));
 
@@ -1509,7 +1509,7 @@ public class StorageClientTest {
     CancelResumableWriteResponse actualResponse = client.cancelResumableWrite(uploadId);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CancelResumableWriteRequest actualRequest =
         ((CancelResumableWriteRequest) actualRequests.get(0));
@@ -1577,7 +1577,7 @@ public class StorageClientTest {
     Object actualResponse = client.getObject(bucket, object);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetObjectRequest actualRequest = ((GetObjectRequest) actualRequests.get(0));
 
@@ -1647,7 +1647,7 @@ public class StorageClientTest {
     Object actualResponse = client.getObject(bucket, object, generation);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetObjectRequest actualRequest = ((GetObjectRequest) actualRequests.get(0));
 
@@ -1789,7 +1789,7 @@ public class StorageClientTest {
     Object actualResponse = client.updateObject(object, updateMask);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateObjectRequest actualRequest = ((UpdateObjectRequest) actualRequests.get(0));
 
@@ -1893,7 +1893,7 @@ public class StorageClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getObjectsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListObjectsRequest actualRequest = ((ListObjectsRequest) actualRequests.get(0));
 
@@ -1937,7 +1937,7 @@ public class StorageClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getObjectsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListObjectsRequest actualRequest = ((ListObjectsRequest) actualRequests.get(0));
 
@@ -2006,7 +2006,7 @@ public class StorageClientTest {
     RewriteResponse actualResponse = client.rewriteObject(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     RewriteObjectRequest actualRequest = ((RewriteObjectRequest) actualRequests.get(0));
 
@@ -2111,7 +2111,7 @@ public class StorageClientTest {
     StartResumableWriteResponse actualResponse = client.startResumableWrite(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     StartResumableWriteRequest actualRequest = ((StartResumableWriteRequest) actualRequests.get(0));
 
@@ -2154,7 +2154,7 @@ public class StorageClientTest {
     QueryWriteStatusResponse actualResponse = client.queryWriteStatus(uploadId);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     QueryWriteStatusRequest actualRequest = ((QueryWriteStatusRequest) actualRequests.get(0));
 
@@ -2190,7 +2190,7 @@ public class StorageClientTest {
     ServiceAccount actualResponse = client.getServiceAccount(project);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetServiceAccountRequest actualRequest = ((GetServiceAccountRequest) actualRequests.get(0));
 
@@ -2226,7 +2226,7 @@ public class StorageClientTest {
     ServiceAccount actualResponse = client.getServiceAccount(project);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetServiceAccountRequest actualRequest = ((GetServiceAccountRequest) actualRequests.get(0));
 
@@ -2266,7 +2266,7 @@ public class StorageClientTest {
     CreateHmacKeyResponse actualResponse = client.createHmacKey(project, serviceAccountEmail);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateHmacKeyRequest actualRequest = ((CreateHmacKeyRequest) actualRequests.get(0));
 
@@ -2308,7 +2308,7 @@ public class StorageClientTest {
     CreateHmacKeyResponse actualResponse = client.createHmacKey(project, serviceAccountEmail);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateHmacKeyRequest actualRequest = ((CreateHmacKeyRequest) actualRequests.get(0));
 
@@ -2345,7 +2345,7 @@ public class StorageClientTest {
 
     client.deleteHmacKey(accessId, project);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteHmacKeyRequest actualRequest = ((DeleteHmacKeyRequest) actualRequests.get(0));
 
@@ -2382,7 +2382,7 @@ public class StorageClientTest {
 
     client.deleteHmacKey(accessId, project);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteHmacKeyRequest actualRequest = ((DeleteHmacKeyRequest) actualRequests.get(0));
 
@@ -2430,7 +2430,7 @@ public class StorageClientTest {
     HmacKeyMetadata actualResponse = client.getHmacKey(accessId, project);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetHmacKeyRequest actualRequest = ((GetHmacKeyRequest) actualRequests.get(0));
 
@@ -2478,7 +2478,7 @@ public class StorageClientTest {
     HmacKeyMetadata actualResponse = client.getHmacKey(accessId, project);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetHmacKeyRequest actualRequest = ((GetHmacKeyRequest) actualRequests.get(0));
 
@@ -2524,7 +2524,7 @@ public class StorageClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getHmacKeysList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListHmacKeysRequest actualRequest = ((ListHmacKeysRequest) actualRequests.get(0));
 
@@ -2568,7 +2568,7 @@ public class StorageClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getHmacKeysList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListHmacKeysRequest actualRequest = ((ListHmacKeysRequest) actualRequests.get(0));
 
@@ -2614,7 +2614,7 @@ public class StorageClientTest {
     HmacKeyMetadata actualResponse = client.updateHmacKey(hmacKey, updateMask);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockStorage.getRequests();
+    List<Message> actualRequests = mockStorage.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateHmacKeyRequest actualRequest = ((UpdateHmacKeyRequest) actualRequests.get(0));
 

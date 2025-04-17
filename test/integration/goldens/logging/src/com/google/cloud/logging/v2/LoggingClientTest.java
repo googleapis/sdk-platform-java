@@ -51,9 +51,9 @@ import com.google.logging.v2.TailLogEntriesRequest;
 import com.google.logging.v2.TailLogEntriesResponse;
 import com.google.logging.v2.WriteLogEntriesRequest;
 import com.google.logging.v2.WriteLogEntriesResponse;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Duration;
 import com.google.protobuf.Empty;
+import com.google.protobuf.Message;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -118,7 +118,7 @@ public class LoggingClientTest {
 
     client.deleteLog(logName);
 
-    List<AbstractMessage> actualRequests = mockLoggingServiceV2.getRequests();
+    List<Message> actualRequests = mockLoggingServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteLogRequest actualRequest = ((DeleteLogRequest) actualRequests.get(0));
 
@@ -152,7 +152,7 @@ public class LoggingClientTest {
 
     client.deleteLog(logName);
 
-    List<AbstractMessage> actualRequests = mockLoggingServiceV2.getRequests();
+    List<Message> actualRequests = mockLoggingServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteLogRequest actualRequest = ((DeleteLogRequest) actualRequests.get(0));
 
@@ -191,7 +191,7 @@ public class LoggingClientTest {
         client.writeLogEntries(logName, resource, labels, entries);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLoggingServiceV2.getRequests();
+    List<Message> actualRequests = mockLoggingServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     WriteLogEntriesRequest actualRequest = ((WriteLogEntriesRequest) actualRequests.get(0));
 
@@ -236,7 +236,7 @@ public class LoggingClientTest {
         client.writeLogEntries(logName, resource, labels, entries);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLoggingServiceV2.getRequests();
+    List<Message> actualRequests = mockLoggingServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     WriteLogEntriesRequest actualRequest = ((WriteLogEntriesRequest) actualRequests.get(0));
 
@@ -289,7 +289,7 @@ public class LoggingClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getEntriesList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockLoggingServiceV2.getRequests();
+    List<Message> actualRequests = mockLoggingServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListLogEntriesRequest actualRequest = ((ListLogEntriesRequest) actualRequests.get(0));
 
@@ -343,7 +343,7 @@ public class LoggingClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getResourceDescriptorsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockLoggingServiceV2.getRequests();
+    List<Message> actualRequests = mockLoggingServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListMonitoredResourceDescriptorsRequest actualRequest =
         ((ListMonitoredResourceDescriptorsRequest) actualRequests.get(0));
@@ -393,7 +393,7 @@ public class LoggingClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getLogNamesList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockLoggingServiceV2.getRequests();
+    List<Message> actualRequests = mockLoggingServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListLogsRequest actualRequest = ((ListLogsRequest) actualRequests.get(0));
 
@@ -437,7 +437,7 @@ public class LoggingClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getLogNamesList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockLoggingServiceV2.getRequests();
+    List<Message> actualRequests = mockLoggingServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListLogsRequest actualRequest = ((ListLogsRequest) actualRequests.get(0));
 
@@ -481,7 +481,7 @@ public class LoggingClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getLogNamesList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockLoggingServiceV2.getRequests();
+    List<Message> actualRequests = mockLoggingServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListLogsRequest actualRequest = ((ListLogsRequest) actualRequests.get(0));
 
@@ -525,7 +525,7 @@ public class LoggingClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getLogNamesList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockLoggingServiceV2.getRequests();
+    List<Message> actualRequests = mockLoggingServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListLogsRequest actualRequest = ((ListLogsRequest) actualRequests.get(0));
 
@@ -569,7 +569,7 @@ public class LoggingClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getLogNamesList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockLoggingServiceV2.getRequests();
+    List<Message> actualRequests = mockLoggingServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListLogsRequest actualRequest = ((ListLogsRequest) actualRequests.get(0));
 
