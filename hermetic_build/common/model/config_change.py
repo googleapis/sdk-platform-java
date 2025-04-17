@@ -106,8 +106,10 @@ class ConfigChange:
         :return: QualifiedCommit objects.
         """
         with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp_dir:
-            # we only need commit history, thus a shadow clone is enough.
-            repo = Repo.clone_from(url=repo_url, to_path=tmp_dir, filter=["blob:none"])
+			# We clone the whole repository in order to avoid errors when re-fetching missing
+			# objects when compiting the diffs.
+			# See https://github.com/googleapis/sdk-platform-java/issues/3745
+            repo = Repo.clone_from(url=repo_url, to_path=tmp_dir)
             commit = repo.commit(self.current_config.googleapis_commitish)
             proto_paths = self.current_config.get_proto_path_to_library_name()
             qualified_commits = []
