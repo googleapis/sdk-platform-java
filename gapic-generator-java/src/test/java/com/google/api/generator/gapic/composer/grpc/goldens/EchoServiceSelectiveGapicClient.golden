@@ -437,7 +437,7 @@ public class EchoServiceShouldGeneratePartialUsualClient implements BackgroundRe
    * }
    * }</pre>
    *
-   * <p><b>Warning: </b>This method is internal used only. Please do not use directly.
+   * <p><b>Warning: </b>This method is for internal use only. Please do not use it directly.
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -466,7 +466,7 @@ public class EchoServiceShouldGeneratePartialUsualClient implements BackgroundRe
    * }
    * }</pre>
    *
-   * <p><b>Warning: </b>This method is internal used only. Please do not use directly.
+   * <p><b>Warning: </b>This method is for internal use only. Please do not use it directly.
    *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -496,7 +496,7 @@ public class EchoServiceShouldGeneratePartialUsualClient implements BackgroundRe
    * }
    * }</pre>
    *
-   * <p><b>Warning: </b>This method is internal used only. Please do not use directly.
+   * <p><b>Warning: </b>This method is for internal use only. Please do not use it directly.
    *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -530,7 +530,7 @@ public class EchoServiceShouldGeneratePartialUsualClient implements BackgroundRe
    * }
    * }</pre>
    *
-   * <p><b>Warning: </b>This method is internal used only. Please do not use directly.
+   * <p><b>Warning: </b>This method is for internal use only. Please do not use it directly.
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -567,7 +567,7 @@ public class EchoServiceShouldGeneratePartialUsualClient implements BackgroundRe
    * }
    * }</pre>
    *
-   * <p><b>Warning: </b>This method is internal used only. Please do not use directly.
+   * <p><b>Warning: </b>This method is for internal use only. Please do not use it directly.
    */
   @InternalApi("This API is not intended for public consumption.")
   public final UnaryCallable<EchoRequest, EchoResponse> chatShouldGenerateAsInternalCallable() {
@@ -601,7 +601,7 @@ public class EchoServiceShouldGeneratePartialUsualClient implements BackgroundRe
    * }
    * }</pre>
    *
-   * <p><b>Warning: </b>This method is internal used only. Please do not use directly.
+   * <p><b>Warning: </b>This method is for internal use only. Please do not use it directly.
    */
   @InternalApi("This API is not intended for public consumption.")
   public final BidiStreamingCallable<EchoRequest, EchoResponse>
