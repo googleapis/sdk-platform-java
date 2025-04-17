@@ -15,6 +15,7 @@
 # Setup logging
 import logging
 import sys
+
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
 import os
@@ -22,7 +23,6 @@ import click
 
 from common.model.generation_config import GenerationConfig
 from common.utils.generation_config_comparator import compare_config
-
 
 
 @click.group(invoke_without_command=False)
