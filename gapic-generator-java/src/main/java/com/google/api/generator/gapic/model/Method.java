@@ -38,6 +38,8 @@ public abstract class Method {
 
   public abstract TypeNode outputType();
 
+  public abstract boolean isInternalApi();
+
   public abstract boolean isBatching();
 
   public boolean isPaged() {
@@ -136,6 +138,7 @@ public abstract class Method {
         .setStream(Stream.NONE)
         .setAutoPopulatedFields(new ArrayList<>())
         .setMethodSignatures(ImmutableList.of())
+        .setIsInternalApi(false)
         .setIsBatching(false)
         .setIsDeprecated(false)
         .setOperationPollingMethod(false);
@@ -161,6 +164,8 @@ public abstract class Method {
     public abstract Builder setInputType(TypeNode inputType);
 
     public abstract Builder setOutputType(TypeNode outputType);
+
+    public abstract Builder setIsInternalApi(boolean isInternalApi);
 
     public abstract Builder setStream(Stream stream);
 
