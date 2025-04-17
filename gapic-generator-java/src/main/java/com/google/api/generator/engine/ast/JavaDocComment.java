@@ -149,7 +149,11 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public JavaDocComment build() {
-      // @param, @throws, @return, @deprecated and @internalApi should always get printed at the
+      // Add additional descriptive text before block tags.
+      if (!Strings.isNullOrEmpty(internalOnly)) {
+        componentsList.add(String.format("<p> <b>Warning: </b>%s", HtmlEscaper.process(internalOnly)));
+      }
+      // @param, @throws, @return and @deprecated should always get printed at the
       // end.
       componentsList.addAll(paramsList);
       if (!Strings.isNullOrEmpty(throwsType)) {
@@ -158,9 +162,6 @@ public abstract class JavaDocComment implements Comment {
       }
       if (!Strings.isNullOrEmpty(deprecated)) {
         componentsList.add(String.format("@deprecated %s", deprecated));
-      }
-      if (!Strings.isNullOrEmpty(internalOnly)) {
-        componentsList.add(String.format("@internalApi %s", internalOnly));
       }
       if (!Strings.isNullOrEmpty(returnDescription)) {
         componentsList.add(String.format("@return %s", returnDescription));

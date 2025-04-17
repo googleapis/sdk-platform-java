@@ -96,7 +96,7 @@ public class EchoServiceShouldGeneratePartialUsualSettings
   /**
    * Returns the object with the settings used for calls to chatShouldGenerateAsInternal.
    *
-   * @internalApi This method is internal used only. Please do not use directly.
+   * <p><b>Warning: </b>This method is internal used only. Please do not use directly.
    */
   @InternalApi("Internal API. This API is not intended for public consumption.")
   public UnaryCallSettings<EchoRequest, EchoResponse> chatShouldGenerateAsInternalSettings() {
@@ -107,7 +107,7 @@ public class EchoServiceShouldGeneratePartialUsualSettings
   /**
    * Returns the object with the settings used for calls to echoShouldGenerateAsInternal.
    *
-   * @internalApi This method is internal used only. Please do not use directly.
+   * <p><b>Warning: </b>This method is internal used only. Please do not use directly.
    */
   @InternalApi("Internal API. This API is not intended for public consumption.")
   public StreamingCallSettings<EchoRequest, EchoResponse> echoShouldGenerateAsInternalSettings() {
@@ -235,7 +235,7 @@ public class EchoServiceShouldGeneratePartialUsualSettings
     /**
      * Returns the builder for the settings used for calls to chatShouldGenerateAsInternal.
      *
-     * @internalApi This method is internal used only. Please do not use directly.
+     * <p><b>Warning: </b>This method is internal used only. Please do not use directly.
      */
     @InternalApi("Internal API. This API is not intended for public consumption.")
     public UnaryCallSettings.Builder<EchoRequest, EchoResponse>
@@ -246,7 +246,7 @@ public class EchoServiceShouldGeneratePartialUsualSettings
     /**
      * Returns the builder for the settings used for calls to echoShouldGenerateAsInternal.
      *
-     * @internalApi This method is internal used only. Please do not use directly.
+     * <p><b>Warning: </b>This method is internal used only. Please do not use directly.
      */
     @InternalApi("Internal API. This API is not intended for public consumption.")
     public StreamingCallSettings.Builder<EchoRequest, EchoResponse>

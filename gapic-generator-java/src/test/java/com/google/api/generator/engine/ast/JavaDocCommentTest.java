@@ -217,9 +217,9 @@ class JavaDocCommentTest {
             .build();
     String expected =
         LineFormatter.lines(
+            "<p> <b>Warning: </b>This method is internal used only. Please do not use directly.\n",
             "@throws java.lang.RuntimeException if the remote call fails.\n",
             "@deprecated Use the {@link ShelfBookName} class instead.\n",
-            "@internalApi This method is internal used only. Please do not use directly.\n",
             "@return This is the correct method return text.");
     assertEquals(expected, javaDocComment.comment());
   }
@@ -228,7 +228,7 @@ class JavaDocCommentTest {
   void createJavaDocComment_allComponents() {
     // No matter what order `setThrows`, `setDeprecated`, and `setReturn` are called,
     // They will be printed at the end. And `@param` should be grouped,
-    // they should always be printed right before `@throws`, `@deprecated`, `@InternalApi` and
+    // they should always be printed right before `@throws`, `@deprecated` and
     // `@return`.
     // All other add methods should keep the order of how they are added.
     String content = "this is a test comment";
@@ -274,11 +274,11 @@ class JavaDocCommentTest {
             "<li> A request object method.\n",
             "<li> A callable method.\n",
             "</ol>\n",
+            "<p> <b>Warning: </b>This method is internal used only. Please do not use directly.\n",
             "@param shelfName The name of the shelf where books are published to.\n",
             "@param shelf The shelf to create.\n",
             "@throws com.google.api.gax.rpc.ApiException if the remote call fails.\n",
             "@deprecated Use the {@link ArchivedBookName} class instead.\n",
-            "@internalApi This method is internal used only. Please do not use directly.\n",
             "@return This is the method return text.");
     assertEquals(expected, javaDocComment.comment());
   }
