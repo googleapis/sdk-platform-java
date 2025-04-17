@@ -18,6 +18,11 @@ import yaml
 from typing import Optional
 from common.model.library_config import LibraryConfig
 from common.model.gapic_config import GapicConfig
+from common.model.owlbot_yaml_config import (
+    OwlbotYamlConfig,
+    OwlbotYamlAdditionRemoval,
+    DeepCopyRegexItem,
+)
 
 REPO_LEVEL_PARAMETER = "Repo level parameter"
 LIBRARY_LEVEL_PARAMETER = "Library level parameter"
@@ -77,6 +82,23 @@ class GenerationConfig:
                     break
         return self.__contains_common_protos
 
+    def to_dict(self):
+        return {
+            "gapic_generator_version": self.gapic_generator_version,
+            "googleapis_commitish": self.googleapis_commitish,
+            "libraries_bom_version": self.libraries_bom_version,
+            "libraries": [library.to_dict() for library in self.libraries],
+        }
+
+    def write_object_to_yaml(self, file_path):
+        """Writes a Python object to a YAML file."""
+        try:
+            with open(file_path, "w") as file:
+                yaml.dump(self.to_dict(), file, indent=2, sort_keys=False)
+            print(f"Object written to {file_path}")
+        except Exception as e:
+            print(f"Error writing to YAML file: {e}")
+
     @staticmethod
     def __set_generator_version(gapic_generator_version: Optional[str]) -> str:
         if gapic_generator_version is not None:
@@ -131,6 +153,8 @@ class GenerationConfig:
                 new_gapic = GapicConfig(proto_path)
                 parsed_gapics.append(new_gapic)
 
+            owlbot_yaml = _owlbot_yaml_config_from_yaml(library)
+
             new_library = LibraryConfig(
                 api_shortname=_required(library, "api_shortname"),
                 api_description=_required(library, "api_description"),
@@ -160,6 +184,7 @@ class GenerationConfig:
                 recommended_package=_optional(library, "recommended_package", None),
                 min_java_version=_optional(library, "min_java_version", None),
                 transport=_optional(library, "transport", None),
+                owlbot_yaml=owlbot_yaml,
             )
             parsed_libraries.append(new_library)
 
@@ -190,3 +215,59 @@ def _optional(config: dict, key: str, default: any):
     if key not in config:
         return default
     return config[key]
+
+
+def _owlbot_yaml_addition_remove_from_yaml(data: dict) -> OwlbotYamlAdditionRemoval:
+    """
+    Parses the addition or remove section from owlbot_yaml data.
+    """
+    deep_copy_regex = _optional(data, "deep_copy_regex", None)
+    deep_remove_regex = _optional(data, "deep_remove_regex", None)
+    deep_preserve_regex = _optional(data, "deep_preserve_regex", None)
+
+    parsed_deep_copy_regex = None
+    if deep_copy_regex:
+        parsed_deep_copy_regex = [
+            _deep_copy_regex_item_from_yaml(item) for item in deep_copy_regex
+        ]
+
+    return OwlbotYamlAdditionRemoval(
+        deep_copy_regex=parsed_deep_copy_regex,
+        deep_remove_regex=deep_remove_regex,
+        deep_preserve_regex=deep_preserve_regex,
+    )
+
+
+def _deep_copy_regex_item_from_yaml(data: dict) -> DeepCopyRegexItem:
+    """
+    Parses a DeepCopyRegexItem from a dictionary.
+    """
+    source = _required(data, "source")
+    dest = _required(data, "dest")
+    return DeepCopyRegexItem(source=source, dest=dest)
+
+
+def _owlbot_yaml_config_from_yaml(
+    library: LibraryConfig,
+) -> Optional["OwlbotYamlConfig"]:
+    """
+    Parses the owlbot_yaml section from a library's data.
+    """
+    owlbot_yaml_data = _optional(library, "owlbot_yaml", None)
+
+    if not owlbot_yaml_data:
+        return None
+
+    addition_data = _optional(owlbot_yaml_data, "addition", None)
+    removal_data = _optional(owlbot_yaml_data, "remove", None)
+
+    additions = None
+    removals = None
+
+    if addition_data:
+        additions = _owlbot_yaml_addition_remove_from_yaml(addition_data)
+
+    if removal_data:
+        removals = _owlbot_yaml_addition_remove_from_yaml(removal_data)
+
+    return OwlbotYamlConfig(additions=additions, removals=removals)

@@ -12,24 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import json
+import os
+import re
 import sys
 import subprocess
-import os
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 
 from common.model.generation_config import GenerationConfig
 from common.model.library_config import LibraryConfig
-from typing import List
 from library_generation.model.repo_config import RepoConfig
-from library_generation.utils.file_render import render
+from library_generation.utils.file_render import render, render_to_str
 from library_generation.utils.proto_path_utils import remove_version_from
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 SDK_PLATFORM_JAVA = "googleapis/sdk-platform-java"
 
 
-def create_argument(arg_key: str, arg_container: object) -> List[str]:
+def create_argument(arg_key: str, arg_container: object) -> list[str]:
     """
     Generates a list of two elements [argument, value], or returns
     an empty array if arg_val is None
@@ -41,7 +41,7 @@ def create_argument(arg_key: str, arg_container: object) -> List[str]:
 
 
 def run_process_and_print_output(
-    arguments: List[str] | str, job_name: str = "Job", exit_on_fail=True, **kwargs
+    arguments: list[str] | str, job_name: str = "Job", exit_on_fail=True, **kwargs
 ) -> Any:
     """
     Runs a process with the given "arguments" list and prints its output.
@@ -68,7 +68,7 @@ def run_process_and_print_output(
 
 
 def run_process_and_get_output_string(
-    arguments: List[str] | str, job_name: str = "Job", exit_on_fail=True, **kwargs
+    arguments: list[str] | str, job_name: str = "Job", exit_on_fail=True, **kwargs
 ) -> Any:
     """
     Wrapper of run_process_and_print_output() that returns the merged
@@ -123,7 +123,7 @@ def eprint(*args, **kwargs):
 
 def prepare_repo(
     gen_config: GenerationConfig,
-    library_config: List[LibraryConfig],
+    library_config: list[LibraryConfig],
     repo_path: str,
     language: str = "java",
 ) -> RepoConfig:
@@ -276,14 +276,23 @@ def generate_postprocessing_prerequisite_files(
         else f"{library_path}/.github/{owlbot_yaml_file}"
     )
     if not os.path.exists(path_to_owlbot_yaml_file):
-        render(
+        # 1. Render the base content
+        generated_content = render_to_str(
             template_name="owlbot.yaml.monorepo.j2",
-            output_name=path_to_owlbot_yaml_file,
             artifact_id=artifact_id,
             proto_path=remove_version_from(proto_path),
             module_name=repo_metadata["repo_short"],
             api_shortname=library.api_shortname,
+            owlbot_yaml=library.owlbot_yaml,
         )
+        # 2. Apply additions and removals
+        modified_content = apply_owlbot_config(generated_content, library.owlbot_yaml)
+
+        # 3. Write the modified content back to the file
+        directory = os.path.dirname(path_to_owlbot_yaml_file)
+        os.makedirs(directory, exist_ok=True)
+        with open(path_to_owlbot_yaml_file, "w") as f:
+            f.write(modified_content)
 
     # generate owlbot.py
     py_file = "owlbot.py"
@@ -307,3 +316,127 @@ def generate_postprocessing_prerequisite_files(
             should_include_templates=True,
             template_excludes=template_excludes,
         )
+
+
+def apply_owlbot_config(
+    content: str, owlbot_config: Optional["OwlbotYamlConfig"]
+) -> str:
+    """
+    Applies the addition and removal configurations to the generated owlbot.yaml content.
+
+    Args:
+        content: The generated owlbot.yaml content as a string.
+        owlbot_config: The OwlbotYamlConfig object containing the addition and removal rules.
+
+    Returns:
+        The modified owlbot.yaml content.
+    """
+    if not owlbot_config:
+        return content
+
+    modified_content = content
+
+    if owlbot_config.removals:
+        if owlbot_config.removals.deep_remove_regex:
+            for regex_pattern in owlbot_config.removals.deep_remove_regex:
+                modified_content = re.sub(
+                    r'- "' + regex_pattern + r'"[^\S\n]*\n', "", modified_content
+                )
+        if owlbot_config.removals.deep_preserve_regex:
+            for regex_pattern in owlbot_config.removals.deep_preserve_regex:
+                modified_content = re.sub(
+                    r'- "' + regex_pattern + r'"[^\S\n]*\n', "", modified_content
+                )
+        if owlbot_config.removals.deep_copy_regex:
+            for item in owlbot_config.removals.deep_copy_regex:
+                # Construct the regex to match both source and dest lines
+                source_regex = r'- source: "' + re.escape(item.source) + r'"\n'
+                dest_regex = r'\s+dest: "' + re.escape(item.dest) + r'"\n'
+                removal_regex = rf"{source_regex}{dest_regex}"
+                modified_content = re.sub(
+                    removal_regex, "", modified_content, flags=re.MULTILINE
+                )
+    if owlbot_config.additions:
+        if owlbot_config.additions.deep_remove_regex:
+            modified_content = _add_items_after_key(
+                content=modified_content,
+                key="deep-remove-regex:",
+                items=owlbot_config.additions.deep_remove_regex,
+                quote=True,
+            )
+        if owlbot_config.additions.deep_preserve_regex:
+            modified_content = _add_items_after_key(
+                content=modified_content,
+                key="deep-preserve-regex:",
+                items=owlbot_config.additions.deep_preserve_regex,
+                quote=True,
+            )
+        if owlbot_config.additions.deep_copy_regex:
+            modified_content = _add_deep_copy_regex_items(
+                content=modified_content,
+                key="deep-copy-regex:",
+                items=owlbot_config.additions.deep_copy_regex,
+            )
+
+    return modified_content
+
+
+def _add_items_after_key(
+    content: str, key: str, items: list[str], quote: bool = False
+) -> str:
+    """
+    Adds items after a specified key in the content, following the template pattern.
+
+    Args:
+        content: The generated owlbot.yaml content.
+        key: The key after which to add the items (e.g., "deep-remove-regex:").
+        items: The list of items to add.
+        quote: Whether to enclose the item in double quotes.
+
+    Returns:
+        The modified content.
+    """
+
+    def format_item(item: str) -> str:
+        if quote:
+            return f'- "{item}"\n'
+        else:
+            return f"- {item}\n"
+
+    pattern = re.compile(rf"^{re.escape(key)}", re.MULTILINE)
+    match = pattern.search(content)
+
+    if match:
+        insert_position = match.end() + 1  # Insert after the newline
+        new_items = "".join(format_item(item) for item in items)
+        return content[:insert_position] + new_items + content[insert_position:]
+    else:
+        return content  # Key not found, return original content
+
+
+def _add_deep_copy_regex_items(
+    content: str, key: str, items: list["DeepCopyRegexItem"]
+) -> str:
+    """
+    Adds deep_copy_regex items after a specified key in the content.
+
+    Args:
+        content: The generated owlbot.yaml content.
+        key: The key after which to add the items (e.g., "deep-copy-regex:").
+        items: The list of DeepCopyRegexItem objects to add.
+
+    Returns:
+        The modified content.
+    """
+
+    pattern = re.compile(rf"^{re.escape(key)}", re.MULTILINE)
+    match = pattern.search(content)
+
+    if match:
+        insert_position = match.end() + 1  # Insert after the newline
+        new_items = "".join(
+            f'- source: "{item.source}"\n  dest: "{item.dest}"\n' for item in items
+        )
+        return content[:insert_position] + new_items + content[insert_position:]
+    else:
+        return content
