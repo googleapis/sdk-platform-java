@@ -28,11 +28,16 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   git clone "https://github.com/googleapis/$repo.git" --depth=1
   pushd "$repo"
 
-  # Compile with Java 11 and run the tests with Java 8
-  mvn clean compile -T 1C
+  # Compile with Java 11 and run the tests with Java 8 JVM
+  mvn compile -T 1C
 
-  export JAVA_HOME="${JAVA8_HOME}"
-  export PATH=$JAVA_HOME/bin:$PATH
+  # JAVA8_HOME is set by the GH Actions CI
+  if [ -n "${JAVA8_HOME}" ]; then
+    surefire_opt="-Djvm=${JAVA8_HOME}/bin/java"
+  else
+    # Provide a default value for local executions that don't configure JAVA8_HOME
+    surefire_opt="-Djvm=${JAVA_HOME}/bin/java"
+  fi
 
   # Compile the Handwritten Library with the Protobuf-Java version to test source compatibility
   # Run unit tests to help check for any behavior differences (dependant on coverage)
@@ -45,6 +50,7 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
       -Denforcer.skip \
       -Dprotobuf.version=${PROTOBUF_RUNTIME_VERSION} \
       -pl "${google_cloud_java_handwritten_maven_args}" -am \
+      "${surefire_opt}" \
       -T 1C
   else
     mvn test -B -V -ntp \
@@ -53,6 +59,7 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
       -Dmaven.javadoc.skip \
       -Denforcer.skip \
       -Dprotobuf.version=${PROTOBUF_RUNTIME_VERSION} \
+      "${surefire_opt}" \
       -T 1C
   fi
 
