@@ -32,13 +32,13 @@ public abstract class EchoServiceShouldGeneratePartialUsualStub implements Backg
         "Not implemented: chatAgainShouldGenerateAsUsualCallable()");
   }
 
-  @InternalApi("Internal API. This API is not intended for public consumption.")
+  @InternalApi("This API is not intended for public consumption.")
   public UnaryCallable<EchoRequest, EchoResponse> chatShouldGenerateAsInternalCallable() {
     throw new UnsupportedOperationException(
         "Not implemented: chatShouldGenerateAsInternalCallable()");
   }
 
-  @InternalApi("Internal API. This API is not intended for public consumption.")
+  @InternalApi("This API is not intended for public consumption.")
   public BidiStreamingCallable<EchoRequest, EchoResponse> echoShouldGenerateAsInternalCallable() {
     throw new UnsupportedOperationException(
         "Not implemented: echoShouldGenerateAsInternalCallable()");

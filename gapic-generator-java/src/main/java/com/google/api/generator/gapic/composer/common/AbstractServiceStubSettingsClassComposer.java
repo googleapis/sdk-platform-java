@@ -84,6 +84,7 @@ import com.google.api.generator.gapic.composer.samplecode.SampleComposerUtil;
 import com.google.api.generator.gapic.composer.samplecode.SettingsSampleComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
+import com.google.api.generator.gapic.composer.utils.CommonStrings;
 import com.google.api.generator.gapic.composer.utils.PackageChecker;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicBatchingSettings;
@@ -129,20 +130,13 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   private static final String BATCHING_DESC_PATTERN = "%s_BATCHING_DESC";
   private static final String PAGE_STR_DESC_PATTERN = "%s_PAGE_STR_DESC";
   private static final String PAGED_RESPONSE_FACTORY_PATTERN = "%s_PAGE_STR_FACT";
-  private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
   private static final String NESTED_BUILDER_CLASS_NAME = "Builder";
   private static final String NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_NAME =
       "unaryMethodSettingsBuilders";
   private static final String NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_NAME =
       "RETRYABLE_CODE_DEFINITIONS";
   private static final String NESTED_RETRY_PARAM_DEFINITIONS_VAR_NAME = "RETRY_PARAM_DEFINITIONS";
-
-  private static final String OPERATION_SETTINGS_LITERAL = "OperationSettings";
-  private static final String SETTINGS_LITERAL = "Settings";
-
   private static final String DOT = ".";
-  private static final String INTERNAL_API_WARNING =
-      "Internal API. This API is not intended for public consumption.";
 
   protected static final TypeStore FIXED_TYPESTORE = createStaticTypes();
 
@@ -1025,7 +1019,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     if (isInternal) {
       annotations.add(
           AnnotationNode.withTypeAndDescription(
-              FIXED_TYPESTORE.get("InternalApi"), INTERNAL_API_WARNING));
+              FIXED_TYPESTORE.get("InternalApi"), CommonStrings.INTERNAL_API_WARNING));
     }
     return annotations;
   }
@@ -1637,7 +1631,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                   VariableExpr varExpr = e.getValue();
                   TypeNode varType = varExpr.type();
                   Preconditions.checkState(
-                      e.getKey().endsWith(SETTINGS_LITERAL),
+                      e.getKey().endsWith(CommonStrings.SETTINGS_LITERAL),
                       String.format("%s expected to end with \"Settings\"", e.getKey()));
                   String methodName = getMethodNameFromSettingsVarName(e.getKey());
 
@@ -2130,7 +2124,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         service.pakkage(),
         service.methods().stream()
             .filter(m -> m.isPaged())
-            .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
+            .map(m -> String.format(CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),
         true,
         ClassNames.getServiceClientClassName(service));
@@ -2209,7 +2203,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   }
 
   private static String getPagedResponseTypeName(String methodName) {
-    return String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, JavaStyle.toUpperCamelCase(methodName));
+    return String.format(
+        CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, JavaStyle.toUpperCamelCase(methodName));
   }
 
   private static TypeNode getCallSettingsType(
@@ -2287,11 +2282,11 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   private static String getMethodNameFromSettingsVarName(String settingsVarName) {
     BiFunction<String, String, String> methodNameSubstrFn =
         (s, literal) -> s.substring(0, s.length() - literal.length());
-    if (settingsVarName.endsWith(OPERATION_SETTINGS_LITERAL)) {
-      return methodNameSubstrFn.apply(settingsVarName, OPERATION_SETTINGS_LITERAL);
+    if (settingsVarName.endsWith(CommonStrings.OPERATION_SETTINGS_LITERAL)) {
+      return methodNameSubstrFn.apply(settingsVarName, CommonStrings.OPERATION_SETTINGS_LITERAL);
     }
-    if (settingsVarName.endsWith(SETTINGS_LITERAL)) {
-      return methodNameSubstrFn.apply(settingsVarName, SETTINGS_LITERAL);
+    if (settingsVarName.endsWith(CommonStrings.SETTINGS_LITERAL)) {
+      return methodNameSubstrFn.apply(settingsVarName, CommonStrings.SETTINGS_LITERAL);
     }
     return settingsVarName;
   }

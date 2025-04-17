@@ -473,18 +473,20 @@ public class Parser {
     Boolean generateOmittedAsInternal =
         selectiveGapicGenerationConfig.getGenerateOmittedAsInternal();
 
-    // Set method to PUBLIC if no SelectiveGapicGeneration Configuration is configured or the method
-    // is in the allow list.
+    // Set method to PUBLIC if no SelectiveGapicGeneration Configuration is configured and
+    // GenerateOmittedAsInternal is false.
+    if (includeMethodsList.isEmpty() && generateOmittedAsInternal == false) {
+      return SelectiveGapicType.PUBLIC;
+    }
+
+    // Set method to PUBLIC if the method is in the allow list.
+    if (includeMethodsList.contains(method.getFullName())) {
+      return SelectiveGapicType.PUBLIC;
+    }
     // Otherwise, generate this method as INTERNAL or HIDDEN based on GenerateOmittedAsInternal
     // flag.
-    if (includeMethodsList.isEmpty() && generateOmittedAsInternal == false
-        || includeMethodsList.contains(method.getFullName())) {
-      return SelectiveGapicType.PUBLIC;
-    } else if (generateOmittedAsInternal) {
-      return SelectiveGapicType.INTERNAL;
-    } else {
-      return SelectiveGapicType.HIDDEN;
-    }
+
+    return generateOmittedAsInternal ? SelectiveGapicType.INTERNAL : SelectiveGapicType.HIDDEN;
   }
 
   // A service is considered empty if it contains no methods, or only methods marked as HIDDEN.

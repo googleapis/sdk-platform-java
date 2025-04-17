@@ -151,7 +151,8 @@ public abstract class JavaDocComment implements Comment {
     public JavaDocComment build() {
       // Add additional descriptive text before block tags.
       if (!Strings.isNullOrEmpty(internalOnly)) {
-        componentsList.add(String.format("<p> <b>Warning: </b>%s", HtmlEscaper.process(internalOnly)));
+        componentsList.add(
+            String.format("<p> <b>Warning: </b>%s", HtmlEscaper.process(internalOnly)));
       }
       // @param, @throws, @return and @deprecated should always get printed at the
       // end.

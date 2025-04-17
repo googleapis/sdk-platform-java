@@ -35,6 +35,7 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.composer.comment.StubCommentComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
+import com.google.api.generator.gapic.composer.utils.CommonStrings;
 import com.google.api.generator.gapic.composer.utils.PackageChecker;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
@@ -55,9 +56,6 @@ import java.util.stream.Collectors;
 import javax.annotation.Generated;
 
 public abstract class AbstractServiceStubClassComposer implements ClassComposer {
-  private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
-  private static final String INTERNAL_API_WARNING =
-      "Internal API. This API is not intended for public consumption.";
 
   private final TransportContext transportContext;
 
@@ -192,7 +190,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     } else if (isPaged) {
       genericRefs.add(
           typeStore
-              .get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
+              .get(String.format(CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
               .reference());
     } else {
       genericRefs.add(method.outputType().reference());
@@ -205,7 +203,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
     if (method.isInternalApi()) {
       annotations.add(
           AnnotationNode.withTypeAndDescription(
-              typeStore.get("InternalApi"), INTERNAL_API_WARNING));
+              typeStore.get("InternalApi"), CommonStrings.INTERNAL_API_WARNING));
     }
 
     returnType = TypeNode.withReference(returnType.reference().copyAndSetGenerics(genericRefs));
@@ -282,7 +280,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
         service.pakkage(),
         service.methods().stream()
             .filter(m -> m.isPaged())
-            .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
+            .map(m -> String.format(CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),
         true,
         ClassNames.getServiceClientClassName(service));

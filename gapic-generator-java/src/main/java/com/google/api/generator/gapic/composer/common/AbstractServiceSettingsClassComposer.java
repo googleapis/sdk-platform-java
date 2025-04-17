@@ -56,6 +56,7 @@ import com.google.api.generator.gapic.composer.samplecode.SampleComposerUtil;
 import com.google.api.generator.gapic.composer.samplecode.SettingsSampleComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
+import com.google.api.generator.gapic.composer.utils.CommonStrings;
 import com.google.api.generator.gapic.composer.utils.PackageChecker;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
@@ -81,12 +82,7 @@ import javax.annotation.Generated;
 
 public abstract class AbstractServiceSettingsClassComposer implements ClassComposer {
   private static final String BUILDER_CLASS_NAME = "Builder";
-  private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
 
-  private static final String OPERATION_SETTINGS_LITERAL = "OperationSettings";
-  private static final String SETTINGS_LITERAL = "Settings";
-  private static final String INTERNAL_API_WARNING =
-      "Internal API. This API is not intended for public consumption.";
   protected static final TypeStore FIXED_TYPESTORE = createStaticTypes();
 
   private final TransportContext transportContext;
@@ -108,7 +104,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     if (method.isInternalApi()) {
       annotations.add(
           AnnotationNode.withTypeAndDescription(
-              FIXED_TYPESTORE.get("InternalApi"), INTERNAL_API_WARNING));
+              FIXED_TYPESTORE.get("InternalApi"), CommonStrings.INTERNAL_API_WARNING));
     }
 
     return annotations;
@@ -878,7 +874,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         service.pakkage(),
         service.methods().stream()
             .filter(m -> m.isPaged())
-            .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
+            .map(m -> String.format(CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),
         true,
         ClassNames.getServiceClientClassName(service));
@@ -955,7 +951,8 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     if (protoMethod.isPaged()) {
       generics.add(
           typeStore
-              .get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, protoMethod.name()))
+              .get(
+                  String.format(CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, protoMethod.name()))
               .reference());
     }
 
@@ -976,11 +973,11 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
   private static String getMethodNameFromSettingsVarName(String settingsVarName) {
     BiFunction<String, String, String> methodNameSubstrFn =
         (s, literal) -> s.substring(0, s.length() - literal.length());
-    if (settingsVarName.endsWith(OPERATION_SETTINGS_LITERAL)) {
-      return methodNameSubstrFn.apply(settingsVarName, OPERATION_SETTINGS_LITERAL);
+    if (settingsVarName.endsWith(CommonStrings.OPERATION_SETTINGS_LITERAL)) {
+      return methodNameSubstrFn.apply(settingsVarName, CommonStrings.OPERATION_SETTINGS_LITERAL);
     }
-    if (settingsVarName.endsWith(SETTINGS_LITERAL)) {
-      return methodNameSubstrFn.apply(settingsVarName, SETTINGS_LITERAL);
+    if (settingsVarName.endsWith(CommonStrings.SETTINGS_LITERAL)) {
+      return methodNameSubstrFn.apply(settingsVarName, CommonStrings.SETTINGS_LITERAL);
     }
     return settingsVarName;
   }

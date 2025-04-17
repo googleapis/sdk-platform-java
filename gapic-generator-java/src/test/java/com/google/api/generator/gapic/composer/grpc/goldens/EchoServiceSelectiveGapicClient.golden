@@ -442,7 +442,7 @@ public class EchoServiceShouldGeneratePartialUsualClient implements BackgroundRe
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @InternalApi("Internal API. This API is not intended for public consumption.")
+  @InternalApi("This API is not intended for public consumption.")
   public final EchoResponse chatShouldGenerateAsInternal() {
     EchoRequest request = EchoRequest.newBuilder().build();
     return chatShouldGenerateAsInternal(request);
@@ -471,7 +471,7 @@ public class EchoServiceShouldGeneratePartialUsualClient implements BackgroundRe
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @InternalApi("Internal API. This API is not intended for public consumption.")
+  @InternalApi("This API is not intended for public consumption.")
   public final EchoResponse chatShouldGenerateAsInternal(FoobarName name) {
     EchoRequest request =
         EchoRequest.newBuilder().setName(name == null ? null : name.toString()).build();
@@ -501,7 +501,7 @@ public class EchoServiceShouldGeneratePartialUsualClient implements BackgroundRe
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @InternalApi("Internal API. This API is not intended for public consumption.")
+  @InternalApi("This API is not intended for public consumption.")
   public final EchoResponse chatShouldGenerateAsInternal(String name) {
     EchoRequest request = EchoRequest.newBuilder().setName(name).build();
     return chatShouldGenerateAsInternal(request);
@@ -535,7 +535,7 @@ public class EchoServiceShouldGeneratePartialUsualClient implements BackgroundRe
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @InternalApi("Internal API. This API is not intended for public consumption.")
+  @InternalApi("This API is not intended for public consumption.")
   public final EchoResponse chatShouldGenerateAsInternal(EchoRequest request) {
     return chatShouldGenerateAsInternalCallable().call(request);
   }
@@ -569,7 +569,7 @@ public class EchoServiceShouldGeneratePartialUsualClient implements BackgroundRe
    *
    * <p><b>Warning: </b>This method is internal used only. Please do not use directly.
    */
-  @InternalApi("Internal API. This API is not intended for public consumption.")
+  @InternalApi("This API is not intended for public consumption.")
   public final UnaryCallable<EchoRequest, EchoResponse> chatShouldGenerateAsInternalCallable() {
     return stub.chatShouldGenerateAsInternalCallable();
   }
@@ -603,7 +603,7 @@ public class EchoServiceShouldGeneratePartialUsualClient implements BackgroundRe
    *
    * <p><b>Warning: </b>This method is internal used only. Please do not use directly.
    */
-  @InternalApi("Internal API. This API is not intended for public consumption.")
+  @InternalApi("This API is not intended for public consumption.")
   public final BidiStreamingCallable<EchoRequest, EchoResponse>
       echoShouldGenerateAsInternalCallable() {
     return stub.echoShouldGenerateAsInternalCallable();

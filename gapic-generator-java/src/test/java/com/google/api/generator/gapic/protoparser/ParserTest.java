@@ -22,10 +22,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.ClientLibrarySettings;
+import com.google.api.CommonLanguageSettings;
 import com.google.api.FieldInfo.Format;
+import com.google.api.JavaSettings;
 import com.google.api.MethodSettings;
 import com.google.api.Publishing;
 import com.google.api.PythonSettings;
+import com.google.api.SelectiveGapicGeneration;
 import com.google.api.Service;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
@@ -884,6 +887,60 @@ class ParserTest {
         SelectiveGapicType.PUBLIC);
   }
 
+  @Test
+  void selectiveGenerationTest_shouldGenerateAsPublicIfMethodInList() {
+    String protoPackage = "google.selective.generate.v1beta1";
+    String methodsAllowList =
+        "google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsual.EchoShouldGenerateAsUsual";
+    Service service =
+        createServiceWithSelectiveGapicConfiguration(protoPackage, methodsAllowList, true);
+
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    // methodToGenerate from fileDescriptor:
+    // google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsual.EchoShouldGenerateAsUsual
+    MethodDescriptor methodToGenerate = fileDescriptor.getServices().get(1).getMethods().get(0);
+
+    assertEquals(
+        Parser.getMethodSelectiveGapicType(methodToGenerate, Optional.of(service), protoPackage),
+        SelectiveGapicType.PUBLIC);
+  }
+
+  @Test
+  void selectiveGenerationTest_shouldGenerateAsInternalIfMethodNotInListWithGenerateOmittedTrue() {
+    String protoPackage = "google.selective.generate.v1beta1";
+    String methodsAllowList =
+        "google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsual.EchoShouldGenerateAsUsual";
+    Service service =
+        createServiceWithSelectiveGapicConfiguration(protoPackage, methodsAllowList, true);
+
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    // methodToGenerate from fileDescriptor:
+    // google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsual.ChatShouldGenerateAsInternal
+    MethodDescriptor methodToGenerate = fileDescriptor.getServices().get(1).getMethods().get(3);
+
+    assertEquals(
+        Parser.getMethodSelectiveGapicType(methodToGenerate, Optional.of(service), protoPackage),
+        SelectiveGapicType.INTERNAL);
+  }
+
+  @Test
+  void selectiveGenerationTest_shouldGenerateAsHiddenIfMethodNotInListWithGenerateOmittedFalse() {
+    String protoPackage = "google.selective.generate.v1beta1";
+    String methodsAllowList =
+        "google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsual.EchoShouldGenerateAsUsual";
+    Service service =
+        createServiceWithSelectiveGapicConfiguration(protoPackage, methodsAllowList, false);
+
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    // methodToGenerate from fileDescriptor:
+    // google.selective.generate.v1beta1.EchoServiceShouldGeneratePartialUsual.ChatShouldGenerateAsInternal
+    MethodDescriptor methodToGenerate = fileDescriptor.getServices().get(1).getMethods().get(3);
+
+    assertEquals(
+        Parser.getMethodSelectiveGapicType(methodToGenerate, Optional.of(service), protoPackage),
+        SelectiveGapicType.HIDDEN);
+  }
+
   private void assertMethodArgumentEquals(
       String name, TypeNode type, List<TypeNode> nestedFields, MethodArgument argument) {
     assertEquals(name, argument.name());
@@ -893,5 +950,34 @@ class ParserTest {
 
   private static Reference createStatusReference() {
     return VaporReference.builder().setName("Status").setPakkage("com.google.rpc").build();
+  }
+
+  private static Service createServiceWithSelectiveGapicConfiguration(
+      String protoPackage, String methodsAllowList, boolean generateOmittedAsInternal) {
+    // Create a service with method allow-list and generateOmittedAsInternal flag.
+    JavaSettings java_settings =
+        JavaSettings.newBuilder()
+            .setLibraryPackage("com.google.foobar.v1")
+            .putServiceClassNames("com.google.foo.v1.BarService", "BazService")
+            .setCommon(
+                CommonLanguageSettings.newBuilder()
+                    .setSelectiveGapicGeneration(
+                        SelectiveGapicGeneration.newBuilder()
+                            .addMethods(methodsAllowList)
+                            .setGenerateOmittedAsInternal(generateOmittedAsInternal)))
+            .build();
+    ClientLibrarySettings clientLibrarySettings =
+        ClientLibrarySettings.newBuilder()
+            .setVersion(protoPackage)
+            .setJavaSettings(java_settings)
+            .build();
+    Publishing publishing =
+        Publishing.newBuilder().addLibrarySettings(clientLibrarySettings).build();
+    Service service =
+        Service.newBuilder()
+            .setTitle("Selective generation test")
+            .setPublishing(publishing)
+            .build();
+    return service;
   }
 }

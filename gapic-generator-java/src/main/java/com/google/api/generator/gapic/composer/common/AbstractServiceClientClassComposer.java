@@ -63,6 +63,7 @@ import com.google.api.generator.gapic.composer.samplecode.ServiceClientHeaderSam
 import com.google.api.generator.gapic.composer.samplecode.ServiceClientMethodSampleComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
+import com.google.api.generator.gapic.composer.utils.CommonStrings;
 import com.google.api.generator.gapic.composer.utils.PackageChecker;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicClass;
@@ -104,12 +105,9 @@ import java.util.stream.Collectors;
 import javax.annotation.Generated;
 
 public abstract class AbstractServiceClientClassComposer implements ClassComposer {
-  private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
   private static final String CALLABLE_NAME_PATTERN = "%sCallable";
   private static final String PAGED_CALLABLE_NAME_PATTERN = "%sPagedCallable";
   private static final String OPERATION_CALLABLE_NAME_PATTERN = "%sOperationCallable";
-  private static final String INTERNAL_API_WARNING =
-      "Internal API. This API is not intended for public consumption.";
 
   private static final Reference LIST_REFERENCE = ConcreteReference.withClazz(List.class);
   private static final Reference MAP_REFERENCE = ConcreteReference.withClazz(Map.class);
@@ -139,7 +137,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     if (method.isInternalApi()) {
       annotations.add(
           AnnotationNode.withTypeAndDescription(
-              typeStore.get("InternalApi"), INTERNAL_API_WARNING));
+              typeStore.get("InternalApi"), CommonStrings.INTERNAL_API_WARNING));
     }
 
     return annotations;
@@ -730,7 +728,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     TypeNode methodInputType = method.inputType();
     TypeNode methodOutputType =
         method.isPaged()
-            ? typeStore.get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
+            ? typeStore.get(
+                String.format(CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
             : method.outputType();
     if (method.hasLro()) {
       LongrunningOperation lro = method.lro();
@@ -840,7 +839,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     TypeNode methodInputType = method.inputType();
     TypeNode methodOutputType =
         method.isPaged()
-            ? typeStore.get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
+            ? typeStore.get(
+                String.format(CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
             : method.outputType();
     if (method.hasLro()) {
       LongrunningOperation lro = method.lro();
@@ -1834,7 +1834,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
         service.pakkage(),
         service.methods().stream()
             .filter(m -> m.isPaged())
-            .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
+            .map(m -> String.format(CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),
         true,
         ClassNames.getServiceClientClassName(service));
@@ -1852,7 +1852,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       return Arrays.asList(
           method.inputType().reference(),
           typeStore
-              .get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
+              .get(String.format(CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
               .reference());
     }
     return Arrays.asList(method.inputType().reference(), method.outputType().reference());
