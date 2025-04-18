@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+set -exo pipefail
 # This script should be run at the root of the repository.
 # This script is used to, when a pull request changes the generation
 # configuration (generation_config.yaml by default) or Dockerfile:
@@ -106,9 +106,11 @@ if [[ "${showcase_mode}" == "true" ]]; then
 fi
 
 # get changed library list.
-changed_libraries=$(python hermetic_build/common/cli/get_changed_libraries.py create \
+changed_libraries_file="$(mktemp)"
+python hermetic_build/common/cli/get_changed_libraries.py create \
   --baseline-generation-config-path="${baseline_generation_config}" \
-  --current-generation-config-path="${generation_config}")
+  --current-generation-config-path="${generation_config}" | tee "${changed_libraries_file}"
+changed_libraries="$(cat "${changed_libraries_file}")"
 echo "Changed libraries are: ${changed_libraries:-"No changed library"}."
 
 # run hermetic code generation docker image.
