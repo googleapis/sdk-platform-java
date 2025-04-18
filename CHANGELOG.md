@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.56.0](https://github.com/googleapis/sdk-platform-java/compare/v2.55.1...v2.56.0) (2025-04-18)
+
+
+### Features
+
+* Selective gapic generation phase II ([#3730](https://github.com/googleapis/sdk-platform-java/issues/3730)) ([64ac2c1](https://github.com/googleapis/sdk-platform-java/commit/64ac2c1df1c3ddd46caaa82dd3553365691b66c6))
+
+
+### Bug Fixes
+
+* **hermetic-build:** use correct image name in templated graalvm jobs ([#3743](https://github.com/googleapis/sdk-platform-java/issues/3743)) ([29a78d3](https://github.com/googleapis/sdk-platform-java/commit/29a78d3b7b6ac8533790f6a3763cc7f8144826ee))
+* plumb mtls endpoint to TransportChannelProvider ([#3673](https://github.com/googleapis/sdk-platform-java/issues/3673)) ([a961459](https://github.com/googleapis/sdk-platform-java/commit/a9614593701d945a58b9e333b99589871f82ef33))
+
+
+### Dependencies
+
+* add opentelemetry gcp-resources to shared deps ([#3722](https://github.com/googleapis/sdk-platform-java/issues/3722)) ([b1b075d](https://github.com/googleapis/sdk-platform-java/commit/b1b075d0530c7b10dc92cdd9cad0801147b95fc7))
+
 ## [2.55.1](https://github.com/googleapis/sdk-platform-java/compare/v2.55.0...v2.55.1) (2025-03-12)
 
 
