@@ -100,7 +100,7 @@ git checkout "${googleapis_commitish}"
 popd
 
 # we also setup showcase
-if [[ "${showcase_mode}" == "true" ]]; then
+if [[ "${showcase_mode}" == "true123" ]]; then
   source java-showcase/scripts/showcase_utilities.sh
   append_showcase_to_api_defs "${api_def_dir}"
 fi
