@@ -96,6 +96,7 @@ googleapis_commitish=$(grep googleapis_commitish "${generation_config}" | cut -d
 api_def_dir=$(mktemp -d)
 git clone https://github.com/googleapis/googleapis.git "${api_def_dir}"
 pushd "${api_def_dir}"
+git cat-file -t b947e523934dbac5d97613d8aa08e04fc38c5fb6 || echo 'could not cat the file'
 git checkout "${googleapis_commitish}"
 popd
 
