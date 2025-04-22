@@ -24,7 +24,7 @@ jobs:
           cache: maven
       - run: mvn -version
       - name: Install
-        run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip
+        run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip -Dfmt.skip
       - name: Create issue if previous step fails
         if: ${{ failure() }}
         env:
@@ -49,7 +49,7 @@ jobs:
           cache: maven
       - run: mvn -version
       - name: Install with Java 11
-        run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip -DskipTests
+        run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip -DskipTests -Dfmt.skip
 
       - uses: actions/setup-java@v4
         with:
@@ -58,11 +58,11 @@ jobs:
       - run: mvn -version
       - name: Test with Java 8
         # Direct goal invocation ("surefire:test") prevents recompiling tests
-        run: mvn surefire:test --errors --batch-mode --no-transfer-progress
+        run: mvn surefire:test --errors --batch-mode --no-transfer-progress -Dfmt.skip
       - name: Create issue if previous step fails
         if: ${{ failure() }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.CLOUD_JAVA_BOT_TOKEN }}
         run: |
           gh issue create \
             --title "Nightly-java8 build on ${{ matrix.os }} failed." \
