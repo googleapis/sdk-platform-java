@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.composer.common;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
+import com.google.api.core.InternalApi;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
@@ -55,6 +56,7 @@ import com.google.api.generator.gapic.composer.samplecode.SampleComposerUtil;
 import com.google.api.generator.gapic.composer.samplecode.SettingsSampleComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
+import com.google.api.generator.gapic.composer.utils.CommonStrings;
 import com.google.api.generator.gapic.composer.utils.PackageChecker;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
@@ -70,7 +72,6 @@ import com.google.longrunning.Operation;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -81,10 +82,7 @@ import javax.annotation.Generated;
 
 public abstract class AbstractServiceSettingsClassComposer implements ClassComposer {
   private static final String BUILDER_CLASS_NAME = "Builder";
-  private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
 
-  private static final String OPERATION_SETTINGS_LITERAL = "OperationSettings";
-  private static final String SETTINGS_LITERAL = "Settings";
   protected static final TypeStore FIXED_TYPESTORE = createStaticTypes();
 
   private final TransportContext transportContext;
@@ -95,6 +93,21 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
 
   protected TransportContext getTransportContext() {
     return transportContext;
+  }
+
+  private static List<AnnotationNode> createMethodAnnotations(Method method) {
+    List<AnnotationNode> annotations = new ArrayList<>();
+    if (method.isDeprecated()) {
+      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
+    }
+
+    if (method.isInternalApi()) {
+      annotations.add(
+          AnnotationNode.withTypeAndDescription(
+              FIXED_TYPESTORE.get("InternalApi"), CommonStrings.INTERNAL_API_WARNING));
+    }
+
+    return annotations;
   }
 
   @Override
@@ -133,16 +146,21 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
 
   private static List<CommentStatement> createClassHeaderComments(
       Service service, TypeNode classType, List<Sample> samples) {
-    // Pick the first pure unary rpc method, if no such method exists, then pick the first in the
+    // Pick the first public pure unary rpc method, if no such method exists, then pick the first
+    // public in the
     // list.
+    List<Method> publicMethods =
+        service.methods().stream()
+            .filter(m -> m.isInternalApi() == false)
+            .collect(Collectors.toList());
     Optional<Method> methodOpt =
-        service.methods().isEmpty()
+        publicMethods.isEmpty()
             ? Optional.empty()
             : Optional.of(
-                service.methods().stream()
+                publicMethods.stream()
                     .filter(m -> m.stream() == Stream.NONE && !m.hasLro() && !m.isPaged())
                     .findFirst()
-                    .orElse(service.methods().get(0)));
+                    .orElse(publicMethods.get(0)));
     Optional<String> methodNameOpt =
         methodOpt.isPresent() ? Optional.of(methodOpt.get().name()) : Optional.empty();
     Optional<Sample> sampleCode =
@@ -156,9 +174,9 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     // Create a sample for a LRO method using LRO-specific RetrySettings, if one exists in the
     // service.
     Optional<Method> lroMethodOpt =
-        service.methods().isEmpty()
+        publicMethods.isEmpty()
             ? Optional.empty()
-            : service.methods().stream()
+            : publicMethods.stream()
                 .filter(m -> m.stream() == Stream.NONE && m.hasLro())
                 .findFirst();
     Optional<String> lroMethodNameOpt =
@@ -270,38 +288,34 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method protoMethod : service.methods()) {
       String javaStyleName = JavaStyle.toLowerCamelCase(protoMethod.name());
-      String javaMethodName =
-          String.format("%sSettings", JavaStyle.toLowerCamelCase(protoMethod.name()));
+      String javaMethodName = String.format("%sSettings", javaStyleName);
       MethodDefinition.Builder methodBuilder =
           methodMakerFn.apply(getCallSettingsType(protoMethod, typeStore), javaMethodName);
-      javaMethods.add(
-          methodBuilder
-              .setHeaderCommentStatements(
-                  SettingsCommentComposer.createCallSettingsGetterComment(
-                      getMethodNameFromSettingsVarName(javaMethodName), protoMethod.isDeprecated()))
-              .setAnnotations(
-                  protoMethod.isDeprecated()
-                      ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
-                      : Collections.emptyList())
-              .build());
+      javaMethods.add(methodBuilderHelper(protoMethod, methodBuilder, javaMethodName));
       if (protoMethod.hasLro()) {
-        javaMethodName = String.format("%sOperationSettings", javaStyleName);
+        String javaOperationSettingsMethodName =
+            String.format("%sOperationSettings", javaStyleName);
         methodBuilder =
-            methodMakerFn.apply(getOperationCallSettingsType(protoMethod), javaMethodName);
+            methodMakerFn.apply(
+                getOperationCallSettingsType(protoMethod), javaOperationSettingsMethodName);
         javaMethods.add(
-            methodBuilder
-                .setHeaderCommentStatements(
-                    SettingsCommentComposer.createCallSettingsGetterComment(
-                        getMethodNameFromSettingsVarName(javaMethodName),
-                        protoMethod.isDeprecated()))
-                .setAnnotations(
-                    protoMethod.isDeprecated()
-                        ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
-                        : Collections.emptyList())
-                .build());
+            methodBuilderHelper(protoMethod, methodBuilder, javaOperationSettingsMethodName));
       }
     }
     return javaMethods;
+  }
+
+  // Add method header comment statements and annotations.
+  private static MethodDefinition methodBuilderHelper(
+      Method protoMethod, MethodDefinition.Builder methodBuilder, String javaMethodName) {
+    return methodBuilder
+        .setHeaderCommentStatements(
+            SettingsCommentComposer.createCallSettingsGetterComment(
+                getMethodNameFromSettingsVarName(javaMethodName),
+                protoMethod.isDeprecated(),
+                protoMethod.isInternalApi()))
+        .setAnnotations(createMethodAnnotations(protoMethod))
+        .build();
   }
 
   private static MethodDefinition createCreatorMethod(Service service, TypeStore typeStore) {
@@ -771,11 +785,10 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
           methodBuilder
               .setHeaderCommentStatements(
                   SettingsCommentComposer.createCallSettingsBuilderGetterComment(
-                      getMethodNameFromSettingsVarName(javaMethodName), protoMethod.isDeprecated()))
-              .setAnnotations(
-                  protoMethod.isDeprecated()
-                      ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
-                      : Collections.emptyList())
+                      getMethodNameFromSettingsVarName(javaMethodName),
+                      protoMethod.isDeprecated(),
+                      protoMethod.isInternalApi()))
+              .setAnnotations(createMethodAnnotations(protoMethod))
               .build());
 
       if (protoMethod.hasLro()) {
@@ -787,11 +800,9 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                 .setHeaderCommentStatements(
                     SettingsCommentComposer.createCallSettingsBuilderGetterComment(
                         getMethodNameFromSettingsVarName(javaMethodName),
-                        protoMethod.isDeprecated()))
-                .setAnnotations(
-                    protoMethod.isDeprecated()
-                        ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
-                        : Collections.emptyList())
+                        protoMethod.isDeprecated(),
+                        protoMethod.isInternalApi()))
+                .setAnnotations(createMethodAnnotations(protoMethod))
                 .build());
       }
     }
@@ -822,6 +833,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
             ApiClientHeaderProvider.class,
             ApiFunction.class,
             BetaApi.class,
+            InternalApi.class,
             ClientContext.class,
             ClientSettings.class,
             Generated.class,
@@ -862,7 +874,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         service.pakkage(),
         service.methods().stream()
             .filter(m -> m.isPaged())
-            .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
+            .map(m -> String.format(CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),
         true,
         ClassNames.getServiceClientClassName(service));
@@ -939,7 +951,8 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     if (protoMethod.isPaged()) {
       generics.add(
           typeStore
-              .get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, protoMethod.name()))
+              .get(
+                  String.format(CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, protoMethod.name()))
               .reference());
     }
 
@@ -960,11 +973,11 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
   private static String getMethodNameFromSettingsVarName(String settingsVarName) {
     BiFunction<String, String, String> methodNameSubstrFn =
         (s, literal) -> s.substring(0, s.length() - literal.length());
-    if (settingsVarName.endsWith(OPERATION_SETTINGS_LITERAL)) {
-      return methodNameSubstrFn.apply(settingsVarName, OPERATION_SETTINGS_LITERAL);
+    if (settingsVarName.endsWith(CommonStrings.OPERATION_SETTINGS_LITERAL)) {
+      return methodNameSubstrFn.apply(settingsVarName, CommonStrings.OPERATION_SETTINGS_LITERAL);
     }
-    if (settingsVarName.endsWith(SETTINGS_LITERAL)) {
-      return methodNameSubstrFn.apply(settingsVarName, SETTINGS_LITERAL);
+    if (settingsVarName.endsWith(CommonStrings.SETTINGS_LITERAL)) {
+      return methodNameSubstrFn.apply(settingsVarName, CommonStrings.SETTINGS_LITERAL);
     }
     return settingsVarName;
   }

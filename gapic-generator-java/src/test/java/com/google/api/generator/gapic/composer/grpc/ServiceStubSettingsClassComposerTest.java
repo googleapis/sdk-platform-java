@@ -31,27 +31,38 @@ class ServiceStubSettingsClassComposerTest {
             "LoggingServiceV2StubSettings",
             GrpcTestProtoLoader.instance().parseLogging(),
             "logging",
-            "v2"),
+            "v2",
+            0),
         Arguments.of(
             "PublisherStubSettings",
             GrpcTestProtoLoader.instance().parsePubSubPublisher(),
             "pubsub",
-            "v1"),
+            "v1",
+            0),
         Arguments.of(
             "EchoStubSettings",
             GrpcTestProtoLoader.instance().parseShowcaseEcho(),
             "localhost:7469",
-            "v1beta1"),
+            "v1beta1",
+            0),
         Arguments.of(
             "DeprecatedServiceStubSettings",
             GrpcTestProtoLoader.instance().parseDeprecatedService(),
             "localhost:7469",
-            "v1"),
+            "v1",
+            0),
         Arguments.of(
             "ApiVersionTestingStubSettings",
             GrpcTestProtoLoader.instance().parseApiVersionTesting(),
             "localhost:7469",
-            "v1"));
+            "v1",
+            0),
+        Arguments.of(
+            "EchoServiceSelectiveGapicStubSettings",
+            GrpcTestProtoLoader.instance().parseSelectiveGenerationTesting(),
+            "localhost:7469",
+            "v1beta1",
+            1));
   }
 
   @ParameterizedTest
@@ -60,8 +71,9 @@ class ServiceStubSettingsClassComposerTest {
       String name,
       GapicContext context,
       String apiShortNameExpected,
-      String packageVersionExpected) {
-    Service service = context.services().get(0);
+      String packageVersionExpected,
+      int serviceIndex) {
+    Service service = context.services().get(serviceIndex);
     GapicClass clazz = ServiceStubSettingsClassComposer.instance().generate(context, service);
 
     Assert.assertGoldenClass(this.getClass(), clazz, name + ".golden");

@@ -59,31 +59,31 @@ public class SettingsCommentComposer {
       "Retries are configured for idempotent methods but not for non-idempotent methods.";
 
   public static final CommentStatement DEFAULT_SCOPES_COMMENT =
-      toSimpleComment("The default scopes of the service.");
+      toCommentStatement("The default scopes of the service.");
 
   public static final CommentStatement DEFAULT_EXECUTOR_PROVIDER_BUILDER_METHOD_COMMENT =
-      toSimpleComment("Returns a builder for the default ExecutorProvider for this service.");
+      toCommentStatement("Returns a builder for the default ExecutorProvider for this service.");
 
   public static final CommentStatement DEFAULT_SERVICE_NAME_METHOD_COMMENT =
-      toSimpleComment("Returns the default service name.");
+      toCommentStatement("Returns the default service name.");
   public static final CommentStatement DEFAULT_SERVICE_ENDPOINT_METHOD_COMMENT =
-      toSimpleComment("Returns the default service endpoint.");
+      toCommentStatement("Returns the default service endpoint.");
   public static final CommentStatement DEFAULT_SERVICE_MTLS_ENDPOINT_METHOD_COMMENT =
-      toSimpleComment("Returns the default mTLS service endpoint.");
+      toCommentStatement("Returns the default mTLS service endpoint.");
   public static final CommentStatement DEFAULT_SERVICE_SCOPES_METHOD_COMMENT =
-      toSimpleComment("Returns the default service scopes.");
+      toCommentStatement("Returns the default service scopes.");
 
   public static final CommentStatement DEFAULT_CREDENTIALS_PROVIDER_BUILDER_METHOD_COMMENT =
-      toSimpleComment("Returns a builder for the default credentials for this service.");
+      toCommentStatement("Returns a builder for the default credentials for this service.");
 
   public static final CommentStatement DEFAULT_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT =
-      toSimpleComment("Returns a builder for the default ChannelProvider for this service.");
+      toCommentStatement("Returns a builder for the default ChannelProvider for this service.");
 
   public static final CommentStatement NEW_BUILDER_METHOD_COMMENT =
-      toSimpleComment("Returns a new builder for this class.");
+      toCommentStatement("Returns a new builder for this class.");
 
   public static final CommentStatement TO_BUILDER_METHOD_COMMENT =
-      toSimpleComment("Returns a builder containing all the values of this settings class.");
+      toCommentStatement("Returns a builder containing all the values of this settings class.");
 
   public static final List<CommentStatement> APPLY_TO_ALL_UNARY_METHODS_METHOD_COMMENTS =
       Arrays.asList(
@@ -103,9 +103,10 @@ public class SettingsCommentComposer {
 
   public SettingsCommentComposer(String transportPrefix) {
     this.newTransportBuilderMethodComment =
-        toSimpleComment(String.format("Returns a new %s builder for this class.", transportPrefix));
+        toCommentStatement(
+            String.format("Returns a new %s builder for this class.", transportPrefix));
     this.transportProviderBuilderMethodComment =
-        toSimpleComment(
+        toCommentStatement(
             String.format(
                 "Returns a builder for the default %s ChannelProvider for this service.",
                 transportPrefix));
@@ -120,23 +121,21 @@ public class SettingsCommentComposer {
   }
 
   public static CommentStatement createCallSettingsGetterComment(
-      String javaMethodName, boolean isMethodDeprecated) {
-    String methodComment = String.format(CALL_SETTINGS_METHOD_DOC_PATTERN, javaMethodName);
-    return isMethodDeprecated
-        ? toDeprecatedSimpleComment(methodComment)
-        : toSimpleComment(methodComment);
+      String javaMethodName, boolean isMethodDeprecated, boolean isMethodInternal) {
+    return toCommentStatement(
+        String.format(CALL_SETTINGS_METHOD_DOC_PATTERN, javaMethodName),
+        isMethodDeprecated,
+        isMethodInternal);
   }
 
   public static CommentStatement createBuilderClassComment(String outerClassName) {
-    return toSimpleComment(String.format(BUILDER_CLASS_DOC_PATTERN, outerClassName));
+    return toCommentStatement(String.format(BUILDER_CLASS_DOC_PATTERN, outerClassName));
   }
 
   public static CommentStatement createCallSettingsBuilderGetterComment(
-      String javaMethodName, boolean isMethodDeprecated) {
+      String javaMethodName, boolean isMethodDeprecated, boolean isMethodInternal) {
     String methodComment = String.format(CALL_SETTINGS_BUILDER_METHOD_DOC_PATTERN, javaMethodName);
-    return isMethodDeprecated
-        ? toDeprecatedSimpleComment(methodComment)
-        : toSimpleComment(methodComment);
+    return toCommentStatement(methodComment, isMethodDeprecated, isMethodInternal);
   }
 
   public static List<CommentStatement> createClassHeaderComments(
@@ -201,15 +200,21 @@ public class SettingsCommentComposer {
         CommentStatement.withComment(javaDocCommentBuilder.build()));
   }
 
-  private static CommentStatement toSimpleComment(String comment) {
-    return CommentStatement.withComment(JavaDocComment.withComment(comment));
+  private static CommentStatement toCommentStatement(String comment) {
+    return toCommentStatement(comment, false, false);
   }
 
-  private static CommentStatement toDeprecatedSimpleComment(String comment) {
-    return CommentStatement.withComment(
-        JavaDocComment.builder()
-            .addComment(comment)
-            .setDeprecated(CommentComposer.DEPRECATED_METHOD_STRING)
-            .build());
+  private static CommentStatement toCommentStatement(
+      String comment, boolean isDeprecated, boolean isInternal) {
+    JavaDocComment.Builder docBuilder = JavaDocComment.builder().addComment(comment);
+    docBuilder =
+        isDeprecated
+            ? docBuilder.setDeprecated(CommentComposer.DEPRECATED_METHOD_STRING)
+            : docBuilder;
+    docBuilder =
+        isInternal
+            ? docBuilder.setInternalOnly(CommentComposer.INTERNAL_ONLY_METHOD_STRING)
+            : docBuilder;
+    return CommentStatement.withComment(docBuilder.build());
   }
 }

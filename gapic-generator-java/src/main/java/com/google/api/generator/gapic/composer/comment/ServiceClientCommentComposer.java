@@ -202,6 +202,10 @@ public class ServiceClientCommentComposer {
       methodJavadocBuilder.setDeprecated(CommentComposer.DEPRECATED_METHOD_STRING);
     }
 
+    if (method.isInternalApi()) {
+      methodJavadocBuilder.setInternalOnly(CommentComposer.INTERNAL_ONLY_METHOD_STRING);
+    }
+
     List<CommentStatement> comments = new ArrayList<>();
     comments.add(CommentComposer.AUTO_GENERATED_METHOD_COMMENT);
     if (!methodJavadocBuilder.emptyComments()) {
@@ -343,6 +347,10 @@ public class ServiceClientCommentComposer {
 
     if (method.isDeprecated()) {
       methodJavadocBuilder.setDeprecated(CommentComposer.DEPRECATED_METHOD_STRING);
+    }
+
+    if (method.isInternalApi()) {
+      methodJavadocBuilder.setInternalOnly(CommentComposer.INTERNAL_ONLY_METHOD_STRING);
     }
 
     return Arrays.asList(

@@ -49,6 +49,9 @@ public class CommentComposer {
   static final String DEPRECATED_METHOD_STRING =
       "This method is deprecated and will be removed in the next major version update.";
 
+  static final String INTERNAL_ONLY_METHOD_STRING =
+      "This method is for internal use only. Please do not use it directly.";
+
   public static final CommentStatement APACHE_LICENSE_COMMENT =
       CommentStatement.withComment(BlockComment.withComment(APACHE_LICENSE_STRING));
 
