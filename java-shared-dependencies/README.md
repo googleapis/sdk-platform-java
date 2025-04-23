@@ -14,7 +14,7 @@ If you are using Maven, add this to the `dependencyManagement` section.
     <dependency>
       <groupId>com.google.cloud</groupId>
       <artifactId>google-cloud-shared-dependencies</artifactId>
-      <version>3.46.1</version>
+      <version>3.46.2</version>
       <type>pom</type>
       <scope>import</scope>
     </dependency>
