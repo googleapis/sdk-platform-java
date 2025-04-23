@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.56.1](https://github.com/googleapis/sdk-platform-java/compare/v2.56.0...v2.56.1) (2025-04-23)
+
+
+### Bug Fixes
+
+* match graalvm job names with internal configs ([#3755](https://github.com/googleapis/sdk-platform-java/issues/3755)) ([23b4b12](https://github.com/googleapis/sdk-platform-java/commit/23b4b1277e3675cad1ebaa32c1115e8050501a0d))
+* use java 17 in samples.yaml ([#3754](https://github.com/googleapis/sdk-platform-java/issues/3754)) ([2d5c5e2](https://github.com/googleapis/sdk-platform-java/commit/2d5c5e28f56cc4332efd511bf9018c966a7c0458))
+* use spotify formatter in hermetic build templates ([#3752](https://github.com/googleapis/sdk-platform-java/issues/3752)) ([65e29da](https://github.com/googleapis/sdk-platform-java/commit/65e29dacaf533be61f2a14cbb8adeea316750911))
+
 ## [2.56.0](https://github.com/googleapis/sdk-platform-java/compare/v2.55.1...v2.56.0) (2025-04-18)
 
 
