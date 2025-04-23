@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.56.2](https://github.com/googleapis/sdk-platform-java/compare/v2.56.1...v2.56.2) (2025-04-23)
+
+
+### Bug Fixes
+
+* keep native image templates up to date ([#3759](https://github.com/googleapis/sdk-platform-java/issues/3759)) ([7dffab1](https://github.com/googleapis/sdk-platform-java/commit/7dffab1251268736c9bf05b7d4bfcca06ed6576a))
+
 ## [2.56.1](https://github.com/googleapis/sdk-platform-java/compare/v2.56.0...v2.56.1) (2025-04-23)
 
 
