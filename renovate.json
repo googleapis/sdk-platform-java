@@ -70,7 +70,7 @@
     {
       "customType": "regex",
       "fileMatch": [
-        "^.cloudbuild/library_generation/library_generation.Dockerfile$"
+        "^.cloudbuild/library_generation/library_generation.*\\.Dockerfile$"
       ],
       "matchStrings": [
         "OWLBOT_CLI_COMMITTISH=(?<currentDigest>.*?)\\n"
