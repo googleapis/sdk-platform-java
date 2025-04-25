@@ -35,7 +35,7 @@
       "customType": "regex",
       "fileMatch": [
         "^gax-java/dependencies\\.properties$",
-        "^\\.cloudbuild/library_generation/library_generation\\.Dockerfile$"
+        "^\\.cloudbuild/library_generation/library_generation.*\\.Dockerfile$"
       ],
       "matchStrings": [
         "version\\.io_grpc=(?<currentValue>.+?)\\n",
