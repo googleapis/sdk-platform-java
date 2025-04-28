@@ -28,6 +28,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>flatten-maven-plugin</artifactId>
+        <version>1.7.0</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -164,6 +165,7 @@
                     <exclude>com.google.protobuf.NewInstanceSchema</exclude>
                     <exclude>com.google.protobuf.NewInstanceSchemaLite</exclude>
                     <exclude>com.google.protobuf.NewInstanceSchemas</exclude>
+                    <exclude>com.google.protobuf.NioByteString</exclude>
                     <exclude>com.google.protobuf.NullValue</exclude>
                     <exclude>com.google.protobuf.OneofInfo</exclude>
                     <exclude>com.google.protobuf.Option</exclude>
@@ -178,6 +180,7 @@
                     <exclude>com.google.protobuf.RawMessageInfo</exclude>
                     <exclude>com.google.protobuf.Reader</exclude>
                     <exclude>com.google.protobuf.RepeatedFieldBuilderV3</exclude>
+                    <exclude>com.google.protobuf.RopeByteString</exclude>
                     <exclude>com.google.protobuf.Schema</exclude>
                     <exclude>com.google.protobuf.SchemaFactory</exclude>
                     <exclude>com.google.protobuf.SchemaUtil</exclude>
@@ -194,10 +197,8 @@
                     <exclude>com.google.protobuf.StructProto</exclude>
                     <exclude>com.google.protobuf.StructuralMessageInfo</exclude>
                     <exclude>com.google.protobuf.Syntax</exclude>
-                    <exclude>com.google.protobuf.TextFormat</exclude>
                     <exclude>com.google.protobuf.TextFormatEscaper</exclude>
-                    <exclude>com.google.protobuf.TextFormatParseInfoTree</exclude>
-                    <exclude>com.google.protobuf.TextFormatParseLocation</exclude>
+                    <exclude>com.google.protobuf.TextFormatInternal</exclude>
                     <exclude>com.google.protobuf.Timestamp</exclude>
                     <exclude>com.google.protobuf.TimestampOrBuilder</exclude>
                     <exclude>com.google.protobuf.TimestampProto</exclude>
@@ -337,6 +338,7 @@
                     <exclude>com.google.protobuf.NewInstanceSchema$*</exclude>
                     <exclude>com.google.protobuf.NewInstanceSchemaLite$*</exclude>
                     <exclude>com.google.protobuf.NewInstanceSchemas$*</exclude>
+                    <exclude>com.google.protobuf.NioByteString$*</exclude>
                     <exclude>com.google.protobuf.NullValue$*</exclude>
                     <exclude>com.google.protobuf.OneofInfo$*</exclude>
                     <exclude>com.google.protobuf.Option$*</exclude>
@@ -351,6 +353,7 @@
                     <exclude>com.google.protobuf.RawMessageInfo$*</exclude>
                     <exclude>com.google.protobuf.Reader$*</exclude>
                     <exclude>com.google.protobuf.RepeatedFieldBuilderV3$*</exclude>
+                    <exclude>com.google.protobuf.RopeByteString$*</exclude>
                     <exclude>com.google.protobuf.Schema$*</exclude>
                     <exclude>com.google.protobuf.SchemaFactory$*</exclude>
                     <exclude>com.google.protobuf.SchemaUtil$*</exclude>
@@ -367,10 +370,8 @@
                     <exclude>com.google.protobuf.StructProto$*</exclude>
                     <exclude>com.google.protobuf.StructuralMessageInfo$*</exclude>
                     <exclude>com.google.protobuf.Syntax$*</exclude>
-                    <exclude>com.google.protobuf.TextFormat$*</exclude>
                     <exclude>com.google.protobuf.TextFormatEscaper$*</exclude>
-                    <exclude>com.google.protobuf.TextFormatParseInfoTree$*</exclude>
-                    <exclude>com.google.protobuf.TextFormatParseLocation$*</exclude>
+                    <exclude>com.google.protobuf.TextFormatInternal$*</exclude>
                     <exclude>com.google.protobuf.Timestamp$*</exclude>
                     <exclude>com.google.protobuf.TimestampOrBuilder$*</exclude>
                     <exclude>com.google.protobuf.TimestampProto$*</exclude>
