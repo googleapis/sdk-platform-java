@@ -20,3 +20,5 @@ google-cloud-shared-dependencies:3.46.3:3.46.3
 gapic-showcase:0.2.3:0.2.3
 proto-gapic-showcase-v1beta1:0.2.3:0.2.3
 grpc-gapic-showcase-v1beta1:0.2.3:0.2.3
+proto-google-iam-v3:1.50.3:1.50.3
+grpc-google-iam-v3:1.50.3:1.50.3
