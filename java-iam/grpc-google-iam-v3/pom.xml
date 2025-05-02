@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.api.grpc.api.grpc</groupId>
   <artifactId>grpc-google-iam-v3</artifactId>
-  <version>1.50.2</version><!-- {x-version-update:grpc-google-iam-v3:current} -->
+  <version>1.50.3-SNAPSHOT</version><!-- {x-version-update:grpc-google-iam-v3:current} -->
   <name>grpc-google-iam-v3</name>
   <description>GRPC library for proto-google-iam-v1</description>
   <parent>
@@ -42,10 +42,6 @@
       <artifactId>guava</artifactId>
     </dependency>
   </dependencies>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> e30992350 (chore: Resolve pom issues in IAM v3 generation)
 
   <profiles>
     <profile>
@@ -70,9 +66,4 @@
       </plugin>
     </plugins>
   </build>
-<<<<<<< HEAD
-=======
->>>>>>> aa68664b5 (chore: Resolve merge conflicts)
-=======
->>>>>>> e30992350 (chore: Resolve pom issues in IAM v3 generation)
 </project>

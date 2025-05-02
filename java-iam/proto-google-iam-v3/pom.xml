@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.api.grpc.api.grpc</groupId>
   <artifactId>proto-google-iam-v3</artifactId>
-  <version>1.50.2</version><!-- {x-version-update:proto-google-iam-v3:current} -->
+  <version>1.50.3-SNAPSHOT</version><!-- {x-version-update:proto-google-iam-v3:current} -->
   <name>proto-google-iam-v3</name>
   <description>Proto library for proto-google-iam-v1</description>
   <parent>
@@ -22,16 +22,6 @@
       <artifactId>proto-google-common-protos</artifactId>
     </dependency>
     <dependency>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-      <groupId>com.google.api.grpc</groupId>
-      <artifactId>proto-google-iam-v1</artifactId>
-    </dependency>
-    <dependency>
->>>>>>> aa68664b5 (chore: Resolve merge conflicts)
-=======
->>>>>>> e30992350 (chore: Resolve pom issues in IAM v3 generation)
       <groupId>com.google.api</groupId>
       <artifactId>api-common</artifactId>
     </dependency>
