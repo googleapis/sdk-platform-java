@@ -120,6 +120,20 @@ import javax.annotation.Generated;
  *       </td>
  *    </tr>
  *    <tr>
+ *      <td><p> FailEchoWithDetails</td>
+ *      <td><p> This method always fails with a gRPC "Aborted" error status that contains multiple error details.  These include one instance of each of the standard ones in error_details.proto (https://github.com/googleapis/googleapis/blob/master/google/rpc/error_details.proto) plus a custom, Showcase-defined PoetryError. The intent of this RPC is to verify that GAPICs can process these various error details and surface them to the user in an idiomatic form.</td>
+ *      <td>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *           <li><p> failEchoWithDetails(FailEchoWithDetailsRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *           <li><p> failEchoWithDetailsCallable()
+ *      </ul>
+ *       </td>
+ *    </tr>
+ *    <tr>
  *      <td><p> Expand</td>
  *      <td><p> This method splits the given content into words and will pass each word back through the stream. This method showcases server-side streaming RPCs.</td>
  *      <td>
@@ -550,6 +564,67 @@ public class EchoClient implements BackgroundResource {
   public final UnaryCallable<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
       echoErrorDetailsCallable() {
     return stub.echoErrorDetailsCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * This method always fails with a gRPC "Aborted" error status that contains multiple error
+   * details. These include one instance of each of the standard ones in error_details.proto
+   * (https://github.com/googleapis/googleapis/blob/master/google/rpc/error_details.proto) plus a
+   * custom, Showcase-defined PoetryError. The intent of this RPC is to verify that GAPICs can
+   * process these various error details and surface them to the user in an idiomatic form.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   FailEchoWithDetailsRequest request =
+   *       FailEchoWithDetailsRequest.newBuilder().setMessage("message954925063").build();
+   *   FailEchoWithDetailsResponse response = echoClient.failEchoWithDetails(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final FailEchoWithDetailsResponse failEchoWithDetails(FailEchoWithDetailsRequest request) {
+    return failEchoWithDetailsCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * This method always fails with a gRPC "Aborted" error status that contains multiple error
+   * details. These include one instance of each of the standard ones in error_details.proto
+   * (https://github.com/googleapis/googleapis/blob/master/google/rpc/error_details.proto) plus a
+   * custom, Showcase-defined PoetryError. The intent of this RPC is to verify that GAPICs can
+   * process these various error details and surface them to the user in an idiomatic form.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   FailEchoWithDetailsRequest request =
+   *       FailEchoWithDetailsRequest.newBuilder().setMessage("message954925063").build();
+   *   ApiFuture<FailEchoWithDetailsResponse> future =
+   *       echoClient.failEchoWithDetailsCallable().futureCall(request);
+   *   // Do something.
+   *   FailEchoWithDetailsResponse response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<FailEchoWithDetailsRequest, FailEchoWithDetailsResponse>
+      failEchoWithDetailsCallable() {
+    return stub.failEchoWithDetailsCallable();
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.

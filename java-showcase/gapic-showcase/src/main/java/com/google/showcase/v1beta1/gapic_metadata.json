@@ -82,6 +82,9 @@
             "Expand": {
               "methods": ["expandCallable"]
             },
+            "FailEchoWithDetails": {
+              "methods": ["failEchoWithDetails", "failEchoWithDetailsCallable"]
+            },
             "GetIamPolicy": {
               "methods": ["getIamPolicy", "getIamPolicyCallable"]
             },

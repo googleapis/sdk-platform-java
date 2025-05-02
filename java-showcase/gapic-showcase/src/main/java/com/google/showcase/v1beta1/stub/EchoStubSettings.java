@@ -73,6 +73,8 @@ import com.google.showcase.v1beta1.EchoErrorDetailsResponse;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.ExpandRequest;
+import com.google.showcase.v1beta1.FailEchoWithDetailsRequest;
+import com.google.showcase.v1beta1.FailEchoWithDetailsResponse;
 import com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse;
 import com.google.showcase.v1beta1.PagedExpandLegacyRequest;
 import com.google.showcase.v1beta1.PagedExpandRequest;
@@ -171,6 +173,8 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
   private final UnaryCallSettings<EchoRequest, EchoResponse> echoSettings;
   private final UnaryCallSettings<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
       echoErrorDetailsSettings;
+  private final UnaryCallSettings<FailEchoWithDetailsRequest, FailEchoWithDetailsResponse>
+      failEchoWithDetailsSettings;
   private final ServerStreamingCallSettings<ExpandRequest, EchoResponse> expandSettings;
   private final StreamingCallSettings<EchoRequest, EchoResponse> collectSettings;
   private final StreamingCallSettings<EchoRequest, EchoResponse> chatSettings;
@@ -372,6 +376,12 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     return echoErrorDetailsSettings;
   }
 
+  /** Returns the object with the settings used for calls to failEchoWithDetails. */
+  public UnaryCallSettings<FailEchoWithDetailsRequest, FailEchoWithDetailsResponse>
+      failEchoWithDetailsSettings() {
+    return failEchoWithDetailsSettings;
+  }
+
   /** Returns the object with the settings used for calls to expand. */
   public ServerStreamingCallSettings<ExpandRequest, EchoResponse> expandSettings() {
     return expandSettings;
@@ -554,6 +564,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
     echoSettings = settingsBuilder.echoSettings().build();
     echoErrorDetailsSettings = settingsBuilder.echoErrorDetailsSettings().build();
+    failEchoWithDetailsSettings = settingsBuilder.failEchoWithDetailsSettings().build();
     expandSettings = settingsBuilder.expandSettings().build();
     collectSettings = settingsBuilder.collectSettings().build();
     chatSettings = settingsBuilder.chatSettings().build();
@@ -576,6 +587,8 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     private final UnaryCallSettings.Builder<EchoRequest, EchoResponse> echoSettings;
     private final UnaryCallSettings.Builder<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
         echoErrorDetailsSettings;
+    private final UnaryCallSettings.Builder<FailEchoWithDetailsRequest, FailEchoWithDetailsResponse>
+        failEchoWithDetailsSettings;
     private final ServerStreamingCallSettings.Builder<ExpandRequest, EchoResponse> expandSettings;
     private final StreamingCallSettings.Builder<EchoRequest, EchoResponse> collectSettings;
     private final StreamingCallSettings.Builder<EchoRequest, EchoResponse> chatSettings;
@@ -653,6 +666,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
       echoSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       echoErrorDetailsSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      failEchoWithDetailsSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       expandSettings = ServerStreamingCallSettings.newBuilder();
       collectSettings = StreamingCallSettings.newBuilder();
       chatSettings = StreamingCallSettings.newBuilder();
@@ -673,6 +687,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
               echoSettings,
               echoErrorDetailsSettings,
+              failEchoWithDetailsSettings,
               pagedExpandSettings,
               pagedExpandLegacySettings,
               pagedExpandLegacyMappedSettings,
@@ -691,6 +706,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
       echoSettings = settings.echoSettings.toBuilder();
       echoErrorDetailsSettings = settings.echoErrorDetailsSettings.toBuilder();
+      failEchoWithDetailsSettings = settings.failEchoWithDetailsSettings.toBuilder();
       expandSettings = settings.expandSettings.toBuilder();
       collectSettings = settings.collectSettings.toBuilder();
       chatSettings = settings.chatSettings.toBuilder();
@@ -710,6 +726,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
               echoSettings,
               echoErrorDetailsSettings,
+              failEchoWithDetailsSettings,
               pagedExpandSettings,
               pagedExpandLegacySettings,
               pagedExpandLegacyMappedSettings,
@@ -754,6 +771,11 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
       builder
           .echoErrorDetailsSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      builder
+          .failEchoWithDetailsSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
 
@@ -862,6 +884,12 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     public UnaryCallSettings.Builder<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
         echoErrorDetailsSettings() {
       return echoErrorDetailsSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to failEchoWithDetails. */
+    public UnaryCallSettings.Builder<FailEchoWithDetailsRequest, FailEchoWithDetailsResponse>
+        failEchoWithDetailsSettings() {
+      return failEchoWithDetailsSettings;
     }
 
     /** Returns the builder for the settings used for calls to expand. */

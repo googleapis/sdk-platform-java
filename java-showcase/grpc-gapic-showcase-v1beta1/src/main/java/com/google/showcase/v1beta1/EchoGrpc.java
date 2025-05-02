@@ -129,6 +129,53 @@ public final class EchoGrpc {
   }
 
   private static volatile io.grpc.MethodDescriptor<
+          com.google.showcase.v1beta1.FailEchoWithDetailsRequest,
+          com.google.showcase.v1beta1.FailEchoWithDetailsResponse>
+      getFailEchoWithDetailsMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "FailEchoWithDetails",
+      requestType = com.google.showcase.v1beta1.FailEchoWithDetailsRequest.class,
+      responseType = com.google.showcase.v1beta1.FailEchoWithDetailsResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<
+          com.google.showcase.v1beta1.FailEchoWithDetailsRequest,
+          com.google.showcase.v1beta1.FailEchoWithDetailsResponse>
+      getFailEchoWithDetailsMethod() {
+    io.grpc.MethodDescriptor<
+            com.google.showcase.v1beta1.FailEchoWithDetailsRequest,
+            com.google.showcase.v1beta1.FailEchoWithDetailsResponse>
+        getFailEchoWithDetailsMethod;
+    if ((getFailEchoWithDetailsMethod = EchoGrpc.getFailEchoWithDetailsMethod) == null) {
+      synchronized (EchoGrpc.class) {
+        if ((getFailEchoWithDetailsMethod = EchoGrpc.getFailEchoWithDetailsMethod) == null) {
+          EchoGrpc.getFailEchoWithDetailsMethod =
+              getFailEchoWithDetailsMethod =
+                  io.grpc.MethodDescriptor
+                      .<com.google.showcase.v1beta1.FailEchoWithDetailsRequest,
+                          com.google.showcase.v1beta1.FailEchoWithDetailsResponse>
+                          newBuilder()
+                      .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+                      .setFullMethodName(
+                          generateFullMethodName(SERVICE_NAME, "FailEchoWithDetails"))
+                      .setSampledToLocalTracing(true)
+                      .setRequestMarshaller(
+                          io.grpc.protobuf.ProtoUtils.marshaller(
+                              com.google.showcase.v1beta1.FailEchoWithDetailsRequest
+                                  .getDefaultInstance()))
+                      .setResponseMarshaller(
+                          io.grpc.protobuf.ProtoUtils.marshaller(
+                              com.google.showcase.v1beta1.FailEchoWithDetailsResponse
+                                  .getDefaultInstance()))
+                      .setSchemaDescriptor(new EchoMethodDescriptorSupplier("FailEchoWithDetails"))
+                      .build();
+        }
+      }
+    }
+    return getFailEchoWithDetailsMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<
           com.google.showcase.v1beta1.ExpandRequest, com.google.showcase.v1beta1.EchoResponse>
       getExpandMethod;
 
@@ -573,6 +620,27 @@ public final class EchoGrpc {
      *
      *
      * <pre>
+     * This method always fails with a gRPC "Aborted" error status that contains
+     * multiple error details.  These include one instance of each of the standard
+     * ones in error_details.proto
+     * (https://github.com/googleapis/googleapis/blob/master/google/rpc/error_details.proto)
+     * plus a custom, Showcase-defined PoetryError. The intent of this RPC is to
+     * verify that GAPICs can process these various error details and surface them
+     * to the user in an idiomatic form.
+     * </pre>
+     */
+    default void failEchoWithDetails(
+        com.google.showcase.v1beta1.FailEchoWithDetailsRequest request,
+        io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.FailEchoWithDetailsResponse>
+            responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
+          getFailEchoWithDetailsMethod(), responseObserver);
+    }
+
+    /**
+     *
+     *
+     * <pre>
      * This method splits the given content into words and will pass each word back
      * through the stream. This method showcases server-side streaming RPCs.
      * </pre>
@@ -779,6 +847,29 @@ public final class EchoGrpc {
      *
      *
      * <pre>
+     * This method always fails with a gRPC "Aborted" error status that contains
+     * multiple error details.  These include one instance of each of the standard
+     * ones in error_details.proto
+     * (https://github.com/googleapis/googleapis/blob/master/google/rpc/error_details.proto)
+     * plus a custom, Showcase-defined PoetryError. The intent of this RPC is to
+     * verify that GAPICs can process these various error details and surface them
+     * to the user in an idiomatic form.
+     * </pre>
+     */
+    public void failEchoWithDetails(
+        com.google.showcase.v1beta1.FailEchoWithDetailsRequest request,
+        io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.FailEchoWithDetailsResponse>
+            responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getFailEchoWithDetailsMethod(), getCallOptions()),
+          request,
+          responseObserver);
+    }
+
+    /**
+     *
+     *
+     * <pre>
      * This method splits the given content into words and will pass each word back
      * through the stream. This method showcases server-side streaming RPCs.
      * </pre>
@@ -969,6 +1060,25 @@ public final class EchoGrpc {
      *
      *
      * <pre>
+     * This method always fails with a gRPC "Aborted" error status that contains
+     * multiple error details.  These include one instance of each of the standard
+     * ones in error_details.proto
+     * (https://github.com/googleapis/googleapis/blob/master/google/rpc/error_details.proto)
+     * plus a custom, Showcase-defined PoetryError. The intent of this RPC is to
+     * verify that GAPICs can process these various error details and surface them
+     * to the user in an idiomatic form.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.FailEchoWithDetailsResponse failEchoWithDetails(
+        com.google.showcase.v1beta1.FailEchoWithDetailsRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getFailEchoWithDetailsMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
      * This method splits the given content into words and will pass each word back
      * through the stream. This method showcases server-side streaming RPCs.
      * </pre>
@@ -1148,6 +1258,25 @@ public final class EchoGrpc {
      *
      *
      * <pre>
+     * This method always fails with a gRPC "Aborted" error status that contains
+     * multiple error details.  These include one instance of each of the standard
+     * ones in error_details.proto
+     * (https://github.com/googleapis/googleapis/blob/master/google/rpc/error_details.proto)
+     * plus a custom, Showcase-defined PoetryError. The intent of this RPC is to
+     * verify that GAPICs can process these various error details and surface them
+     * to the user in an idiomatic form.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.FailEchoWithDetailsResponse failEchoWithDetails(
+        com.google.showcase.v1beta1.FailEchoWithDetailsRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getFailEchoWithDetailsMethod(), getCallOptions(), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
      * This method splits the given content into words and will pass each word back
      * through the stream. This method showcases server-side streaming RPCs.
      * </pre>
@@ -1293,6 +1422,26 @@ public final class EchoGrpc {
      *
      *
      * <pre>
+     * This method always fails with a gRPC "Aborted" error status that contains
+     * multiple error details.  These include one instance of each of the standard
+     * ones in error_details.proto
+     * (https://github.com/googleapis/googleapis/blob/master/google/rpc/error_details.proto)
+     * plus a custom, Showcase-defined PoetryError. The intent of this RPC is to
+     * verify that GAPICs can process these various error details and surface them
+     * to the user in an idiomatic form.
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<
+            com.google.showcase.v1beta1.FailEchoWithDetailsResponse>
+        failEchoWithDetails(com.google.showcase.v1beta1.FailEchoWithDetailsRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getFailEchoWithDetailsMethod(), getCallOptions()), request);
+    }
+
+    /**
+     *
+     *
+     * <pre>
      * This is similar to the Expand method but instead of returning a stream of
      * expanded words, this method returns a paged list of expanded words.
      * </pre>
@@ -1371,14 +1520,15 @@ public final class EchoGrpc {
 
   private static final int METHODID_ECHO = 0;
   private static final int METHODID_ECHO_ERROR_DETAILS = 1;
-  private static final int METHODID_EXPAND = 2;
-  private static final int METHODID_PAGED_EXPAND = 3;
-  private static final int METHODID_PAGED_EXPAND_LEGACY = 4;
-  private static final int METHODID_PAGED_EXPAND_LEGACY_MAPPED = 5;
-  private static final int METHODID_WAIT = 6;
-  private static final int METHODID_BLOCK = 7;
-  private static final int METHODID_COLLECT = 8;
-  private static final int METHODID_CHAT = 9;
+  private static final int METHODID_FAIL_ECHO_WITH_DETAILS = 2;
+  private static final int METHODID_EXPAND = 3;
+  private static final int METHODID_PAGED_EXPAND = 4;
+  private static final int METHODID_PAGED_EXPAND_LEGACY = 5;
+  private static final int METHODID_PAGED_EXPAND_LEGACY_MAPPED = 6;
+  private static final int METHODID_WAIT = 7;
+  private static final int METHODID_BLOCK = 8;
+  private static final int METHODID_COLLECT = 9;
+  private static final int METHODID_CHAT = 10;
 
   private static final class MethodHandlers<Req, Resp>
       implements io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -1407,6 +1557,12 @@ public final class EchoGrpc {
           serviceImpl.echoErrorDetails(
               (com.google.showcase.v1beta1.EchoErrorDetailsRequest) request,
               (io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoErrorDetailsResponse>)
+                  responseObserver);
+          break;
+        case METHODID_FAIL_ECHO_WITH_DETAILS:
+          serviceImpl.failEchoWithDetails(
+              (com.google.showcase.v1beta1.FailEchoWithDetailsRequest) request,
+              (io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.FailEchoWithDetailsResponse>)
                   responseObserver);
           break;
         case METHODID_EXPAND:
@@ -1486,6 +1642,13 @@ public final class EchoGrpc {
                     com.google.showcase.v1beta1.EchoErrorDetailsRequest,
                     com.google.showcase.v1beta1.EchoErrorDetailsResponse>(
                     service, METHODID_ECHO_ERROR_DETAILS)))
+        .addMethod(
+            getFailEchoWithDetailsMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+                new MethodHandlers<
+                    com.google.showcase.v1beta1.FailEchoWithDetailsRequest,
+                    com.google.showcase.v1beta1.FailEchoWithDetailsResponse>(
+                    service, METHODID_FAIL_ECHO_WITH_DETAILS)))
         .addMethod(
             getExpandMethod(),
             io.grpc.stub.ServerCalls.asyncServerStreamingCall(
@@ -1588,6 +1751,7 @@ public final class EchoGrpc {
                       .setSchemaDescriptor(new EchoFileDescriptorSupplier())
                       .addMethod(getEchoMethod())
                       .addMethod(getEchoErrorDetailsMethod())
+                      .addMethod(getFailEchoWithDetailsMethod())
                       .addMethod(getExpandMethod())
                       .addMethod(getCollectMethod())
                       .addMethod(getChatMethod())

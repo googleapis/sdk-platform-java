@@ -120,7 +120,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
    *
    *
    * <pre>
-   * The field mask to determine wich fields are to be updated. If empty, the
+   * The field mask to determine which fields are to be updated. If empty, the
    * server will assume all fields are to be updated.
    * </pre>
    *
@@ -137,7 +137,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
    *
    *
    * <pre>
-   * The field mask to determine wich fields are to be updated. If empty, the
+   * The field mask to determine which fields are to be updated. If empty, the
    * server will assume all fields are to be updated.
    * </pre>
    *
@@ -154,7 +154,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
    *
    *
    * <pre>
-   * The field mask to determine wich fields are to be updated. If empty, the
+   * The field mask to determine which fields are to be updated. If empty, the
    * server will assume all fields are to be updated.
    * </pre>
    *
@@ -761,7 +761,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
      *
      *
      * <pre>
-     * The field mask to determine wich fields are to be updated. If empty, the
+     * The field mask to determine which fields are to be updated. If empty, the
      * server will assume all fields are to be updated.
      * </pre>
      *
@@ -777,7 +777,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
      *
      *
      * <pre>
-     * The field mask to determine wich fields are to be updated. If empty, the
+     * The field mask to determine which fields are to be updated. If empty, the
      * server will assume all fields are to be updated.
      * </pre>
      *
@@ -799,7 +799,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
      *
      *
      * <pre>
-     * The field mask to determine wich fields are to be updated. If empty, the
+     * The field mask to determine which fields are to be updated. If empty, the
      * server will assume all fields are to be updated.
      * </pre>
      *
@@ -823,7 +823,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
      *
      *
      * <pre>
-     * The field mask to determine wich fields are to be updated. If empty, the
+     * The field mask to determine which fields are to be updated. If empty, the
      * server will assume all fields are to be updated.
      * </pre>
      *
@@ -844,7 +844,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
      *
      *
      * <pre>
-     * The field mask to determine wich fields are to be updated. If empty, the
+     * The field mask to determine which fields are to be updated. If empty, the
      * server will assume all fields are to be updated.
      * </pre>
      *
@@ -873,7 +873,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
      *
      *
      * <pre>
-     * The field mask to determine wich fields are to be updated. If empty, the
+     * The field mask to determine which fields are to be updated. If empty, the
      * server will assume all fields are to be updated.
      * </pre>
      *
@@ -894,7 +894,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
      *
      *
      * <pre>
-     * The field mask to determine wich fields are to be updated. If empty, the
+     * The field mask to determine which fields are to be updated. If empty, the
      * server will assume all fields are to be updated.
      * </pre>
      *
@@ -910,7 +910,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
      *
      *
      * <pre>
-     * The field mask to determine wich fields are to be updated. If empty, the
+     * The field mask to determine which fields are to be updated. If empty, the
      * server will assume all fields are to be updated.
      * </pre>
      *
@@ -930,7 +930,7 @@ public final class UpdateBlurbRequest extends com.google.protobuf.GeneratedMessa
      *
      *
      * <pre>
-     * The field mask to determine wich fields are to be updated. If empty, the
+     * The field mask to determine which fields are to be updated. If empty, the
      * server will assume all fields are to be updated.
      * </pre>
      *

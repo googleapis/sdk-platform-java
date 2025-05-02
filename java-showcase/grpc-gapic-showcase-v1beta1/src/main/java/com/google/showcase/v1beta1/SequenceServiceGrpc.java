@@ -448,6 +448,8 @@ public final class SequenceServiceGrpc {
      *
      * <pre>
      * Attempts a streaming sequence.
+     * May not function as expected in HTTP mode due to when http statuses are sent
+     * See https://github.com/googleapis/gapic-showcase/issues/1377 for more details
      * </pre>
      */
     default void attemptStreamingSequence(
@@ -568,6 +570,8 @@ public final class SequenceServiceGrpc {
      *
      * <pre>
      * Attempts a streaming sequence.
+     * May not function as expected in HTTP mode due to when http statuses are sent
+     * See https://github.com/googleapis/gapic-showcase/issues/1377 for more details
      * </pre>
      */
     public void attemptStreamingSequence(
@@ -665,6 +669,8 @@ public final class SequenceServiceGrpc {
      *
      * <pre>
      * Attempts a streaming sequence.
+     * May not function as expected in HTTP mode due to when http statuses are sent
+     * See https://github.com/googleapis/gapic-showcase/issues/1377 for more details
      * </pre>
      */
     @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/10918")
@@ -760,6 +766,8 @@ public final class SequenceServiceGrpc {
      *
      * <pre>
      * Attempts a streaming sequence.
+     * May not function as expected in HTTP mode due to when http statuses are sent
+     * See https://github.com/googleapis/gapic-showcase/issues/1377 for more details
      * </pre>
      */
     public java.util.Iterator<com.google.showcase.v1beta1.AttemptStreamingSequenceResponse>
