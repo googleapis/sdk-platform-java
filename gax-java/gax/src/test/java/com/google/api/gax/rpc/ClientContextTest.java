@@ -1264,8 +1264,7 @@ class ClientContextTest {
   @Test
   void test_nullMtlsEndpointIsNotPassedToTransportChannel() throws IOException {
     // Set the mtlsEndpoint in the TransportChannelProvider as null. This configures the
-    // ClientContext
-    // to attempt to pass the mtlsEndpoint over.
+    // ClientContext to attempt to pass the mtlsEndpoint over.
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null, null);
@@ -1276,6 +1275,7 @@ class ClientContextTest {
         new FakeStubSettings.Builder()
             .setEndpoint(DEFAULT_ENDPOINT)
             // Set this to be null so that the resolved mtls endpoint is null
+            // This resolved value should not be passed to the TransportChannelProvider
             .setMtlsEndpoint(null)
             .build();
     ClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
