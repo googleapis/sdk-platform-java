@@ -43,6 +43,9 @@
     </dependency>
   </dependencies>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e30992350 (chore: Resolve pom issues in IAM v3 generation)
 
   <profiles>
     <profile>
@@ -67,6 +70,9 @@
       </plugin>
     </plugins>
   </build>
+<<<<<<< HEAD
 =======
 >>>>>>> aa68664b5 (chore: Resolve merge conflicts)
+=======
+>>>>>>> e30992350 (chore: Resolve pom issues in IAM v3 generation)
 </project>
