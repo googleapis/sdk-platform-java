@@ -45,6 +45,8 @@ import com.google.showcase.v1beta1.EchoErrorDetailsResponse;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.ExpandRequest;
+import com.google.showcase.v1beta1.FailEchoWithDetailsRequest;
+import com.google.showcase.v1beta1.FailEchoWithDetailsResponse;
 import com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse;
 import com.google.showcase.v1beta1.PagedExpandLegacyRequest;
 import com.google.showcase.v1beta1.PagedExpandRequest;
@@ -79,6 +81,11 @@ public abstract class EchoStub implements BackgroundResource {
   public UnaryCallable<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
       echoErrorDetailsCallable() {
     throw new UnsupportedOperationException("Not implemented: echoErrorDetailsCallable()");
+  }
+
+  public UnaryCallable<FailEchoWithDetailsRequest, FailEchoWithDetailsResponse>
+      failEchoWithDetailsCallable() {
+    throw new UnsupportedOperationException("Not implemented: failEchoWithDetailsCallable()");
   }
 
   public ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable() {

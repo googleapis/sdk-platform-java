@@ -17,7 +17,7 @@
   </parent>
 
   <properties>
-    <gapic-showcase.version>0.35.1</gapic-showcase.version>
+    <gapic-showcase.version>0.36.2</gapic-showcase.version>
     <slf4j1-logback.version>1.2.13</slf4j1-logback.version>
   </properties>
 
