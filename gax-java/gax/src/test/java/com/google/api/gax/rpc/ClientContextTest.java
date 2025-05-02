@@ -1263,6 +1263,9 @@ class ClientContextTest {
   // the old behavior where BigTable doesn't set an mtlsEndpoint value.
   @Test
   void test_nullMtlsEndpointIsNotPassedToTransportChannel() throws IOException {
+    // Set the mtlsEndpoint in the TransportChannelProvider as null. This configures the
+    // ClientContext
+    // to attempt to pass the mtlsEndpoint over.
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null, null);
