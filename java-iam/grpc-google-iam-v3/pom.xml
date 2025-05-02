@@ -10,7 +10,7 @@
   <parent>
     <groupId>com.google.cloud</groupId>
     <artifactId>google-iam-parent</artifactId>
-    <version>1.50.2</version><!-- {x-version-update:proto-google-iam-v1:current} -->
+    <version>1.50.3-SNAPSHOT</version><!-- {x-version-update:proto-google-iam-v1:current} -->
   </parent>
   <dependencies>
     <dependency>
@@ -42,6 +42,7 @@
       <artifactId>guava</artifactId>
     </dependency>
   </dependencies>
+<<<<<<< HEAD
 
   <profiles>
     <profile>
@@ -66,4 +67,6 @@
       </plugin>
     </plugins>
   </build>
+=======
+>>>>>>> aa68664b5 (chore: Resolve merge conflicts)
 </project>
