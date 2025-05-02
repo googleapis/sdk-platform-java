@@ -70,7 +70,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.util.Preconditions;
 import org.mockito.Mockito;
 
 class ClientContextTest {
@@ -249,9 +248,11 @@ class ClientContextTest {
 
     @Override
     public TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint) {
-      // Throws NPE if this is passed with a null value. This should never happen as
-      // GAPICs should always have a default mtlsEndpoint value
-      Preconditions.notNull(mtlsEndpoint, "mtlsEndpoint should never be null");
+      // Throws an exception if this is passed with a null value. This should never
+      // happen as GAPICs should always have a default mtlsEndpoint value
+      if (mtlsEndpoint == null) {
+        throw new IllegalArgumentException("mtlsEndpoint is null");
+      }
       return new FakeTransportProvider(
           this.transport,
           this.executor,
