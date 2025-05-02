@@ -83,6 +83,11 @@
         <scope>import</scope>
       </dependency>
       <dependency>
+        <groupId>com.google.api</groupId>
+        <artifactId>api-common</artifactId>
+        <version>2.47.2</version><!-- {x-version-update:api-common:current} -->
+      </dependency>
+      <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>proto-google-iam-v2</artifactId>
         <version>protobuf-shading-within-module</version><!-- {x-version-update:proto-google-iam-v2:current} -->
@@ -118,6 +123,16 @@
         <version>protobuf-shading-within-module</version><!-- {x-version-update:proto-google-iam-v1:current} -->
       </dependency>
       <dependency>
+        <groupId>com.google.api.grpc.api.grpc</groupId>
+        <artifactId>proto-google-iam-v3</artifactId>
+        <version>1.50.3-SNAPSHOT</version><!-- {x-version-update:proto-google-iam-v3:current} -->
+      </dependency>
+      <dependency>
+        <groupId>com.google.api.grpc.api.grpc</groupId>
+        <artifactId>grpc-google-iam-v3</artifactId>
+        <version>1.50.3-SNAPSHOT</version><!-- {x-version-update:grpc-google-iam-v3:current} -->
+      </dependency>
+      <dependency>
         <groupId>javax.annotation</groupId>
         <artifactId>javax.annotation-api</artifactId>
         <version>${javax.annotation-api.version}</version>
@@ -136,8 +151,10 @@
     <module>proto-google-iam-v1</module>
     <module>grpc-google-iam-v2beta</module>
     <module>grpc-google-iam-v2</module>
+    <module>grpc-google-iam-v3</module>
     <module>proto-google-iam-v2beta</module>
     <module>proto-google-iam-v2</module>
+    <module>proto-google-iam-v3</module>
     <module>grpc-google-iam-v1</module>
   </modules>
 

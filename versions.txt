@@ -20,3 +20,5 @@ google-cloud-shared-dependencies:3.46.2:3.46.3-SNAPSHOT
 gapic-showcase:0.2.2:0.2.3-SNAPSHOT
 proto-gapic-showcase-v1beta1:0.2.2:0.2.3-SNAPSHOT
 grpc-gapic-showcase-v1beta1:0.2.2:0.2.3-SNAPSHOT
+proto-google-iam-v3:1.50.2:1.50.3-SNAPSHOT
+grpc-google-iam-v3:1.50.2:1.50.3-SNAPSHOT
