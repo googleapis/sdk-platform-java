@@ -55,16 +55,6 @@
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>com.google.api.grpc.api.grpc</groupId>
-        <artifactId>proto-google-iam-v3</artifactId>
-        <version>1.50.2</version><!-- {x-version-update:proto-google-iam-v3:current} -->
-      </dependency>
-      <dependency>
-        <groupId>com.google.api.grpc.api.grpc</groupId>
-        <artifactId>grpc-google-iam-v3</artifactId>
-        <version>1.50.2</version><!-- {x-version-update:grpc-google-iam-v3:current} -->
-      </dependency>
-      <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava-bom</artifactId>
         <version>${guava.version}</version>
@@ -91,6 +81,11 @@
         <version>2.64.2</version><!-- {x-version-update:gax:current} -->
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.google.api</groupId>
+        <artifactId>api-common</artifactId>
+        <version>2.47.2</version><!-- {x-version-update:api-common:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
@@ -126,6 +121,16 @@
         <groupId>com.google.api.grpc</groupId>
         <artifactId>proto-google-iam-v1</artifactId>
         <version>1.50.2</version><!-- {x-version-update:proto-google-iam-v1:current} -->
+      </dependency>
+      <dependency>
+        <groupId>com.google.api.grpc.api.grpc</groupId>
+        <artifactId>proto-google-iam-v3</artifactId>
+        <version>1.50.2</version><!-- {x-version-update:proto-google-iam-v3:current} -->
+      </dependency>
+      <dependency>
+        <groupId>com.google.api.grpc.api.grpc</groupId>
+        <artifactId>grpc-google-iam-v3</artifactId>
+        <version>1.50.2</version><!-- {x-version-update:grpc-google-iam-v3:current} -->
       </dependency>
       <dependency>
         <groupId>javax.annotation</groupId>

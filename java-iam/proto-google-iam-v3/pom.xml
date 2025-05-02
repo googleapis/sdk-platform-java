@@ -8,8 +8,8 @@
   <name>proto-google-iam-v3</name>
   <description>Proto library for proto-google-iam-v1</description>
   <parent>
-    <groupId>com.google.api.grpc</groupId>
-    <artifactId>proto-google-iam-v1-parent</artifactId>
+    <groupId>com.google.cloud</groupId>
+    <artifactId>google-iam-parent</artifactId>
     <version>1.50.2</version><!-- {x-version-update:proto-google-iam-v1:current} -->
   </parent>
   <dependencies>
@@ -20,10 +20,6 @@
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>proto-google-common-protos</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.api.grpc</groupId>
-      <artifactId>proto-google-iam-v1</artifactId>
     </dependency>
     <dependency>
       <groupId>com.google.api</groupId>
