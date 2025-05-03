@@ -28,7 +28,7 @@ public interface ListBlurbsRequestOrBuilder
    *
    *
    * <pre>
-   * The resource name of the requested room or profile whos blurbs to list.
+   * The resource name of the requested room or profile who blurbs to list.
    * </pre>
    *
    * <code>
@@ -43,7 +43,7 @@ public interface ListBlurbsRequestOrBuilder
    *
    *
    * <pre>
-   * The resource name of the requested room or profile whos blurbs to list.
+   * The resource name of the requested room or profile who blurbs to list.
    * </pre>
    *
    * <code>

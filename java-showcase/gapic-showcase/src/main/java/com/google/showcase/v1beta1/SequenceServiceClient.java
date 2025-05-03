@@ -167,7 +167,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td><p> AttemptStreamingSequence</td>
- *      <td><p> Attempts a streaming sequence.</td>
+ *      <td><p> Attempts a streaming sequence. May not function as expected in HTTP mode due to when http statuses are sent See https://github.com/googleapis/gapic-showcase/issues/1377 for more details</td>
  *      <td>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -856,7 +856,8 @@ public class SequenceServiceClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Attempts a streaming sequence.
+   * Attempts a streaming sequence. May not function as expected in HTTP mode due to when http
+   * statuses are sent See https://github.com/googleapis/gapic-showcase/issues/1377 for more details
    *
    * <p>Sample code:
    *

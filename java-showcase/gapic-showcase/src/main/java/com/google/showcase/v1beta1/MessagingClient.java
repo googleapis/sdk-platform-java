@@ -1779,7 +1779,7 @@ public class MessagingClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param parent The resource name of the requested room or profile whos blurbs to list.
+   * @param parent The resource name of the requested room or profile who blurbs to list.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListBlurbsPagedResponse listBlurbs(ProfileName parent) {
@@ -1808,7 +1808,7 @@ public class MessagingClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param parent The resource name of the requested room or profile whos blurbs to list.
+   * @param parent The resource name of the requested room or profile who blurbs to list.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListBlurbsPagedResponse listBlurbs(RoomName parent) {
@@ -1837,7 +1837,7 @@ public class MessagingClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param parent The resource name of the requested room or profile whos blurbs to list.
+   * @param parent The resource name of the requested room or profile who blurbs to list.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListBlurbsPagedResponse listBlurbs(String parent) {
