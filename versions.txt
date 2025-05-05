@@ -22,3 +22,5 @@ proto-gapic-showcase-v1beta1:0.3.0:0.3.0
 grpc-gapic-showcase-v1beta1:0.3.0:0.3.0
 proto-google-iam-v3:1.51.0:1.51.0
 grpc-google-iam-v3:1.51.0:1.51.0
+proto-google-iam-v3beta:1.51.0:1.51.0
+grpc-google-iam-v3beta:1.51.0:1.51.0
