@@ -123,12 +123,12 @@
         <version>protobuf-shading-within-module</version><!-- {x-version-update:proto-google-iam-v1:current} -->
       </dependency>
       <dependency>
-        <groupId>com.google.api.grpc.api.grpc</groupId>
+        <groupId>com.google.api.grpc</groupId>
         <artifactId>proto-google-iam-v3</artifactId>
         <version>1.50.4-SNAPSHOT</version><!-- {x-version-update:proto-google-iam-v3:current} -->
       </dependency>
       <dependency>
-        <groupId>com.google.api.grpc.api.grpc</groupId>
+        <groupId>com.google.api.grpc</groupId>
         <artifactId>grpc-google-iam-v3</artifactId>
         <version>1.50.4-SNAPSHOT</version><!-- {x-version-update:grpc-google-iam-v3:current} -->
       </dependency>
