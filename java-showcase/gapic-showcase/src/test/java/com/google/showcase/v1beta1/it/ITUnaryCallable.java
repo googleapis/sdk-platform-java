@@ -20,12 +20,15 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.gax.grpc.GrpcStatusCode;
+import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.CancelledException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.rpc.Status;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
+import com.google.showcase.v1beta1.FailEchoWithDetailsRequest;
+import com.google.showcase.v1beta1.PoetryError;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.AfterAll;
@@ -70,6 +73,31 @@ class ITUnaryCallable {
     CancelledException exception =
         assertThrows(CancelledException.class, () -> grpcClient.echo(requestWithServerError));
     assertThat(exception.getStatusCode().getCode()).isEqualTo(GrpcStatusCode.Code.CANCELLED);
+  }
+
+  @Test
+  void grpc_failEchoWithDetails() {
+    FailEchoWithDetailsRequest request =
+            FailEchoWithDetailsRequest.newBuilder().build();
+    try {
+      grpcClient.failEchoWithDetails(request);
+    } catch (ApiException e) {
+      System.out.println(e.getErrorDetails().getMessage(PoetryError.class));
+      System.out.println(e.getErrorDetails().getLocalizedMessage());
+      System.out.println(e.getErrorDetails().getHelp());
+    }
+  }
+
+  @Test
+  void http_failEchoWithDetails() {
+    FailEchoWithDetailsRequest request =
+            FailEchoWithDetailsRequest.newBuilder().build();
+    try {
+      httpjsonClient.failEchoWithDetails(request);
+    } catch (ApiException e) {
+      e.printStackTrace();
+      System.out.println(e.getErrorDetails());
+    }
   }
 
   @Test
