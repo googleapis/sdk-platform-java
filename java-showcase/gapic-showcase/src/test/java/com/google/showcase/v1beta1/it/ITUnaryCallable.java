@@ -77,8 +77,7 @@ class ITUnaryCallable {
 
   @Test
   void grpc_failEchoWithDetails() {
-    FailEchoWithDetailsRequest request =
-            FailEchoWithDetailsRequest.newBuilder().build();
+    FailEchoWithDetailsRequest request = FailEchoWithDetailsRequest.newBuilder().build();
     try {
       grpcClient.failEchoWithDetails(request);
     } catch (ApiException e) {
@@ -90,8 +89,7 @@ class ITUnaryCallable {
 
   @Test
   void http_failEchoWithDetails() {
-    FailEchoWithDetailsRequest request =
-            FailEchoWithDetailsRequest.newBuilder().build();
+    FailEchoWithDetailsRequest request = FailEchoWithDetailsRequest.newBuilder().build();
     try {
       httpjsonClient.failEchoWithDetails(request);
     } catch (ApiException e) {
