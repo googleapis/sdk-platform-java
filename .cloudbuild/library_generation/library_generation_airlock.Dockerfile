@@ -58,7 +58,7 @@ RUN sh compile-x86_64-alpine-linux.sh
 # 3.12.7-alpine3.20
 FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python@sha256:b83d5ec7274bee17d2f4bd0bfbb082f156241e4513f0a37c70500e1763b1d90d as final
 
-ARG OWLBOT_CLI_COMMITTISH=3a68a9c0de318784b3aefadcc502a6521b3f1bc5
+ARG OWLBOT_CLI_COMMITTISH=43b02f9c537b2d297aa70257e8cad7eebdb4030f
 ARG PROTOC_VERSION=25.5
 ARG GRPC_VERSION=1.70.0
 ENV HOME=/home
