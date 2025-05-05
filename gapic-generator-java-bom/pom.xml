@@ -114,6 +114,11 @@
         <artifactId>proto-google-iam-v2beta</artifactId>
         <version>protobuf-shading-within-module</version><!-- {x-version-update:proto-google-iam-v2beta:current} -->
       </dependency>
+      <dependency>
+        <groupId>com.google.api.grpc</groupId>
+        <artifactId>proto-google-iam-v3</artifactId>
+        <version>1.50.4-SNAPSHOT</version><!-- {x-version-update:proto-google-iam-v3:current} -->
+      </dependency>
 
       <!-- Following test deps are kept to keep them consistent with versions above -->
       <dependency>
@@ -130,6 +135,11 @@
         <groupId>com.google.api.grpc</groupId>
         <artifactId>grpc-google-iam-v2beta</artifactId>
         <version>protobuf-shading-within-module</version><!-- {x-version-update:grpc-google-iam-v2beta:current} -->
+      </dependency>
+      <dependency>
+        <groupId>com.google.api.grpc</groupId>
+        <artifactId>grpc-google-iam-v3</artifactId>
+        <version>1.50.4-SNAPSHOT</version><!-- {x-version-update:grpc-google-iam-v3:current} -->
       </dependency>
     </dependencies>
 
