@@ -1,5 +1,38 @@
 # Changelog
 
+## [2.56.3](https://github.com/googleapis/sdk-platform-java/compare/v2.56.2...v2.56.3) (2025-05-02)
+
+
+### Bug Fixes
+
+* Only send mtlsEndpoint if it is non-null ([#3767](https://github.com/googleapis/sdk-platform-java/issues/3767)) ([8f8df7b](https://github.com/googleapis/sdk-platform-java/commit/8f8df7b8eb00adfb49db09e95383a88bdb9eff9e))
+* subscribe Airlock Docker image definition to GRPC updates ([#3765](https://github.com/googleapis/sdk-platform-java/issues/3765)) ([d0f43e3](https://github.com/googleapis/sdk-platform-java/commit/d0f43e33951a7c9da0fe2adb122f7c73038e9421))
+
+
+### Dependencies
+
+* update dependency com.google.errorprone:error_prone_annotations to v2.38.0 ([#3773](https://github.com/googleapis/sdk-platform-java/issues/3773)) ([e16fe65](https://github.com/googleapis/sdk-platform-java/commit/e16fe65fed7dc704fce37dfe6957246407dc6178))
+* update gapic-showcase to 36.2 ([#3771](https://github.com/googleapis/sdk-platform-java/issues/3771)) ([15b2577](https://github.com/googleapis/sdk-platform-java/commit/15b2577f67a130d6dbef2ae93da53ab2b49211c7))
+* update google auth library dependencies to v1.34.0 ([#3772](https://github.com/googleapis/sdk-platform-java/issues/3772)) ([406a180](https://github.com/googleapis/sdk-platform-java/commit/406a180969f865d13bf0e880db10c1a65f0ba536))
+* Update maven-shared-utils to v3.2.1 ([#3768](https://github.com/googleapis/sdk-platform-java/issues/3768)) ([7ec93c3](https://github.com/googleapis/sdk-platform-java/commit/7ec93c3015284ecc0e18e820088ebea5aa6975ff))
+
+## [2.56.2](https://github.com/googleapis/sdk-platform-java/compare/v2.56.1...v2.56.2) (2025-04-23)
+
+
+### Bug Fixes
+
+* inline version update in kokoro templates ([#3762](https://github.com/googleapis/sdk-platform-java/issues/3762)) ([050aeab](https://github.com/googleapis/sdk-platform-java/commit/050aeab4e84b6333aa1d4658ba62dcc68818c374))
+* keep native image templates up to date ([#3759](https://github.com/googleapis/sdk-platform-java/issues/3759)) ([7dffab1](https://github.com/googleapis/sdk-platform-java/commit/7dffab1251268736c9bf05b7d4bfcca06ed6576a))
+
+## [2.56.1](https://github.com/googleapis/sdk-platform-java/compare/v2.56.0...v2.56.1) (2025-04-23)
+
+
+### Bug Fixes
+
+* match graalvm job names with internal configs ([#3755](https://github.com/googleapis/sdk-platform-java/issues/3755)) ([23b4b12](https://github.com/googleapis/sdk-platform-java/commit/23b4b1277e3675cad1ebaa32c1115e8050501a0d))
+* use java 17 in samples.yaml ([#3754](https://github.com/googleapis/sdk-platform-java/issues/3754)) ([2d5c5e2](https://github.com/googleapis/sdk-platform-java/commit/2d5c5e28f56cc4332efd511bf9018c966a7c0458))
+* use spotify formatter in hermetic build templates ([#3752](https://github.com/googleapis/sdk-platform-java/issues/3752)) ([65e29da](https://github.com/googleapis/sdk-platform-java/commit/65e29dacaf533be61f2a14cbb8adeea316750911))
+
 ## [2.56.0](https://github.com/googleapis/sdk-platform-java/compare/v2.55.1...v2.56.0) (2025-04-18)
 
 

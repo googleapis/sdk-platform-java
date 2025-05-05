@@ -61,6 +61,8 @@ import com.google.showcase.v1beta1.EchoErrorDetailsResponse;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.ExpandRequest;
+import com.google.showcase.v1beta1.FailEchoWithDetailsRequest;
+import com.google.showcase.v1beta1.FailEchoWithDetailsResponse;
 import com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse;
 import com.google.showcase.v1beta1.PagedExpandLegacyRequest;
 import com.google.showcase.v1beta1.PagedExpandRequest;
@@ -155,6 +157,41 @@ public class HttpJsonEchoStub extends EchoStub {
               .setResponseParser(
                   ProtoMessageResponseParser.<EchoErrorDetailsResponse>newBuilder()
                       .setDefaultInstance(EchoErrorDetailsResponse.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
+                      .build())
+              .build();
+
+  private static final ApiMethodDescriptor<FailEchoWithDetailsRequest, FailEchoWithDetailsResponse>
+      failEchoWithDetailsMethodDescriptor =
+          ApiMethodDescriptor.<FailEchoWithDetailsRequest, FailEchoWithDetailsResponse>newBuilder()
+              .setFullMethodName("google.showcase.v1beta1.Echo/FailEchoWithDetails")
+              .setHttpMethod("POST")
+              .setType(ApiMethodDescriptor.MethodType.UNARY)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<FailEchoWithDetailsRequest>newBuilder()
+                      .setPath(
+                          "/v1beta1/echo:failWithDetails",
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<FailEchoWithDetailsRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
+                          })
+                      .setQueryParamsExtractor(
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<FailEchoWithDetailsRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
+                          })
+                      .setRequestBodyExtractor(
+                          request ->
+                              ProtoRestSerializer.create()
+                                  .toBody("*", request.toBuilder().build(), false))
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<FailEchoWithDetailsResponse>newBuilder()
+                      .setDefaultInstance(FailEchoWithDetailsResponse.getDefaultInstance())
                       .setDefaultTypeRegistry(typeRegistry)
                       .build())
               .build();
@@ -551,6 +588,8 @@ public class HttpJsonEchoStub extends EchoStub {
   private final UnaryCallable<EchoRequest, EchoResponse> echoCallable;
   private final UnaryCallable<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
       echoErrorDetailsCallable;
+  private final UnaryCallable<FailEchoWithDetailsRequest, FailEchoWithDetailsResponse>
+      failEchoWithDetailsCallable;
   private final ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable;
   private final UnaryCallable<PagedExpandRequest, PagedExpandResponse> pagedExpandCallable;
   private final UnaryCallable<PagedExpandRequest, PagedExpandPagedResponse>
@@ -679,6 +718,13 @@ public class HttpJsonEchoStub extends EchoStub {
                 .setMethodDescriptor(echoErrorDetailsMethodDescriptor)
                 .setTypeRegistry(typeRegistry)
                 .build();
+    HttpJsonCallSettings<FailEchoWithDetailsRequest, FailEchoWithDetailsResponse>
+        failEchoWithDetailsTransportSettings =
+            HttpJsonCallSettings
+                .<FailEchoWithDetailsRequest, FailEchoWithDetailsResponse>newBuilder()
+                .setMethodDescriptor(failEchoWithDetailsMethodDescriptor)
+                .setTypeRegistry(typeRegistry)
+                .build();
     HttpJsonCallSettings<ExpandRequest, EchoResponse> expandTransportSettings =
         HttpJsonCallSettings.<ExpandRequest, EchoResponse>newBuilder()
             .setMethodDescriptor(expandMethodDescriptor)
@@ -775,6 +821,11 @@ public class HttpJsonEchoStub extends EchoStub {
     this.echoErrorDetailsCallable =
         callableFactory.createUnaryCallable(
             echoErrorDetailsTransportSettings, settings.echoErrorDetailsSettings(), clientContext);
+    this.failEchoWithDetailsCallable =
+        callableFactory.createUnaryCallable(
+            failEchoWithDetailsTransportSettings,
+            settings.failEchoWithDetailsSettings(),
+            clientContext);
     this.expandCallable =
         callableFactory.createServerStreamingCallable(
             expandTransportSettings, settings.expandSettings(), clientContext);
@@ -841,6 +892,7 @@ public class HttpJsonEchoStub extends EchoStub {
     List<ApiMethodDescriptor> methodDescriptors = new ArrayList<>();
     methodDescriptors.add(echoMethodDescriptor);
     methodDescriptors.add(echoErrorDetailsMethodDescriptor);
+    methodDescriptors.add(failEchoWithDetailsMethodDescriptor);
     methodDescriptors.add(expandMethodDescriptor);
     methodDescriptors.add(pagedExpandMethodDescriptor);
     methodDescriptors.add(pagedExpandLegacyMethodDescriptor);
@@ -868,6 +920,12 @@ public class HttpJsonEchoStub extends EchoStub {
   public UnaryCallable<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
       echoErrorDetailsCallable() {
     return echoErrorDetailsCallable;
+  }
+
+  @Override
+  public UnaryCallable<FailEchoWithDetailsRequest, FailEchoWithDetailsResponse>
+      failEchoWithDetailsCallable() {
+    return failEchoWithDetailsCallable;
   }
 
   @Override
