@@ -6,7 +6,7 @@
   <artifactId>proto-google-iam-v3</artifactId>
   <version>1.51.0</version><!-- {x-version-update:proto-google-iam-v3:current} -->
   <name>proto-google-iam-v3</name>
-  <description>Proto library for proto-google-iam-v1</description>
+  <description>Proto library for proto-google-iam-v3</description>
   <parent>
     <groupId>com.google.cloud</groupId>
     <artifactId>google-iam-parent</artifactId>

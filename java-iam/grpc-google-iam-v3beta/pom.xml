@@ -6,7 +6,7 @@
   <artifactId>grpc-google-iam-v3beta</artifactId>
   <version>1.51.0</version><!-- {x-version-update:grpc-google-iam-v3beta:current} -->
   <name>grpc-google-iam-v3beta</name>
-  <description>GRPC library for proto-google-iam-v1</description>
+  <description>GRPC library for proto-google-iam-v3beta</description>
   <parent>
     <groupId>com.google.cloud</groupId>
     <artifactId>google-iam-parent</artifactId>
