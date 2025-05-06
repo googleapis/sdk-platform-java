@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.57.0](https://github.com/googleapis/sdk-platform-java/compare/v2.56.3...v2.57.0) (2025-05-05)
+
+
+### Features
+
+* Generate IAM v3beta Client Library ([#3780](https://github.com/googleapis/sdk-platform-java/issues/3780)) ([6fc9656](https://github.com/googleapis/sdk-platform-java/commit/6fc965638ce5df58db0b04726ee0aa3afe99c485))
+
+
+### Bug Fixes
+
+* Update IAM v3 groupId to the correct value ([#3777](https://github.com/googleapis/sdk-platform-java/issues/3777)) ([6ecbf5f](https://github.com/googleapis/sdk-platform-java/commit/6ecbf5f1c7731536089bdc255200beb85b1c3586))
+
 ## [2.56.3](https://github.com/googleapis/sdk-platform-java/compare/v2.56.2...v2.56.3) (2025-05-02)
 
 
