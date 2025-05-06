@@ -4,7 +4,7 @@
   <groupId>com.google.api</groupId>
   <artifactId>gapic-generator-java-bom</artifactId>
   <packaging>pom</packaging>
-  <version>2.57.0</version><!-- {x-version-update:gapic-generator-java:current} -->
+  <version>2.57.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
   <name>GAPIC Generator Java BOM</name>
   <description>
     BOM for the libraries in gapic-generator-java repository. Users should not
@@ -15,7 +15,7 @@
   <parent>
     <groupId>com.google.api</groupId>
     <artifactId>gapic-generator-java-pom-parent</artifactId>
-    <version>2.57.0</version><!-- {x-version-update:gapic-generator-java:current} -->
+    <version>2.57.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
     <relativePath>../gapic-generator-java-pom-parent</relativePath>
   </parent>
 
@@ -75,7 +75,7 @@
       <dependency>
         <groupId>com.google.api</groupId>
         <artifactId>api-common</artifactId>
-        <version>2.48.0</version><!-- {x-version-update:api-common:current} -->
+        <version>2.48.1-SNAPSHOT</version><!-- {x-version-update:api-common:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.api</groupId>
@@ -87,7 +87,7 @@
       <dependency>
         <groupId>com.google.api</groupId>
         <artifactId>gapic-generator-java</artifactId>
-        <version>2.57.0</version><!-- {x-version-update:gapic-generator-java:current} -->
+        <version>2.57.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
@@ -117,7 +117,7 @@
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>proto-google-iam-v3</artifactId>
-        <version>1.51.0</version><!-- {x-version-update:proto-google-iam-v3:current} -->
+        <version>1.51.1-SNAPSHOT</version><!-- {x-version-update:proto-google-iam-v3:current} -->
       </dependency>
 
       <!-- Following test deps are kept to keep them consistent with versions above -->
@@ -139,7 +139,7 @@
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>grpc-google-iam-v3</artifactId>
-        <version>1.51.0</version><!-- {x-version-update:grpc-google-iam-v3:current} -->
+        <version>1.51.1-SNAPSHOT</version><!-- {x-version-update:grpc-google-iam-v3:current} -->
       </dependency>
     </dependencies>
 
