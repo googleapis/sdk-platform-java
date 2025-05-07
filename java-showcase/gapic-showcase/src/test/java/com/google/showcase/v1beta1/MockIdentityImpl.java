@@ -17,8 +17,8 @@
 package com.google.showcase.v1beta1;
 
 import com.google.api.core.BetaApi;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Empty;
+import com.google.protobuf.Message;
 import com.google.showcase.v1beta1.IdentityGrpc.IdentityImplBase;
 import io.grpc.stub.StreamObserver;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ import javax.annotation.Generated;
 @BetaApi
 @Generated("by gapic-generator-java")
 public class MockIdentityImpl extends IdentityImplBase {
-  private List<AbstractMessage> requests;
+  private List<Message> requests;
   private Queue<Object> responses;
 
   public MockIdentityImpl() {
@@ -38,15 +38,15 @@ public class MockIdentityImpl extends IdentityImplBase {
     responses = new LinkedList<>();
   }
 
-  public List<AbstractMessage> getRequests() {
+  public List<Message> getRequests() {
     return requests;
   }
 
-  public void addResponse(AbstractMessage response) {
+  public void addResponse(Message response) {
     responses.add(response);
   }
 
-  public void setResponses(List<AbstractMessage> responses) {
+  public void setResponses(List<Message> responses) {
     this.responses = new LinkedList<Object>(responses);
   }
 

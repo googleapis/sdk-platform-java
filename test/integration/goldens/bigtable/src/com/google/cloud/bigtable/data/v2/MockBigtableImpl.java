@@ -32,7 +32,7 @@ import com.google.bigtable.v2.ReadRowsRequest;
 import com.google.bigtable.v2.ReadRowsResponse;
 import com.google.bigtable.v2.SampleRowKeysRequest;
 import com.google.bigtable.v2.SampleRowKeysResponse;
-import com.google.protobuf.AbstractMessage;
+import com.google.protobuf.Message;
 import io.grpc.stub.StreamObserver;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -43,7 +43,7 @@ import javax.annotation.Generated;
 @BetaApi
 @Generated("by gapic-generator-java")
 public class MockBigtableImpl extends BigtableImplBase {
-  private List<AbstractMessage> requests;
+  private List<Message> requests;
   private Queue<Object> responses;
 
   public MockBigtableImpl() {
@@ -51,15 +51,15 @@ public class MockBigtableImpl extends BigtableImplBase {
     responses = new LinkedList<>();
   }
 
-  public List<AbstractMessage> getRequests() {
+  public List<Message> getRequests() {
     return requests;
   }
 
-  public void addResponse(AbstractMessage response) {
+  public void addResponse(Message response) {
     responses.add(response);
   }
 
-  public void setResponses(List<AbstractMessage> responses) {
+  public void setResponses(List<Message> responses) {
     this.responses = new LinkedList<Object>(responses);
   }
 

@@ -61,7 +61,6 @@ import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.longrunning.Operation;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Any;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -902,7 +901,7 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
   private static TypeStore createStaticTypes() {
     List<Class<?>> concreteClazzes =
         Arrays.asList(
-            AbstractMessage.class,
+            com.google.protobuf.Message.class,
             After.class,
             AfterClass.class,
             Any.class,

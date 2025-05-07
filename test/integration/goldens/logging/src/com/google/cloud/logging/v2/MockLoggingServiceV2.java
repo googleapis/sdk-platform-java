@@ -18,7 +18,7 @@ package com.google.cloud.logging.v2;
 
 import com.google.api.core.BetaApi;
 import com.google.api.gax.grpc.testing.MockGrpcService;
-import com.google.protobuf.AbstractMessage;
+import com.google.protobuf.Message;
 import io.grpc.ServerServiceDefinition;
 import java.util.List;
 import javax.annotation.Generated;
@@ -33,12 +33,12 @@ public class MockLoggingServiceV2 implements MockGrpcService {
   }
 
   @Override
-  public List<AbstractMessage> getRequests() {
+  public List<Message> getRequests() {
     return serviceImpl.getRequests();
   }
 
   @Override
-  public void addResponse(AbstractMessage response) {
+  public void addResponse(Message response) {
     serviceImpl.addResponse(response);
   }
 
