@@ -103,6 +103,8 @@ if [[ -z "${api_def_dir}" ]];then
   pushd "${api_def_dir}"
   git checkout "${googleapis_commitish}"
   popd
+else
+  ls "${api_def_dir}/google/cloud/vertexai"
 fi
 
 # we also setup showcase
