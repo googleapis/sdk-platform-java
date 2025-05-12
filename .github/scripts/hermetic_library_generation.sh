@@ -50,6 +50,10 @@ case "${key}" in
     showcase_mode="$2"
     shift
     ;;
+  --api_def_dir)
+    showcase_mode="$2"
+    shift
+    ;;
   *)
     echo "Invalid option: [$1]"
     exit 1
@@ -92,12 +96,14 @@ git checkout "${current_branch}"
 git show "${target_branch}":"${generation_config}" > "${baseline_generation_config}"
 
 # download api definitions from googleapis repository
-googleapis_commitish=$(grep googleapis_commitish "${generation_config}" | cut -d ":" -f 2 | xargs)
-api_def_dir=$(mktemp -d)
-git clone https://github.com/googleapis/googleapis.git "${api_def_dir}"
-pushd "${api_def_dir}"
-git checkout "${googleapis_commitish}"
-popd
+if [[ -z "${api_def_dir}" ]];then
+  googleapis_commitish=$(grep googleapis_commitish "${generation_config}" | cut -d ":" -f 2 | xargs)
+  api_def_dir=$(mktemp -d)
+  git clone https://github.com/googleapis/googleapis.git "${api_def_dir}"
+  pushd "${api_def_dir}"
+  git checkout "${googleapis_commitish}"
+  popd
+fi
 
 # we also setup showcase
 if [[ "${showcase_mode}" == "true" ]]; then
