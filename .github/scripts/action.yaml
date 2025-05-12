@@ -33,6 +33,9 @@ inputs:
   showcase_mode:
     description: true if we need to download the showcase api definitions
     required: false
+  api_def_dir:
+    description: Path to api definitions (e.g. googleapis). Used when a custom set of protos is needed.
+    required: false
   token:
     description: Personal Access Token
     required: true
@@ -76,10 +79,12 @@ runs:
         --target_branch "${BASE_REF}" \
         --current_branch "${HEAD_REF}" \
         --showcase_mode "${SHOWCASE_MODE}" \
+        --api_def_dir "${API_DEF_DIR}" \
         --image_tag "${IMAGE_TAG}"
     env:
       BASE_REF: ${{ inputs.base_ref }}
       HEAD_REF: ${{ inputs.head_ref }}
       IMAGE_TAG: ${{ inputs.image_tag }}
       SHOWCASE_MODE: ${{ inputs.showcase_mode }}
+      API_DEF_DIR: ${{ inputs.api_def_dir }}
       GH_TOKEN: ${{ inputs.token }}
