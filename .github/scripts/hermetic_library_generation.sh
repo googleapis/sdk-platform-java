@@ -51,7 +51,7 @@ case "${key}" in
     shift
     ;;
   --api_def_dir)
-    showcase_mode="$2"
+    api_def_dir="$2"
     shift
     ;;
   *)
