@@ -104,7 +104,7 @@ if [[ -z "${api_def_dir}" ]];then
   git checkout "${googleapis_commitish}"
   popd
 else
-  ls "${api_def_dir}/google/cloud/vertexai"
+  ls "${api_def_dir}/google/cloud/vertexai/v1"
 fi
 
 # we also setup showcase
