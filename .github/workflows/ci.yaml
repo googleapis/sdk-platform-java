@@ -93,7 +93,7 @@ jobs:
           bazelisk --batch test //test/integration/...
   build-java-24:
     name: "build(24) except self-service clients"
-    # Support for Java 21 is available for all use cases except self-service clients.
+    # Support for Java 24 is available for all use cases except self-service clients.
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
