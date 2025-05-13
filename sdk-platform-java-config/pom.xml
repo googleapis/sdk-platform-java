@@ -17,6 +17,6 @@
     </parent>
 
     <properties>
-        <google-cloud-shared-dependencies.version>3.47.1-SNAPSHOT</google-cloud-shared-dependencies.version> <!-- {x-version-update:google-cloud-shared-dependencies:current} -->
+        <google-cloud-shared-dependencies.version>3.48.0</google-cloud-shared-dependencies.version> <!-- {x-version-update:google-cloud-shared-dependencies:current} -->
     </properties>
 </project>
