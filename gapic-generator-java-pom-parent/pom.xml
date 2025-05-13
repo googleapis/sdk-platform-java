@@ -167,6 +167,11 @@
                 </goals>
                 <configuration>
                   <propertyName>surefire.jacoco.args</propertyName>
+                  <excludes>
+                    <exclude>sun/**</exclude>
+                    <exclude>jdk/**</exclude>
+                    <exclude>java/**</exclude>
+                  </excludes>
                 </configuration>
               </execution>
               <execution>
