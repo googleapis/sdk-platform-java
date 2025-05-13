@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.58.0](https://github.com/googleapis/sdk-platform-java/compare/v2.57.0...v2.58.0) (2025-05-13)
+
+
+### Features
+
+* add cloudbuild config to publish image via AR Exit Gate ([#3786](https://github.com/googleapis/sdk-platform-java/issues/3786)) ([5cc8857](https://github.com/googleapis/sdk-platform-java/commit/5cc88577f8c78fcac49bcbcbbc2715eef7bf031d))
+
+
+### Dependencies
+
+* update google auth library dependencies to v1.35.0 ([#3789](https://github.com/googleapis/sdk-platform-java/issues/3789)) ([93f4c95](https://github.com/googleapis/sdk-platform-java/commit/93f4c951ffb9f9a9b577f6971f47dfacdae7ac4f))
+* update google http client dependencies to v1.47.0 ([#3790](https://github.com/googleapis/sdk-platform-java/issues/3790)) ([4478e34](https://github.com/googleapis/sdk-platform-java/commit/4478e345bd935b3c31800648f7786399f46bb4c9))
+
 ## [2.57.0](https://github.com/googleapis/sdk-platform-java/compare/v2.56.3...v2.57.0) (2025-05-05)
 
 
