@@ -336,13 +336,6 @@
             <goals>
               <goal>prepare-agent</goal>
             </goals>
-            <configuration>
-              <excludes>
-                <exclude>sun/**</exclude>
-                <exclude>jdk/**</exclude>
-                <exclude>java/**</exclude>
-              </excludes>
-            </configuration>
           </execution>
           <execution>
             <id>report</id>
