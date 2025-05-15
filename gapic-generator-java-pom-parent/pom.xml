@@ -167,6 +167,7 @@
                 </goals>
                 <configuration>
                   <propertyName>surefire.jacoco.args</propertyName>
+                  <argLine>@{surefire.jacoco.args} --add-opens java.base/jdk.internal.loader=ALL-UNNAMED --add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/java.lang.invoke=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/sun.security.util=ALL-UNNAMED --add-opens java.base/sun.net.util=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util.concurrent.atomic=ALL-UNNAMED</argLine>
                 </configuration>
               </execution>
               <execution>
