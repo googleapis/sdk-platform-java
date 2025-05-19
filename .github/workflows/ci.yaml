@@ -106,12 +106,12 @@ jobs:
       - name: Unit Tests
         run: |
           mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
-              -Dfmt.skip -DenableTestCoverage
+              -Dfmt.skip
       # The `envVarTest` profile runs tests that require an environment variable
       - name: Env Var Tests
         run: |
           mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
-              -Dfmt.skip -DenableTestCoverage -PenvVarTest
+              -Dfmt.skip -PenvVarTest
         # Set the Env Var for this step only
         env:
           GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
