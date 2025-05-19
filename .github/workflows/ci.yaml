@@ -106,12 +106,12 @@ jobs:
       - name: Unit Tests
         run: |
           mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
-              -Dfmt.skip
+              -Dfmt.skip -DenableTestCoverage -Djacoco.skip=true
       # The `envVarTest` profile runs tests that require an environment variable
       - name: Env Var Tests
         run: |
           mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
-              -Dfmt.skip -PenvVarTest
+              -Dfmt.skip -DenableTestCoverage -PenvVarTest -Djacoco.skip=true
         # Set the Env Var for this step only
         env:
           GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
@@ -120,7 +120,7 @@ jobs:
       - run: bazelisk version
       - name: Install Maven modules
         run: |
-          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip -Djacoco.skip=true
       - name: Integration Tests
         run: |
           bazelisk --batch test //test/integration/...
