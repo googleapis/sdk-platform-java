@@ -111,7 +111,7 @@ jobs:
       - name: Env Var Tests
         run: |
           mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
-              -Dfmt.skip -DenableTestCoverage -PenvVarTest -Djacoco.skip=true
+              -Dfmt.skip -DenableTestCoverage -PenvVarTest
         # Set the Env Var for this step only
         env:
           GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
@@ -120,10 +120,10 @@ jobs:
       - run: bazelisk version
       - name: Install Maven modules
         run: |
-          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip -Djacoco.skip=true
+          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
       - name: Integration Tests
         run: |
-          bazelisk --batch test //test/integration/...
+          bazelisk --batch test //test/integration/... -Dcom.google.testing.junit.runner.shouldInstallTestSecurityManager=false
   build-java8-except-gapic-generator-java:
     name: "build(8) except for gapic-generator-java"
     runs-on: ubuntu-22.04
