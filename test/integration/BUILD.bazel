@@ -93,10 +93,6 @@ java_gapic_test(
     test_classes = [
         "com.google.storage.v2.StorageClientTest",
     ],
-     jvm_flags = [
-            "-Xmx1G",  # or any valid value
-            # No -Djava.security.manager here!
-        ],
     runtime_deps = ["@com_google_googleapis//google/storage/v2:storage_java_gapic_test"],
 )
 

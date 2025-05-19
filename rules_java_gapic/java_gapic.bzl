@@ -373,13 +373,12 @@ def java_gapic_library(
         **kwargs
     )
 
-def java_gapic_test(name, runtime_deps, test_classes, jvm_flags =[], **kwargs):
+def java_gapic_test(name, runtime_deps, test_classes, **kwargs):
     for test_class in test_classes:
         native.java_test(
             name = test_class,
             test_class = test_class,
             runtime_deps = runtime_deps,
-            jvm_flags = jvm_flags,
             **kwargs
         )
     native.test_suite(
