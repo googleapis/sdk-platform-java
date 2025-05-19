@@ -121,6 +121,9 @@ jobs:
       - name: Install Maven modules
         run: |
           mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip -Djacoco.skip=true
+      - name: Integration Tests
+        run: |
+          bazelisk --batch test //test/integration/...
   build-java8-except-gapic-generator-java:
     name: "build(8) except for gapic-generator-java"
     runs-on: ubuntu-22.04
