@@ -149,7 +149,14 @@ def _construct_extra_deps(scope_to_deps, versions_map):
                 if not extra_deps.get(key):
                     extra_deps[key] = "%s project(':%s')" % (scope, pkg_dependency)
             elif _is_java_dependency(dep):
-                for f in dep[JavaInfo].transitive_deps.to_list():
+                for f in dep[JavaInfo].transitive_runtime_jars.to_list():
+                    maven_artifact = label_name_to_maven_artifact.get(f.owner.name)
+                    if not maven_artifact:
+                        continue
+                    key = "{{%s}}" % maven_artifact
+                    if not extra_deps.get(key):
+                        extra_deps[key] = "%s '%s'" % (scope, versions_map[key])
+                for f in dep[JavaInfo].transitive_compile_time_jars.to_list():
                     maven_artifact = label_name_to_maven_artifact.get(f.owner.name)
                     if not maven_artifact:
                         continue
