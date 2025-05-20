@@ -106,7 +106,7 @@ jobs:
       - name: Unit Tests
         run: |
           mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
-              -Dfmt.skip -DenableTestCoverage -Djacoco.skip=true
+              -Dfmt.skip -DenableTestCoverage
       # The `envVarTest` profile runs tests that require an environment variable
       - name: Env Var Tests
         run: |
@@ -123,7 +123,26 @@ jobs:
           mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
       - name: Integration Tests
         run: |
-          bazelisk --batch test //test/integration/... --jvmopt=-Dcom.google.testing.junit.runner.shouldInstallTestSecurityManager=false,-Djava.security.manager=disallow
+          bazelisk --batch test //test/integration/... --jvmopt=-Dcom.google.testing.junit.runner.shouldInstallTestSecurityManager=false
+      - name: Gradle Build Generated Storage Client Library
+        run: |
+          echo "Building Storage lib from generated source..."
+          mkdir /tmp/java-storage
+          bazelisk --batch build @com_google_googleapis//google/storage/v2:google-cloud-storage-v2-java
+          tar zxvf bazel-bin/external/com_google_googleapis/google/storage/v2/google-cloud-storage-v2-java.tar.gz -C /tmp/java-storage
+          pushd /tmp/java-storage/google-cloud-storage-v2-java
+          ./gradlew clean build publishToMavenLocal sourcesJar allJars
+          popd
+
+      - name: Gradle Build Generated Compute Client Library
+        run: |
+          echo "Building Compute lib from generated source..."
+          mkdir /tmp/java-compute
+          bazelisk --batch build @com_google_googleapis//google/cloud/compute/v1small:google-cloud-compute-small-v1-java
+          tar zxvf bazel-bin/external/com_google_googleapis/google/cloud/compute/v1small/google-cloud-compute-small-v1-java.tar.gz -C /tmp/java-compute
+          pushd /tmp/java-compute/google-cloud-compute-small-v1-java
+          ./gradlew clean build publishToMavenLocal sourcesJar allJars
+          popd
   build-java8-except-gapic-generator-java:
     name: "build(8) except for gapic-generator-java"
     runs-on: ubuntu-22.04

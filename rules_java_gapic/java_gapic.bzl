@@ -379,9 +379,6 @@ def java_gapic_test(name, runtime_deps, test_classes, **kwargs):
             name = test_class,
             test_class = test_class,
             runtime_deps = runtime_deps,
-            jvm_flags = [
-                    "-DSHOULD_INSTALL_SECURITY_MANAGER_PROPERTY=false",
-                ],
             **kwargs
         )
     native.test_suite(
