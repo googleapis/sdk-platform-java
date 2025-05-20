@@ -91,6 +91,40 @@ jobs:
       - name: Integration Tests
         run: |
           bazelisk --batch test //test/integration/...
+  build-java-24:
+    name: "build(24) except self-service clients"
+    # Support for Java 24 is available for all use cases except self-service clients.
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: 24
+          distribution: temurin
+          cache: maven
+      - run: java -version
+      - name: Unit Tests
+        run: |
+          mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
+              -Dfmt.skip -DenableTestCoverage
+      # The `envVarTest` profile runs tests that require an environment variable
+      - name: Env Var Tests
+        run: |
+          mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
+              -Dfmt.skip -DenableTestCoverage -PenvVarTest
+        # Set the Env Var for this step only
+        env:
+          GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
+          GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS: true
+          GOOGLE_SDK_JAVA_LOGGING: true
+      - run: bazelisk version
+      - name: Install Maven modules
+        run: |
+          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+      - name: Integration Tests
+        # note need to set shouldInstallTestSecurityManager=false due to https://github.com/bazelbuild/bazel/issues/24354
+        run: |
+          bazelisk --batch test //test/integration/... --jvmopt=-Dcom.google.testing.junit.runner.shouldInstallTestSecurityManager=false
   build-java8-except-gapic-generator-java:
     name: "build(8) except for gapic-generator-java"
     runs-on: ubuntu-22.04
@@ -273,7 +307,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        java: [ 11, 17, 21, 23 ]
+        java: [ 11, 17, 21, 24 ]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
