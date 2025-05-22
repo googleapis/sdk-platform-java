@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.58.1](https://github.com/googleapis/sdk-platform-java/compare/v2.58.0...v2.58.1) (2025-05-22)
+
+
+### Bug Fixes
+
+* manage graalvm image versions via Hermetic Build templates _only_ ([#3800](https://github.com/googleapis/sdk-platform-java/issues/3800)) ([244c5dc](https://github.com/googleapis/sdk-platform-java/commit/244c5dce9f77d0b431d2ec3ea5b101b07dcc3d70))
+
 ## [2.58.0](https://github.com/googleapis/sdk-platform-java/compare/v2.57.0...v2.58.0) (2025-05-13)
 
 
