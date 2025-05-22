@@ -4,13 +4,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.api.grpc</groupId>
   <artifactId>grpc-google-common-protos</artifactId>
-  <version>protobuf-shading-v1</version><!-- {x-version-update:proto-google-common-protos:current} -->
+  <version>protobuf-shading-within-module</version><!-- {x-version-update:proto-google-common-protos:current} -->
   <name>grpc-google-common-protos</name>
   <description>GRPC library for grpc-google-common-protos</description>
   <parent>
     <groupId>com.google.api.grpc</groupId>
     <artifactId>google-common-protos-parent</artifactId>
-    <version>protobuf-shading-v1</version><!-- {x-version-update:proto-google-common-protos:current} -->
+    <version>protobuf-shading-within-module</version><!-- {x-version-update:proto-google-common-protos:current} -->
   </parent>
   <dependencies>
     <dependency>
@@ -42,7 +42,7 @@
     <dependency>
       <groupId>org.example</groupId>
       <artifactId>protobuf-api</artifactId>
-      <version>latest-1.0-SNAPSHOT</version>
+      <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>

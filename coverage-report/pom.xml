@@ -31,17 +31,17 @@
             <dependency>
                 <groupId>com.google.api</groupId>
                 <artifactId>gax</artifactId>
-                <version>protobuf-shading-v1</version> <!-- {x-version-update:gax:current} -->
+                <version>protobuf-shading-within-module</version> <!-- {x-version-update:gax:current} -->
             </dependency>
             <dependency>
                 <groupId>com.google.api</groupId>
                 <artifactId>gax-grpc</artifactId>
-                <version>protobuf-shading-v1</version> <!-- {x-version-update:gax-grpc:current} -->
+                <version>protobuf-shading-within-module</version> <!-- {x-version-update:gax-grpc:current} -->
             </dependency>
             <dependency>
                 <groupId>com.google.api</groupId>
                 <artifactId>gax-httpjson</artifactId>
-                <version>protobuf-shading-v1</version> <!-- {x-version-update:gax:current} -->
+                <version>protobuf-shading-within-module</version> <!-- {x-version-update:gax:current} -->
             </dependency>
             <dependency>
                 <groupId>com.google.api</groupId>

@@ -80,7 +80,7 @@
       <dependency>
         <groupId>com.google.api</groupId>
         <artifactId>gax-bom</artifactId>
-        <version>protobuf-shading-v1</version><!-- {x-version-update:gax:current} -->
+        <version>protobuf-shading-within-module</version><!-- {x-version-update:gax:current} -->
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -92,44 +92,44 @@
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>grpc-google-common-protos</artifactId>
-        <version>protobuf-shading-v1</version><!-- {x-version-update:proto-google-common-protos:current} -->
+        <version>protobuf-shading-within-module</version><!-- {x-version-update:proto-google-common-protos:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>proto-google-common-protos</artifactId>
-        <version>protobuf-shading-v1</version><!-- {x-version-update:proto-google-common-protos:current} -->
+        <version>protobuf-shading-within-module</version><!-- {x-version-update:proto-google-common-protos:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>proto-google-iam-v1</artifactId>
-        <version>protobuf-shading-v1</version><!-- {x-version-update:proto-google-iam-v1:current} -->
+        <version>protobuf-shading-within-module</version><!-- {x-version-update:proto-google-iam-v1:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>proto-google-iam-v2</artifactId>
-        <version>protobuf-shading-v1</version><!-- {x-version-update:proto-google-iam-v2:current} -->
+        <version>protobuf-shading-within-module</version><!-- {x-version-update:proto-google-iam-v2:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>proto-google-iam-v2beta</artifactId>
-        <version>protobuf-shading-v1</version><!-- {x-version-update:proto-google-iam-v2beta:current} -->
+        <version>protobuf-shading-within-module</version><!-- {x-version-update:proto-google-iam-v2beta:current} -->
       </dependency>
 
       <!-- Following test deps are kept to keep them consistent with versions above -->
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>grpc-google-iam-v1</artifactId>
-        <version>protobuf-shading-v1</version><!-- {x-version-update:grpc-google-iam-v1:current} -->
+        <version>protobuf-shading-within-module</version><!-- {x-version-update:grpc-google-iam-v1:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>grpc-google-iam-v2</artifactId>
-        <version>protobuf-shading-v1</version><!-- {x-version-update:grpc-google-iam-v2:current} -->
+        <version>protobuf-shading-within-module</version><!-- {x-version-update:grpc-google-iam-v2:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>grpc-google-iam-v2beta</artifactId>
-        <version>protobuf-shading-v1</version><!-- {x-version-update:grpc-google-iam-v2beta:current} -->
+        <version>protobuf-shading-within-module</version><!-- {x-version-update:grpc-google-iam-v2beta:current} -->
       </dependency>
     </dependencies>
 

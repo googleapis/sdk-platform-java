@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.cloud</groupId>
   <artifactId>google-cloud-core-http</artifactId>
-  <version>protobuf-shading-v1</version><!-- {x-version-update:google-cloud-core:current} -->
+  <version>protobuf-shading-within-module</version><!-- {x-version-update:google-cloud-core:current} -->
   <packaging>jar</packaging>
   <name>Google Cloud Core HTTP</name>
   <description>
@@ -12,7 +12,7 @@
   <parent>
     <groupId>com.google.cloud</groupId>
     <artifactId>google-cloud-core-parent</artifactId>
-    <version>protobuf-shading-v1</version><!-- {x-version-update:google-cloud-core:current} -->
+    <version>protobuf-shading-within-module</version><!-- {x-version-update:google-cloud-core:current} -->
   </parent>
   <properties>
     <site.installationModule>google-cloud-core-http</site.installationModule>
@@ -21,7 +21,7 @@
     <dependency>
       <groupId>com.google.cloud</groupId>
       <artifactId>google-cloud-core</artifactId>
-      <version>protobuf-shading-v1</version>
+      <version>protobuf-shading-within-module</version>
     </dependency>
     <dependency>
       <groupId>com.google.auth</groupId>
@@ -50,12 +50,12 @@
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax</artifactId>
-      <version>protobuf-shading-v1</version>
+      <version>protobuf-shading-within-module</version>
     </dependency>
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax-httpjson</artifactId>
-      <version>protobuf-shading-v1</version>
+      <version>protobuf-shading-within-module</version>
     </dependency>
     <dependency>
       <groupId>com.google.code.findbugs</groupId>

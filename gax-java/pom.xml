@@ -4,7 +4,7 @@
   <groupId>com.google.api</groupId>
   <artifactId>gax-parent</artifactId>
   <packaging>pom</packaging>
-  <version>protobuf-shading-v1</version><!-- {x-version-update:gax:current} -->
+  <version>protobuf-shading-within-module</version><!-- {x-version-update:gax:current} -->
   <name>GAX (Google Api eXtensions) for Java (Parent)</name>
   <description>Google Api eXtensions for Java (Parent)</description>
 
@@ -98,24 +98,24 @@
       <dependency>
         <groupId>com.google.api</groupId>
         <artifactId>gax</artifactId>
-        <version>protobuf-shading-v1</version> <!-- {x-version-update:gax:current} -->
+        <version>protobuf-shading-within-module</version> <!-- {x-version-update:gax:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.api</groupId>
         <artifactId>gax</artifactId>
-        <version>protobuf-shading-v1</version> <!-- {x-version-update:gax:current} -->
+        <version>protobuf-shading-within-module</version> <!-- {x-version-update:gax:current} -->
         <type>test-jar</type>
         <classifier>testlib</classifier>
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>proto-google-common-protos</artifactId>
-        <version>protobuf-shading-v1</version><!-- {x-version-update:proto-google-common-protos:current} -->
+        <version>protobuf-shading-within-module</version><!-- {x-version-update:proto-google-common-protos:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>grpc-google-common-protos</artifactId>
-        <version>protobuf-shading-v1</version><!-- {x-version-update:grpc-google-common-protos:current} -->
+        <version>protobuf-shading-within-module</version><!-- {x-version-update:grpc-google-common-protos:current} -->
       </dependency>
       <dependency>
         <groupId>io.grpc</groupId>

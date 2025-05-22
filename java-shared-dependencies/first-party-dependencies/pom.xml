@@ -45,7 +45,7 @@
       <dependency>
         <groupId>com.google.cloud</groupId>
         <artifactId>google-cloud-core-bom</artifactId>
-        <version>protobuf-shading-v1</version><!-- {x-version-update:google-cloud-core:current} -->
+        <version>protobuf-shading-within-module</version><!-- {x-version-update:google-cloud-core:current} -->
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -69,13 +69,13 @@
       <dependency>
         <groupId>com.google.cloud</groupId>
         <artifactId>google-cloud-core</artifactId>
-        <version>protobuf-shading-v1</version><!-- {x-version-update:google-cloud-core:current} -->
+        <version>protobuf-shading-within-module</version><!-- {x-version-update:google-cloud-core:current} -->
         <type>test-jar</type>
       </dependency>
       <dependency>
         <groupId>com.google.cloud</groupId>
         <artifactId>google-cloud-core</artifactId>
-        <version>protobuf-shading-v1</version><!-- {x-version-update:google-cloud-core:current} -->
+        <version>protobuf-shading-within-module</version><!-- {x-version-update:google-cloud-core:current} -->
         <classifier>tests</classifier>
       </dependency>
     </dependencies>
