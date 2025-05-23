@@ -18,8 +18,6 @@ from synthtool.languages import java
 
 for library in s.get_staging_dirs():
     # put any special-case replacements here
-    print('moving library asdasd: ')
-    print(library)
     s.move(library)
 
 s.remove_staging_dirs()
