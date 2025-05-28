@@ -58,12 +58,12 @@ FROM docker.io/library/python:3.13.2-alpine3.20@sha256:816feb29731cdee64b15b0ae9
 
 ARG OWLBOT_CLI_COMMITTISH=3a68a9c0de318784b3aefadcc502a6521b3f1bc5
 ARG PROTOC_VERSION=25.8
-ARG GRPC_VERSION=1.71.0
+ARG GRPC_VERSION=1.72.0
 ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
 
 # install OS tools
-RUN apk update && apk add unzip curl rsync openjdk17 jq bash nodejs npm git gcompat
+RUN apk update && apk add unzip curl rsync openjdk17 jq bash nodejs npm git
 
 SHELL [ "/bin/bash", "-c" ]
 
