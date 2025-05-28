@@ -22,7 +22,7 @@ env:
   GITHUB_REPOSITORY: ${{ github.repository }}
 jobs:
   library_generation:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - name: Determine whether the pull request comes from a fork
       run: |
