@@ -71,18 +71,18 @@ SHELL [ "/bin/bash", "-c" ]
 # This list was obtained via `libtree -pvvv /grpc/*` in the final container as
 # well as inspecting the modifications done by compile-x86_64-alpine-linux.sh
 # in the glibc-compat stage using the `dive` command.
-# COPY --from=glibc-compat /etc/libgcc* /etc/
-# COPY --from=glibc-compat /lib64/ld-linux-x86-64.so.2 /lib64/
-# COPY --from=glibc-compat /lib/GLIBCFAKE.so.0 /lib/
-# COPY --from=glibc-compat /lib/ld-linux-x86-64.so.2 /lib/
-# COPY --from=glibc-compat /lib/libpthread* /lib/
-# COPY --from=glibc-compat /lib/libucontext* /lib/
-# COPY --from=glibc-compat /lib/libc.* /lib/
-# COPY --from=glibc-compat /usr/lib/libgcc* /usr/lib/
-# COPY --from=glibc-compat /usr/lib/libstdc* /usr/lib/
-# COPY --from=glibc-compat /usr/lib/libobstack* /usr/lib/
-# COPY --from=glibc-compat /lib/libm.so.6 /usr/lib/
-# COPY --from=glibc-compat /usr/lib/libucontext.so.1 /usr/lib/
+COPY --from=glibc-compat /etc/libgcc* /etc/
+COPY --from=glibc-compat /lib64/ld-linux-x86-64.so.2 /lib64/
+COPY --from=glibc-compat /lib/GLIBCFAKE.so.0 /lib/
+COPY --from=glibc-compat /lib/ld-linux-x86-64.so.2 /lib/
+COPY --from=glibc-compat /lib/libpthread* /lib/
+COPY --from=glibc-compat /lib/libucontext* /lib/
+COPY --from=glibc-compat /lib/libc.* /lib/
+COPY --from=glibc-compat /usr/lib/libgcc* /usr/lib/
+COPY --from=glibc-compat /usr/lib/libstdc* /usr/lib/
+COPY --from=glibc-compat /usr/lib/libobstack* /usr/lib/
+COPY --from=glibc-compat /lib/libm.so.6 /usr/lib/
+COPY --from=glibc-compat /usr/lib/libucontext.so.1 /usr/lib/
 
 
 # copy source code
