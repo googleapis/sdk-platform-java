@@ -37,6 +37,11 @@ jobs:
       with:
         fetch-depth: 0
         token: ${{ secrets.CLOUD_JAVA_BOT_TOKEN }}
+    - uses: actions/setup-java@v4
+      with:
+        java-version: 17
+        distribution: temurin
+        cache: maven
     - name: Install Maven modules
       if: env.SHOULD_RUN == 'true'
       shell: bash
