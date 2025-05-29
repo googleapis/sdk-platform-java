@@ -328,8 +328,9 @@ public abstract class EndpointContext {
 
       // If a custom endpoint is being used, skip S2A.
       if (!Strings.isNullOrEmpty(clientSettingsEndpoint())
-          || (transportChannelProviderEndpoint()
-              == buildEndpointTemplate(serviceName(), resolvedUniverseDomain()))) {
+          || ((!Strings.isNullOrEmpty(transportChannelProviderEndpoint()))
+              && !(transportChannelProviderEndpoint()
+                  == buildEndpointTemplate(serviceName(), resolvedUniverseDomain())))) {
         return false;
       }
 
