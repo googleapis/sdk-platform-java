@@ -380,7 +380,9 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
+            .setTransportChannelProviderEndpoint("")
             .setUsingGDCH(false);
     EndpointContext endpointContext = defaultEndpointContextBuilder.build();
     Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isTrue();
@@ -477,7 +479,9 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
+            .setTransportChannelProviderEndpoint("")
             .setUsingGDCH(false);
     Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isFalse();
   }
@@ -489,7 +493,9 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
+            .setTransportChannelProviderEndpoint("")
             .setUsingGDCH(true);
     Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isFalse();
   }
@@ -501,7 +507,23 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("test.endpoint.com:443")
+            .setTransportChannelProviderEndpoint("")
+            .setUsingGDCH(false);
+    Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isFalse();
+  }
+
+  @Test
+  void shouldUseS2A_customEndpointSetViaTransportChannelProvider_returnsFalse() throws IOException {
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(envProvider.getenv(EndpointContext.S2A_ENV_ENABLE_USE_S2A)).thenReturn("true");
+    defaultEndpointContextBuilder =
+        defaultEndpointContextBuilder
+            .setEnvProvider(envProvider)
+            .setUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
+            .setClientSettingsEndpoint("")
+            .setTransportChannelProviderEndpoint("test.endpoint.com:443")
             .setUsingGDCH(false);
     Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isFalse();
   }
@@ -513,7 +535,9 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
+            .setTransportChannelProviderEndpoint("")
             .setUsingGDCH(false)
             .setMtlsEndpoint(null);
     Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isFalse();
@@ -526,7 +550,9 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
+            .setTransportChannelProviderEndpoint("")
             .setMtlsEndpoint("")
             .setUsingGDCH(false);
     Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isFalse();
@@ -539,7 +565,9 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
+            .setTransportChannelProviderEndpoint("")
             .setMtlsEndpoint("test.mtls.abcd.com:443")
             .setUsingGDCH(false);
     Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isFalse();
@@ -552,7 +580,9 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
+            .setTransportChannelProviderEndpoint("")
             .setUsingGDCH(false);
     Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isTrue();
   }
