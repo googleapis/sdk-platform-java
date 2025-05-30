@@ -380,6 +380,7 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setResolvedUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
             .setTransportChannelProviderEndpoint("")
             .setUsingGDCH(false);
@@ -478,6 +479,7 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setResolvedUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
             .setTransportChannelProviderEndpoint("")
             .setUsingGDCH(false);
@@ -491,6 +493,7 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setResolvedUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
             .setTransportChannelProviderEndpoint("")
             .setUsingGDCH(true);
@@ -504,6 +507,7 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setResolvedUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("test.endpoint.com:443")
             .setTransportChannelProviderEndpoint("")
             .setUsingGDCH(false);
@@ -517,6 +521,7 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setResolvedUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
             .setTransportChannelProviderEndpoint("test.endpoint.com:443")
             .setUsingGDCH(false);
@@ -530,6 +535,7 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setResolvedUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
             .setTransportChannelProviderEndpoint("")
             .setUsingGDCH(false)
@@ -544,6 +550,7 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setResolvedUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
             .setTransportChannelProviderEndpoint("")
             .setMtlsEndpoint("")
@@ -558,6 +565,7 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setResolvedUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
             .setTransportChannelProviderEndpoint("")
             .setMtlsEndpoint("test.mtls.abcd.com:443")
@@ -572,6 +580,7 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setResolvedUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
             .setTransportChannelProviderEndpoint("")
             .setUsingGDCH(false);
