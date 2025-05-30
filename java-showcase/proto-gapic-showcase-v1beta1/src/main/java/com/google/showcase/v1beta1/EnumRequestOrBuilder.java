@@ -28,7 +28,7 @@ public interface EnumRequestOrBuilder
    *
    *
    * <pre>
-   * Whether the client is requesting a new, unknown enum value or a known enum value already declard in this proto file.
+   * Whether the client is requesting a new, unknown enum value or a known enum value already declared in this proto file.
    * </pre>
    *
    * <code>bool unknown_enum = 1;</code>

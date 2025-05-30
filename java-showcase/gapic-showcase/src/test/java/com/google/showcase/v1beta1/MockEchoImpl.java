@@ -101,6 +101,28 @@ public class MockEchoImpl extends EchoImplBase {
   }
 
   @Override
+  public void failEchoWithDetails(
+      FailEchoWithDetailsRequest request,
+      StreamObserver<FailEchoWithDetailsResponse> responseObserver) {
+    Object response = responses.poll();
+    if (response instanceof FailEchoWithDetailsResponse) {
+      requests.add(request);
+      responseObserver.onNext(((FailEchoWithDetailsResponse) response));
+      responseObserver.onCompleted();
+    } else if (response instanceof Exception) {
+      responseObserver.onError(((Exception) response));
+    } else {
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method FailEchoWithDetails, expected %s or %s",
+                  response == null ? "null" : response.getClass().getName(),
+                  FailEchoWithDetailsResponse.class.getName(),
+                  Exception.class.getName())));
+    }
+  }
+
+  @Override
   public void expand(ExpandRequest request, StreamObserver<EchoResponse> responseObserver) {
     Object response = responses.poll();
     if (response instanceof EchoResponse) {

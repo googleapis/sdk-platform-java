@@ -224,6 +224,43 @@ public class EchoClientTest {
   }
 
   @Test
+  public void failEchoWithDetailsTest() throws Exception {
+    FailEchoWithDetailsResponse expectedResponse = FailEchoWithDetailsResponse.newBuilder().build();
+    mockEcho.addResponse(expectedResponse);
+
+    FailEchoWithDetailsRequest request =
+        FailEchoWithDetailsRequest.newBuilder().setMessage("message954925063").build();
+
+    FailEchoWithDetailsResponse actualResponse = client.failEchoWithDetails(request);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<AbstractMessage> actualRequests = mockEcho.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    FailEchoWithDetailsRequest actualRequest = ((FailEchoWithDetailsRequest) actualRequests.get(0));
+
+    Assert.assertEquals(request.getMessage(), actualRequest.getMessage());
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void failEchoWithDetailsExceptionTest() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockEcho.addException(exception);
+
+    try {
+      FailEchoWithDetailsRequest request =
+          FailEchoWithDetailsRequest.newBuilder().setMessage("message954925063").build();
+      client.failEchoWithDetails(request);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
   public void expandTest() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder()
