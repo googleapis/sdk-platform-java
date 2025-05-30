@@ -41,11 +41,11 @@ import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Empty;
 import com.google.protobuf.FieldMask;
+import com.google.protobuf.Message;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -119,7 +119,7 @@ public class SequenceServiceClientTest {
     Sequence actualResponse = client.createSequence(sequence);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockSequenceService.getRequests();
+    List<Message> actualRequests = mockSequenceService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateSequenceRequest actualRequest = ((CreateSequenceRequest) actualRequests.get(0));
 
@@ -159,7 +159,7 @@ public class SequenceServiceClientTest {
     StreamingSequence actualResponse = client.createStreamingSequence(streamingSequence);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockSequenceService.getRequests();
+    List<Message> actualRequests = mockSequenceService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateStreamingSequenceRequest actualRequest =
         ((CreateStreamingSequenceRequest) actualRequests.get(0));
@@ -199,7 +199,7 @@ public class SequenceServiceClientTest {
     SequenceReport actualResponse = client.getSequenceReport(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockSequenceService.getRequests();
+    List<Message> actualRequests = mockSequenceService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetSequenceReportRequest actualRequest = ((GetSequenceReportRequest) actualRequests.get(0));
 
@@ -238,7 +238,7 @@ public class SequenceServiceClientTest {
     SequenceReport actualResponse = client.getSequenceReport(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockSequenceService.getRequests();
+    List<Message> actualRequests = mockSequenceService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetSequenceReportRequest actualRequest = ((GetSequenceReportRequest) actualRequests.get(0));
 
@@ -277,7 +277,7 @@ public class SequenceServiceClientTest {
     StreamingSequenceReport actualResponse = client.getStreamingSequenceReport(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockSequenceService.getRequests();
+    List<Message> actualRequests = mockSequenceService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetStreamingSequenceReportRequest actualRequest =
         ((GetStreamingSequenceReportRequest) actualRequests.get(0));
@@ -317,7 +317,7 @@ public class SequenceServiceClientTest {
     StreamingSequenceReport actualResponse = client.getStreamingSequenceReport(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockSequenceService.getRequests();
+    List<Message> actualRequests = mockSequenceService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetStreamingSequenceReportRequest actualRequest =
         ((GetStreamingSequenceReportRequest) actualRequests.get(0));
@@ -352,7 +352,7 @@ public class SequenceServiceClientTest {
 
     client.attemptSequence(name);
 
-    List<AbstractMessage> actualRequests = mockSequenceService.getRequests();
+    List<Message> actualRequests = mockSequenceService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     AttemptSequenceRequest actualRequest = ((AttemptSequenceRequest) actualRequests.get(0));
 
@@ -386,7 +386,7 @@ public class SequenceServiceClientTest {
 
     client.attemptSequence(name);
 
-    List<AbstractMessage> actualRequests = mockSequenceService.getRequests();
+    List<Message> actualRequests = mockSequenceService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     AttemptSequenceRequest actualRequest = ((AttemptSequenceRequest) actualRequests.get(0));
 
@@ -486,7 +486,7 @@ public class SequenceServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockLocations.getRequests();
+    List<Message> actualRequests = mockLocations.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListLocationsRequest actualRequest = ((ListLocationsRequest) actualRequests.get(0));
 
@@ -537,7 +537,7 @@ public class SequenceServiceClientTest {
     Location actualResponse = client.getLocation(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLocations.getRequests();
+    List<Message> actualRequests = mockLocations.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetLocationRequest actualRequest = ((GetLocationRequest) actualRequests.get(0));
 
@@ -583,7 +583,7 @@ public class SequenceServiceClientTest {
     Policy actualResponse = client.setIamPolicy(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     SetIamPolicyRequest actualRequest = ((SetIamPolicyRequest) actualRequests.get(0));
 
@@ -635,7 +635,7 @@ public class SequenceServiceClientTest {
     Policy actualResponse = client.getIamPolicy(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetIamPolicyRequest actualRequest = ((GetIamPolicyRequest) actualRequests.get(0));
 
@@ -680,7 +680,7 @@ public class SequenceServiceClientTest {
     TestIamPermissionsResponse actualResponse = client.testIamPermissions(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     TestIamPermissionsRequest actualRequest = ((TestIamPermissionsRequest) actualRequests.get(0));
 
