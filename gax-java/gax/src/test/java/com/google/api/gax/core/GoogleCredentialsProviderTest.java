@@ -72,6 +72,28 @@ class GoogleCredentialsProviderTest {
   }
 
   @Test
+  void serviceAccountReplacedWithJwtTokens_setEmptyDomain() throws Exception {
+    ServiceAccountCredentials serviceAccountCredentials =
+        CreateServiceAccountCredentials().toBuilder().setUniverseDomain("").build();
+
+    GoogleCredentialsProvider provider =
+        GoogleCredentialsProvider.newBuilder()
+            .setScopesToApply(ImmutableList.of("scope1", "scope2"))
+            .setJwtEnabledScopes(ImmutableList.of("scope1"))
+            .setOAuth2Credentials(serviceAccountCredentials)
+            .build();
+
+    Credentials credentials = provider.getCredentials();
+    assertThat(credentials).isInstanceOf(ServiceAccountJwtAccessCredentials.class);
+    ServiceAccountJwtAccessCredentials jwtCreds = (ServiceAccountJwtAccessCredentials) credentials;
+    assertThat(jwtCreds.getClientId()).isEqualTo(serviceAccountCredentials.getClientId());
+    assertThat(jwtCreds.getClientEmail()).isEqualTo(serviceAccountCredentials.getClientEmail());
+    assertThat(jwtCreds.getPrivateKeyId()).isEqualTo(serviceAccountCredentials.getPrivateKeyId());
+    assertThat(jwtCreds.getPrivateKey()).isEqualTo(serviceAccountCredentials.getPrivateKey());
+    assertThat(jwtCreds.getUniverseDomain()).isEqualTo(Credentials.GOOGLE_DEFAULT_UNIVERSE);
+  }
+
+  @Test
   void serviceAccountReplacedWithJwtTokens_customUniverseDomain() throws Exception {
     ServiceAccountCredentials serviceAccountCredentials =
         CreateServiceAccountCredentials().toBuilder().setUniverseDomain("example.com").build();
