@@ -16,9 +16,6 @@
 
 package com.google.cloud;
 
-import static com.google.common.base.Predicates.in;
-import static com.google.common.base.Predicates.not;
-
 import com.google.api.core.BetaApi;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Predicate;
@@ -101,7 +98,7 @@ public abstract class Binding {
      * @throws NullPointerException if a member is null.
      */
     public Builder removeMembers(String... members) {
-      Predicate<String> selectMembersNotInList = not(in(Arrays.asList(members)));
+      Predicate<String> selectMembersNotInList = e -> !Arrays.asList(members).contains(e);
       Collection<String> filter = Collections2.filter(getMembers(), selectMembersNotInList);
       setMembers(filter);
       return this;
