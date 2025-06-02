@@ -32,11 +32,11 @@ import com.google.api.gax.rpc.StatusCode;
 import com.google.api.resourcenames.ResourceName;
 import com.google.common.collect.Lists;
 import com.google.longrunning.Operation;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.Duration;
 import com.google.protobuf.Empty;
 import com.google.protobuf.FieldMask;
+import com.google.protobuf.Message;
 import com.google.protobuf.Timestamp;
 import com.google.type.Expr;
 import io.grpc.StatusRuntimeException;
@@ -122,7 +122,7 @@ public class AssetServiceClientTest {
     ExportAssetsResponse actualResponse = client.exportAssetsAsync(request).get();
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ExportAssetsRequest actualRequest = ((ExportAssetsRequest) actualRequests.get(0));
 
@@ -182,7 +182,7 @@ public class AssetServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getAssetsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListAssetsRequest actualRequest = ((ListAssetsRequest) actualRequests.get(0));
 
@@ -226,7 +226,7 @@ public class AssetServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getAssetsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListAssetsRequest actualRequest = ((ListAssetsRequest) actualRequests.get(0));
 
@@ -271,7 +271,7 @@ public class AssetServiceClientTest {
     BatchGetAssetsHistoryResponse actualResponse = client.batchGetAssetsHistory(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     BatchGetAssetsHistoryRequest actualRequest =
         ((BatchGetAssetsHistoryRequest) actualRequests.get(0));
@@ -328,7 +328,7 @@ public class AssetServiceClientTest {
     Feed actualResponse = client.createFeed(parent);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateFeedRequest actualRequest = ((CreateFeedRequest) actualRequests.get(0));
 
@@ -372,7 +372,7 @@ public class AssetServiceClientTest {
     Feed actualResponse = client.getFeed(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetFeedRequest actualRequest = ((GetFeedRequest) actualRequests.get(0));
 
@@ -416,7 +416,7 @@ public class AssetServiceClientTest {
     Feed actualResponse = client.getFeed(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetFeedRequest actualRequest = ((GetFeedRequest) actualRequests.get(0));
 
@@ -452,7 +452,7 @@ public class AssetServiceClientTest {
     ListFeedsResponse actualResponse = client.listFeeds(parent);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListFeedsRequest actualRequest = ((ListFeedsRequest) actualRequests.get(0));
 
@@ -496,7 +496,7 @@ public class AssetServiceClientTest {
     Feed actualResponse = client.updateFeed(feed);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateFeedRequest actualRequest = ((UpdateFeedRequest) actualRequests.get(0));
 
@@ -530,7 +530,7 @@ public class AssetServiceClientTest {
 
     client.deleteFeed(name);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteFeedRequest actualRequest = ((DeleteFeedRequest) actualRequests.get(0));
 
@@ -564,7 +564,7 @@ public class AssetServiceClientTest {
 
     client.deleteFeed(name);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteFeedRequest actualRequest = ((DeleteFeedRequest) actualRequests.get(0));
 
@@ -611,7 +611,7 @@ public class AssetServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getResultsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     SearchAllResourcesRequest actualRequest = ((SearchAllResourcesRequest) actualRequests.get(0));
 
@@ -660,7 +660,7 @@ public class AssetServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getResultsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     SearchAllIamPoliciesRequest actualRequest =
         ((SearchAllIamPoliciesRequest) actualRequests.get(0));
@@ -709,7 +709,7 @@ public class AssetServiceClientTest {
     AnalyzeIamPolicyResponse actualResponse = client.analyzeIamPolicy(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     AnalyzeIamPolicyRequest actualRequest = ((AnalyzeIamPolicyRequest) actualRequests.get(0));
 
@@ -764,7 +764,7 @@ public class AssetServiceClientTest {
         client.analyzeIamPolicyLongrunningAsync(request).get();
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     AnalyzeIamPolicyLongrunningRequest actualRequest =
         ((AnalyzeIamPolicyLongrunningRequest) actualRequests.get(0));
@@ -814,7 +814,7 @@ public class AssetServiceClientTest {
     AnalyzeMoveResponse actualResponse = client.analyzeMove(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     AnalyzeMoveRequest actualRequest = ((AnalyzeMoveRequest) actualRequests.get(0));
 
@@ -866,7 +866,7 @@ public class AssetServiceClientTest {
     QueryAssetsResponse actualResponse = client.queryAssets(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     QueryAssetsRequest actualRequest = ((QueryAssetsRequest) actualRequests.get(0));
 
@@ -929,7 +929,7 @@ public class AssetServiceClientTest {
     SavedQuery actualResponse = client.createSavedQuery(parent, savedQuery, savedQueryId);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateSavedQueryRequest actualRequest = ((CreateSavedQueryRequest) actualRequests.get(0));
 
@@ -981,7 +981,7 @@ public class AssetServiceClientTest {
     SavedQuery actualResponse = client.createSavedQuery(parent, savedQuery, savedQueryId);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateSavedQueryRequest actualRequest = ((CreateSavedQueryRequest) actualRequests.get(0));
 
@@ -1033,7 +1033,7 @@ public class AssetServiceClientTest {
     SavedQuery actualResponse = client.createSavedQuery(parent, savedQuery, savedQueryId);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateSavedQueryRequest actualRequest = ((CreateSavedQueryRequest) actualRequests.get(0));
 
@@ -1085,7 +1085,7 @@ public class AssetServiceClientTest {
     SavedQuery actualResponse = client.createSavedQuery(parent, savedQuery, savedQueryId);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateSavedQueryRequest actualRequest = ((CreateSavedQueryRequest) actualRequests.get(0));
 
@@ -1135,7 +1135,7 @@ public class AssetServiceClientTest {
     SavedQuery actualResponse = client.getSavedQuery(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetSavedQueryRequest actualRequest = ((GetSavedQueryRequest) actualRequests.get(0));
 
@@ -1181,7 +1181,7 @@ public class AssetServiceClientTest {
     SavedQuery actualResponse = client.getSavedQuery(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetSavedQueryRequest actualRequest = ((GetSavedQueryRequest) actualRequests.get(0));
 
@@ -1225,7 +1225,7 @@ public class AssetServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getSavedQueriesList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListSavedQueriesRequest actualRequest = ((ListSavedQueriesRequest) actualRequests.get(0));
 
@@ -1269,7 +1269,7 @@ public class AssetServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getSavedQueriesList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListSavedQueriesRequest actualRequest = ((ListSavedQueriesRequest) actualRequests.get(0));
 
@@ -1313,7 +1313,7 @@ public class AssetServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getSavedQueriesList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListSavedQueriesRequest actualRequest = ((ListSavedQueriesRequest) actualRequests.get(0));
 
@@ -1357,7 +1357,7 @@ public class AssetServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getSavedQueriesList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListSavedQueriesRequest actualRequest = ((ListSavedQueriesRequest) actualRequests.get(0));
 
@@ -1404,7 +1404,7 @@ public class AssetServiceClientTest {
     SavedQuery actualResponse = client.updateSavedQuery(savedQuery, updateMask);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateSavedQueryRequest actualRequest = ((UpdateSavedQueryRequest) actualRequests.get(0));
 
@@ -1440,7 +1440,7 @@ public class AssetServiceClientTest {
 
     client.deleteSavedQuery(name);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteSavedQueryRequest actualRequest = ((DeleteSavedQueryRequest) actualRequests.get(0));
 
@@ -1474,7 +1474,7 @@ public class AssetServiceClientTest {
 
     client.deleteSavedQuery(name);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteSavedQueryRequest actualRequest = ((DeleteSavedQueryRequest) actualRequests.get(0));
 
@@ -1518,7 +1518,7 @@ public class AssetServiceClientTest {
         client.batchGetEffectiveIamPolicies(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    List<Message> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     BatchGetEffectiveIamPoliciesRequest actualRequest =
         ((BatchGetEffectiveIamPoliciesRequest) actualRequests.get(0));
