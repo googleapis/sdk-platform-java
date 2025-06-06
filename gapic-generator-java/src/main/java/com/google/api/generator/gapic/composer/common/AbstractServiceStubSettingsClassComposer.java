@@ -152,19 +152,19 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   // Maps of package->methodName to types for pagination with max_results field.
   private static final ImmutableMap<String, ImmutableMap<String, TypeNode>>
       PAGINATE_MAX_RESULT_TYPES =
-      ImmutableMap.of(
-          "com.google.cloud.bigquery.v2",
           ImmutableMap.of(
-              "ListDatasets",
-              TypeNode.UINT32VALUE,
-              "ListJobs",
-              TypeNode.INT32VALUE,
-              "ListModels",
-              TypeNode.UINT32VALUE,
-              "ListRoutines",
-              TypeNode.UINT32VALUE,
-              "ListTables",
-              TypeNode.UINT32VALUE));
+              "com.google.cloud.bigquery.v2",
+              ImmutableMap.of(
+                  "ListDatasets",
+                  TypeNode.UINT32VALUE,
+                  "ListJobs",
+                  TypeNode.INT32VALUE,
+                  "ListModels",
+                  TypeNode.UINT32VALUE,
+                  "ListRoutines",
+                  TypeNode.UINT32VALUE,
+                  "ListTables",
+                  TypeNode.UINT32VALUE));
 
   protected static final VariableExpr DEFAULT_SERVICE_SCOPES_VAR_EXPR =
       createDefaultServiceScopesVarExpr();

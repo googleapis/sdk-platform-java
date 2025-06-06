@@ -46,6 +46,7 @@ import com.google.api.generator.gapic.protoparser.Parser.SelectiveGapicType;
 import com.google.api.version.test.ApiVersionTestingOuterClass;
 import com.google.auto.populate.field.AutoPopulateFieldTestingOuterClass;
 import com.google.bookshop.v1beta1.BookshopProto;
+import com.google.cloud.bigquery.v2.JobProto;
 import com.google.common.collect.ImmutableList;
 import com.google.common.truth.Truth;
 import com.google.protobuf.Descriptors.FileDescriptor;
@@ -53,7 +54,6 @@ import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import com.google.selective.generate.v1beta1.SelectiveApiGenerationOuterClass;
-import com.google.cloud.bigquery.v2.JobProto;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
 import com.google.testgapic.v1beta1.LockerProto;
@@ -375,40 +375,44 @@ class ParserTest {
   }
 
   @Test
-  void parsePageSizeFieldName_basic(){
+  void parsePageSizeFieldName_basic() {
     MethodDescriptor methodDescriptor = echoService.getMethods().get(5);
     assertEquals("PagedExpand", methodDescriptor.getName());
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    String pageSizeFieldName = Parser.parsePageSizeFieldName(methodDescriptor, messageTypes, Transport.GRPC);
+    String pageSizeFieldName =
+        Parser.parsePageSizeFieldName(methodDescriptor, messageTypes, Transport.GRPC);
     assertEquals("page_size", pageSizeFieldName);
   }
 
   @Test
-  void parsePageSizeFieldName_grpcLegacy(){
+  void parsePageSizeFieldName_grpcLegacy() {
     MethodDescriptor methodDescriptor = echoService.getMethods().get(10);
     assertEquals("PagedExpandLegacy", methodDescriptor.getName());
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    String pageSizeFieldName = Parser.parsePageSizeFieldName(methodDescriptor, messageTypes, Transport.GRPC);
+    String pageSizeFieldName =
+        Parser.parsePageSizeFieldName(methodDescriptor, messageTypes, Transport.GRPC);
     assertNull(pageSizeFieldName);
   }
 
   @Test
-  void parsePageSizeFieldName_restLegacy(){
+  void parsePageSizeFieldName_restLegacy() {
     MethodDescriptor methodDescriptor = echoService.getMethods().get(10);
     assertEquals("PagedExpandLegacy", methodDescriptor.getName());
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    String pageSizeFieldName = Parser.parsePageSizeFieldName(methodDescriptor, messageTypes, Transport.REST);
+    String pageSizeFieldName =
+        Parser.parsePageSizeFieldName(methodDescriptor, messageTypes, Transport.REST);
     assertEquals("max_results", pageSizeFieldName);
   }
 
   @Test
-  void parsePageSizeFieldName_bigqueryLegacy(){
+  void parsePageSizeFieldName_bigqueryLegacy() {
     FileDescriptor bqJobFileDescriptor = JobProto.getDescriptor();
     ServiceDescriptor jobService = bqJobFileDescriptor.getServices().get(0);
     MethodDescriptor methodDescriptor = jobService.getMethods().get(0);
     assertEquals("ListJobs", methodDescriptor.getName());
     Map<String, Message> messageTypes = Parser.parseMessages(bqJobFileDescriptor);
-    String pageSizeFieldName = Parser.parsePageSizeFieldName(methodDescriptor, messageTypes, Transport.GRPC);
+    String pageSizeFieldName =
+        Parser.parsePageSizeFieldName(methodDescriptor, messageTypes, Transport.GRPC);
     assertEquals("max_results", pageSizeFieldName);
   }
 

@@ -123,7 +123,8 @@ public class Parser {
 
   // List of services that can use max_result field as an alternative to page_size for pagination.
   private static final ImmutableSet<String> PAGINATION_MAX_RESULTS_SERVICES_ALLOWLIST =
-      ImmutableSet.of("google.cloud.bigquery.v2.JobService.ListJobs",
+      ImmutableSet.of(
+          "google.cloud.bigquery.v2.JobService.ListJobs",
           "google.cloud.bigquery.v2.RoutineService.ListRoutines",
           "google.cloud.bigquery.v2.DatasetService.ListDatasets",
           "google.cloud.bigquery.v2.ModelService.ListModels",
@@ -1037,8 +1038,8 @@ public class Parser {
       // page_size gets priority over max_results if both are present
       List<String> fieldNames = new ArrayList<>();
       fieldNames.add("page_size");
-      if ((transport == Transport.REST) || (PAGINATION_MAX_RESULTS_SERVICES_ALLOWLIST.contains(
-          methodDescriptor.getFullName()))) {
+      if ((transport == Transport.REST)
+          || (PAGINATION_MAX_RESULTS_SERVICES_ALLOWLIST.contains(methodDescriptor.getFullName()))) {
         fieldNames.add("max_results");
       }
       for (String fieldName : fieldNames) {
