@@ -121,6 +121,14 @@ public class Parser {
   private static final Set<String> MIXIN_JAVA_PACKAGE_ALLOWLIST =
       ImmutableSet.of("com.google.iam.v1", "com.google.longrunning", "com.google.cloud.location");
 
+  // List of services that can use max_result field as an alternative to page_size for pagination.
+  private static final ImmutableSet<String> PAGINATION_MAX_RESULTS_SERVICES_ALLOWLIST =
+      ImmutableSet.of("google.cloud.bigquery.v2.JobService.ListJobs",
+          "google.cloud.bigquery.v2.RoutineService.ListRoutines",
+          "google.cloud.bigquery.v2.DatasetService.ListDatasets",
+          "google.cloud.bigquery.v2.ModelService.ListModels",
+          "google.cloud.bigquery.v2.TableService.ListTables");
+
   // Allow other parsers to access this.
   protected static final SourceCodeInfoParser SOURCE_CODE_INFO_PARSER = new SourceCodeInfoParser();
 
@@ -1029,7 +1037,8 @@ public class Parser {
       // page_size gets priority over max_results if both are present
       List<String> fieldNames = new ArrayList<>();
       fieldNames.add("page_size");
-      if (transport == Transport.REST) {
+      if ((transport == Transport.REST) || (PAGINATION_MAX_RESULTS_SERVICES_ALLOWLIST.contains(
+          methodDescriptor.getFullName()))) {
         fieldNames.add("max_results");
       }
       for (String fieldName : fieldNames) {
