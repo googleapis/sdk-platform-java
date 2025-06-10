@@ -131,8 +131,8 @@
       </dependency>
       <dependency>
         <groupId>org.graalvm.sdk</groupId>
-        <artifactId>graal-sdk</artifactId>
-        <version>${graal-sdk.version}</version>
+        <artifactId>nativeimage</artifactId>
+        <version>${graal-sdk-nativeimage.version}</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
