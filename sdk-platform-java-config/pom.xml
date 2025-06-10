@@ -4,7 +4,7 @@
     <groupId>com.google.cloud</groupId>
     <artifactId>sdk-platform-java-config</artifactId>
     <packaging>pom</packaging>
-    <version>3.45.2-SNAPSHOT</version> <!-- {x-version-update:google-cloud-shared-dependencies:current} -->
+    <version>protobuf-shading-within-module</version> <!-- {x-version-update:google-cloud-shared-dependencies:current} -->
     <name>SDK Platform For Java Configurations</name>
     <description>
         Shared build configuration for Google Cloud Java libraries.

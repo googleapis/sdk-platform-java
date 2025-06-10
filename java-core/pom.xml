@@ -33,7 +33,7 @@
       <dependency>
         <groupId>com.google.cloud</groupId>
         <artifactId>google-cloud-shared-dependencies</artifactId>
-        <version>3.45.2-SNAPSHOT</version><!-- {x-version-update:google-cloud-shared-dependencies:current} -->
+        <version>protobuf-shading-within-module</version><!-- {x-version-update:google-cloud-shared-dependencies:current} -->
         <type>pom</type>
         <scope>import</scope>
       </dependency>
