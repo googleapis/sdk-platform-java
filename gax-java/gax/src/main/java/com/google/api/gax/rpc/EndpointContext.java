@@ -309,16 +309,15 @@ public abstract class EndpointContext {
     /** Determine if S2A can be used */
     @VisibleForTesting
     boolean shouldUseS2A() {
-      // If running on windows or macos intel, skip S2A. S2A has runtime 
+      // If running on windows or macos intel, skip S2A. S2A has runtime
       // dependency on netty-tcnative which is dropping support on these platforms.
       // https://github.com/netty/netty-tcnative/issues/898
       // https://github.com/netty/netty-tcnative/issues/897
-      if (System.getProperty("os.name").contains("Windows") || 
-        (System.getProperty("os.name").contains("OS X") 
-        && System.getProperty("os.arch").contains("x86_64"))) {
-          return false;
+      if (System.getProperty("os.name").contains("Windows")
+          || (System.getProperty("os.name").contains("OS X")
+              && System.getProperty("os.arch").contains("x86_64"))) {
+        return false;
       }
-
 
       // If mTLS endpoint is not available, skip S2A
       if (Strings.isNullOrEmpty(mtlsEndpoint())) {
