@@ -57,12 +57,12 @@
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>proto-google-iam-v3beta</artifactId>
-        <version>1.53.1-SNAPSHOT</version><!-- {x-version-update:proto-google-iam-v3beta:current} -->
+        <version>protobuf-shading-within-module</version><!-- {x-version-update:proto-google-iam-v3beta:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>grpc-google-iam-v3beta</artifactId>
-        <version>1.53.1-SNAPSHOT</version><!-- {x-version-update:grpc-google-iam-v3beta:current} -->
+        <version>protobuf-shading-within-module</version><!-- {x-version-update:grpc-google-iam-v3beta:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.guava</groupId>
@@ -135,12 +135,12 @@
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>proto-google-iam-v3</artifactId>
-        <version>1.53.1-SNAPSHOT</version><!-- {x-version-update:proto-google-iam-v3:current} -->
+        <version>protobuf-shading-within-module</version><!-- {x-version-update:proto-google-iam-v3:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>grpc-google-iam-v3</artifactId>
-        <version>1.53.1-SNAPSHOT</version><!-- {x-version-update:grpc-google-iam-v3:current} -->
+        <version>protobuf-shading-within-module</version><!-- {x-version-update:grpc-google-iam-v3:current} -->
       </dependency>
       <dependency>
         <groupId>javax.annotation</groupId>
