@@ -1,22 +1,5 @@
-type: google.api.Service
-config_version: 3
-name: bigquery.googleapis.com
-title: BigQuery GAPIC Testing API
-
-publishing:
-  # ...
-  library_settings:
-  - version: google.cloud.bigquery.v2
-    java_settings:
-      common:
-        selective_gapic_generation:
-          methods:
-          - google.cloud.bigquery.v2.JobService.ListJobs
-          generate_omitted_as_internal: false
-        reference_docs_uri: www.abc.net
-        destinations:
-        - PACKAGE_MANAGER
-    python_settings:
-      common:
-        destinations:
-        - PACKAGE_MANAGER
+type: com.google.api.codegen.ConfigProto
+config_schema_version: 2.0.0
+language_settings:
+  java:
+    package_name: com.google.cloud.bigquery.v2
