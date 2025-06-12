@@ -35,7 +35,15 @@ import com.google.api.client.util.Key;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 
-/** Data class representing context_aware_metadata.json file. */
+/**
+ * Data class representing context_aware_metadata.json file.
+ *
+ * <p>This class is deprecated. It has been replaced by
+ * com.google.auth.mtls.ContextAwareMetadataJson from the Java auth library.
+ *
+ * <p>Note: This class is for Google cloud internal use only.
+ */
+@Deprecated
 public class ContextAwareMetadataJson extends GenericJson {
   /** Cert provider command */
   @Key("cert_provider_command")

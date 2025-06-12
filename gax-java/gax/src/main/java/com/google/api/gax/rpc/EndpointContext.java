@@ -32,9 +32,9 @@ package com.google.api.gax.rpc;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.internal.EnvironmentProvider;
 import com.google.api.gax.rpc.mtls.CertificateBasedAccess;
-import com.google.api.gax.rpc.mtls.DefaultMtlsProviderFactory;
-import com.google.api.gax.rpc.mtls.v2.MtlsProvider;
 import com.google.auth.Credentials;
+import com.google.auth.mtls.DefaultMtlsProviderFactory;
+import com.google.auth.mtls.MtlsProvider;
 import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
@@ -215,8 +215,7 @@ public abstract class EndpointContext {
 
     public abstract Builder setSwitchToMtlsEndpointAllowed(boolean switchToMtlsEndpointAllowed);
 
-    public abstract Builder setMtlsProvider(
-        com.google.api.gax.rpc.mtls.v2.MtlsProvider mtlsProvider);
+    public abstract Builder setMtlsProvider(MtlsProvider mtlsProvider);
 
     public abstract Builder setCertificateBasedAccess(
         CertificateBasedAccess certificateBasedAccess);

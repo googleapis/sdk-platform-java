@@ -36,7 +36,7 @@ import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.mtls.AbstractMtlsTransportChannelTest;
 import com.google.api.gax.rpc.mtls.CertificateBasedAccess;
-import com.google.api.gax.rpc.mtls.v2.MtlsProvider;
+import com.google.auth.mtls.MtlsProvider;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;

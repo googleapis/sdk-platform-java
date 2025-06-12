@@ -32,7 +32,7 @@ package com.google.api.gax.rpc.testing;
 
 import com.google.api.client.util.SecurityUtils;
 import com.google.api.core.InternalApi;
-import com.google.api.gax.rpc.mtls.v2.MtlsProvider;
+import com.google.auth.mtls.MtlsProvider;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
@@ -56,6 +56,11 @@ public class FakeMtlsProvider implements MtlsProvider {
       throw new IOException("getKeyStore throws exception");
     }
     return keyStore;
+  }
+
+  @Override
+  public boolean isAvailable() throws IOException {
+    return true;
   }
 
   public static KeyStore createTestMtlsKeyStore() throws IOException {
