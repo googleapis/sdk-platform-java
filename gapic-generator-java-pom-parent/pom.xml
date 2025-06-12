@@ -30,7 +30,7 @@
     <google.auth.version>1.37.0</google.auth.version>
     <google.http-client.version>1.47.0</google.http-client.version>
     <gson.version>2.12.1</gson.version>
-    <guava.version>33.4.0-jre</guava.version>
+    <guava.version>33.4.4-jre</guava.version>
     <protobuf.version>3.25.8</protobuf.version>
     <opentelemetry.version>1.47.0</opentelemetry.version>
     <maven.compiler.release>8</maven.compiler.release>
