@@ -11,9 +11,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
 
-import click as click
+# Setup logging
+import logging
+import sys
+
+logging.basicConfig(level=logging.DEBUG, stream=sys.stderr)
+
+import os
+import click
 
 from common.model.generation_config import GenerationConfig
 from common.utils.generation_config_comparator import compare_config

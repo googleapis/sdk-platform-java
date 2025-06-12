@@ -139,6 +139,12 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
     return ((EchoStubSettings) getStubSettings()).echoErrorDetailsSettings();
   }
 
+  /** Returns the object with the settings used for calls to failEchoWithDetails. */
+  public UnaryCallSettings<FailEchoWithDetailsRequest, FailEchoWithDetailsResponse>
+      failEchoWithDetailsSettings() {
+    return ((EchoStubSettings) getStubSettings()).failEchoWithDetailsSettings();
+  }
+
   /** Returns the object with the settings used for calls to expand. */
   public ServerStreamingCallSettings<ExpandRequest, EchoResponse> expandSettings() {
     return ((EchoStubSettings) getStubSettings()).expandSettings();
@@ -335,6 +341,12 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
     public UnaryCallSettings.Builder<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
         echoErrorDetailsSettings() {
       return getStubSettingsBuilder().echoErrorDetailsSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to failEchoWithDetails. */
+    public UnaryCallSettings.Builder<FailEchoWithDetailsRequest, FailEchoWithDetailsResponse>
+        failEchoWithDetailsSettings() {
+      return getStubSettingsBuilder().failEchoWithDetailsSettings();
     }
 
     /** Returns the builder for the settings used for calls to expand. */

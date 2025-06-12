@@ -38,15 +38,16 @@ option (google.api.resource_definition) = {
 
 // This proto is used to test selective api generation
 // covered scenarios:
-//  - A service with several rpcs, part of them should be generated
-//  - A service with several rpcs, none of them should be generated
-// This proto should be tested side-by-side with yaml file:
-//  - selective_api_generation_v1beta1.yaml
+//  - A service with several rpcs, all of them should be generated as public methods
+//  - A service with several rpcs, part of them should be generated as public methods
+//  - A service with several rpcs, none of them should be generated as public methods
+// This proto should be tested side-by-side with yaml files:
+//  - selective_api_generation_v1beta1.yaml or  - selective_api_generation_generate_omitted_v1beta1.yaml
 
-service EchoServiceShouldGeneratePartial {
+service EchoServiceShouldGenerateAllAsUsual {
   option (google.api.default_host) = "localhost:7469";
 
-  rpc EchoShouldInclude(EchoRequest) returns (EchoResponse) {
+  rpc EchoShouldGenerateAsUsual(EchoRequest) returns (EchoResponse) {
     option (google.api.http) = {
       post: "/v1beta1/echo:echo"
       body: "*"
@@ -55,28 +56,53 @@ service EchoServiceShouldGeneratePartial {
     option (google.api.method_signature) = "";
   }
 
-  rpc ChatShouldInclude(stream EchoRequest) returns (stream EchoResponse);
+  rpc ChatShouldGenerateAsUsual(stream EchoRequest) returns (stream EchoResponse);
 
-  rpc ChatAgainShouldInclude(stream EchoRequest) returns (stream EchoResponse) {
+  rpc ChatAgainShouldGenerateAsUsual(stream EchoRequest) returns (stream EchoResponse) {
+    option (google.api.method_signature) = "content";
+  }
+}
+
+service EchoServiceShouldGeneratePartialUsual {
+  option (google.api.default_host) = "localhost:7469";
+
+  rpc EchoShouldGenerateAsUsual(EchoRequest) returns (EchoResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/echo:echo"
+      body: "*"
+    };
+    option (google.api.method_signature) = "name";
+    option (google.api.method_signature) = "";
+  }
+
+  rpc ChatShouldGenerateAsUsual(stream EchoRequest) returns (stream EchoResponse);
+
+  rpc ChatAgainShouldGenerateAsUsual(stream EchoRequest) returns (stream EchoResponse) {
     option (google.api.method_signature) = "content";
   }
 
-  rpc AnExcludedMethod(stream EchoRequestWithFoobarbaz) returns (stream EchoResponse);
+  rpc ChatShouldGenerateAsInternal(EchoRequest) returns (EchoResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/echo:echo"
+      body: "*"
+    };
+    option (google.api.method_signature) = "name";
+    option (google.api.method_signature) = "";
+  };
 
-  rpc AnotherExcludedMethod(stream EchoRequest) returns (stream EchoResponse);
-
+  rpc EchoShouldGenerateAsInternal(stream EchoRequest) returns (stream EchoResponse);
 }
 
-service EchoServiceShouldGenerateNone {
+service EchoServiceShouldGenerateAllInternal {
   option (google.api.default_host) = "localhost:7469";
   option (google.api.oauth_scopes) =
     "https://www.googleapis.com/auth/cloud-platform";
 
-  rpc Echo(EchoRequest) returns (EchoResponse) {
+  rpc EchoShouldGenerateAsInternal(EchoRequest) returns (EchoResponse) {
     option (google.api.method_signature) = "content";
   }
 
-  rpc ChatAgain(stream EchoRequest) returns (stream EchoResponse) {
+  rpc ChatShouldGenerateAsInternal(stream EchoRequest) returns (stream EchoResponse) {
     option (google.api.method_signature) = "content";
   }
 }

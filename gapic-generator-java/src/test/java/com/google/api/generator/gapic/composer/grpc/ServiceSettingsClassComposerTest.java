@@ -32,12 +32,20 @@ class ServiceSettingsClassComposerTest {
             "EchoSettings",
             TestProtoLoader.instance().parseShowcaseEcho(),
             "localhost:7469",
-            "v1beta1"),
+            "v1beta1",
+            0),
         Arguments.of(
             "DeprecatedServiceSettings",
             TestProtoLoader.instance().parseDeprecatedService(),
             "localhost:7469",
-            "v1"));
+            "v1",
+            0),
+        Arguments.of(
+            "EchoServiceSelectiveGapicServiceSettings",
+            TestProtoLoader.instance().parseSelectiveGenerationTesting(),
+            "localhost:7469",
+            "v1beta1",
+            1));
   }
 
   @ParameterizedTest
@@ -46,8 +54,9 @@ class ServiceSettingsClassComposerTest {
       String name,
       GapicContext context,
       String apiShortNameExpected,
-      String packageVersionExpected) {
-    Service service = context.services().get(0);
+      String packageVersionExpected,
+      int serviceIndex) {
+    Service service = context.services().get(serviceIndex);
     GapicClass clazz = ServiceSettingsClassComposer.instance().generate(context, service);
 
     Assert.assertGoldenClass(this.getClass(), clazz, name + ".golden");
