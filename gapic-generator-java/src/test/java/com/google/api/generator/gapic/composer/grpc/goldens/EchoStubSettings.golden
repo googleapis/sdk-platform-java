@@ -43,6 +43,7 @@ import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.ExpandRequest;
 import com.google.showcase.v1beta1.Object;
+import com.google.showcase.v1beta1.PagedExpandLegacyRequest;
 import com.google.showcase.v1beta1.PagedExpandRequest;
 import com.google.showcase.v1beta1.PagedExpandResponse;
 import com.google.showcase.v1beta1.WaitMetadata;
@@ -149,6 +150,8 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       waitOperationSettings;
   private final UnaryCallSettings<BlockRequest, BlockResponse> blockSettings;
   private final UnaryCallSettings<EchoRequest, Object> collideNameSettings;
+  private final UnaryCallSettings<PagedExpandLegacyRequest, PagedExpandResponse>
+      pagedExpandLegacySettings;
 
   private static final PagedListDescriptor<PagedExpandRequest, PagedExpandResponse, EchoResponse>
       PAGED_EXPAND_PAGE_STR_DESC =
@@ -309,6 +312,12 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     return collideNameSettings;
   }
 
+  /** Returns the object with the settings used for calls to pagedExpandLegacy. */
+  public UnaryCallSettings<PagedExpandLegacyRequest, PagedExpandResponse>
+      pagedExpandLegacySettings() {
+    return pagedExpandLegacySettings;
+  }
+
   public EchoStub createStub() throws IOException {
     if (getTransportChannelProvider()
         .getTransportName()
@@ -394,6 +403,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     waitOperationSettings = settingsBuilder.waitOperationSettings().build();
     blockSettings = settingsBuilder.blockSettings().build();
     collideNameSettings = settingsBuilder.collideNameSettings().build();
+    pagedExpandLegacySettings = settingsBuilder.pagedExpandLegacySettings().build();
   }
 
   /** Builder for EchoStubSettings. */
@@ -415,6 +425,8 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
         waitOperationSettings;
     private final UnaryCallSettings.Builder<BlockRequest, BlockResponse> blockSettings;
     private final UnaryCallSettings.Builder<EchoRequest, Object> collideNameSettings;
+    private final UnaryCallSettings.Builder<PagedExpandLegacyRequest, PagedExpandResponse>
+        pagedExpandLegacySettings;
     private static final ImmutableMap<String, ImmutableSet<StatusCode.Code>>
         RETRYABLE_CODE_DEFINITIONS;
 
@@ -476,6 +488,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       waitOperationSettings = OperationCallSettings.newBuilder();
       blockSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       collideNameSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      pagedExpandLegacySettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
 
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
@@ -484,7 +497,8 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
               simplePagedExpandSettings,
               waitSettings,
               blockSettings,
-              collideNameSettings);
+              collideNameSettings,
+              pagedExpandLegacySettings);
       initDefaults(this);
     }
 
@@ -502,6 +516,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       waitOperationSettings = settings.waitOperationSettings.toBuilder();
       blockSettings = settings.blockSettings.toBuilder();
       collideNameSettings = settings.collideNameSettings.toBuilder();
+      pagedExpandLegacySettings = settings.pagedExpandLegacySettings.toBuilder();
 
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
@@ -510,7 +525,8 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
               simplePagedExpandSettings,
               waitSettings,
               blockSettings,
-              collideNameSettings);
+              collideNameSettings,
+              pagedExpandLegacySettings);
     }
 
     private static Builder createDefault() {
@@ -558,6 +574,11 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
       builder
           .collideNameSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      builder
+          .pagedExpandLegacySettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
 
@@ -660,6 +681,12 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     /** Returns the builder for the settings used for calls to collideName. */
     public UnaryCallSettings.Builder<EchoRequest, Object> collideNameSettings() {
       return collideNameSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to pagedExpandLegacy. */
+    public UnaryCallSettings.Builder<PagedExpandLegacyRequest, PagedExpandResponse>
+        pagedExpandLegacySettings() {
+      return pagedExpandLegacySettings;
     }
 
     @Override
