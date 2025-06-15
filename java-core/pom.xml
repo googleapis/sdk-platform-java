@@ -17,6 +17,44 @@
     <relativePath>../gapic-generator-java-pom-parent</relativePath>
   </parent>
 
+  <!-- Because the parent POM is in the com.google.api namespace and this artifact is in
+    the com.google.cloud namespace in Central Portal (we cannot mix multiple namespaces
+    in one deployment bundle) and we want to release them in one release job, we copy the
+    following metadata (developers, scm, and licenses). This enables us to release this
+    artifact independently from the parent artifact. -->
+  <url>https://github.com/googleapis/sdk-platform-java</url>
+  <developers>
+    <developer>
+      <id>suztomo</id>
+      <name>Tomo Suzuki</name>
+      <email>suztomo@google.com</email>
+      <organization>Google</organization>
+      <roles>
+        <role>Developer</role>
+      </roles>
+    </developer>
+  </developers>
+  <organization>
+    <name>Google LLC</name>
+  </organization>
+  <scm child.scm.connection.inherit.append.path="false"  child.scm.developerConnection.inherit.append.path="false"
+       child.scm.url.inherit.append.path="false">
+    <connection>scm:git:git@github.com:googleapis/sdk-platform-java.git</connection>
+    <developerConnection>scm:git:git@github.com:googleapis/sdk-platform-java.git</developerConnection>
+    <url>https://github.com/googleapis/sdk-platform-java</url>
+    <tag>HEAD</tag>
+  </scm>
+  <issueManagement>
+    <url>https://github.com/googleapis/sdk-platform-java/issues</url>
+    <system>GitHub Issues</system>
+  </issueManagement>
+
+  <licenses>
+    <license>
+      <name>Apache-2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
