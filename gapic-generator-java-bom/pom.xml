@@ -77,13 +77,64 @@
         <artifactId>api-common</artifactId>
         <version>2.50.1</version><!-- {x-version-update:api-common:current} -->
       </dependency>
+
+      <!-- Copying the content of gax-bom to untagle the circular dependencies of com.google.cloud and com.google.api -->
       <dependency>
         <groupId>com.google.api</groupId>
-        <artifactId>gax-bom</artifactId>
+        <artifactId>gax</artifactId>
         <version>2.67.1</version><!-- {x-version-update:gax:current} -->
-        <type>pom</type>
-        <scope>import</scope>
       </dependency>
+      <dependency>
+        <groupId>com.google.api</groupId>
+        <artifactId>gax</artifactId>
+        <version>2.67.1</version><!-- {x-version-update:gax:current} -->
+        <type>test-jar</type>
+        <classifier>testlib</classifier>
+      </dependency>
+      <dependency>
+        <groupId>com.google.api</groupId>
+        <artifactId>gax</artifactId>
+        <version>2.67.1</version><!-- {x-version-update:gax:current} -->
+        <classifier>testlib</classifier>
+      </dependency>
+      <dependency>
+        <groupId>com.google.api</groupId>
+        <artifactId>gax-grpc</artifactId>
+        <version>2.67.1</version><!-- {x-version-update:gax-grpc:current} -->
+      </dependency>
+      <dependency>
+        <groupId>com.google.api</groupId>
+        <artifactId>gax-grpc</artifactId>
+        <version>2.67.1</version><!-- {x-version-update:gax-grpc:current} -->
+        <type>test-jar</type>
+        <classifier>testlib</classifier>
+      </dependency>
+      <dependency>
+        <groupId>com.google.api</groupId>
+        <artifactId>gax-grpc</artifactId>
+        <version>2.67.1</version><!-- {x-version-update:gax-grpc:current} -->
+        <classifier>testlib</classifier>
+      </dependency>
+      <dependency>
+        <groupId>com.google.api</groupId>
+        <artifactId>gax-httpjson</artifactId>
+        <version>2.67.1</version><!-- {x-version-update:gax:current} -->
+      </dependency>
+      <dependency>
+        <groupId>com.google.api</groupId>
+        <artifactId>gax-httpjson</artifactId>
+        <version>2.67.1</version><!-- {x-version-update:gax:current} -->
+        <type>test-jar</type>
+        <classifier>testlib</classifier>
+      </dependency>
+      <dependency>
+        <groupId>com.google.api</groupId>
+        <artifactId>gax-httpjson</artifactId>
+        <version>2.67.1</version><!-- {x-version-update:gax:current} -->
+        <classifier>testlib</classifier>
+      </dependency>
+      <!-- End of the content of gax-bom -->
+
       <dependency>
         <groupId>com.google.api</groupId>
         <artifactId>gapic-generator-java</artifactId>
