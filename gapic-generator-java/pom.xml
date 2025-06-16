@@ -29,7 +29,7 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>com.google.api</groupId>
+        <groupId>com.google.cloud</groupId>
         <artifactId>gapic-generator-java-bom</artifactId>
         <version>2.59.1</version><!-- {x-version-update:gapic-generator-java:current} -->
         <type>pom</type>
