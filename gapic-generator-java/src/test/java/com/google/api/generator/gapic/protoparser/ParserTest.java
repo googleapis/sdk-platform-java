@@ -408,11 +408,13 @@ class ParserTest {
   void parsePageSizeFieldName_bigqueryLegacy() {
     FileDescriptor bqJobFileDescriptor = JobProto.getDescriptor();
     ServiceDescriptor jobService = bqJobFileDescriptor.getServices().get(0);
-    MethodDescriptor methodDescriptor = jobService.getMethods().get(0);
-    assertEquals("ListJobs", methodDescriptor.getName());
+    MethodDescriptor deleteJobMethodDescriptor = jobService.getMethods().get(0);
+    assertEquals("DeleteJob", deleteJobMethodDescriptor.getName());
+    MethodDescriptor listJobsMethodDescriptor = jobService.getMethods().get(1);
+    assertEquals("ListJobs", listJobsMethodDescriptor.getName());
     Map<String, Message> messageTypes = Parser.parseMessages(bqJobFileDescriptor);
     String pageSizeFieldName =
-        Parser.parsePageSizeFieldName(methodDescriptor, messageTypes, Transport.GRPC);
+        Parser.parsePageSizeFieldName(listJobsMethodDescriptor, messageTypes, Transport.GRPC);
     assertEquals("max_results", pageSizeFieldName);
   }
 

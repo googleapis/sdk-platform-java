@@ -545,12 +545,6 @@ public class TestProtoLoader {
     ServiceDescriptor biqqueryServiceDescriptor = bigqueryFileDescriptor.getServices().get(0);
     assertEquals("JobService", biqqueryServiceDescriptor.getName());
 
-    String serviceYamlFilename = "bigquery_v2.yaml";
-    Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
-    Optional<com.google.api.Service> serviceYamlOpt =
-        ServiceYamlParser.parse(serviceYamlPath.toString());
-    assertTrue(serviceYamlOpt.isPresent());
-
     Map<String, Message> messageTypes = Parser.parseMessages(bigqueryFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(bigqueryFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
@@ -559,7 +553,7 @@ public class TestProtoLoader {
             bigqueryFileDescriptor,
             messageTypes,
             resourceNames,
-            serviceYamlOpt,
+            Optional.empty(),
             outputResourceNames);
 
     String jsonFilename = "bigquery_v2_service_config.json";

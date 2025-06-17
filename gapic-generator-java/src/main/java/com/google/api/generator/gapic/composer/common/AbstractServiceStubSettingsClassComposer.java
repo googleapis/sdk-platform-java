@@ -149,22 +149,19 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
   private final TransportContext transportContext;
 
-  // Maps of package->methodName to types for pagination with max_results field.
-  private static final ImmutableMap<String, ImmutableMap<String, TypeNode>>
-      PAGINATE_MAX_RESULT_TYPES =
-          ImmutableMap.of(
-              "com.google.cloud.bigquery.v2",
-              ImmutableMap.of(
-                  "ListDatasets",
-                  TypeNode.UINT32VALUE,
-                  "ListJobs",
-                  TypeNode.INT32VALUE,
-                  "ListModels",
-                  TypeNode.UINT32VALUE,
-                  "ListRoutines",
-                  TypeNode.UINT32VALUE,
-                  "ListTables",
-                  TypeNode.UINT32VALUE));
+  // Maps of BigQuery methods to pagination types.
+  private static final ImmutableMap<String, TypeNode> BIGQUERY_PAGINATE_MAX_RESULT_TYPES =
+      ImmutableMap.of(
+          "com.google.cloud.bigquery.v2.ListDatasets",
+          TypeNode.UINT32VALUE,
+          "com.google.cloud.bigquery.v2.ListJobs",
+          TypeNode.INT32VALUE,
+          "com.google.cloud.bigquery.v2.ListModels",
+          TypeNode.UINT32VALUE,
+          "com.google.cloud.bigquery.v2.ListRoutines",
+          TypeNode.UINT32VALUE,
+          "com.google.cloud.bigquery.v2.ListTables",
+          TypeNode.UINT32VALUE);
 
   protected static final VariableExpr DEFAULT_SERVICE_SCOPES_VAR_EXPR =
       createDefaultServiceScopesVarExpr();
@@ -744,8 +741,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .build());
 
     // Create injectPageSize method.
-    String pkg = method.inputType().reference().pakkage();
-    String methodName = method.name();
+    String methodFullName =
+        String.format("%s.%s", method.inputType().reference().pakkage(), method.name());
     VariableExpr pageSizeVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(TypeNode.INT).setName("pageSize").build());
@@ -758,15 +755,15 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setMethodName("set" + JavaStyle.toUpperCamelCase(method.pageSizeFieldName()))
             .setArguments(pageSizeVarExpr)
             .build();
-    if (PAGINATE_MAX_RESULT_TYPES.containsKey(pkg)
-        && PAGINATE_MAX_RESULT_TYPES.get(pkg).containsKey(methodName)) {
+    if (BIGQUERY_PAGINATE_MAX_RESULT_TYPES.containsKey(methodFullName)) {
       returnExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(newBuilderExpr)
               .setMethodName("set" + JavaStyle.toUpperCamelCase(method.pageSizeFieldName()))
               .setArguments(
                   MethodInvocationExpr.builder()
-                      .setStaticReferenceType(PAGINATE_MAX_RESULT_TYPES.get(pkg).get(methodName))
+                      .setStaticReferenceType(
+                          BIGQUERY_PAGINATE_MAX_RESULT_TYPES.get(methodFullName))
                       .setMethodName("of")
                       .setArguments(pageSizeVarExpr)
                       .build())
@@ -798,8 +795,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setMethodName("get" + JavaStyle.toUpperCamelCase(method.pageSizeFieldName()))
             .setReturnType(returnType)
             .build();
-    if (PAGINATE_MAX_RESULT_TYPES.containsKey(pkg)
-        && PAGINATE_MAX_RESULT_TYPES.get(pkg).containsKey(methodName)) {
+    if (BIGQUERY_PAGINATE_MAX_RESULT_TYPES.containsKey(methodFullName)) {
       // Return type is UINT32VALUE or INT32VALUE so use getValue to unwrap.
       returnExpr =
           MethodInvocationExpr.builder()

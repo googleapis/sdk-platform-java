@@ -37,6 +37,14 @@ service JobService {
     "https://www.googleapis.com/auth/devstorage.read_only,"
     "https://www.googleapis.com/auth/devstorage.read_write";
 
+  // Requests the deletion of the metadata of a job. This call returns when the
+  // job's metadata is deleted.
+  rpc DeleteJob(DeleteJobRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/bigquery/v2/projects/{project_id=*}/jobs/{job_id=*}/delete"
+    };
+  }
+
   // Lists all jobs that you started in the specified project. Job information
   // is available for a six month period after creation. The job list is sorted
   // in reverse chronological order, by job creation time. Requires the Can View
@@ -61,6 +69,25 @@ message ListJobsRequest {
   // Page token, returned by a previous call, to request the next page of
   // results.
   string page_token = 6;
+}
+
+// Describes the format of a jobs deletion request.
+message DeleteJobRequest {
+  // Required. Project ID of the job for which metadata is to be deleted.
+  string project_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Required. Job ID of the job for which metadata is to be deleted. If this is
+  // a parent job which has child jobs, the metadata from all child jobs will be
+  // deleted as well. Direct deletion of the metadata of child jobs is not
+  // allowed.
+  string job_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The geographic location of the job. Required.
+  //
+  // For more information, see how to
+  // [specify
+  // locations](https://cloud.google.com/bigquery/docs/locations#specify_locations).
+  string location = 3;
 }
 
 // Simplified ListFormatJob for testing.

@@ -11,6 +11,7 @@ import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.bigquery.v2.JobProto;
 import com.google.longrunning.stub.GrpcOperationsStub;
+import com.google.protobuf.Empty;
 import io.grpc.MethodDescriptor;
 import io.grpc.protobuf.ProtoUtils;
 import java.io.IOException;
@@ -26,6 +27,16 @@ import javax.annotation.Generated;
  */
 @Generated("by gapic-generator-java")
 public class GrpcJobServiceStub extends JobServiceStub {
+  private static final MethodDescriptor<JobProto.DeleteJobRequest, Empty>
+      deleteJobMethodDescriptor =
+          MethodDescriptor.<JobProto.DeleteJobRequest, Empty>newBuilder()
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName("google.cloud.bigquery.v2.JobService/DeleteJob")
+              .setRequestMarshaller(
+                  ProtoUtils.marshaller(JobProto.DeleteJobRequest.getDefaultInstance()))
+              .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+              .build();
+
   private static final MethodDescriptor<JobProto.ListJobsRequest, JobProto.JobList>
       listJobsMethodDescriptor =
           MethodDescriptor.<JobProto.ListJobsRequest, JobProto.JobList>newBuilder()
@@ -36,6 +47,7 @@ public class GrpcJobServiceStub extends JobServiceStub {
               .setResponseMarshaller(ProtoUtils.marshaller(JobProto.JobList.getDefaultInstance()))
               .build();
 
+  private final UnaryCallable<JobProto.DeleteJobRequest, Empty> deleteJobCallable;
   private final UnaryCallable<JobProto.ListJobsRequest, JobProto.JobList> listJobsCallable;
   private final UnaryCallable<JobProto.ListJobsRequest, ListJobsPagedResponse>
       listJobsPagedCallable;
@@ -82,6 +94,17 @@ public class GrpcJobServiceStub extends JobServiceStub {
     this.callableFactory = callableFactory;
     this.operationsStub = GrpcOperationsStub.create(clientContext, callableFactory);
 
+    GrpcCallSettings<JobProto.DeleteJobRequest, Empty> deleteJobTransportSettings =
+        GrpcCallSettings.<JobProto.DeleteJobRequest, Empty>newBuilder()
+            .setMethodDescriptor(deleteJobMethodDescriptor)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("job_id", String.valueOf(request.getJobId()));
+                  builder.add("project_id", String.valueOf(request.getProjectId()));
+                  return builder.build();
+                })
+            .build();
     GrpcCallSettings<JobProto.ListJobsRequest, JobProto.JobList> listJobsTransportSettings =
         GrpcCallSettings.<JobProto.ListJobsRequest, JobProto.JobList>newBuilder()
             .setMethodDescriptor(listJobsMethodDescriptor)
@@ -93,6 +116,9 @@ public class GrpcJobServiceStub extends JobServiceStub {
                 })
             .build();
 
+    this.deleteJobCallable =
+        callableFactory.createUnaryCallable(
+            deleteJobTransportSettings, settings.deleteJobSettings(), clientContext);
     this.listJobsCallable =
         callableFactory.createUnaryCallable(
             listJobsTransportSettings, settings.listJobsSettings(), clientContext);
@@ -106,6 +132,11 @@ public class GrpcJobServiceStub extends JobServiceStub {
 
   public GrpcOperationsStub getOperationsStub() {
     return operationsStub;
+  }
+
+  @Override
+  public UnaryCallable<JobProto.DeleteJobRequest, Empty> deleteJobCallable() {
+    return deleteJobCallable;
   }
 
   @Override
