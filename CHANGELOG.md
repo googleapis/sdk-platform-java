@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.59.2](https://github.com/googleapis/sdk-platform-java/compare/v2.59.1...v2.59.2) (2025-06-17)
+
+
+### Bug Fixes
+
+* update googleapis commit at Thu Jun 12 02:34:24 UTC 2025 ([f3a5d87](https://github.com/googleapis/sdk-platform-java/commit/f3a5d87ed2b5ab1acddd1bf362d11d6ccf3d22b4))
+* update googleapis commit at Thu Jun 12 02:34:24 UTC 2025 ([#3833](https://github.com/googleapis/sdk-platform-java/issues/3833)) ([f3a5d87](https://github.com/googleapis/sdk-platform-java/commit/f3a5d87ed2b5ab1acddd1bf362d11d6ccf3d22b4))
+
 ## [2.59.1](https://github.com/googleapis/sdk-platform-java/compare/v2.59.0...v2.59.1) (2025-06-12)
 
 
