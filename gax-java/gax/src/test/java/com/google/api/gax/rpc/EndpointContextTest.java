@@ -374,18 +374,19 @@ class EndpointContextTest {
   }
 
   @Test
-  void endpointContextBuild_shouldUseS2A_mtlsEndpoint() throws IOException {
+  void endpointContextBuild_shouldUseS2A_tlsEndpoint() throws IOException {
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(envProvider.getenv(EndpointContext.S2A_ENV_ENABLE_USE_S2A)).thenReturn("true");
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setResolvedUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
             .setTransportChannelProviderEndpoint("")
             .setUsingGDCH(false);
     EndpointContext endpointContext = defaultEndpointContextBuilder.build();
     Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isTrue();
-    Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(DEFAULT_MTLS_ENDPOINT);
+    Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
   }
 
   @Test
@@ -478,6 +479,7 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setResolvedUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
             .setTransportChannelProviderEndpoint("")
             .setUsingGDCH(false);
@@ -491,6 +493,7 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setResolvedUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
             .setTransportChannelProviderEndpoint("")
             .setUsingGDCH(true);
@@ -504,6 +507,7 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setResolvedUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("test.endpoint.com:443")
             .setTransportChannelProviderEndpoint("")
             .setUsingGDCH(false);
@@ -517,6 +521,7 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setResolvedUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
             .setTransportChannelProviderEndpoint("test.endpoint.com:443")
             .setUsingGDCH(false);
@@ -530,6 +535,7 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setResolvedUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
             .setTransportChannelProviderEndpoint("")
             .setUsingGDCH(false)
@@ -544,6 +550,7 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setResolvedUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
             .setTransportChannelProviderEndpoint("")
             .setMtlsEndpoint("")
@@ -558,6 +565,7 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setResolvedUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
             .setTransportChannelProviderEndpoint("")
             .setMtlsEndpoint("test.mtls.abcd.com:443")
@@ -572,6 +580,7 @@ class EndpointContextTest {
     defaultEndpointContextBuilder =
         defaultEndpointContextBuilder
             .setEnvProvider(envProvider)
+            .setResolvedUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint("")
             .setTransportChannelProviderEndpoint("")
             .setUsingGDCH(false);

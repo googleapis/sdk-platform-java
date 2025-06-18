@@ -45,9 +45,9 @@ class ApiResultRetryAlgorithmTest {
   @Test
   void testShouldRetryNoContext() {
     ApiException nonRetryable =
-        new ApiException(null, new FakeStatusCode(Code.INTERNAL), /* retryable = */ false);
+        new ApiException(null, new FakeStatusCode(Code.INTERNAL), /* retryable= */ false);
     ApiException retryable =
-        new ApiException(null, new FakeStatusCode(Code.UNAVAILABLE), /* retryable = */ true);
+        new ApiException(null, new FakeStatusCode(Code.UNAVAILABLE), /* retryable= */ true);
 
     ApiResultRetryAlgorithm<String> algorithm = new ApiResultRetryAlgorithm<>();
     assertFalse(algorithm.shouldRetry(nonRetryable, null));
@@ -62,9 +62,9 @@ class ApiResultRetryAlgorithmTest {
     when(context.getRetryableCodes()).thenReturn(null);
 
     ApiException nonRetryable =
-        new ApiException(null, new FakeStatusCode(Code.UNAVAILABLE), /* retryable = */ false);
+        new ApiException(null, new FakeStatusCode(Code.UNAVAILABLE), /* retryable= */ false);
     ApiException retryable =
-        new ApiException(null, new FakeStatusCode(Code.UNAVAILABLE), /* retryable = */ true);
+        new ApiException(null, new FakeStatusCode(Code.UNAVAILABLE), /* retryable= */ true);
 
     ApiResultRetryAlgorithm<String> algorithm = new ApiResultRetryAlgorithm<>();
     assertFalse(algorithm.shouldRetry(context, nonRetryable, null));
@@ -86,9 +86,9 @@ class ApiResultRetryAlgorithmTest {
     // The return value of isRetryable() will be ignored, as UNAVAILABLE has been added as a
     // retryable code to the call context.
     ApiException unavailableException =
-        new ApiException(null, new FakeStatusCode(Code.UNAVAILABLE), /* retryable = */ false);
+        new ApiException(null, new FakeStatusCode(Code.UNAVAILABLE), /* retryable= */ false);
     ApiException dataLossException =
-        new ApiException(null, new FakeStatusCode(Code.DATA_LOSS), /* retryable = */ true);
+        new ApiException(null, new FakeStatusCode(Code.DATA_LOSS), /* retryable= */ true);
 
     ApiResultRetryAlgorithm<String> algorithm = new ApiResultRetryAlgorithm<>();
     assertTrue(algorithm.shouldRetry(context, unavailableException, null));
@@ -102,7 +102,7 @@ class ApiResultRetryAlgorithmTest {
     when(context.getRetryableCodes()).thenReturn(Collections.<Code>emptySet());
 
     ApiException unavailableException =
-        new ApiException(null, new FakeStatusCode(Code.UNAVAILABLE), /* retryable = */ true);
+        new ApiException(null, new FakeStatusCode(Code.UNAVAILABLE), /* retryable= */ true);
 
     ApiResultRetryAlgorithm<String> algorithm = new ApiResultRetryAlgorithm<>();
     assertFalse(algorithm.shouldRetry(context, unavailableException, null));

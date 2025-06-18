@@ -303,13 +303,6 @@ public abstract class EndpointContext {
             "mTLS is not supported in any universe other than googleapis.com");
       }
 
-      // Check if Experimental S2A feature enabled. When feature is non-experimental, remove this
-      // check from this function, and plumb MTLS endpoint to channel creation logic separately.
-      // Note that mTLS via S2A is an independent feature from mTLS via DCA (for which endpoint
-      // determined by {@code mtlsEndpointResolver} above).
-      if (shouldUseS2A()) {
-        return mtlsEndpoint();
-      }
       return endpoint;
     }
 
@@ -334,8 +327,12 @@ public abstract class EndpointContext {
       }
 
       // If a custom endpoint is being used, skip S2A.
-      if (!Strings.isNullOrEmpty(clientSettingsEndpoint())
-          || !Strings.isNullOrEmpty(transportChannelProviderEndpoint())) {
+      if ((!Strings.isNullOrEmpty(clientSettingsEndpoint())
+              && !buildEndpointTemplate(serviceName(), resolvedUniverseDomain())
+                  .contains(clientSettingsEndpoint()))
+          || (!Strings.isNullOrEmpty(transportChannelProviderEndpoint())
+              && !buildEndpointTemplate(serviceName(), resolvedUniverseDomain())
+                  .contains(transportChannelProviderEndpoint()))) {
         return false;
       }
 

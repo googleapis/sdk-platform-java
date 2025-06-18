@@ -42,11 +42,14 @@ import com.google.api.gax.rpc.testing.FakeChannel;
 import com.google.api.gax.rpc.testing.FakeTransportChannel;
 import com.google.api.gax.tracing.ApiTracer;
 import com.google.auth.Credentials;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.truth.Truth;
+import io.grpc.CallCredentials;
 import io.grpc.CallOptions;
 import io.grpc.ManagedChannel;
 import io.grpc.Metadata.Key;
+import io.grpc.auth.MoreCallCredentials;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -98,6 +101,26 @@ class GrpcCallContextTest {
     } catch (IllegalArgumentException expected) {
       Truth.assertThat(expected).hasMessageThat().contains("Expected GrpcTransportChannel");
     }
+  }
+
+  @Test
+  void testWithTransportChannelIsDirectPath() {
+    ManagedChannel channel = Mockito.mock(ManagedChannel.class);
+    Credentials credentials = Mockito.mock(GoogleCredentials.class);
+    GrpcCallContext context = GrpcCallContext.createDefault().withCredentials(credentials);
+    assertNotNull(context.getCallOptions().getCredentials());
+    context =
+        context.withTransportChannel(
+            GrpcTransportChannel.newBuilder()
+                .setDirectPath(true)
+                .setManagedChannel(channel)
+                .build());
+    assertNull(context.getCallOptions().getCredentials());
+
+    // Call credentials from the call options will be stripped.
+    context.withCallOptions(
+        CallOptions.DEFAULT.withCallCredentials(MoreCallCredentials.from(credentials)));
+    assertNull(context.getCallOptions().getCredentials());
   }
 
   @Test
@@ -318,6 +341,25 @@ class GrpcCallContextTest {
         .isNotEqualTo(ctx1.getCallOptions().getOption(key));
     Truth.assertThat(merged.getCallOptions().getOption(key))
         .isEqualTo(ctx2.getCallOptions().getOption(key));
+  }
+
+  @Test
+  void testMergeWithIsDirectPath() {
+    ManagedChannel channel = Mockito.mock(ManagedChannel.class);
+    CallCredentials callCredentials = Mockito.mock(CallCredentials.class);
+    GrpcCallContext ctx1 =
+        GrpcCallContext.createDefault()
+            .withCallOptions(CallOptions.DEFAULT.withCallCredentials(callCredentials));
+    GrpcCallContext ctx2 =
+        GrpcCallContext.createDefault()
+            .withTransportChannel(
+                GrpcTransportChannel.newBuilder()
+                    .setDirectPath(true)
+                    .setManagedChannel(channel)
+                    .build());
+
+    GrpcCallContext merged = (GrpcCallContext) ctx1.merge(ctx2);
+    assertNull(merged.getCallOptions().getCredentials());
   }
 
   @Test

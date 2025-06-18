@@ -73,7 +73,9 @@ public interface TransportChannelProvider {
   /** Sets the executor to use when constructing a new {@link TransportChannel}. */
   TransportChannelProvider withExecutor(Executor executor);
 
-  /** @deprecated Please use {@link #withExecutor(Executor)}. */
+  /**
+   * @deprecated Please use {@link #withExecutor(Executor)}.
+   */
   @Deprecated
   TransportChannelProvider withExecutor(ScheduledExecutorService executor);
 
@@ -96,6 +98,20 @@ public interface TransportChannelProvider {
    * <p>This method should only be called if {@link #needsEndpoint()} returns true.
    */
   TransportChannelProvider withEndpoint(String endpoint);
+
+  /** True for gRPC transport provider which has no mtlsEndpoint set. */
+  default boolean needsMtlsEndpoint() {
+    return false;
+  }
+
+  /**
+   * Sets the mTLS endpoint to use when constructing a new {@link TransportChannel} using S2A.
+   *
+   * <p>This method should only be called if {@link #needsMtlsEndpoint()} returns true.
+   */
+  default TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint) {
+    return this;
+  }
 
   /** Sets whether to use S2A when constructing a new {@link TransportChannel}. */
   @BetaApi(

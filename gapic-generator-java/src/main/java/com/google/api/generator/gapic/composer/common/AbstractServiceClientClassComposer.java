@@ -18,6 +18,7 @@ import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.api.core.BetaApi;
+import com.google.api.core.InternalApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.api.gax.paging.AbstractFixedSizeCollection;
@@ -62,6 +63,7 @@ import com.google.api.generator.gapic.composer.samplecode.ServiceClientHeaderSam
 import com.google.api.generator.gapic.composer.samplecode.ServiceClientMethodSampleComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
+import com.google.api.generator.gapic.composer.utils.CommonStrings;
 import com.google.api.generator.gapic.composer.utils.PackageChecker;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicClass;
@@ -103,7 +105,6 @@ import java.util.stream.Collectors;
 import javax.annotation.Generated;
 
 public abstract class AbstractServiceClientClassComposer implements ClassComposer {
-  private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
   private static final String CALLABLE_NAME_PATTERN = "%sCallable";
   private static final String PAGED_CALLABLE_NAME_PATTERN = "%sPagedCallable";
   private static final String OPERATION_CALLABLE_NAME_PATTERN = "%sOperationCallable";
@@ -127,6 +128,21 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     return transportContext;
   }
 
+  private static List<AnnotationNode> createMethodAnnotations(Method method, TypeStore typeStore) {
+    List<AnnotationNode> annotations = new ArrayList<>();
+    if (method.isDeprecated()) {
+      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
+    }
+
+    if (method.isInternalApi()) {
+      annotations.add(
+          AnnotationNode.withTypeAndDescription(
+              typeStore.get("InternalApi"), CommonStrings.INTERNAL_API_WARNING));
+    }
+
+    return annotations;
+  }
+
   @Override
   public GapicClass generate(GapicContext context, Service service) {
     Map<String, ResourceName> resourceNames = context.helperResourceNames();
@@ -136,7 +152,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     GapicClass.Kind kind = Kind.MAIN;
     String pakkage = service.pakkage();
     boolean hasLroClient = service.hasStandardLroMethods();
-
     List<Sample> samples = new ArrayList<>();
     Map<String, List<String>> grpcRpcsToJavaMethodNames = new HashMap<>();
     Map<String, List<String>> methodVariantsForClientHeader = new HashMap<>();
@@ -713,7 +728,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     TypeNode methodInputType = method.inputType();
     TypeNode methodOutputType =
         method.isPaged()
-            ? typeStore.get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
+            ? typeStore.get(
+                String.format(CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
             : method.outputType();
     if (method.hasLro()) {
       LongrunningOperation lro = method.lro();
@@ -802,11 +818,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             methodVariantBuilder.setReturnType(methodOutputType).setReturnExpr(rpcInvocationExpr);
       }
 
-      if (method.isDeprecated()) {
-        methodVariantBuilder =
-            methodVariantBuilder.setAnnotations(
-                Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED)));
-      }
+      methodVariantBuilder =
+          methodVariantBuilder.setAnnotations(createMethodAnnotations(method, typeStore));
       methodVariantBuilder = methodVariantBuilder.setBody(statements);
       javaMethods.add(methodVariantBuilder.build());
     }
@@ -826,9 +839,9 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     TypeNode methodInputType = method.inputType();
     TypeNode methodOutputType =
         method.isPaged()
-            ? typeStore.get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
+            ? typeStore.get(
+                String.format(CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
             : method.outputType();
-    List<AnnotationNode> annotations = new ArrayList<>();
     if (method.hasLro()) {
       LongrunningOperation lro = method.lro();
       methodOutputType =
@@ -885,10 +898,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .setName(String.format(method.hasLro() ? "%sAsync" : "%s", methodName))
             .setArguments(Arrays.asList(requestArgVarExpr));
 
-    if (method.isDeprecated()) {
-      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
-    }
-
     if (isProtoEmptyType(methodOutputType)) {
       methodBuilder =
           methodBuilder
@@ -899,8 +908,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
           methodBuilder.setReturnExpr(callableMethodExpr).setReturnType(methodOutputType);
     }
 
-    methodBuilder.setAnnotations(annotations);
-
+    methodBuilder.setAnnotations(createMethodAnnotations(method, typeStore));
     return methodBuilder.build();
   }
 
@@ -966,7 +974,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
           rawCallableReturnType = typeStore.get("BidiStreamingCallable");
           break;
         case NONE:
-          // Fall through.
+        // Fall through.
         default:
           rawCallableReturnType = typeStore.get("UnaryCallable");
       }
@@ -1039,11 +1047,8 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     }
 
     MethodDefinition.Builder methodDefBuilder = MethodDefinition.builder();
-    if (method.isDeprecated()) {
-      methodDefBuilder =
-          methodDefBuilder.setAnnotations(
-              Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED)));
-    }
+
+    methodDefBuilder = methodDefBuilder.setAnnotations(createMethodAnnotations(method, typeStore));
 
     return methodDefBuilder
         .setHeaderCommentStatements(
@@ -1774,6 +1779,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             ApiFutures.class,
             BackgroundResource.class,
             BetaApi.class,
+            InternalApi.class,
             BidiStreamingCallable.class,
             ClientStreamingCallable.class,
             Generated.class,
@@ -1828,7 +1834,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
         service.pakkage(),
         service.methods().stream()
             .filter(m -> m.isPaged())
-            .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
+            .map(m -> String.format(CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),
         true,
         ClassNames.getServiceClientClassName(service));
@@ -1846,7 +1852,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       return Arrays.asList(
           method.inputType().reference(),
           typeStore
-              .get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
+              .get(String.format(CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
               .reference());
     }
     return Arrays.asList(method.inputType().reference(), method.outputType().reference());

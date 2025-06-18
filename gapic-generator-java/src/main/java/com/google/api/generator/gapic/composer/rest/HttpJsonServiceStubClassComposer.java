@@ -190,8 +190,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     return ExprStatement.withExpr(
         AssignmentExpr.builder()
             .setVariableExpr(
-                methodDescriptorVarExpr
-                    .toBuilder()
+                methodDescriptorVarExpr.toBuilder()
                     .setIsDecl(true)
                     .setScope(ScopeNode.PRIVATE)
                     .setIsStatic(true)
@@ -1006,9 +1005,9 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
         methodType = MethodType.SERVER_STREAMING;
         break;
       case CLIENT:
-        // Not feasible to suppor in REST
+      // Not feasible to suppor in REST
       case BIDI:
-        // Not feasible to suppor in REST
+      // Not feasible to suppor in REST
       default:
         throw new UnsupportedOperationException(
             String.format(
@@ -1254,8 +1253,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
     TypeNode typeRegistryType = FIXED_REST_TYPESTORE.get(TypeRegistry.class.getSimpleName());
 
     VariableExpr typeRegistryVarExpr =
-        TYPE_REGISTRY_VAR_EXPR
-            .toBuilder()
+        TYPE_REGISTRY_VAR_EXPR.toBuilder()
             .setIsDecl(true)
             .setIsStatic(true)
             .setScope(ScopeNode.PRIVATE)

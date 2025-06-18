@@ -18,6 +18,7 @@ import com.google.api.MonitoredResourceDescriptor;
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.BetaApi;
+import com.google.api.core.InternalApi;
 import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.batching.BatchingSettings;
 import com.google.api.gax.batching.FlowControlSettings;
@@ -83,6 +84,7 @@ import com.google.api.generator.gapic.composer.samplecode.SampleComposerUtil;
 import com.google.api.generator.gapic.composer.samplecode.SettingsSampleComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
+import com.google.api.generator.gapic.composer.utils.CommonStrings;
 import com.google.api.generator.gapic.composer.utils.PackageChecker;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicBatchingSettings;
@@ -128,17 +130,12 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   private static final String BATCHING_DESC_PATTERN = "%s_BATCHING_DESC";
   private static final String PAGE_STR_DESC_PATTERN = "%s_PAGE_STR_DESC";
   private static final String PAGED_RESPONSE_FACTORY_PATTERN = "%s_PAGE_STR_FACT";
-  private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
   private static final String NESTED_BUILDER_CLASS_NAME = "Builder";
   private static final String NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_NAME =
       "unaryMethodSettingsBuilders";
   private static final String NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_NAME =
       "RETRYABLE_CODE_DEFINITIONS";
   private static final String NESTED_RETRY_PARAM_DEFINITIONS_VAR_NAME = "RETRY_PARAM_DEFINITIONS";
-
-  private static final String OPERATION_SETTINGS_LITERAL = "OperationSettings";
-  private static final String SETTINGS_LITERAL = "Settings";
-
   private static final String DOT = ".";
 
   protected static final TypeStore FIXED_TYPESTORE = createStaticTypes();
@@ -173,13 +170,15 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
     List<Sample> samples = new ArrayList<>();
     Set<String> deprecatedSettingVarNames = new HashSet<>();
+    Set<String> internalSettingVarNames = new HashSet<>();
     Map<String, VariableExpr> methodSettingsMemberVarExprs =
         createMethodSettingsClassMemberVarExprs(
             service,
             serviceConfig,
             typeStore,
             /* isNestedClass= */ false,
-            deprecatedSettingVarNames);
+            deprecatedSettingVarNames,
+            internalSettingVarNames);
     String className = ClassNames.getServiceStubSettingsClassName(service);
     List<CommentStatement> classHeaderComments =
         createClassHeaderComments(service, typeStore.get(className), samples);
@@ -196,7 +195,11 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                     service, serviceConfig, methodSettingsMemberVarExprs, messageTypes, typeStore))
             .setMethods(
                 createClassMethods(
-                    service, methodSettingsMemberVarExprs, deprecatedSettingVarNames, typeStore))
+                    service,
+                    methodSettingsMemberVarExprs,
+                    deprecatedSettingVarNames,
+                    internalSettingVarNames,
+                    typeStore))
             .setNestedClasses(
                 Arrays.asList(createNestedBuilderClass(service, serviceConfig, typeStore)))
             .build();
@@ -410,16 +413,21 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
   private static List<CommentStatement> createClassHeaderComments(
       Service service, TypeNode classType, List<Sample> samples) {
-    // Pick the first pure unary rpc method, if no such method exists, then pick the first in the
+    // Pick the first public pure unary rpc method, if no such method exists, then pick the first
+    // public in the
     // list.
+    List<Method> publicMethods =
+        service.methods().stream()
+            .filter(m -> m.isInternalApi() == false)
+            .collect(Collectors.toList());
     Optional<Method> methodOpt =
-        service.methods().isEmpty()
+        publicMethods.isEmpty()
             ? Optional.empty()
             : Optional.of(
-                service.methods().stream()
+                publicMethods.stream()
                     .filter(m -> m.stream() == Stream.NONE && !m.hasLro() && !m.isPaged())
                     .findFirst()
-                    .orElse(service.methods().get(0)));
+                    .orElse(publicMethods.get(0)));
     Optional<String> methodNameOpt = methodOpt.map(Method::name);
 
     Optional<Sample> sampleCode =
@@ -433,9 +441,9 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // Create a sample for a LRO method using LRO-specific RetrySettings, if one exists in the
     // service.
     Optional<Method> lroMethodOpt =
-        service.methods().isEmpty()
+        publicMethods.isEmpty()
             ? Optional.empty()
-            : service.methods().stream()
+            : publicMethods.stream()
                 .filter(m -> m.stream() == Stream.NONE && m.hasLro())
                 .findFirst();
     Optional<String> lroMethodNameOpt =
@@ -475,7 +483,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       GapicServiceConfig serviceConfig,
       TypeStore typeStore,
       boolean isNestedClass,
-      Set<String> deprecatedSettingVarNames) {
+      Set<String> deprecatedSettingVarNames,
+      Set<String> internalSettingVarNames) {
     // Maintain insertion order.
     Map<String, VariableExpr> varExprs = new LinkedHashMap<>();
 
@@ -488,6 +497,9 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       String varName = String.format("%sSettings", JavaStyle.toLowerCamelCase(method.name()));
       if (method.isDeprecated()) {
         deprecatedSettingVarNames.add(varName);
+      }
+      if (method.isInternalApi()) {
+        internalSettingVarNames.add(varName);
       }
       varExprs.put(
           varName,
@@ -518,8 +530,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // Assign DEFAULT_SERVICE_SCOPES.
     statements.add(SettingsCommentComposer.DEFAULT_SCOPES_COMMENT);
     VariableExpr defaultServiceScopesDeclVarExpr =
-        DEFAULT_SERVICE_SCOPES_VAR_EXPR
-            .toBuilder()
+        DEFAULT_SERVICE_SCOPES_VAR_EXPR.toBuilder()
             .setIsDecl(true)
             .setScope(ScopeNode.PRIVATE)
             .setIsStatic(true)
@@ -826,8 +837,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // Declare and assign the variable.
     return AssignmentExpr.builder()
         .setVariableExpr(
-            pagedListDescVarExpr
-                .toBuilder()
+            pagedListDescVarExpr.toBuilder()
                 .setIsDecl(true)
                 .setScope(ScopeNode.PRIVATE)
                 .setIsStatic(true)
@@ -966,8 +976,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
     return AssignmentExpr.builder()
         .setVariableExpr(
-            pagedListResponseFactoryVarExpr
-                .toBuilder()
+            pagedListResponseFactoryVarExpr.toBuilder()
                 .setIsDecl(true)
                 .setScope(ScopeNode.PRIVATE)
                 .setIsStatic(true)
@@ -981,10 +990,12 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       Service service,
       Map<String, VariableExpr> methodSettingsMemberVarExprs,
       Set<String> deprecatedSettingVarNames,
+      Set<String> internalSettingVarNames,
       TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.addAll(
-        createMethodSettingsGetterMethods(methodSettingsMemberVarExprs, deprecatedSettingVarNames));
+        createMethodSettingsGetterMethods(
+            methodSettingsMemberVarExprs, deprecatedSettingVarNames, internalSettingVarNames));
     javaMethods.add(createCreateStubMethod(service, typeStore));
     javaMethods.addAll(createDefaultHelperAndGetterMethods(service, typeStore));
     javaMethods.addAll(
@@ -999,20 +1010,33 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     return javaMethods;
   }
 
+  private static List<AnnotationNode> createMethodAnnotation(
+      boolean isDeprecated, boolean isInternal) {
+    List<AnnotationNode> annotations = new ArrayList<>();
+    if (isDeprecated) {
+      annotations.add(AnnotationNode.withType(TypeNode.DEPRECATED));
+    }
+    if (isInternal) {
+      annotations.add(
+          AnnotationNode.withTypeAndDescription(
+              FIXED_TYPESTORE.get("InternalApi"), CommonStrings.INTERNAL_API_WARNING));
+    }
+    return annotations;
+  }
+
   private static List<MethodDefinition> createMethodSettingsGetterMethods(
       Map<String, VariableExpr> methodSettingsMemberVarExprs,
-      final Set<String> deprecatedSettingVarNames) {
+      final Set<String> deprecatedSettingVarNames,
+      final Set<String> internalSettingVarNames) {
     Function<Map.Entry<String, VariableExpr>, MethodDefinition> varToMethodFn =
         e -> {
           boolean isDeprecated = deprecatedSettingVarNames.contains(e.getKey());
+          boolean isInternal = internalSettingVarNames.contains(e.getKey());
           return MethodDefinition.builder()
               .setHeaderCommentStatements(
                   SettingsCommentComposer.createCallSettingsGetterComment(
-                      getMethodNameFromSettingsVarName(e.getKey()), isDeprecated))
-              .setAnnotations(
-                  isDeprecated
-                      ? Arrays.asList(AnnotationNode.withType(TypeNode.DEPRECATED))
-                      : Collections.emptyList())
+                      getMethodNameFromSettingsVarName(e.getKey()), isDeprecated, isInternal))
+              .setAnnotations(createMethodAnnotation(isDeprecated, isInternal))
               .setScope(ScopeNode.PUBLIC)
               .setReturnType(e.getValue().type())
               .setName(e.getKey())
@@ -1351,13 +1375,15 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                 .build());
 
     Set<String> nestedDeprecatedSettingVarNames = new HashSet<>();
+    Set<String> nestedInternalSettingVarNames = new HashSet<>();
     Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs =
         createMethodSettingsClassMemberVarExprs(
             service,
             serviceConfig,
             typeStore,
             /* isNestedClass= */ true,
-            nestedDeprecatedSettingVarNames);
+            nestedDeprecatedSettingVarNames,
+            nestedInternalSettingVarNames);
 
     // TODO(miraleung): Fill this out.
     return ClassDefinition.builder()
@@ -1378,6 +1404,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                 extendsType,
                 nestedMethodSettingsMemberVarExprs,
                 nestedDeprecatedSettingVarNames,
+                nestedInternalSettingVarNames,
                 typeStore))
         .build();
   }
@@ -1438,6 +1465,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       TypeNode superType,
       Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs,
       Set<String> nestedDeprecatedSettingVarNames,
+      Set<String> nestedInternalSettingVarNames,
       TypeStore typeStore) {
     List<MethodDefinition> nestedClassMethods = new ArrayList<>();
     nestedClassMethods.addAll(
@@ -1449,7 +1477,9 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     nestedClassMethods.add(createNestedClassUnaryMethodSettingsBuilderGetterMethod());
     nestedClassMethods.addAll(
         createNestedClassSettingsBuilderGetterMethods(
-            nestedMethodSettingsMemberVarExprs, nestedDeprecatedSettingVarNames));
+            nestedMethodSettingsMemberVarExprs,
+            nestedDeprecatedSettingVarNames,
+            nestedInternalSettingVarNames));
     nestedClassMethods.add(createNestedClassBuildMethod(service, typeStore));
     return nestedClassMethods;
   }
@@ -1601,7 +1631,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                   VariableExpr varExpr = e.getValue();
                   TypeNode varType = varExpr.type();
                   Preconditions.checkState(
-                      e.getKey().endsWith(SETTINGS_LITERAL),
+                      e.getKey().endsWith(CommonStrings.SETTINGS_LITERAL),
                       String.format("%s expected to end with \"Settings\"", e.getKey()));
                   String methodName = getMethodNameFromSettingsVarName(e.getKey());
 
@@ -1967,7 +1997,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
   private static List<MethodDefinition> createNestedClassSettingsBuilderGetterMethods(
       Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs,
-      Set<String> nestedDeprecatedSettingVarNames) {
+      Set<String> nestedDeprecatedSettingVarNames,
+      Set<String> nestedInternalSettingVarNames) {
     Reference operationCallSettingsBuilderRef =
         ConcreteReference.withClazz(OperationCallSettings.Builder.class);
     Function<TypeNode, Boolean> isOperationCallSettingsBuilderFn =
@@ -1975,26 +2006,22 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             t.reference()
                 .copyAndSetGenerics(ImmutableList.of())
                 .equals(operationCallSettingsBuilderRef);
-    AnnotationNode deprecatedAnnotation = AnnotationNode.withType(TypeNode.DEPRECATED);
 
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Map.Entry<String, VariableExpr> settingsVarEntry :
         nestedMethodSettingsMemberVarExprs.entrySet()) {
       String varName = settingsVarEntry.getKey();
       VariableExpr settingsVarExpr = settingsVarEntry.getValue();
-      List<AnnotationNode> annotations = new ArrayList<>();
 
       boolean isDeprecated = nestedDeprecatedSettingVarNames.contains(varName);
-      if (isDeprecated) {
-        annotations.add(deprecatedAnnotation);
-      }
+      boolean isInternal = nestedInternalSettingVarNames.contains(varName);
 
       javaMethods.add(
           MethodDefinition.builder()
               .setHeaderCommentStatements(
                   SettingsCommentComposer.createCallSettingsBuilderGetterComment(
-                      getMethodNameFromSettingsVarName(varName), isDeprecated))
-              .setAnnotations(annotations)
+                      getMethodNameFromSettingsVarName(varName), isDeprecated, isInternal))
+              .setAnnotations(createMethodAnnotation(isDeprecated, isInternal))
               .setScope(ScopeNode.PUBLIC)
               .setReturnType(settingsVarExpr.type())
               .setName(settingsVarExpr.variable().identifier().name())
@@ -2035,6 +2062,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             BatchingDescriptor.class,
             BatchingSettings.class,
             BetaApi.class,
+            InternalApi.class,
             ClientContext.class,
             Duration.class,
             Empty.class,
@@ -2096,7 +2124,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         service.pakkage(),
         service.methods().stream()
             .filter(m -> m.isPaged())
-            .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
+            .map(m -> String.format(CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),
         true,
         ClassNames.getServiceClientClassName(service));
@@ -2175,7 +2203,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   }
 
   private static String getPagedResponseTypeName(String methodName) {
-    return String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, JavaStyle.toUpperCamelCase(methodName));
+    return String.format(
+        CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, JavaStyle.toUpperCamelCase(methodName));
   }
 
   private static TypeNode getCallSettingsType(
@@ -2208,7 +2237,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                     : ServerStreamingCallSettings.class);
         break;
       case CLIENT:
-        // Fall through.
+      // Fall through.
       case BIDI:
         callSettingsType =
             typeMakerFn.apply(
@@ -2217,7 +2246,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                     : StreamingCallSettings.class);
         break;
       case NONE:
-        // Fall through.
+      // Fall through.
       default:
         break;
     }
@@ -2253,11 +2282,11 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   private static String getMethodNameFromSettingsVarName(String settingsVarName) {
     BiFunction<String, String, String> methodNameSubstrFn =
         (s, literal) -> s.substring(0, s.length() - literal.length());
-    if (settingsVarName.endsWith(OPERATION_SETTINGS_LITERAL)) {
-      return methodNameSubstrFn.apply(settingsVarName, OPERATION_SETTINGS_LITERAL);
+    if (settingsVarName.endsWith(CommonStrings.OPERATION_SETTINGS_LITERAL)) {
+      return methodNameSubstrFn.apply(settingsVarName, CommonStrings.OPERATION_SETTINGS_LITERAL);
     }
-    if (settingsVarName.endsWith(SETTINGS_LITERAL)) {
-      return methodNameSubstrFn.apply(settingsVarName, SETTINGS_LITERAL);
+    if (settingsVarName.endsWith(CommonStrings.SETTINGS_LITERAL)) {
+      return methodNameSubstrFn.apply(settingsVarName, CommonStrings.SETTINGS_LITERAL);
     }
     return settingsVarName;
   }

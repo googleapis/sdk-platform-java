@@ -475,8 +475,7 @@ class ITOtelMetrics {
         .setRetryableCodes(ImmutableSet.of(statusCode));
     EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
     grpcEchoSettings =
-        grpcEchoSettings
-            .toBuilder()
+        grpcEchoSettings.toBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
                 EchoSettings.defaultGrpcTransportProviderBuilder()
@@ -487,9 +486,7 @@ class ITOtelMetrics {
 
     EchoStubSettings echoStubSettings =
         (EchoStubSettings)
-            grpcEchoSettings
-                .getStubSettings()
-                .toBuilder()
+            grpcEchoSettings.getStubSettings().toBuilder()
                 .setTracerFactory(
                     new MetricsTracerFactory(createOtelMetricsRecorder(inMemoryMetricReader)))
                 .build();
@@ -541,8 +538,7 @@ class ITOtelMetrics {
         .setRetryableCodes(ImmutableSet.of(statusCode));
     EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
     httpJsonEchoSettings =
-        httpJsonEchoSettings
-            .toBuilder()
+        httpJsonEchoSettings.toBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
                 EchoSettings.defaultHttpJsonTransportProviderBuilder()
@@ -554,9 +550,7 @@ class ITOtelMetrics {
 
     EchoStubSettings echoStubSettings =
         (EchoStubSettings)
-            httpJsonEchoSettings
-                .getStubSettings()
-                .toBuilder()
+            httpJsonEchoSettings.getStubSettings().toBuilder()
                 .setTracerFactory(
                     new MetricsTracerFactory(createOtelMetricsRecorder(inMemoryMetricReader)))
                 .build();
@@ -666,8 +660,7 @@ class ITOtelMetrics {
         .setRetryableCodes(ImmutableSet.of(Code.DEADLINE_EXCEEDED));
     EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
     grpcEchoSettings =
-        grpcEchoSettings
-            .toBuilder()
+        grpcEchoSettings.toBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
                 EchoSettings.defaultGrpcTransportProviderBuilder()
@@ -678,9 +671,7 @@ class ITOtelMetrics {
 
     EchoStubSettings echoStubSettings =
         (EchoStubSettings)
-            grpcEchoSettings
-                .getStubSettings()
-                .toBuilder()
+            grpcEchoSettings.getStubSettings().toBuilder()
                 .setTracerFactory(
                     new MetricsTracerFactory(createOtelMetricsRecorder(inMemoryMetricReader)))
                 .build();
@@ -734,8 +725,7 @@ class ITOtelMetrics {
         .setRetryableCodes(ImmutableSet.of(Code.DEADLINE_EXCEEDED));
     EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
     httpJsonEchoSettings =
-        httpJsonEchoSettings
-            .toBuilder()
+        httpJsonEchoSettings.toBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
                 EchoSettings.defaultHttpJsonTransportProviderBuilder()
@@ -747,9 +737,7 @@ class ITOtelMetrics {
 
     EchoStubSettings echoStubSettings =
         (EchoStubSettings)
-            httpJsonEchoSettings
-                .getStubSettings()
-                .toBuilder()
+            httpJsonEchoSettings.getStubSettings().toBuilder()
                 .setTracerFactory(
                     new MetricsTracerFactory(createOtelMetricsRecorder(inMemoryMetricReader)))
                 .build();
@@ -817,9 +805,7 @@ class ITOtelMetrics {
 
     EchoStubSettings echoStubSettings =
         (EchoStubSettings)
-            grpcEchoSettings
-                .getStubSettings()
-                .toBuilder()
+            grpcEchoSettings.getStubSettings().toBuilder()
                 .setTracerFactory(metricsTracerFactory)
                 .build();
     EchoStub stub = echoStubSettings.createStub();

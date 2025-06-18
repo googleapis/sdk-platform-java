@@ -17,7 +17,7 @@ update to a compatible client version in `./WORKSPACE`.
 
 ```shell
 # Install the showcase server version defined in gapic-showcase/pom.xml
-cd showcase
+cd java-showcase
 go install github.com/googleapis/gapic-showcase/cmd/gapic-showcase@v"$(cd gapic-showcase;mvn help:evaluate -Dexpression=gapic-showcase.version -q -DforceStdout |sed 's/\x1b\[[0-9;]*m//g')"
 PATH=$PATH:`go env GOPATH`/bin
 gapic-showcase --help
@@ -67,7 +67,7 @@ Open a new terminal window in the root project directory.
 This step does not require Docker.
 
 ```shell
-cd showcase
+cd java-showcase
 mvn verify -P enable-integration-tests
 ```
 

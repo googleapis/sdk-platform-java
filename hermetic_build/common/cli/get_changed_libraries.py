@@ -11,11 +11,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+# Setup logging
+import logging
+import sys
+
+logging.basicConfig(level=logging.DEBUG, stream=sys.stderr)
+
 import os
+import click
 
-import click as click
-
-from common.model.generation_config import from_yaml
+from common.model.generation_config import GenerationConfig
 from common.utils.generation_config_comparator import compare_config
 
 
@@ -69,8 +75,8 @@ def create(
             "current-generation-config-path."
         )
     config_change = compare_config(
-        baseline_config=from_yaml(baseline_generation_config_path),
-        current_config=from_yaml(current_generation_config_path),
+        baseline_config=GenerationConfig.from_yaml(baseline_generation_config_path),
+        current_config=GenerationConfig.from_yaml(current_generation_config_path),
     )
     click.echo(",".join(config_change.get_changed_libraries()))
 

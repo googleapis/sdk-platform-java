@@ -159,14 +159,14 @@ def prepare_repo(
         json_name = ".repo-metadata.json"
         if os.path.exists(f"{absolute_library_path}/{json_name}"):
             os.remove(f"{absolute_library_path}/{json_name}")
-    versions_file = f"{repo_path}/versions.txt"
-    if not Path(versions_file).exists():
-        raise FileNotFoundError(f"{versions_file} is not found.")
-
+    versions_file = Path(repo_path) / "versions.txt"
+    if not versions_file.exists():
+        versions_file.touch()
+        print(f"Created empty versions file: {versions_file}")
     return RepoConfig(
         output_folder=output_folder,
         libraries=libraries,
-        versions_file=str(Path(versions_file).resolve()),
+        versions_file=str(versions_file),
     )
 
 

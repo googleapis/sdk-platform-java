@@ -15,8 +15,10 @@ import os
 import sys
 from typing import Optional
 import click as click
+import shutil
+from pathlib import Path
 from library_generation.generate_repo import generate_from_yaml
-from common.model.generation_config import from_yaml, GenerationConfig
+from common.model.generation_config import GenerationConfig
 
 
 @click.group(invoke_without_command=False)
@@ -35,10 +37,27 @@ def main(ctx):
     help="""
     Absolute or relative path to a generation_config.yaml that contains the
     metadata about library generation.
+    When not set, will use generation_config.yaml from --generation-input.
+    When neither this or --generation-input is set default to 
+    generation_config.yaml in the current working directory 
+    """,
+)
+@click.option(
+    "--generation-input",
+    required=False,
+    default=None,
+    type=str,
+    help="""
+    Absolute or relative path to a input folder that contains 
+    generation_config.yaml and versions.txt.
+    This is only used when --generation-config-path is not set.
+    When neither this or --generation-config-path is set default to 
+    generation_config.yaml in the current working directory 
     """,
 )
 @click.option(
     "--library-names",
+    required=False,
     type=str,
     default=None,
     show_default=True,
@@ -46,10 +65,30 @@ def main(ctx):
     A list of library names that will be generated, separated by comma.
     The library name of a library is the value of library_name or api_shortname,
     if library_name is not specified, in the generation configuration.
+    
+    If neither --library-names  or --api-path specified, all libraries in the 
+    generation configuration will be generated.
+    """,
+)
+@click.option(
+    "--api-path",
+    required=False,
+    type=str,
+    default=None,
+    show_default=True,
+    help="""
+    Path within the API root (e.g. googleapis) to the API to 
+    generate/build/configure etc. This is expected to be a major-versioned 
+    API directory, e.g. google/cloud/functions/v2.
+
+    Takes precedence over --library-names when specidied. 
+    If neither --library-names  or --api-path specified, all libraries in the 
+    generation configuration will be generated.
     """,
 )
 @click.option(
     "--repository-path",
+    "--output",
     type=str,
     default=".",
     show_default=True,
@@ -62,6 +101,7 @@ def main(ctx):
 )
 @click.option(
     "--api-definitions-path",
+    "--api-root",
     type=str,
     default=".",
     show_default=True,
@@ -73,7 +113,9 @@ def main(ctx):
 )
 def generate(
     generation_config_path: Optional[str],
+    generation_input: Optional[str],
     library_names: Optional[str],
+    api_path: Optional[str],
     repository_path: str,
     api_definitions_path: str,
 ):
@@ -93,7 +135,9 @@ def generate(
     """
     __generate_repo_impl(
         generation_config_path=generation_config_path,
+        generation_input=generation_input,
         library_names=library_names,
+        api_path=api_path,
         repository_path=repository_path,
         api_definitions_path=api_definitions_path,
     )
@@ -101,7 +145,9 @@ def generate(
 
 def __generate_repo_impl(
     generation_config_path: Optional[str],
+    generation_input: Optional[str],
     library_names: Optional[str],
+    api_path: Optional[str],
     repository_path: str,
     api_definitions_path: str,
 ):
@@ -111,8 +157,20 @@ def __generate_repo_impl(
     meant to allow testing of this implementation function.
     """
 
+    # only use generation_input when generation_config_path is not provided and
+    # generation_input provided. generation_config_path should be deprecated after
+    # migration to 1pp.
     default_generation_config_path = f"{os.getcwd()}/generation_config.yaml"
-    if generation_config_path is None:
+    if generation_config_path is None and generation_input is not None:
+        print(
+            "generation_config_path is not provided, using generation-input folder provided"
+        )
+        generation_config_path = f"{generation_input}/generation_config.yaml"
+        # copy versions.txt from generation_input to repository_path
+        # override if present.
+        _copy_versions_file(generation_input, repository_path)
+    if generation_config_path is None and generation_input is None:
+        print("Using default generation config path")
         generation_config_path = default_generation_config_path
     generation_config_path = os.path.abspath(generation_config_path)
     if not os.path.isfile(generation_config_path):
@@ -121,7 +179,7 @@ def __generate_repo_impl(
         )
     repository_path = os.path.abspath(repository_path)
     api_definitions_path = os.path.abspath(api_definitions_path)
-    generation_config = from_yaml(generation_config_path)
+    generation_config = GenerationConfig.from_yaml(generation_config_path)
     include_library_names = _parse_library_name_from(
         includes=library_names, generation_config=generation_config
     )
@@ -130,7 +188,35 @@ def __generate_repo_impl(
         repository_path=repository_path,
         api_definitions_path=api_definitions_path,
         target_library_names=include_library_names,
+        target_api_path=api_path,
     )
+
+
+def _copy_versions_file(generation_input_path, repository_path):
+    """
+    Copies the versions.txt file from the generation_input folder to the repository_path.
+    Overrides the destination file if it already exists.
+
+    Args:
+        generation_input_path (str): The path to the generation_input folder.
+        repository_path (str): The path to the repository folder.
+    """
+    source_file = Path(generation_input_path) / "versions.txt"
+    destination_file = Path(repository_path) / "versions.txt"
+
+    if not source_file.exists():
+        destination_file.touch()
+        print(
+            f"generation-input does not contain versions.txt. "
+            f"Created empty versions file: {source_file}"
+        )
+        return
+    try:
+        shutil.copy2(source_file, destination_file)
+        print(f"Copied '{source_file}' to '{destination_file}'")
+    except Exception as e:
+        print(f"An error occurred while copying the versions.txt: {e}")
+        raise  # Re-raises the caught exception
 
 
 def _needs_full_repo_generation(generation_config: GenerationConfig) -> bool:
@@ -169,7 +255,7 @@ def validate_generation_config(generation_config_path: str) -> None:
     if generation_config_path is None:
         generation_config_path = "generation_config.yaml"
     try:
-        from_yaml(os.path.abspath(generation_config_path))
+        GenerationConfig.from_yaml(os.path.abspath(generation_config_path))
         print(f"{generation_config_path} is validated without any errors.")
     except ValueError as err:
         print(err)

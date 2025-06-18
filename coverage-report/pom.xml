@@ -31,22 +31,22 @@
             <dependency>
                 <groupId>com.google.api</groupId>
                 <artifactId>gax</artifactId>
-                <version>2.62.1-SNAPSHOT</version> <!-- {x-version-update:gax:current} -->
+                <version>2.67.2</version> <!-- {x-version-update:gax:current} -->
             </dependency>
             <dependency>
                 <groupId>com.google.api</groupId>
                 <artifactId>gax-grpc</artifactId>
-                <version>2.62.1-SNAPSHOT</version> <!-- {x-version-update:gax-grpc:current} -->
+                <version>2.67.2</version> <!-- {x-version-update:gax-grpc:current} -->
             </dependency>
             <dependency>
                 <groupId>com.google.api</groupId>
                 <artifactId>gax-httpjson</artifactId>
-                <version>2.62.1-SNAPSHOT</version> <!-- {x-version-update:gax:current} -->
+                <version>2.67.2</version> <!-- {x-version-update:gax:current} -->
             </dependency>
             <dependency>
                 <groupId>com.google.api</groupId>
                 <artifactId>api-common</artifactId>
-                <version>2.45.1-SNAPSHOT</version> <!-- {x-version-update:api-common:current} -->
+                <version>2.50.2</version> <!-- {x-version-update:api-common:current} -->
             </dependency>
         </dependencies>
 
@@ -55,7 +55,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.12</version>
+                <version>0.8.13</version>
                 <executions>
                     <execution>
                         <id>unit-tests-report-aggregate</id>
@@ -74,9 +74,8 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>com.coveo</groupId>
+                <groupId>com.spotify.fmt</groupId>
                 <artifactId>fmt-maven-plugin</artifactId>
-                <version>2.9</version>
             </plugin>
         </plugins>
     </build>

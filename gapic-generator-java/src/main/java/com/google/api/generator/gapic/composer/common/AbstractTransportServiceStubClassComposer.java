@@ -58,6 +58,7 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.StubCommentComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
+import com.google.api.generator.gapic.composer.utils.CommonStrings;
 import com.google.api.generator.gapic.composer.utils.PackageChecker;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicClass;
@@ -101,7 +102,6 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   private static final Statement EMPTY_LINE_STATEMENT = EmptyLineStatement.create();
 
   private static final String METHOD_DESCRIPTOR_NAME_PATTERN = "%sMethodDescriptor";
-  private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
   private static final String PAGED_CALLABLE_CLASS_MEMBER_PATTERN = "%sPagedCallable";
 
   private static final String BACKGROUND_RESOURCES_MEMBER_NAME = "backgroundResources";
@@ -491,7 +491,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
                                 typeStore
                                     .get(
                                         String.format(
-                                            PAGED_RESPONSE_TYPE_NAME_PATTERN, protoMethod.name()))
+                                            CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN,
+                                            protoMethod.name()))
                                     .reference()))))
             .build());
   }
@@ -715,9 +716,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     secondCtorExprs.add(
         AssignmentExpr.builder()
             .setVariableExpr(
-                classMemberVarExprs
-                    .get("callableFactory")
-                    .toBuilder()
+                classMemberVarExprs.get("callableFactory").toBuilder()
                     .setExprReferenceExpr(thisExpr)
                     .build())
             .setValueExpr(callableFactoryVarExpr)
@@ -1241,7 +1240,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
         service.methods().stream()
             .filter(x -> x.isSupportedByTransport(getTransportContext().transport()))
             .filter(Method::isPaged)
-            .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
+            .map(m -> String.format(CommonStrings.PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
             .collect(Collectors.toList()),
         true,
         getTransportContext().classNames().getServiceClientClassName(service));
@@ -1261,7 +1260,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
         callableType = FIXED_TYPESTORE.get("BidiStreamingCallable");
         break;
       case NONE:
-        // Fall through
+      // Fall through
       default:
         // Fall through
     }

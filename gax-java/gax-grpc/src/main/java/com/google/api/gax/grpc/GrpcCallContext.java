@@ -96,6 +96,7 @@ public final class GrpcCallContext implements ApiCallContext {
   private final ImmutableMap<String, List<String>> extraHeaders;
   private final ApiCallContextOptions options;
   private final EndpointContext endpointContext;
+  private final boolean isDirectPath;
 
   /** Returns an empty instance with a null channel and default {@link CallOptions}. */
   public static GrpcCallContext createDefault() {
@@ -111,7 +112,8 @@ public final class GrpcCallContext implements ApiCallContext {
         ApiCallContextOptions.getDefaultOptions(),
         null,
         null,
-        null);
+        null,
+        false);
   }
 
   /** Returns an instance with the given channel and {@link CallOptions}. */
@@ -128,7 +130,8 @@ public final class GrpcCallContext implements ApiCallContext {
         ApiCallContextOptions.getDefaultOptions(),
         null,
         null,
-        null);
+        null,
+        false);
   }
 
   private GrpcCallContext(
@@ -143,10 +146,14 @@ public final class GrpcCallContext implements ApiCallContext {
       ApiCallContextOptions options,
       @Nullable RetrySettings retrySettings,
       @Nullable Set<StatusCode.Code> retryableCodes,
-      @Nullable EndpointContext endpointContext) {
+      @Nullable EndpointContext endpointContext,
+      boolean isDirectPath) {
     this.channel = channel;
     this.credentials = credentials;
-    this.callOptions = Preconditions.checkNotNull(callOptions);
+    Preconditions.checkNotNull(callOptions);
+    // CallCredentials is stripped from CallOptions because CallCredentials are attached
+    // to ChannelCredentials in DirectPath flows. Adding it again would duplicate the headers.
+    this.callOptions = isDirectPath ? callOptions.withCallCredentials(null) : callOptions;
     this.timeout = timeout;
     this.streamWaitTimeout = streamWaitTimeout;
     this.streamIdleTimeout = streamIdleTimeout;
@@ -159,6 +166,7 @@ public final class GrpcCallContext implements ApiCallContext {
     // a valid EndpointContext with user configurations after the client has been initialized.
     this.endpointContext =
         endpointContext == null ? EndpointContext.getDefaultInstance() : endpointContext;
+    this.isDirectPath = isDirectPath;
   }
 
   /**
@@ -199,7 +207,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   @Override
@@ -210,7 +219,20 @@ public final class GrpcCallContext implements ApiCallContext {
           "Expected GrpcTransportChannel, got " + inputChannel.getClass().getName());
     }
     GrpcTransportChannel transportChannel = (GrpcTransportChannel) inputChannel;
-    return withChannel(transportChannel.getChannel());
+    return new GrpcCallContext(
+        transportChannel.getChannel(),
+        credentials,
+        callOptions,
+        timeout,
+        streamWaitTimeout,
+        streamIdleTimeout,
+        channelAffinity,
+        extraHeaders,
+        options,
+        retrySettings,
+        retryableCodes,
+        endpointContext,
+        transportChannel.isDirectPath());
   }
 
   @Override
@@ -228,7 +250,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   /** This method is obsolete. Use {@link #withTimeoutDuration(java.time.Duration)} instead. */
@@ -262,7 +285,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   /** This method is obsolete. Use {@link #getTimeoutDuration()} instead. */
@@ -310,7 +334,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   /**
@@ -344,7 +369,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   @BetaApi("The surface for channel affinity is not stable yet and may change in the future.")
@@ -361,7 +387,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   @BetaApi("The surface for extra headers is not stable yet and may change in the future.")
@@ -382,7 +409,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   @Override
@@ -404,7 +432,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   @Override
@@ -426,7 +455,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   @Override
@@ -455,6 +485,8 @@ public final class GrpcCallContext implements ApiCallContext {
     if (newDeadline == null) {
       newDeadline = callOptions.getDeadline();
     }
+
+    boolean newIsDirectPath = grpcCallContext.isDirectPath;
 
     CallCredentials newCallCredentials = grpcCallContext.callOptions.getCredentials();
     if (newCallCredentials == null) {
@@ -525,7 +557,8 @@ public final class GrpcCallContext implements ApiCallContext {
         newOptions,
         newRetrySettings,
         newRetryableCodes,
-        endpointContext);
+        endpointContext,
+        newIsDirectPath);
   }
 
   /** The {@link Channel} set on this context. */
@@ -564,6 +597,7 @@ public final class GrpcCallContext implements ApiCallContext {
   public org.threeten.bp.Duration getStreamIdleTimeout() {
     return toThreetenDuration(getStreamIdleTimeoutDuration());
   }
+
   /**
    * The stream idle timeout set for this context.
    *
@@ -588,7 +622,11 @@ public final class GrpcCallContext implements ApiCallContext {
     return extraHeaders;
   }
 
-  /** Returns a new instance with the channel set to the given channel. */
+  /**
+   * This method is obsolete. Use {@link #withTransportChannel()} instead. Returns a new instance
+   * with the channel set to the given channel.
+   */
+  @ObsoleteApi("Use withTransportChannel() instead")
   public GrpcCallContext withChannel(Channel newChannel) {
     return new GrpcCallContext(
         newChannel,
@@ -602,7 +640,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   /** Returns a new instance with the call options set to the given call options. */
@@ -619,7 +658,8 @@ public final class GrpcCallContext implements ApiCallContext {
         options,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   public GrpcCallContext withRequestParamsDynamicHeaderOption(String requestParams) {
@@ -663,7 +703,8 @@ public final class GrpcCallContext implements ApiCallContext {
         newOptions,
         retrySettings,
         retryableCodes,
-        endpointContext);
+        endpointContext,
+        isDirectPath);
   }
 
   /** {@inheritDoc} */

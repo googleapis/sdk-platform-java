@@ -27,9 +27,19 @@ import org.junit.jupiter.params.provider.MethodSource;
 class ServiceStubClassComposerTest {
   static Stream<Arguments> data() {
     return Stream.of(
-        Arguments.of("EchoStub", TestProtoLoader.instance().parseShowcaseEcho(), "", ""),
+        Arguments.of("EchoStub", TestProtoLoader.instance().parseShowcaseEcho(), "", "", 0),
         Arguments.of(
-            "DeprecatedServiceStub", TestProtoLoader.instance().parseDeprecatedService(), "", ""));
+            "DeprecatedServiceStub",
+            TestProtoLoader.instance().parseDeprecatedService(),
+            "",
+            "",
+            0),
+        Arguments.of(
+            "EchoServiceSelectiveGapicClientStub",
+            TestProtoLoader.instance().parseSelectiveGenerationTesting(),
+            "",
+            "",
+            1));
   }
 
   @ParameterizedTest
@@ -38,8 +48,9 @@ class ServiceStubClassComposerTest {
       String name,
       GapicContext context,
       String apiShortNameExpected,
-      String packageVersionExpected) {
-    Service service = context.services().get(0);
+      String packageVersionExpected,
+      int serviceIndex) {
+    Service service = context.services().get(serviceIndex);
     GapicClass clazz = ServiceStubClassComposer.instance().generate(context, service);
 
     Assert.assertGoldenClass(this.getClass(), clazz, name + ".golden");

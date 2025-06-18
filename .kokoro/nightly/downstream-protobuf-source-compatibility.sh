@@ -15,32 +15,53 @@
 
 set -eo pipefail
 
-# Comma-delimited list of repos to test with the local java-shared-dependencies
-if [ -z "${REPOS_UNDER_TEST}" ]; then
-  echo "REPOS_UNDER_TEST must be set to run downstream-protobuf-source-compatibility.sh"
-  echo "Expects a comma-delimited list: i.e REPOS_UNDER_TEST=\"java-bigtable,java-bigquery\""
-  exit 1
-fi
+scriptDir=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
+source "${scriptDir}/common.sh"
 
-# Version of Protobuf-Java runtime to compile with
-if [ -z "${PROTOBUF_RUNTIME_VERSION}" ]; then
-  echo "PROTOBUF_RUNTIME_VERSION must be set to run downstream-protobuf-source-compatibility.sh"
-  echo "Expects a single Protobuf-Java runtime version i.e. PROTOBUF_RUNTIME_VERSION=\"4.28.3\""
-  exit 1
-fi
+validate_protobuf_compatibility_script_inputs
 
+# REPOS_UNDER_TEST Env Var accepts a comma separated list of googleapis repos to test. For Github CI,
+# this will be a single repo as Github will build a matrix of repos with each repo being tested in parallel.
+# For local invocation, you can pass a list of repos to test multiple repos together.
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   # Perform source-compatibility testing on main (latest changes)
   git clone "https://github.com/googleapis/$repo.git" --depth=1
   pushd "$repo"
 
+  # Compile with Java 11 and run the tests with Java 8 JVM
+  mvn compile -T 1C
+
+  # JAVA8_HOME is set by the GH Actions CI
+  if [ -n "${JAVA8_HOME}" ]; then
+    surefire_opt="-Djvm=${JAVA8_HOME}/bin/java"
+  else
+    # Provide a default value for local executions that don't configure JAVA8_HOME
+    surefire_opt="-Djvm=${JAVA_HOME}/bin/java"
+  fi
+
   # Compile the Handwritten Library with the Protobuf-Java version to test source compatibility
   # Run unit tests to help check for any behavior differences (dependant on coverage)
-  mvn clean test -B -V -ntp \
-      -Dclirr.skip=true \
-      -Denforcer.skip=true \
-      -Dmaven.javadoc.skip=true \
+  if [ "${repo}" == "google-cloud-java" ]; then
+    # The `-am` command also builds anything these libraries depend on (i.e. proto-* and grpc-* sub modules)
+    mvn test -B -V -ntp \
+      -Dclirr.skip \
+      -Denforcer.skip \
+      -Dmaven.javadoc.skip \
+      -Denforcer.skip \
       -Dprotobuf.version=${PROTOBUF_RUNTIME_VERSION} \
+      -pl "${google_cloud_java_handwritten_maven_args}" -am \
+      "${surefire_opt}" \
       -T 1C
+  else
+    mvn test -B -V -ntp \
+      -Dclirr.skip \
+      -Denforcer.skip \
+      -Dmaven.javadoc.skip \
+      -Denforcer.skip \
+      -Dprotobuf.version=${PROTOBUF_RUNTIME_VERSION} \
+      "${surefire_opt}" \
+      -T 1C
+  fi
+
   popd
 done

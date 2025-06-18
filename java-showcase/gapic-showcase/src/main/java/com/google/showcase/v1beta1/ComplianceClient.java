@@ -200,7 +200,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td><p> GetEnum</td>
- *      <td><p> This method requests an enum value from the server. Depending on the contents of EnumRequest, the enum value returned will be a known enum declared in the .proto file, or a made-up enum value the is unknown to the client. To verify that clients can round-trip unknown enum vaues they receive, use the response from this RPC as the request to VerifyEnum()
+ *      <td><p> This method requests an enum value from the server. Depending on the contents of EnumRequest, the enum value returned will be a known enum declared in the .proto file, or a made-up enum value the is unknown to the client. To verify that clients can round-trip unknown enum values they receive, use the response from this RPC as the request to VerifyEnum()
  * <p>  The values of enums sent by the server when a known or unknown value is requested will be the same within a single Showcase server run (this is needed for VerifyEnum() to work) but are not guaranteed to be the same across separate Showcase server runs.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
@@ -1011,7 +1011,7 @@ public class ComplianceClient implements BackgroundResource {
   /**
    * This method requests an enum value from the server. Depending on the contents of EnumRequest,
    * the enum value returned will be a known enum declared in the .proto file, or a made-up enum
-   * value the is unknown to the client. To verify that clients can round-trip unknown enum vaues
+   * value the is unknown to the client. To verify that clients can round-trip unknown enum values
    * they receive, use the response from this RPC as the request to VerifyEnum()
    *
    * <p>The values of enums sent by the server when a known or unknown value is requested will be
@@ -1043,7 +1043,7 @@ public class ComplianceClient implements BackgroundResource {
   /**
    * This method requests an enum value from the server. Depending on the contents of EnumRequest,
    * the enum value returned will be a known enum declared in the .proto file, or a made-up enum
-   * value the is unknown to the client. To verify that clients can round-trip unknown enum vaues
+   * value the is unknown to the client. To verify that clients can round-trip unknown enum values
    * they receive, use the response from this RPC as the request to VerifyEnum()
    *
    * <p>The values of enums sent by the server when a known or unknown value is requested will be

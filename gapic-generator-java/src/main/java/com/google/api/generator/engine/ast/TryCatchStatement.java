@@ -31,6 +31,7 @@ public abstract class TryCatchStatement implements Statement {
 
   // Optional only if the sample code bit is set (i.e. this is sample code).
   public abstract List<VariableExpr> catchVariableExprs();
+
   // Optional only if the sample code bit is set (i.e. this is sample code).
   public abstract List<List<Statement>> catchBlocks();
 

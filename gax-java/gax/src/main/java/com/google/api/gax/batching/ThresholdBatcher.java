@@ -142,6 +142,7 @@ public final class ThresholdBatcher<E> {
       this.receiver = receiver;
       return this;
     }
+
     /** Set the flow controller for the ThresholdBatcher. */
     public Builder<E> setFlowController(BatchingFlowController<E> flowController) {
       this.flowController = flowController;
