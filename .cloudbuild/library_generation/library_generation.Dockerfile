@@ -21,7 +21,7 @@ FROM docker.io/library/maven:3.9.9-eclipse-temurin-17-alpine@sha256:969014ee8852
 WORKDIR /sdk-platform-java
 COPY . .
 # {x-version-update-start:gapic-generator-java:current}
-ENV DOCKER_GAPIC_GENERATOR_VERSION="2.58.1-SNAPSHOT"
+ENV DOCKER_GAPIC_GENERATOR_VERSION="2.59.2"
 # {x-version-update-end}
 
 # Download the java formatter
@@ -37,7 +37,7 @@ RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_
 FROM docker.io/library/python:3.13.2-slim@sha256:6b3223eb4d93718828223966ad316909c39813dee3ee9395204940500792b740 as final
 
 ARG OWLBOT_CLI_COMMITTISH=3a68a9c0de318784b3aefadcc502a6521b3f1bc5
-ARG PROTOC_VERSION=25.5
+ARG PROTOC_VERSION=25.8
 ARG GRPC_VERSION=1.71.0
 ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"

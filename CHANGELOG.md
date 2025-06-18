@@ -1,5 +1,47 @@
 # Changelog
 
+## [2.59.2](https://github.com/googleapis/sdk-platform-java/compare/v2.59.1...v2.59.2) (2025-06-17)
+
+
+### Bug Fixes
+
+* update googleapis commit at Thu Jun 12 02:34:24 UTC 2025 ([f3a5d87](https://github.com/googleapis/sdk-platform-java/commit/f3a5d87ed2b5ab1acddd1bf362d11d6ccf3d22b4))
+* update googleapis commit at Thu Jun 12 02:34:24 UTC 2025 ([#3833](https://github.com/googleapis/sdk-platform-java/issues/3833)) ([f3a5d87](https://github.com/googleapis/sdk-platform-java/commit/f3a5d87ed2b5ab1acddd1bf362d11d6ccf3d22b4))
+
+## [2.59.1](https://github.com/googleapis/sdk-platform-java/compare/v2.59.0...v2.59.1) (2025-06-12)
+
+
+### Bug Fixes
+
+* S2A- Check if a default endpoint has been set ([#3784](https://github.com/googleapis/sdk-platform-java/issues/3784)) ([5b2ab82](https://github.com/googleapis/sdk-platform-java/commit/5b2ab829888631caa382621570910187de45ce1c))
+
+
+### Dependencies
+
+* update google auth library dependencies to v1.37.0 ([#3830](https://github.com/googleapis/sdk-platform-java/issues/3830)) ([8bf9d3c](https://github.com/googleapis/sdk-platform-java/commit/8bf9d3cbe0be80d0bd15dfb896514103293002e0))
+
+## [2.59.0](https://github.com/googleapis/sdk-platform-java/compare/v2.58.0...v2.59.0) (2025-06-02)
+
+
+### Features
+
+* add logic to set universe domain to ServiceAccountJwtAccessCredentials ([#3806](https://github.com/googleapis/sdk-platform-java/issues/3806)) ([5b45708](https://github.com/googleapis/sdk-platform-java/commit/5b45708d5ff92aae8e4138a737d294c71e1f235a))
+* use debian base image for `java-library-generation` ([#3817](https://github.com/googleapis/sdk-platform-java/issues/3817)) ([94d0b30](https://github.com/googleapis/sdk-platform-java/commit/94d0b30d94d79c74125811bf7353afe917e2fe6c))
+
+
+### Bug Fixes
+
+* manage graalvm image versions via Hermetic Build templates _only_ ([#3800](https://github.com/googleapis/sdk-platform-java/issues/3800)) ([244c5dc](https://github.com/googleapis/sdk-platform-java/commit/244c5dce9f77d0b431d2ec3ea5b101b07dcc3d70))
+
+
+### Dependencies
+
+* update dependency com.google.oauth-client:google-oauth-client-bom to v1.39.0 ([#3813](https://github.com/googleapis/sdk-platform-java/issues/3813)) ([196a7ca](https://github.com/googleapis/sdk-platform-java/commit/196a7cab502b5570f458f4cf4b324b99265e368c))
+* update google api dependencies ([#3791](https://github.com/googleapis/sdk-platform-java/issues/3791)) ([45ef2e0](https://github.com/googleapis/sdk-platform-java/commit/45ef2e0d595ab71555b0eee780962b08d2f073b6))
+* update google auth library dependencies to v1.36.0 ([#3814](https://github.com/googleapis/sdk-platform-java/issues/3814)) ([07f834a](https://github.com/googleapis/sdk-platform-java/commit/07f834a61201639ae771c179a229f7b5f794774d))
+* update grpc dependencies to 1.71.0 ([#3807](https://github.com/googleapis/sdk-platform-java/issues/3807)) ([49a7ae5](https://github.com/googleapis/sdk-platform-java/commit/49a7ae50071e75fe0d161a4eb9360a4fe4e6147b))
+* Upgrade Protobuf-Java to v3.25.8 ([#3810](https://github.com/googleapis/sdk-platform-java/issues/3810)) ([ab90662](https://github.com/googleapis/sdk-platform-java/commit/ab90662288a2181e16ecfb19c9ebb38fb9e29422))
+
 ## [2.58.0](https://github.com/googleapis/sdk-platform-java/compare/v2.57.0...v2.58.0) (2025-05-13)
 
 
