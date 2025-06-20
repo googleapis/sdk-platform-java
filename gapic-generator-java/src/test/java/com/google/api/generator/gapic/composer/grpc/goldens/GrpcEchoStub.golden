@@ -22,6 +22,7 @@ import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.ExpandRequest;
 import com.google.showcase.v1beta1.Object;
+import com.google.showcase.v1beta1.PagedExpandLegacyRequest;
 import com.google.showcase.v1beta1.PagedExpandRequest;
 import com.google.showcase.v1beta1.PagedExpandResponse;
 import com.google.showcase.v1beta1.WaitMetadata;
@@ -126,6 +127,17 @@ public class GrpcEchoStub extends EchoStub {
           .setResponseMarshaller(ProtoUtils.marshaller(Object.getDefaultInstance()))
           .build();
 
+  private static final MethodDescriptor<PagedExpandLegacyRequest, PagedExpandResponse>
+      pagedExpandLegacyMethodDescriptor =
+          MethodDescriptor.<PagedExpandLegacyRequest, PagedExpandResponse>newBuilder()
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName("google.showcase.v1beta1.Echo/PagedExpandLegacy")
+              .setRequestMarshaller(
+                  ProtoUtils.marshaller(PagedExpandLegacyRequest.getDefaultInstance()))
+              .setResponseMarshaller(
+                  ProtoUtils.marshaller(PagedExpandResponse.getDefaultInstance()))
+              .build();
+
   private final UnaryCallable<EchoRequest, EchoResponse> echoCallable;
   private final ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable;
   private final ClientStreamingCallable<EchoRequest, EchoResponse> collectCallable;
@@ -141,6 +153,8 @@ public class GrpcEchoStub extends EchoStub {
   private final OperationCallable<WaitRequest, WaitResponse, WaitMetadata> waitOperationCallable;
   private final UnaryCallable<BlockRequest, BlockResponse> blockCallable;
   private final UnaryCallable<EchoRequest, Object> collideNameCallable;
+  private final UnaryCallable<PagedExpandLegacyRequest, PagedExpandResponse>
+      pagedExpandLegacyCallable;
 
   private final BackgroundResource backgroundResources;
   private final GrpcOperationsStub operationsStub;
@@ -220,6 +234,11 @@ public class GrpcEchoStub extends EchoStub {
         GrpcCallSettings.<EchoRequest, Object>newBuilder()
             .setMethodDescriptor(collideNameMethodDescriptor)
             .build();
+    GrpcCallSettings<PagedExpandLegacyRequest, PagedExpandResponse>
+        pagedExpandLegacyTransportSettings =
+            GrpcCallSettings.<PagedExpandLegacyRequest, PagedExpandResponse>newBuilder()
+                .setMethodDescriptor(pagedExpandLegacyMethodDescriptor)
+                .build();
 
     this.echoCallable =
         callableFactory.createUnaryCallable(
@@ -264,6 +283,11 @@ public class GrpcEchoStub extends EchoStub {
     this.collideNameCallable =
         callableFactory.createUnaryCallable(
             collideNameTransportSettings, settings.collideNameSettings(), clientContext);
+    this.pagedExpandLegacyCallable =
+        callableFactory.createUnaryCallable(
+            pagedExpandLegacyTransportSettings,
+            settings.pagedExpandLegacySettings(),
+            clientContext);
 
     this.backgroundResources =
         new BackgroundResourceAggregation(clientContext.getBackgroundResources());
@@ -337,6 +361,11 @@ public class GrpcEchoStub extends EchoStub {
   @Override
   public UnaryCallable<EchoRequest, Object> collideNameCallable() {
     return collideNameCallable;
+  }
+
+  @Override
+  public UnaryCallable<PagedExpandLegacyRequest, PagedExpandResponse> pagedExpandLegacyCallable() {
+    return pagedExpandLegacyCallable;
   }
 
   @Override

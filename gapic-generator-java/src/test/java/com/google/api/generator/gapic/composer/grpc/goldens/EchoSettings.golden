@@ -159,6 +159,12 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
     return ((EchoStubSettings) getStubSettings()).collideNameSettings();
   }
 
+  /** Returns the object with the settings used for calls to pagedExpandLegacy. */
+  public UnaryCallSettings<PagedExpandLegacyRequest, PagedExpandResponse>
+      pagedExpandLegacySettings() {
+    return ((EchoStubSettings) getStubSettings()).pagedExpandLegacySettings();
+  }
+
   public static final EchoSettings create(EchoStubSettings stub) throws IOException {
     return new EchoSettings.Builder(stub.toBuilder()).build();
   }
@@ -312,6 +318,12 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
     /** Returns the builder for the settings used for calls to collideName. */
     public UnaryCallSettings.Builder<EchoRequest, Object> collideNameSettings() {
       return getStubSettingsBuilder().collideNameSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to pagedExpandLegacy. */
+    public UnaryCallSettings.Builder<PagedExpandLegacyRequest, PagedExpandResponse>
+        pagedExpandLegacySettings() {
+      return getStubSettingsBuilder().pagedExpandLegacySettings();
     }
 
     @Override
