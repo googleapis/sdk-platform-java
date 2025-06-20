@@ -149,6 +149,20 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
 
   private final TransportContext transportContext;
 
+  // Maps of BigQuery methods to pagination types.
+  private static final ImmutableMap<String, TypeNode> BIGQUERY_PAGINATE_MAX_RESULT_TYPES =
+      ImmutableMap.of(
+          "com.google.cloud.bigquery.v2.ListDatasets",
+          TypeNode.UINT32VALUE,
+          "com.google.cloud.bigquery.v2.ListJobs",
+          TypeNode.INT32VALUE,
+          "com.google.cloud.bigquery.v2.ListModels",
+          TypeNode.UINT32VALUE,
+          "com.google.cloud.bigquery.v2.ListRoutines",
+          TypeNode.UINT32VALUE,
+          "com.google.cloud.bigquery.v2.ListTables",
+          TypeNode.UINT32VALUE);
+
   protected static final VariableExpr DEFAULT_SERVICE_SCOPES_VAR_EXPR =
       createDefaultServiceScopesVarExpr();
 
@@ -727,9 +741,12 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .build());
 
     // Create injectPageSize method.
+    String methodFullName =
+        String.format("%s.%s", method.inputType().reference().pakkage(), method.name());
     VariableExpr pageSizeVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(TypeNode.INT).setName("pageSize").build());
+
     // Re-declare for clarity and easier readability.
     returnType = method.inputType();
     returnExpr =
@@ -738,6 +755,20 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setMethodName("set" + JavaStyle.toUpperCamelCase(method.pageSizeFieldName()))
             .setArguments(pageSizeVarExpr)
             .build();
+    if (BIGQUERY_PAGINATE_MAX_RESULT_TYPES.containsKey(methodFullName)) {
+      returnExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(newBuilderExpr)
+              .setMethodName("set" + JavaStyle.toUpperCamelCase(method.pageSizeFieldName()))
+              .setArguments(
+                  MethodInvocationExpr.builder()
+                      .setStaticReferenceType(
+                          BIGQUERY_PAGINATE_MAX_RESULT_TYPES.get(methodFullName))
+                      .setMethodName("of")
+                      .setArguments(pageSizeVarExpr)
+                      .build())
+              .build();
+    }
     returnExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(returnExpr)
@@ -758,17 +789,32 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     // TODO(miraleung): Test the edge cases where these proto fields aren't present.
     // Create extractPageSize method.
     returnType = TypeNode.INT_OBJECT;
+    returnExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(payloadVarExpr)
+            .setMethodName("get" + JavaStyle.toUpperCamelCase(method.pageSizeFieldName()))
+            .setReturnType(returnType)
+            .build();
+    if (BIGQUERY_PAGINATE_MAX_RESULT_TYPES.containsKey(methodFullName)) {
+      // Return type is UINT32VALUE or INT32VALUE so use getValue to unwrap.
+      returnExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(payloadVarExpr)
+              .setMethodName("get" + JavaStyle.toUpperCamelCase(method.pageSizeFieldName()))
+              .build();
+      returnExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(returnExpr)
+              .setMethodName("getValue")
+              .setReturnType(returnType)
+              .build();
+    }
     anonClassMethods.add(
         methodStarterBuilder
             .setReturnType(returnType)
             .setName("extractPageSize")
             .setArguments(payloadVarExpr.toBuilder().setIsDecl(true).build())
-            .setReturnExpr(
-                MethodInvocationExpr.builder()
-                    .setExprReferenceExpr(payloadVarExpr)
-                    .setMethodName("get" + JavaStyle.toUpperCamelCase(method.pageSizeFieldName()))
-                    .setReturnType(returnType)
-                    .build())
+            .setReturnExpr(returnExpr)
             .build());
 
     // Create extractNextToken method.

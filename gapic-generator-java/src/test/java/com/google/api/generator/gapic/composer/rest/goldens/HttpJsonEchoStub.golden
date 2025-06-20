@@ -32,6 +32,7 @@ import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.ExpandRequest;
 import com.google.showcase.v1beta1.Object;
+import com.google.showcase.v1beta1.PagedExpandLegacyRequest;
 import com.google.showcase.v1beta1.PagedExpandRequest;
 import com.google.showcase.v1beta1.PagedExpandResponse;
 import com.google.showcase.v1beta1.WaitMetadata;
@@ -302,6 +303,42 @@ public class HttpJsonEchoStub extends EchoStub {
                   .build())
           .build();
 
+  private static final ApiMethodDescriptor<PagedExpandLegacyRequest, PagedExpandResponse>
+      pagedExpandLegacyMethodDescriptor =
+          ApiMethodDescriptor.<PagedExpandLegacyRequest, PagedExpandResponse>newBuilder()
+              .setFullMethodName("google.showcase.v1beta1.Echo/PagedExpandLegacy")
+              .setHttpMethod("POST")
+              .setType(ApiMethodDescriptor.MethodType.UNARY)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<PagedExpandLegacyRequest>newBuilder()
+                      .setPath(
+                          "/v1beta1/echo:pagedExpandLegacy",
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<PagedExpandLegacyRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
+                          })
+                      .setQueryParamsExtractor(
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<PagedExpandLegacyRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
+                            return fields;
+                          })
+                      .setRequestBodyExtractor(
+                          request ->
+                              ProtoRestSerializer.create()
+                                  .toBody("*", request.toBuilder().build(), true))
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<PagedExpandResponse>newBuilder()
+                      .setDefaultInstance(PagedExpandResponse.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
+                      .build())
+              .build();
+
   private final UnaryCallable<EchoRequest, EchoResponse> echoCallable;
   private final ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable;
   private final UnaryCallable<PagedExpandRequest, PagedExpandResponse> pagedExpandCallable;
@@ -314,6 +351,8 @@ public class HttpJsonEchoStub extends EchoStub {
   private final OperationCallable<WaitRequest, WaitResponse, WaitMetadata> waitOperationCallable;
   private final UnaryCallable<BlockRequest, BlockResponse> blockCallable;
   private final UnaryCallable<EchoRequest, Object> collideNameCallable;
+  private final UnaryCallable<PagedExpandLegacyRequest, PagedExpandResponse>
+      pagedExpandLegacyCallable;
 
   private final BackgroundResource backgroundResources;
   private final HttpJsonOperationsStub httpJsonOperationsStub;
@@ -440,6 +479,12 @@ public class HttpJsonEchoStub extends EchoStub {
             .setMethodDescriptor(collideNameMethodDescriptor)
             .setTypeRegistry(typeRegistry)
             .build();
+    HttpJsonCallSettings<PagedExpandLegacyRequest, PagedExpandResponse>
+        pagedExpandLegacyTransportSettings =
+            HttpJsonCallSettings.<PagedExpandLegacyRequest, PagedExpandResponse>newBuilder()
+                .setMethodDescriptor(pagedExpandLegacyMethodDescriptor)
+                .setTypeRegistry(typeRegistry)
+                .build();
 
     this.echoCallable =
         callableFactory.createUnaryCallable(
@@ -478,6 +523,11 @@ public class HttpJsonEchoStub extends EchoStub {
     this.collideNameCallable =
         callableFactory.createUnaryCallable(
             collideNameTransportSettings, settings.collideNameSettings(), clientContext);
+    this.pagedExpandLegacyCallable =
+        callableFactory.createUnaryCallable(
+            pagedExpandLegacyTransportSettings,
+            settings.pagedExpandLegacySettings(),
+            clientContext);
 
     this.backgroundResources =
         new BackgroundResourceAggregation(clientContext.getBackgroundResources());
@@ -493,6 +543,7 @@ public class HttpJsonEchoStub extends EchoStub {
     methodDescriptors.add(waitMethodDescriptor);
     methodDescriptors.add(blockMethodDescriptor);
     methodDescriptors.add(collideNameMethodDescriptor);
+    methodDescriptors.add(pagedExpandLegacyMethodDescriptor);
     return methodDescriptors;
   }
 
@@ -549,6 +600,11 @@ public class HttpJsonEchoStub extends EchoStub {
   @Override
   public UnaryCallable<EchoRequest, Object> collideNameCallable() {
     return collideNameCallable;
+  }
+
+  @Override
+  public UnaryCallable<PagedExpandLegacyRequest, PagedExpandResponse> pagedExpandLegacyCallable() {
+    return pagedExpandLegacyCallable;
   }
 
   @Override

@@ -62,7 +62,13 @@ class ServiceStubSettingsClassComposerTest {
             GrpcTestProtoLoader.instance().parseSelectiveGenerationTesting(),
             "localhost:7469",
             "v1beta1",
-            1));
+            1),
+        Arguments.of(
+            "JobServiceStubSettings",
+            GrpcTestProtoLoader.instance().parseBigqueryService(),
+            "bigquery",
+            "v2",
+            0));
   }
 
   @ParameterizedTest

@@ -26,6 +26,7 @@ import com.google.protobuf.Timestamp;
 import com.google.rpc.Status;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -885,6 +886,57 @@ public class EchoClientTest {
               .setFoobar(Foobar.newBuilder().build())
               .build();
       client.collideName(request);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
+  public void pagedExpandLegacyTest() throws Exception {
+    PagedExpandResponse expectedResponse =
+        PagedExpandResponse.newBuilder()
+            .addAllResponses(new ArrayList<EchoResponse>())
+            .setNextPageToken("nextPageToken-1386094857")
+            .build();
+    mockEcho.addResponse(expectedResponse);
+
+    PagedExpandLegacyRequest request =
+        PagedExpandLegacyRequest.newBuilder()
+            .setContent("content951530617")
+            .setMaxResults(1128457243)
+            .setPageToken("pageToken873572522")
+            .build();
+
+    PagedExpandResponse actualResponse = client.pagedExpandLegacy(request);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<AbstractMessage> actualRequests = mockEcho.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    PagedExpandLegacyRequest actualRequest = ((PagedExpandLegacyRequest) actualRequests.get(0));
+
+    Assert.assertEquals(request.getContent(), actualRequest.getContent());
+    Assert.assertEquals(request.getMaxResults(), actualRequest.getMaxResults());
+    Assert.assertEquals(request.getPageToken(), actualRequest.getPageToken());
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void pagedExpandLegacyExceptionTest() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockEcho.addException(exception);
+
+    try {
+      PagedExpandLegacyRequest request =
+          PagedExpandLegacyRequest.newBuilder()
+              .setContent("content951530617")
+              .setMaxResults(1128457243)
+              .setPageToken("pageToken873572522")
+              .build();
+      client.pagedExpandLegacy(request);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
