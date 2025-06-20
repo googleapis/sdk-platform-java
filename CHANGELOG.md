@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.59.2](https://github.com/googleapis/sdk-platform-java/compare/v2.59.1...v2.59.2) (2025-06-17)
+
+
+### Bug Fixes
+
+* update googleapis commit at Thu Jun 12 02:34:24 UTC 2025 ([f3a5d87](https://github.com/googleapis/sdk-platform-java/commit/f3a5d87ed2b5ab1acddd1bf362d11d6ccf3d22b4))
+* update googleapis commit at Thu Jun 12 02:34:24 UTC 2025 ([#3833](https://github.com/googleapis/sdk-platform-java/issues/3833)) ([f3a5d87](https://github.com/googleapis/sdk-platform-java/commit/f3a5d87ed2b5ab1acddd1bf362d11d6ccf3d22b4))
+
+## [2.59.1](https://github.com/googleapis/sdk-platform-java/compare/v2.59.0...v2.59.1) (2025-06-12)
+
+
+### Bug Fixes
+
+* S2A- Check if a default endpoint has been set ([#3784](https://github.com/googleapis/sdk-platform-java/issues/3784)) ([5b2ab82](https://github.com/googleapis/sdk-platform-java/commit/5b2ab829888631caa382621570910187de45ce1c))
+
+
+### Dependencies
+
+* update google auth library dependencies to v1.37.0 ([#3830](https://github.com/googleapis/sdk-platform-java/issues/3830)) ([8bf9d3c](https://github.com/googleapis/sdk-platform-java/commit/8bf9d3cbe0be80d0bd15dfb896514103293002e0))
+
 ## [2.59.0](https://github.com/googleapis/sdk-platform-java/compare/v2.58.0...v2.59.0) (2025-06-02)
 
 

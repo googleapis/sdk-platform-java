@@ -293,4 +293,25 @@ public class MockEchoImpl extends EchoImplBase {
                   Exception.class.getName())));
     }
   }
+
+  @Override
+  public void pagedExpandLegacy(
+      PagedExpandLegacyRequest request, StreamObserver<PagedExpandResponse> responseObserver) {
+    java.lang.Object response = responses.poll();
+    if (response instanceof PagedExpandResponse) {
+      requests.add(request);
+      responseObserver.onNext(((PagedExpandResponse) response));
+      responseObserver.onCompleted();
+    } else if (response instanceof Exception) {
+      responseObserver.onError(((Exception) response));
+    } else {
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method PagedExpandLegacy, expected %s or %s",
+                  response == null ? "null" : response.getClass().getName(),
+                  PagedExpandResponse.class.getName(),
+                  Exception.class.getName())));
+    }
+  }
 }

@@ -31,6 +31,7 @@ import com.google.api.generator.gapic.protoparser.ServiceYamlParser;
 import com.google.api.version.test.ApiVersionTestingOuterClass;
 import com.google.auto.populate.field.AutoPopulateFieldTestingOuterClass;
 import com.google.bookshop.v1beta1.BookshopProto;
+import com.google.cloud.bigquery.v2.JobProto;
 import com.google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTestingOuterClass;
 import com.google.logging.v2.LogEntryProto;
 import com.google.logging.v2.LoggingConfigProto;
@@ -86,7 +87,7 @@ public class TestProtoLoader {
   public GapicContext parseDeprecatedService() {
     FileDescriptor fileDescriptor = DeprecatedServiceOuterClass.getDescriptor();
     ServiceDescriptor serviceDescriptor = fileDescriptor.getServices().get(0);
-    assertEquals(serviceDescriptor.getName(), "DeprecatedService");
+    assertEquals("DeprecatedService", serviceDescriptor.getName());
 
     Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
     Map<String, ResourceName> resourceNames = new HashMap<>();
@@ -114,7 +115,7 @@ public class TestProtoLoader {
   public GapicContext parseBookshopService() {
     FileDescriptor fileDescriptor = BookshopProto.getDescriptor();
     ServiceDescriptor serviceDescriptor = fileDescriptor.getServices().get(0);
-    assertEquals(serviceDescriptor.getName(), "Bookshop");
+    assertEquals("Bookshop", serviceDescriptor.getName());
 
     Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
     Map<String, ResourceName> resourceNames = new HashMap<>();
@@ -142,7 +143,7 @@ public class TestProtoLoader {
   public GapicContext parseNestedMessage() {
     FileDescriptor fileDescriptor = TypesTestingProto.getDescriptor();
     ServiceDescriptor serviceDescriptor = fileDescriptor.getServices().get(0);
-    assertEquals(serviceDescriptor.getName(), "NestedMessageService");
+    assertEquals("NestedMessageService", serviceDescriptor.getName());
     Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
 
     FileDescriptor messageFileDescriptor = NestedMessageProto.getDescriptor();
@@ -166,7 +167,7 @@ public class TestProtoLoader {
   public GapicContext parseShowcaseEcho() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
-    assertEquals(echoServiceDescriptor.getName(), "Echo");
+    assertEquals("Echo", echoServiceDescriptor.getName());
 
     String serviceYamlFilename = "echo_v1beta1.yaml";
     Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
@@ -207,7 +208,7 @@ public class TestProtoLoader {
   public GapicContext parseShowcaseIdentity() {
     FileDescriptor fileDescriptor = IdentityOuterClass.getDescriptor();
     ServiceDescriptor identityService = fileDescriptor.getServices().get(0);
-    assertEquals(identityService.getName(), "Identity");
+    assertEquals("Identity", identityService.getName());
 
     Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
@@ -228,7 +229,7 @@ public class TestProtoLoader {
   public GapicContext parseShowcaseMessaging() {
     FileDescriptor fileDescriptor = MessagingOuterClass.getDescriptor();
     ServiceDescriptor messagingService = fileDescriptor.getServices().get(0);
-    assertEquals(messagingService.getName(), "Messaging");
+    assertEquals("Messaging", messagingService.getName());
 
     Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
@@ -249,7 +250,7 @@ public class TestProtoLoader {
   public GapicContext parseShowcaseTesting() {
     FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
     ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
-    assertEquals(testingService.getName(), "Testing");
+    assertEquals("Testing", testingService.getName());
 
     Map<String, Message> messageTypes = Parser.parseMessages(testingFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(testingFileDescriptor);
@@ -275,7 +276,7 @@ public class TestProtoLoader {
     FileDescriptor testingFileDescriptor =
         ExplicitDynamicRoutingHeaderTestingOuterClass.getDescriptor();
     ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
-    assertEquals(testingService.getName(), "ExplicitDynamicRoutingHeaderTesting");
+    assertEquals("ExplicitDynamicRoutingHeaderTesting", testingService.getName());
 
     Map<String, Message> messageTypes = Parser.parseMessages(testingFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(testingFileDescriptor);
@@ -300,7 +301,7 @@ public class TestProtoLoader {
   public GapicContext parseApiVersionTesting() {
     FileDescriptor testingFileDescriptor = ApiVersionTestingOuterClass.getDescriptor();
     ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
-    assertEquals(testingService.getName(), "EchoWithVersion");
+    assertEquals("EchoWithVersion", testingService.getName());
 
     Map<String, Message> messageTypes = Parser.parseMessages(testingFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(testingFileDescriptor);
@@ -333,7 +334,7 @@ public class TestProtoLoader {
         AutoPopulateFieldTestingOuterClass.getDescriptor();
     ServiceDescriptor autopopulationServiceDescriptor =
         autopopulationFileDescriptor.getServices().get(0);
-    assertEquals(autopopulationServiceDescriptor.getName(), "AutoPopulateFieldTesting");
+    assertEquals("AutoPopulateFieldTesting", autopopulationServiceDescriptor.getName());
 
     String serviceYamlFilename = "auto_populate_field_testing.yaml";
     Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
@@ -451,7 +452,7 @@ public class TestProtoLoader {
   public GapicContext parseLogging() {
     FileDescriptor serviceFileDescriptor = LoggingProto.getDescriptor();
     ServiceDescriptor serviceDescriptor = serviceFileDescriptor.getServices().get(0);
-    assertEquals(serviceDescriptor.getName(), "LoggingServiceV2");
+    assertEquals("LoggingServiceV2", serviceDescriptor.getName());
 
     List<FileDescriptor> protoFiles =
         Arrays.asList(
@@ -506,7 +507,7 @@ public class TestProtoLoader {
   public GapicContext parseCallabeNameType() {
     FileDescriptor serviceFileDescriptor = CallableNameType.getDescriptor();
     ServiceDescriptor serviceDescriptor = serviceFileDescriptor.getServices().get(0);
-    assertEquals(serviceDescriptor.getName(), "CallableNameTypeService");
+    assertEquals("CallableNameTypeService", serviceDescriptor.getName());
 
     List<FileDescriptor> protoFiles = Collections.singletonList(serviceFileDescriptor);
 
@@ -534,6 +535,38 @@ public class TestProtoLoader {
         .setMessages(messageTypes)
         .setResourceNames(resourceNames)
         .setServices(services)
+        .setHelperResourceNames(outputResourceNames)
+        .setTransport(transport)
+        .build();
+  }
+
+  public GapicContext parseBigqueryService() {
+    FileDescriptor bigqueryFileDescriptor = JobProto.getDescriptor();
+    ServiceDescriptor biqqueryServiceDescriptor = bigqueryFileDescriptor.getServices().get(0);
+    assertEquals("JobService", biqqueryServiceDescriptor.getName());
+
+    Map<String, Message> messageTypes = Parser.parseMessages(bigqueryFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(bigqueryFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            bigqueryFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
+
+    String jsonFilename = "bigquery_v2_service_config.json";
+    Path jsonPath = Paths.get(testFilesDirectory, jsonFilename);
+    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(configOpt.isPresent());
+    GapicServiceConfig config = configOpt.get();
+
+    return GapicContext.builder()
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
+        .setServiceConfig(config)
         .setHelperResourceNames(outputResourceNames)
         .setTransport(transport)
         .build();
