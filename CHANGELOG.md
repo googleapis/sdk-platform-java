@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.60.0](https://github.com/googleapis/sdk-platform-java/compare/v2.59.2...v2.60.0) (2025-06-23)
+
+
+### Features
+
+* handle auto pagination for BigQuery v2 ([#3829](https://github.com/googleapis/sdk-platform-java/issues/3829)) ([025c84c](https://github.com/googleapis/sdk-platform-java/commit/025c84c6c9b8c49a9057a7b3ebd0eb1fab3cda13))
+
+
+### Dependencies
+
+* update google auth library dependencies to v1.37.1 ([#3846](https://github.com/googleapis/sdk-platform-java/issues/3846)) ([ea1d9e5](https://github.com/googleapis/sdk-platform-java/commit/ea1d9e5d3a0346d71a553216cf2486b3be6dc618))
+* update google http client dependencies to v1.47.1 ([#3848](https://github.com/googleapis/sdk-platform-java/issues/3848)) ([a9a39d7](https://github.com/googleapis/sdk-platform-java/commit/a9a39d7f814d1f45188c7b17de685b796c0b5aa7))
+
 ## [2.59.2](https://github.com/googleapis/sdk-platform-java/compare/v2.59.1...v2.59.2) (2025-06-17)
 
 
