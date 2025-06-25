@@ -45,6 +45,8 @@ import com.google.api.gax.rpc.internal.EnvironmentProvider;
 import com.google.api.gax.rpc.mtls.CertificateBasedAccess;
 import com.google.auth.ApiKeyCredentials;
 import com.google.auth.Credentials;
+import com.google.auth.mtls.CertificateSourceUnavailableException;
+import com.google.auth.mtls.DefaultMtlsProviderFactory;
 import com.google.auth.mtls.MtlsProvider;
 import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auth.oauth2.SecureSessionAgent;
@@ -487,13 +489,15 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
   @VisibleForTesting
   ChannelCredentials createMtlsChannelCredentials() throws IOException, GeneralSecurityException {
-    if (certificateBasedAccess.useMtlsClientCertificate()) {
-      KeyStore mtlsKeyStore = mtlsProvider.getKeyStore();
-      if (mtlsKeyStore != null) {
-        KeyManagerFactory factory =
-            KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-        factory.init(mtlsKeyStore, new char[] {});
-        return TlsChannelCredentials.newBuilder().keyManager(factory.getKeyManagers()).build();
+    if (certificateBasedAccess != null && certificateBasedAccess.useMtlsClientCertificate()) {
+      if (mtlsProvider != null) {
+        KeyStore mtlsKeyStore = mtlsProvider.getKeyStore();
+        if (mtlsKeyStore != null) {
+          KeyManagerFactory factory =
+              KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+          factory.init(mtlsKeyStore, new char[] {});
+          return TlsChannelCredentials.newBuilder().keyManager(factory.getKeyManagers()).build();
+        }
       }
     }
     return null;
@@ -1280,6 +1284,24 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
 
     public InstantiatingGrpcChannelProvider build() {
+      if (certificateBasedAccess == null) {
+        certificateBasedAccess = CertificateBasedAccess.createWithSystemEnv();
+      }
+      if (certificateBasedAccess.useMtlsClientCertificate()) {
+        if (mtlsProvider == null) {
+          // Attempt to create default MtlsProvider from environment.
+          try {
+            mtlsProvider = DefaultMtlsProviderFactory.create();
+          } catch (CertificateSourceUnavailableException e) {
+            // This is okay. Leave mtlsProvider as null;
+          } catch (IOException e) {
+            LOG.log(
+                Level.WARNING,
+                "DefaultMtlsProviderFactory encountered unexpected IOException: " + e.getMessage());
+          }
+        }
+      }
+
       if (isMtlsS2AHardBoundTokensEnabled()) {
         // Set a {@code ComputeEngineCredentials} instance to be per-RPC call credentials,
         // which will be used to fetch MTLS_S2A hard bound tokens from the metdata server.

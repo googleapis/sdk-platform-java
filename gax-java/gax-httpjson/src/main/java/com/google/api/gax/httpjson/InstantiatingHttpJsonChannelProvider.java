@@ -38,6 +38,8 @@ import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.mtls.CertificateBasedAccess;
 import com.google.auth.Credentials;
+import com.google.auth.mtls.CertificateSourceUnavailableException;
+import com.google.auth.mtls.DefaultMtlsProviderFactory;
 import com.google.auth.mtls.MtlsProvider;
 import com.google.common.annotations.VisibleForTesting;
 import java.io.IOException;
@@ -46,6 +48,8 @@ import java.security.KeyStore;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * InstantiatingHttpJsonChannelProvider is a TransportChannelProvider which constructs a {@link
@@ -61,6 +65,9 @@ import java.util.concurrent.ScheduledExecutorService;
  */
 @InternalExtensionOnly
 public final class InstantiatingHttpJsonChannelProvider implements TransportChannelProvider {
+
+  @VisibleForTesting
+  static final Logger LOG = Logger.getLogger(InstantiatingHttpJsonChannelProvider.class.getName());
 
   private final Executor executor;
   private final HeaderProvider headerProvider;
@@ -177,10 +184,12 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   }
 
   HttpTransport createHttpTransport() throws IOException, GeneralSecurityException {
-    if (certificateBasedAccess.useMtlsClientCertificate()) {
-      KeyStore mtlsKeyStore = mtlsProvider.getKeyStore();
-      if (mtlsKeyStore != null) {
-        return new NetHttpTransport.Builder().trustCertificates(null, mtlsKeyStore, "").build();
+    if (certificateBasedAccess != null && certificateBasedAccess.useMtlsClientCertificate()) {
+      if (mtlsProvider != null) {
+        KeyStore mtlsKeyStore = mtlsProvider.getKeyStore();
+        if (mtlsKeyStore != null) {
+          return new NetHttpTransport.Builder().trustCertificates(null, mtlsKeyStore, "").build();
+        }
       }
     }
     return null;
@@ -241,7 +250,7 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
     private HttpJsonInterceptorProvider interceptorProvider;
     private String endpoint;
     private HttpTransport httpTransport;
-    private MtlsProvider mtlsProvider = null;
+    private MtlsProvider mtlsProvider;
     private CertificateBasedAccess certificateBasedAccess;
 
     private Builder() {}
@@ -330,6 +339,23 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
     }
 
     public InstantiatingHttpJsonChannelProvider build() {
+      if (certificateBasedAccess == null) {
+        certificateBasedAccess = CertificateBasedAccess.createWithSystemEnv();
+      }
+      if (certificateBasedAccess.useMtlsClientCertificate()) {
+        if (mtlsProvider == null) {
+          // Attempt to create default MtlsProvider from environment.
+          try {
+            mtlsProvider = DefaultMtlsProviderFactory.create();
+          } catch (CertificateSourceUnavailableException e) {
+            // This is okay. Leave mtlsProvider as null;
+          } catch (IOException e) {
+            LOG.log(
+                Level.WARNING,
+                "DefaultMtlsProviderFactory encountered unexpected IOException: " + e.getMessage());
+          }
+        }
+      }
       return new InstantiatingHttpJsonChannelProvider(
           executor,
           headerProvider,
