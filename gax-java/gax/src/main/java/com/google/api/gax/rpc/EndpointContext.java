@@ -33,6 +33,7 @@ import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.internal.EnvironmentProvider;
 import com.google.api.gax.rpc.mtls.CertificateBasedAccess;
 import com.google.auth.Credentials;
+import com.google.auth.mtls.CertificateSourceUnavailableException;
 import com.google.auth.mtls.DefaultMtlsProviderFactory;
 import com.google.auth.mtls.MtlsProvider;
 import com.google.auth.oauth2.ComputeEngineCredentials;
@@ -40,6 +41,8 @@ import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Nullable;
 
 /**
@@ -51,6 +54,8 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
+
+  @VisibleForTesting static final Logger LOG = Logger.getLogger(EndpointContext.class.getName());
 
   private static final EndpointContext INSTANCE;
 
@@ -283,18 +288,22 @@ public abstract class EndpointContext {
 
     /** Determines the fully resolved endpoint and universe domain values */
     private String determineEndpoint() throws IOException {
-      MtlsProvider mtlsProvider = mtlsProvider();
-      if (mtlsProvider == null) {
-        try {
-          mtlsProvider = DefaultMtlsProviderFactory.create();
-        } catch (IOException e) {
-          // throw e;
-        }
-      }
       CertificateBasedAccess cba =
           certificateBasedAccess() == null
               ? CertificateBasedAccess.createWithSystemEnv()
               : certificateBasedAccess();
+      MtlsProvider mtlsProvider = mtlsProvider();
+      if (mtlsProvider == null) {
+        try {
+          mtlsProvider = DefaultMtlsProviderFactory.create();
+        } catch (CertificateSourceUnavailableException e) {
+          // This is okay. Leave mtlsProvider as null;
+        } catch (IOException e) {
+          LOG.log(
+              Level.WARNING,
+              "DefaultMtlsProviderFactory encountered unexpected IOException: " + e.getMessage());
+        }
+      }
       // TransportChannelProvider's endpoint will override the ClientSettings' endpoint
       String customEndpoint =
           transportChannelProviderEndpoint() == null
@@ -376,7 +385,7 @@ public abstract class EndpointContext {
         MtlsProvider mtlsProvider,
         CertificateBasedAccess cba)
         throws IOException {
-      if (switchToMtlsEndpointAllowed && mtlsProvider != null) {
+      if (switchToMtlsEndpointAllowed && cba != null && mtlsProvider != null) {
         switch (cba.getMtlsEndpointUsagePolicy()) {
           case ALWAYS:
             return mtlsEndpoint;
