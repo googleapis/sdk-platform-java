@@ -16,6 +16,8 @@ from hashlib import sha256
 from typing import Optional
 from common.model.gapic_config import GapicConfig
 from common.model.gapic_inputs import GapicInputs
+from common.model.owlbot_yaml_config import OwlbotYamlConfig
+from collections import OrderedDict
 
 
 MAVEN_COORDINATE_SEPARATOR = ":"
@@ -54,6 +56,7 @@ class LibraryConfig:
         recommended_package: Optional[str] = None,
         min_java_version: Optional[int] = None,
         transport: Optional[str] = None,
+        owlbot_yaml: Optional[OwlbotYamlConfig] = None,
     ):
         self.api_shortname = api_shortname
         self.api_description = api_description
@@ -81,6 +84,7 @@ class LibraryConfig:
         self.min_java_version = min_java_version
         self.distribution_name = self.__get_distribution_name(distribution_name)
         self.transport = self.__validate_transport(transport)
+        self.owlbot_yaml = owlbot_yaml
 
     def set_gapic_configs(self, gapic_configs: list[GapicConfig]) -> None:
         """
@@ -121,6 +125,61 @@ class LibraryConfig:
         files.
         """
         return self.transport if self.transport is not None else gapic_inputs.transport
+
+    def to_dict(self):
+        """Converts the LibraryConfig object to a dictionary with ordered keys."""
+        data = {}
+        data["api_shortname"] = self.api_shortname
+        data["name_pretty"] = self.name_pretty
+        data["product_documentation"] = self.product_documentation
+        data["api_description"] = self.api_description
+        if self.library_type and self.library_type != "GAPIC_AUTO":
+            data["library_type"] = self.library_type
+        if self.release_level:
+            data["release_level"] = self.release_level
+        if self.api_id:
+            data["api_id"] = self.api_id
+        if self.api_reference:
+            data["api_reference"] = self.api_reference
+        if self.codeowner_team:
+            data["codeowner_team"] = self.codeowner_team
+        if self.client_documentation:
+            data["client_documentation"] = self.client_documentation
+        if self.distribution_name:
+            data["distribution_name"] = self.distribution_name
+        if self.excluded_dependencies:
+            data["excluded_dependencies"] = self.excluded_dependencies
+        if self.excluded_poms:
+            data["excluded_poms"] = self.excluded_poms
+        if self.googleapis_commitish:
+            data["googleapis_commitish"] = self.googleapis_commitish
+        if self.group_id and self.group_id != "com.google.cloud":
+            data["group_id"] = self.group_id
+        if self.issue_tracker:
+            data["issue_tracker"] = self.issue_tracker
+        if self.library_name:
+            data["library_name"] = self.library_name
+        if self.rest_documentation:
+            data["rest_documentation"] = self.rest_documentation
+        if self.rpc_documentation:
+            data["rpc_documentation"] = self.rpc_documentation
+        if self.cloud_api is False:  # Only spell out when false
+            data["cloud_api"] = self.cloud_api
+        if self.requires_billing is False:  # Only spell out when false
+            data["requires_billing"] = self.requires_billing
+        if self.extra_versioned_modules:
+            data["extra_versioned_modules"] = self.extra_versioned_modules
+        if self.recommended_package:
+            data["recommended_package"] = self.recommended_package
+        if self.min_java_version:
+            data["min_java_version"] = self.min_java_version
+        if self.transport:
+            data["transport"] = self.transport
+        if self.gapic_configs:
+            data["GAPICs"] = [gc.to_dict() for gc in self.gapic_configs]
+        if self.owlbot_yaml:
+            data["owlbot_yaml"] = self.owlbot_yaml.to_dict()
+        return data
 
     def __get_distribution_name(self, distribution_name: Optional[str]) -> str:
         LibraryConfig.__check_distribution_name(distribution_name)
