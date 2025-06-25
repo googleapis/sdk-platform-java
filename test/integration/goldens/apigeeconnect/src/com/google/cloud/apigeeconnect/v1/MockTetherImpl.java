@@ -18,7 +18,7 @@ package com.google.cloud.apigeeconnect.v1;
 
 import com.google.api.core.BetaApi;
 import com.google.cloud.apigeeconnect.v1.TetherGrpc.TetherImplBase;
-import com.google.protobuf.AbstractMessage;
+import com.google.protobuf.Message;
 import io.grpc.stub.StreamObserver;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -29,7 +29,7 @@ import javax.annotation.Generated;
 @BetaApi
 @Generated("by gapic-generator-java")
 public class MockTetherImpl extends TetherImplBase {
-  private List<AbstractMessage> requests;
+  private List<Message> requests;
   private Queue<Object> responses;
 
   public MockTetherImpl() {
@@ -37,15 +37,15 @@ public class MockTetherImpl extends TetherImplBase {
     responses = new LinkedList<>();
   }
 
-  public List<AbstractMessage> getRequests() {
+  public List<Message> getRequests() {
     return requests;
   }
 
-  public void addResponse(AbstractMessage response) {
+  public void addResponse(Message response) {
     responses.add(response);
   }
 
-  public void setResponses(List<AbstractMessage> responses) {
+  public void setResponses(List<Message> responses) {
     this.responses = new LinkedList<Object>(responses);
   }
 
