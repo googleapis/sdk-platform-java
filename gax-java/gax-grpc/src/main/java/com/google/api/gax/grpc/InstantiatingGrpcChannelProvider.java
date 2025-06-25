@@ -42,9 +42,12 @@ import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannel;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.internal.EnvironmentProvider;
-import com.google.api.gax.rpc.mtls.MtlsProvider;
+import com.google.api.gax.rpc.mtls.CertificateBasedAccess;
 import com.google.auth.ApiKeyCredentials;
 import com.google.auth.Credentials;
+import com.google.auth.mtls.CertificateSourceUnavailableException;
+import com.google.auth.mtls.DefaultMtlsProviderFactory;
+import com.google.auth.mtls.MtlsProvider;
 import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auth.oauth2.SecureSessionAgent;
 import com.google.auth.oauth2.SecureSessionAgentConfig;
@@ -150,6 +153,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable private final Boolean allowNonDefaultServiceAccount;
   @VisibleForTesting final ImmutableMap<String, ?> directPathServiceConfig;
   @Nullable private final MtlsProvider mtlsProvider;
+  @Nullable private final CertificateBasedAccess certificateBasedAccess;
   @Nullable private final SecureSessionAgent s2aConfigProvider;
   private final List<HardBoundTokenTypes> allowedHardBoundTokenTypes;
   @VisibleForTesting final Map<String, String> headersWithDuplicatesRemoved = new HashMap<>();
@@ -183,6 +187,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     this.mtlsEndpoint = builder.mtlsEndpoint;
     this.allowedHardBoundTokenTypes = builder.allowedHardBoundTokenTypes;
     this.mtlsProvider = builder.mtlsProvider;
+    this.certificateBasedAccess = builder.certificateBasedAccess;
     this.s2aConfigProvider = builder.s2aConfigProvider;
     this.envProvider = builder.envProvider;
     this.interceptorProvider = builder.interceptorProvider;
@@ -484,13 +489,15 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
   @VisibleForTesting
   ChannelCredentials createMtlsChannelCredentials() throws IOException, GeneralSecurityException {
-    if (mtlsProvider.useMtlsClientCertificate()) {
-      KeyStore mtlsKeyStore = mtlsProvider.getKeyStore();
-      if (mtlsKeyStore != null) {
-        KeyManagerFactory factory =
-            KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-        factory.init(mtlsKeyStore, new char[] {});
-        return TlsChannelCredentials.newBuilder().keyManager(factory.getKeyManagers()).build();
+    if (certificateBasedAccess != null && certificateBasedAccess.useMtlsClientCertificate()) {
+      if (mtlsProvider != null) {
+        KeyStore mtlsKeyStore = mtlsProvider.getKeyStore();
+        if (mtlsKeyStore != null) {
+          KeyManagerFactory factory =
+              KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+          factory.init(mtlsKeyStore, new char[] {});
+          return TlsChannelCredentials.newBuilder().keyManager(factory.getKeyManagers()).build();
+        }
       }
     }
     return null;
@@ -853,7 +860,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     private boolean useS2A;
     private EnvironmentProvider envProvider;
     private SecureSessionAgent s2aConfigProvider = SecureSessionAgent.create();
-    private MtlsProvider mtlsProvider = new MtlsProvider();
+    private MtlsProvider mtlsProvider;
+    private CertificateBasedAccess certificateBasedAccess;
     @Nullable private GrpcInterceptorProvider interceptorProvider;
     @Nullable private Integer maxInboundMessageSize;
     @Nullable private Integer maxInboundMetadataSize;
@@ -904,6 +912,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       this.allowedHardBoundTokenTypes = provider.allowedHardBoundTokenTypes;
       this.directPathServiceConfig = provider.directPathServiceConfig;
       this.mtlsProvider = provider.mtlsProvider;
+      this.certificateBasedAccess = provider.certificateBasedAccess;
       this.s2aConfigProvider = provider.s2aConfigProvider;
     }
 
@@ -991,6 +1000,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @VisibleForTesting
     Builder setMtlsProvider(MtlsProvider mtlsProvider) {
       this.mtlsProvider = mtlsProvider;
+      return this;
+    }
+
+    @VisibleForTesting
+    Builder setCertificateBasedAccess(CertificateBasedAccess certificateBasedAccess) {
+      this.certificateBasedAccess = certificateBasedAccess;
       return this;
     }
 
@@ -1269,6 +1284,24 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
 
     public InstantiatingGrpcChannelProvider build() {
+      if (certificateBasedAccess == null) {
+        certificateBasedAccess = CertificateBasedAccess.createWithSystemEnv();
+      }
+      if (certificateBasedAccess.useMtlsClientCertificate()) {
+        if (mtlsProvider == null) {
+          // Attempt to create default MtlsProvider from environment.
+          try {
+            mtlsProvider = DefaultMtlsProviderFactory.create();
+          } catch (CertificateSourceUnavailableException e) {
+            // This is okay. Leave mtlsProvider as null;
+          } catch (IOException e) {
+            LOG.log(
+                Level.WARNING,
+                "DefaultMtlsProviderFactory encountered unexpected IOException: " + e.getMessage());
+          }
+        }
+      }
+
       if (isMtlsS2AHardBoundTokensEnabled()) {
         // Set a {@code ComputeEngineCredentials} instance to be per-RPC call credentials,
         // which will be used to fetch MTLS_S2A hard bound tokens from the metdata server.
