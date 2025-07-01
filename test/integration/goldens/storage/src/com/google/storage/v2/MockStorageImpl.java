@@ -22,8 +22,8 @@ import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Empty;
+import com.google.protobuf.Message;
 import com.google.storage.v2.StorageGrpc.StorageImplBase;
 import io.grpc.stub.StreamObserver;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ import javax.annotation.Generated;
 @BetaApi
 @Generated("by gapic-generator-java")
 public class MockStorageImpl extends StorageImplBase {
-  private List<AbstractMessage> requests;
+  private List<Message> requests;
   private Queue<java.lang.Object> responses;
 
   public MockStorageImpl() {
@@ -43,15 +43,15 @@ public class MockStorageImpl extends StorageImplBase {
     responses = new LinkedList<>();
   }
 
-  public List<AbstractMessage> getRequests() {
+  public List<Message> getRequests() {
     return requests;
   }
 
-  public void addResponse(AbstractMessage response) {
+  public void addResponse(Message response) {
     responses.add(response);
   }
 
-  public void setResponses(List<AbstractMessage> responses) {
+  public void setResponses(List<Message> responses) {
     this.responses = new LinkedList<java.lang.Object>(responses);
   }
 
