@@ -489,15 +489,16 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
   @VisibleForTesting
   ChannelCredentials createMtlsChannelCredentials() throws IOException, GeneralSecurityException {
-    if (certificateBasedAccess != null && certificateBasedAccess.useMtlsClientCertificate()) {
-      if (mtlsProvider != null) {
-        KeyStore mtlsKeyStore = mtlsProvider.getKeyStore();
-        if (mtlsKeyStore != null) {
-          KeyManagerFactory factory =
-              KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-          factory.init(mtlsKeyStore, new char[] {});
-          return TlsChannelCredentials.newBuilder().keyManager(factory.getKeyManagers()).build();
-        }
+    if (certificateBasedAccess == null || mtlsProvider == null) {
+      return null;
+    }
+    if (certificateBasedAccess.useMtlsClientCertificate()) {
+      KeyStore mtlsKeyStore = mtlsProvider.getKeyStore();
+      if (mtlsKeyStore != null) {
+        KeyManagerFactory factory =
+            KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+        factory.init(mtlsKeyStore, new char[] {});
+        return TlsChannelCredentials.newBuilder().keyManager(factory.getKeyManagers()).build();
       }
     }
     return null;
@@ -1293,7 +1294,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
           try {
             mtlsProvider = DefaultMtlsProviderFactory.create();
           } catch (CertificateSourceUnavailableException e) {
-            // This is okay. Leave mtlsProvider as null;
+            // This is okay. Leave mtlsProvider as null so that we will not auto-upgrade
+            // to mTLS endpoints. See https://google.aip.dev/auth/4114.
           } catch (IOException e) {
             LOG.log(
                 Level.WARNING,

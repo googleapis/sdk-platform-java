@@ -52,11 +52,11 @@ class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransportChan
 
   private static final String DEFAULT_ENDPOINT = "localhost:8080";
   private static final Map<String, String> DEFAULT_HEADER_MAP = Collections.emptyMap();
-  private CertificateBasedAccess cba;
+  private CertificateBasedAccess certificateBasedAccess;
 
   @BeforeEach
   public void setup() throws IOException {
-    cba =
+    certificateBasedAccess =
         new CertificateBasedAccess(
             name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "never" : "false");
   }
@@ -67,7 +67,9 @@ class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransportChan
     executor.shutdown();
 
     TransportChannelProvider provider =
-        InstantiatingHttpJsonChannelProvider.newBuilder().setCertificateBasedAccess(cba).build();
+        InstantiatingHttpJsonChannelProvider.newBuilder()
+            .setCertificateBasedAccess(certificateBasedAccess)
+            .build();
 
     assertThat(provider.needsEndpoint()).isTrue();
     provider = provider.withEndpoint(DEFAULT_ENDPOINT);
@@ -121,7 +123,7 @@ class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransportChan
     InstantiatingHttpJsonChannelProvider instantiatingHttpJsonChannelProvider =
         InstantiatingHttpJsonChannelProvider.newBuilder()
             .setEndpoint(DEFAULT_ENDPOINT)
-            .setCertificateBasedAccess(cba)
+            .setCertificateBasedAccess(certificateBasedAccess)
             .build();
     instantiatingHttpJsonChannelProvider =
         (InstantiatingHttpJsonChannelProvider)
@@ -154,7 +156,7 @@ class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransportChan
         InstantiatingHttpJsonChannelProvider.newBuilder()
             .setEndpoint(DEFAULT_ENDPOINT)
             .setExecutor(executor)
-            .setCertificateBasedAccess(cba)
+            .setCertificateBasedAccess(certificateBasedAccess)
             .build();
     instantiatingHttpJsonChannelProvider =
         (InstantiatingHttpJsonChannelProvider)
@@ -180,13 +182,13 @@ class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransportChan
 
   @Override
   protected Object getMtlsObjectFromTransportChannel(
-      MtlsProvider provider, CertificateBasedAccess cba)
+      MtlsProvider provider, CertificateBasedAccess certificateBasedAccess)
       throws IOException, GeneralSecurityException {
     InstantiatingHttpJsonChannelProvider channelProvider =
         InstantiatingHttpJsonChannelProvider.newBuilder()
             .setEndpoint("localhost:8080")
             .setMtlsProvider(provider)
-            .setCertificateBasedAccess(cba)
+            .setCertificateBasedAccess(certificateBasedAccess)
             .setHeaderProvider(Mockito.mock(HeaderProvider.class))
             .setExecutor(Mockito.mock(Executor.class))
             .build();

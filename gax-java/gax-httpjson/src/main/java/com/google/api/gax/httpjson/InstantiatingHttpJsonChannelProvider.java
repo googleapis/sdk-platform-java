@@ -184,12 +184,13 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   }
 
   HttpTransport createHttpTransport() throws IOException, GeneralSecurityException {
-    if (certificateBasedAccess != null && certificateBasedAccess.useMtlsClientCertificate()) {
-      if (mtlsProvider != null) {
-        KeyStore mtlsKeyStore = mtlsProvider.getKeyStore();
-        if (mtlsKeyStore != null) {
-          return new NetHttpTransport.Builder().trustCertificates(null, mtlsKeyStore, "").build();
-        }
+    if (certificateBasedAccess == null || mtlsProvider == null) {
+      return null;
+    }
+    if (certificateBasedAccess.useMtlsClientCertificate()) {
+      KeyStore mtlsKeyStore = mtlsProvider.getKeyStore();
+      if (mtlsKeyStore != null) {
+        return new NetHttpTransport.Builder().trustCertificates(null, mtlsKeyStore, "").build();
       }
     }
     return null;
@@ -348,7 +349,8 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
           try {
             mtlsProvider = DefaultMtlsProviderFactory.create();
           } catch (CertificateSourceUnavailableException e) {
-            // This is okay. Leave mtlsProvider as null;
+            // This is okay. Leave mtlsProvider as null so that we will not auto-upgrade
+            // to mTLS endpoints. See https://google.aip.dev/auth/4114.
           } catch (IOException e) {
             LOG.log(
                 Level.WARNING,

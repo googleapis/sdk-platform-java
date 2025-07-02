@@ -32,11 +32,17 @@ package com.google.api.gax.rpc.mtls;
 
 import com.google.api.gax.rpc.internal.EnvironmentProvider;
 
-/** Utility class for handling certificate-based access configurations. */
+/**
+ * Utility class for handling certificate-based access configurations.
+ *
+ * <p>This class handles the processing of GOOGLE_API_USE_CLIENT_CERTIFICATE and
+ * GOOGLE_API_USE_MTLS_ENDPOINT environment variables according to https://google.aip.dev/auth/4114
+ */
 public class CertificateBasedAccess {
 
   private final EnvironmentProvider envProvider;
 
+  /** The EnvironmentProvider mechanism supports env var injection for unit tests. */
   public CertificateBasedAccess(EnvironmentProvider envProvider) {
     this.envProvider = envProvider;
   }

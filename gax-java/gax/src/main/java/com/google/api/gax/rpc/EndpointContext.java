@@ -288,7 +288,7 @@ public abstract class EndpointContext {
 
     /** Determines the fully resolved endpoint and universe domain values */
     private String determineEndpoint() throws IOException {
-      CertificateBasedAccess cba =
+      CertificateBasedAccess certificateBasedAccess =
           certificateBasedAccess() == null
               ? CertificateBasedAccess.createWithSystemEnv()
               : certificateBasedAccess();
@@ -325,7 +325,11 @@ public abstract class EndpointContext {
 
       String endpoint =
           mtlsEndpointResolver(
-              customEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed(), mtlsProvider, cba);
+              customEndpoint,
+              mtlsEndpoint(),
+              switchToMtlsEndpointAllowed(),
+              mtlsProvider,
+              certificateBasedAccess);
 
       // Check if mTLS is configured with non-GDU
       if (endpoint.equals(mtlsEndpoint())
@@ -383,16 +387,17 @@ public abstract class EndpointContext {
         String mtlsEndpoint,
         boolean switchToMtlsEndpointAllowed,
         MtlsProvider mtlsProvider,
-        CertificateBasedAccess cba)
+        CertificateBasedAccess certificateBasedAccess)
         throws IOException {
-      if (switchToMtlsEndpointAllowed && cba != null && mtlsProvider != null) {
-        switch (cba.getMtlsEndpointUsagePolicy()) {
+      if (switchToMtlsEndpointAllowed && certificateBasedAccess != null && mtlsProvider != null) {
+        switch (certificateBasedAccess.getMtlsEndpointUsagePolicy()) {
           case ALWAYS:
             return mtlsEndpoint;
           case NEVER:
             return endpoint;
           default:
-            if (cba.useMtlsClientCertificate() && mtlsProvider.getKeyStore() != null) {
+            if (certificateBasedAccess.useMtlsClientCertificate()
+                && mtlsProvider.getKeyStore() != null) {
               return mtlsEndpoint;
             }
             return endpoint;
