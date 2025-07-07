@@ -61,6 +61,8 @@ class ClientLibraryReflectConfigComposerTest {
             "com.google.showcase.v1beta1.Foobar$Builder",
             "com.google.showcase.v1beta1.Object",
             "com.google.showcase.v1beta1.Object$Builder",
+            "com.google.showcase.v1beta1.PagedExpandLegacyRequest",
+            "com.google.showcase.v1beta1.PagedExpandLegacyRequest$Builder",
             "com.google.showcase.v1beta1.PagedExpandRequest",
             "com.google.showcase.v1beta1.PagedExpandRequest$Builder",
             "com.google.showcase.v1beta1.PagedExpandResponse",
