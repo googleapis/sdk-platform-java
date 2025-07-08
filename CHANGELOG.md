@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.60.1](https://github.com/googleapis/sdk-platform-java/compare/v2.60.0...v2.60.1) (2025-07-08)
+
+
+### Bug Fixes
+
+* **hermetic-build:** use public maven metadata for latest version inference ([#3853](https://github.com/googleapis/sdk-platform-java/issues/3853)) ([0be1e96](https://github.com/googleapis/sdk-platform-java/commit/0be1e9670079bcf6a9246d0284e59001c24242ea))
+
 ## [2.60.0](https://github.com/googleapis/sdk-platform-java/compare/v2.59.2...v2.60.0) (2025-06-23)
 
 
