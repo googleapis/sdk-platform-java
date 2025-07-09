@@ -48,8 +48,14 @@ import java.util.List;
 /**
  * Provider class for mutual TLS. It is used to configure the mutual TLS in the transport with the
  * default client certificate on device.
+ *
+ * <p>This class is deprecated. It has been replaced by com.google.auth.mtls.SecureConnectProvider
+ * from the Java auth library.
+ *
+ * <p>Note: This class is for Google cloud internal use only.
  */
 @BetaApi
+@Deprecated
 public class MtlsProvider {
   interface ProcessProvider {
     public Process createProcess(InputStream metadata) throws IOException;
