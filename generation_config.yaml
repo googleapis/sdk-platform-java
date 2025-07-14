@@ -1,4 +1,4 @@
-googleapis_commitish: c759e924aa786f3df0e64499daf97d46a27edb31
+googleapis_commitish: cd7fed30706c129f2bca11d5b2ef18f4ad18a7ac
 # the libraries are ordered with respect to library name, which is
 # java-{library.library_name} or java-{library.api-shortname} when
 # library.library_name is not defined.
@@ -49,3 +49,5 @@ libraries:
   - proto_path: google/iam/v1
   - proto_path: google/iam/v2
   - proto_path: google/iam/v2beta
+  - proto_path: google/iam/v3
+  - proto_path: google/iam/v3beta

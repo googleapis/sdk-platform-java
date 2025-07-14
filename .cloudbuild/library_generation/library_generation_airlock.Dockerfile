@@ -21,7 +21,7 @@ FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/maven@sha256:d3f0
 WORKDIR /sdk-platform-java
 COPY . .
 # {x-version-update-start:gapic-generator-java:current}
-ENV DOCKER_GAPIC_GENERATOR_VERSION="2.56.2"
+ENV DOCKER_GAPIC_GENERATOR_VERSION="2.60.2-SNAPSHOT"
 # {x-version-update-end}
 
 # Download the java formatter
@@ -34,57 +34,19 @@ RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip -Dfmt.skip
 RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "./gapic-generator-java.jar"
 
-# 3.20.1
-FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/alpine@sha256:dabf91b69c191a1a0a1628fd6bdd029c0c4018041c7f052870bb13c5a222ae76 as glibc-compat
-
-RUN apk update && apk add git sudo
-# This SHA is the latest known-to-work version of this binary compatibility tool
-ARG GLIB_MUS_SHA=e94aca542e3ab08b42aa0b0d6e72478b935bb8e8
-WORKDIR /home
-
-# Install compatibility layer to run glibc-based programs (such as the
-# grpc plugin).
-# Alpine, by default, only supports musl-based binaries, and there is no public
-# downloadable distribution of the grpc plugin that is Alpine (musl) compatible.
-# This is one of the recommended approaches to ensure glibc-compatibility
-# as per https://wiki.alpinelinux.org/wiki/Running_glibc_programs
-RUN git clone https://gitlab.com/manoel-linux1/GlibMus-HQ.git
-WORKDIR /home/GlibMus-HQ
-# We lock the tool to the latest known-to-work version
-RUN git checkout "${GLIB_MUS_SHA}"
-RUN chmod a+x compile-x86_64-alpine-linux.sh
-RUN sh compile-x86_64-alpine-linux.sh
-
-# 3.12.7-alpine3.20
-FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python@sha256:b83d5ec7274bee17d2f4bd0bfbb082f156241e4513f0a37c70500e1763b1d90d as final
+# 3.12.3-slim-bookworm
+FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python@sha256:afc139a0a640942491ec481ad8dda10f2c5b753f5c969393b12480155fe15a63 as final
 
 ARG OWLBOT_CLI_COMMITTISH=3a68a9c0de318784b3aefadcc502a6521b3f1bc5
-ARG PROTOC_VERSION=25.5
-ARG GRPC_VERSION=1.70.0
+ARG PROTOC_VERSION=25.8
+ARG GRPC_VERSION=1.71.0
 ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
 
 # install OS tools
-RUN apk update && apk add unzip curl rsync openjdk17 jq bash nodejs npm git
+RUN apt update && apt install -y curl unzip rsync jq nodejs npm git openjdk-17-jdk
 
 SHELL [ "/bin/bash", "-c" ]
-
-# Copy glibc shared objects to enable execution of the grpc plugin.
-# This list was obtained via `libtree -pvvv /grpc/*` in the final container as
-# well as inspecting the modifications done by compile-x86_64-alpine-linux.sh
-# in the glibc-compat stage using the `dive` command.
-COPY --from=glibc-compat /etc/libgcc* /etc/
-COPY --from=glibc-compat /lib64/ld-linux-x86-64.so.2 /lib64/
-COPY --from=glibc-compat /lib/GLIBCFAKE.so.0 /lib/
-COPY --from=glibc-compat /lib/ld-linux-x86-64.so.2 /lib/
-COPY --from=glibc-compat /lib/libpthread* /lib/
-COPY --from=glibc-compat /lib/libucontext* /lib/
-COPY --from=glibc-compat /lib/libc.* /lib/
-COPY --from=glibc-compat /usr/lib/libgcc* /usr/lib/
-COPY --from=glibc-compat /usr/lib/libstdc* /usr/lib/
-COPY --from=glibc-compat /usr/lib/libobstack* /usr/lib/
-COPY --from=glibc-compat /lib/libm.so.6 /usr/lib/
-
 
 # copy source code
 COPY hermetic_build/common /src/common
@@ -122,7 +84,6 @@ RUN git checkout "${OWLBOT_CLI_COMMITTISH}"
 RUN npm i && npm run compile && npm link
 RUN owl-bot copy-code --version
 RUN chmod o+rx $(which owl-bot)
-RUN apk del -r npm && apk cache clean
 
 # copy the Java formatter
 COPY --from=ggj-build "/google-java-format.jar" "${HOME}"/.library_generation/google-java-format.jar
