@@ -69,7 +69,7 @@ class CertificateBasedAccessTest {
   void testUseMtlsClientCertificateTrue() {
     CertificateBasedAccess cba =
         new CertificateBasedAccess(
-            name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "auto" : "true");
+            name -> name.equals("GOOGLE_API_USE_CLIENT_CERTIFICATE") ? "true" : "auto");
     assertTrue(cba.useMtlsClientCertificate());
   }
 
@@ -77,7 +77,7 @@ class CertificateBasedAccessTest {
   void testUseMtlsClientCertificateFalse() {
     CertificateBasedAccess cba =
         new CertificateBasedAccess(
-            name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "auto" : "false");
+            name -> name.equals("GOOGLE_API_USE_CLIENT_CERTIFICATE") ? "false" : "auto");
     assertFalse(cba.useMtlsClientCertificate());
   }
 }

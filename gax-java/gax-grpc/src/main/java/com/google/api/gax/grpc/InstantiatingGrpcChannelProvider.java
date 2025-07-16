@@ -153,7 +153,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable private final Boolean allowNonDefaultServiceAccount;
   @VisibleForTesting final ImmutableMap<String, ?> directPathServiceConfig;
   @Nullable private final MtlsProvider mtlsProvider;
-  @Nullable private final CertificateBasedAccess certificateBasedAccess;
+  private final CertificateBasedAccess certificateBasedAccess;
   @Nullable private final SecureSessionAgent s2aConfigProvider;
   private final List<HardBoundTokenTypes> allowedHardBoundTokenTypes;
   @VisibleForTesting final Map<String, String> headersWithDuplicatesRemoved = new HashMap<>();
@@ -489,7 +489,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
   @VisibleForTesting
   ChannelCredentials createMtlsChannelCredentials() throws IOException, GeneralSecurityException {
-    if (certificateBasedAccess == null || mtlsProvider == null) {
+    if (mtlsProvider == null) {
       return null;
     }
     if (certificateBasedAccess.useMtlsClientCertificate()) {
@@ -861,7 +861,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     private boolean useS2A;
     private EnvironmentProvider envProvider;
     private SecureSessionAgent s2aConfigProvider = SecureSessionAgent.create();
-    private MtlsProvider mtlsProvider;
+    @Nullable private MtlsProvider mtlsProvider;
     private CertificateBasedAccess certificateBasedAccess;
     @Nullable private GrpcInterceptorProvider interceptorProvider;
     @Nullable private Integer maxInboundMessageSize;

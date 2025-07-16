@@ -50,6 +50,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Nullable;
 
 /**
  * InstantiatingHttpJsonChannelProvider is a TransportChannelProvider which constructs a {@link
@@ -74,7 +75,7 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   private final HttpJsonInterceptorProvider interceptorProvider;
   private final String endpoint;
   private final HttpTransport httpTransport;
-  private final MtlsProvider mtlsProvider;
+  @Nullable private final MtlsProvider mtlsProvider;
   private final CertificateBasedAccess certificateBasedAccess;
 
   private InstantiatingHttpJsonChannelProvider(
@@ -184,7 +185,7 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   }
 
   HttpTransport createHttpTransport() throws IOException, GeneralSecurityException {
-    if (certificateBasedAccess == null || mtlsProvider == null) {
+    if (mtlsProvider == null) {
       return null;
     }
     if (certificateBasedAccess.useMtlsClientCertificate()) {
