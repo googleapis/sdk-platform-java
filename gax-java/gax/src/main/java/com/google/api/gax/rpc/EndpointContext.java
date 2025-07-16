@@ -125,7 +125,7 @@ public abstract class EndpointContext {
   public abstract MtlsProvider mtlsProvider();
 
   @Nullable
-  public abstract CertificateBasedAccess certificateBasedAccess();
+  abstract CertificateBasedAccess certificateBasedAccess();
 
   public abstract boolean usingGDCH();
 
@@ -222,8 +222,7 @@ public abstract class EndpointContext {
 
     public abstract Builder setMtlsProvider(MtlsProvider mtlsProvider);
 
-    public abstract Builder setCertificateBasedAccess(
-        CertificateBasedAccess certificateBasedAccess);
+    abstract Builder setCertificateBasedAccess(CertificateBasedAccess certificateBasedAccess);
 
     public abstract Builder setUsingGDCH(boolean usingGDCH);
 
