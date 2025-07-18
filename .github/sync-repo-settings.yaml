@@ -166,6 +166,8 @@ branchProtectionRules:
       - should-run-library-generation-tests
       - showcase (11)
       - showcase (17)
+      - showcase (21)
+      - showcase (24)
 permissionRules:
   - team: cloud-java-team-teamsync
     permission: admin
