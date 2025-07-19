@@ -39,6 +39,7 @@ import com.google.longrunning.Operation;
 import com.google.longrunning.OperationsGrpc.OperationsImplBase;
 import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Empty;
+import com.google.protobuf.Message;
 import io.grpc.stub.StreamObserver;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -48,7 +49,7 @@ import java.util.Queue;
 /** A custom mock Operations service implementation which only mocks responses for GetOperation. */
 @BetaApi
 public class MockOperationsExImpl extends OperationsImplBase {
-  private List<AbstractMessage> requests;
+  private List<Message> requests;
   private Queue<Object> getOperationResponses;
 
   public MockOperationsExImpl() {
@@ -56,11 +57,11 @@ public class MockOperationsExImpl extends OperationsImplBase {
     getOperationResponses = new LinkedList<>();
   }
 
-  public List<AbstractMessage> getRequests() {
+  public List<Message> getRequests() {
     return requests;
   }
 
-  public void addGetOperationResponse(AbstractMessage response) {
+  public void addGetOperationResponse(Message response) {
     this.getOperationResponses.add(response);
   }
 
