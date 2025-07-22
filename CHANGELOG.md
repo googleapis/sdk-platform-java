@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.60.2](https://github.com/googleapis/sdk-platform-java/compare/v2.60.1...v2.60.2) (2025-07-22)
+
+
+### Dependencies
+
+* update arrow.version to 17.0.0, auth deps to 1.37.1 and http-client deps to 1.47.1 ([#3863](https://github.com/googleapis/sdk-platform-java/issues/3863)) ([b5bb3ca](https://github.com/googleapis/sdk-platform-java/commit/b5bb3ca6fc08d04e001a3ca83d4aac1627a5c504))
+
 ## [2.60.1](https://github.com/googleapis/sdk-platform-java/compare/v2.60.0...v2.60.1) (2025-07-08)
 
 
