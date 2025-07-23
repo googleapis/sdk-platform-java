@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.60.3](https://github.com/googleapis/sdk-platform-java/compare/v2.60.2...v2.60.3) (2025-07-23)
+
+
+### Bug Fixes
+
+* make generation config update logs verbose ([#3764](https://github.com/googleapis/sdk-platform-java/issues/3764)) ([9b1a34b](https://github.com/googleapis/sdk-platform-java/commit/9b1a34b0dd08c0eddcf09ef5d81b225d0942f529))
+
 ## [2.60.2](https://github.com/googleapis/sdk-platform-java/compare/v2.60.1...v2.60.2) (2025-07-22)
 
 
