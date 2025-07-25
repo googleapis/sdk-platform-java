@@ -51,7 +51,7 @@ import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.longrunning.Operation;
-import com.google.protobuf.AbstractMessage;
+import com.google.protobuf.Message;
 import io.grpc.ServerServiceDefinition;
 import io.grpc.stub.StreamObserver;
 import java.util.ArrayList;
@@ -75,8 +75,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
                   TypeNode.withReference(
                       ConcreteReference.builder()
                           .setClazz(List.class)
-                          .setGenerics(
-                              Arrays.asList(FIXED_TYPESTORE.get("AbstractMessage").reference()))
+                          .setGenerics(Arrays.asList(FIXED_TYPESTORE.get("Message").reference()))
                           .build()))
               .build());
 
@@ -179,10 +178,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
   private static MethodDefinition createAddResponseMethod() {
     VariableExpr responseArgExpr =
         VariableExpr.withVariable(
-            Variable.builder()
-                .setName("response")
-                .setType(FIXED_TYPESTORE.get("AbstractMessage"))
-                .build());
+            Variable.builder().setName("response").setType(FIXED_TYPESTORE.get("Message")).build());
     Expr methodInvocationExpr =
         MethodInvocationExpr.builder()
             .setMethodName("add")
@@ -207,8 +203,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
                     TypeNode.withReference(
                         ConcreteReference.builder()
                             .setClazz(List.class)
-                            .setGenerics(
-                                Arrays.asList(FIXED_TYPESTORE.get("AbstractMessage").reference()))
+                            .setGenerics(Arrays.asList(FIXED_TYPESTORE.get("Message").reference()))
                             .build()))
                 .build());
     Expr responseAssignExpr =
@@ -597,7 +592,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
   private static TypeStore createStaticTypes() {
     List<Class<?>> concreteClazzes =
         Arrays.asList(
-            AbstractMessage.class,
+            Message.class,
             ArrayList.class,
             BetaApi.class,
             Generated.class,
