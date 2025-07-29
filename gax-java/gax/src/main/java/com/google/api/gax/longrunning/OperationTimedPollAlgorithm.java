@@ -93,7 +93,7 @@ public class OperationTimedPollAlgorithm extends ExponentialRetryAlgorithm {
           Level.WARNING,
           "The long running operation request is no longer being tracked. "
               + "Possible reasons include a timeout or "
-              + "exceeding the maximum number of retry attempts."
+              + "exceeding the maximum number of poll attempts."
               + " Please refer to "
               + LRO_TROUBLESHOOTING_LINK
               + " for more information");
