@@ -91,7 +91,8 @@ public class OperationTimedPollAlgorithm extends ExponentialRetryAlgorithm {
     if (LOGGER.isLoggable(Level.WARNING)) {
       LOGGER.log(
           Level.WARNING,
-          "The task has been cancelled. Possible reasons include a timeout or "
+          "The long running operation request is no longer being tracked. "
+              + "Possible reasons include a timeout or "
               + "exceeding the maximum number of retry attempts."
               + " Please refer to "
               + LRO_TROUBLESHOOTING_LINK
