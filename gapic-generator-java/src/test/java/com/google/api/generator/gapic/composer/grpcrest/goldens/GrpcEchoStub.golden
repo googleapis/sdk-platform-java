@@ -51,6 +51,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/Echo")
           .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<ExpandRequest, EchoResponse> expandMethodDescriptor =
@@ -59,6 +60,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/Expand")
           .setRequestMarshaller(ProtoUtils.marshaller(ExpandRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<PagedExpandRequest, PagedExpandResponse>
@@ -69,6 +71,7 @@ public class GrpcEchoStub extends EchoStub {
               .setRequestMarshaller(ProtoUtils.marshaller(PagedExpandRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(PagedExpandResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<PagedExpandRequest, PagedExpandResponse>
@@ -79,6 +82,7 @@ public class GrpcEchoStub extends EchoStub {
               .setRequestMarshaller(ProtoUtils.marshaller(PagedExpandRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(PagedExpandResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<WaitRequest, Operation> waitMethodDescriptor =
@@ -87,6 +91,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/Wait")
           .setRequestMarshaller(ProtoUtils.marshaller(WaitRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Operation.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<BlockRequest, BlockResponse> blockMethodDescriptor =
@@ -95,6 +100,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/Block")
           .setRequestMarshaller(ProtoUtils.marshaller(BlockRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(BlockResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<EchoRequest, Object> collideNameMethodDescriptor =
@@ -103,6 +109,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/CollideName")
           .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Object.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<EchoRequest, Object> nestedBindingMethodDescriptor =
@@ -111,6 +118,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/NestedBinding")
           .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Object.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<EchoRequest, EchoResponse> chatMethodDescriptor =
@@ -119,6 +127,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/Chat")
           .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<EchoRequest, EchoResponse> noBindingMethodDescriptor =
@@ -127,6 +136,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/NoBinding")
           .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<UpdateCaseRequest, Case> updateCaseMethodDescriptor =
@@ -135,6 +145,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/UpdateCase")
           .setRequestMarshaller(ProtoUtils.marshaller(UpdateCaseRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Case.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private final UnaryCallable<EchoRequest, EchoResponse> echoCallable;
