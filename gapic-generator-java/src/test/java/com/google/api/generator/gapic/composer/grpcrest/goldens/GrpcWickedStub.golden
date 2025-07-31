@@ -33,6 +33,7 @@ public class GrpcWickedStub extends WickedStub {
           .setFullMethodName("google.showcase.v1beta1.Wicked/CraftEvilPlan")
           .setRequestMarshaller(ProtoUtils.marshaller(EvilRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(EvilResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<EvilRequest, EvilResponse>
@@ -42,6 +43,7 @@ public class GrpcWickedStub extends WickedStub {
               .setFullMethodName("google.showcase.v1beta1.Wicked/BrainstormEvilPlans")
               .setRequestMarshaller(ProtoUtils.marshaller(EvilRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(EvilResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<EvilRequest, EvilResponse>
@@ -51,6 +53,7 @@ public class GrpcWickedStub extends WickedStub {
               .setFullMethodName("google.showcase.v1beta1.Wicked/PersuadeEvilPlan")
               .setRequestMarshaller(ProtoUtils.marshaller(EvilRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(EvilResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private final UnaryCallable<EvilRequest, EvilResponse> craftEvilPlanCallable;

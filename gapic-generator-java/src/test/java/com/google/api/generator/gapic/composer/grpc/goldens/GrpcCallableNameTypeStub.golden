@@ -33,6 +33,7 @@ public class GrpcCallableNameTypeServiceStub extends CallableNameTypeServiceStub
               .setRequestMarshaller(
                   ProtoUtils.marshaller(GetApiOperationRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(ApiOperation.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetApiOperationRequest, ApiOperation>
@@ -43,6 +44,7 @@ public class GrpcCallableNameTypeServiceStub extends CallableNameTypeServiceStub
               .setRequestMarshaller(
                   ProtoUtils.marshaller(GetApiOperationRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(ApiOperation.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private final UnaryCallable<GetApiOperationRequest, ApiOperation> getApiOperationCallable;
