@@ -141,6 +141,8 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
             .apply("setResponseMarshaller", protoUtilsMarshallerFn.apply(methodInvocationArg))
             .apply(methodDescriptorMaker);
 
+    // The sampledToLocalTracing flag is set to true for all gRPC MethodDescriptors in GAPICs
+    // This flag enables captures for specific method names to help provide more detailed metrics
     methodDescriptorMaker =
         methodMakerFn
             .apply(
