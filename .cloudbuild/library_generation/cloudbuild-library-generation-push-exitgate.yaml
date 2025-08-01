@@ -25,7 +25,11 @@ steps:
       "build",
       "-t", "${_SHA_IMAGE_ID}",
       "-t", "${_VERSIONED_IMAGE_ID}",
-      "-f", ".cloudbuild/library_generation/library_generation_airlock.Dockerfile",
+      # 3.9.9-eclipse-temurin-11-alpine
+      "--build-arg", "GGJ_BUILD_BASE=us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/maven@sha256:d3f04985c6a68415e36c0a6468d0f8316f27d4dbee77bc459257ba444224bd9f",
+      # 3.12.3-slim-bookworm
+      "--build-arg", "FINAL_BASE=us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python@sha256:afc139a0a640942491ec481ad8dda10f2c5b753f5c969393b12480155fe15a63",
+      "-f", ".cloudbuild/library_generation/library_generation.Dockerfile",
       "."
     ]
     id: library-generation-build
