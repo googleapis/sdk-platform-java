@@ -44,5 +44,5 @@ jobs:
           cd -
       # Run for the Showcase tests
       - name: Perform Dependency Compatibility Testing (Showcase)
-        run: ../.github/scripts/test_dependency_compatibility.sh dependencies.txt
+        run: ../.github/scripts/test_dependency_compatibility.sh ../dependencies.txt
         working-directory: java-showcase

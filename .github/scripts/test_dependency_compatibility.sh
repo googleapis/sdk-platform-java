@@ -9,13 +9,21 @@
 # The upper-bound dependencies file will be in the format of:
 # ${dependency.name}=${dependency.version}
 
+set -ex
+
 # Check if a filename was provided as an argument
 if [ -z "$1" ]; then
   echo "Usage: $0 <dependency_file>"
   exit 1
 fi
 
-DEPENDENCY_FILE="$1"
+UPPER_BOUND_DEPENDENCY_FILE="$1"
+
+if [ ! -e "${UPPER_BOUND_DEPENDENCY_FILE}" ]; then
+    echo "The inputted upper-bound dependency file '$FILE' does not exist"
+    exit 1
+fi
+
 MAVEN_COMMAND="mvn verify -Penable-integration-tests -Dclirr.skip -Dcheckstyle.skip -Dfmt.skip "
 
 # Read the file line by line
@@ -33,7 +41,7 @@ while IFS= read -r line; do
 
   # Append the formatted property to the Maven command
   MAVEN_COMMAND+=" -D${dependency.version}=${version}"
-done < "${DEPENDENCY_FILE}"
+done < "${UPPER_BOUND_DEPENDENCY_FILE}"
 
 # Run the generated maven command to test with the dependency versions
 $MAVEN_COMMAND
