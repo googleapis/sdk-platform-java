@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# This script generates a maven command to test unit and integration tests for
+# the repo. The outputted maven command will be in the rough following format
+# `mvn verify ... -D{dependency.name}.version={dependency.version]`. The variables
+# ${dependency.name} and ${dependency.version} come from the upper-bound dependencies
+# file called `dependencies.txt` located in the root of sdk-platform-java.
+#
+# The upper-bound dependencies file will be in the format of:
+# ${dependency.name}=${dependency.version}
+
 # Check if a filename was provided as an argument
 if [ -z "$1" ]; then
   echo "Usage: $0 <dependency_file>"
@@ -26,5 +35,5 @@ while IFS= read -r line; do
   MAVEN_COMMAND+=" -D${dependency.version}=${version}"
 done < "${DEPENDENCY_FILE}"
 
-# Run the generated maven command
+# Run the generated maven command to test with the dependency versions
 $MAVEN_COMMAND
