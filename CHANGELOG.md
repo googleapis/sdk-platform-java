@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.61.0](https://github.com/googleapis/sdk-platform-java/compare/v2.60.2...v2.61.0) (2025-08-04)
+
+
+### Features
+
+* **mtls:** Add support for X.509-based mTLS-transport in Java GAX lib ([#3852](https://github.com/googleapis/sdk-platform-java/issues/3852)) ([2d02344](https://github.com/googleapis/sdk-platform-java/commit/2d02344d79f5cfdca7834aa0d6306f1b72a7505a))
+
+
+### Bug Fixes
+
+* improve error messaging for LRO CancellationException ([#3873](https://github.com/googleapis/sdk-platform-java/issues/3873)) ([9cae675](https://github.com/googleapis/sdk-platform-java/commit/9cae675f0ff44227cea60e6802769e82cce948f2))
+* make generation config update logs verbose ([#3764](https://github.com/googleapis/sdk-platform-java/issues/3764)) ([9b1a34b](https://github.com/googleapis/sdk-platform-java/commit/9b1a34b0dd08c0eddcf09ef5d81b225d0942f529))
+
 ## [2.60.2](https://github.com/googleapis/sdk-platform-java/compare/v2.60.1...v2.60.2) (2025-07-22)
 
 
