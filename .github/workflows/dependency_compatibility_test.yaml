@@ -11,7 +11,6 @@ on:
 jobs:
   dependency-compatibility-test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -21,5 +20,10 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
+      # Run in the root module which should test for everything barring showcase
       - name: Perform Dependency Compatibility Testing
         run: ./.github/scripts/test_dependency_compatibility.sh dependencies.txt
+      # Run for the Showcase tests
+      - name: Perform Dependency Compatibility Testing (Showcase)
+        run: ../.github/scripts/test_dependency_compatibility.sh dependencies.txt
+        working-directory: java-showcase
