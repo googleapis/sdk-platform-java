@@ -1,0 +1,22 @@
+name: Dependency Compatibility Test
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 1 * * *' # Nightly at 1am
+
+jobs:
+  dependency-compatibility-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+      - name: Perform Dependency Compatibility Testing
+        run: ./.github/scripts/test_dependency_compatibility.sh dependencies.txt
