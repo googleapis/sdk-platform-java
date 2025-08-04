@@ -40,7 +40,7 @@ while IFS= read -r line; do
   version=$(echo "${line}" | cut -d'=' -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
 
   # Append the formatted property to the Maven command
-  MAVEN_COMMAND+=" -D${dependency.version}=${version}"
+  MAVEN_COMMAND+=" -D${dependency}=${version}"
 done < "${UPPER_BOUND_DEPENDENCY_FILE}"
 
 # Run the generated maven command to test with the dependency versions
