@@ -21,7 +21,7 @@ FROM docker.io/library/maven:3.9.9-eclipse-temurin-17-alpine@sha256:969014ee8852
 WORKDIR /sdk-platform-java
 COPY . .
 # {x-version-update-start:gapic-generator-java:current}
-ENV DOCKER_GAPIC_GENERATOR_VERSION="2.60.3-SNAPSHOT"
+ENV DOCKER_GAPIC_GENERATOR_VERSION="2.61.0"
 # {x-version-update-end}
 
 # Download the java formatter
