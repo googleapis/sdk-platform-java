@@ -66,6 +66,7 @@ public class GrpcIdentityStub extends IdentityStub {
           .setFullMethodName("google.showcase.v1beta1.Identity/CreateUser")
           .setRequestMarshaller(ProtoUtils.marshaller(CreateUserRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(User.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<GetUserRequest, User> getUserMethodDescriptor =
@@ -74,6 +75,7 @@ public class GrpcIdentityStub extends IdentityStub {
           .setFullMethodName("google.showcase.v1beta1.Identity/GetUser")
           .setRequestMarshaller(ProtoUtils.marshaller(GetUserRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(User.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<UpdateUserRequest, User> updateUserMethodDescriptor =
@@ -82,6 +84,7 @@ public class GrpcIdentityStub extends IdentityStub {
           .setFullMethodName("google.showcase.v1beta1.Identity/UpdateUser")
           .setRequestMarshaller(ProtoUtils.marshaller(UpdateUserRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(User.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<DeleteUserRequest, Empty> deleteUserMethodDescriptor =
@@ -90,6 +93,7 @@ public class GrpcIdentityStub extends IdentityStub {
           .setFullMethodName("google.showcase.v1beta1.Identity/DeleteUser")
           .setRequestMarshaller(ProtoUtils.marshaller(DeleteUserRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<ListUsersRequest, ListUsersResponse>
@@ -99,6 +103,7 @@ public class GrpcIdentityStub extends IdentityStub {
               .setFullMethodName("google.showcase.v1beta1.Identity/ListUsers")
               .setRequestMarshaller(ProtoUtils.marshaller(ListUsersRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(ListUsersResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ListLocationsRequest, ListLocationsResponse>
@@ -110,6 +115,7 @@ public class GrpcIdentityStub extends IdentityStub {
                   ProtoUtils.marshaller(ListLocationsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListLocationsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetLocationRequest, Location> getLocationMethodDescriptor =
@@ -118,6 +124,7 @@ public class GrpcIdentityStub extends IdentityStub {
           .setFullMethodName("google.cloud.location.Locations/GetLocation")
           .setRequestMarshaller(ProtoUtils.marshaller(GetLocationRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Location.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<SetIamPolicyRequest, Policy> setIamPolicyMethodDescriptor =
@@ -126,6 +133,7 @@ public class GrpcIdentityStub extends IdentityStub {
           .setFullMethodName("google.iam.v1.IAMPolicy/SetIamPolicy")
           .setRequestMarshaller(ProtoUtils.marshaller(SetIamPolicyRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Policy.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<GetIamPolicyRequest, Policy> getIamPolicyMethodDescriptor =
@@ -134,6 +142,7 @@ public class GrpcIdentityStub extends IdentityStub {
           .setFullMethodName("google.iam.v1.IAMPolicy/GetIamPolicy")
           .setRequestMarshaller(ProtoUtils.marshaller(GetIamPolicyRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Policy.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<TestIamPermissionsRequest, TestIamPermissionsResponse>
@@ -145,6 +154,7 @@ public class GrpcIdentityStub extends IdentityStub {
                   ProtoUtils.marshaller(TestIamPermissionsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(TestIamPermissionsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private final UnaryCallable<CreateUserRequest, User> createUserCallable;

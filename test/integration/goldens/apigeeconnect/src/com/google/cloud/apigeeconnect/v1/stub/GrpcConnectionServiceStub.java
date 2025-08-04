@@ -52,6 +52,7 @@ public class GrpcConnectionServiceStub extends ConnectionServiceStub {
                   ProtoUtils.marshaller(ListConnectionsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListConnectionsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private final UnaryCallable<ListConnectionsRequest, ListConnectionsResponse>

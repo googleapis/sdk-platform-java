@@ -42,6 +42,7 @@ public class GrpcAutoPopulateFieldTestingStub extends AutoPopulateFieldTestingSt
                   ProtoUtils.marshaller(AutoPopulateFieldTestingEchoRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(AutoPopulateFieldTestingEchoResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<
@@ -57,6 +58,7 @@ public class GrpcAutoPopulateFieldTestingStub extends AutoPopulateFieldTestingSt
                   ProtoUtils.marshaller(AutoPopulateFieldTestingExpandRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(AutoPopulateFieldTestingEchoResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<
@@ -72,6 +74,7 @@ public class GrpcAutoPopulateFieldTestingStub extends AutoPopulateFieldTestingSt
                   ProtoUtils.marshaller(AutoPopulateFieldTestingEchoRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(AutoPopulateFieldTestingEchoResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<
@@ -87,6 +90,7 @@ public class GrpcAutoPopulateFieldTestingStub extends AutoPopulateFieldTestingSt
                   ProtoUtils.marshaller(AutoPopulateFieldTestingEchoRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(AutoPopulateFieldTestingEchoResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private final UnaryCallable<
