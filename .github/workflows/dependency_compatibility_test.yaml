@@ -34,7 +34,7 @@ jobs:
       - name: Perform Dependency Compatibility Testing
         shell: bash
         run: |
-          if [[ -z ${{ github.event.inputs.dependencies-list }} ]]
+          if [[ ${{ github.event.inputs.dependencies-list }} == '' ]]
             ./.github/scripts/test_dependency_compatibility.sh -f dependencies.txt
           else
             ./.github/scripts/test_dependency_compatibility.sh -l ${{ github.event.inputs.dependencies-list }}
@@ -56,7 +56,7 @@ jobs:
       - name: Perform Dependency Compatibility Testing (Showcase)
         shell: bash
         run: |
-          if [[ -z ${{ github.event.inputs.dependencies-list }} ]]
+          if [[ ${{ github.event.inputs.dependencies-list }} == '' ]]
             ../.github/scripts/test_dependency_compatibility.sh -f ../dependencies.txt
           else
             ../.github/scripts/test_dependency_compatibility.sh -l ${{ github.event.inputs.dependencies-list }}
