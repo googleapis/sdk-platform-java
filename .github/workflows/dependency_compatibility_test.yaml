@@ -7,7 +7,8 @@ on:
   workflow_dispatch:
     inputs:
       dependencies-list:
-        description: 'Comma-separated list of dependencies to test (Format: dep1=1.0,dep2=2.0)'
+        description: 'Comma-separated list of dependencies to test (Format: dep1=1.0,dep2=2.0).
+                      No input (default) will run the the upper-bound dependencies file.'
         required: false
         default: ''
   schedule:
@@ -25,7 +26,7 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
-      - run: echo "DEPENDENCIES_LIST=${{ github.event.inputs.dependencies-list }}" >> $GITHUB_ENV
+      - run: echo "DEPENDENCIES_LIST=${{ github.event.inputs.dependencies-list || '' }}" >> $GITHUB_ENV
       # Set up the for the CI
       - name: Install sdk-platform-java's modules
         # gapic-generator-java requires Java 8 and is irrelevant for this CI
