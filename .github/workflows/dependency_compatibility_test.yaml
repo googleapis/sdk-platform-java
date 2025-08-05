@@ -32,10 +32,12 @@ jobs:
 
       # Run in the root module which should test for everything barring showcase
       - name: Perform Dependency Compatibility Testing
-        # Unless specifically inputted by the user, the `-l` argument will be empty
-        # and the workflow will run with the default upper-bounds dependencies file
-        run: ./.github/scripts/test_dependency_compatibility.sh -f dependencies.txt -l ${{ github.event.inputs.dependencies-list }}
-
+        run: |
+          if [ -z ${{ github.event.inputs.dependencies-list }} ]
+            ./.github/scripts/test_dependency_compatibility.sh -f dependencies.txt
+          else
+            ./.github/scripts/test_dependency_compatibility.sh -l ${{ github.event.inputs.dependencies-list }}
+          fi
       # Set up local showcase server
       - name: Parse showcase version
         working-directory: java-showcase/gapic-showcase
@@ -51,7 +53,10 @@ jobs:
           cd -
       # Run for the Showcase tests
       - name: Perform Dependency Compatibility Testing (Showcase)
-        # Unless specifically inputted by the user, the `-l` argument will be empty
-        # and the workflow will run with the default upper-bounds dependencies file
-        run: ../.github/scripts/test_dependency_compatibility.sh -f ../dependencies.txt -l ${{ github.event.inputs.dependencies-list }}
+        run: |
+          if [ -z ${{ github.event.inputs.dependencies-list }} ]
+            ../.github/scripts/test_dependency_compatibility.sh -f ../dependencies.txt
+          else
+            ../.github/scripts/test_dependency_compatibility.sh -l ${{ github.event.inputs.dependencies-list }}
+          fi
         working-directory: java-showcase
