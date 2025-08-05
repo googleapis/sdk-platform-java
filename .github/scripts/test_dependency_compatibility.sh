@@ -5,18 +5,21 @@
 # `mvn verify ... -D{dependency.name}.version={dependency.version]`. The variables
 # ${dependency.name} and ${dependency.version} are parsed from the input to the script.
 #
-# There are two inputs to the script:
-# 1. -f {file}: File for the upper-bound dependencies to test
-# 2. -l {deps_list}: Comma-separated list of dependencies to test
-# If both inputs are supplied, the deps_list has precedence. For Github Actions workflow,
-# the default run will run with the upper-bounds file. A `workflow_dispatch` option takes in
-# an input for the deps_list to manually run a subset of dependencies
+# Default invocation ./.github/scripts/test_dependency_compatibility.sh will use the default
+# upper-bounds dependency file at the root of the repo.
+# There are two potential inputs to the script:
+# 1. -f {file}: Custom file/path for the upper-bound dependencies to test
+# 2. -l {deps_list}: Comma-separated list of dependencies to test (e.g. protobuf=4.31.0,guava=33.4.8-jre)
+# Note: Do not include the `-D` prefix or `.version` suffix. Those values will be appended when generating
+# the maven command.
+#
+# If both inputs are supplied, the deps_list input has precedence. For Github Actions workflow,
+# the default workflow will run with the upper-bounds file. A `workflow_dispatch` option takes in
+# an input for the deps_list to manually run a subset of dependencies.
 #
 # The default upper-bound dependencies file is `dependencies.txt` located in the root
 # of sdk-platform-java. The upper-bound dependencies file will be in the format of:
 # ${dependency.name}=${dependency.version}
-#
-# The deps_list is in the format of `dep1=1.0,dep2=2.0`
 
 set -ex
 
@@ -44,7 +47,7 @@ if [[ -z "${file}" && -z "${dependency_list}" ]]; then
   print_help && exit 1
 fi
 
-MAVEN_COMMAND="mvn verify -Penable-integration-tests -Dclirr.skip -Dcheckstyle.skip -Dfmt.skip "
+MAVEN_COMMAND="mvn verify -Penable-integration-tests -Dclirr.skip -Dcheckstyle.skip -Dfmt.skip -Denforcer.skip "
 
 # Check if a list of dependencies was provided as an argument. If the list of dependency inputted
 # is empty, then run with the upper-bound dependencies file
@@ -70,7 +73,7 @@ if [ -z "${dependency_list}" ]; then
     version=$(echo "${line}" | cut -d'=' -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
 
     # Append the formatted property to the Maven command
-    MAVEN_COMMAND+=" -D${dependency}=${version}"
+    MAVEN_COMMAND+=" -D${dependency}.version=${version}"
   done < "${UPPER_BOUND_DEPENDENCY_FILE}"
 else # This else block means that a list of dependencies was inputted
   # Set the Internal Field Separator (IFS) to a comma.

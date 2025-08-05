@@ -7,8 +7,9 @@ on:
   workflow_dispatch:
     inputs:
       dependencies-list:
-        description: 'Comma-separated list of dependencies to test (Format: dep1=1.0,dep2=2.0).
-                      No input (default) will run the the upper-bound dependencies file.'
+        description: 'Comma-separated list of dependencies to test (Example format: protobuf=4.31.0,guava=33.4.8-jre).
+                      Do not include the `-D` prefix or `.version` suffix. Those values will be appended when generating
+                      the command. No input (default) will run the the upper-bound dependencies file.'
         required: false
         default: ''
   schedule:
@@ -45,7 +46,7 @@ jobs:
           if [[ -n "${{ env.DEPENDENCIES_LIST }}" ]]; then
             ./.github/scripts/test_dependency_compatibility.sh -l ${{ env.DEPENDENCIES_LIST }}
           else
-            ./.github/scripts/test_dependency_compatibility.sh -f dependencies.txt
+            ./.github/scripts/test_dependency_compatibility.sh
           fi
       # Set up local showcase server to run the showcase ITs
       - name: Parse showcase version
