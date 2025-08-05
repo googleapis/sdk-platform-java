@@ -25,6 +25,7 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
+      - run: echo "DEPENDENCIES_LIST=${{ github.event.inputs.dependencies-list }}" >> $GITHUB_ENV
       # Set up the for the CI
       - name: Install sdk-platform-java's modules
         # gapic-generator-java requires Java 8 and is irrelevant for this CI
@@ -34,10 +35,10 @@ jobs:
       - name: Perform Dependency Compatibility Testing
         shell: bash
         run: |
-          if [[ ${{ github.event.inputs.dependencies-list }} == '' ]]
+          if [[ -z ${{ env.DEPENDENCIES_LIST }} ]]
             ./.github/scripts/test_dependency_compatibility.sh -f dependencies.txt
           else
-            ./.github/scripts/test_dependency_compatibility.sh -l ${{ github.event.inputs.dependencies-list }}
+            ./.github/scripts/test_dependency_compatibility.sh -l ${{ env.DEPENDENCIES_LIST }}
           fi
       # Set up local showcase server
       - name: Parse showcase version
@@ -56,9 +57,9 @@ jobs:
       - name: Perform Dependency Compatibility Testing (Showcase)
         shell: bash
         run: |
-          if [[ ${{ github.event.inputs.dependencies-list }} == '' ]]
+          if [[ -z ${{ env.DEPENDENCIES_LIST }} ]]
             ../.github/scripts/test_dependency_compatibility.sh -f ../dependencies.txt
           else
-            ../.github/scripts/test_dependency_compatibility.sh -l ${{ github.event.inputs.dependencies-list }}
+            ../.github/scripts/test_dependency_compatibility.sh -l ${{ env.DEPENDENCIES_LIST }}
           fi
         working-directory: java-showcase
