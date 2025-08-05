@@ -38,10 +38,11 @@ jobs:
       - name: Perform Dependency Compatibility Testing
         shell: bash
         run: |
-          if [[ ${{ env.DEPENDENCIES_LIST }} == '' ]]; then
-            ./.github/scripts/test_dependency_compatibility.sh -f dependencies.txt
-          else
+          echo "Dependencies list: ${env.DEPENDENCIES_LIST}"
+          if [[ -n "${{ env.DEPENDENCIES_LIST }}" ]]; then
             ./.github/scripts/test_dependency_compatibility.sh -l ${{ env.DEPENDENCIES_LIST }}
+          else
+            ./.github/scripts/test_dependency_compatibility.sh -f dependencies.txt
           fi
       # Set up local showcase server
       - name: Parse showcase version
@@ -60,9 +61,10 @@ jobs:
       - name: Perform Dependency Compatibility Testing (Showcase)
         shell: bash
         run: |
-          if [[ ${{ env.DEPENDENCIES_LIST }} == '' ]]; then
-            ../.github/scripts/test_dependency_compatibility.sh -f ../dependencies.txt
-          else
+          echo "Dependencies list: ${env.DEPENDENCIES_LIST}"
+          if [[ -n "${{ env.DEPENDENCIES_LIST }}" ]]; then
             ../.github/scripts/test_dependency_compatibility.sh -l ${{ env.DEPENDENCIES_LIST }}
+          else
+            ../.github/scripts/test_dependency_compatibility.sh -f ../dependencies.txt
           fi
         working-directory: java-showcase
