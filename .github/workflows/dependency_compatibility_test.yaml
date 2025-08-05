@@ -38,7 +38,6 @@ jobs:
       - name: Perform Dependency Compatibility Testing
         shell: bash
         run: |
-          echo "Dependencies list: ${env.DEPENDENCIES_LIST}"
           if [[ -n "${{ env.DEPENDENCIES_LIST }}" ]]; then
             ./.github/scripts/test_dependency_compatibility.sh -l ${{ env.DEPENDENCIES_LIST }}
           else
@@ -61,7 +60,6 @@ jobs:
       - name: Perform Dependency Compatibility Testing (Showcase)
         shell: bash
         run: |
-          echo "Dependencies list: ${env.DEPENDENCIES_LIST}"
           if [[ -n "${{ env.DEPENDENCIES_LIST }}" ]]; then
             ../.github/scripts/test_dependency_compatibility.sh -l ${{ env.DEPENDENCIES_LIST }}
           else
