@@ -21,8 +21,7 @@ google.api-client=2.8.0
 threeten-extra=1.8.0
 opencensus=0.31.0
 findbugs=3.0.2
-# Ignore this for now as maven is trying resolve this to be jackson v2.19.2.2
-# jackson=2.19.2
+jackson=2.19.2
 errorprone=2.41.0
 codec=1.19.0
 httpcomponents.httpcore=4.4.16
