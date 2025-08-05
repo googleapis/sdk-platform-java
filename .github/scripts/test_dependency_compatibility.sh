@@ -3,23 +3,34 @@
 # This script generates a maven command to test unit and integration tests for
 # the repo. The outputted maven command will be in the rough following format
 # `mvn verify ... -D{dependency.name}.version={dependency.version]`. The variables
-# ${dependency.name} and ${dependency.version} come from the upper-bound dependencies
-# file called `dependencies.txt` located in the root of sdk-platform-java.
+# ${dependency.name} and ${dependency.version} are parsed from the input to the script.
 #
-# The upper-bound dependencies file will be in the format of:
+# There are two inputs to the script:
+# 1. -f {file}: File for the upper-bound dependencies to test
+# 2. -l {deps_list}: Comma-separated list of dependencies to test
+# If both inputs are supplied, the deps_list has precedence. For Github Actions workflow,
+# the default run will run with the upper-bounds file. A `workflow_dispatch` option takes in
+# an input for the deps_list to manually run a subset of dependencies
+#
+# The default upper-bound dependencies file is `dependencies.txt` located in the root
+# of sdk-platform-java. The upper-bound dependencies file will be in the format of:
 # ${dependency.name}=${dependency.version}
+#
+# The deps_list is in the format of `dep1=1.0,dep2=2.0`
 
 set -ex
 
-file=''
-dependency_list=''
-
 function print_help() {
   echo "Unexpected input argument for this script."
-  echo "Use -f for the directory of the upper-bound dependencies file."
-  echo "Use -l for a comma-separate list of dependencies to test (Format: dep1=1.0,dep2=2.0)"
+  echo "Use -f {file} for the directory of the upper-bound dependencies file."
+  echo "Use -l {deps_list} for a comma-separated list of dependencies to test (Format: dep1=1.0,dep2=2.0)"
 }
 
+# Default to the upper bounds file in the root of the repo
+file='dependencies.txt'
+dependency_list=''
+
+# The colon (:) after the letter means that there is an input associated with the flag
 while getopts 'f:l:' flag; do
   case "${flag}" in
     f) file="${OPTARG}" ;;
@@ -28,6 +39,7 @@ while getopts 'f:l:' flag; do
   esac
 done
 
+# Error if both the file and deps_list inputs is empty
 if [[ -z "${file}" && -z "${dependency_list}" ]]; then
   print_help && exit 1
 fi
@@ -40,13 +52,13 @@ if [ -z "${dependency_list}" ]; then
   UPPER_BOUND_DEPENDENCY_FILE=$file
 
   if [ ! -e "${UPPER_BOUND_DEPENDENCY_FILE}" ]; then
-    echo "The inputted upper-bound dependency file '${UPPER_BOUND_DEPENDENCY_FILE}' does not exist"
+    echo "The inputted upper-bound dependency file '${UPPER_BOUND_DEPENDENCY_FILE}' cannot be found"
     exit 1
   fi
 
   # Read the file line by line
   while IFS= read -r line; do
-    # Ignore comments and blank lines
+    # Ignore any comments and blank lines
     if [[ "${line}" =~ ^[[:space:]]*# ]] || [[ -z "${line}" ]]; then
       continue
     fi
@@ -60,7 +72,7 @@ if [ -z "${dependency_list}" ]; then
     # Append the formatted property to the Maven command
     MAVEN_COMMAND+=" -D${dependency}=${version}"
   done < "${UPPER_BOUND_DEPENDENCY_FILE}"
-else # List of dependencies was inputted
+else # This else block means that a list of dependencies was inputted
   # Set the Internal Field Separator (IFS) to a comma.
   # This tells 'read' to split the string by commas into an array named DEPS.
   # The 'read -ra' command reads the input into an array.
@@ -69,7 +81,7 @@ else # List of dependencies was inputted
   # Loop through each item in the DEPS array.
   for DEP_PAIR in "${DEPS[@]}"; do
     # Skip any empty items that might result from trailing commas.
-    if [ -z "$DEP_PAIR" ]; then
+    if [ -z "${DEP_PAIR}" ]; then
       continue
     fi
 

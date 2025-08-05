@@ -17,6 +17,8 @@ on:
 jobs:
   dependency-compatibility-test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout sdk-platform-java
         uses: actions/checkout@v4
@@ -26,15 +28,17 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
+      # The workflow_dispatch event is for team members who want to manually test certain dependencies + version combos
+      # The normal workflow is not from `workflow_dispatch` and will use the default upper-bounds dependencies file
       - name: Determine Inputted Dependencies List
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dependencies-list != '' }}
         run: echo "DEPENDENCIES_LIST=${{ github.event.inputs.dependencies-list }}" >> $GITHUB_ENV
-      # Set up the for the CI
+      # Install the modules for the rest of the CI
       - name: Install sdk-platform-java's modules
         # gapic-generator-java requires Java 8 and is irrelevant for this CI
         run: mvn -q -B -ntp install --projects '!gapic-generator-java' -Dcheckstyle.skip -Dfmt.skip -DskipTests -Dclirr.skip -T 1C
 
-      # Run in the root module which should test for everything barring showcase
+      # Run in the root module which should test for everything except for showcase
       - name: Perform Dependency Compatibility Testing
         shell: bash
         run: |
@@ -43,7 +47,7 @@ jobs:
           else
             ./.github/scripts/test_dependency_compatibility.sh -f dependencies.txt
           fi
-      # Set up local showcase server
+      # Set up local showcase server to run the showcase ITs
       - name: Parse showcase version
         working-directory: java-showcase/gapic-showcase
         run: echo "SHOWCASE_VERSION=$(mvn help:evaluate -Dexpression=gapic-showcase.version -q -DforceStdout)" >> "$GITHUB_ENV"
@@ -56,9 +60,10 @@ jobs:
           tar -xf showcase-*
           ./gapic-showcase run &
           cd -
-      # Run for the Showcase tests
-      - name: Perform Dependency Compatibility Testing (Showcase)
+      # Run specifically for showcase
+      - name: Perform Dependency Compatibility Testing (Showcase only)
         shell: bash
+        # Need to cd out of the directory to get the scripts as this step is run inside the java-showcase directory
         run: |
           if [[ -n "${{ env.DEPENDENCIES_LIST }}" ]]; then
             ../.github/scripts/test_dependency_compatibility.sh -l ${{ env.DEPENDENCIES_LIST }}
