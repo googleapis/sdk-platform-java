@@ -5,6 +5,10 @@ on:
     branches:
       - 'main'
   workflow_dispatch:
+    inputs:
+      dependencies-list:
+        description: 'Comma-separated list of dependencies to test (Format: dep1=1.0,dep2=2.0)'
+        required: false
   schedule:
     - cron: '0 1 * * *' # Nightly at 1am
 
@@ -27,7 +31,9 @@ jobs:
 
       # Run in the root module which should test for everything barring showcase
       - name: Perform Dependency Compatibility Testing
-        run: ./.github/scripts/test_dependency_compatibility.sh dependencies.txt
+        # Unless specifically inputted by the user, the `-l` argument will be empty
+        # and the workflow will run with the default upper-bounds dependencies file
+        run: ./.github/scripts/test_dependency_compatibility.sh -f dependencies.txt -l ${{ github.event.inputs.dependencies-list }}
 
       # Set up local showcase server
       - name: Parse showcase version
@@ -44,5 +50,7 @@ jobs:
           cd -
       # Run for the Showcase tests
       - name: Perform Dependency Compatibility Testing (Showcase)
-        run: ../.github/scripts/test_dependency_compatibility.sh ../dependencies.txt
+        # Unless specifically inputted by the user, the `-l` argument will be empty
+        # and the workflow will run with the default upper-bounds dependencies file
+        run: ../.github/scripts/test_dependency_compatibility.sh -f ../dependencies.txt -l ${{ github.event.inputs.dependencies-list }}
         working-directory: java-showcase
