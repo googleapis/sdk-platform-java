@@ -63,14 +63,6 @@ jobs:
             if [[ $(echo "${EVENT_PAYLOAD}" | jq -r .issue.pull_request) != "null" ]]; then
               IS_PR="true"
             fi
-          elif [[ "${EVENT_NAME}" == "pull_request_review" ]]; then
-            USER_REQUEST=$(echo "${EVENT_PAYLOAD}" | jq -r .review.body)
-            ISSUE_NUMBER=$(echo "${EVENT_PAYLOAD}" | jq -r .pull_request.number)
-            IS_PR="true"
-          elif [[ "${EVENT_NAME}" == "pull_request_review_comment" ]]; then
-            USER_REQUEST=$(echo "${EVENT_PAYLOAD}" | jq -r .comment.body)
-            ISSUE_NUMBER=$(echo "${EVENT_PAYLOAD}" | jq -r .pull_request.number)
-            IS_PR="true"
           fi
 
           # Clean up user request

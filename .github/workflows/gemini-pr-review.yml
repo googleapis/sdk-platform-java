@@ -29,28 +29,22 @@ permissions:
 
 jobs:
   review-pr:
-#    if: |-
-#      github.event_name == 'workflow_dispatch' ||
-#      (
-#        github.event_name == 'pull_request' &&
-#        contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.pull_request.author_association)
-#      ) ||
-#      (
-#        github.event_name == 'issue_comment' &&
-#        github.event.issue.pull_request &&
-#        contains(github.event.comment.body, '@gemini-cli /review') &&
-#        contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)
-#      )
+    if: |-
+      github.event_name == 'workflow_dispatch' ||
+      (
+        github.event_name == 'pull_request' &&
+        contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.pull_request.author_association)
+      ) ||
+      (
+        github.event_name == 'issue_comment' &&
+        github.event.issue.pull_request &&
+        contains(github.event.comment.body, '@gemini-cli /review') &&
+        contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)
+      )
     timeout-minutes: 5
     runs-on: 'ubuntu-latest'
 
     steps:
-      - name: Print author association
-        run: |-
-          echo "${{ github.event.issue.pull_request }}"
-          echo "${{ github.event_name }}"
-          echo "${{ github.event.comment.body }}"
-          echo "${{ github.event.comment.author_association }}"
       - name: 'Checkout PR code'
         uses: 'actions/checkout@v5'
 
