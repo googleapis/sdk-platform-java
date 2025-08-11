@@ -137,7 +137,7 @@ Showcase integration tests are run against a local server that implements the Sh
     mvn verify -P enable-integration-tests
     ```
 
-### 5. Contribution Guidelines
+## 5. Contribution Guidelines
 
 - **Commits:** Commit messages should follow the [Conventional Commits](https://www.conventionalcommits.org/)
   specification. The format is `<type>: <description>`. The type should be one of the following: fix, feat,
