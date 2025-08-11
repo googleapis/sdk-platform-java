@@ -22,11 +22,11 @@ The repository is structured into several key modules:
     *   `pathtemplate`: Path Template library for manipulating strings that are formatted as Google API resource names.
     *   `resourcenames`: Resource Name library used by generated resource name types.
 
-*   **`java-common-protos`**: Provides Protobuf-generated classes for common Google services that are used across multiple APIs.
+*   **`java-common-protos`**: Provides Protobuf-generated classes for common Google services that are used across multiple APIs. The code is in this module is auto-generated and should not be modified.
 
-*   **`java-iam`**: Contains Protobuf-generated classes for Google's Identity and Access Management (IAM) service, used for managing policies.
+*   **`java-iam`**: Contains Protobuf-generated classes for Google's Identity and Access Management (IAM) service, used for managing policies. The code is in this module is auto-generated and should not be modified.
 
-*   **`java-showcase`**: A demonstration client library for the "Showcase" API, which is a fake API used for integration testing of the GAPIC generator and GAX library. The `README.md` in this module provides instructions on how to run the Showcase server and the integration tests.
+*   **`java-showcase`**: A demonstration client library for the "Showcase" API, which is a fake API used for integration testing of the GAPIC generator and GAX library.
 
 *   **`java-shared-dependencies`**: Manages shared Maven dependencies for all Google Cloud Java client libraries. This ensures consistency and helps avoid dependency conflicts.
 
@@ -83,18 +83,15 @@ Based on where the code changes are, we should add different tests, in general
 
 ### 4.2. Running Unit Tests
 
-To run all unit tests in the `gapic-generator-java` module, first build the other modules with `mvn -pl '!gapic-generator-java' install -DskipTests`, then run:
+Unit tests can be tested via this command:
 
 ```sh
-cd gapic-generator-java
 mvn test
 ```
 
-You can also run specific tests or update golden files using Maven profiles, as described in `gapic-generator-java/DEVELOPMENT.md`.
-
 ### 4.3. Running Golden Integration Tests
 
-Integration tests are run using Bazel. To run all integration tests, use the following command from the root of the repository:
+Golden integration tests are run using Bazel. To run all golden integration tests, use the following command from the root of the repository:
 
 ```sh
 bazelisk test //...
@@ -136,8 +133,14 @@ Showcase integration tests are run against a local server that implements the Sh
     cd java-showcase
     mvn verify -P enable-integration-tests
     ```
+    
+## 5. Dependency Management
 
-## 5. Contribution Guidelines
+- Try not to bump any dependency version unless there is a known CVE (security or vulnerability issue)
+- Try to avoid introducing new external dependencies. If a new dependency is required, please state the reason.
+- Prefer to use features from the Java standard library, then try to use features from any existing dependencies (preferably from Google managed dependencies)
+
+## 6. Contribution Guidelines
 
 - **Commits:** Commit messages should follow the [Conventional Commits](https://www.conventionalcommits.org/)
   specification. The format is `<type>: <description>`. The type should be one of the following: fix, feat,
