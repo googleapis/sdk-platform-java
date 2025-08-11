@@ -2,8 +2,6 @@
 
 ## 1. Overview
 
-### 1.1. Repository Purpose
-
 This repository, `sdk-platform-java`, is a monorepo containing the foundational components for building Java client libraries for Google Cloud Platform services. It includes the GAPIC (Generated API Client) generator for Java, the GAX (Google API Extensions) runtime library, and other shared modules.
 
 ## 2. Project Structure
@@ -68,9 +66,9 @@ mvn fmt:format
 The repository employs a multi-layered testing strategy to ensure the quality and correctness of the generated code:
 
 *   **Unit Tests:** Traditional unit tests for individual classes and methods.
-*   **Golden Unit Tests:** These tests generate code from test protos and compare the output to "golden" files, which are pre-approved versions of the generated code.
-*   **Showcase Integration Tests:** These tests run the generated Showcase client against a local Showcase server to verify end-to-end functionality.
-*   **Golden Integration Tests:** These tests generate full client libraries for real Google Cloud APIs and compare them to golden versions.
+*   **Golden Unit Tests:** These tests generate code from test protos and compare the output to "golden" files, which are pre-approved versions of the generated code. These test cases exist inside the `gapic-generator-java` module.
+*   **Showcase Integration Tests:** These tests run the generated Showcase client against a local Showcase server to verify end-to-end functionality. This is the preferred way of testing integration tests.
+*   **Golden Integration Tests:** These tests generate full client libraries for real Google Cloud APIs and compare them to golden versions. This is an older test strategy and showcase testing is preferred.
 
 Based on where the code changes are, we should add different tests, in general
 
@@ -136,9 +134,9 @@ Showcase integration tests are run against a local server that implements the Sh
     
 ## 5. Dependency Management
 
-- Try not to bump any dependency version unless there is a known CVE (security or vulnerability issue)
+- Try not to bump any external dependency version unless there is a known CVE (security or vulnerability issue) or a critical bug fix.
 - Try to avoid introducing new external dependencies. If a new dependency is required, please state the reason.
-- Prefer to use features from the Java standard library, then try to use features from any existing dependencies (preferably from Google managed dependencies)
+- Prefer to use features from the Java standard library, then try to use features from any existing dependencies (preferably from Google managed dependencies).
 
 ## 6. Contribution Guidelines
 
