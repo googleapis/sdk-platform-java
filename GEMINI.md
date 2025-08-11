@@ -1,6 +1,4 @@
-# GEMINI.md
-
-This document provides a comprehensive overview of the `sdk-platform-java` repository, intended for use by Large Language Models (LLMs) to understand the project's context, development practices, and architecture.
+# Gemini CLI Context for sdk-platform-java
 
 ## 1. Overview
 
@@ -36,10 +34,10 @@ The repository is structured into several key modules:
 
 ### 3.1. Prerequisites
 
-To build and work with this project, you will need:
+To build and work with this project, you will need to install:
 
-*   Java 11 or higher.
-*   `bazelisk` for running Bazel builds.
+*   Java 8+
+*   Maven
 
 ### 3.2. Building the Project
 
@@ -63,28 +61,9 @@ To format the code, run:
 mvn fmt:format
 ```
 
-## 4. Development Workflow
+## 4. Testing
 
-### 4.1. Running the GAPIC Generator
-
-The `gapic-generator-java/DEVELOPMENT.md` file provides detailed instructions on how to run the GAPIC generator locally. This is useful for testing changes to the generator or for generating client libraries for new APIs. The process involves:
-
-1.  Cloning the `googleapis` repository, which contains the API definition files.
-2.  Modifying the `googleapis/WORKSPACE` file to point to your local `sdk-platform-java` repository.
-3.  Building the new target using `bazelisk`.
-
-### 4.2. Debugging
-
-The `gapic-generator-java/DEVELOPMENT.md` file also provides a guide for debugging the GAPIC generator. This involves setting the `JVM_DEBUG_PORT` environment variable and using a remote JVM debugger in your IDE. The steps are:
-
-1.  Set the `JVM_DEBUG_PORT` environment variable (e.g., `export JVM_DEBUG_PORT=5005`).
-2.  Run the `bazel build` command with the `--subcommands` flag to get the `protoc` command.
-3.  Run the `protoc` command.
-4.  Attach a remote JVM debugger to the specified port.
-
-## 5. Testing
-
-### 5.1. Testing Strategy
+### 4.1. Testing Strategy
 
 The repository employs a multi-layered testing strategy to ensure the quality and correctness of the generated code:
 
@@ -102,7 +81,7 @@ Based on where the code changes are, we should add different tests, in general
       * If they are in `other modules(ast, model, writer etc.)`, you _must_ add traditional unit tests, you _may_ add golden unit tests to easily see the changes.
 - If the changes are in both `gax` and `gapic-generator-java`, you _must_ add all test layers, including traditional unit tests, golden unit tests and showcase integration tests.
 
-### 5.2. Running Unit Tests
+### 4.2. Running Unit Tests
 
 To run all unit tests in the `gapic-generator-java` module, first build the other modules with `mvn -pl '!gapic-generator-java' install -DskipTests`, then run:
 
@@ -113,7 +92,7 @@ mvn test
 
 You can also run specific tests or update golden files using Maven profiles, as described in `gapic-generator-java/DEVELOPMENT.md`.
 
-### 5.3. Running Golden Integration Tests
+### 4.3. Running Golden Integration Tests
 
 Integration tests are run using Bazel. To run all integration tests, use the following command from the root of the repository:
 
@@ -127,7 +106,7 @@ Specific integration tests can be run by specifying the target, for example:
 bazelisk test //test/integration:redis
 ```
 
-### 5.4. Updating Golden Files
+### 4.4. Updating Golden Files
 
 If you make changes that affect the generated code, you will need to update the golden files. This can be done using the following command:
 
@@ -135,7 +114,7 @@ If you make changes that affect the generated code, you will need to update the 
 bazelisk run //test/integration:update_asset && bazelisk run //test/integration:update_credentials && bazelisk run //test/integration:update_iam && bazelisk run //test/integration:update_kms && bazelisk run //test/integration:update_pubsub && bazelisk run //test/integration:update_logging && bazelisk run //test/integration:update_redis && bazelisk run //test/integration:update_storage && bazelisk run //test/integration:update_library && bazelisk run //test/integration:update_compute && bazelisk run //test/integration:update_bigtable && bazelisk run //test/integration:update_apigeeconnect 
 ```
 
-### 5.5. Running Showcase Integration Tests
+### 4.5. Running Showcase Integration Tests
 
 Showcase integration tests are run against a local server that implements the Showcase API. The `java-showcase/README.md` file provides detailed instructions on how to run these tests. The general steps are:
 
@@ -157,3 +136,13 @@ Showcase integration tests are run against a local server that implements the Sh
     cd java-showcase
     mvn verify -P enable-integration-tests
     ```
+
+### 5. Contribution Guidelines
+
+- **Commits:** Commit messages should follow the [Conventional Commits](https://www.conventionalcommits.org/)
+  specification. The format is `<type>: <description>`. The type should be one of the following: fix, feat,
+  build, chore, docs, test, or refactor.
+- **Issues:** All significant changes should start with a GitHub issue.
+- **Pull Requests:** All code changes must be submitted via a pull request and require review.
+- **Testing:** All new logic should be accompanied by tests.
+- For more details, see `CONTRIBUTING.md`.
