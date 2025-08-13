@@ -90,18 +90,20 @@ jobs:
             1. Run: `gh label list` to get all available labels.
             2. Review the issue title and body provided in the environment
                variables: "${ISSUE_TITLE}" and "${ISSUE_BODY}".
-            3. Classify issues by their kind (bug, enhancement, documentation,
+            3. Classify issues by their type (bug, enhancement, documentation,
                cleanup, etc) and their priority (p0, p1, p2, p3). Set the
-               labels accoridng to the format `kind/*` and `priority/*` patterns.
+               labels according to the format `type: *` and `priority: *` patterns.
+               If the priority is determined to be more urgent than p2 (e.g. p0 or p1), mark the issue
+               as p2 and add a comment in the issue with the reason. The comment should ping
+               @blakeli0, @lqiu96, and @zhumin8 to notify them.
             4. Apply the selected labels to this issue using:
                `gh issue edit "${ISSUE_NUMBER}" --add-label "label1,label2"`
-            5. If the "status/needs-triage" label is present, remove it using:
-               `gh issue edit "${ISSUE_NUMBER}" --remove-label "status/needs-triage"`
 
             ## Guidelines
 
+            - If there are already labels for `type: *` and `priority: *` set on the issue, do not modify the labels
             - Only use labels that already exist in the repository
-            - Do not add comments or modify the issue content
+            - Do not modify the original issue content
             - Triage only the current issue
             - Assign all applicable labels based on the issue content
             - Reference all shell variables as "${VAR}" (with quotes and braces)
