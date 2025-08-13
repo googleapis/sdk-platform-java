@@ -1,4 +1,4 @@
-///*
+/// *
 // * Copyright 2025 Google LLC
 // *
 // * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,15 +14,15 @@
 // * limitations under the License.
 // */
 //
-//package com.google.showcase.v1beta1.it.logging;
+// package com.google.showcase.v1beta1.it.logging;
 //
-//import ch.qos.logback.classic.spi.ILoggingEvent;
-//import ch.qos.logback.core.AppenderBase;
-//import java.util.ArrayList;
-//import java.util.List;
+// import ch.qos.logback.classic.spi.ILoggingEvent;
+// import ch.qos.logback.core.AppenderBase;
+// import java.util.ArrayList;
+// import java.util.List;
 //
-///** Logback appender used to set up tests. */
-//public class TestAppender extends AppenderBase<ILoggingEvent> {
+/// ** Logback appender used to set up tests. */
+// public class TestAppender extends AppenderBase<ILoggingEvent> {
 //  public List<ILoggingEvent> events = new ArrayList<>();
 //
 //  @Override
@@ -37,4 +37,4 @@
 //  public void clearEvents() {
 //    events.clear();
 //  }
-//}
+// }
