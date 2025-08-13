@@ -101,9 +101,9 @@ jobs:
 
             ## Guidelines
 
-            - If there are already labels for `type: *` and `priority: *`, do not modify them
+            - If there are already labels for `type: *` and `priority: *` set on the issue, do not modify the labels
             - Only use labels that already exist in the repository
-            - Do not add comments or modify the issue content
+            - Do not modify the original issue content
             - Triage only the current issue
             - Assign all applicable labels based on the issue content
             - Reference all shell variables as "${VAR}" (with quotes and braces)
