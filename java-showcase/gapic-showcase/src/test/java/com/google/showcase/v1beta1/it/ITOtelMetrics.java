@@ -865,7 +865,7 @@ class ITOtelMetrics {
 
     GrpcOpenTelemetry grpcOpenTelemetry = GrpcOpenTelemetry.newBuilder().sdk(openTelemetry).build();
 
-    // Java-Spanner configures the gRPCTransportChannelProvider with gRPCOpenTelemetry
+    // Java-Spanner configures the InstantiatingGrpcChannelProvider with gRPCOpenTelemetry
     // This setup below is copied from their implementation
     InstantiatingGrpcChannelProvider.Builder builder =
         EchoSettings.defaultGrpcTransportProviderBuilder();
@@ -909,6 +909,8 @@ class ITOtelMetrics {
       for (PointData pointData : pointDataList) {
         String methodName =
             pointData.getAttributes().get(AttributeKey.stringKey(grpcMethodNameAttributeKey));
+
+        // All the attributes in the gRPC metrics should have the full method name
         Truth.assertThat(methodName).doesNotMatch("other");
         Truth.assertThat(methodName).matches("^google.showcase.v1beta1.Echo/.*$");
       }
