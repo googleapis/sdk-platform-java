@@ -30,9 +30,10 @@
 
 package com.google.showcase.v1beta1.it;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.Assert.assertThrows;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
@@ -59,6 +60,7 @@ import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import com.google.showcase.v1beta1.stub.EchoStub;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.opentelemetry.GrpcOpenTelemetry;
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.common.Attributes;
@@ -76,9 +78,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -102,8 +106,13 @@ class ITOtelMetrics {
   private static final String OPERATION_COUNT = SERVICE_NAME + "/operation_count";
   private static final String ATTEMPT_LATENCY = SERVICE_NAME + "/attempt_latency";
   private static final String OPERATION_LATENCY = SERVICE_NAME + "/operation_latency";
-  private static final int NUM_DEFAULT_METRICS = 4;
-  private static final int NUM_COLLECTION_FLUSH_ATTEMPTS = 10;
+  private static final Set<String> GAX_METRICS =
+      ImmutableSet.of(ATTEMPT_COUNT, OPERATION_COUNT, ATTEMPT_LATENCY, OPERATION_LATENCY);
+
+  // Gax provides four metrics by default. This number may change as new metrics are added.
+  private static final int NUM_GAX_OTEL_METRICS = 4;
+  private static final int NUM_DEFAULT_FLUSH_ATTEMPTS = 10;
+
   private InMemoryMetricReader inMemoryMetricReader;
   private EchoClient grpcClient;
   private EchoClient httpClient;
@@ -157,7 +166,8 @@ class ITOtelMetrics {
   }
 
   @AfterEach
-  void cleanup() throws InterruptedException {
+  void cleanup() throws InterruptedException, IOException {
+    inMemoryMetricReader.close();
     inMemoryMetricReader.shutdown();
 
     grpcClient.close();
@@ -286,15 +296,23 @@ class ITOtelMetrics {
    */
   private List<MetricData> getMetricDataList(InMemoryMetricReader metricReader)
       throws InterruptedException {
-    for (int i = 0; i < NUM_COLLECTION_FLUSH_ATTEMPTS; i++) {
+    for (int i = 0; i < NUM_DEFAULT_FLUSH_ATTEMPTS; i++) {
       Thread.sleep(1000L);
       List<MetricData> metricData = new ArrayList<>(metricReader.collectAllMetrics());
-      if (metricData.size() == NUM_DEFAULT_METRICS) {
+      // Depending on the OpenTelemetry instance (i.e. OpenTelemetry, GrpcOpenTelemetry, etc.)
+      // there may be additional metrics recorded. Only check to ensure the Gax Metrics
+      // are recorded properly. Any additional metrics are fine to be passed.
+      if (metricData.size() >= NUM_GAX_OTEL_METRICS && areAllGaxMetricsRecorded(metricData)) {
         return metricData;
       }
     }
-    Assertions.fail("Unable to collect all the metrics required for the test");
+    Assertions.fail("Unable to collect all the GAX metrics required for the test");
     return new ArrayList<>();
+  }
+
+  private boolean areAllGaxMetricsRecorded(List<MetricData> metricData) {
+    return metricData.stream().filter(data -> GAX_METRICS.contains(data.getName())).count()
+        == NUM_GAX_OTEL_METRICS;
   }
 
   @Test
@@ -830,7 +848,73 @@ class ITOtelMetrics {
             randomAttributeKey2,
             randomAttributeValue2);
     verifyDefaultMetricsAttributes(actualMetricDataList, expectedAttributes);
+  }
 
-    inMemoryMetricReader.close();
+  // This test case uses GrpcOpenTelemetry from grpc-java and includes additional grpc-java specific
+  // metrics. This test case ensures that the `setSampledToLocalTracing` set to true will ensure
+  // that
+  // the gRPC full method name in the stub is recorded (not recorded as `other`).
+  @Test
+  void grpcOpenTelemetryImplementation_setSampledToLocalTracing_methodFullNameIsRecorded()
+      throws Exception {
+    SdkMeterProvider sdkMeterProvider =
+        SdkMeterProvider.builder().registerMetricReader(inMemoryMetricReader).build();
+
+    OpenTelemetry openTelemetry =
+        OpenTelemetrySdk.builder().setMeterProvider(sdkMeterProvider).build();
+
+    GrpcOpenTelemetry grpcOpenTelemetry = GrpcOpenTelemetry.newBuilder().sdk(openTelemetry).build();
+
+    // Java-Spanner configures the gRPCTransportChannelProvider with gRPCOpenTelemetry
+    // This setup below is copied from their implementation
+    InstantiatingGrpcChannelProvider.Builder builder =
+        EchoSettings.defaultGrpcTransportProviderBuilder();
+    ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator =
+        builder.getChannelConfigurator();
+    builder.setChannelConfigurator(
+        b -> {
+          b.usePlaintext();
+          grpcOpenTelemetry.configureChannelBuilder(b);
+          if (channelConfigurator != null) {
+            return channelConfigurator.apply(b);
+          }
+          return b;
+        });
+
+    OpenTelemetryMetricsRecorder otelMetricsRecorder =
+        new OpenTelemetryMetricsRecorder(openTelemetry, SERVICE_NAME);
+
+    // Create a custom EchoClient that is different from what is created by default in setup()
+    EchoClient echoClient =
+        TestClientInitializer.createGrpcEchoClientOpentelemetry(
+            new MetricsTracerFactory(otelMetricsRecorder), builder.build());
+
+    EchoRequest echoRequest =
+        EchoRequest.newBuilder().setContent("test_grpc_request_succeeded").build();
+    echoClient.echo(echoRequest);
+
+    List<MetricData> metricDataList = getMetricDataList();
+
+    String gRPCMetricNamePrefix = "grpc.";
+    String grpcMethodNameAttributeKey = "grpc.method";
+
+    List<MetricData> grpcMetricDataList =
+        metricDataList.stream()
+            .filter(x -> x.getName().startsWith(gRPCMetricNamePrefix))
+            .collect(Collectors.toList());
+    Truth.assertThat(grpcMetricDataList).isNotEmpty();
+    for (MetricData grpcMetricData : grpcMetricDataList) {
+      List<PointData> pointDataList = new ArrayList<>(grpcMetricData.getData().getPoints());
+
+      for (PointData pointData : pointDataList) {
+        String methodName =
+            pointData.getAttributes().get(AttributeKey.stringKey(grpcMethodNameAttributeKey));
+        Truth.assertThat(methodName).doesNotMatch("other");
+        Truth.assertThat(methodName).matches("^google.showcase.v1beta1.Echo/.*$");
+      }
+    }
+
+    echoClient.close();
+    echoClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 }
