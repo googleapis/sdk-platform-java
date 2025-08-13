@@ -896,7 +896,7 @@ class ITOtelMetrics {
     List<MetricData> metricDataList = getMetricDataList();
 
     String gRPCMetricNamePrefix = "grpc.";
-    String grpcMethodNameAttributeKey = "grpc.method";
+    String gRPCMethodNameAttributeKey = "grpc.method";
 
     List<MetricData> grpcMetricDataList =
         metricDataList.stream()
@@ -908,7 +908,7 @@ class ITOtelMetrics {
 
       for (PointData pointData : pointDataList) {
         String methodName =
-            pointData.getAttributes().get(AttributeKey.stringKey(grpcMethodNameAttributeKey));
+            pointData.getAttributes().get(AttributeKey.stringKey(gRPCMethodNameAttributeKey));
 
         // All the attributes in the gRPC metrics should have the full method name
         Truth.assertThat(methodName).doesNotMatch("other");
