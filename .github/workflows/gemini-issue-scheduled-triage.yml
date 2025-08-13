@@ -97,7 +97,7 @@ jobs:
             3. Classify each issue by their type (bug, enhancement, documentation,
                cleanup, etc) and their priority (p0, p1, p2, p3). Set the
                labels according to the format `type: *` and `priority: *` patterns.
-               If the priority is decided to be more urgent than p2 (e.g. p0 or p1), mark the issue
+               If the priority is determined to be more urgent than p2 (e.g. p0 or p1), mark the issue
                as p2 and add a comment in the issue with the reason. The comment should ping
                @blakeli0, @lqiu96, and @zhumin8 to notify them.
             4. Apply the selected labels to this issue using:
