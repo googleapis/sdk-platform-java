@@ -96,12 +96,6 @@
       <groupId>com.google.protobuf</groupId>
       <artifactId>protobuf-java</artifactId>
     </dependency>
-    <!-- Add the grpc-java opentelemetry module to test for clients using GrpcOpenTelemetry -->
-    <dependency>
-      <groupId>io.grpc</groupId>
-      <artifactId>grpc-opentelemetry</artifactId>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>proto-google-common-protos</artifactId>
@@ -219,6 +213,12 @@
     <dependency>
       <groupId>io.opentelemetry</groupId>
       <artifactId>opentelemetry-sdk-testing</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- Add the grpc-java opentelemetry module to test for clients using GrpcOpenTelemetry -->
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-opentelemetry</artifactId>
       <scope>test</scope>
     </dependency>
 
