@@ -32,10 +32,6 @@ jobs:
       - name: Determine Inputted Dependencies List
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dependencies-list != '' }}
         run: echo "DEPENDENCIES_LIST=${{ github.event.inputs.dependencies-list }}" >> $GITHUB_ENV
-      # Install the modules for the rest of the CI
-      - name: Install sdk-platform-java's modules
-        # gapic-generator-java requires Java 8 and is irrelevant for this CI
-        run: mvn -q -B -ntp install --projects '!gapic-generator-java' -Dcheckstyle.skip -Dfmt.skip -DskipTests -Dclirr.skip -T 1C
 
       # Run in the root module which should test for everything except for showcase
       - name: Perform Dependency Compatibility Testing
@@ -59,6 +55,11 @@ jobs:
           tar -xf showcase-*
           ./gapic-showcase run &
           cd -
+
+      # Install the modules for showcase (Shared-Deps is required to run showcase)
+      - name: Install sdk-platform-java's modules
+        # gapic-generator-java requires Java 8 and is irrelevant for this CI
+        run: mvn -q -B -ntp install --projects '!gapic-generator-java' -Dcheckstyle.skip -Dfmt.skip -DskipTests -Dclirr.skip -T 1C
       # Run specifically for showcase
       - name: Perform Dependency Compatibility Testing (Showcase only)
         shell: bash

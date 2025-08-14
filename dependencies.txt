@@ -3,7 +3,7 @@
 # "1P" refers to First-Party dependencies (owned by Google).
 # "3P" refers to Third-Party dependencies.
 
-# 1P Parent-Pom
+# Pom-Parent Dependencies (https://github.com/googleapis/sdk-platform-java/blob/main/gapic-generator-java-pom-parent/pom.xml)
 javax.annotation-api=1.3.2
 grpc=1.74.0
 google.auth=1.37.1
@@ -17,12 +17,12 @@ j2objc-annotations=3.0.0
 threetenbp=1.7.1
 slf4j=2.0.17
 
-# 1P Shared-Deps
+# 1P Shared-Deps (https://github.com/googleapis/sdk-platform-java/blob/main/java-shared-dependencies/first-party-dependencies/pom.xml)
 grpc-gcp=1.6.1
 google.oauth-client=1.39.0
 google.api-client=2.8.0
 
-# 3P Shared-Deps
+# 3P Shared-Deps (https://github.com/googleapis/sdk-platform-java/blob/main/java-shared-dependencies/third-party-dependencies/pom.xml)
 threeten-extra=1.8.0
 opencensus=0.31.0
 findbugs=3.0.2
