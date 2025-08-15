@@ -78,6 +78,7 @@ public class GrpcSubscriberStub extends SubscriberStub {
               .setFullMethodName("google.pubsub.v1.Subscriber/CreateSubscription")
               .setRequestMarshaller(ProtoUtils.marshaller(Subscription.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Subscription.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetSubscriptionRequest, Subscription>
@@ -88,6 +89,7 @@ public class GrpcSubscriberStub extends SubscriberStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(GetSubscriptionRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Subscription.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<UpdateSubscriptionRequest, Subscription>
@@ -98,6 +100,7 @@ public class GrpcSubscriberStub extends SubscriberStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(UpdateSubscriptionRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Subscription.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ListSubscriptionsRequest, ListSubscriptionsResponse>
@@ -109,6 +112,7 @@ public class GrpcSubscriberStub extends SubscriberStub {
                   ProtoUtils.marshaller(ListSubscriptionsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListSubscriptionsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<DeleteSubscriptionRequest, Empty>
@@ -119,6 +123,7 @@ public class GrpcSubscriberStub extends SubscriberStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(DeleteSubscriptionRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ModifyAckDeadlineRequest, Empty>
@@ -129,6 +134,7 @@ public class GrpcSubscriberStub extends SubscriberStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(ModifyAckDeadlineRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<AcknowledgeRequest, Empty> acknowledgeMethodDescriptor =
@@ -137,6 +143,7 @@ public class GrpcSubscriberStub extends SubscriberStub {
           .setFullMethodName("google.pubsub.v1.Subscriber/Acknowledge")
           .setRequestMarshaller(ProtoUtils.marshaller(AcknowledgeRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<PullRequest, PullResponse> pullMethodDescriptor =
@@ -145,6 +152,7 @@ public class GrpcSubscriberStub extends SubscriberStub {
           .setFullMethodName("google.pubsub.v1.Subscriber/Pull")
           .setRequestMarshaller(ProtoUtils.marshaller(PullRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(PullResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<StreamingPullRequest, StreamingPullResponse>
@@ -156,6 +164,7 @@ public class GrpcSubscriberStub extends SubscriberStub {
                   ProtoUtils.marshaller(StreamingPullRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(StreamingPullResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ModifyPushConfigRequest, Empty>
@@ -166,6 +175,7 @@ public class GrpcSubscriberStub extends SubscriberStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(ModifyPushConfigRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetSnapshotRequest, Snapshot> getSnapshotMethodDescriptor =
@@ -174,6 +184,7 @@ public class GrpcSubscriberStub extends SubscriberStub {
           .setFullMethodName("google.pubsub.v1.Subscriber/GetSnapshot")
           .setRequestMarshaller(ProtoUtils.marshaller(GetSnapshotRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Snapshot.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<ListSnapshotsRequest, ListSnapshotsResponse>
@@ -185,6 +196,7 @@ public class GrpcSubscriberStub extends SubscriberStub {
                   ProtoUtils.marshaller(ListSnapshotsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListSnapshotsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<CreateSnapshotRequest, Snapshot>
@@ -195,6 +207,7 @@ public class GrpcSubscriberStub extends SubscriberStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(CreateSnapshotRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Snapshot.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<UpdateSnapshotRequest, Snapshot>
@@ -205,6 +218,7 @@ public class GrpcSubscriberStub extends SubscriberStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(UpdateSnapshotRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Snapshot.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<DeleteSnapshotRequest, Empty>
@@ -215,6 +229,7 @@ public class GrpcSubscriberStub extends SubscriberStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(DeleteSnapshotRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<SeekRequest, SeekResponse> seekMethodDescriptor =
@@ -223,6 +238,7 @@ public class GrpcSubscriberStub extends SubscriberStub {
           .setFullMethodName("google.pubsub.v1.Subscriber/Seek")
           .setRequestMarshaller(ProtoUtils.marshaller(SeekRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(SeekResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<SetIamPolicyRequest, Policy> setIamPolicyMethodDescriptor =
@@ -231,6 +247,7 @@ public class GrpcSubscriberStub extends SubscriberStub {
           .setFullMethodName("google.iam.v1.IAMPolicy/SetIamPolicy")
           .setRequestMarshaller(ProtoUtils.marshaller(SetIamPolicyRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Policy.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<GetIamPolicyRequest, Policy> getIamPolicyMethodDescriptor =
@@ -239,6 +256,7 @@ public class GrpcSubscriberStub extends SubscriberStub {
           .setFullMethodName("google.iam.v1.IAMPolicy/GetIamPolicy")
           .setRequestMarshaller(ProtoUtils.marshaller(GetIamPolicyRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Policy.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<TestIamPermissionsRequest, TestIamPermissionsResponse>
@@ -250,6 +268,7 @@ public class GrpcSubscriberStub extends SubscriberStub {
                   ProtoUtils.marshaller(TestIamPermissionsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(TestIamPermissionsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private final UnaryCallable<Subscription, Subscription> createSubscriptionCallable;

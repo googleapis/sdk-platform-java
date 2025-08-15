@@ -75,6 +75,7 @@ public class GrpcTestingStub extends TestingStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(CreateSessionRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Session.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetSessionRequest, Session> getSessionMethodDescriptor =
@@ -83,6 +84,7 @@ public class GrpcTestingStub extends TestingStub {
           .setFullMethodName("google.showcase.v1beta1.Testing/GetSession")
           .setRequestMarshaller(ProtoUtils.marshaller(GetSessionRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Session.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<ListSessionsRequest, ListSessionsResponse>
@@ -93,6 +95,7 @@ public class GrpcTestingStub extends TestingStub {
               .setRequestMarshaller(ProtoUtils.marshaller(ListSessionsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListSessionsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<DeleteSessionRequest, Empty> deleteSessionMethodDescriptor =
@@ -101,6 +104,7 @@ public class GrpcTestingStub extends TestingStub {
           .setFullMethodName("google.showcase.v1beta1.Testing/DeleteSession")
           .setRequestMarshaller(ProtoUtils.marshaller(DeleteSessionRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<ReportSessionRequest, ReportSessionResponse>
@@ -112,6 +116,7 @@ public class GrpcTestingStub extends TestingStub {
                   ProtoUtils.marshaller(ReportSessionRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ReportSessionResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ListTestsRequest, ListTestsResponse>
@@ -121,6 +126,7 @@ public class GrpcTestingStub extends TestingStub {
               .setFullMethodName("google.showcase.v1beta1.Testing/ListTests")
               .setRequestMarshaller(ProtoUtils.marshaller(ListTestsRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(ListTestsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<DeleteTestRequest, Empty> deleteTestMethodDescriptor =
@@ -129,6 +135,7 @@ public class GrpcTestingStub extends TestingStub {
           .setFullMethodName("google.showcase.v1beta1.Testing/DeleteTest")
           .setRequestMarshaller(ProtoUtils.marshaller(DeleteTestRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<VerifyTestRequest, VerifyTestResponse>
@@ -138,6 +145,7 @@ public class GrpcTestingStub extends TestingStub {
               .setFullMethodName("google.showcase.v1beta1.Testing/VerifyTest")
               .setRequestMarshaller(ProtoUtils.marshaller(VerifyTestRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(VerifyTestResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ListLocationsRequest, ListLocationsResponse>
@@ -149,6 +157,7 @@ public class GrpcTestingStub extends TestingStub {
                   ProtoUtils.marshaller(ListLocationsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListLocationsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetLocationRequest, Location> getLocationMethodDescriptor =
@@ -157,6 +166,7 @@ public class GrpcTestingStub extends TestingStub {
           .setFullMethodName("google.cloud.location.Locations/GetLocation")
           .setRequestMarshaller(ProtoUtils.marshaller(GetLocationRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Location.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<SetIamPolicyRequest, Policy> setIamPolicyMethodDescriptor =
@@ -165,6 +175,7 @@ public class GrpcTestingStub extends TestingStub {
           .setFullMethodName("google.iam.v1.IAMPolicy/SetIamPolicy")
           .setRequestMarshaller(ProtoUtils.marshaller(SetIamPolicyRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Policy.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<GetIamPolicyRequest, Policy> getIamPolicyMethodDescriptor =
@@ -173,6 +184,7 @@ public class GrpcTestingStub extends TestingStub {
           .setFullMethodName("google.iam.v1.IAMPolicy/GetIamPolicy")
           .setRequestMarshaller(ProtoUtils.marshaller(GetIamPolicyRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Policy.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<TestIamPermissionsRequest, TestIamPermissionsResponse>
@@ -184,6 +196,7 @@ public class GrpcTestingStub extends TestingStub {
                   ProtoUtils.marshaller(TestIamPermissionsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(TestIamPermissionsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private final UnaryCallable<CreateSessionRequest, Session> createSessionCallable;
