@@ -102,6 +102,7 @@ public class GrpcStorageStub extends StorageStub {
           .setFullMethodName("google.storage.v2.Storage/DeleteBucket")
           .setRequestMarshaller(ProtoUtils.marshaller(DeleteBucketRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<GetBucketRequest, Bucket> getBucketMethodDescriptor =
@@ -110,6 +111,7 @@ public class GrpcStorageStub extends StorageStub {
           .setFullMethodName("google.storage.v2.Storage/GetBucket")
           .setRequestMarshaller(ProtoUtils.marshaller(GetBucketRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Bucket.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<CreateBucketRequest, Bucket> createBucketMethodDescriptor =
@@ -118,6 +120,7 @@ public class GrpcStorageStub extends StorageStub {
           .setFullMethodName("google.storage.v2.Storage/CreateBucket")
           .setRequestMarshaller(ProtoUtils.marshaller(CreateBucketRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Bucket.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<ListBucketsRequest, ListBucketsResponse>
@@ -128,6 +131,7 @@ public class GrpcStorageStub extends StorageStub {
               .setRequestMarshaller(ProtoUtils.marshaller(ListBucketsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListBucketsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<LockBucketRetentionPolicyRequest, Bucket>
@@ -138,6 +142,7 @@ public class GrpcStorageStub extends StorageStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(LockBucketRetentionPolicyRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Bucket.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetIamPolicyRequest, Policy> getIamPolicyMethodDescriptor =
@@ -146,6 +151,7 @@ public class GrpcStorageStub extends StorageStub {
           .setFullMethodName("google.storage.v2.Storage/GetIamPolicy")
           .setRequestMarshaller(ProtoUtils.marshaller(GetIamPolicyRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Policy.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<SetIamPolicyRequest, Policy> setIamPolicyMethodDescriptor =
@@ -154,6 +160,7 @@ public class GrpcStorageStub extends StorageStub {
           .setFullMethodName("google.storage.v2.Storage/SetIamPolicy")
           .setRequestMarshaller(ProtoUtils.marshaller(SetIamPolicyRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Policy.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<TestIamPermissionsRequest, TestIamPermissionsResponse>
@@ -165,6 +172,7 @@ public class GrpcStorageStub extends StorageStub {
                   ProtoUtils.marshaller(TestIamPermissionsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(TestIamPermissionsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<UpdateBucketRequest, Bucket> updateBucketMethodDescriptor =
@@ -173,6 +181,7 @@ public class GrpcStorageStub extends StorageStub {
           .setFullMethodName("google.storage.v2.Storage/UpdateBucket")
           .setRequestMarshaller(ProtoUtils.marshaller(UpdateBucketRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Bucket.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<DeleteNotificationRequest, Empty>
@@ -183,6 +192,7 @@ public class GrpcStorageStub extends StorageStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(DeleteNotificationRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetNotificationRequest, Notification>
@@ -193,6 +203,7 @@ public class GrpcStorageStub extends StorageStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(GetNotificationRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Notification.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<CreateNotificationRequest, Notification>
@@ -203,6 +214,7 @@ public class GrpcStorageStub extends StorageStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(CreateNotificationRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Notification.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ListNotificationsRequest, ListNotificationsResponse>
@@ -214,6 +226,7 @@ public class GrpcStorageStub extends StorageStub {
                   ProtoUtils.marshaller(ListNotificationsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListNotificationsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ComposeObjectRequest, Object>
@@ -224,6 +237,7 @@ public class GrpcStorageStub extends StorageStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(ComposeObjectRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Object.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<DeleteObjectRequest, Empty> deleteObjectMethodDescriptor =
@@ -232,6 +246,7 @@ public class GrpcStorageStub extends StorageStub {
           .setFullMethodName("google.storage.v2.Storage/DeleteObject")
           .setRequestMarshaller(ProtoUtils.marshaller(DeleteObjectRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<CancelResumableWriteRequest, CancelResumableWriteResponse>
@@ -243,6 +258,7 @@ public class GrpcStorageStub extends StorageStub {
                   ProtoUtils.marshaller(CancelResumableWriteRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(CancelResumableWriteResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetObjectRequest, Object> getObjectMethodDescriptor =
@@ -251,6 +267,7 @@ public class GrpcStorageStub extends StorageStub {
           .setFullMethodName("google.storage.v2.Storage/GetObject")
           .setRequestMarshaller(ProtoUtils.marshaller(GetObjectRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Object.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<ReadObjectRequest, ReadObjectResponse>
@@ -260,6 +277,7 @@ public class GrpcStorageStub extends StorageStub {
               .setFullMethodName("google.storage.v2.Storage/ReadObject")
               .setRequestMarshaller(ProtoUtils.marshaller(ReadObjectRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(ReadObjectResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<UpdateObjectRequest, Object> updateObjectMethodDescriptor =
@@ -268,6 +286,7 @@ public class GrpcStorageStub extends StorageStub {
           .setFullMethodName("google.storage.v2.Storage/UpdateObject")
           .setRequestMarshaller(ProtoUtils.marshaller(UpdateObjectRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Object.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<WriteObjectRequest, WriteObjectResponse>
@@ -278,6 +297,7 @@ public class GrpcStorageStub extends StorageStub {
               .setRequestMarshaller(ProtoUtils.marshaller(WriteObjectRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(WriteObjectResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ListObjectsRequest, ListObjectsResponse>
@@ -288,6 +308,7 @@ public class GrpcStorageStub extends StorageStub {
               .setRequestMarshaller(ProtoUtils.marshaller(ListObjectsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListObjectsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<RewriteObjectRequest, RewriteResponse>
@@ -298,6 +319,7 @@ public class GrpcStorageStub extends StorageStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(RewriteObjectRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(RewriteResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<StartResumableWriteRequest, StartResumableWriteResponse>
@@ -309,6 +331,7 @@ public class GrpcStorageStub extends StorageStub {
                   ProtoUtils.marshaller(StartResumableWriteRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(StartResumableWriteResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<QueryWriteStatusRequest, QueryWriteStatusResponse>
@@ -320,6 +343,7 @@ public class GrpcStorageStub extends StorageStub {
                   ProtoUtils.marshaller(QueryWriteStatusRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(QueryWriteStatusResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetServiceAccountRequest, ServiceAccount>
@@ -330,6 +354,7 @@ public class GrpcStorageStub extends StorageStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(GetServiceAccountRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(ServiceAccount.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<CreateHmacKeyRequest, CreateHmacKeyResponse>
@@ -341,6 +366,7 @@ public class GrpcStorageStub extends StorageStub {
                   ProtoUtils.marshaller(CreateHmacKeyRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(CreateHmacKeyResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<DeleteHmacKeyRequest, Empty> deleteHmacKeyMethodDescriptor =
@@ -349,6 +375,7 @@ public class GrpcStorageStub extends StorageStub {
           .setFullMethodName("google.storage.v2.Storage/DeleteHmacKey")
           .setRequestMarshaller(ProtoUtils.marshaller(DeleteHmacKeyRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<GetHmacKeyRequest, HmacKeyMetadata>
@@ -358,6 +385,7 @@ public class GrpcStorageStub extends StorageStub {
               .setFullMethodName("google.storage.v2.Storage/GetHmacKey")
               .setRequestMarshaller(ProtoUtils.marshaller(GetHmacKeyRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(HmacKeyMetadata.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ListHmacKeysRequest, ListHmacKeysResponse>
@@ -368,6 +396,7 @@ public class GrpcStorageStub extends StorageStub {
               .setRequestMarshaller(ProtoUtils.marshaller(ListHmacKeysRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListHmacKeysResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<UpdateHmacKeyRequest, HmacKeyMetadata>
@@ -378,6 +407,7 @@ public class GrpcStorageStub extends StorageStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(UpdateHmacKeyRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(HmacKeyMetadata.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private final UnaryCallable<DeleteBucketRequest, Empty> deleteBucketCallable;

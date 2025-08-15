@@ -215,6 +215,12 @@
       <artifactId>opentelemetry-sdk-testing</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- Add the grpc-java opentelemetry module to test for clients using GrpcOpenTelemetry -->
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-opentelemetry</artifactId>
+      <scope>test</scope>
+    </dependency>
 
     <!--  Logging testing dependencies  -->
 
