@@ -42,6 +42,12 @@ jobs:
           else
             ./.github/scripts/test_dependency_compatibility.sh
           fi
+
+      # Install the modules for showcase (Shared-Deps is required to run showcase)
+      - name: Install sdk-platform-java's modules
+        # gapic-generator-java requires Java 8 and is irrelevant for this CI
+        run: mvn -q -B -ntp install --projects '!gapic-generator-java' -Dcheckstyle.skip -Dfmt.skip -DskipTests -Dclirr.skip -T 1C
+
       # Set up local showcase server to run the showcase ITs
       - name: Parse showcase version
         working-directory: java-showcase/gapic-showcase
@@ -56,11 +62,7 @@ jobs:
           ./gapic-showcase run &
           cd -
 
-      # Install the modules for showcase (Shared-Deps is required to run showcase)
-      - name: Install sdk-platform-java's modules
-        # gapic-generator-java requires Java 8 and is irrelevant for this CI
-        run: mvn -q -B -ntp install --projects '!gapic-generator-java' -Dcheckstyle.skip -Dfmt.skip -DskipTests -Dclirr.skip -T 1C
-      # Run specifically for showcase
+      # Run Showcase's Integration Tests
       - name: Perform Dependency Compatibility Testing (Showcase only)
         shell: bash
         # Need to cd out of the directory to get the scripts as this step is run inside the java-showcase directory
