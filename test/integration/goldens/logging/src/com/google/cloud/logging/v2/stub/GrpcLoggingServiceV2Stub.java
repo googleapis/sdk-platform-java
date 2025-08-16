@@ -62,6 +62,7 @@ public class GrpcLoggingServiceV2Stub extends LoggingServiceV2Stub {
           .setFullMethodName("google.logging.v2.LoggingServiceV2/DeleteLog")
           .setRequestMarshaller(ProtoUtils.marshaller(DeleteLogRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<WriteLogEntriesRequest, WriteLogEntriesResponse>
@@ -73,6 +74,7 @@ public class GrpcLoggingServiceV2Stub extends LoggingServiceV2Stub {
                   ProtoUtils.marshaller(WriteLogEntriesRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(WriteLogEntriesResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ListLogEntriesRequest, ListLogEntriesResponse>
@@ -84,6 +86,7 @@ public class GrpcLoggingServiceV2Stub extends LoggingServiceV2Stub {
                   ProtoUtils.marshaller(ListLogEntriesRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListLogEntriesResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<
@@ -101,6 +104,7 @@ public class GrpcLoggingServiceV2Stub extends LoggingServiceV2Stub {
               .setResponseMarshaller(
                   ProtoUtils.marshaller(
                       ListMonitoredResourceDescriptorsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ListLogsRequest, ListLogsResponse>
@@ -110,6 +114,7 @@ public class GrpcLoggingServiceV2Stub extends LoggingServiceV2Stub {
               .setFullMethodName("google.logging.v2.LoggingServiceV2/ListLogs")
               .setRequestMarshaller(ProtoUtils.marshaller(ListLogsRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(ListLogsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<TailLogEntriesRequest, TailLogEntriesResponse>
@@ -121,6 +126,7 @@ public class GrpcLoggingServiceV2Stub extends LoggingServiceV2Stub {
                   ProtoUtils.marshaller(TailLogEntriesRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(TailLogEntriesResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private final UnaryCallable<DeleteLogRequest, Empty> deleteLogCallable;

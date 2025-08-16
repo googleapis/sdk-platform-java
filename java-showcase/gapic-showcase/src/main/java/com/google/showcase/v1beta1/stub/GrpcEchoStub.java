@@ -83,6 +83,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.v1beta1.Echo/Echo")
           .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
@@ -94,6 +95,7 @@ public class GrpcEchoStub extends EchoStub {
                   ProtoUtils.marshaller(EchoErrorDetailsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(EchoErrorDetailsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<FailEchoWithDetailsRequest, FailEchoWithDetailsResponse>
@@ -105,6 +107,7 @@ public class GrpcEchoStub extends EchoStub {
                   ProtoUtils.marshaller(FailEchoWithDetailsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(FailEchoWithDetailsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ExpandRequest, EchoResponse> expandMethodDescriptor =
@@ -113,6 +116,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.v1beta1.Echo/Expand")
           .setRequestMarshaller(ProtoUtils.marshaller(ExpandRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<EchoRequest, EchoResponse> collectMethodDescriptor =
@@ -121,6 +125,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.v1beta1.Echo/Collect")
           .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<EchoRequest, EchoResponse> chatMethodDescriptor =
@@ -129,6 +134,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.v1beta1.Echo/Chat")
           .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<PagedExpandRequest, PagedExpandResponse>
@@ -139,6 +145,7 @@ public class GrpcEchoStub extends EchoStub {
               .setRequestMarshaller(ProtoUtils.marshaller(PagedExpandRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(PagedExpandResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<PagedExpandLegacyRequest, PagedExpandResponse>
@@ -150,6 +157,7 @@ public class GrpcEchoStub extends EchoStub {
                   ProtoUtils.marshaller(PagedExpandLegacyRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(PagedExpandResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<PagedExpandRequest, PagedExpandLegacyMappedResponse>
@@ -160,6 +168,7 @@ public class GrpcEchoStub extends EchoStub {
               .setRequestMarshaller(ProtoUtils.marshaller(PagedExpandRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(PagedExpandLegacyMappedResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<WaitRequest, Operation> waitMethodDescriptor =
@@ -168,6 +177,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.v1beta1.Echo/Wait")
           .setRequestMarshaller(ProtoUtils.marshaller(WaitRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Operation.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<BlockRequest, BlockResponse> blockMethodDescriptor =
@@ -176,6 +186,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.showcase.v1beta1.Echo/Block")
           .setRequestMarshaller(ProtoUtils.marshaller(BlockRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(BlockResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<ListLocationsRequest, ListLocationsResponse>
@@ -187,6 +198,7 @@ public class GrpcEchoStub extends EchoStub {
                   ProtoUtils.marshaller(ListLocationsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListLocationsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetLocationRequest, Location> getLocationMethodDescriptor =
@@ -195,6 +207,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.cloud.location.Locations/GetLocation")
           .setRequestMarshaller(ProtoUtils.marshaller(GetLocationRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Location.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<SetIamPolicyRequest, Policy> setIamPolicyMethodDescriptor =
@@ -203,6 +216,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.iam.v1.IAMPolicy/SetIamPolicy")
           .setRequestMarshaller(ProtoUtils.marshaller(SetIamPolicyRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Policy.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<GetIamPolicyRequest, Policy> getIamPolicyMethodDescriptor =
@@ -211,6 +225,7 @@ public class GrpcEchoStub extends EchoStub {
           .setFullMethodName("google.iam.v1.IAMPolicy/GetIamPolicy")
           .setRequestMarshaller(ProtoUtils.marshaller(GetIamPolicyRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Policy.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<TestIamPermissionsRequest, TestIamPermissionsResponse>
@@ -222,6 +237,7 @@ public class GrpcEchoStub extends EchoStub {
                   ProtoUtils.marshaller(TestIamPermissionsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(TestIamPermissionsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private final UnaryCallable<EchoRequest, EchoResponse> echoCallable;

@@ -37,6 +37,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
               "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/Example1Test")
           .setRequestMarshaller(ProtoUtils.marshaller(Request.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<Request, Empty> example2TestMethodDescriptor =
@@ -46,6 +47,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
               "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/Example2Test")
           .setRequestMarshaller(ProtoUtils.marshaller(Request.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<Request, Empty> example3TestMethodDescriptor =
@@ -55,6 +57,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
               "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/Example3Test")
           .setRequestMarshaller(ProtoUtils.marshaller(Request.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<Request, Empty> example3CTestMethodDescriptor =
@@ -64,6 +67,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
               "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/Example3CTest")
           .setRequestMarshaller(ProtoUtils.marshaller(Request.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<Request, Empty> example4TestMethodDescriptor =
@@ -73,6 +77,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
               "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/Example4Test")
           .setRequestMarshaller(ProtoUtils.marshaller(Request.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<Request, Empty> example5TestMethodDescriptor =
@@ -82,6 +87,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
               "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/Example5Test")
           .setRequestMarshaller(ProtoUtils.marshaller(Request.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<Request, Empty> example6TestMethodDescriptor =
@@ -91,6 +97,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
               "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/Example6Test")
           .setRequestMarshaller(ProtoUtils.marshaller(Request.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<Request, Empty> example7TestMethodDescriptor =
@@ -100,6 +107,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
               "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/Example7Test")
           .setRequestMarshaller(ProtoUtils.marshaller(Request.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<Request, Empty> example8TestMethodDescriptor =
@@ -109,6 +117,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
               "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/Example8Test")
           .setRequestMarshaller(ProtoUtils.marshaller(Request.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<Request, Empty> example9TestMethodDescriptor =
@@ -118,6 +127,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
               "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/Example9Test")
           .setRequestMarshaller(ProtoUtils.marshaller(Request.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<Request, Empty> backwardsCompatible1TestMethodDescriptor =
@@ -127,6 +137,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
               "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/BackwardsCompatible1Test")
           .setRequestMarshaller(ProtoUtils.marshaller(Request.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<Request, Empty> backwardsCompatible2TestMethodDescriptor =
@@ -136,6 +147,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
               "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/BackwardsCompatible2Test")
           .setRequestMarshaller(ProtoUtils.marshaller(Request.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<Request, Empty> backwardsCompatible3TestMethodDescriptor =
@@ -145,6 +157,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
               "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/BackwardsCompatible3Test")
           .setRequestMarshaller(ProtoUtils.marshaller(Request.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<RequestWithNestedField, Empty>
@@ -156,6 +169,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
               .setRequestMarshaller(
                   ProtoUtils.marshaller(RequestWithNestedField.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<EnumRequest, EnumResponse>
@@ -166,6 +180,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
                   "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/ImplicitRoutingHeaderWithEnumTest")
               .setRequestMarshaller(ProtoUtils.marshaller(EnumRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(EnumResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private final UnaryCallable<Request, Empty> example1TestCallable;
