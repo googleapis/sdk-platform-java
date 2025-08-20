@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.62.0](https://github.com/googleapis/sdk-platform-java/compare/v2.61.0...v2.62.0) (2025-08-19)
+
+
+### Features
+
+* Set sampledToLocalTracing flag to true for all gRPC MethodDescriptors ([#3874](https://github.com/googleapis/sdk-platform-java/issues/3874)) ([592e899](https://github.com/googleapis/sdk-platform-java/commit/592e899c516288b0a60b69525ba12d6f29bc6200))
+
 ## [2.61.0](https://github.com/googleapis/sdk-platform-java/compare/v2.60.2...v2.61.0) (2025-08-04)
 
 
