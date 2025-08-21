@@ -234,7 +234,7 @@ public class EchoClientTest {
     FailEchoWithDetailsResponse actualResponse = client.failEchoWithDetails(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockEcho.getRequests();
+    List<Message> actualRequests = mockEcho.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     FailEchoWithDetailsRequest actualRequest = ((FailEchoWithDetailsRequest) actualRequests.get(0));
 
