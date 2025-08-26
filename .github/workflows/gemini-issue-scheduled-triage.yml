@@ -1,112 +1,112 @@
-name: '📋 Gemini Scheduled Issue Triage'
-
-on:
-  schedule:
-    - cron: '0 0 * * *' # Runs every day
-  workflow_dispatch:
-
-concurrency:
-  group: '${{ github.workflow }}'
-  cancel-in-progress: true
-
-defaults:
-  run:
-    shell: 'bash'
-
-permissions:
-  contents: 'read'
-  id-token: 'write'
-  issues: 'write'
-  statuses: 'write'
-
-jobs:
-  triage-issues:
-    timeout-minutes: 5
-    runs-on: 'ubuntu-latest'
-
-    steps:
-      - name: 'Checkout repository'
-        uses: 'actions/checkout@v5'
-
-      - name: 'Find untriaged issues'
-        id: 'find_issues'
-        env:
-          GITHUB_TOKEN: '${{ steps.generate_token.outputs.token || secrets.GITHUB_TOKEN }}'
-          GITHUB_REPOSITORY: '${{ github.repository }}'
-          GITHUB_OUTPUT: '${{ github.output }}'
-        run: |-
-          set -euo pipefail
-
-          echo '🔍 Finding issues without labels...'
-          NO_LABEL_ISSUES="$(gh issue list --repo "${GITHUB_REPOSITORY}" \
-            --search 'is:open is:issue no:label' --json number,title,body)"
-
-          echo '🔄 Merging and deduplicating issues...'
-          ISSUES="$(echo "${NO_LABEL_ISSUES}" "${NEED_TRIAGE_ISSUES}" | jq -c -s 'add | unique_by(.number)')"
-
-          echo '📝 Setting output for GitHub Actions...'
-          echo "issues_to_triage=${ISSUES}" >> "${GITHUB_OUTPUT}"
-
-          ISSUE_COUNT="$(echo "${ISSUES}" | jq 'length')"
-          echo "✅ Found ${ISSUE_COUNT} issues to triage! 🎯"
-
-      - name: 'Run Gemini Issue Triage'
-        if: |-
-          ${{ steps.find_issues.outputs.issues_to_triage != '[]' }}
-        uses: 'google-github-actions/run-gemini-cli@v0'
-        id: 'gemini_issue_triage'
-        env:
-          GITHUB_TOKEN: '${{ steps.generate_token.outputs.token || secrets.GITHUB_TOKEN }}'
-          ISSUES_TO_TRIAGE: '${{ steps.find_issues.outputs.issues_to_triage }}'
-          REPOSITORY: '${{ github.repository }}'
-        with:
-          gemini_cli_version: '${{ vars.GEMINI_CLI_VERSION }}'
-          gcp_workload_identity_provider: '${{ vars.GCP_WIF_PROVIDER }}'
-          gcp_project_id: '${{ vars.GOOGLE_CLOUD_PROJECT }}'
-          gcp_location: '${{ vars.GOOGLE_CLOUD_LOCATION }}'
-          gcp_service_account: '${{ vars.SERVICE_ACCOUNT_EMAIL }}'
-          gemini_api_key: '${{ secrets.GEMINI_API_KEY }}'
-          use_vertex_ai: '${{ vars.GOOGLE_GENAI_USE_VERTEXAI }}'
-          use_gemini_code_assist: '${{ vars.GOOGLE_GENAI_USE_GCA }}'
-          settings: |-
-            {
-              "maxSessionTurns": 25,
-              "coreTools": [
-                "run_shell_command(echo)",
-                "run_shell_command(gh label list)",
-                "run_shell_command(gh issue edit)",
-                "run_shell_command(gh issue list)"
-              ],
-              "telemetry": {
-                "enabled": true,
-                "target": "gcp"
-              }
-            }
-          prompt: |-
-            ## Role
-
-            You are an issue triage assistant. Analyze issues and apply
-            appropriate labels. Use the available tools to gather information;
-            do not ask for information to be provided.
-
-            ## Steps
-
-            1. Run: `gh label list`
-            2. Check environment variable: "${ISSUES_TO_TRIAGE}" (JSON array
-               of issues)
-            3. Classify each issue by their type (bug, enhancement, documentation,
-               cleanup, etc) and their priority (p0, p1, p2, p3). Set the
-               labels according to the format `type: *` and `priority: *` patterns.
-               If the priority is determined to be more urgent than p2 (e.g. p0 or p1), mark the issue
-               as p2 and add a comment in the issue with the reason. The comment should ping
-               @blakeli0, @lqiu96, and @zhumin8 to notify them.
-            4. Apply the selected labels to this issue using:
-               `gh issue edit "${ISSUE_NUMBER}" --add-label "label1,label2"`
-
-            ## Guidelines
-
-            - If there are already labels for `type: *` and `priority: *` set on the issue, do not modify the labels
-            - Only use existing repository labels
-            - Do not modify the original issue content
-            - Triage each issue independently
-            - Reference all shell variables as "${VAR}" (with quotes and braces)
+#name: '📋 Gemini Scheduled Issue Triage'
+#
+#on:
+#  schedule:
+#    - cron: '0 0 * * *' # Runs every day
+#  workflow_dispatch:
+#
+#concurrency:
+#  group: '${{ github.workflow }}'
+#  cancel-in-progress: true
+#
+#defaults:
+#  run:
+#    shell: 'bash'
+#
+#permissions:
+#  contents: 'read'
+#  id-token: 'write'
+#  issues: 'write'
+#  statuses: 'write'
+#
+#jobs:
+#  triage-issues:
+#    timeout-minutes: 5
+#    runs-on: 'ubuntu-latest'
+#
+#    steps:
+#      - name: 'Checkout repository'
+#        uses: 'actions/checkout@v5'
+#
+#      - name: 'Find untriaged issues'
+#        id: 'find_issues'
+#        env:
+#          GITHUB_TOKEN: '${{ steps.generate_token.outputs.token || secrets.GITHUB_TOKEN }}'
+#          GITHUB_REPOSITORY: '${{ github.repository }}'
+#          GITHUB_OUTPUT: '${{ github.output }}'
+#        run: |-
+#          set -euo pipefail
+#
+#          echo '🔍 Finding issues without labels...'
+#          NO_LABEL_ISSUES="$(gh issue list --repo "${GITHUB_REPOSITORY}" \
+#            --search 'is:open is:issue no:label' --json number,title,body)"
+#
+#          echo '🔄 Merging and deduplicating issues...'
+#          ISSUES="$(echo "${NO_LABEL_ISSUES}" "${NEED_TRIAGE_ISSUES}" | jq -c -s 'add | unique_by(.number)')"
+#
+#          echo '📝 Setting output for GitHub Actions...'
+#          echo "issues_to_triage=${ISSUES}" >> "${GITHUB_OUTPUT}"
+#
+#          ISSUE_COUNT="$(echo "${ISSUES}" | jq 'length')"
+#          echo "✅ Found ${ISSUE_COUNT} issues to triage! 🎯"
+#
+#      - name: 'Run Gemini Issue Triage'
+#        if: |-
+#          ${{ steps.find_issues.outputs.issues_to_triage != '[]' }}
+#        uses: 'google-github-actions/run-gemini-cli@v0'
+#        id: 'gemini_issue_triage'
+#        env:
+#          GITHUB_TOKEN: '${{ steps.generate_token.outputs.token || secrets.GITHUB_TOKEN }}'
+#          ISSUES_TO_TRIAGE: '${{ steps.find_issues.outputs.issues_to_triage }}'
+#          REPOSITORY: '${{ github.repository }}'
+#        with:
+#          gemini_cli_version: '${{ vars.GEMINI_CLI_VERSION }}'
+#          gcp_workload_identity_provider: '${{ vars.GCP_WIF_PROVIDER }}'
+#          gcp_project_id: '${{ vars.GOOGLE_CLOUD_PROJECT }}'
+#          gcp_location: '${{ vars.GOOGLE_CLOUD_LOCATION }}'
+#          gcp_service_account: '${{ vars.SERVICE_ACCOUNT_EMAIL }}'
+#          gemini_api_key: '${{ secrets.GEMINI_API_KEY }}'
+#          use_vertex_ai: '${{ vars.GOOGLE_GENAI_USE_VERTEXAI }}'
+#          use_gemini_code_assist: '${{ vars.GOOGLE_GENAI_USE_GCA }}'
+#          settings: |-
+#            {
+#              "maxSessionTurns": 25,
+#              "coreTools": [
+#                "run_shell_command(echo)",
+#                "run_shell_command(gh label list)",
+#                "run_shell_command(gh issue edit)",
+#                "run_shell_command(gh issue list)"
+#              ],
+#              "telemetry": {
+#                "enabled": true,
+#                "target": "gcp"
+#              }
+#            }
+#          prompt: |-
+#            ## Role
+#
+#            You are an issue triage assistant. Analyze issues and apply
+#            appropriate labels. Use the available tools to gather information;
+#            do not ask for information to be provided.
+#
+#            ## Steps
+#
+#            1. Run: `gh label list`
+#            2. Check environment variable: "${ISSUES_TO_TRIAGE}" (JSON array
+#               of issues)
+#            3. Classify each issue by their type (bug, enhancement, documentation,
+#               cleanup, etc) and their priority (p0, p1, p2, p3). Set the
+#               labels according to the format `type: *` and `priority: *` patterns.
+#               If the priority is determined to be more urgent than p2 (e.g. p0 or p1), mark the issue
+#               as p2 and add a comment in the issue with the reason. The comment should ping
+#               @blakeli0, @lqiu96, and @zhumin8 to notify them.
+#            4. Apply the selected labels to this issue using:
+#               `gh issue edit "${ISSUE_NUMBER}" --add-label "label1,label2"`
+#
+#            ## Guidelines
+#
+#            - If there are already labels for `type: *` and `priority: *` set on the issue, do not modify the labels
+#            - Only use existing repository labels
+#            - Do not modify the original issue content
+#            - Triage each issue independently
+#            - Reference all shell variables as "${VAR}" (with quotes and braces)
