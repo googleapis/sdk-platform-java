@@ -110,6 +110,18 @@ public class GrpcEchoStub extends EchoStub {
               .setSampledToLocalTracing(true)
               .build();
 
+  private static final MethodDescriptor<FailEchoWithDetailsRequest, FailEchoWithDetailsResponse>
+      failEchoWithDetailsMethodDescriptor =
+          MethodDescriptor.<FailEchoWithDetailsRequest, FailEchoWithDetailsResponse>newBuilder()
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName("google.showcase.v1beta1.Echo/FailEchoWithDetails")
+              .setRequestMarshaller(
+                  ProtoUtils.marshaller(FailEchoWithDetailsRequest.getDefaultInstance()))
+              .setResponseMarshaller(
+                  ProtoUtils.marshaller(FailEchoWithDetailsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
+              .build();
+
   private static final MethodDescriptor<ExpandRequest, EchoResponse> expandMethodDescriptor =
       MethodDescriptor.<ExpandRequest, EchoResponse>newBuilder()
           .setType(MethodDescriptor.MethodType.SERVER_STREAMING)
