@@ -83,10 +83,10 @@ import com.google.logging.v2.UpdateSettingsRequest;
 import com.google.logging.v2.UpdateSinkRequest;
 import com.google.logging.v2.UpdateViewRequest;
 import com.google.longrunning.Operation;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.Empty;
 import com.google.protobuf.FieldMask;
+import com.google.protobuf.Message;
 import com.google.protobuf.Timestamp;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
@@ -161,7 +161,7 @@ public class ConfigClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getBucketsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListBucketsRequest actualRequest = ((ListBucketsRequest) actualRequests.get(0));
 
@@ -206,7 +206,7 @@ public class ConfigClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getBucketsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListBucketsRequest actualRequest = ((ListBucketsRequest) actualRequests.get(0));
 
@@ -250,7 +250,7 @@ public class ConfigClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getBucketsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListBucketsRequest actualRequest = ((ListBucketsRequest) actualRequests.get(0));
 
@@ -294,7 +294,7 @@ public class ConfigClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getBucketsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListBucketsRequest actualRequest = ((ListBucketsRequest) actualRequests.get(0));
 
@@ -338,7 +338,7 @@ public class ConfigClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getBucketsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListBucketsRequest actualRequest = ((ListBucketsRequest) actualRequests.get(0));
 
@@ -391,7 +391,7 @@ public class ConfigClientTest {
     LogBucket actualResponse = client.getBucket(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetBucketRequest actualRequest = ((GetBucketRequest) actualRequests.get(0));
 
@@ -449,7 +449,7 @@ public class ConfigClientTest {
     LogBucket actualResponse = client.createBucket(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateBucketRequest actualRequest = ((CreateBucketRequest) actualRequests.get(0));
 
@@ -511,7 +511,7 @@ public class ConfigClientTest {
     LogBucket actualResponse = client.updateBucket(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateBucketRequest actualRequest = ((UpdateBucketRequest) actualRequests.get(0));
 
@@ -559,7 +559,7 @@ public class ConfigClientTest {
 
     client.deleteBucket(request);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteBucketRequest actualRequest = ((DeleteBucketRequest) actualRequests.get(0));
 
@@ -603,7 +603,7 @@ public class ConfigClientTest {
 
     client.undeleteBucket(request);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UndeleteBucketRequest actualRequest = ((UndeleteBucketRequest) actualRequests.get(0));
 
@@ -652,7 +652,7 @@ public class ConfigClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getViewsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListViewsRequest actualRequest = ((ListViewsRequest) actualRequests.get(0));
 
@@ -703,7 +703,7 @@ public class ConfigClientTest {
     LogView actualResponse = client.getView(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetViewRequest actualRequest = ((GetViewRequest) actualRequests.get(0));
 
@@ -759,7 +759,7 @@ public class ConfigClientTest {
     LogView actualResponse = client.createView(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateViewRequest actualRequest = ((CreateViewRequest) actualRequests.get(0));
 
@@ -816,7 +816,7 @@ public class ConfigClientTest {
     LogView actualResponse = client.updateView(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateViewRequest actualRequest = ((UpdateViewRequest) actualRequests.get(0));
 
@@ -863,7 +863,7 @@ public class ConfigClientTest {
 
     client.deleteView(request);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteViewRequest actualRequest = ((DeleteViewRequest) actualRequests.get(0));
 
@@ -913,7 +913,7 @@ public class ConfigClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getSinksList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListSinksRequest actualRequest = ((ListSinksRequest) actualRequests.get(0));
 
@@ -957,7 +957,7 @@ public class ConfigClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getSinksList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListSinksRequest actualRequest = ((ListSinksRequest) actualRequests.get(0));
 
@@ -1001,7 +1001,7 @@ public class ConfigClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getSinksList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListSinksRequest actualRequest = ((ListSinksRequest) actualRequests.get(0));
 
@@ -1045,7 +1045,7 @@ public class ConfigClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getSinksList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListSinksRequest actualRequest = ((ListSinksRequest) actualRequests.get(0));
 
@@ -1089,7 +1089,7 @@ public class ConfigClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getSinksList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListSinksRequest actualRequest = ((ListSinksRequest) actualRequests.get(0));
 
@@ -1136,7 +1136,7 @@ public class ConfigClientTest {
     LogSink actualResponse = client.getSink(sinkName);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetSinkRequest actualRequest = ((GetSinkRequest) actualRequests.get(0));
 
@@ -1183,7 +1183,7 @@ public class ConfigClientTest {
     LogSink actualResponse = client.getSink(sinkName);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetSinkRequest actualRequest = ((GetSinkRequest) actualRequests.get(0));
 
@@ -1231,7 +1231,7 @@ public class ConfigClientTest {
     LogSink actualResponse = client.createSink(parent, sink);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateSinkRequest actualRequest = ((CreateSinkRequest) actualRequests.get(0));
 
@@ -1281,7 +1281,7 @@ public class ConfigClientTest {
     LogSink actualResponse = client.createSink(parent, sink);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateSinkRequest actualRequest = ((CreateSinkRequest) actualRequests.get(0));
 
@@ -1331,7 +1331,7 @@ public class ConfigClientTest {
     LogSink actualResponse = client.createSink(parent, sink);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateSinkRequest actualRequest = ((CreateSinkRequest) actualRequests.get(0));
 
@@ -1381,7 +1381,7 @@ public class ConfigClientTest {
     LogSink actualResponse = client.createSink(parent, sink);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateSinkRequest actualRequest = ((CreateSinkRequest) actualRequests.get(0));
 
@@ -1431,7 +1431,7 @@ public class ConfigClientTest {
     LogSink actualResponse = client.createSink(parent, sink);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateSinkRequest actualRequest = ((CreateSinkRequest) actualRequests.get(0));
 
@@ -1481,7 +1481,7 @@ public class ConfigClientTest {
     LogSink actualResponse = client.updateSink(sinkName, sink);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateSinkRequest actualRequest = ((UpdateSinkRequest) actualRequests.get(0));
 
@@ -1531,7 +1531,7 @@ public class ConfigClientTest {
     LogSink actualResponse = client.updateSink(sinkName, sink);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateSinkRequest actualRequest = ((UpdateSinkRequest) actualRequests.get(0));
 
@@ -1582,7 +1582,7 @@ public class ConfigClientTest {
     LogSink actualResponse = client.updateSink(sinkName, sink, updateMask);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateSinkRequest actualRequest = ((UpdateSinkRequest) actualRequests.get(0));
 
@@ -1635,7 +1635,7 @@ public class ConfigClientTest {
     LogSink actualResponse = client.updateSink(sinkName, sink, updateMask);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateSinkRequest actualRequest = ((UpdateSinkRequest) actualRequests.get(0));
 
@@ -1673,7 +1673,7 @@ public class ConfigClientTest {
 
     client.deleteSink(sinkName);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteSinkRequest actualRequest = ((DeleteSinkRequest) actualRequests.get(0));
 
@@ -1707,7 +1707,7 @@ public class ConfigClientTest {
 
     client.deleteSink(sinkName);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteSinkRequest actualRequest = ((DeleteSinkRequest) actualRequests.get(0));
 
@@ -1751,7 +1751,7 @@ public class ConfigClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getExclusionsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListExclusionsRequest actualRequest = ((ListExclusionsRequest) actualRequests.get(0));
 
@@ -1795,7 +1795,7 @@ public class ConfigClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getExclusionsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListExclusionsRequest actualRequest = ((ListExclusionsRequest) actualRequests.get(0));
 
@@ -1839,7 +1839,7 @@ public class ConfigClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getExclusionsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListExclusionsRequest actualRequest = ((ListExclusionsRequest) actualRequests.get(0));
 
@@ -1883,7 +1883,7 @@ public class ConfigClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getExclusionsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListExclusionsRequest actualRequest = ((ListExclusionsRequest) actualRequests.get(0));
 
@@ -1927,7 +1927,7 @@ public class ConfigClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getExclusionsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListExclusionsRequest actualRequest = ((ListExclusionsRequest) actualRequests.get(0));
 
@@ -1970,7 +1970,7 @@ public class ConfigClientTest {
     LogExclusion actualResponse = client.getExclusion(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetExclusionRequest actualRequest = ((GetExclusionRequest) actualRequests.get(0));
 
@@ -2013,7 +2013,7 @@ public class ConfigClientTest {
     LogExclusion actualResponse = client.getExclusion(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetExclusionRequest actualRequest = ((GetExclusionRequest) actualRequests.get(0));
 
@@ -2057,7 +2057,7 @@ public class ConfigClientTest {
     LogExclusion actualResponse = client.createExclusion(parent, exclusion);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateExclusionRequest actualRequest = ((CreateExclusionRequest) actualRequests.get(0));
 
@@ -2103,7 +2103,7 @@ public class ConfigClientTest {
     LogExclusion actualResponse = client.createExclusion(parent, exclusion);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateExclusionRequest actualRequest = ((CreateExclusionRequest) actualRequests.get(0));
 
@@ -2149,7 +2149,7 @@ public class ConfigClientTest {
     LogExclusion actualResponse = client.createExclusion(parent, exclusion);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateExclusionRequest actualRequest = ((CreateExclusionRequest) actualRequests.get(0));
 
@@ -2195,7 +2195,7 @@ public class ConfigClientTest {
     LogExclusion actualResponse = client.createExclusion(parent, exclusion);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateExclusionRequest actualRequest = ((CreateExclusionRequest) actualRequests.get(0));
 
@@ -2241,7 +2241,7 @@ public class ConfigClientTest {
     LogExclusion actualResponse = client.createExclusion(parent, exclusion);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CreateExclusionRequest actualRequest = ((CreateExclusionRequest) actualRequests.get(0));
 
@@ -2288,7 +2288,7 @@ public class ConfigClientTest {
     LogExclusion actualResponse = client.updateExclusion(name, exclusion, updateMask);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateExclusionRequest actualRequest = ((UpdateExclusionRequest) actualRequests.get(0));
 
@@ -2337,7 +2337,7 @@ public class ConfigClientTest {
     LogExclusion actualResponse = client.updateExclusion(name, exclusion, updateMask);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateExclusionRequest actualRequest = ((UpdateExclusionRequest) actualRequests.get(0));
 
@@ -2375,7 +2375,7 @@ public class ConfigClientTest {
 
     client.deleteExclusion(name);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteExclusionRequest actualRequest = ((DeleteExclusionRequest) actualRequests.get(0));
 
@@ -2409,7 +2409,7 @@ public class ConfigClientTest {
 
     client.deleteExclusion(name);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     DeleteExclusionRequest actualRequest = ((DeleteExclusionRequest) actualRequests.get(0));
 
@@ -2452,7 +2452,7 @@ public class ConfigClientTest {
     CmekSettings actualResponse = client.getCmekSettings(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetCmekSettingsRequest actualRequest = ((GetCmekSettingsRequest) actualRequests.get(0));
 
@@ -2500,7 +2500,7 @@ public class ConfigClientTest {
     CmekSettings actualResponse = client.updateCmekSettings(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateCmekSettingsRequest actualRequest = ((UpdateCmekSettingsRequest) actualRequests.get(0));
 
@@ -2549,7 +2549,7 @@ public class ConfigClientTest {
     Settings actualResponse = client.getSettings(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetSettingsRequest actualRequest = ((GetSettingsRequest) actualRequests.get(0));
 
@@ -2591,7 +2591,7 @@ public class ConfigClientTest {
     Settings actualResponse = client.getSettings(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetSettingsRequest actualRequest = ((GetSettingsRequest) actualRequests.get(0));
 
@@ -2634,7 +2634,7 @@ public class ConfigClientTest {
     Settings actualResponse = client.updateSettings(settings, updateMask);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     UpdateSettingsRequest actualRequest = ((UpdateSettingsRequest) actualRequests.get(0));
 
@@ -2683,7 +2683,7 @@ public class ConfigClientTest {
     CopyLogEntriesResponse actualResponse = client.copyLogEntriesAsync(request).get();
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
+    List<Message> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     CopyLogEntriesRequest actualRequest = ((CopyLogEntriesRequest) actualRequests.get(0));
 
