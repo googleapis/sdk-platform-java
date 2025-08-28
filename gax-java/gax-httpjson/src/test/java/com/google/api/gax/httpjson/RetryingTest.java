@@ -350,7 +350,8 @@ class RetryingTest {
         .isEqualTo(tracerFactory.getInstance().getAttemptsStarted().get());
     assertThat(tracerFactory.getInstance().getRetriesExhausted().get()).isTrue();
     assertThat(exception).hasCauseThat().isInstanceOf(ApiException.class);
-    assertThat(exception).hasCauseThat().hasMessageThat().contains("Unavailable");
+    assertThat(((ApiException) exception.getCause()).getStatusCode().getCode())
+        .isEqualTo(Code.UNAVAILABLE);
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
     verify(callInt, atLeastOnce()).futureCall(argumentCaptor.capture(), any(ApiCallContext.class));
@@ -394,7 +395,8 @@ class RetryingTest {
     assertThat(tracerFactory.getInstance().getRetriesExhausted().get()).isFalse();
     assertThat(exception.getStatusCode().getTransportCode())
         .isEqualTo(HTTP_CODE_PRECONDITION_FAILED);
-    assertThat(exception).hasMessageThat().contains("precondition failed");
+    assertThat(exception.getStatusCode().getCode()).isEqualTo(Code.FAILED_PRECONDITION);
+    assertThat(exception.getErrorDetails()).isNotNull();
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
     verify(callInt, atLeastOnce()).futureCall(argumentCaptor.capture(), any(ApiCallContext.class));

@@ -32,9 +32,12 @@ package com.google.api.gax.httpjson;
 import com.google.api.client.http.HttpResponseException;
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.ApiExceptionFactory;
+import com.google.api.gax.rpc.ErrorDetails;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.common.collect.ImmutableSet;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.util.JsonFormat;
 import java.util.Set;
 import java.util.concurrent.CancellationException;
 
@@ -47,16 +50,12 @@ class HttpJsonApiExceptionFactory {
 
   ApiException create(Throwable throwable) {
     if (throwable instanceof HttpResponseException) {
-      HttpResponseException e = (HttpResponseException) throwable;
-      StatusCode statusCode = HttpJsonStatusCode.of(e.getStatusCode());
-      boolean canRetry = retryableCodes.contains(statusCode.getCode());
-      String message = e.getStatusMessage();
-      return createApiException(throwable, statusCode, message, canRetry);
+      return createApiException((HttpResponseException) throwable);
     } else if (throwable instanceof HttpJsonStatusRuntimeException) {
       HttpJsonStatusRuntimeException e = (HttpJsonStatusRuntimeException) throwable;
       StatusCode statusCode = HttpJsonStatusCode.of(e.getStatusCode());
-      return createApiException(
-          throwable, statusCode, e.getMessage(), retryableCodes.contains(statusCode.getCode()));
+      boolean canRetry = retryableCodes.contains(statusCode.getCode());
+      return ApiExceptionFactory.createException(e, statusCode, canRetry);
     } else if (throwable instanceof CancellationException) {
       return ApiExceptionFactory.createException(
           throwable, HttpJsonStatusCode.of(Code.CANCELLED), false);
@@ -69,10 +68,30 @@ class HttpJsonApiExceptionFactory {
     }
   }
 
-  private ApiException createApiException(
-      Throwable throwable, StatusCode statusCode, String message, boolean canRetry) {
-    return message == null
-        ? ApiExceptionFactory.createException(throwable, statusCode, canRetry)
-        : ApiExceptionFactory.createException(message, throwable, statusCode, canRetry);
+  private ApiException createApiException(HttpResponseException e) {
+    StatusCode statusCode = HttpJsonStatusCode.of(e.getStatusCode());
+    boolean canRetry = retryableCodes.contains(statusCode.getCode());
+    String message = e.getStatusMessage();
+    if (message == null) {
+      return ApiExceptionFactory.createException(e, statusCode, canRetry);
+    }
+    if (e.getContent() == null) {
+      return ApiExceptionFactory.createException(message, e, statusCode, canRetry);
+    }
+
+    com.google.rpc.Status.Builder statusBuilder = com.google.rpc.Status.newBuilder();
+    try {
+      JsonFormat.parser().merge(e.getContent(), statusBuilder);
+    } catch (InvalidProtocolBufferException ex) {
+      // Ignore parsing error, return an exception with raw message from the HTTP response.
+      return ApiExceptionFactory.createException(message, e, statusCode, canRetry);
+    }
+
+    com.google.rpc.Status status = statusBuilder.build();
+    ErrorDetails.Builder errorDetailsBuilder =
+        ErrorDetails.builder().setRawErrorMessages(status.getDetailsList());
+
+    return ApiExceptionFactory.createException(
+        e, statusCode, canRetry, errorDetailsBuilder.build());
   }
 }

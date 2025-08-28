@@ -1,0 +1,39 @@
+// Copyright 2025 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package google.rpc;
+
+import "google/protobuf/any.proto";
+import "google/rpc/code.proto";
+
+option java_multiple_files = true;
+option java_outer_classname = "HttpJsonErrorProto";
+option java_package = "com.google.rpc";
+
+message Error {
+  message Status {
+    // The HTTP status code that corresponds to `google.rpc.Status.code`.
+    int32 code = 1;
+    // This corresponds to `google.rpc.Status.message`.
+    string message = 2;
+    // This is the enum version for `google.rpc.Status.code`.
+    google.rpc.Code status = 4;
+    // This corresponds to `google.rpc.Status.details`.
+    repeated google.protobuf.Any details = 5;
+  }
+
+  Status error = 1;
+}

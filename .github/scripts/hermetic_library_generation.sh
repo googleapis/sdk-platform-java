@@ -105,6 +105,8 @@ if [[ "${showcase_mode}" == "true" ]]; then
   append_showcase_to_api_defs "${api_def_dir}"
 fi
 
+cp java-common-protos/proto-google-common-protos/src/main/proto/google/rpc/http_error_status.proto "${api_def_dir}/google/rpc"
+
 # get changed library list.
 changed_libraries_file="$(mktemp)"
 python hermetic_build/common/cli/get_changed_libraries.py create \
