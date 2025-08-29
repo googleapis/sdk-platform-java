@@ -33,7 +33,7 @@ com.fasterxml.jackson:jackson-bom=2.19.2
 commons-codec:commons-codec=1.19.0
 org.apache.httpcomponents:httpclient=4.5.14
 org.apache.httpcomponents:httpcore=4.4.16
-org.apache.httpcomponents.client5:httpclient5-5=5.5
+org.apache.httpcomponents.client5:httpclient5=5.5
 org.apache.httpcomponents.core5:httpcore5=5.3.4
 io.perfmark:perfmark-api=0.27.0
 # Note: This is the google opentelemetry exporter and not the general opentelemetry project
