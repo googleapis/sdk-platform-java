@@ -19,7 +19,7 @@
 #
 # The default upper-bound dependencies file is `dependencies.txt` located in the root
 # of sdk-platform-java. The upper-bound dependencies file will be in the format of:
-# ${dependency.name}=${dependency.version}
+# {groupId}:{artifactId}={version} or {artifactId}={version}
 
 set -ex
 
@@ -36,7 +36,10 @@ function add_dependency_to_maven_command() {
     echo "Malformed dependency string: ${dep_pair}. Expected format: dependency=version"
     exit 1
   fi
-  local dependency=$(echo "${dep_pair}" | cut -d'=' -f1 | tr -d '[:space:]')
+  local full_dependency=$(echo "${dep_pair}" | cut -d'=' -f1 | tr -d '[:space:]')
+  # The dependency can be in the format of {groupId}:{artifactId} or {artifactId}
+  # We only want the artifactId
+  local dependency=$(echo "${full_dependency}" | awk -F':' '{print $NF}')
   local version=$(echo "${dep_pair}" | cut -d'=' -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
   MAVEN_COMMAND+=" -D${dependency}.version=${version}"
 }
