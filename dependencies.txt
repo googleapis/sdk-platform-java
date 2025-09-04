@@ -6,14 +6,14 @@
 # Pom-Parent Dependencies
 # These dependencies are declared: https://github.com/googleapis/sdk-platform-java/blob/main/gapic-generator-java-pom-parent/pom.xml
 javax.annotation-api=1.3.2
-grpc=1.74.0
-google.auth=1.37.1
-google.http-client=1.47.1
+grpc=1.75.0
+google.auth=1.38.0
+google.http-client=2.0.0
 gson=2.13.1
 guava=33.4.8-jre
-protobuf=4.31.1
+protobuf=4.32.0
 # Note: This opentelemetry version refers to the opentelemetry-bom
-opentelemetry=1.52.0
+opentelemetry=1.53.0
 errorprone=2.41.0
 j2objc-annotations=3.1
 threetenbp=1.7.2
@@ -30,19 +30,19 @@ google.api-client=2.8.1
 threeten-extra=1.8.0
 opencensus=0.31.0
 findbugs=3.0.2
-jackson=2.19.2
+jackson=2.20.0
 codec=1.19.0
 httpcomponents.httpcore=4.4.16
 httpcomponents.httpclient=4.5.14
 apache-httpclient-5=5.5
-apache-httpcore-5=5.3.4
+apache-httpcore-5=5.3.5
 perfmark-api=0.27.0
 # Note: This is the google opentelemetry exporter and not the general opentelemetry project
 google.cloud.opentelemetry=0.36.0
 flogger=0.9
 arrow=18.3.0
-dev.cel=0.10.1
+dev.cel=0.11.0
 com.google.crypto.tink=1.18.0
 # The follow opentelemetry dependencies have a different version from the opentelemetry-bom
-opentelemetry-semconv=1.34.0
+opentelemetry-semconv=1.37.0
 io.opentelemetry.contrib.opentelemetry-gcp-resources=1.48.0-alpha
