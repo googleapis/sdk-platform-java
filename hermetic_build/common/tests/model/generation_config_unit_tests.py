@@ -11,9 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+from io import StringIO
 import os
-import unittest
 from pathlib import Path
+import unittest
+from unittest.mock import patch, mock_open
+import yaml
+
 from common.model.generation_config import GenerationConfig
 from common.model.library_config import LibraryConfig
 
@@ -103,6 +108,21 @@ class GenerationConfigTest(unittest.TestCase):
         self.assertEqual("google/cloud/asset/v1p2beta1", gapics[2].proto_path)
         self.assertEqual("google/cloud/asset/v1p5beta1", gapics[3].proto_path)
         self.assertEqual("google/cloud/asset/v1p7beta1", gapics[4].proto_path)
+
+        owlbot_yaml_addition = library.owlbot_yaml.additions
+        owlbot_yaml_removal = library.owlbot_yaml.removals
+        self.assertEqual(
+            "/java-asset/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java",
+            owlbot_yaml_removal.deep_preserve_regex[0],
+        )
+        self.assertEqual(
+            "/owl-bot-staging/java-accesscontextmanager/type/proto-google-identity-accesscontextmanager-type/src",
+            owlbot_yaml_addition.deep_copy_regex[0].dest,
+        )
+        self.assertEqual(
+            "/google/identity/accesscontextmanager/type/.*-java/proto-google-.*/src",
+            owlbot_yaml_addition.deep_copy_regex[0].source,
+        )
 
     def test_get_proto_path_to_library_name_success(self):
         paths = GenerationConfig.from_yaml(
@@ -256,3 +276,65 @@ class GenerationConfigTest(unittest.TestCase):
             GenerationConfig.from_yaml,
             f"{test_config_dir}/config_without_gapics_value.yaml",
         )
+
+    def test_to_dict_return_correctly(self):
+        config = GenerationConfig(
+            gapic_generator_version="x.y.z",
+            libraries_bom_version="a.b.c",
+            googleapis_commitish="foo",
+            libraries=[library_1],
+        )
+        expect_config_as_dict = {
+            "gapic_generator_version": "x.y.z",
+            "libraries_bom_version": "a.b.c",
+            "googleapis_commitish": "foo",
+            "libraries": [library_1.to_dict()],
+        }
+        self.assertEqual(expect_config_as_dict, config.to_dict())
+
+    @patch("builtins.open", new_callable=mock_open)
+    def test_write_object_to_yaml_success(self, mock_open_file):
+        config = GenerationConfig(
+            gapic_generator_version="x.y.z",
+            libraries_bom_version="a.b.c",
+            googleapis_commitish="foo",
+            libraries=[],
+        )
+
+        file_path = "test_output.yaml"
+        config.write_object_to_yaml(file_path)
+
+        # Assert that open was called with the correct arguments
+        mock_open_file.assert_called_once_with(file_path, "w")
+
+        # Get the handle that was used to write to the file
+        handle = mock_open_file()
+
+        # Get the written YAML data
+        written_data = "".join(call.args[0] for call in handle.write.call_args_list)
+
+        # Load the written data using yaml to verify
+        loaded_data = yaml.safe_load(written_data)
+
+        expected_data = {
+            "gapic_generator_version": "x.y.z",
+            "libraries_bom_version": "a.b.c",
+            "googleapis_commitish": "foo",
+            "libraries": [],
+        }
+
+        self.assertEqual(loaded_data, expected_data)
+
+    @patch("builtins.open", side_effect=Exception("File system error"))
+    @patch("sys.stdout", new_callable=StringIO)
+    def test_write_object_to_yaml_error(self, mock_stdout, mock_open_file):
+        config = GenerationConfig(
+            gapic_generator_version="",
+            googleapis_commitish="",
+            libraries=[library_1],
+        )
+        file_path = "test_output.yaml"
+        config.write_object_to_yaml(file_path)
+
+        # Assert that the error message was printed to stdout
+        self.assertIn("Error writing to YAML file:", mock_stdout.getvalue())
