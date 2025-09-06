@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.62.1](https://github.com/googleapis/sdk-platform-java/compare/v2.62.0...v2.62.1) (2025-09-05)
+
+
+### Dependencies
+
+* Update auth to 1.39.0 ([#3898](https://github.com/googleapis/sdk-platform-java/issues/3898)) ([9a8443d](https://github.com/googleapis/sdk-platform-java/commit/9a8443d71cdbdb7a693b6da08db72edb85490807))
+
 ## [2.62.0](https://github.com/googleapis/sdk-platform-java/compare/v2.61.0...v2.62.0) (2025-08-19)
 
 
