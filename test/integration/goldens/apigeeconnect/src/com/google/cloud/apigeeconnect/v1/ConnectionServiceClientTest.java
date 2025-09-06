@@ -26,7 +26,7 @@ import com.google.api.gax.grpc.testing.MockServiceHelper;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.common.collect.Lists;
-import com.google.protobuf.AbstractMessage;
+import com.google.protobuf.Message;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
 import java.util.Arrays;
@@ -97,7 +97,7 @@ public class ConnectionServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getConnectionsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockConnectionService.getRequests();
+    List<Message> actualRequests = mockConnectionService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListConnectionsRequest actualRequest = ((ListConnectionsRequest) actualRequests.get(0));
 
@@ -141,7 +141,7 @@ public class ConnectionServiceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getConnectionsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockConnectionService.getRequests();
+    List<Message> actualRequests = mockConnectionService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListConnectionsRequest actualRequest = ((ListConnectionsRequest) actualRequests.get(0));
 
