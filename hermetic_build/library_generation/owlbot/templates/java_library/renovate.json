@@ -95,5 +95,7 @@
     }
   ],
   "semanticCommits": true,
-  "dependencyDashboard": true
+  "dependencyDashboard": true,
+  "prConcurrentLimit": 0,
+  "prHourlyLimit": 0
 }
