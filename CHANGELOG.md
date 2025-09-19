@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.62.2](https://github.com/googleapis/sdk-platform-java/compare/v2.62.1...v2.62.2) (2025-09-18)
+
+
+### Dependencies
+
+* update google api dependencies ([#3885](https://github.com/googleapis/sdk-platform-java/issues/3885)) ([3694fed](https://github.com/googleapis/sdk-platform-java/commit/3694fed91e65966d074471942bd2e36075ba70d1))
+* update google auth library dependencies to v1.39.1 ([#3907](https://github.com/googleapis/sdk-platform-java/issues/3907)) ([e86a4f6](https://github.com/googleapis/sdk-platform-java/commit/e86a4f6535bc43b5382f22e790ccf2c76e8e9b23))
+
 ## [2.62.1](https://github.com/googleapis/sdk-platform-java/compare/v2.62.0...v2.62.1) (2025-09-05)
 
 
