@@ -62,6 +62,7 @@ public class GrpcComplianceStub extends ComplianceStub {
               .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataBody")
               .setRequestMarshaller(ProtoUtils.marshaller(RepeatRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(RepeatResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<RepeatRequest, RepeatResponse>
@@ -71,6 +72,7 @@ public class GrpcComplianceStub extends ComplianceStub {
               .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataBodyInfo")
               .setRequestMarshaller(ProtoUtils.marshaller(RepeatRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(RepeatResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<RepeatRequest, RepeatResponse>
@@ -80,6 +82,7 @@ public class GrpcComplianceStub extends ComplianceStub {
               .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataQuery")
               .setRequestMarshaller(ProtoUtils.marshaller(RepeatRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(RepeatResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<RepeatRequest, RepeatResponse>
@@ -89,6 +92,7 @@ public class GrpcComplianceStub extends ComplianceStub {
               .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataSimplePath")
               .setRequestMarshaller(ProtoUtils.marshaller(RepeatRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(RepeatResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<RepeatRequest, RepeatResponse>
@@ -98,6 +102,7 @@ public class GrpcComplianceStub extends ComplianceStub {
               .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataPathResource")
               .setRequestMarshaller(ProtoUtils.marshaller(RepeatRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(RepeatResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<RepeatRequest, RepeatResponse>
@@ -108,6 +113,7 @@ public class GrpcComplianceStub extends ComplianceStub {
                   "google.showcase.v1beta1.Compliance/RepeatDataPathTrailingResource")
               .setRequestMarshaller(ProtoUtils.marshaller(RepeatRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(RepeatResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<RepeatRequest, RepeatResponse>
@@ -117,6 +123,7 @@ public class GrpcComplianceStub extends ComplianceStub {
               .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataBodyPut")
               .setRequestMarshaller(ProtoUtils.marshaller(RepeatRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(RepeatResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<RepeatRequest, RepeatResponse>
@@ -126,6 +133,7 @@ public class GrpcComplianceStub extends ComplianceStub {
               .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataBodyPatch")
               .setRequestMarshaller(ProtoUtils.marshaller(RepeatRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(RepeatResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<EnumRequest, EnumResponse> getEnumMethodDescriptor =
@@ -134,6 +142,7 @@ public class GrpcComplianceStub extends ComplianceStub {
           .setFullMethodName("google.showcase.v1beta1.Compliance/GetEnum")
           .setRequestMarshaller(ProtoUtils.marshaller(EnumRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(EnumResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<EnumResponse, EnumResponse> verifyEnumMethodDescriptor =
@@ -142,6 +151,7 @@ public class GrpcComplianceStub extends ComplianceStub {
           .setFullMethodName("google.showcase.v1beta1.Compliance/VerifyEnum")
           .setRequestMarshaller(ProtoUtils.marshaller(EnumResponse.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(EnumResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<ListLocationsRequest, ListLocationsResponse>
@@ -153,6 +163,7 @@ public class GrpcComplianceStub extends ComplianceStub {
                   ProtoUtils.marshaller(ListLocationsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListLocationsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetLocationRequest, Location> getLocationMethodDescriptor =
@@ -161,6 +172,7 @@ public class GrpcComplianceStub extends ComplianceStub {
           .setFullMethodName("google.cloud.location.Locations/GetLocation")
           .setRequestMarshaller(ProtoUtils.marshaller(GetLocationRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Location.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<SetIamPolicyRequest, Policy> setIamPolicyMethodDescriptor =
@@ -169,6 +181,7 @@ public class GrpcComplianceStub extends ComplianceStub {
           .setFullMethodName("google.iam.v1.IAMPolicy/SetIamPolicy")
           .setRequestMarshaller(ProtoUtils.marshaller(SetIamPolicyRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Policy.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<GetIamPolicyRequest, Policy> getIamPolicyMethodDescriptor =
@@ -177,6 +190,7 @@ public class GrpcComplianceStub extends ComplianceStub {
           .setFullMethodName("google.iam.v1.IAMPolicy/GetIamPolicy")
           .setRequestMarshaller(ProtoUtils.marshaller(GetIamPolicyRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Policy.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<TestIamPermissionsRequest, TestIamPermissionsResponse>
@@ -188,6 +202,7 @@ public class GrpcComplianceStub extends ComplianceStub {
                   ProtoUtils.marshaller(TestIamPermissionsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(TestIamPermissionsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataBodyCallable;

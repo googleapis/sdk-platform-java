@@ -58,6 +58,7 @@ public class GrpcMetricsServiceV2Stub extends MetricsServiceV2Stub {
                   ProtoUtils.marshaller(ListLogMetricsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListLogMetricsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetLogMetricRequest, LogMetric>
@@ -67,6 +68,7 @@ public class GrpcMetricsServiceV2Stub extends MetricsServiceV2Stub {
               .setFullMethodName("google.logging.v2.MetricsServiceV2/GetLogMetric")
               .setRequestMarshaller(ProtoUtils.marshaller(GetLogMetricRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(LogMetric.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<CreateLogMetricRequest, LogMetric>
@@ -77,6 +79,7 @@ public class GrpcMetricsServiceV2Stub extends MetricsServiceV2Stub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(CreateLogMetricRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(LogMetric.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<UpdateLogMetricRequest, LogMetric>
@@ -87,6 +90,7 @@ public class GrpcMetricsServiceV2Stub extends MetricsServiceV2Stub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(UpdateLogMetricRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(LogMetric.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<DeleteLogMetricRequest, Empty>
@@ -97,6 +101,7 @@ public class GrpcMetricsServiceV2Stub extends MetricsServiceV2Stub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(DeleteLogMetricRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private final UnaryCallable<ListLogMetricsRequest, ListLogMetricsResponse> listLogMetricsCallable;

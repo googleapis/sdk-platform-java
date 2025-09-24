@@ -97,6 +97,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
               .setRequestMarshaller(ProtoUtils.marshaller(ListKeyRingsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListKeyRingsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ListCryptoKeysRequest, ListCryptoKeysResponse>
@@ -108,6 +109,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
                   ProtoUtils.marshaller(ListCryptoKeysRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListCryptoKeysResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ListCryptoKeyVersionsRequest, ListCryptoKeyVersionsResponse>
@@ -119,6 +121,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
                   ProtoUtils.marshaller(ListCryptoKeyVersionsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListCryptoKeyVersionsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ListImportJobsRequest, ListImportJobsResponse>
@@ -130,6 +133,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
                   ProtoUtils.marshaller(ListImportJobsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListImportJobsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetKeyRingRequest, KeyRing> getKeyRingMethodDescriptor =
@@ -138,6 +142,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
           .setFullMethodName("google.cloud.kms.v1.KeyManagementService/GetKeyRing")
           .setRequestMarshaller(ProtoUtils.marshaller(GetKeyRingRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(KeyRing.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<GetCryptoKeyRequest, CryptoKey>
@@ -147,6 +152,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
               .setFullMethodName("google.cloud.kms.v1.KeyManagementService/GetCryptoKey")
               .setRequestMarshaller(ProtoUtils.marshaller(GetCryptoKeyRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(CryptoKey.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetCryptoKeyVersionRequest, CryptoKeyVersion>
@@ -157,6 +163,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(GetCryptoKeyVersionRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(CryptoKeyVersion.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetPublicKeyRequest, PublicKey>
@@ -166,6 +173,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
               .setFullMethodName("google.cloud.kms.v1.KeyManagementService/GetPublicKey")
               .setRequestMarshaller(ProtoUtils.marshaller(GetPublicKeyRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(PublicKey.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetImportJobRequest, ImportJob>
@@ -175,6 +183,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
               .setFullMethodName("google.cloud.kms.v1.KeyManagementService/GetImportJob")
               .setRequestMarshaller(ProtoUtils.marshaller(GetImportJobRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(ImportJob.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<CreateKeyRingRequest, KeyRing>
@@ -185,6 +194,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(CreateKeyRingRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(KeyRing.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<CreateCryptoKeyRequest, CryptoKey>
@@ -195,6 +205,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(CreateCryptoKeyRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(CryptoKey.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<CreateCryptoKeyVersionRequest, CryptoKeyVersion>
@@ -205,6 +216,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(CreateCryptoKeyVersionRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(CryptoKeyVersion.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ImportCryptoKeyVersionRequest, CryptoKeyVersion>
@@ -215,6 +227,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(ImportCryptoKeyVersionRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(CryptoKeyVersion.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<CreateImportJobRequest, ImportJob>
@@ -225,6 +238,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(CreateImportJobRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(ImportJob.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<UpdateCryptoKeyRequest, CryptoKey>
@@ -235,6 +249,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(UpdateCryptoKeyRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(CryptoKey.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<UpdateCryptoKeyVersionRequest, CryptoKeyVersion>
@@ -245,6 +260,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(UpdateCryptoKeyVersionRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(CryptoKeyVersion.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<EncryptRequest, EncryptResponse> encryptMethodDescriptor =
@@ -253,6 +269,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
           .setFullMethodName("google.cloud.kms.v1.KeyManagementService/Encrypt")
           .setRequestMarshaller(ProtoUtils.marshaller(EncryptRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(EncryptResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<DecryptRequest, DecryptResponse> decryptMethodDescriptor =
@@ -261,6 +278,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
           .setFullMethodName("google.cloud.kms.v1.KeyManagementService/Decrypt")
           .setRequestMarshaller(ProtoUtils.marshaller(DecryptRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(DecryptResponse.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<AsymmetricSignRequest, AsymmetricSignResponse>
@@ -272,6 +290,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
                   ProtoUtils.marshaller(AsymmetricSignRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(AsymmetricSignResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<AsymmetricDecryptRequest, AsymmetricDecryptResponse>
@@ -283,6 +302,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
                   ProtoUtils.marshaller(AsymmetricDecryptRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(AsymmetricDecryptResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<UpdateCryptoKeyPrimaryVersionRequest, CryptoKey>
@@ -294,6 +314,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(UpdateCryptoKeyPrimaryVersionRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(CryptoKey.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<DestroyCryptoKeyVersionRequest, CryptoKeyVersion>
@@ -304,6 +325,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(DestroyCryptoKeyVersionRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(CryptoKeyVersion.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<RestoreCryptoKeyVersionRequest, CryptoKeyVersion>
@@ -314,6 +336,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(RestoreCryptoKeyVersionRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(CryptoKeyVersion.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetIamPolicyRequest, Policy> getIamPolicyMethodDescriptor =
@@ -322,6 +345,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
           .setFullMethodName("google.cloud.kms.v1.KeyManagementService/GetIamPolicy")
           .setRequestMarshaller(ProtoUtils.marshaller(GetIamPolicyRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Policy.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<ListLocationsRequest, ListLocationsResponse>
@@ -333,6 +357,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
                   ProtoUtils.marshaller(ListLocationsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListLocationsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetLocationRequest, Location> getLocationMethodDescriptor =
@@ -341,6 +366,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
           .setFullMethodName("google.cloud.location.Locations/GetLocation")
           .setRequestMarshaller(ProtoUtils.marshaller(GetLocationRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Location.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<TestIamPermissionsRequest, TestIamPermissionsResponse>
@@ -352,6 +378,7 @@ public class GrpcKeyManagementServiceStub extends KeyManagementServiceStub {
                   ProtoUtils.marshaller(TestIamPermissionsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(TestIamPermissionsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private final UnaryCallable<ListKeyRingsRequest, ListKeyRingsResponse> listKeyRingsCallable;

@@ -69,6 +69,7 @@ public class GrpcSchemaServiceStub extends SchemaServiceStub {
           .setFullMethodName("google.pubsub.v1.SchemaService/CreateSchema")
           .setRequestMarshaller(ProtoUtils.marshaller(CreateSchemaRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Schema.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<GetSchemaRequest, Schema> getSchemaMethodDescriptor =
@@ -77,6 +78,7 @@ public class GrpcSchemaServiceStub extends SchemaServiceStub {
           .setFullMethodName("google.pubsub.v1.SchemaService/GetSchema")
           .setRequestMarshaller(ProtoUtils.marshaller(GetSchemaRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Schema.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<ListSchemasRequest, ListSchemasResponse>
@@ -87,6 +89,7 @@ public class GrpcSchemaServiceStub extends SchemaServiceStub {
               .setRequestMarshaller(ProtoUtils.marshaller(ListSchemasRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListSchemasResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ListSchemaRevisionsRequest, ListSchemaRevisionsResponse>
@@ -98,6 +101,7 @@ public class GrpcSchemaServiceStub extends SchemaServiceStub {
                   ProtoUtils.marshaller(ListSchemaRevisionsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListSchemaRevisionsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<CommitSchemaRequest, Schema> commitSchemaMethodDescriptor =
@@ -106,6 +110,7 @@ public class GrpcSchemaServiceStub extends SchemaServiceStub {
           .setFullMethodName("google.pubsub.v1.SchemaService/CommitSchema")
           .setRequestMarshaller(ProtoUtils.marshaller(CommitSchemaRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Schema.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<RollbackSchemaRequest, Schema>
@@ -116,6 +121,7 @@ public class GrpcSchemaServiceStub extends SchemaServiceStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(RollbackSchemaRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Schema.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<DeleteSchemaRevisionRequest, Schema>
@@ -126,6 +132,7 @@ public class GrpcSchemaServiceStub extends SchemaServiceStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(DeleteSchemaRevisionRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Schema.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<DeleteSchemaRequest, Empty> deleteSchemaMethodDescriptor =
@@ -134,6 +141,7 @@ public class GrpcSchemaServiceStub extends SchemaServiceStub {
           .setFullMethodName("google.pubsub.v1.SchemaService/DeleteSchema")
           .setRequestMarshaller(ProtoUtils.marshaller(DeleteSchemaRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<ValidateSchemaRequest, ValidateSchemaResponse>
@@ -145,6 +153,7 @@ public class GrpcSchemaServiceStub extends SchemaServiceStub {
                   ProtoUtils.marshaller(ValidateSchemaRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ValidateSchemaResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ValidateMessageRequest, ValidateMessageResponse>
@@ -156,6 +165,7 @@ public class GrpcSchemaServiceStub extends SchemaServiceStub {
                   ProtoUtils.marshaller(ValidateMessageRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ValidateMessageResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<SetIamPolicyRequest, Policy> setIamPolicyMethodDescriptor =
@@ -164,6 +174,7 @@ public class GrpcSchemaServiceStub extends SchemaServiceStub {
           .setFullMethodName("google.iam.v1.IAMPolicy/SetIamPolicy")
           .setRequestMarshaller(ProtoUtils.marshaller(SetIamPolicyRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Policy.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<GetIamPolicyRequest, Policy> getIamPolicyMethodDescriptor =
@@ -172,6 +183,7 @@ public class GrpcSchemaServiceStub extends SchemaServiceStub {
           .setFullMethodName("google.iam.v1.IAMPolicy/GetIamPolicy")
           .setRequestMarshaller(ProtoUtils.marshaller(GetIamPolicyRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Policy.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<TestIamPermissionsRequest, TestIamPermissionsResponse>
@@ -183,6 +195,7 @@ public class GrpcSchemaServiceStub extends SchemaServiceStub {
                   ProtoUtils.marshaller(TestIamPermissionsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(TestIamPermissionsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private final UnaryCallable<CreateSchemaRequest, Schema> createSchemaCallable;

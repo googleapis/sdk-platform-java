@@ -35,6 +35,7 @@ public class GrpcJobServiceStub extends JobServiceStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(JobProto.DeleteJobRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<JobProto.ListJobsRequest, JobProto.JobList>
@@ -45,6 +46,7 @@ public class GrpcJobServiceStub extends JobServiceStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(JobProto.ListJobsRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(JobProto.JobList.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private final UnaryCallable<JobProto.DeleteJobRequest, Empty> deleteJobCallable;

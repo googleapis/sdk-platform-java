@@ -23,6 +23,7 @@ import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.StatusCode;
+import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.common.collect.ImmutableList;
@@ -289,14 +290,20 @@ public class TestClientInitializer {
 
   public static EchoClient createGrpcEchoClientOpentelemetry(ApiTracerFactory metricsTracerFactory)
       throws Exception {
+    return createGrpcEchoClientOpentelemetry(
+        metricsTracerFactory,
+        EchoSettings.defaultGrpcTransportProviderBuilder()
+            .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+            .build());
+  }
 
+  public static EchoClient createGrpcEchoClientOpentelemetry(
+      ApiTracerFactory metricsTracerFactory, TransportChannelProvider transportChannelProvider)
+      throws Exception {
     EchoSettings grpcEchoSettings =
         EchoSettings.newBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTransportChannelProvider(
-                EchoSettings.defaultGrpcTransportProviderBuilder()
-                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                    .build())
+            .setTransportChannelProvider(transportChannelProvider)
             .setEndpoint(DEFAULT_GRPC_ENDPOINT)
             .build();
 

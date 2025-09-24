@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2025 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -32,12 +32,18 @@ package com.google.api.gax.rpc.mtls;
 
 import com.google.api.client.json.GenericJson;
 import com.google.api.client.util.Key;
-import com.google.api.core.BetaApi;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 
-/** Data class representing context_aware_metadata.json file. */
-@BetaApi
+/**
+ * Data class representing context_aware_metadata.json file.
+ *
+ * <p>This class is deprecated. It has been replaced by
+ * com.google.auth.mtls.ContextAwareMetadataJson from the Java auth library.
+ *
+ * <p>Note: This class is for Google cloud internal use only.
+ */
+@Deprecated
 public class ContextAwareMetadataJson extends GenericJson {
   /** Cert provider command */
   @Key("cert_provider_command")

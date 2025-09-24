@@ -93,6 +93,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
               .setRequestMarshaller(ProtoUtils.marshaller(ListBucketsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListBucketsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetBucketRequest, LogBucket> getBucketMethodDescriptor =
@@ -101,6 +102,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
           .setFullMethodName("google.logging.v2.ConfigServiceV2/GetBucket")
           .setRequestMarshaller(ProtoUtils.marshaller(GetBucketRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(LogBucket.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<CreateBucketRequest, LogBucket>
@@ -110,6 +112,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
               .setFullMethodName("google.logging.v2.ConfigServiceV2/CreateBucket")
               .setRequestMarshaller(ProtoUtils.marshaller(CreateBucketRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(LogBucket.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<UpdateBucketRequest, LogBucket>
@@ -119,6 +122,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
               .setFullMethodName("google.logging.v2.ConfigServiceV2/UpdateBucket")
               .setRequestMarshaller(ProtoUtils.marshaller(UpdateBucketRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(LogBucket.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<DeleteBucketRequest, Empty> deleteBucketMethodDescriptor =
@@ -127,6 +131,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
           .setFullMethodName("google.logging.v2.ConfigServiceV2/DeleteBucket")
           .setRequestMarshaller(ProtoUtils.marshaller(DeleteBucketRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<UndeleteBucketRequest, Empty>
@@ -137,6 +142,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(UndeleteBucketRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ListViewsRequest, ListViewsResponse>
@@ -146,6 +152,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
               .setFullMethodName("google.logging.v2.ConfigServiceV2/ListViews")
               .setRequestMarshaller(ProtoUtils.marshaller(ListViewsRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(ListViewsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetViewRequest, LogView> getViewMethodDescriptor =
@@ -154,6 +161,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
           .setFullMethodName("google.logging.v2.ConfigServiceV2/GetView")
           .setRequestMarshaller(ProtoUtils.marshaller(GetViewRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(LogView.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<CreateViewRequest, LogView> createViewMethodDescriptor =
@@ -162,6 +170,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
           .setFullMethodName("google.logging.v2.ConfigServiceV2/CreateView")
           .setRequestMarshaller(ProtoUtils.marshaller(CreateViewRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(LogView.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<UpdateViewRequest, LogView> updateViewMethodDescriptor =
@@ -170,6 +179,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
           .setFullMethodName("google.logging.v2.ConfigServiceV2/UpdateView")
           .setRequestMarshaller(ProtoUtils.marshaller(UpdateViewRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(LogView.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<DeleteViewRequest, Empty> deleteViewMethodDescriptor =
@@ -178,6 +188,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
           .setFullMethodName("google.logging.v2.ConfigServiceV2/DeleteView")
           .setRequestMarshaller(ProtoUtils.marshaller(DeleteViewRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<ListSinksRequest, ListSinksResponse>
@@ -187,6 +198,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
               .setFullMethodName("google.logging.v2.ConfigServiceV2/ListSinks")
               .setRequestMarshaller(ProtoUtils.marshaller(ListSinksRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(ListSinksResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetSinkRequest, LogSink> getSinkMethodDescriptor =
@@ -195,6 +207,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
           .setFullMethodName("google.logging.v2.ConfigServiceV2/GetSink")
           .setRequestMarshaller(ProtoUtils.marshaller(GetSinkRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(LogSink.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<CreateSinkRequest, LogSink> createSinkMethodDescriptor =
@@ -203,6 +216,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
           .setFullMethodName("google.logging.v2.ConfigServiceV2/CreateSink")
           .setRequestMarshaller(ProtoUtils.marshaller(CreateSinkRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(LogSink.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<UpdateSinkRequest, LogSink> updateSinkMethodDescriptor =
@@ -211,6 +225,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
           .setFullMethodName("google.logging.v2.ConfigServiceV2/UpdateSink")
           .setRequestMarshaller(ProtoUtils.marshaller(UpdateSinkRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(LogSink.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<DeleteSinkRequest, Empty> deleteSinkMethodDescriptor =
@@ -219,6 +234,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
           .setFullMethodName("google.logging.v2.ConfigServiceV2/DeleteSink")
           .setRequestMarshaller(ProtoUtils.marshaller(DeleteSinkRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<ListExclusionsRequest, ListExclusionsResponse>
@@ -230,6 +246,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
                   ProtoUtils.marshaller(ListExclusionsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListExclusionsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetExclusionRequest, LogExclusion>
@@ -239,6 +256,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
               .setFullMethodName("google.logging.v2.ConfigServiceV2/GetExclusion")
               .setRequestMarshaller(ProtoUtils.marshaller(GetExclusionRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(LogExclusion.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<CreateExclusionRequest, LogExclusion>
@@ -249,6 +267,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(CreateExclusionRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(LogExclusion.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<UpdateExclusionRequest, LogExclusion>
@@ -259,6 +278,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(UpdateExclusionRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(LogExclusion.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<DeleteExclusionRequest, Empty>
@@ -269,6 +289,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(DeleteExclusionRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetCmekSettingsRequest, CmekSettings>
@@ -279,6 +300,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(GetCmekSettingsRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(CmekSettings.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<UpdateCmekSettingsRequest, CmekSettings>
@@ -289,6 +311,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(UpdateCmekSettingsRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(CmekSettings.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetSettingsRequest, Settings> getSettingsMethodDescriptor =
@@ -297,6 +320,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
           .setFullMethodName("google.logging.v2.ConfigServiceV2/GetSettings")
           .setRequestMarshaller(ProtoUtils.marshaller(GetSettingsRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Settings.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<UpdateSettingsRequest, Settings>
@@ -307,6 +331,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(UpdateSettingsRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Settings.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<CopyLogEntriesRequest, Operation>
@@ -317,6 +342,7 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(CopyLogEntriesRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Operation.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private final UnaryCallable<ListBucketsRequest, ListBucketsResponse> listBucketsCallable;
