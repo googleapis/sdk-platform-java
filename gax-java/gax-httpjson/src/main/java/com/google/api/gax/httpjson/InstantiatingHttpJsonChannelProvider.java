@@ -356,6 +356,9 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
             LOG.log(
                 Level.WARNING,
                 "DefaultMtlsProviderFactory encountered unexpected IOException: " + e.getMessage());
+            LOG.log(
+                Level.WARNING,
+                "mTLS configuration was detected on the device, but mTLS failed to initialize. Falling back to non-mTLS channel.");
           }
         }
       }
