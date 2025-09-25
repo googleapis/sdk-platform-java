@@ -19,6 +19,21 @@ def render(template_name: str, output_name: str, **kwargs):
     template = jinja_env.get_template(template_name)
     t = template.stream(kwargs)
     directory = os.path.dirname(output_name)
-    if not os.path.isdir(directory):
-        os.makedirs(directory)
+    os.makedirs(directory, exist_ok=True)
     t.dump(str(output_name))
+
+
+def render_to_str(template_name: str, **kwargs) -> str:
+    """
+    Renders a Jinja2 template and returns the output as a string.
+
+    Args:
+        template_name: The name of the Jinja2 template file.
+        **kwargs: Keyword arguments containing the data to pass to the template.
+
+    Returns:
+        The rendered template content as a string.
+    """
+    template = jinja_env.get_template(template_name)
+    rendered_content = template.render(**kwargs)
+    return rendered_content

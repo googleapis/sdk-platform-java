@@ -54,6 +54,13 @@ class GapicConfigTest(unittest.TestCase):
             GapicConfig(proto_path="example/dir1/dir2/v30").is_stable(),
         )
 
+    def test_to_dict_returns_proto_path_as_dict(self):
+        expected_config_as_dict = {"proto_path": "example/dir1/dir2"}
+        self.assertEqual(
+            expected_config_as_dict,
+            GapicConfig(proto_path="example/dir1/dir2").to_dict(),
+        )
+
     def test_compare_configs_without_a_version(self):
         config_len_3 = GapicConfig(proto_path="example/dir1/dir2")
         config_len_4 = GapicConfig(proto_path="example/dir1/dir2/dir3")
