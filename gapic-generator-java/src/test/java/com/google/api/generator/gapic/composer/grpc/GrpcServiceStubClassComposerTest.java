@@ -101,4 +101,15 @@ class GrpcServiceStubClassComposerTest {
     Assert.assertGoldenClass(this.getClass(), clazz, "GrpcCallableNameTypeStub.golden");
     Assert.assertEmptySamples(clazz.samples());
   }
+
+  @Test
+  void generateGrpcServiceStubClass_bigQuery() {
+    GapicContext context = GrpcTestProtoLoader.instance().parseBigqueryService();
+
+    Service bigqueryJobService = context.services().get(0);
+    GapicClass clazz =
+        GrpcServiceStubClassComposer.instance().generate(context, bigqueryJobService);
+    Assert.assertGoldenClass(this.getClass(), clazz, "GrpcBigQueryJobServiceStub.golden");
+    Assert.assertEmptySamples(clazz.samples());
+  }
 }

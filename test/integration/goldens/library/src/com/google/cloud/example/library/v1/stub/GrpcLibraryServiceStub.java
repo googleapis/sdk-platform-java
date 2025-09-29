@@ -64,6 +64,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
           .setFullMethodName("google.example.library.v1.LibraryService/CreateShelf")
           .setRequestMarshaller(ProtoUtils.marshaller(CreateShelfRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Shelf.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<GetShelfRequest, Shelf> getShelfMethodDescriptor =
@@ -72,6 +73,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
           .setFullMethodName("google.example.library.v1.LibraryService/GetShelf")
           .setRequestMarshaller(ProtoUtils.marshaller(GetShelfRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Shelf.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<ListShelvesRequest, ListShelvesResponse>
@@ -82,6 +84,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
               .setRequestMarshaller(ProtoUtils.marshaller(ListShelvesRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListShelvesResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<DeleteShelfRequest, Empty> deleteShelfMethodDescriptor =
@@ -90,6 +93,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
           .setFullMethodName("google.example.library.v1.LibraryService/DeleteShelf")
           .setRequestMarshaller(ProtoUtils.marshaller(DeleteShelfRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<MergeShelvesRequest, Shelf> mergeShelvesMethodDescriptor =
@@ -98,6 +102,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
           .setFullMethodName("google.example.library.v1.LibraryService/MergeShelves")
           .setRequestMarshaller(ProtoUtils.marshaller(MergeShelvesRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Shelf.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<CreateBookRequest, Book> createBookMethodDescriptor =
@@ -106,6 +111,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
           .setFullMethodName("google.example.library.v1.LibraryService/CreateBook")
           .setRequestMarshaller(ProtoUtils.marshaller(CreateBookRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Book.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<GetBookRequest, Book> getBookMethodDescriptor =
@@ -114,6 +120,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
           .setFullMethodName("google.example.library.v1.LibraryService/GetBook")
           .setRequestMarshaller(ProtoUtils.marshaller(GetBookRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Book.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<ListBooksRequest, ListBooksResponse>
@@ -123,6 +130,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
               .setFullMethodName("google.example.library.v1.LibraryService/ListBooks")
               .setRequestMarshaller(ProtoUtils.marshaller(ListBooksRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(ListBooksResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<DeleteBookRequest, Empty> deleteBookMethodDescriptor =
@@ -131,6 +139,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
           .setFullMethodName("google.example.library.v1.LibraryService/DeleteBook")
           .setRequestMarshaller(ProtoUtils.marshaller(DeleteBookRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<UpdateBookRequest, Book> updateBookMethodDescriptor =
@@ -139,6 +148,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
           .setFullMethodName("google.example.library.v1.LibraryService/UpdateBook")
           .setRequestMarshaller(ProtoUtils.marshaller(UpdateBookRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Book.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<MoveBookRequest, Book> moveBookMethodDescriptor =
@@ -147,6 +157,7 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
           .setFullMethodName("google.example.library.v1.LibraryService/MoveBook")
           .setRequestMarshaller(ProtoUtils.marshaller(MoveBookRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Book.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private final UnaryCallable<CreateShelfRequest, Shelf> createShelfCallable;

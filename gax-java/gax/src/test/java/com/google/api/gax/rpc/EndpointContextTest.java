@@ -34,9 +34,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.rpc.internal.EnvironmentProvider;
-import com.google.api.gax.rpc.mtls.MtlsProvider;
+import com.google.api.gax.rpc.mtls.CertificateBasedAccess;
 import com.google.api.gax.rpc.testing.FakeMtlsProvider;
 import com.google.auth.Credentials;
+import com.google.auth.mtls.MtlsProvider;
 import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.common.truth.Truth;
 import io.grpc.Status;
@@ -53,12 +54,15 @@ class EndpointContextTest {
 
   @BeforeEach
   void setUp() throws IOException {
+    MtlsProvider mtlsProvider =
+        new FakeMtlsProvider(FakeMtlsProvider.createTestMtlsKeyStore(), "", false);
     defaultEndpointContextBuilder =
         EndpointContext.newBuilder()
             .setServiceName("test")
             .setUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint(DEFAULT_ENDPOINT)
-            .setMtlsEndpoint(DEFAULT_MTLS_ENDPOINT);
+            .setMtlsEndpoint(DEFAULT_MTLS_ENDPOINT)
+            .setMtlsProvider(mtlsProvider);
     statusCode = Mockito.mock(StatusCode.class);
     Mockito.when(statusCode.getCode()).thenReturn(StatusCode.Code.UNAUTHENTICATED);
     Mockito.when(statusCode.getTransportCode()).thenReturn(Status.Code.UNAUTHENTICATED);
@@ -66,107 +70,111 @@ class EndpointContextTest {
 
   @Test
   void mtlsEndpointResolver_switchToMtlsAllowedIsFalse() throws IOException {
-    boolean useClientCertificate = true;
     boolean throwExceptionForGetKeyStore = false;
     MtlsProvider mtlsProvider =
         new FakeMtlsProvider(
-            useClientCertificate,
-            MtlsProvider.MtlsEndpointUsagePolicy.AUTO,
-            FakeMtlsProvider.createTestMtlsKeyStore(),
-            "",
-            throwExceptionForGetKeyStore);
+            FakeMtlsProvider.createTestMtlsKeyStore(), "", throwExceptionForGetKeyStore);
     boolean switchToMtlsEndpointAllowed = false;
+    CertificateBasedAccess certificateBasedAccess =
+        new CertificateBasedAccess(
+            name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "auto" : "true");
     Truth.assertThat(
             defaultEndpointContextBuilder.mtlsEndpointResolver(
-                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, switchToMtlsEndpointAllowed, mtlsProvider))
+                DEFAULT_ENDPOINT,
+                DEFAULT_MTLS_ENDPOINT,
+                switchToMtlsEndpointAllowed,
+                mtlsProvider,
+                certificateBasedAccess))
         .isEqualTo(DEFAULT_ENDPOINT);
   }
 
   @Test
   void mtlsEndpointResolver_switchToMtlsAllowedIsTrue_mtlsUsageAuto() throws IOException {
-    boolean useClientCertificate = true;
     boolean throwExceptionForGetKeyStore = false;
     MtlsProvider mtlsProvider =
         new FakeMtlsProvider(
-            useClientCertificate,
-            MtlsProvider.MtlsEndpointUsagePolicy.AUTO,
-            FakeMtlsProvider.createTestMtlsKeyStore(),
-            "",
-            throwExceptionForGetKeyStore);
+            FakeMtlsProvider.createTestMtlsKeyStore(), "", throwExceptionForGetKeyStore);
     boolean switchToMtlsEndpointAllowed = true;
+    CertificateBasedAccess certificateBasedAccess =
+        new CertificateBasedAccess(
+            name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "auto" : "true");
     Truth.assertThat(
             defaultEndpointContextBuilder.mtlsEndpointResolver(
-                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, switchToMtlsEndpointAllowed, mtlsProvider))
+                DEFAULT_ENDPOINT,
+                DEFAULT_MTLS_ENDPOINT,
+                switchToMtlsEndpointAllowed,
+                mtlsProvider,
+                certificateBasedAccess))
         .isEqualTo(DEFAULT_MTLS_ENDPOINT);
   }
 
   @Test
   void mtlsEndpointResolver_switchToMtlsAllowedIsTrue_mtlsUsageAlways() throws IOException {
-    boolean useClientCertificate = true;
     boolean throwExceptionForGetKeyStore = false;
     MtlsProvider mtlsProvider =
         new FakeMtlsProvider(
-            useClientCertificate,
-            MtlsProvider.MtlsEndpointUsagePolicy.ALWAYS,
-            FakeMtlsProvider.createTestMtlsKeyStore(),
-            "",
-            throwExceptionForGetKeyStore);
+            FakeMtlsProvider.createTestMtlsKeyStore(), "", throwExceptionForGetKeyStore);
     boolean switchToMtlsEndpointAllowed = true;
+    CertificateBasedAccess certificateBasedAccess =
+        new CertificateBasedAccess(
+            name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "always" : "true");
     Truth.assertThat(
             defaultEndpointContextBuilder.mtlsEndpointResolver(
-                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, switchToMtlsEndpointAllowed, mtlsProvider))
+                DEFAULT_ENDPOINT,
+                DEFAULT_MTLS_ENDPOINT,
+                switchToMtlsEndpointAllowed,
+                mtlsProvider,
+                certificateBasedAccess))
         .isEqualTo(DEFAULT_MTLS_ENDPOINT);
   }
 
   @Test
   void mtlsEndpointResolver_switchToMtlsAllowedIsTrue_mtlsUsageNever() throws IOException {
-    boolean useClientCertificate = true;
     boolean throwExceptionForGetKeyStore = false;
     MtlsProvider mtlsProvider =
         new FakeMtlsProvider(
-            useClientCertificate,
-            MtlsProvider.MtlsEndpointUsagePolicy.NEVER,
-            FakeMtlsProvider.createTestMtlsKeyStore(),
-            "",
-            throwExceptionForGetKeyStore);
+            FakeMtlsProvider.createTestMtlsKeyStore(), "", throwExceptionForGetKeyStore);
     boolean switchToMtlsEndpointAllowed = true;
+    CertificateBasedAccess certificateBasedAccess =
+        new CertificateBasedAccess(
+            name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "never" : "true");
     Truth.assertThat(
             defaultEndpointContextBuilder.mtlsEndpointResolver(
-                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, switchToMtlsEndpointAllowed, mtlsProvider))
+                DEFAULT_ENDPOINT,
+                DEFAULT_MTLS_ENDPOINT,
+                switchToMtlsEndpointAllowed,
+                mtlsProvider,
+                certificateBasedAccess))
         .isEqualTo(DEFAULT_ENDPOINT);
   }
 
   @Test
   void mtlsEndpointResolver_switchToMtlsAllowedIsTrue_useCertificateIsFalse_nullMtlsKeystore()
       throws IOException {
-    boolean useClientCertificate = false;
     boolean throwExceptionForGetKeyStore = false;
-    MtlsProvider mtlsProvider =
-        new FakeMtlsProvider(
-            useClientCertificate,
-            MtlsProvider.MtlsEndpointUsagePolicy.AUTO,
-            null,
-            "",
-            throwExceptionForGetKeyStore);
+    MtlsProvider mtlsProvider = new FakeMtlsProvider(null, "", throwExceptionForGetKeyStore);
     boolean switchToMtlsEndpointAllowed = true;
+    CertificateBasedAccess certificateBasedAccess =
+        new CertificateBasedAccess(
+            name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "auto" : "false");
     Truth.assertThat(
             defaultEndpointContextBuilder.mtlsEndpointResolver(
-                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, switchToMtlsEndpointAllowed, mtlsProvider))
+                DEFAULT_ENDPOINT,
+                DEFAULT_MTLS_ENDPOINT,
+                switchToMtlsEndpointAllowed,
+                mtlsProvider,
+                certificateBasedAccess))
         .isEqualTo(DEFAULT_ENDPOINT);
   }
 
   @Test
   void mtlsEndpointResolver_getKeyStore_throwsIOException() throws IOException {
-    boolean useClientCertificate = true;
     boolean throwExceptionForGetKeyStore = true;
-    MtlsProvider mtlsProvider =
-        new FakeMtlsProvider(
-            useClientCertificate,
-            MtlsProvider.MtlsEndpointUsagePolicy.AUTO,
-            null,
-            "",
-            throwExceptionForGetKeyStore);
+    MtlsProvider mtlsProvider = new FakeMtlsProvider(null, "", throwExceptionForGetKeyStore);
     boolean switchToMtlsEndpointAllowed = true;
+    CertificateBasedAccess certificateBasedAccess =
+        new CertificateBasedAccess(
+            name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "auto" : "true");
     assertThrows(
         IOException.class,
         () ->
@@ -174,7 +182,8 @@ class EndpointContextTest {
                 DEFAULT_ENDPOINT,
                 DEFAULT_MTLS_ENDPOINT,
                 switchToMtlsEndpointAllowed,
-                mtlsProvider));
+                mtlsProvider,
+                certificateBasedAccess));
   }
 
   @Test
@@ -260,18 +269,17 @@ class EndpointContextTest {
   @Test
   void endpointContextBuild_mtlsConfigured_GDU() throws IOException {
     MtlsProvider mtlsProvider =
-        new FakeMtlsProvider(
-            true,
-            MtlsProvider.MtlsEndpointUsagePolicy.ALWAYS,
-            FakeMtlsProvider.createTestMtlsKeyStore(),
-            "",
-            false);
+        new FakeMtlsProvider(FakeMtlsProvider.createTestMtlsKeyStore(), "", false);
+    CertificateBasedAccess certificateBasedAccess =
+        new CertificateBasedAccess(
+            name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "always" : "true");
     EndpointContext endpointContext =
         defaultEndpointContextBuilder
             .setClientSettingsEndpoint(null)
             .setTransportChannelProviderEndpoint(null)
             .setSwitchToMtlsEndpointAllowed(true)
             .setMtlsProvider(mtlsProvider)
+            .setCertificateBasedAccess(certificateBasedAccess)
             .build();
     Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(DEFAULT_MTLS_ENDPOINT);
     Truth.assertThat(endpointContext.resolvedUniverseDomain())
@@ -282,19 +290,18 @@ class EndpointContextTest {
   void endpointContextBuild_mtlsConfigured_nonGDU_throwsIllegalArgumentException()
       throws IOException {
     MtlsProvider mtlsProvider =
-        new FakeMtlsProvider(
-            true,
-            MtlsProvider.MtlsEndpointUsagePolicy.ALWAYS,
-            FakeMtlsProvider.createTestMtlsKeyStore(),
-            "",
-            false);
+        new FakeMtlsProvider(FakeMtlsProvider.createTestMtlsKeyStore(), "", false);
+    CertificateBasedAccess certificateBasedAccess =
+        new CertificateBasedAccess(
+            name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "always" : "true");
     EndpointContext.Builder endpointContextBuilder =
         defaultEndpointContextBuilder
             .setUniverseDomain("random.com")
             .setClientSettingsEndpoint(null)
             .setTransportChannelProviderEndpoint(null)
             .setSwitchToMtlsEndpointAllowed(true)
-            .setMtlsProvider(mtlsProvider);
+            .setMtlsProvider(mtlsProvider)
+            .setCertificateBasedAccess(certificateBasedAccess);
     IllegalArgumentException exception =
         assertThrows(IllegalArgumentException.class, endpointContextBuilder::build);
     Truth.assertThat(exception.getMessage())

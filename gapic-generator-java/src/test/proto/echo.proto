@@ -140,6 +140,16 @@ service Echo {
       body: "*"
     };
   }
+
+  // This is similar to the PagedExpand except that it uses
+  // max_results instead of page_size, as some legacy APIs still
+  // do. New APIs should NOT use this pattern.
+  rpc PagedExpandLegacy(PagedExpandLegacyRequest) returns (PagedExpandResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/echo:pagedExpandLegacy"
+      body: "*"
+    };
+  }
 }
 
 // A severity enum used to test enum capabilities in GAPIC surfaces
@@ -294,4 +304,20 @@ message BlockResponse {
   // This content can contain anything, the server will not depend on a value
   // here.
   string content = 1;
+}
+
+// The request for the PagedExpandLegacy method.  This is a pattern used by some legacy APIs. New
+// APIs should NOT use this pattern, but rather something like PagedExpandRequest which conforms to
+// aip.dev/158.
+message PagedExpandLegacyRequest {
+  // The string to expand.
+  string content = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The number of words to returned in each page.
+  // (-- aip.dev/not-precedent: This is a legacy, non-standard pattern that
+  //     violates aip.dev/158. Ordinarily, this should be page_size. --)
+  int32 max_results = 2;
+
+  // The position of the page to be returned.
+  string page_token = 3;
 }

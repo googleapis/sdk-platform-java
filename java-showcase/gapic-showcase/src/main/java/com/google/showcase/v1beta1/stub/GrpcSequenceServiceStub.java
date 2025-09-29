@@ -72,6 +72,7 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(CreateSequenceRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Sequence.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<CreateStreamingSequenceRequest, StreamingSequence>
@@ -82,6 +83,7 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(CreateStreamingSequenceRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(StreamingSequence.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetSequenceReportRequest, SequenceReport>
@@ -92,6 +94,7 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(GetSequenceReportRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(SequenceReport.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetStreamingSequenceReportRequest, StreamingSequenceReport>
@@ -104,6 +107,7 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
                   ProtoUtils.marshaller(GetStreamingSequenceReportRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(StreamingSequenceReport.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<AttemptSequenceRequest, Empty>
@@ -114,6 +118,7 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(AttemptSequenceRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<
@@ -127,6 +132,7 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
                   ProtoUtils.marshaller(AttemptStreamingSequenceRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(AttemptStreamingSequenceResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ListLocationsRequest, ListLocationsResponse>
@@ -138,6 +144,7 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
                   ProtoUtils.marshaller(ListLocationsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListLocationsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetLocationRequest, Location> getLocationMethodDescriptor =
@@ -146,6 +153,7 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
           .setFullMethodName("google.cloud.location.Locations/GetLocation")
           .setRequestMarshaller(ProtoUtils.marshaller(GetLocationRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Location.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<SetIamPolicyRequest, Policy> setIamPolicyMethodDescriptor =
@@ -154,6 +162,7 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
           .setFullMethodName("google.iam.v1.IAMPolicy/SetIamPolicy")
           .setRequestMarshaller(ProtoUtils.marshaller(SetIamPolicyRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Policy.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<GetIamPolicyRequest, Policy> getIamPolicyMethodDescriptor =
@@ -162,6 +171,7 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
           .setFullMethodName("google.iam.v1.IAMPolicy/GetIamPolicy")
           .setRequestMarshaller(ProtoUtils.marshaller(GetIamPolicyRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Policy.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<TestIamPermissionsRequest, TestIamPermissionsResponse>
@@ -173,6 +183,7 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
                   ProtoUtils.marshaller(TestIamPermissionsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(TestIamPermissionsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private final UnaryCallable<CreateSequenceRequest, Sequence> createSequenceCallable;

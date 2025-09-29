@@ -86,6 +86,7 @@ public class GrpcMessagingStub extends MessagingStub {
           .setFullMethodName("google.showcase.v1beta1.Messaging/CreateRoom")
           .setRequestMarshaller(ProtoUtils.marshaller(CreateRoomRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Room.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<GetRoomRequest, Room> getRoomMethodDescriptor =
@@ -94,6 +95,7 @@ public class GrpcMessagingStub extends MessagingStub {
           .setFullMethodName("google.showcase.v1beta1.Messaging/GetRoom")
           .setRequestMarshaller(ProtoUtils.marshaller(GetRoomRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Room.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<UpdateRoomRequest, Room> updateRoomMethodDescriptor =
@@ -102,6 +104,7 @@ public class GrpcMessagingStub extends MessagingStub {
           .setFullMethodName("google.showcase.v1beta1.Messaging/UpdateRoom")
           .setRequestMarshaller(ProtoUtils.marshaller(UpdateRoomRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Room.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<DeleteRoomRequest, Empty> deleteRoomMethodDescriptor =
@@ -110,6 +113,7 @@ public class GrpcMessagingStub extends MessagingStub {
           .setFullMethodName("google.showcase.v1beta1.Messaging/DeleteRoom")
           .setRequestMarshaller(ProtoUtils.marshaller(DeleteRoomRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<ListRoomsRequest, ListRoomsResponse>
@@ -119,6 +123,7 @@ public class GrpcMessagingStub extends MessagingStub {
               .setFullMethodName("google.showcase.v1beta1.Messaging/ListRooms")
               .setRequestMarshaller(ProtoUtils.marshaller(ListRoomsRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(ListRoomsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<CreateBlurbRequest, Blurb> createBlurbMethodDescriptor =
@@ -127,6 +132,7 @@ public class GrpcMessagingStub extends MessagingStub {
           .setFullMethodName("google.showcase.v1beta1.Messaging/CreateBlurb")
           .setRequestMarshaller(ProtoUtils.marshaller(CreateBlurbRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Blurb.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<GetBlurbRequest, Blurb> getBlurbMethodDescriptor =
@@ -135,6 +141,7 @@ public class GrpcMessagingStub extends MessagingStub {
           .setFullMethodName("google.showcase.v1beta1.Messaging/GetBlurb")
           .setRequestMarshaller(ProtoUtils.marshaller(GetBlurbRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Blurb.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<UpdateBlurbRequest, Blurb> updateBlurbMethodDescriptor =
@@ -143,6 +150,7 @@ public class GrpcMessagingStub extends MessagingStub {
           .setFullMethodName("google.showcase.v1beta1.Messaging/UpdateBlurb")
           .setRequestMarshaller(ProtoUtils.marshaller(UpdateBlurbRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Blurb.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<DeleteBlurbRequest, Empty> deleteBlurbMethodDescriptor =
@@ -151,6 +159,7 @@ public class GrpcMessagingStub extends MessagingStub {
           .setFullMethodName("google.showcase.v1beta1.Messaging/DeleteBlurb")
           .setRequestMarshaller(ProtoUtils.marshaller(DeleteBlurbRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<ListBlurbsRequest, ListBlurbsResponse>
@@ -160,6 +169,7 @@ public class GrpcMessagingStub extends MessagingStub {
               .setFullMethodName("google.showcase.v1beta1.Messaging/ListBlurbs")
               .setRequestMarshaller(ProtoUtils.marshaller(ListBlurbsRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(ListBlurbsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<SearchBlurbsRequest, Operation>
@@ -169,6 +179,7 @@ public class GrpcMessagingStub extends MessagingStub {
               .setFullMethodName("google.showcase.v1beta1.Messaging/SearchBlurbs")
               .setRequestMarshaller(ProtoUtils.marshaller(SearchBlurbsRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Operation.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<StreamBlurbsRequest, StreamBlurbsResponse>
@@ -179,6 +190,7 @@ public class GrpcMessagingStub extends MessagingStub {
               .setRequestMarshaller(ProtoUtils.marshaller(StreamBlurbsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(StreamBlurbsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<CreateBlurbRequest, SendBlurbsResponse>
@@ -188,6 +200,7 @@ public class GrpcMessagingStub extends MessagingStub {
               .setFullMethodName("google.showcase.v1beta1.Messaging/SendBlurbs")
               .setRequestMarshaller(ProtoUtils.marshaller(CreateBlurbRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(SendBlurbsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ConnectRequest, StreamBlurbsResponse>
@@ -198,6 +211,7 @@ public class GrpcMessagingStub extends MessagingStub {
               .setRequestMarshaller(ProtoUtils.marshaller(ConnectRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(StreamBlurbsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<ListLocationsRequest, ListLocationsResponse>
@@ -209,6 +223,7 @@ public class GrpcMessagingStub extends MessagingStub {
                   ProtoUtils.marshaller(ListLocationsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(ListLocationsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private static final MethodDescriptor<GetLocationRequest, Location> getLocationMethodDescriptor =
@@ -217,6 +232,7 @@ public class GrpcMessagingStub extends MessagingStub {
           .setFullMethodName("google.cloud.location.Locations/GetLocation")
           .setRequestMarshaller(ProtoUtils.marshaller(GetLocationRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Location.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<SetIamPolicyRequest, Policy> setIamPolicyMethodDescriptor =
@@ -225,6 +241,7 @@ public class GrpcMessagingStub extends MessagingStub {
           .setFullMethodName("google.iam.v1.IAMPolicy/SetIamPolicy")
           .setRequestMarshaller(ProtoUtils.marshaller(SetIamPolicyRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Policy.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<GetIamPolicyRequest, Policy> getIamPolicyMethodDescriptor =
@@ -233,6 +250,7 @@ public class GrpcMessagingStub extends MessagingStub {
           .setFullMethodName("google.iam.v1.IAMPolicy/GetIamPolicy")
           .setRequestMarshaller(ProtoUtils.marshaller(GetIamPolicyRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Policy.getDefaultInstance()))
+          .setSampledToLocalTracing(true)
           .build();
 
   private static final MethodDescriptor<TestIamPermissionsRequest, TestIamPermissionsResponse>
@@ -244,6 +262,7 @@ public class GrpcMessagingStub extends MessagingStub {
                   ProtoUtils.marshaller(TestIamPermissionsRequest.getDefaultInstance()))
               .setResponseMarshaller(
                   ProtoUtils.marshaller(TestIamPermissionsResponse.getDefaultInstance()))
+              .setSampledToLocalTracing(true)
               .build();
 
   private final UnaryCallable<CreateRoomRequest, Room> createRoomCallable;

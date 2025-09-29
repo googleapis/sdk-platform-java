@@ -1,5 +1,75 @@
 # Changelog
 
+## [2.62.2](https://github.com/googleapis/sdk-platform-java/compare/v2.62.1...v2.62.2) (2025-09-18)
+
+
+### Dependencies
+
+* update google api dependencies ([#3885](https://github.com/googleapis/sdk-platform-java/issues/3885)) ([3694fed](https://github.com/googleapis/sdk-platform-java/commit/3694fed91e65966d074471942bd2e36075ba70d1))
+* update google auth library dependencies to v1.39.1 ([#3907](https://github.com/googleapis/sdk-platform-java/issues/3907)) ([e86a4f6](https://github.com/googleapis/sdk-platform-java/commit/e86a4f6535bc43b5382f22e790ccf2c76e8e9b23))
+
+## [2.62.1](https://github.com/googleapis/sdk-platform-java/compare/v2.62.0...v2.62.1) (2025-09-05)
+
+
+### Dependencies
+
+* Update auth to 1.39.0 ([#3898](https://github.com/googleapis/sdk-platform-java/issues/3898)) ([9a8443d](https://github.com/googleapis/sdk-platform-java/commit/9a8443d71cdbdb7a693b6da08db72edb85490807))
+
+## [2.62.0](https://github.com/googleapis/sdk-platform-java/compare/v2.61.0...v2.62.0) (2025-08-19)
+
+
+### Features
+
+* Set sampledToLocalTracing flag to true for all gRPC MethodDescriptors ([#3874](https://github.com/googleapis/sdk-platform-java/issues/3874)) ([592e899](https://github.com/googleapis/sdk-platform-java/commit/592e899c516288b0a60b69525ba12d6f29bc6200))
+
+## [2.61.0](https://github.com/googleapis/sdk-platform-java/compare/v2.60.2...v2.61.0) (2025-08-04)
+
+
+### Features
+
+* **mtls:** Add support for X.509-based mTLS-transport in Java GAX lib ([#3852](https://github.com/googleapis/sdk-platform-java/issues/3852)) ([2d02344](https://github.com/googleapis/sdk-platform-java/commit/2d02344d79f5cfdca7834aa0d6306f1b72a7505a))
+
+
+### Bug Fixes
+
+* improve error messaging for LRO CancellationException ([#3873](https://github.com/googleapis/sdk-platform-java/issues/3873)) ([9cae675](https://github.com/googleapis/sdk-platform-java/commit/9cae675f0ff44227cea60e6802769e82cce948f2))
+* make generation config update logs verbose ([#3764](https://github.com/googleapis/sdk-platform-java/issues/3764)) ([9b1a34b](https://github.com/googleapis/sdk-platform-java/commit/9b1a34b0dd08c0eddcf09ef5d81b225d0942f529))
+
+## [2.60.2](https://github.com/googleapis/sdk-platform-java/compare/v2.60.1...v2.60.2) (2025-07-22)
+
+
+### Dependencies
+
+* update arrow.version to 17.0.0, auth deps to 1.37.1 and http-client deps to 1.47.1 ([#3863](https://github.com/googleapis/sdk-platform-java/issues/3863)) ([b5bb3ca](https://github.com/googleapis/sdk-platform-java/commit/b5bb3ca6fc08d04e001a3ca83d4aac1627a5c504))
+
+## [2.60.1](https://github.com/googleapis/sdk-platform-java/compare/v2.60.0...v2.60.1) (2025-07-08)
+
+
+### Bug Fixes
+
+* **hermetic-build:** use public maven metadata for latest version inference ([#3853](https://github.com/googleapis/sdk-platform-java/issues/3853)) ([0be1e96](https://github.com/googleapis/sdk-platform-java/commit/0be1e9670079bcf6a9246d0284e59001c24242ea))
+
+## [2.60.0](https://github.com/googleapis/sdk-platform-java/compare/v2.59.2...v2.60.0) (2025-06-23)
+
+
+### Features
+
+* handle auto pagination for BigQuery v2 ([#3829](https://github.com/googleapis/sdk-platform-java/issues/3829)) ([025c84c](https://github.com/googleapis/sdk-platform-java/commit/025c84c6c9b8c49a9057a7b3ebd0eb1fab3cda13))
+
+
+### Dependencies
+
+* update google auth library dependencies to v1.37.1 ([#3846](https://github.com/googleapis/sdk-platform-java/issues/3846)) ([ea1d9e5](https://github.com/googleapis/sdk-platform-java/commit/ea1d9e5d3a0346d71a553216cf2486b3be6dc618))
+* update google http client dependencies to v1.47.1 ([#3848](https://github.com/googleapis/sdk-platform-java/issues/3848)) ([a9a39d7](https://github.com/googleapis/sdk-platform-java/commit/a9a39d7f814d1f45188c7b17de685b796c0b5aa7))
+
+## [2.59.2](https://github.com/googleapis/sdk-platform-java/compare/v2.59.1...v2.59.2) (2025-06-17)
+
+
+### Bug Fixes
+
+* update googleapis commit at Thu Jun 12 02:34:24 UTC 2025 ([f3a5d87](https://github.com/googleapis/sdk-platform-java/commit/f3a5d87ed2b5ab1acddd1bf362d11d6ccf3d22b4))
+* update googleapis commit at Thu Jun 12 02:34:24 UTC 2025 ([#3833](https://github.com/googleapis/sdk-platform-java/issues/3833)) ([f3a5d87](https://github.com/googleapis/sdk-platform-java/commit/f3a5d87ed2b5ab1acddd1bf362d11d6ccf3d22b4))
+
 ## [2.59.1](https://github.com/googleapis/sdk-platform-java/compare/v2.59.0...v2.59.1) (2025-06-12)
 
 

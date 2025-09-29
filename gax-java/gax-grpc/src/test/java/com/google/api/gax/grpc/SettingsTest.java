@@ -51,8 +51,8 @@ import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
-import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auth.Credentials;
+import com.google.auth.mtls.MtlsProvider;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -83,7 +83,7 @@ class SettingsTest {
     public static final int DEFAULT_SERVICE_PORT = 443;
     public static final String DEFAULT_SERVICE_ENDPOINT =
         DEFAULT_SERVICE_ADDRESS + ':' + DEFAULT_SERVICE_PORT;
-    public static final MtlsProvider DEFAULT_MTLS_PROVIDER = new MtlsProvider();
+    public static final MtlsProvider DEFAULT_MTLS_PROVIDER = null;
     public static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
         ImmutableList.<String>builder()
             .add("https://www.googleapis.com/auth/pubsub")

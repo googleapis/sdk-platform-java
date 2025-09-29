@@ -128,4 +128,26 @@
     <className>com/google/api/gax/rpc/TransportChannelProvider</className>
     <method>* needsMtlsEndpoint()</method>
   </difference>
+  <difference>
+    <differenceType>7013</differenceType>
+    <className>com/google/api/gax/rpc/EndpointContext</className>
+    <method>com.google.api.gax.rpc.mtls.CertificateBasedAccess certificateBasedAccess()</method>
+  </difference>
+  <difference>
+    <differenceType>7006</differenceType>
+    <className>com/google/api/gax/rpc/EndpointContext</className>
+    <method>com.google.api.gax.rpc.mtls.MtlsProvider mtlsProvider()</method>Add commentMore actions
+    <to>com.google.auth.mtls.MtlsProvider</to>
+  </difference>
+  <difference>
+    <differenceType>7013</differenceType>
+    <className>com/google/api/gax/rpc/EndpointContext$Builder</className>
+    <method>com.google.api.gax.rpc.EndpointContext$Builder setCertificateBasedAccess(com.google.api.gax.rpc.mtls.CertificateBasedAccess)</method>
+  </difference>
+  <difference>
+    <differenceType>7005</differenceType>
+    <className>com/google/api/gax/rpc/EndpointContext$Builder</className>
+    <method>com.google.api.gax.rpc.EndpointContext$Builder setMtlsProvider(com.google.api.gax.rpc.mtls.MtlsProvider)</method>
+    <to>com.google.api.gax.rpc.EndpointContext$Builder setMtlsProvider(com.google.auth.mtls.MtlsProvider)</to>
+  </difference>
 </differences>

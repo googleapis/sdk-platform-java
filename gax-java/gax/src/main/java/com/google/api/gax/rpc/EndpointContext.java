@@ -31,13 +31,18 @@ package com.google.api.gax.rpc;
 
 import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.internal.EnvironmentProvider;
-import com.google.api.gax.rpc.mtls.MtlsProvider;
+import com.google.api.gax.rpc.mtls.CertificateBasedAccess;
 import com.google.auth.Credentials;
+import com.google.auth.mtls.CertificateSourceUnavailableException;
+import com.google.auth.mtls.DefaultMtlsProviderFactory;
+import com.google.auth.mtls.MtlsProvider;
 import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Nullable;
 
 /**
@@ -49,6 +54,8 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
+
+  @VisibleForTesting static final Logger LOG = Logger.getLogger(EndpointContext.class.getName());
 
   private static final EndpointContext INSTANCE;
 
@@ -116,6 +123,9 @@ public abstract class EndpointContext {
 
   @Nullable
   public abstract MtlsProvider mtlsProvider();
+
+  @Nullable
+  abstract CertificateBasedAccess certificateBasedAccess();
 
   public abstract boolean usingGDCH();
 
@@ -212,6 +222,8 @@ public abstract class EndpointContext {
 
     public abstract Builder setMtlsProvider(MtlsProvider mtlsProvider);
 
+    abstract Builder setCertificateBasedAccess(CertificateBasedAccess certificateBasedAccess);
+
     public abstract Builder setUsingGDCH(boolean usingGDCH);
 
     public abstract Builder setResolvedEndpoint(String resolvedEndpoint);
@@ -238,7 +250,10 @@ public abstract class EndpointContext {
 
     abstract boolean switchToMtlsEndpointAllowed();
 
+    @Nullable
     abstract MtlsProvider mtlsProvider();
+
+    abstract CertificateBasedAccess certificateBasedAccess();
 
     abstract boolean usingGDCH();
 
@@ -272,7 +287,30 @@ public abstract class EndpointContext {
 
     /** Determines the fully resolved endpoint and universe domain values */
     private String determineEndpoint() throws IOException {
-      MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
+      CertificateBasedAccess certificateBasedAccess =
+          certificateBasedAccess() == null
+              ? CertificateBasedAccess.createWithSystemEnv()
+              : certificateBasedAccess();
+      MtlsProvider mtlsProvider = mtlsProvider();
+
+      // Only attempt to create a default MtlsProvider if client certificate usage is enabled.
+      if (certificateBasedAccess.useMtlsClientCertificate()) {
+        if (mtlsProvider == null) {
+          try {
+            mtlsProvider = DefaultMtlsProviderFactory.create();
+          } catch (CertificateSourceUnavailableException e) {
+            // This is okay. Leave mtlsProvider as null;
+          } catch (IOException e) {
+            LOG.log(
+                Level.WARNING,
+                "DefaultMtlsProviderFactory encountered unexpected IOException: " + e.getMessage());
+            LOG.log(
+                Level.WARNING,
+                "mTLS configuration was detected on the device, but mTLS failed to initialize. Falling back to non-mTLS channel.");
+          }
+        }
+      }
+
       // TransportChannelProvider's endpoint will override the ClientSettings' endpoint
       String customEndpoint =
           transportChannelProviderEndpoint() == null
@@ -294,7 +332,11 @@ public abstract class EndpointContext {
 
       String endpoint =
           mtlsEndpointResolver(
-              customEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed(), mtlsProvider);
+              customEndpoint,
+              mtlsEndpoint(),
+              switchToMtlsEndpointAllowed(),
+              mtlsProvider,
+              certificateBasedAccess);
 
       // Check if mTLS is configured with non-GDU
       if (endpoint.equals(mtlsEndpoint())
@@ -351,16 +393,18 @@ public abstract class EndpointContext {
         String endpoint,
         String mtlsEndpoint,
         boolean switchToMtlsEndpointAllowed,
-        MtlsProvider mtlsProvider)
+        MtlsProvider mtlsProvider,
+        CertificateBasedAccess certificateBasedAccess)
         throws IOException {
-      if (switchToMtlsEndpointAllowed && mtlsProvider != null) {
-        switch (mtlsProvider.getMtlsEndpointUsagePolicy()) {
+      if (switchToMtlsEndpointAllowed && certificateBasedAccess != null && mtlsProvider != null) {
+        switch (certificateBasedAccess.getMtlsEndpointUsagePolicy()) {
           case ALWAYS:
             return mtlsEndpoint;
           case NEVER:
             return endpoint;
           default:
-            if (mtlsProvider.useMtlsClientCertificate() && mtlsProvider.getKeyStore() != null) {
+            if (certificateBasedAccess.useMtlsClientCertificate()
+                && mtlsProvider.getKeyStore() != null) {
               return mtlsEndpoint;
             }
             return endpoint;
