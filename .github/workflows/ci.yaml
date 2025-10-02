@@ -120,7 +120,7 @@ jobs:
       - run: bazelisk version
       - name: Install Maven modules
         run: |
-          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip -Dfmt.skip
       - name: Integration Tests
         # note need to set shouldInstallTestSecurityManager=false due to https://github.com/bazelbuild/bazel/issues/24354
         run: |
