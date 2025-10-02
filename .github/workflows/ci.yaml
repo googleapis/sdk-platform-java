@@ -319,7 +319,7 @@ jobs:
         run: |
           mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip -Dfmt.skip
       - name: Java Linter
-        if: matrix.java >= 17
+        if: matrix.java >= 17 && matrix.java < 25
         working-directory: java-showcase
         run: |
           mvn -B -ntp fmt:check
