@@ -45,4 +45,4 @@ dev.cel=0.11.0
 com.google.crypto.tink=1.18.0
 # The follow opentelemetry dependencies have a different version from the opentelemetry-bom
 opentelemetry-semconv=1.37.0
-io.opentelemetry.contrib.opentelemetry-gcp-resources=1.49.0-alpha
+io.opentelemetry.contrib.opentelemetry-gcp-resources=1.50.0-alpha
