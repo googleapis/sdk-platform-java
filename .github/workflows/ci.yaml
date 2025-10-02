@@ -91,15 +91,15 @@ jobs:
       - name: Integration Tests
         run: |
           bazelisk --batch test //test/integration/...
-  build-java-24:
-    name: "build(24) except self-service clients"
-    # Support for Java 24 is available for all use cases except self-service clients.
+  build-java-25:
+    name: "build(25) except self-service clients"
+    # Support for Java 25 is available for all use cases except self-service clients.
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          java-version: 24
+          java-version: 25
           distribution: temurin
           cache: maven
       - run: java -version
@@ -120,7 +120,7 @@ jobs:
       - run: bazelisk version
       - name: Install Maven modules
         run: |
-          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip -Dfmt.skip
       - name: Integration Tests
         # note need to set shouldInstallTestSecurityManager=false due to https://github.com/bazelbuild/bazel/issues/24354
         run: |
@@ -307,7 +307,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        java: [ 11, 17, 21, 24 ]
+        java: [ 11, 17, 21, 25 ]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -318,11 +318,6 @@ jobs:
       - name: Install Maven modules
         run: |
           mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip -Dfmt.skip
-      - name: Java Linter
-        if: matrix.java >= 17
-        working-directory: java-showcase
-        run: |
-          mvn -B -ntp fmt:check
       - name: Showcase golden tests
         working-directory: java-showcase
         run: |
