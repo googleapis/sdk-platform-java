@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.62.3](https://github.com/googleapis/sdk-platform-java/compare/v2.62.2...v2.62.3) (2025-10-02)
+
+
+### Bug Fixes
+
+* **mtls:** Fix EndpointContext's determineEndpoint logic to respect env var ([#3912](https://github.com/googleapis/sdk-platform-java/issues/3912)) ([e5948d0](https://github.com/googleapis/sdk-platform-java/commit/e5948d0cf27a2ee0ff03da3541524e0463356629))
+
 ## [2.62.2](https://github.com/googleapis/sdk-platform-java/compare/v2.62.1...v2.62.2) (2025-09-18)
 
 
