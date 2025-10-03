@@ -94,6 +94,7 @@ def main():
         return
 
     # --- Initial Label Check ---
+    retry_count = 0
     try:
         print(f"Performing initial label check for PR #{pr_number}...")
         current_labels = get_pr_labels(owner, repo, pr_number)
@@ -103,6 +104,7 @@ def main():
         if missing_labels:
             print("Required Kokoro labels are missing. Adding them now...")
             add_labels_to_pr(owner, repo, pr_number, missing_labels)
+            retry_count += 1
         else:
             print("Required Kokoro labels are already present.")
     except requests.exceptions.RequestException as e:
@@ -122,8 +124,12 @@ def main():
             print(f"Overall status: {state}")
 
             if state == "failure":
+                if retry_count >= 2:
+                    print("The PR has failed twice after applying the Kokoro labels. Failing the script.")
+                    return
                 print("Some checks have failed. Retrying the tests...")
                 add_labels_to_pr(owner, repo, pr_number, LABELS_TO_ADD)
+                retry_count += 1
             elif state == "success":
                 print("All checks have passed. Merging the pull request...")
                 merge_pr(owner, repo, pr_number)
