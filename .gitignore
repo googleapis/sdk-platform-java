@@ -26,3 +26,7 @@ target/
 **/dist/
 library_generation/**/*.jar
 **/google-java-format.jar
+
+# librarian
+internal/librariangen/gapic-generator-java.jar
+internal/librariangen/protoc-gen-java_gapic
