@@ -40,6 +40,7 @@ fi
 # Main Logic
 # -----------------------------------------------------------------------------
 
+# Hardcoded list of downstream PRs testing Protobuf 4.29.x Compatibility
 PR_URLS_429=(
     "https://github.com/googleapis/java-bigtable/pull/2614"
     "https://github.com/googleapis/java-bigquery/pull/3867"
@@ -56,6 +57,7 @@ PR_URLS_429=(
     "https://github.com/googleapis/java-storage-nio/pull/1612"
 )
 
+# Hardcoded list of downstream PRs testing Protobuf 4.31.x Compatibility
 PR_URLS_431=(
     "https://github.com/googleapis/java-bigtable/pull/2663"
     "https://github.com/googleapis/java-bigquery/pull/3942"
@@ -72,10 +74,8 @@ PR_URLS_431=(
     "https://github.com/googleapis/java-storage-nio/pull/1644"
 )
 
-# Keep track of the directory where the script was started.
-START_DIR=$(pwd)
-
 function processPRs() {
+    pushd "/tmp"
     PR_URLS=("$@")
     # Loop through all PR URLs defined in the PR_URLS array.
     for pr_url in "${PR_URLS[@]}"; do
@@ -106,8 +106,9 @@ function processPRs() {
         fi
 
         # Navigate into the repository's directory.
-        cd "$REPO_NAME"
+        pushd "$REPO_NAME"
 
+        # Stash any existing changes in the repo
         git stash
 
         echo "Checking out PR #$PR_NUMBER..."
@@ -133,11 +134,11 @@ function processPRs() {
             echo "No stash entries found, skipping git stash pop."
         fi
 
-        # Return to the starting directory to process the next repository.
-        cd "$START_DIR"
+        popd
         echo "-----------------------------------------"
     done
     echo "🎉 All done!"
+    popd
 }
 
 echo "Running for all 4.29 Protobuf PRs..."

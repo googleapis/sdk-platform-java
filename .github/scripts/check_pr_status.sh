@@ -5,8 +5,7 @@
 #
 # Assumes the user has the GitHub CLI (`gh`) installed and is authenticated.
 
-# --- Configuration ---
-# Add the list of GitHub PR URLs you want to check into this array.
+# Hardcoded list of downstream Protobuf testing PRs to check the status of
 PULL_REQUESTS=(
     "https://github.com/googleapis/java-bigtable/pull/2614"
     "https://github.com/googleapis/java-bigquery/pull/3867"
@@ -36,7 +35,7 @@ PULL_REQUESTS=(
     "https://github.com/googleapis/java-storage-nio/pull/1644"
 )
 
-# The name of the CI job you want to check.
+# The name of the Integration Testing CI job
 JOB_NAME="Kokoro - Test: Integration"
 
 # --- Script Logic ---
@@ -62,9 +61,7 @@ for pr_url in "${PULL_REQUESTS[@]}"; do
     echo "  -> 🟡 WARNING: Could not find the '${JOB_NAME}' job."
     ((FAILURES++))
   else
-    # The output format of `gh pr checks` is typically:
-    # JOB_NAME  STATUS  TIME  URL
-    # We can use `awk` to extract the second column, which is the status.
+    # Get the json values for the name of the job and the status
     status=$(gh pr checks ${pr_url} --json name,state -q ".[] | select(.name == \"${JOB_NAME}\") | .state")
 
     # Check the status and report accordingly.
