@@ -1,0 +1,28 @@
+# This is a GitHub Actions workflow to run the check_pr_status.sh script nightly.
+name: Nightly PR Status Check
+
+on:
+  schedule:
+    # This cron schedule runs at 03:00 UTC every day.
+    # This corresponds to 11:00 PM EST during Daylight Saving Time (EDT).
+    # Note: During Standard Time, this will be 10:00 PM EST.
+    - cron: '0 3 * * *'
+
+  # This allows you to manually run the workflow from the Actions tab in GitHub.
+  workflow_dispatch:
+
+jobs:
+  run_pr_check:
+    # The type of runner that the job will run on.
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # The GH_TOKEN is set automatically using GitHub's built-in secret.
+      # The `gh` CLI tool will automatically use this token for authentication.
+      - name: Run PR status check script
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./.github/scripts/update_prs.sh
