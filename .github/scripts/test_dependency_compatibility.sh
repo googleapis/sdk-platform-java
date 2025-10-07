@@ -64,9 +64,10 @@ if [ -z "${dependency_list}" ]; then
     if [[ "${line}" =~ ^[[:space:]]*# ]] || [[ -z "${line}" ]]; then
       continue
     fi
-    # Format from `dependencies.txt`: {GroupID}:{ArtifactID}:{Version}:{MavenPropertyName}
-    dependency=$(echo "${line}" | cut -d':' -f4)
-    version=$(echo "${line}" | cut -d':' -f3)
+    # Format from `dependencies.txt`: {GroupID}:{ArtifactID},{PropertyName}={Version}
+    version=$(echo "${line}" | cut -d'=' -f2)
+    dependency_and_group_artifact=$(echo "${line}" | cut -d'=' -f1)
+    dependency=$(echo "${dependency_and_group_artifact}" | cut -d',' -f2)
     MAVEN_COMMAND+=" -D${dependency}.version=${version}"
   done < "${UPPER_BOUND_DEPENDENCY_FILE}"
 else # This else block means that a list of dependencies was inputted
@@ -81,9 +82,9 @@ else # This else block means that a list of dependencies was inputted
     if [ -z "${DEP_PAIR}" ]; then
       continue
     fi
-    # Format: {MavenPropertyName}:{Version}
-    dependency=$(echo "${DEP_PAIR}" | cut -d':' -f1)
-    version=$(echo "${DEP_PAIR}" | cut -d':' -f2)
+    # Format: {MavenPropertyName}={Version}
+    dependency=$(echo "${DEP_PAIR}" | cut -d'=' -f1)
+    version=$(echo "${DEP_PAIR}" | cut -d'=' -f2)
     MAVEN_COMMAND+=" -D${dependency}.version=${version}"
   done
 fi
