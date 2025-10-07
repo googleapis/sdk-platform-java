@@ -32,15 +32,13 @@ function print_help() {
 # Function to parse a dependency string and append it to the Maven command
 function add_dependency_to_maven_command() {
   local dep_pair=$1
-  if [[ ! "${dep_pair}" =~ .*=.* ]]; then
-    echo "Malformed dependency string: ${dep_pair}. Expected format: dependency=version"
+  if [[ ! "${dep_pair}" =~ .*:.*:.* ]]; then
+    echo "Malformed dependency string: ${dep_pair}. Expected format: {GroupID}:{ArtifactID}:{Version}:{MavenPropertyName}"
     exit 1
   fi
-  local full_dependency=$(echo "${dep_pair}" | cut -d'=' -f1 | tr -d '[:space:]')
-  # The dependency can be in the format of {groupId}:{artifactId};{pomPropertyName}
-  # We only want the pomPropertyName
-  local dependency=$(echo "${full_dependency}" | awk -F';' '{print $NF}')
-  local version=$(echo "${dep_pair}" | cut -d'=' -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+  local full_dependency=$(echo "${dep_pair}" | rev | cut -d':' -f2- | rev)
+  local dependency=$(echo "${dep_pair}" | rev | cut -d':' -f1 | rev)
+  local version=$(echo "${full_dependency}" | awk -F':' '{print $NF}')
   MAVEN_COMMAND+=" -D${dependency}.version=${version}"
 }
 

@@ -13,6 +13,16 @@
     {
       "customType": "regex",
       "fileMatch": [
+        "^dependencies\\.txt$"
+      ],
+      "matchStrings": [
+        "^(?<depName>[^:]+:[^:]+):(?<currentValue>[^:]+):(?<additionalInfo>[^:]+?)$"
+      ],
+      "datasourceTemplate": "maven"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
         "^gax-java/dependencies\\.properties$"
       ],
       "matchStrings": [
