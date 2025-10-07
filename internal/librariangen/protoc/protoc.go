@@ -18,6 +18,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"cloud.google.com/go/internal/postprocessor/librarian/librariangen/request"
 )
@@ -61,7 +62,6 @@ func Build(lib *request.Library, api *request.API, apiServiceDir string, config 
 	// Construct the protoc command arguments.
 	var gapicOpts []string
 	if config.HasGAPIC() {
-		gapicOpts = append(gapicOpts, "go-gapic-package="+config.GAPICImportPath())
 		if config.ServiceYAML() != "" {
 			gapicOpts = append(gapicOpts, fmt.Sprintf("api-service-config=%s", filepath.Join(apiServiceDir, config.ServiceYAML())))
 		}
@@ -71,14 +71,14 @@ func Build(lib *request.Library, api *request.API, apiServiceDir string, config 
 		if config.Transport() != "" {
 			gapicOpts = append(gapicOpts, fmt.Sprintf("transport=%s", config.Transport()))
 		}
-		if config.ReleaseLevel() != "" {
-			gapicOpts = append(gapicOpts, fmt.Sprintf("release-level=%s", config.ReleaseLevel()))
-		}
+		//if lib.ReleaseLevel != "" {
+		//	gapicOpts = append(gapicOpts, fmt.Sprintf("release-level=%s", lib.ReleaseLevel))
+		//}
+		//if api.GoPackagePath != "" {
+		//	gapicOpts = append(gapicOpts, fmt.Sprintf("go-gapic-package=%s;%s", api.GoPackagePath, api.GoPackageName))
+		//}
 		if config.HasMetadata() {
 			gapicOpts = append(gapicOpts, "metadata")
-		}
-		if config.HasDiregapic() {
-			gapicOpts = append(gapicOpts, "diregapic")
 		}
 		if config.HasRESTNumericEnums() {
 			gapicOpts = append(gapicOpts, "rest-numeric-enums")
@@ -90,25 +90,9 @@ func Build(lib *request.Library, api *request.API, apiServiceDir string, config 
 		"--experimental_allow_proto3_optional",
 	}
 	// All generated files are written to the /output directory.
-	// Which plugin(s) we use depends on whether the Bazel rule was go_grpc_library
-	// or go_proto_library:
-	// - If we're using go_rpc, we use the newer go plugin and the go-grpc plugin
-	// - Otherwise, use the "old" plugin (built explicitly in the Dockerfile)
-	if config.HasGoGRPC() {
-		args = append(args, "--go_out="+outputDir, "--go-grpc_out="+outputDir, "--go-grpc_opt=require_unimplemented_servers=false")
-	} else {
-		args = append(args, "--go_v1_out="+outputDir)
-		if config.HasLegacyGRPC() {
-			args = append(args, "--go_v1_opt=plugins=grpc")
-		}
-	}
-	if config.HasGAPIC() {
-		args = append(args, "--go_gapic_out="+outputDir)
-
-		for _, opt := range gapicOpts {
-			args = append(args, "--go_gapic_opt="+opt)
-		}
-	}
+	args = append(args, fmt.Sprintf("--java_out=%s", outputDir))
+	args = append(args, fmt.Sprintf("--java_gapic_out=metadata:%s", filepath.Join(outputDir, "java_gapic.zip")))
+	args = append(args, fmt.Sprintf("--java_gapic_opt=%s", strings.Join(gapicOpts, ",")))
 	args = append(args,
 		// The -I flag specifies the import path for protoc. All protos
 		// and their dependencies must be findable from this path.

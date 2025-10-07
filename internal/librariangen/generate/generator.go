@@ -15,9 +15,11 @@
 package generate
 
 import (
+	"archive/zip"
 	"context"
 	"errors"
 	"fmt"
+	"io"
 	"io/fs"
 	"log/slog"
 	"os"
@@ -111,16 +113,34 @@ func Generate(ctx context.Context, cfg *Config) error {
 	if err := invokeProtoc(ctx, cfg, generateReq, moduleConfig); err != nil {
 		return fmt.Errorf("librariangen: gapic generation failed: %w", err)
 	}
+
+	// Unzip the generated zip file.
+	zipPath := filepath.Join(cfg.OutputDir, "java_gapic.zip")
+	if err := unzip(zipPath, cfg.OutputDir); err != nil {
+		return fmt.Errorf("librariangen: failed to unzip %s: %w", zipPath, err)
+	}
+
+	// Unzip the inner temp-codegen.srcjar.
+	srcjarPath := filepath.Join(cfg.OutputDir, "temp-codegen.srcjar")
+	srcjarDest := filepath.Join(cfg.OutputDir, "java_gapic_srcjar")
+	if err := unzip(srcjarPath, srcjarDest); err != nil {
+		return fmt.Errorf("librariangen: failed to unzip %s: %w", srcjarPath, err)
+	}
+
+	if err := restructureOutput(cfg.OutputDir, generateReq.ID); err != nil {
+		return fmt.Errorf("librariangen: failed to restructure output: %w", err)
+	}
+
 	if err := fixPermissions(cfg.OutputDir); err != nil {
 		return fmt.Errorf("librariangen: failed to fix permissions: %w", err)
 	}
-	if err := flattenOutput(cfg.OutputDir); err != nil {
-		return fmt.Errorf("librariangen: failed to flatten output: %w", err)
-	}
+	//if err := flattenOutput(cfg.OutputDir); err != nil {
+	//	return fmt.Errorf("librariangen: failed to flatten output: %w", err)
+	//}
 
-	if err := applyModuleVersion(cfg.OutputDir, generateReq.ID, moduleConfig.GetModulePath()); err != nil {
-		return fmt.Errorf("librariangen: failed to apply module version to output directories: %w", err)
-	}
+	//if err := applyModuleVersion(cfg.OutputDir, generateReq.ID, moduleConfig.GetModulePath()); err != nil {
+	//	return fmt.Errorf("librariangen: failed to apply module version to output directories: %w", err)
+	//}
 
 	if !cfg.DisablePostProcessor {
 		slog.Debug("librariangen: post-processor enabled")
@@ -178,7 +198,7 @@ func readGenerateReq(librarianDir string) (*request.Library, error) {
 	return generateReq, nil
 }
 
-// fixPermissions recursively finds all .go files in the given directory and sets
+// fixPermissions recursively finds all .java files in the given directory and sets
 // their permissions to 0644.
 func fixPermissions(dir string) error {
 	slog.Debug("librariangen: changing file permissions to 644", "dir", dir)
@@ -186,7 +206,7 @@ func fixPermissions(dir string) error {
 		if err != nil {
 			return err
 		}
-		if !d.IsDir() && strings.HasSuffix(path, ".go") {
+		if !d.IsDir() && strings.HasSuffix(path, ".java") {
 			if err := os.Chmod(path, 0644); err != nil {
 				return fmt.Errorf("librariangen: failed to chmod %s: %w", path, err)
 			}
@@ -276,6 +296,105 @@ func moveFiles(sourceDir, targetDir string) error {
 		slog.Debug("librariangen: moving file", "from", oldPath, "to", newPath)
 		if err := os.Rename(oldPath, newPath); err != nil {
 			return fmt.Errorf("librariangen: failed to move %s to %s: %w", oldPath, newPath, err)
+		}
+	}
+	return nil
+}
+
+func restructureOutput(outputDir, libraryID string) error {
+	slog.Debug("librariangen: restructuring output directory", "dir", outputDir)
+
+	// Define source and destination directories.
+	gapicSrcDir := filepath.Join(outputDir, "java_gapic_srcjar", "src", "main", "java")
+	gapicTestDir := filepath.Join(outputDir, "java_gapic_srcjar", "src", "test", "java")
+	protoSrcDir := filepath.Join(outputDir, "com")
+	samplesDir := filepath.Join(outputDir, "java_gapic_srcjar", "samples", "snippets")
+
+	gapicDestDir := filepath.Join(outputDir, fmt.Sprintf("google-cloud-%s", libraryID), "src", "main", "java")
+	gapicTestDestDir := filepath.Join(outputDir, fmt.Sprintf("google-cloud-%s", libraryID), "src", "test", "java")
+	protoDestDir := filepath.Join(outputDir, fmt.Sprintf("proto-google-cloud-%s-v1", libraryID), "src", "main", "java")
+	samplesDestDir := filepath.Join(outputDir, "samples", "snippets")
+
+	// Create destination directories.
+	if err := os.MkdirAll(gapicDestDir, 0755); err != nil {
+		return err
+	}
+	if err := os.MkdirAll(gapicTestDestDir, 0755); err != nil {
+		return err
+	}
+	if err := os.MkdirAll(protoDestDir, 0755); err != nil {
+		return err
+	}
+	if err := os.MkdirAll(samplesDestDir, 0755); err != nil {
+		return err
+	}
+
+	// Move files.
+	if err := moveFiles(gapicSrcDir, gapicDestDir); err != nil {
+		return err
+	}
+	if err := moveFiles(gapicTestDir, gapicTestDestDir); err != nil {
+		return err
+	}
+	if err := moveFiles(protoSrcDir, protoDestDir); err != nil {
+		return err
+	}
+	if err := moveFiles(samplesDir, samplesDestDir); err != nil {
+		return err
+	}
+
+	// Clean up old directories.
+	if err := os.RemoveAll(filepath.Join(outputDir, "java_gapic_srcjar")); err != nil {
+		return err
+	}
+	if err := os.RemoveAll(filepath.Join(outputDir, "com")); err != nil {
+		return err
+	}
+	if err := os.RemoveAll(filepath.Join(outputDir, "java_gapic.zip")); err != nil {
+		return err
+	}
+	if err := os.RemoveAll(filepath.Join(outputDir, "temp-codegen.srcjar")); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func unzip(src, dest string) error {
+	r, err := zip.OpenReader(src)
+	if err != nil {
+		return err
+	}
+	defer r.Close()
+
+	for _, f := range r.File {
+		fpath := filepath.Join(dest, f.Name)
+		if f.FileInfo().IsDir() {
+			os.MkdirAll(fpath, os.ModePerm)
+			continue
+		}
+
+		if err := os.MkdirAll(filepath.Dir(fpath), os.ModePerm); err != nil {
+			return err
+		}
+
+		outFile, err := os.OpenFile(fpath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
+		if err != nil {
+			return err
+		}
+
+		rc, err := f.Open()
+		if err != nil {
+			return err
+		}
+
+		_, err = io.Copy(outFile, rc)
+
+		outFile.Close()
+		rc.Close()
+
+		if err != nil {
+			return err
 		}
 	}
 	return nil

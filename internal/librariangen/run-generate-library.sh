@@ -26,6 +26,7 @@ cd "$(dirname "$0")" # Change to the script's directory to make relative paths w
 
 LIBRARIANGEN_GOTOOLCHAIN=local
 LIBRARIANGEN_LOG=librariangen.log
+GAPIC_GENERATOR_VERSION="2.62.3"
 echo "Cleaning up from last time: rm -f $LIBRARIANGEN_LOG"
 rm -f "$LIBRARIANGEN_LOG"
 
@@ -34,9 +35,6 @@ rm -f "$LIBRARIANGEN_LOG"
 echo "--- Tool Versions ---"
 echo "Go: $(GOWORK=off GOTOOLCHAIN=${LIBRARIANGEN_GOTOOLCHAIN} go version)"
 echo "protoc: $(protoc --version 2>&1)"
-echo "protoc-gen-go: $(protoc-gen-go --version 2>&1)"
-echo "protoc-gen-go-grpc: $(protoc-gen-go-grpc --version 2>&1)"
-echo "protoc-gen-go_gapic: v0.53.1"
 echo "---------------------"
 ) >> "$LIBRARIANGEN_LOG" 2>&1
 
@@ -44,19 +42,20 @@ echo "---------------------"
 if ! command -v "protoc" &> /dev/null; then
   echo "Error: protoc not found in PATH. Please install it."
 fi
-if ! command -v "protoc-gen-go" &> /dev/null; then
-  echo "Error: protoc-gen-go not found in PATH. Please install it."
-  echo "  go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.35.2"
-fi
-if ! command -v "protoc-gen-go-grpc" &> /dev/null; then
-  echo "Error: protoc-gen-go-grpc not found in PATH. Please install it."
-  echo "  go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.3.0"
-fi
-if ! command -v "protoc-gen-go_gapic" &> /dev/null; then
-  echo "protoc-gen-go_gapic not found in PATH. Installing..."
-  (GOWORK=off GOTOOLCHAIN=${LIBRARIANGEN_GOTOOLCHAIN} go install github.com/googleapis/gapic-generator-go/cmd/protoc-gen-go_gapic@v0.53.1)
-fi
 
+# Download gapic-generator-java
+echo "Downloading gapic-generator-java version $GAPIC_GENERATOR_VERSION..."
+wget -q https://repo1.maven.org/maven2/com/google/api/gapic-generator-java/$GAPIC_GENERATOR_VERSION/gapic-generator-java-$GAPIC_GENERATOR_VERSION.jar -O gapic-generator-java.jar
+#cp /usr/local/google/home/meltsufin/projects/sdk-platform-java/gapic-generator-java/target/gapic-generator-java-2.62.4-SNAPSHOT.jar gapic-generator-java.jar
+
+# Create wrapper script
+ABS_PATH=$(pwd)
+cat > protoc-gen-java_gapic << EOL
+#!/bin/bash
+set -e
+exec java -cp "$ABS_PATH/gapic-generator-java.jar" com.google.api.generator.Main $@
+EOL
+chmod +x protoc-gen-java_gapic
 
 echo "Cleaning up from last time..."
 rm -rf ./output ./librarian
@@ -97,13 +96,14 @@ GOWORK=off GOTOOLCHAIN=${LIBRARIANGEN_GOTOOLCHAIN} go build -o "$BINARY_PATH" .
 
 # 4. Run the librariangen generate command.
 echo "Running librariangen..."
+enable_post_processor=false
 if [ "$enable_post_processor" = true ]; then
-    PATH=$(GOWORK=off GOTOOLCHAIN=${LIBRARIANGEN_GOTOOLCHAIN} go env GOPATH)/bin:$HOME/go/bin:$PATH ./librariangen generate \
+    PATH=$(pwd):$(GOWORK=off GOTOOLCHAIN=${LIBRARIANGEN_GOTOOLCHAIN} go env GOPATH)/bin:$HOME/go/bin:$PATH ./librariangen generate \
       --source="$SOURCE_DIR" \
       --librarian="$LIBRARIAN_DIR" \
       --output="$OUTPUT_DIR" >> "$LIBRARIANGEN_LOG" 2>&1
 else
-    PATH=$(GOWORK=off GOTOOLCHAIN=${LIBRARIANGEN_GOTOOLCHAIN} go env GOPATH)/bin:$HOME/go/bin:$PATH ./librariangen generate \
+    PATH=$(pwd):$(GOWORK=off GOTOOLCHAIN=${LIBRARIANGEN_GOTOOLCHAIN} go env GOPATH)/bin:$HOME/go/bin:$PATH ./librariangen generate \
       --source="$SOURCE_DIR" \
       --librarian="$LIBRARIAN_DIR" \
       --output="$OUTPUT_DIR" \

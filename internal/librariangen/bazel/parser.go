@@ -40,17 +40,8 @@ type Config struct {
 	transport         string
 	diregapic         bool
 
-	// Meta configuration
-	// TODO(quartzmo): Remove this field once the googleapis migration from go_proto_library
-	// to go_grpc_library is complete.
-	// See https://github.com/googleapis/librarian/issues/1021.
-	hasGoGRPC bool
-
 	// Whether this library has a GAPIC rule at all.
 	hasGAPIC bool
-
-	// Whether the go_proto_library rule uses @io_bazel_rules_go//proto:go_grpc
-	hasLegacyGRPC bool
 }
 
 // HasGAPIC indicates whether the GAPIC generator should be run.
@@ -96,18 +87,13 @@ func (c *Config) HasDiregapic() bool { return c.diregapic }
 // numeric enums. This is typically true.
 func (c *Config) HasRESTNumericEnums() bool { return c.restNumericEnums }
 
-// HasGoGRPC is meta-configuration that indicates if a go_grpc_library rule is used
-// instead of a go_proto_library in the BUILD.bazel file. This is not part of the
-// BUILD.bazel configuration passed to the GAPIC generator. If true, --go-grpc_out
-// is passed to the protoc command. Will be removed once the googleapis migration
-// from go_proto_library to go_grpc_library is complete and --go-grpc_out is always
-// used. This is trending toward typically true.
-func (c *Config) HasGoGRPC() bool { return c.hasGoGRPC }
+// HasGoGRPC indicates whether the Go gRPC generator should be run.
+func (c *Config) HasGoGRPC() bool { return false }
 
-// HasLegacyGRPC indicates whether a go_proto_library rule uses
-// @io_bazel_rules_go//proto:go_grpc to generate gRPC code. If so,
-// the "plugins=grpc" option is passed to the legacy Go plugin.
-func (c *Config) HasLegacyGRPC() bool { return c.hasLegacyGRPC }
+// HasLegacyGRPC indicates whether the legacy Go gRPC generator should be run.
+func (c *Config) HasLegacyGRPC() bool { return false }
+
+
 
 // Validate ensures that the configuration is valid.
 func (c *Config) Validate() error {
@@ -156,19 +142,7 @@ func Parse(dir string) (*Config, error) {
 		}
 	}
 
-	// We are currently migrating go_proto_library to go_grpc_library.
-	// Only one is expect to be present
-	if strings.Contains(content, "go_grpc_library") {
-		c.hasGoGRPC = true
-	}
-	goProtoLibraryPattern := regexp.MustCompile(`go_proto_library\((?s:.)*?\)`)
-	goProtoLibraryBlock := goProtoLibraryPattern.FindString(content)
-	if goProtoLibraryBlock != "" {
-		if c.hasGoGRPC {
-			return nil, fmt.Errorf("librariangen: misconfiguration in BUILD.bazel file, only one of go_grpc_library and go_proto_library rules should be present: %s", fp)
-		}
-		c.hasLegacyGRPC = strings.Contains(goProtoLibraryBlock, "@io_bazel_rules_go//proto:go_grpc")
-	}
+
 	if err := c.Validate(); err != nil {
 		return nil, fmt.Errorf("librariangen: invalid bazel config in %s: %w", dir, err)
 	}
