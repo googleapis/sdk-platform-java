@@ -65,9 +65,9 @@ if [ -z "${dependency_list}" ]; then
       continue
     fi
     # Format from `dependencies.txt`: {GroupID}:{ArtifactID},{PropertyName}={Version}
-    version=$(echo "${line}" | cut -d'=' -f2)
-    dependency_and_group_artifact=$(echo "${line}" | cut -d'=' -f1)
-    dependency=$(echo "${dependency_and_group_artifact}" | cut -d',' -f2)
+    propertyVersion=$(echo "${line}" | cut -d',' -f2)
+    dependency=$(echo "${propertyVersion}" | cut -d'=' -f1)
+    version=$(echo "${propertyVersion}" | cut -d'=' -f2)
     MAVEN_COMMAND+=" -D${dependency}.version=${version}"
   done < "${UPPER_BOUND_DEPENDENCY_FILE}"
 else # This else block means that a list of dependencies was inputted

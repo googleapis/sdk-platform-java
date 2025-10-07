@@ -1,8 +1,8 @@
 # This file contains a list of dependencies and their versions to be tested for compatibility.
 # The format is `{GroupID}:{ArtifactID},{PropertyName}={Version}`. The GAV coordinates
-# (specifically the GroupID and ArtifactID are parsed by renovate to find the artifact from Maven
-# Central. Version stores the currently known upper bound. MavenPropertyName corresponds to the
-# Maven property value in the pom.xml (it is not a 1:1 mapping to the GAV).
+# (specifically the GroupID and ArtifactID) are parsed by renovate to find the artifact from Maven
+# Central. Version stores the currently known upper bound. PropertyName corresponds to the Maven
+# property value in the pom.xml (it is NOT a 1:1 mapping to the GAV).
 # "1P" refers to First-Party dependencies (owned by Google).
 # "3P" refers to Third-Party dependencies.
 
