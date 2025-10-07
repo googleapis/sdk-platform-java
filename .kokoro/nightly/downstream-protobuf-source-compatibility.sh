@@ -48,7 +48,7 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
       -Denforcer.skip \
       -Dmaven.javadoc.skip \
       -Denforcer.skip \
-      -Dprotobuf-java.version=${PROTOBUF_RUNTIME_VERSION} \
+      -Dprotobuf.version=${PROTOBUF_RUNTIME_VERSION} \
       -pl "${google_cloud_java_handwritten_maven_args}" -am \
       "${surefire_opt}" \
       -T 1C
@@ -58,7 +58,7 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
       -Denforcer.skip \
       -Dmaven.javadoc.skip \
       -Denforcer.skip \
-      -Dprotobuf-java.version=${PROTOBUF_RUNTIME_VERSION} \
+      -Dprotobuf.version=${PROTOBUF_RUNTIME_VERSION} \
       "${surefire_opt}" \
       -T 1C
   fi

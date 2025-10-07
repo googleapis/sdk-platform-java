@@ -63,7 +63,7 @@
         <dependency>
             <groupId>com.google.errorprone</groupId>
             <artifactId>error_prone_annotations</artifactId>
-            <version>${error_prone_annotations.version}</version>
+            <version>${errorprone.version}</version>
             <scope>compile</scope>
         </dependency>
 

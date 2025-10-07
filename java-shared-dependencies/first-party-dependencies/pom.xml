@@ -23,8 +23,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <site.installationModule>${project.artifactId}</site.installationModule>
     <grpc-gcp.version>1.6.1</grpc-gcp.version>
-    <google-oauth-client.version>1.39.0</google-oauth-client.version>
-    <google-api-client.version>2.7.2</google-api-client.version>
+    <google.oauth-client.version>1.39.0</google.oauth-client.version>
+    <google.api-client.version>2.7.2</google.api-client.version>
   </properties>
 
   <dependencyManagement>
@@ -52,14 +52,14 @@
       <dependency>
         <groupId>com.google.oauth-client</groupId>
         <artifactId>google-oauth-client-bom</artifactId>
-        <version>${google-oauth-client.version}</version>
+        <version>${google.oauth-client.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.google.api-client</groupId>
         <artifactId>google-api-client-bom</artifactId>
-        <version>${google-api-client.version}</version>
+        <version>${google.api-client.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
