@@ -29,19 +29,6 @@ function print_help() {
   echo "Use -l {deps_list} for a comma-separated list of dependencies to test (Format: dep1=1.0,dep2=2.0)"
 }
 
-# Function to parse a dependency string and append it to the Maven command
-function add_dependency_to_maven_command() {
-  local dep_pair=$1
-  if [[ ! "${dep_pair}" =~ .*:.*:.* ]]; then
-    echo "Malformed dependency string: ${dep_pair}. Expected format: {GroupID}:{ArtifactID}:{Version}:{MavenPropertyName}"
-    exit 1
-  fi
-  local full_dependency=$(echo "${dep_pair}" | rev | cut -d':' -f2- | rev)
-  local dependency=$(echo "${dep_pair}" | rev | cut -d':' -f1 | rev)
-  local version=$(echo "${full_dependency}" | awk -F':' '{print $NF}')
-  MAVEN_COMMAND+=" -D${dependency}.version=${version}"
-}
-
 # Default to the upper bounds file in the root of the repo
 file='dependencies.txt'
 dependency_list=''
@@ -78,7 +65,10 @@ if [ -z "${dependency_list}" ]; then
     if [[ "${line}" =~ ^[[:space:]]*# ]] || [[ -z "${line}" ]]; then
       continue
     fi
-    add_dependency_to_maven_command "${line}"
+    # Format from `dependencies.txt`: {GroupID}:{ArtifactID}:{Version}:{MavenPropertyName}
+    dependency=$(echo "${line}" | cut -d':' -f4)
+    version=$(echo "${line}" | cut -d':' -f3)
+    MAVEN_COMMAND+=" -D${dependency}.version=${version}"
   done < "${UPPER_BOUND_DEPENDENCY_FILE}"
 else # This else block means that a list of dependencies was inputted
   # Set the Internal Field Separator (IFS) to a comma.
@@ -92,7 +82,10 @@ else # This else block means that a list of dependencies was inputted
     if [ -z "${DEP_PAIR}" ]; then
       continue
     fi
-    add_dependency_to_maven_command "${DEP_PAIR}"
+    # Format: {MavenPropertyName}:{Version}
+    dependency=$(echo "${DEP_PAIR}" | cut -d':' -f1)
+    version=$(echo "${DEP_PAIR}" | cut -d':' -f2)
+    MAVEN_COMMAND+=" -D${dependency}.version=${version}"
   done
 fi
 
