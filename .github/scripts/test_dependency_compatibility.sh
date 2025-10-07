@@ -9,7 +9,7 @@
 # upper-bounds dependency file at the root of the repo.
 # There are two potential inputs to the script:
 # 1. -f {file}: Custom file/path for the upper-bound dependencies to test
-# 2. -l {deps_list}: Comma-separated list of dependencies to test (e.g. protobuf=4.31.0,guava=33.4.8-jre)
+# 2. -l {deps_list}: Comma-separated list of dependencies to test (e.g. protobuf:4.31.0,guava:33.4.8-jre)
 # Note: Do not include the `-D` prefix or `.version` suffix. Those values will be appended when generating
 # the maven command.
 #
@@ -18,15 +18,14 @@
 # an input for the deps_list to manually run a subset of dependencies.
 #
 # The default upper-bound dependencies file is `dependencies.txt` located in the root
-# of sdk-platform-java. The upper-bound dependencies file will be in the format of:
-# {groupId}:{artifactId}={version} or {artifactId}={version}
+# of sdk-platform-java. See the upper-bound dependencies file for the dependency format.
 
 set -ex
 
 function print_help() {
   echo "Unexpected input argument for this script."
   echo "Use -f {file} for the directory of the upper-bound dependencies file."
-  echo "Use -l {deps_list} for a comma-separated list of dependencies to test (Format: dep1=1.0,dep2=2.0)"
+  echo "Use -l {deps_list} for a comma-separated list of dependencies to test (Format: dep1:1.0,dep2:2.0)"
 }
 
 # Default to the upper bounds file in the root of the repo
