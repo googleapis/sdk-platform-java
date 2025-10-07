@@ -5,3 +5,6 @@ librariangen-container.log
 librariangen-container-release-init.log
 build-docker-and-test.log
 doc
+output/
+gapic-generator-java.jar
+protoc-gen-java_gapic
