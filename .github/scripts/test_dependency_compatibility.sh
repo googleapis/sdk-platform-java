@@ -47,7 +47,7 @@ if [[ -z "${file}" && -z "${dependency_list}" ]]; then
   print_help && exit 1
 fi
 
-MAVEN_COMMAND="mvn verify -Penable-integration-tests -Dclirr.skip -Dcheckstyle.skip -Dfmt.skip -Denforcer.skip "
+MAVEN_COMMAND="mvn -ntp -B verify -Penable-integration-tests -Dclirr.skip -Dcheckstyle.skip -Dfmt.skip -Denforcer.skip"
 
 # Check if a list of dependencies was provided as an argument. If the list of dependency inputted
 # is empty, then run with the upper-bound dependencies file

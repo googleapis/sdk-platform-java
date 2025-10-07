@@ -7,7 +7,8 @@ on:
   workflow_dispatch:
     inputs:
       dependencies-list:
-        description: 'Comma-separated list of dependencies to test (Example format: protobuf=4.31.0,guava=33.4.8-jre).
+        description: 'Comma-separated list of dependencies to test (Example format: protobuf:4.31.0,guava:33.4.8-jre).
+                      Note: The name should be the maven property. Find this value in the <properties> section in the pom.
                       Do not include the `-D` prefix or `.version` suffix. Those values will be appended when generating
                       the command. No input (default) will run the the upper-bound dependencies file.'
         required: false
