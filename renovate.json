@@ -13,7 +13,7 @@
     {
       "customType": "regex",
       "managerFilePatterns": ["/dependencies\\.txt/"],
-      "matchStrings": ["(?<depName>.*)=(?<currentValue>.*)\\n"],
+      "matchStrings": ["(?<depName>.*);(?<unused>.*)=(?<currentValue>.*)"],
       "datasourceTemplate": "maven"
     },
     {

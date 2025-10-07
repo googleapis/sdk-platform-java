@@ -37,9 +37,9 @@ function add_dependency_to_maven_command() {
     exit 1
   fi
   local full_dependency=$(echo "${dep_pair}" | cut -d'=' -f1 | tr -d '[:space:]')
-  # The dependency can be in the format of {groupId}:{artifactId} or {artifactId}
-  # We only want the artifactId
-  local dependency=$(echo "${full_dependency}" | awk -F':' '{print $NF}')
+  # The dependency can be in the format of {groupId}:{artifactId};{pomPropertyName}
+  # We only want the pomPropertyName
+  local dependency=$(echo "${full_dependency}" | awk -F';' '{print $NF}')
   local version=$(echo "${dep_pair}" | cut -d'=' -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
   MAVEN_COMMAND+=" -D${dependency}.version=${version}"
 }
