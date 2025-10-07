@@ -38,6 +38,7 @@ import com.google.api.client.testing.http.MockLowLevelHttpResponse;
 import com.google.api.core.ApiClock;
 import com.google.api.core.CurrentMillisClock;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.spi.ServiceRpcFactory;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -58,7 +59,7 @@ class ServiceOptionsTest {
   private static GoogleCredentials credentialsWithQuotaProject;
   private static GoogleCredentials credentialsNotInGDU;
 
-  private static final String JSON_KEY =
+  private static final String SA_JSON_KEY =
       "{\n"
           + "  \"private_key_id\": \"somekeyid\",\n"
           + "  \"private_key\": \"-----BEGIN PRIVATE KEY-----\\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggS"
@@ -87,7 +88,7 @@ class ServiceOptionsTest {
           + "  \"universe_domain\": \"googleapis.com\"\n"
           + "}";
 
-  private static final String JSON_KEY_PROJECT_ID =
+  private static final String SA_JSON_KEY_PROJECT_ID =
       "{\n"
           + "  \"private_key_id\": \"somekeyid\",\n"
           + "  \"private_key\": \"-----BEGIN PRIVATE KEY-----\\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggS"
@@ -117,7 +118,7 @@ class ServiceOptionsTest {
           + "  \"universe_domain\": \"googleapis.com\"\n"
           + "}";
 
-  private static final String JSON_KEY_QUOTA_PROJECT_ID =
+  private static final String SA_JSON_KEY_QUOTA_PROJECT_ID =
       "{\n"
           + "  \"private_key_id\": \"somekeyid\",\n"
           + "  \"private_key\": \"-----BEGIN PRIVATE KEY-----\\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggS"
@@ -149,7 +150,7 @@ class ServiceOptionsTest {
           + "}";
 
   // Key added by copying the keys above and adding in the universe domain field
-  private static final String JSON_KEY_NON_GDU =
+  private static final String SA_JSON_KEY_NON_GDU =
       "{\n"
           + "  \"private_key_id\": \"somekeyid\",\n"
           + "  \"private_key\": \"-----BEGIN PRIVATE KEY-----\\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggS"
@@ -179,16 +180,16 @@ class ServiceOptionsTest {
           + "}";
 
   static {
-    credentials = loadCredentials(JSON_KEY);
-    credentialsWithProjectId = loadCredentials(JSON_KEY_PROJECT_ID);
-    credentialsWithQuotaProject = loadCredentials(JSON_KEY_QUOTA_PROJECT_ID);
-    credentialsNotInGDU = loadCredentials(JSON_KEY_NON_GDU);
+    credentials = loadServiceAccountCredentials(SA_JSON_KEY);
+    credentialsWithProjectId = loadServiceAccountCredentials(SA_JSON_KEY_PROJECT_ID);
+    credentialsWithQuotaProject = loadServiceAccountCredentials(SA_JSON_KEY_QUOTA_PROJECT_ID);
+    credentialsNotInGDU = loadServiceAccountCredentials(SA_JSON_KEY_NON_GDU);
   }
 
-  static GoogleCredentials loadCredentials(String credentialFile) {
+  static GoogleCredentials loadServiceAccountCredentials(String credentialFile) {
     try {
       InputStream keyStream = new ByteArrayInputStream(credentialFile.getBytes());
-      return GoogleCredentials.fromStream(keyStream);
+      return ServiceAccountCredentials.fromStream(keyStream);
     } catch (IOException e) {
       fail("Couldn't create fake JSON credentials.");
     }

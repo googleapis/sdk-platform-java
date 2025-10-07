@@ -44,6 +44,7 @@ import com.google.api.gax.rpc.testing.FakeCallContext;
 import com.google.api.gax.rpc.testing.FakeClientSettings;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.truth.Truth;
 import java.io.ByteArrayInputStream;
@@ -69,7 +70,7 @@ class ClientSettingsTest {
       "quota_project_id_from_credentials";
   private static final String QUOTA_PROJECT_ID_FROM_CONTEXT =
       "quota_project_id_from_client_context";
-  private static final String JSON_KEY_QUOTA_PROJECT_ID =
+  private static final String SA_JSON_KEY_QUOTA_PROJECT_ID =
       "{\n"
           + "  \"private_key_id\": \"somekeyid\",\n"
           + "  \"private_key\": \"-----BEGIN PRIVATE KEY-----\\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggS"
@@ -102,7 +103,7 @@ class ClientSettingsTest {
           + "}";
 
   private static final GoogleCredentials credentialsWithQuotaProject =
-      loadCredentials(JSON_KEY_QUOTA_PROJECT_ID);
+      loadServiceAccountCredentials(SA_JSON_KEY_QUOTA_PROJECT_ID);
 
   @Test
   void testEmptyBuilder() throws Exception {
@@ -321,10 +322,10 @@ class ClientSettingsTest {
         .containsExactly(StatusCode.Code.DEADLINE_EXCEEDED);
   }
 
-  static GoogleCredentials loadCredentials(String credentialFile) {
+  static GoogleCredentials loadServiceAccountCredentials(String serviceAccountCredentialFile) {
     try {
-      InputStream keyStream = new ByteArrayInputStream(credentialFile.getBytes());
-      return GoogleCredentials.fromStream(keyStream);
+      InputStream keyStream = new ByteArrayInputStream(serviceAccountCredentialFile.getBytes());
+      return ServiceAccountCredentials.fromStream(keyStream);
     } catch (IOException e) {
       fail("Couldn't create fake JSON credentials.");
     }
