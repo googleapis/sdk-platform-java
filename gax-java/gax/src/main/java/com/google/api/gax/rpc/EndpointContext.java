@@ -292,17 +292,25 @@ public abstract class EndpointContext {
               ? CertificateBasedAccess.createWithSystemEnv()
               : certificateBasedAccess();
       MtlsProvider mtlsProvider = mtlsProvider();
-      if (mtlsProvider == null) {
-        try {
-          mtlsProvider = DefaultMtlsProviderFactory.create();
-        } catch (CertificateSourceUnavailableException e) {
-          // This is okay. Leave mtlsProvider as null;
-        } catch (IOException e) {
-          LOG.log(
-              Level.WARNING,
-              "DefaultMtlsProviderFactory encountered unexpected IOException: " + e.getMessage());
+
+      // Only attempt to create a default MtlsProvider if client certificate usage is enabled.
+      if (certificateBasedAccess.useMtlsClientCertificate()) {
+        if (mtlsProvider == null) {
+          try {
+            mtlsProvider = DefaultMtlsProviderFactory.create();
+          } catch (CertificateSourceUnavailableException e) {
+            // This is okay. Leave mtlsProvider as null;
+          } catch (IOException e) {
+            LOG.log(
+                Level.WARNING,
+                "DefaultMtlsProviderFactory encountered unexpected IOException: " + e.getMessage());
+            LOG.log(
+                Level.WARNING,
+                "mTLS configuration was detected on the device, but mTLS failed to initialize. Falling back to non-mTLS channel.");
+          }
         }
       }
+
       // TransportChannelProvider's endpoint will override the ClientSettings' endpoint
       String customEndpoint =
           transportChannelProviderEndpoint() == null
