@@ -29,8 +29,8 @@ import com.google.logging.v2.TailLogEntriesRequest;
 import com.google.logging.v2.TailLogEntriesResponse;
 import com.google.logging.v2.WriteLogEntriesRequest;
 import com.google.logging.v2.WriteLogEntriesResponse;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Empty;
+import com.google.protobuf.Message;
 import io.grpc.stub.StreamObserver;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -41,7 +41,7 @@ import javax.annotation.Generated;
 @BetaApi
 @Generated("by gapic-generator-java")
 public class MockLoggingServiceV2Impl extends LoggingServiceV2ImplBase {
-  private List<AbstractMessage> requests;
+  private List<Message> requests;
   private Queue<Object> responses;
 
   public MockLoggingServiceV2Impl() {
@@ -49,15 +49,15 @@ public class MockLoggingServiceV2Impl extends LoggingServiceV2ImplBase {
     responses = new LinkedList<>();
   }
 
-  public List<AbstractMessage> getRequests() {
+  public List<Message> getRequests() {
     return requests;
   }
 
-  public void addResponse(AbstractMessage response) {
+  public void addResponse(Message response) {
     responses.add(response);
   }
 
-  public void setResponses(List<AbstractMessage> responses) {
+  public void setResponses(List<Message> responses) {
     this.responses = new LinkedList<Object>(responses);
   }
 

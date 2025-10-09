@@ -30,7 +30,7 @@
 package com.google.api.gax.grpc.testing;
 
 import com.google.api.core.BetaApi;
-import com.google.protobuf.AbstractMessage;
+import com.google.protobuf.Message;
 import io.grpc.ServerServiceDefinition;
 import java.util.List;
 
@@ -38,10 +38,10 @@ import java.util.List;
 @BetaApi
 public interface MockGrpcService {
   /** Returns all the requests received. */
-  List<AbstractMessage> getRequests();
+  List<Message> getRequests();
 
   /** Adds the response to the response queue. */
-  void addResponse(AbstractMessage response);
+  void addResponse(Message response);
 
   /** Adds the exception to the response queue. */
   void addException(Exception exception);
