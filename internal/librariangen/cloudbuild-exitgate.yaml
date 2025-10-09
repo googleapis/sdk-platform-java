@@ -43,3 +43,10 @@ options:
     logging: CLOUD_LOGGING_ONLY
 images:
   - us-central1-docker.pkg.dev/cloud-sdk-librarian-prod/images-dev/librarian-java:latest
+dependencies:
+- gitSource:
+    repository:
+      url: "${_LOUHI_REPOSITORY_URL}"
+    revision: "${_LOUHI_REF_SHA}"
+    destPath: "."
+
