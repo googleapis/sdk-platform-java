@@ -18,8 +18,7 @@
 # an input for the deps_list to manually run a subset of dependencies.
 #
 # The default upper-bound dependencies file is `dependencies.txt` located in the root
-# of sdk-platform-java. The upper-bound dependencies file will be in the format of:
-# ${dependency.name}=${dependency.version}
+# of sdk-platform-java. See the upper-bound dependencies file for the dependency format.
 
 set -ex
 
@@ -27,18 +26,6 @@ function print_help() {
   echo "Unexpected input argument for this script."
   echo "Use -f {file} for the directory of the upper-bound dependencies file."
   echo "Use -l {deps_list} for a comma-separated list of dependencies to test (Format: dep1=1.0,dep2=2.0)"
-}
-
-# Function to parse a dependency string and append it to the Maven command
-function add_dependency_to_maven_command() {
-  local dep_pair=$1
-  if [[ ! "${dep_pair}" =~ .*=.* ]]; then
-    echo "Malformed dependency string: ${dep_pair}. Expected format: dependency=version"
-    exit 1
-  fi
-  local dependency=$(echo "${dep_pair}" | cut -d'=' -f1 | tr -d '[:space:]')
-  local version=$(echo "${dep_pair}" | cut -d'=' -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-  MAVEN_COMMAND+=" -D${dependency}.version=${version}"
 }
 
 # Default to the upper bounds file in the root of the repo
@@ -59,7 +46,7 @@ if [[ -z "${file}" && -z "${dependency_list}" ]]; then
   print_help && exit 1
 fi
 
-MAVEN_COMMAND="mvn verify -Penable-integration-tests -Dclirr.skip -Dcheckstyle.skip -Dfmt.skip -Denforcer.skip "
+MAVEN_COMMAND="mvn -ntp -B verify -Penable-integration-tests -Dclirr.skip -Dcheckstyle.skip -Dfmt.skip -Denforcer.skip"
 
 # Check if a list of dependencies was provided as an argument. If the list of dependency inputted
 # is empty, then run with the upper-bound dependencies file
@@ -77,7 +64,11 @@ if [ -z "${dependency_list}" ]; then
     if [[ "${line}" =~ ^[[:space:]]*# ]] || [[ -z "${line}" ]]; then
       continue
     fi
-    add_dependency_to_maven_command "${line}"
+    # Format from `dependencies.txt`: {GroupID}:{ArtifactID},{PropertyName}={Version}
+    propertyVersion=$(echo "${line}" | cut -d',' -f2)
+    dependency=$(echo "${propertyVersion}" | cut -d'=' -f1)
+    version=$(echo "${propertyVersion}" | cut -d'=' -f2)
+    MAVEN_COMMAND+=" -D${dependency}.version=${version}"
   done < "${UPPER_BOUND_DEPENDENCY_FILE}"
 else # This else block means that a list of dependencies was inputted
   # Set the Internal Field Separator (IFS) to a comma.
@@ -91,7 +82,10 @@ else # This else block means that a list of dependencies was inputted
     if [ -z "${DEP_PAIR}" ]; then
       continue
     fi
-    add_dependency_to_maven_command "${DEP_PAIR}"
+    # Format: {MavenPropertyName}={Version}
+    dependency=$(echo "${DEP_PAIR}" | cut -d'=' -f1)
+    version=$(echo "${DEP_PAIR}" | cut -d'=' -f2)
+    MAVEN_COMMAND+=" -D${dependency}.version=${version}"
   done
 fi
 

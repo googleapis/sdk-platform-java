@@ -8,6 +8,7 @@ on:
     inputs:
       dependencies-list:
         description: 'Comma-separated list of dependencies to test (Example format: protobuf=4.31.0,guava=33.4.8-jre).
+                      Note: The name should be the maven property. Find this value in the <properties> section in the pom.
                       Do not include the `-D` prefix or `.version` suffix. Those values will be appended when generating
                       the command. No input (default) will run the the upper-bound dependencies file.'
         required: false
@@ -34,7 +35,7 @@ jobs:
         run: echo "DEPENDENCIES_LIST=${{ github.event.inputs.dependencies-list }}" >> $GITHUB_ENV
 
       # Run in the root module which should test for everything except for showcase
-      - name: Perform Dependency Compatibility Testing
+      - name: Perform Dependency Compatibility Unit Testing
         shell: bash
         run: |
           if [[ -n "${{ env.DEPENDENCIES_LIST }}" ]]; then
@@ -63,7 +64,7 @@ jobs:
           cd -
 
       # Run Showcase's Integration Tests
-      - name: Perform Dependency Compatibility Testing (Showcase only)
+      - name: Perform Dependency Compatibility Integration Testing (Showcase Tests)
         shell: bash
         # Need to cd out of the directory to get the scripts as this step is run inside the java-showcase directory
         run: |

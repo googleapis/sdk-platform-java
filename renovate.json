@@ -12,6 +12,12 @@
   "customManagers": [
     {
       "customType": "regex",
+      "managerFilePatterns": ["/^dependencies\\.txt$/"],
+      "matchStrings": ["(?<depName>.*),(.*)=(?<currentValue>.*)"],
+      "datasourceTemplate": "maven"
+    },
+    {
+      "customType": "regex",
       "fileMatch": [
         "^gax-java/dependencies\\.properties$"
       ],
