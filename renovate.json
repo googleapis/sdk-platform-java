@@ -22,6 +22,16 @@
         "^gax-java/dependencies\\.properties$"
       ],
       "matchStrings": [
+        "=(?<depName>.+\\:.+?):(?<currentValue>.+?)\\n"
+      ],
+      "datasourceTemplate": "maven"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "^gax-java/dependencies\\.properties$"
+      ],
+      "matchStrings": [
         "version\\.google_java_format=(?<currentValue>.+?)\\n"
       ],
       "depNameTemplate": "com.google.googlejavaformat:google-java-format",
