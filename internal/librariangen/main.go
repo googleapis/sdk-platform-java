@@ -27,22 +27,32 @@ const version = "0.1.0"
 
 // main is the entrypoint for the librariangen CLI.
 func main() {
-	logLevel := slog.LevelInfo
-	switch os.Getenv("GOOGLE_SDK_JAVA_LOGGING_LEVEL") {
-	case "debug":
-		logLevel = slog.LevelDebug
-	case "quiet":
-		logLevel = slog.LevelError + 1
-	}
+	os.Exit(runCLI(os.Args))
+}
+
+func runCLI(args []string) int {
+	logLevel := parseLogLevel(os.Getenv("GOOGLE_SDK_JAVA_LOGGING_LEVEL"))
 	slog.SetDefault(slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
 		Level: logLevel,
 	})))
-	slog.Info("librariangen: invoked", "args", os.Args)
-	if err := run(context.Background(), os.Args[1:]); err != nil {
+	slog.Info("librariangen: invoked", "args", args)
+	if err := run(context.Background(), args[1:]); err != nil {
 		slog.Error("librariangen: failed", "error", err)
-		os.Exit(1)
+		return 1
 	}
 	slog.Info("librariangen: finished successfully")
+	return 0
+}
+
+func parseLogLevel(logLevelEnv string) slog.Level {
+	switch logLevelEnv {
+	case "debug":
+		return slog.LevelDebug
+	case "quiet":
+		return slog.LevelError + 1
+	default:
+		return slog.LevelInfo
+	}
 }
 
 // run executes the appropriate command based on the CLI's invocation arguments.
