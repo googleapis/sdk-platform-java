@@ -94,53 +94,61 @@ public final class OperationsProto {
 
   static {
     java.lang.String[] descriptorData = {
-      "\n#google/longrunning/operations.proto\022\022g"
+      "\n"
+          + "#google/longrunning/operations.proto\022\022g"
           + "oogle.longrunning\032\034google/api/annotation"
-          + "s.proto\032\027google/api/client.proto\032\031google"
-          + "/protobuf/any.proto\032 google/protobuf/des"
-          + "criptor.proto\032\036google/protobuf/duration."
-          + "proto\032\033google/protobuf/empty.proto\032\027goog"
-          + "le/rpc/status.proto\"\250\001\n\tOperation\022\014\n\004nam"
-          + "e\030\001 \001(\t\022&\n\010metadata\030\002 \001(\0132\024.google.proto"
-          + "buf.Any\022\014\n\004done\030\003 \001(\010\022#\n\005error\030\004 \001(\0132\022.g"
-          + "oogle.rpc.StatusH\000\022(\n\010response\030\005 \001(\0132\024.g"
-          + "oogle.protobuf.AnyH\000B\010\n\006result\"#\n\023GetOpe"
-          + "rationRequest\022\014\n\004name\030\001 \001(\t\"\\\n\025ListOpera"
-          + "tionsRequest\022\014\n\004name\030\004 \001(\t\022\016\n\006filter\030\001 \001"
-          + "(\t\022\021\n\tpage_size\030\002 \001(\005\022\022\n\npage_token\030\003 \001("
-          + "\t\"d\n\026ListOperationsResponse\0221\n\noperation"
-          + "s\030\001 \003(\0132\035.google.longrunning.Operation\022\027"
-          + "\n\017next_page_token\030\002 \001(\t\"&\n\026CancelOperati"
-          + "onRequest\022\014\n\004name\030\001 \001(\t\"&\n\026DeleteOperati"
-          + "onRequest\022\014\n\004name\030\001 \001(\t\"P\n\024WaitOperation"
-          + "Request\022\014\n\004name\030\001 \001(\t\022*\n\007timeout\030\002 \001(\0132\031"
-          + ".google.protobuf.Duration\"=\n\rOperationIn"
-          + "fo\022\025\n\rresponse_type\030\001 \001(\t\022\025\n\rmetadata_ty"
-          + "pe\030\002 \001(\t2\252\005\n\nOperations\022\224\001\n\016ListOperatio"
-          + "ns\022).google.longrunning.ListOperationsRe"
-          + "quest\032*.google.longrunning.ListOperation"
-          + "sResponse\"+\332A\013name,filter\202\323\344\223\002\027\022\025/v1/{na"
-          + "me=operations}\022\177\n\014GetOperation\022\'.google."
-          + "longrunning.GetOperationRequest\032\035.google"
-          + ".longrunning.Operation\"\'\332A\004name\202\323\344\223\002\032\022\030/"
-          + "v1/{name=operations/**}\022~\n\017DeleteOperati"
-          + "on\022*.google.longrunning.DeleteOperationR"
-          + "equest\032\026.google.protobuf.Empty\"\'\332A\004name\202"
-          + "\323\344\223\002\032*\030/v1/{name=operations/**}\022\210\001\n\017Canc"
-          + "elOperation\022*.google.longrunning.CancelO"
-          + "perationRequest\032\026.google.protobuf.Empty\""
-          + "1\332A\004name\202\323\344\223\002$\"\037/v1/{name=operations/**}"
-          + ":cancel:\001*\022Z\n\rWaitOperation\022(.google.lon"
-          + "grunning.WaitOperationRequest\032\035.google.l"
-          + "ongrunning.Operation\"\000\032\035\312A\032longrunning.g"
-          + "oogleapis.com:Z\n\016operation_info\022\036.google"
-          + ".protobuf.MethodOptions\030\231\010 \001(\0132!.google."
-          + "longrunning.OperationInfoB\245\001\n\026com.google"
-          + ".longrunningB\017OperationsProtoP\001ZCcloud.g"
-          + "oogle.com/go/longrunning/autogen/longrun"
-          + "ningpb;longrunningpb\370\001\001\242\002\005GLRUN\252\002\022Google"
-          + ".LongRunning\312\002\022Google\\LongRunningb\006proto"
-          + "3"
+          + "s.proto\032\027google/api/client.proto\032\037google"
+          + "/api/field_behavior.proto\032\031google/protobuf/any.proto\032"
+          + " google/protobuf/descriptor.proto\032\036google/protobuf/duration.proto\032\033"
+          + "google/protobuf/empty.proto\032\027google/rpc/status.proto\"\250\001\n"
+          + "\tOperation\022\014\n"
+          + "\004name\030\001 \001(\t\022&\n"
+          + "\010metadata\030\002 \001(\0132\024.google.protobuf.Any\022\014\n"
+          + "\004done\030\003 \001(\010\022#\n"
+          + "\005error\030\004 \001(\0132\022.google.rpc.StatusH\000\022(\n"
+          + "\010response\030\005 \001(\0132\024.google.protobuf.AnyH\000B\010\n"
+          + "\006result\"#\n"
+          + "\023GetOperationRequest\022\014\n"
+          + "\004name\030\001 \001(\t\"|\n"
+          + "\025ListOperationsRequest\022\014\n"
+          + "\004name\030\004 \001(\t\022\016\n"
+          + "\006filter\030\001 \001(\t\022\021\n"
+          + "\tpage_size\030\002 \001(\005\022\022\n\n"
+          + "page_token\030\003 \001(\t\022\036\n"
+          + "\026return_partial_success\030\005 \001(\010\"~\n"
+          + "\026ListOperationsResponse\0221\n\n"
+          + "operations\030\001 \003(\0132\035.google.longrunning.Operation\022\027\n"
+          + "\017next_page_token\030\002 \001(\t\022\030\n"
+          + "\013unreachable\030\003 \003(\tB\003\340A\006\"&\n"
+          + "\026CancelOperationRequest\022\014\n"
+          + "\004name\030\001 \001(\t\"&\n"
+          + "\026DeleteOperationRequest\022\014\n"
+          + "\004name\030\001 \001(\t\"P\n"
+          + "\024WaitOperationRequest\022\014\n"
+          + "\004name\030\001 \001(\t\022*\n"
+          + "\007timeout\030\002 \001(\0132\031.google.protobuf.Duration\"=\n\r"
+          + "OperationInfo\022\025\n\r"
+          + "response_type\030\001 \001(\t\022\025\n\r"
+          + "metadata_type\030\002 \001(\t2\252\005\n\n"
+          + "Operations\022\224\001\n"
+          + "\016ListOperations\022).google.longrunning.ListO"
+          + "perationsRequest\032*.google.longrunning.Li"
+          + "stOperationsResponse\"+\332A\013name,filter\202\323\344\223\002\027\022\025/v1/{name=operations}\022\177\n"
+          + "\014GetOperation\022\'.google.longrunning.GetOperationReque"
+          + "st\032\035.google.longrunning.Operation\"\'\332A\004name\202\323\344\223\002\032\022\030/v1/{name=operations/**}\022~\n"
+          + "\017DeleteOperation\022*.google.longrunning.Delet"
+          + "eOperationRequest\032\026.google.protobuf.Empt"
+          + "y\"\'\332A\004name\202\323\344\223\002\032*\030/v1/{name=operations/**}\022\210\001\n"
+          + "\017CancelOperation\022*.google.longrunning.CancelOperationRequest\032\026.google.prot"
+          + "obuf.Empty\"1\332A\004name\202\323\344\223\002$\"\037/v1/{name=operations/**}:cancel:\001*\022Z\n\r"
+          + "WaitOperation\022(.google.longrunning.WaitOperationRequest"
+          + "\032\035.google.longrunning.Operation\"\000\032\035\312A\032longrunning.googleapis.com:Z\n"
+          + "\016operation_info\022\036.google.protobuf.MethodOptions\030\231\010"
+          + " \001(\0132!.google.longrunning.OperationInfoB\242\001\n"
+          + "\026com.google.longrunningB\017OperationsProto"
+          + "P\001ZCcloud.google.com/go/longrunning/auto"
+          + "gen/longrunningpb;longrunningpb\242\002\005GLRUN\252"
+          + "\002\022Google.LongRunning\312\002\022Google\\LongRunningb\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
@@ -148,6 +156,7 @@ public final class OperationsProto {
             new com.google.protobuf.Descriptors.FileDescriptor[] {
               com.google.api.AnnotationsProto.getDescriptor(),
               com.google.api.ClientProto.getDescriptor(),
+              com.google.api.FieldBehaviorProto.getDescriptor(),
               com.google.protobuf.AnyProto.getDescriptor(),
               com.google.protobuf.DescriptorProtos.getDescriptor(),
               com.google.protobuf.DurationProto.getDescriptor(),
@@ -176,7 +185,7 @@ public final class OperationsProto {
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_longrunning_ListOperationsRequest_descriptor,
             new java.lang.String[] {
-              "Name", "Filter", "PageSize", "PageToken",
+              "Name", "Filter", "PageSize", "PageToken", "ReturnPartialSuccess",
             });
     internal_static_google_longrunning_ListOperationsResponse_descriptor =
         getDescriptor().getMessageTypes().get(3);
@@ -184,7 +193,7 @@ public final class OperationsProto {
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_longrunning_ListOperationsResponse_descriptor,
             new java.lang.String[] {
-              "Operations", "NextPageToken",
+              "Operations", "NextPageToken", "Unreachable",
             });
     internal_static_google_longrunning_CancelOperationRequest_descriptor =
         getDescriptor().getMessageTypes().get(4);
@@ -222,12 +231,14 @@ public final class OperationsProto {
     com.google.protobuf.ExtensionRegistry registry =
         com.google.protobuf.ExtensionRegistry.newInstance();
     registry.add(com.google.api.ClientProto.defaultHost);
+    registry.add(com.google.api.FieldBehaviorProto.fieldBehavior);
     registry.add(com.google.api.AnnotationsProto.http);
     registry.add(com.google.api.ClientProto.methodSignature);
     com.google.protobuf.Descriptors.FileDescriptor.internalUpdateFileDescriptor(
         descriptor, registry);
     com.google.api.AnnotationsProto.getDescriptor();
     com.google.api.ClientProto.getDescriptor();
+    com.google.api.FieldBehaviorProto.getDescriptor();
     com.google.protobuf.AnyProto.getDescriptor();
     com.google.protobuf.DescriptorProtos.getDescriptor();
     com.google.protobuf.DurationProto.getDescriptor();
