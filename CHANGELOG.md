@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.63.0](https://github.com/googleapis/sdk-platform-java/compare/v2.62.3...v2.63.0) (2025-10-11)
+
+
+### Features
+
+* **librariangen:** add execv package ([#3932](https://github.com/googleapis/sdk-platform-java/issues/3932)) ([f6b0b47](https://github.com/googleapis/sdk-platform-java/commit/f6b0b47a14eddd9c76540362b5922a5acc56b5d4))
+* **librariangen:** add request package ([#3933](https://github.com/googleapis/sdk-platform-java/issues/3933)) ([fe44aed](https://github.com/googleapis/sdk-platform-java/commit/fe44aede2aba9627db4aa0397d2ac4de353cea03))
+* **librariangen:** scaffold Java language container for Librarian ([#3926](https://github.com/googleapis/sdk-platform-java/issues/3926)) ([29d188d](https://github.com/googleapis/sdk-platform-java/commit/29d188d20e530570f46774b37d88703822774a33))
+
 ## [2.62.3](https://github.com/googleapis/sdk-platform-java/compare/v2.62.2...v2.62.3) (2025-10-02)
 
 
