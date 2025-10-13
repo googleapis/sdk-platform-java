@@ -20,7 +20,6 @@ import (
 	"path/filepath"
 	"strings"
 
-	"cloud.google.com/java/internal/librariangen/request"
 )
 
 // ConfigProvider is an interface that describes the configuration needed
@@ -36,7 +35,7 @@ type ConfigProvider interface {
 }
 
 // Build constructs the full protoc command arguments for a given API.
-func Build(lib *request.Library, api *request.API, apiServiceDir string, config ConfigProvider, sourceDir, outputDir string) ([]string, error) {
+func Build(apiServiceDir string, config ConfigProvider, sourceDir, outputDir string) ([]string, error) {
 	// Gather all .proto files in the API's source directory.
 	entries, err := os.ReadDir(apiServiceDir)
 	if err != nil {

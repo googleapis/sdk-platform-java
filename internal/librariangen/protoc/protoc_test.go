@@ -19,7 +19,6 @@ import (
 	"strings"
 	"testing"
 
-	"cloud.google.com/java/internal/librariangen/request"
 	"github.com/google/go-cmp/cmp"
 )
 
@@ -50,7 +49,6 @@ func TestBuild(t *testing.T) {
 	tests := []struct {
 		name          string
 		apiPath       string
-		apiServiceDir string
 		reqID         string
 		config        mockConfigProvider
 		want          []string
@@ -130,14 +128,7 @@ func TestBuild(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			req := &request.Library{
-				ID: tt.reqID,
-			}
-			api := &request.API{
-				Path: tt.apiPath,
-			}
-
-			got, err := Build(req, api, filepath.Join(sourceDir, tt.apiPath), &tt.config, sourceDir, "/output")
+			got, err := Build(filepath.Join(sourceDir, tt.apiPath), &tt.config, sourceDir, "/output")
 			if err != nil {
 				t.Fatalf("Build() failed: %v", err)
 			}
