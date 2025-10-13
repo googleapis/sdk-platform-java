@@ -27,6 +27,13 @@ jobs:
         run: go version
 
       - name: Run Go tests
-        run: go test ./...
+        run: go test -v -coverprofile=coverage.txt -covermode=atomic ./...
         working-directory: internal/librariangen
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: coverage.txt
+          working-directory: internal/librariangen
+          flags: librariangen
