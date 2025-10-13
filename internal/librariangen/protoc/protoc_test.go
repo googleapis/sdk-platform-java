@@ -49,14 +49,12 @@ func TestBuild(t *testing.T) {
 	tests := []struct {
 		name          string
 		apiPath       string
-		reqID         string
 		config        mockConfigProvider
 		want          []string
 	}{
 		{
 			name:    "java_grpc_library rule",
 			apiPath: "google/cloud/workflows/v1",
-			reqID:   "workflows",
 			config: mockConfigProvider{
 				transport:         "grpc",
 				grpcServiceConfig: "workflows_grpc_service_config.json",
@@ -84,7 +82,6 @@ func TestBuild(t *testing.T) {
 		{
 			name:    "java_proto_library rule with legacy gRPC",
 			apiPath: "google/cloud/secretmanager/v1beta2",
-			reqID:   "secretmanager",
 			config: mockConfigProvider{
 				transport:         "grpc",
 				grpcServiceConfig: "secretmanager_grpc_service_config.json",
@@ -112,7 +109,6 @@ func TestBuild(t *testing.T) {
 			// the config is used to say "don't generate GAPIC".
 			name:    "proto-only",
 			apiPath: "google/cloud/secretmanager/v1beta2",
-			reqID:   "secretmanager",
 			config: mockConfigProvider{
 				hasGAPIC:  false,
 			},
