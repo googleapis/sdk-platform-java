@@ -210,6 +210,11 @@
       "matchPackageNames": [
         "/^com.google.errorprone/"
       ]
+    },
+    {
+      "matchPackageNames": ["ch.qos.logback:logback-classic", "ch.qos.logback:logback-core"],
+      "matchUpdateTypes": ["patch"],
+      "enabled": true
     }
   ]
 }
