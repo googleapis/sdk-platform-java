@@ -16,6 +16,7 @@ package main
 
 import (
 	"context"
+	"log/slog"
 	"testing"
 )
 
@@ -88,6 +89,52 @@ func TestRun(t *testing.T) {
 			// context. The generate function is not actually called.
 			if err := run(ctx, tt.args); (err != nil) != tt.wantErr {
 				t.Errorf("run() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+	}
+}
+
+func TestRunCLI(t *testing.T) {
+	tests := []struct {
+		name     string
+		args     []string
+		wantCode int
+	}{
+		{
+			name:     "success",
+			args:     []string{"librariangen", "build"},
+			wantCode: 0,
+		},
+		{
+			name:     "failure",
+			args:     []string{"librariangen", "foo"},
+			wantCode: 1,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if gotCode := runCLI(tt.args); gotCode != tt.wantCode {
+				t.Errorf("runCLI() = %v, want %v", gotCode, tt.wantCode)
+			}
+		})
+	}
+}
+
+func TestParseLogLevel(t *testing.T) {
+	tests := []struct {
+		name  string
+		level string
+		want  slog.Level
+	}{
+		{"default", "", slog.LevelInfo},
+		{"debug", "debug", slog.LevelDebug},
+		{"quiet", "quiet", slog.LevelError + 1},
+		{"invalid", "foo", slog.LevelInfo},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := parseLogLevel(tt.level); got != tt.want {
+				t.Errorf("parseLogLevel() = %v, want %v", got, tt.want)
 			}
 		})
 	}
