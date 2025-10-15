@@ -147,16 +147,6 @@
         <artifactId>javax.annotation-api</artifactId>
         <version>${javax.annotation-api.version}</version>
       </dependency>
-      <dependency>
-        <groupId>com.google.errorprone</groupId>
-        <artifactId>error_prone_annotations</artifactId>
-        <version>${errorprone.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.google.j2objc</groupId>
-        <artifactId>j2objc-annotations</artifactId>
-        <version>${j2objc-annotations.version}</version>
-      </dependency>
 
       <dependency>
         <groupId>junit</groupId>
