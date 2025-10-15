@@ -12,7 +12,7 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["/^dependencies\\.txt$/"],
+      "fileMatch": ["dependencies.txt"],
       "matchStrings": ["(?<depName>.*),(.*)=(?<currentValue>.*)"],
       "datasourceTemplate": "maven"
     },
