@@ -180,3 +180,59 @@ java_grpc_library(
 		t.Error("HasGAPIC() = true; want false")
 	}
 }
+
+func TestParse_missingSomeAttrs(t *testing.T) {
+	content := `
+java_gapic_library(
+    name = "asset_java_gapic",
+    service_yaml = "cloudasset_v1.yaml",
+)
+`
+	tmpDir := t.TempDir()
+	buildPath := filepath.Join(tmpDir, "BUILD.bazel")
+	if err := os.WriteFile(buildPath, []byte(content), 0644); err != nil {
+		t.Fatalf("failed to write test file: %v", err)
+	}
+
+	got, err := Parse(tmpDir)
+	if err != nil {
+		t.Fatalf("Parse() failed: %v", err)
+	}
+
+	if got.GRPCServiceConfig() != "" {
+		t.Errorf("GRPCServiceConfig() = %q; want \"\"", got.GRPCServiceConfig())
+	}
+	if got.Transport() != "" {
+		t.Errorf("Transport() = %q; want \"\"", got.Transport())
+	}
+	if got.HasRESTNumericEnums() {
+		t.Error("HasRESTNumericEnums() = true; want false")
+	}
+}
+
+func TestParse_invalidBoolAttr(t *testing.T) {
+	content := `
+java_gapic_library(
+    name = "asset_java_gapic",
+    rest_numeric_enums = "not-a-bool",
+)
+`
+	tmpDir := t.TempDir()
+	buildPath := filepath.Join(tmpDir, "BUILD.bazel")
+	if err := os.WriteFile(buildPath, []byte(content), 0644); err != nil {
+		t.Fatalf("failed to write test file: %v", err)
+	}
+
+	_, err := Parse(tmpDir)
+	if err == nil {
+		t.Error("Parse() succeeded; want error")
+	}
+}
+
+func TestParse_noBuildFile(t *testing.T) {
+	tmpDir := t.TempDir()
+	_, err := Parse(tmpDir)
+	if err == nil {
+		t.Error("Parse() succeeded; want error")
+	}
+}
