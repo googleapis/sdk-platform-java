@@ -92,7 +92,7 @@
       "matchManagers": [
         "regex"
       ],
-      "fileMatch": ["dependencies.txt"],
+      "fileMatch": ["/^dependencies\\.txt$/"],
       "matchDatasources": ["maven"],
       "groupName": "Upper Bound Dependencies File",
       "description": "Group all dependencies from the Upper Bound Dependencies File"
@@ -101,6 +101,7 @@
       "matchPackageNames": [
         "com.google.cloud:google-cloud-shared-config"
       ],
+      "fileMatch": ["/^(?!dependencies\\.txt$).*$/"],
       "registryUrls": [
         "https://repo.maven.apache.org/maven2/",
         "https://repo1.maven.org/maven2"
@@ -131,6 +132,7 @@
     {
       "semanticCommitType": "deps",
       "semanticCommitScope": null,
+      "fileMatch": ["/^(?!dependencies\\.txt$).*$/"],
       "matchPackageNames": [
         "*"
       ]
@@ -139,6 +141,7 @@
       "semanticCommitType": "build",
       "semanticCommitScope": "deps",
       "enabled": true,
+      "fileMatch": ["/^(?!dependencies\\.txt$).*$/"],
       "matchPackageNames": [
         "/^org.apache.maven/",
         "/^org.jacoco:/",
@@ -150,6 +153,7 @@
     {
       "semanticCommitType": "chore",
       "semanticCommitScope": "deps",
+      "fileMatch": ["/^(?!dependencies\\.txt$).*$/"],
       "matchPackageNames": [
         "/^{{metadata['repo']['distribution_name']}}/",
         "/^com.google.cloud:libraries-bom/",
@@ -159,6 +163,7 @@
     {
       "semanticCommitType": "test",
       "semanticCommitScope": "deps",
+      "fileMatch": ["/^(?!dependencies\\.txt$).*$/"],
       "matchPackageNames": [
         "/^junit:junit/",
         "/^com.google.truth:truth/",
@@ -169,18 +174,21 @@
     },
     {
       "ignoreUnstable": false,
+      "fileMatch": ["/^(?!dependencies\\.txt$).*$/"],
       "matchPackageNames": [
         "/^com.google.cloud:google-cloud-/"
       ]
     },
     {
       "groupName": "jackson dependencies",
+      "fileMatch": ["/^(?!dependencies\\.txt$).*$/"],
       "matchPackageNames": [
         "/^com.fasterxml.jackson.core/"
       ]
     },
     {
       "groupName": "gRPC dependencies",
+      "fileMatch": ["/^(?!dependencies\\.txt$).*$/"],
       "matchPackageNames": [
         "/^io.grpc/"
       ],
@@ -188,12 +196,14 @@
     },
     {
       "groupName": "Google Auth Library dependencies",
+      "fileMatch": ["/^(?!dependencies\\.txt$).*$/"],
       "matchPackageNames": [
         "/^com.google.auth/"
       ]
     },
     {
       "groupName": "Google API dependencies",
+      "fileMatch": ["/^(?!dependencies\\.txt$).*$/"],
       "matchPackageNames": [
         "/com.google.api.grpc:grpc-google-common-protos/",
         "/com.google.api.grpc:grpc-google-iam-v1/",
@@ -204,24 +214,28 @@
     },
     {
       "groupName": "Google HTTP Client dependencies",
+      "fileMatch": ["/^(?!dependencies\\.txt$).*$/"],
       "matchPackageNames": [
         "/^com.google.http-client/"
       ]
     },
     {
       "groupName": "OpenCensus dependencies",
+      "fileMatch": ["/^(?!dependencies\\.txt$).*$/"],
       "matchPackageNames": [
         "/^io.opencensus/"
       ]
     },
     {
       "groupName": "Netty dependencies",
+      "fileMatch": ["/^(?!dependencies\\.txt$).*$/"],
       "matchPackageNames": [
         "/^io.netty/"
       ]
     },
     {
       "groupName": "Error Prone dependencies",
+      "fileMatch": ["/^(?!dependencies\\.txt$).*$/"],
       "matchPackageNames": [
         "/^com.google.errorprone/"
       ]
