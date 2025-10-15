@@ -89,19 +89,9 @@
   ],
   "packageRules": [
     {
-      "matchManagers": [
-        "regex"
-      ],
-      "matchFileNames": ["/^dependencies\\.txt$/"],
-      "matchDatasources": ["maven"],
-      "groupName": "Upper Bound Dependencies File",
-      "description": "Group all dependencies from the Upper Bound Dependencies File"
-    },
-    {
       "matchPackageNames": [
         "com.google.cloud:google-cloud-shared-config"
       ],
-      "matchFileNames": ["**/pom.xml", "^gax-java/dependencies\\.properties$", "^\\.cloudbuild/graalvm/.*\\.yaml$"],
       "registryUrls": [
         "https://repo.maven.apache.org/maven2/",
         "https://repo1.maven.org/maven2"
@@ -132,7 +122,6 @@
     {
       "semanticCommitType": "deps",
       "semanticCommitScope": null,
-      "matchFileNames": ["**/pom.xml", "^gax-java/dependencies\\.properties$", "^\\.cloudbuild/library_generation/library_generation.*\\.Dockerfile$", "^\\.cloudbuild/graalvm/.*\\.yaml$"],
       "matchPackageNames": [
         "*"
       ]
@@ -141,7 +130,6 @@
       "semanticCommitType": "build",
       "semanticCommitScope": "deps",
       "enabled": true,
-      "matchFileNames": ["**/pom.xml", "^gax-java/dependencies\\.properties$"],
       "matchPackageNames": [
         "/^org.apache.maven/",
         "/^org.jacoco:/",
@@ -153,7 +141,6 @@
     {
       "semanticCommitType": "chore",
       "semanticCommitScope": "deps",
-      "matchFileNames": ["**/pom.xml", "^gax-java/dependencies\\.properties$"],
       "matchPackageNames": [
         "/^{{metadata['repo']['distribution_name']}}/",
         "/^com.google.cloud:libraries-bom/",
@@ -163,7 +150,6 @@
     {
       "semanticCommitType": "test",
       "semanticCommitScope": "deps",
-      "matchFileNames": ["**/pom.xml", "^gax-java/dependencies\\.properties$"],
       "matchPackageNames": [
         "/^junit:junit/",
         "/^com.google.truth:truth/",
@@ -174,21 +160,18 @@
     },
     {
       "ignoreUnstable": false,
-      "matchFileNames": ["**/pom.xml", "^gax-java/dependencies\\.properties$"],
       "matchPackageNames": [
         "/^com.google.cloud:google-cloud-/"
       ]
     },
     {
       "groupName": "jackson dependencies",
-      "matchFileNames": ["**/pom.xml", "^gax-java/dependencies\\.properties$"],
       "matchPackageNames": [
         "/^com.fasterxml.jackson.core/"
       ]
     },
     {
       "groupName": "gRPC dependencies",
-      "matchFileNames": ["**/pom.xml", "^gax-java/dependencies\\.properties$", "^\\.cloudbuild/library_generation/library_generation.*\\.Dockerfile$"],
       "matchPackageNames": [
         "/^io.grpc/"
       ],
@@ -196,14 +179,12 @@
     },
     {
       "groupName": "Google Auth Library dependencies",
-      "matchFileNames": ["**/pom.xml", "^gax-java/dependencies\\.properties$"],
       "matchPackageNames": [
         "/^com.google.auth/"
       ]
     },
     {
       "groupName": "Google API dependencies",
-      "matchFileNames": ["**/pom.xml", "^gax-java/dependencies\\.properties$"],
       "matchPackageNames": [
         "/com.google.api.grpc:grpc-google-common-protos/",
         "/com.google.api.grpc:grpc-google-iam-v1/",
@@ -214,31 +195,36 @@
     },
     {
       "groupName": "Google HTTP Client dependencies",
-      "matchFileNames": ["**/pom.xml", "^gax-java/dependencies\\.properties$"],
       "matchPackageNames": [
         "/^com.google.http-client/"
       ]
     },
     {
       "groupName": "OpenCensus dependencies",
-      "matchFileNames": ["**/pom.xml", "^gax-java/dependencies\\.properties$"],
       "matchPackageNames": [
         "/^io.opencensus/"
       ]
     },
     {
       "groupName": "Netty dependencies",
-      "matchFileNames": ["**/pom.xml", "^gax-java/dependencies\\.properties$"],
       "matchPackageNames": [
         "/^io.netty/"
       ]
     },
     {
       "groupName": "Error Prone dependencies",
-      "matchFileNames": ["**/pom.xml", "^gax-java/dependencies\\.properties$"],
       "matchPackageNames": [
         "/^com.google.errorprone/"
       ]
+    },
+    {
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": ["dependencies.txt"],
+      "matchDatasources": ["maven"],
+      "groupName": "Upper Bound Dependencies File",
+      "description": "Group all dependencies from the Upper Bound Dependencies File"
     }
   ]
 }
