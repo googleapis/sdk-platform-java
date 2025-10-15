@@ -462,6 +462,11 @@
       <artifactId>error_prone_annotations</artifactId>
       <version>${errorprone.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.google.j2objc</groupId>
+      <artifactId>j2objc-annotations</artifactId>
+      <version>${j2objc-annotations.version}</version>
+    </dependency>
 
     <!--
       TODO: remove when dropping Java 8.
