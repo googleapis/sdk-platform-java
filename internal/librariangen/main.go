@@ -16,32 +16,42 @@ package main
 
 import (
 	"context"
-	"errors"
-	"fmt"
 	"log/slog"
 	"os"
-	"strings"
+
+	"cloud.google.com/java/internal/librariangen/languagecontainer"
+	"cloud.google.com/java/internal/librariangen/message"
 )
 
 const version = "0.1.0"
 
-// main is the entrypoint for the librariangen CLI.
-func main() {
-	os.Exit(runCLI(os.Args))
+// javaContainer implements the LanguageContainer interface for Java.
+type javaContainer struct{}
+
+func (c *javaContainer) Generate(context.Context, *languagecontainer.GenerateCommandEnv) error {
+	// Java-specific implementation for the "generate" command.
+	slog.Warn("librariangen: generate command is not yet implemented")
+
+	return nil
 }
 
-func runCLI(args []string) int {
+func (c *javaContainer) Configure(ctx context.Context,
+	request *languagecontainer.ConfigureCommandEnv) (*message.ConfigureResponse, error) {
+	// Java-specific implementation for the "configure" command.
+	slog.Warn("librariangen: configure command is not yet implemented")
+	return nil, nil
+}
+
+// main is the entrypoint for the librariangen CLI.
+func main() {
 	logLevel := parseLogLevel(os.Getenv("GOOGLE_SDK_JAVA_LOGGING_LEVEL"))
 	slog.SetDefault(slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
 		Level: logLevel,
 	})))
+	args := os.Args
 	slog.Info("librariangen: invoked", "args", args)
-	if err := run(context.Background(), args[1:]); err != nil {
-		slog.Error("librariangen: failed", "error", err)
-		return 1
-	}
-	slog.Info("librariangen: finished successfully")
-	return 0
+	container := javaContainer{}
+	os.Exit(languagecontainer.Run(os.Args, &container))
 }
 
 func parseLogLevel(logLevelEnv string) slog.Level {
@@ -53,43 +63,4 @@ func parseLogLevel(logLevelEnv string) slog.Level {
 	default:
 		return slog.LevelInfo
 	}
-}
-
-// run executes the appropriate command based on the CLI's invocation arguments.
-// The idiomatic structure is `librariangen [command] [flags]`.
-func run(ctx context.Context, args []string) error {
-	if len(args) < 1 {
-		return errors.New("librariangen: expected a command")
-	}
-
-	// The --version flag is a special case and not a command.
-	if args[0] == "--version" {
-		fmt.Println(version)
-		return nil
-	}
-
-	cmd := args[0]
-	flags := args[1:]
-
-	if strings.HasPrefix(cmd, "-") {
-		return fmt.Errorf("librariangen: command cannot be a flag: %s", cmd)
-	}
-
-	switch cmd {
-	case "generate":
-		slog.Warn("librariangen: generate command is not yet implemented")
-		return nil
-	case "release-init":
-		slog.Warn("librariangen: release-init command is not yet implemented")
-		return nil
-	case "configure":
-		slog.Warn("librariangen: configure command is not yet implemented")
-		return nil
-	case "build":
-		slog.Warn("librariangen: build command is not yet implemented")
-		return nil
-	default:
-		return fmt.Errorf("librariangen: unknown command: %s (with flags %s)", cmd, flags)
-	}
-
 }
