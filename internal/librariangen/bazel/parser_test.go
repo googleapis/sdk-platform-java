@@ -57,21 +57,31 @@ java_gapic_library(
 		t.Fatalf("Parse() failed: %v", err)
 	}
 
-	if !got.HasGAPIC() {
-		t.Error("HasGAPIC() = false; want true")
-	}
-	if want := "cloudasset_v1.yaml"; got.ServiceYAML() != want {
-		t.Errorf("ServiceYAML() = %q; want %q", got.ServiceYAML(), want)
-	}
-	if want := "cloudasset_grpc_service_config.json"; got.GRPCServiceConfig() != want {
-		t.Errorf("GRPCServiceConfig() = %q; want %q", got.GRPCServiceConfig(), want)
-	}
-	if want := "grpc+rest"; got.Transport() != want {
-		t.Errorf("Transport() = %q; want %q", got.Transport(), want)
-	}
-	if !got.HasRESTNumericEnums() {
-		t.Error("HasRESTNumericEnums() = false; want true")
-	}
+	t.Run("HasGAPIC", func(t *testing.T) {
+		if !got.HasGAPIC() {
+			t.Error("HasGAPIC() = false; want true")
+		}
+	})
+	t.Run("ServiceYAML", func(t *testing.T) {
+		if want := "cloudasset_v1.yaml"; got.ServiceYAML() != want {
+			t.Errorf("ServiceYAML() = %q; want %q", got.ServiceYAML(), want)
+		}
+	})
+	t.Run("GRPCServiceConfig", func(t *testing.T) {
+		if want := "cloudasset_grpc_service_config.json"; got.GRPCServiceConfig() != want {
+			t.Errorf("GRPCServiceConfig() = %q; want %q", got.GRPCServiceConfig(), want)
+		}
+	})
+	t.Run("Transport", func(t *testing.T) {
+		if want := "grpc+rest"; got.Transport() != want {
+			t.Errorf("Transport() = %q; want %q", got.Transport(), want)
+		}
+	})
+	t.Run("HasRESTNumericEnums", func(t *testing.T) {
+		if !got.HasRESTNumericEnums() {
+			t.Error("HasRESTNumericEnums() = false; want true")
+		}
+	})
 }
 
 func TestParse_serviceConfigIsTarget(t *testing.T) {

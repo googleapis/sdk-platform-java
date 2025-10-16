@@ -23,6 +23,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"sync"
 )
 
 // Config holds configuration extracted from a googleapis BUILD.bazel file.
@@ -59,6 +60,7 @@ func (c *Config) Validate() error {
 	return nil
 }
 
+var javaGapicLibraryRE = regexp.MustCompile(`java_gapic_library\((?s:.)*?\)`)
 // Parse reads a BUILD.bazel file from the given directory and extracts the
 // relevant configuration from the java_gapic_library rule.
 func Parse(dir string) (*Config, error) {
@@ -70,8 +72,7 @@ func Parse(dir string) (*Config, error) {
 	}
 	content := string(data)
 
-	re := regexp.MustCompile(`java_gapic_library\((?s:.)*?\)`)
-	gapicLibraryBlock := re.FindString(content)
+	gapicLibraryBlock := javaGapicLibraryRE.FindString(content)
 	if gapicLibraryBlock != "" {
 		c.hasGAPIC = true
 		c.grpcServiceConfig = findString(gapicLibraryBlock, "grpc_service_config")
@@ -84,12 +85,23 @@ func Parse(dir string) (*Config, error) {
 	if err := c.Validate(); err != nil {
 		return nil, fmt.Errorf("librariangen: invalid bazel config in %s: %w", dir, err)
 	}
-	slog.Debug("librariangen: bazel config loaded", "conf", fmt.Sprintf("%+v", c))
+	slog.Debug("librariangen: bazel config loaded", "conf", c)
 	return c, nil
 }
 
+var reCache = &sync.Map{}
+
+func getRegexp(key, pattern string) *regexp.Regexp {
+	val, ok := reCache.Load(key)
+	if !ok {
+		val = regexp.MustCompile(pattern)
+		reCache.Store(key, val)
+	}
+	return val.(*regexp.Regexp)
+}
+
 func findString(content, name string) string {
-	re := regexp.MustCompile(fmt.Sprintf(`%s\s*=\s*"([^"]+)"`, name))
+	re := getRegexp("findString_"+name, fmt.Sprintf(`%s\s*=\s*"([^"]+)"`, name))
 	if match := re.FindStringSubmatch(content); len(match) > 1 {
 		return match[1]
 	}
@@ -98,7 +110,7 @@ func findString(content, name string) string {
 }
 
 func findBool(content, name string) (bool, error) {
-	re := regexp.MustCompile(fmt.Sprintf(`%s\s*=\s*(\w+)`, name))
+	re := getRegexp("findBool_"+name, fmt.Sprintf(`%s\s*=\s*(\w+)`, name))
 	if match := re.FindStringSubmatch(content); len(match) > 1 {
 		if b, err := strconv.ParseBool(match[1]); err == nil {
 			return b, nil
