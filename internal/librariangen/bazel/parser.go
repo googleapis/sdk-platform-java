@@ -101,9 +101,13 @@ func getRegexp(key, pattern string) *regexp.Regexp {
 }
 
 func findString(content, name string) string {
-	re := getRegexp("findString_"+name, fmt.Sprintf(`%s\s*=\s*"([^"]+)"`, name))
-	if match := re.FindStringSubmatch(content); len(match) > 1 {
-		return match[1]
+	re := getRegexp("findString_"+name, fmt.Sprintf(`%s\s*=\s*(?:"([^"]+)"|'([^']+)'){1}`, name))
+	match := re.FindStringSubmatch(content)
+	if len(match) > 2 {
+		if match[1] != "" {
+			return match[1] // Double-quoted
+		}
+		return match[2] // Single-quoted
 	}
 	slog.Debug("librariangen: failed to find string attr in BUILD.bazel", "name", name)
 	return ""

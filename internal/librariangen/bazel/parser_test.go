@@ -38,7 +38,7 @@ java_gapic_library(
         ":asset_java_grpc",
         "//google/iam/v1:iam_java_grpc",
     ],
-    transport = "grpc+rest",
+    transport = 'grpc+rest',
     deps = [
         ":asset_java_proto",
         "//google/api:api_java_proto",
