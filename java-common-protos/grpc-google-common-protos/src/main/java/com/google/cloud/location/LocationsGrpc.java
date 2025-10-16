@@ -26,9 +26,6 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  * [Location.metadata][google.cloud.location.Location.metadata] field.
  * </pre>
  */
-@javax.annotation.Generated(
-    value = "by gRPC proto compiler",
-    comments = "Source: google/cloud/location/locations.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class LocationsGrpc {
 
@@ -315,8 +312,8 @@ public final class LocationsGrpc {
      * </pre>
      */
     public com.google.cloud.location.ListLocationsResponse listLocations(
-        com.google.cloud.location.ListLocationsRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.cloud.location.ListLocationsRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getListLocationsMethod(), getCallOptions(), request);
     }
 
@@ -328,8 +325,8 @@ public final class LocationsGrpc {
      * </pre>
      */
     public com.google.cloud.location.Location getLocation(
-        com.google.cloud.location.GetLocationRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.cloud.location.GetLocationRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getGetLocationMethod(), getCallOptions(), request);
     }
   }
