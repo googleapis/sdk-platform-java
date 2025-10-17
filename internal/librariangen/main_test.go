@@ -18,9 +18,16 @@ import (
 	"context"
 	"log/slog"
 	"testing"
+
+	"cloud.google.com/java/internal/librariangen/generate"
 )
 
 func TestRun(t *testing.T) {
+	// Replace the real functions with fakes for testing.
+	generateFunc = func(_ context.Context, _ *generate.Config) error {
+		return nil
+	}
+
 	ctx := context.Background()
 	tests := []struct {
 		name    string
