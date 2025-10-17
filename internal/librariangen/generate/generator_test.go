@@ -418,12 +418,14 @@ func TestUnzip(t *testing.T) {
 		if err != nil {
 			t.Fatalf("failed to open zip file: %v", err)
 		}
+		defer f.Close() // Ensure file is closed
 		zipWriter := zip.NewWriter(f)
 		if _, err := zipWriter.Create("file.txt"); err != nil {
 			t.Fatalf("failed to create file in zip: %v", err)
 		}
-		zipWriter.Close()
-		f.Close()
+		if err := zipWriter.Close(); err != nil { // Check for errors on close
+			t.Fatalf("failed to close zip writer: %v", err)
+		}
 
 		// Make the output directory read-only.
 		readOnlyDir := filepath.Join(e.tmpDir, "readonly")

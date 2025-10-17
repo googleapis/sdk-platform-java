@@ -83,7 +83,7 @@ if [ ! -d "$LIBRARIANGEN_GOOGLEAPIS_DIR" ]; then
   exit 1
 fi
 echo "Using googleapis source from $LIBRARIANGEN_GOOGLEAPIS_DIR"
-SOURCE_DIR=$(readlink -f "$LIBRARIANGEN_GOOGLEAPIS_DIR")
+SOURCE_DIR=$(cd "$LIBRARIANGEN_GOOGLEAPIS_DIR" && pwd)
 
 # Copy the generate-request.json into the librarian directory.
 cp "testdata/generate/librarian/generate-request.json" "$LIBRARIAN_DIR/"
