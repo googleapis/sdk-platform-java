@@ -3,6 +3,8 @@ on:
     branches:
       - main
   pull_request:
+    paths-ignore:
+      - 'internal/librariangen/**'
 name: ci
 jobs:
   build:
