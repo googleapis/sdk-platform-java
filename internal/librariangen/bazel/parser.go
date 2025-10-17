@@ -28,6 +28,7 @@ import (
 
 // Config holds configuration extracted from a googleapis BUILD.bazel file.
 type Config struct {
+	gapicYAML         string
 	grpcServiceConfig string
 	restNumericEnums  bool
 	serviceYAML       string
@@ -37,6 +38,9 @@ type Config struct {
 
 // HasGAPIC indicates whether the GAPIC generator should be run.
 func (c *Config) HasGAPIC() bool { return c.hasGAPIC }
+
+// GapicYAML is the GAPIC config file in the API version directory in googleapis.
+func (c *Config) GapicYAML() string { return c.gapicYAML }
 
 // ServiceYAML is the client config file in the API version directory in googleapis.
 func (c *Config) ServiceYAML() string { return c.serviceYAML }
@@ -81,6 +85,7 @@ func Parse(dir string) (*Config, error) {
 		if c.restNumericEnums, err = findBool(gapicLibraryBlock, "rest_numeric_enums"); err != nil {
 			return nil, fmt.Errorf("librariangen: failed to parse BUILD.bazel file %s: %w", fp, err)
 		}
+		c.gapicYAML = strings.TrimPrefix(findString(gapicLibraryBlock, "gapic_yaml"), ":")
 	}
 	if err := c.Validate(); err != nil {
 		return nil, fmt.Errorf("librariangen: invalid bazel config in %s: %w", dir, err)

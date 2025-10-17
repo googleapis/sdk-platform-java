@@ -17,10 +17,13 @@ package main
 import (
 	"context"
 	"errors"
+	"flag"
 	"fmt"
 	"log/slog"
 	"os"
 	"strings"
+
+	"cloud.google.com/java/internal/librariangen/generate"
 )
 
 const version = "0.1.0"
@@ -29,6 +32,10 @@ const version = "0.1.0"
 func main() {
 	os.Exit(runCLI(os.Args))
 }
+
+var (
+	generateFunc = generate.Generate
+)
 
 func runCLI(args []string) int {
 	logLevel := parseLogLevel(os.Getenv("GOOGLE_SDK_JAVA_LOGGING_LEVEL"))
@@ -77,8 +84,7 @@ func run(ctx context.Context, args []string) error {
 
 	switch cmd {
 	case "generate":
-		slog.Warn("librariangen: generate command is not yet implemented")
-		return nil
+		return handleGenerate(ctx, flags)
 	case "release-init":
 		slog.Warn("librariangen: release-init command is not yet implemented")
 		return nil
@@ -92,4 +98,18 @@ func run(ctx context.Context, args []string) error {
 		return fmt.Errorf("librariangen: unknown command: %s (with flags %s)", cmd, flags)
 	}
 
+}
+
+// handleGenerate parses flags for the generate command and calls the generator.
+func handleGenerate(ctx context.Context, args []string) error {
+	cfg := &generate.Config{}
+	generateFlags := flag.NewFlagSet("generate", flag.ContinueOnError)
+	generateFlags.StringVar(&cfg.LibrarianDir, "librarian", "/librarian", "Path to the librarian-tool input directory. Contains generate-request.json.")
+	generateFlags.StringVar(&cfg.InputDir, "input", "/input", "Path to the .librarian/generator-input directory from the language repository.")
+	generateFlags.StringVar(&cfg.OutputDir, "output", "/output", "Path to the empty directory where librariangen writes its output.")
+	generateFlags.StringVar(&cfg.SourceDir, "source", "/source", "Path to a complete checkout of the googleapis repository.")
+	if err := generateFlags.Parse(args); err != nil {
+		return fmt.Errorf("librariangen: failed to parse flags: %w", err)
+	}
+	return generateFunc(ctx, cfg)
 }
