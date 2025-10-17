@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.64.0](https://github.com/googleapis/sdk-platform-java/compare/v2.63.0...v2.64.0) (2025-10-17)
+
+
+### Features
+
+* **librariangen:** add generate package ([#3952](https://github.com/googleapis/sdk-platform-java/issues/3952)) ([2f6c75d](https://github.com/googleapis/sdk-platform-java/commit/2f6c75da3021d030c7a192f1fbb4b30908ef9dad))
+
 ## [2.63.0](https://github.com/googleapis/sdk-platform-java/compare/v2.62.3...v2.63.0) (2025-10-16)
 
 
