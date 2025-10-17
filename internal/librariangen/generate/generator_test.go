@@ -438,6 +438,36 @@ func TestUnzip(t *testing.T) {
 			t.Error("unzip() with read-only destination should return an error")
 		}
 	})
+
+	t.Run("zip slip vulnerability", func(t *testing.T) {
+		// Create a zip file with a malicious file path.
+		maliciousZipPath := filepath.Join(e.outputDir, "malicious.zip")
+		f, err := os.Create(maliciousZipPath)
+		if err != nil {
+			t.Fatalf("failed to create malicious zip file: %v", err)
+		}
+		defer f.Close()
+		zipWriter := zip.NewWriter(f)
+		if _, err := zipWriter.Create("../../pwned.txt"); err != nil {
+			t.Fatalf("failed to create malicious file in zip: %v", err)
+		}
+		zipWriter.Close()
+
+		destDir := filepath.Join(e.outputDir, "unzip-dest")
+		if err := os.Mkdir(destDir, 0755); err != nil {
+			t.Fatalf("failed to create unzip dest dir: %v", err)
+		}
+
+		if err := unzip(maliciousZipPath, destDir); err == nil {
+			t.Error("unzip() with malicious zip file should return an error")
+		}
+
+		// Check that the malicious file was not created.
+		pwnedFile := filepath.Join(e.tmpDir, "pwned.txt")
+		if _, err := os.Stat(pwnedFile); !os.IsNotExist(err) {
+			t.Errorf("malicious file was created at %s", pwnedFile)
+		}
+	})
 }
 
 func TestMoveFiles(t *testing.T) {
