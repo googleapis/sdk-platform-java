@@ -248,16 +248,19 @@ func unzip(src, dest string) error {
 
 		rc, err := f.Open()
 		if err != nil {
+			outFile.Close()
 			return err
 		}
 
-		_, err = io.Copy(outFile, rc)
+		_, copyErr := io.Copy(outFile, rc)
+		rc.Close() // Error on read-only file close is less critical
+		closeErr := outFile.Close()
 
-		outFile.Close()
-		rc.Close()
-
-		if err != nil {
-			return err
+		if copyErr != nil {
+			return copyErr
+		}
+		if closeErr != nil {
+			return closeErr
 		}
 	}
 	return nil
