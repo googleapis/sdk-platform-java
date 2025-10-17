@@ -25,9 +25,6 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  * bindings.
  * </pre>
  */
-@javax.annotation.Generated(
-    value = "by gRPC proto compiler",
-    comments = "Source: google/iam/v3/policy_bindings_service.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class PolicyBindingsGrpc {
 
@@ -639,8 +636,8 @@ public final class PolicyBindingsGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation createPolicyBinding(
-        com.google.iam.v3.CreatePolicyBindingRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.iam.v3.CreatePolicyBindingRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getCreatePolicyBindingMethod(), getCallOptions(), request);
     }
 
@@ -652,8 +649,8 @@ public final class PolicyBindingsGrpc {
      * </pre>
      */
     public com.google.iam.v3.PolicyBinding getPolicyBinding(
-        com.google.iam.v3.GetPolicyBindingRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.iam.v3.GetPolicyBindingRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getGetPolicyBindingMethod(), getCallOptions(), request);
     }
 
@@ -669,8 +666,8 @@ public final class PolicyBindingsGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation updatePolicyBinding(
-        com.google.iam.v3.UpdatePolicyBindingRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.iam.v3.UpdatePolicyBindingRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getUpdatePolicyBindingMethod(), getCallOptions(), request);
     }
 
@@ -684,8 +681,8 @@ public final class PolicyBindingsGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation deletePolicyBinding(
-        com.google.iam.v3.DeletePolicyBindingRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.iam.v3.DeletePolicyBindingRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getDeletePolicyBindingMethod(), getCallOptions(), request);
     }
 
@@ -697,8 +694,8 @@ public final class PolicyBindingsGrpc {
      * </pre>
      */
     public com.google.iam.v3.ListPolicyBindingsResponse listPolicyBindings(
-        com.google.iam.v3.ListPolicyBindingsRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.iam.v3.ListPolicyBindingsRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getListPolicyBindingsMethod(), getCallOptions(), request);
     }
 
@@ -711,8 +708,9 @@ public final class PolicyBindingsGrpc {
      * </pre>
      */
     public com.google.iam.v3.SearchTargetPolicyBindingsResponse searchTargetPolicyBindings(
-        com.google.iam.v3.SearchTargetPolicyBindingsRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.iam.v3.SearchTargetPolicyBindingsRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getSearchTargetPolicyBindingsMethod(), getCallOptions(), request);
     }
   }

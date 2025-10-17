@@ -31,9 +31,6 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  * developers can have a consistent client experience.
  * </pre>
  */
-@javax.annotation.Generated(
-    value = "by gRPC proto compiler",
-    comments = "Source: google/longrunning/operations.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class OperationsGrpc {
 
@@ -602,8 +599,8 @@ public final class OperationsGrpc {
      * </pre>
      */
     public com.google.longrunning.ListOperationsResponse listOperations(
-        com.google.longrunning.ListOperationsRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.longrunning.ListOperationsRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getListOperationsMethod(), getCallOptions(), request);
     }
 
@@ -617,8 +614,8 @@ public final class OperationsGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation getOperation(
-        com.google.longrunning.GetOperationRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.longrunning.GetOperationRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getGetOperationMethod(), getCallOptions(), request);
     }
 
@@ -633,8 +630,8 @@ public final class OperationsGrpc {
      * </pre>
      */
     public com.google.protobuf.Empty deleteOperation(
-        com.google.longrunning.DeleteOperationRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.longrunning.DeleteOperationRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getDeleteOperationMethod(), getCallOptions(), request);
     }
 
@@ -656,8 +653,8 @@ public final class OperationsGrpc {
      * </pre>
      */
     public com.google.protobuf.Empty cancelOperation(
-        com.google.longrunning.CancelOperationRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.longrunning.CancelOperationRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getCancelOperationMethod(), getCallOptions(), request);
     }
 
@@ -677,8 +674,8 @@ public final class OperationsGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation waitOperation(
-        com.google.longrunning.WaitOperationRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.longrunning.WaitOperationRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getWaitOperationMethod(), getCallOptions(), request);
     }
   }

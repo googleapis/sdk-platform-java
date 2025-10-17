@@ -18,9 +18,6 @@ package com.google.showcase.v1beta1;
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 
 /** */
-@javax.annotation.Generated(
-    value = "by gRPC proto compiler",
-    comments = "Source: schema/google/showcase/v1beta1/sequence.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class SequenceServiceGrpc {
 
@@ -607,8 +604,8 @@ public final class SequenceServiceGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.Sequence createSequence(
-        com.google.showcase.v1beta1.CreateSequenceRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.CreateSequenceRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getCreateSequenceMethod(), getCallOptions(), request);
     }
 
@@ -620,8 +617,9 @@ public final class SequenceServiceGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.StreamingSequence createStreamingSequence(
-        com.google.showcase.v1beta1.CreateStreamingSequenceRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.CreateStreamingSequenceRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getCreateStreamingSequenceMethod(), getCallOptions(), request);
     }
 
@@ -633,8 +631,9 @@ public final class SequenceServiceGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.SequenceReport getSequenceReport(
-        com.google.showcase.v1beta1.GetSequenceReportRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.GetSequenceReportRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getGetSequenceReportMethod(), getCallOptions(), request);
     }
 
@@ -646,8 +645,9 @@ public final class SequenceServiceGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.StreamingSequenceReport getStreamingSequenceReport(
-        com.google.showcase.v1beta1.GetStreamingSequenceReportRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.GetStreamingSequenceReportRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getGetStreamingSequenceReportMethod(), getCallOptions(), request);
     }
 
@@ -659,8 +659,8 @@ public final class SequenceServiceGrpc {
      * </pre>
      */
     public com.google.protobuf.Empty attemptSequence(
-        com.google.showcase.v1beta1.AttemptSequenceRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.AttemptSequenceRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getAttemptSequenceMethod(), getCallOptions(), request);
     }
 

@@ -25,9 +25,6 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  * policies.
  * </pre>
  */
-@javax.annotation.Generated(
-    value = "by gRPC proto compiler",
-    comments = "Source: google/iam/v3/principal_access_boundary_policies_service.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class PrincipalAccessBoundaryPoliciesGrpc {
 
@@ -688,8 +685,9 @@ public final class PrincipalAccessBoundaryPoliciesGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation createPrincipalAccessBoundaryPolicy(
-        com.google.iam.v3.CreatePrincipalAccessBoundaryPolicyRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.iam.v3.CreatePrincipalAccessBoundaryPolicyRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getCreatePrincipalAccessBoundaryPolicyMethod(), getCallOptions(), request);
     }
 
@@ -701,8 +699,9 @@ public final class PrincipalAccessBoundaryPoliciesGrpc {
      * </pre>
      */
     public com.google.iam.v3.PrincipalAccessBoundaryPolicy getPrincipalAccessBoundaryPolicy(
-        com.google.iam.v3.GetPrincipalAccessBoundaryPolicyRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.iam.v3.GetPrincipalAccessBoundaryPolicyRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getGetPrincipalAccessBoundaryPolicyMethod(), getCallOptions(), request);
     }
 
@@ -714,8 +713,9 @@ public final class PrincipalAccessBoundaryPoliciesGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation updatePrincipalAccessBoundaryPolicy(
-        com.google.iam.v3.UpdatePrincipalAccessBoundaryPolicyRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.iam.v3.UpdatePrincipalAccessBoundaryPolicyRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getUpdatePrincipalAccessBoundaryPolicyMethod(), getCallOptions(), request);
     }
 
@@ -727,8 +727,9 @@ public final class PrincipalAccessBoundaryPoliciesGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation deletePrincipalAccessBoundaryPolicy(
-        com.google.iam.v3.DeletePrincipalAccessBoundaryPolicyRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.iam.v3.DeletePrincipalAccessBoundaryPolicyRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getDeletePrincipalAccessBoundaryPolicyMethod(), getCallOptions(), request);
     }
 
@@ -741,8 +742,9 @@ public final class PrincipalAccessBoundaryPoliciesGrpc {
      */
     public com.google.iam.v3.ListPrincipalAccessBoundaryPoliciesResponse
         listPrincipalAccessBoundaryPolicies(
-            com.google.iam.v3.ListPrincipalAccessBoundaryPoliciesRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+            com.google.iam.v3.ListPrincipalAccessBoundaryPoliciesRequest request)
+            throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getListPrincipalAccessBoundaryPoliciesMethod(), getCallOptions(), request);
     }
 
@@ -756,8 +758,9 @@ public final class PrincipalAccessBoundaryPoliciesGrpc {
      */
     public com.google.iam.v3.SearchPrincipalAccessBoundaryPolicyBindingsResponse
         searchPrincipalAccessBoundaryPolicyBindings(
-            com.google.iam.v3.SearchPrincipalAccessBoundaryPolicyBindingsRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+            com.google.iam.v3.SearchPrincipalAccessBoundaryPolicyBindingsRequest request)
+            throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(),
           getSearchPrincipalAccessBoundaryPolicyBindingsMethod(),
           getCallOptions(),
