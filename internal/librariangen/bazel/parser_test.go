@@ -31,6 +31,7 @@ java_grpc_library(
 java_gapic_library(
     name = "asset_java_gapic",
     srcs = [":asset_proto_with_info"],
+    gapic_yaml = "cloudasset_gapic.yaml",
     grpc_service_config = "cloudasset_grpc_service_config.json",
     rest_numeric_enums = True,
     service_yaml = "cloudasset_v1.yaml",
@@ -67,6 +68,11 @@ java_gapic_library(
 			t.Errorf("ServiceYAML() = %q; want %q", got.ServiceYAML(), want)
 		}
 	})
+	t.Run("GapicYAML", func(t *testing.T) {
+		if want := "cloudasset_gapic.yaml"; got.GapicYAML() != want {
+			t.Errorf("GapicYAML() = %q; want %q", got.GapicYAML(), want)
+		}
+	})
 	t.Run("GRPCServiceConfig", func(t *testing.T) {
 		if want := "cloudasset_grpc_service_config.json"; got.GRPCServiceConfig() != want {
 			t.Errorf("GRPCServiceConfig() = %q; want %q", got.GRPCServiceConfig(), want)
@@ -84,7 +90,7 @@ java_gapic_library(
 	})
 }
 
-func TestParse_serviceConfigIsTarget(t *testing.T) {
+func TestParse_configIsTarget(t *testing.T) {
 	content := `
 java_grpc_library(
     name = "asset_java_grpc",
@@ -95,6 +101,7 @@ java_grpc_library(
 java_gapic_library(
     name = "asset_java_gapic",
     srcs = [":asset_proto_with_info"],
+    gapic_yaml = ":cloudasset_gapic.yaml",
     grpc_service_config = "cloudasset_grpc_service_config.json",
     rest_numeric_enums = True,
     service_yaml = ":cloudasset_v1.yaml",
@@ -124,6 +131,9 @@ java_gapic_library(
 	if want := "cloudasset_v1.yaml"; got.ServiceYAML() != want {
 		t.Errorf("ServiceYAML() = %q; want %q", got.ServiceYAML(), want)
 	}
+	if want := "cloudasset_gapic.yaml"; got.GapicYAML() != want {
+		t.Errorf("GapicYAML() = %q; want %q", got.GapicYAML(), want)
+	}
 }
 
 func TestConfig_Validate(t *testing.T) {
@@ -136,6 +146,7 @@ func TestConfig_Validate(t *testing.T) {
 			name: "valid GAPIC",
 			cfg: &Config{
 				hasGAPIC:          true,
+				gapicYAML:         "a",
 				serviceYAML:       "b",
 				grpcServiceConfig: "c",
 				transport:         "d",
@@ -149,7 +160,7 @@ func TestConfig_Validate(t *testing.T) {
 		},
 		{
 			name:    "gRPC service config and transport are optional",
-			cfg:     &Config{hasGAPIC: true, serviceYAML: "b"},
+			cfg:     &Config{hasGAPIC: true, serviceYAML: "b", gapicYAML: "a"},
 			wantErr: false,
 		},
 		{
