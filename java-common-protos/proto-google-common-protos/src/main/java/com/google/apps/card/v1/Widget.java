@@ -71,7 +71,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * The shape used to crop the image.
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -403,6 +403,191 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(enum_scope:google.apps.card.v1.Widget.HorizontalAlignment)
   }
 
+  /**
+   *
+   *
+   * <pre>
+   * Represents vertical alignment attribute.
+   * </pre>
+   *
+   * Protobuf enum {@code google.apps.card.v1.Widget.VerticalAlignment}
+   */
+  public enum VerticalAlignment implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     *
+     *
+     * <pre>
+     * Unspecified type. Do not use.
+     * </pre>
+     *
+     * <code>VERTICAL_ALIGNMENT_UNSPECIFIED = 0;</code>
+     */
+    VERTICAL_ALIGNMENT_UNSPECIFIED(0),
+    /**
+     *
+     *
+     * <pre>
+     * Alignment to the top position.
+     * </pre>
+     *
+     * <code>TOP = 1;</code>
+     */
+    TOP(1),
+    /**
+     *
+     *
+     * <pre>
+     * Alignment to the middle position.
+     * </pre>
+     *
+     * <code>MIDDLE = 2;</code>
+     */
+    MIDDLE(2),
+    /**
+     *
+     *
+     * <pre>
+     * Alignment to the bottom position.
+     * </pre>
+     *
+     * <code>BOTTOM = 3;</code>
+     */
+    BOTTOM(3),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     *
+     *
+     * <pre>
+     * Unspecified type. Do not use.
+     * </pre>
+     *
+     * <code>VERTICAL_ALIGNMENT_UNSPECIFIED = 0;</code>
+     */
+    public static final int VERTICAL_ALIGNMENT_UNSPECIFIED_VALUE = 0;
+
+    /**
+     *
+     *
+     * <pre>
+     * Alignment to the top position.
+     * </pre>
+     *
+     * <code>TOP = 1;</code>
+     */
+    public static final int TOP_VALUE = 1;
+
+    /**
+     *
+     *
+     * <pre>
+     * Alignment to the middle position.
+     * </pre>
+     *
+     * <code>MIDDLE = 2;</code>
+     */
+    public static final int MIDDLE_VALUE = 2;
+
+    /**
+     *
+     *
+     * <pre>
+     * Alignment to the bottom position.
+     * </pre>
+     *
+     * <code>BOTTOM = 3;</code>
+     */
+    public static final int BOTTOM_VALUE = 3;
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static VerticalAlignment valueOf(int value) {
+      return forNumber(value);
+    }
+
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     */
+    public static VerticalAlignment forNumber(int value) {
+      switch (value) {
+        case 0:
+          return VERTICAL_ALIGNMENT_UNSPECIFIED;
+        case 1:
+          return TOP;
+        case 2:
+          return MIDDLE;
+        case 3:
+          return BOTTOM;
+        default:
+          return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<VerticalAlignment>
+        internalGetValueMap() {
+      return internalValueMap;
+    }
+
+    private static final com.google.protobuf.Internal.EnumLiteMap<VerticalAlignment>
+        internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<VerticalAlignment>() {
+              public VerticalAlignment findValueByNumber(int number) {
+                return VerticalAlignment.forNumber(number);
+              }
+            };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalStateException(
+            "Can't get the descriptor of an unrecognized enum value.");
+      }
+      return getDescriptor().getValues().get(ordinal());
+    }
+
+    public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
+      return getDescriptor();
+    }
+
+    public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
+      return com.google.apps.card.v1.Widget.getDescriptor().getEnumTypes().get(2);
+    }
+
+    private static final VerticalAlignment[] VALUES = values();
+
+    public static VerticalAlignment valueOf(
+        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private VerticalAlignment(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:google.apps.card.v1.Widget.VerticalAlignment)
+  }
+
   private int dataCase_ = 0;
 
   @SuppressWarnings("serial")
@@ -422,6 +607,8 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     DIVIDER(9),
     GRID(10),
     COLUMNS(11),
+    CAROUSEL(13),
+    CHIP_LIST(14),
     DATA_NOT_SET(0);
     private final int value;
 
@@ -461,6 +648,10 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
           return GRID;
         case 11:
           return COLUMNS;
+        case 13:
+          return CAROUSEL;
+        case 14:
+          return CHIP_LIST;
         case 0:
           return DATA_NOT_SET;
         default:
@@ -490,7 +681,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
    * and
    * [Formatting
    * text in Google Workspace
-   * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+   * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
    *
    * For example, the following JSON creates a bolded text:
    * ```
@@ -520,7 +711,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
    * and
    * [Formatting
    * text in Google Workspace
-   * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+   * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
    *
    * For example, the following JSON creates a bolded text:
    * ```
@@ -553,7 +744,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
    * and
    * [Formatting
    * text in Google Workspace
-   * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+   * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
    *
    * For example, the following JSON creates a bolded text:
    * ```
@@ -785,7 +976,6 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
    *         "red": 0,
    *         "green": 0,
    *         "blue": 1,
-   *         "alpha": 1
    *       },
    *       "disabled": true,
    *     },
@@ -832,7 +1022,6 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
    *         "red": 0,
    *         "green": 0,
    *         "blue": 1,
-   *         "alpha": 1
    *       },
    *       "disabled": true,
    *     },
@@ -882,7 +1071,6 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
    *         "red": 0,
    *         "green": 0,
    *         "blue": 1,
-   *         "alpha": 1
    *       },
    *       "disabled": true,
    *     },
@@ -1244,7 +1432,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
    *   "name": "appointment_time",
    *   "label": "Book your appointment at:",
    *   "type": "DATE_AND_TIME",
-   *   "valueMsEpoch": "796435200000"
+   *   "valueMsEpoch": 796435200000
    * }
    * ```
    * </pre>
@@ -1273,7 +1461,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
    *   "name": "appointment_time",
    *   "label": "Book your appointment at:",
    *   "type": "DATE_AND_TIME",
-   *   "valueMsEpoch": "796435200000"
+   *   "valueMsEpoch": 796435200000
    * }
    * ```
    * </pre>
@@ -1305,7 +1493,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
    *   "name": "appointment_time",
    *   "label": "Book your appointment at:",
    *   "type": "DATE_AND_TIME",
-   *   "valueMsEpoch": "796435200000"
+   *   "valueMsEpoch": 796435200000
    * }
    * ```
    * </pre>
@@ -1405,7 +1593,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
    * of columns. A grid with 10 items and 2 columns has 5 rows. A grid with 11
    * items and 2 columns has 6 rows.
    *
-   * [Google Workspace Add-ons and
+   * [Google Workspace add-ons and
    * Chat apps](https://developers.google.com/workspace/extend):
    *
    * For example, the following JSON creates a 2 column grid with a single
@@ -1463,7 +1651,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
    * of columns. A grid with 10 items and 2 columns has 5 rows. A grid with 11
    * items and 2 columns has 6 rows.
    *
-   * [Google Workspace Add-ons and
+   * [Google Workspace add-ons and
    * Chat apps](https://developers.google.com/workspace/extend):
    *
    * For example, the following JSON creates a 2 column grid with a single
@@ -1524,7 +1712,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
    * of columns. A grid with 10 items and 2 columns has 5 rows. A grid with 11
    * items and 2 columns has 6 rows.
    *
-   * [Google Workspace Add-ons and
+   * [Google Workspace add-ons and
    * Chat apps](https://developers.google.com/workspace/extend):
    *
    * For example, the following JSON creates a 2 column grid with a single
@@ -1734,6 +1922,246 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     return com.google.apps.card.v1.Columns.getDefaultInstance();
   }
 
+  public static final int CAROUSEL_FIELD_NUMBER = 13;
+
+  /**
+   *
+   *
+   * <pre>
+   * A carousel contains a collection of nested widgets.
+   * For example, this is a JSON representation of a carousel that contains
+   * two text paragraphs.
+   *
+   * ```
+   * {
+   *   "widgets": [
+   *     {
+   *       "textParagraph": {
+   *         "text": "First text paragraph in the carousel."
+   *       }
+   *     },
+   *     {
+   *       "textParagraph": {
+   *         "text": "Second text paragraph in the carousel."
+   *       }
+   *     }
+   *   ]
+   * }
+   * ```
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Carousel carousel = 13;</code>
+   *
+   * @return Whether the carousel field is set.
+   */
+  @java.lang.Override
+  public boolean hasCarousel() {
+    return dataCase_ == 13;
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * A carousel contains a collection of nested widgets.
+   * For example, this is a JSON representation of a carousel that contains
+   * two text paragraphs.
+   *
+   * ```
+   * {
+   *   "widgets": [
+   *     {
+   *       "textParagraph": {
+   *         "text": "First text paragraph in the carousel."
+   *       }
+   *     },
+   *     {
+   *       "textParagraph": {
+   *         "text": "Second text paragraph in the carousel."
+   *       }
+   *     }
+   *   ]
+   * }
+   * ```
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Carousel carousel = 13;</code>
+   *
+   * @return The carousel.
+   */
+  @java.lang.Override
+  public com.google.apps.card.v1.Carousel getCarousel() {
+    if (dataCase_ == 13) {
+      return (com.google.apps.card.v1.Carousel) data_;
+    }
+    return com.google.apps.card.v1.Carousel.getDefaultInstance();
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * A carousel contains a collection of nested widgets.
+   * For example, this is a JSON representation of a carousel that contains
+   * two text paragraphs.
+   *
+   * ```
+   * {
+   *   "widgets": [
+   *     {
+   *       "textParagraph": {
+   *         "text": "First text paragraph in the carousel."
+   *       }
+   *     },
+   *     {
+   *       "textParagraph": {
+   *         "text": "Second text paragraph in the carousel."
+   *       }
+   *     }
+   *   ]
+   * }
+   * ```
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Carousel carousel = 13;</code>
+   */
+  @java.lang.Override
+  public com.google.apps.card.v1.CarouselOrBuilder getCarouselOrBuilder() {
+    if (dataCase_ == 13) {
+      return (com.google.apps.card.v1.Carousel) data_;
+    }
+    return com.google.apps.card.v1.Carousel.getDefaultInstance();
+  }
+
+  public static final int CHIP_LIST_FIELD_NUMBER = 14;
+
+  /**
+   *
+   *
+   * <pre>
+   * A list of chips.
+   *
+   * For example, the following JSON creates two chips. The first
+   * is a text chip and the second is an icon chip that opens a
+   * link:
+   * ```
+   * "chipList": {
+   *   "chips": [
+   *     {
+   *       "text": "Edit",
+   *       "disabled": true,
+   *     },
+   *     {
+   *       "icon": {
+   *         "knownIcon": "INVITE",
+   *         "altText": "check calendar"
+   *       },
+   *       "onClick": {
+   *         "openLink": {
+   *           "url": "https://example.com/calendar"
+   *         }
+   *       }
+   *     }
+   *   ]
+   * }
+   * ```
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.ChipList chip_list = 14;</code>
+   *
+   * @return Whether the chipList field is set.
+   */
+  @java.lang.Override
+  public boolean hasChipList() {
+    return dataCase_ == 14;
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * A list of chips.
+   *
+   * For example, the following JSON creates two chips. The first
+   * is a text chip and the second is an icon chip that opens a
+   * link:
+   * ```
+   * "chipList": {
+   *   "chips": [
+   *     {
+   *       "text": "Edit",
+   *       "disabled": true,
+   *     },
+   *     {
+   *       "icon": {
+   *         "knownIcon": "INVITE",
+   *         "altText": "check calendar"
+   *       },
+   *       "onClick": {
+   *         "openLink": {
+   *           "url": "https://example.com/calendar"
+   *         }
+   *       }
+   *     }
+   *   ]
+   * }
+   * ```
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.ChipList chip_list = 14;</code>
+   *
+   * @return The chipList.
+   */
+  @java.lang.Override
+  public com.google.apps.card.v1.ChipList getChipList() {
+    if (dataCase_ == 14) {
+      return (com.google.apps.card.v1.ChipList) data_;
+    }
+    return com.google.apps.card.v1.ChipList.getDefaultInstance();
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * A list of chips.
+   *
+   * For example, the following JSON creates two chips. The first
+   * is a text chip and the second is an icon chip that opens a
+   * link:
+   * ```
+   * "chipList": {
+   *   "chips": [
+   *     {
+   *       "text": "Edit",
+   *       "disabled": true,
+   *     },
+   *     {
+   *       "icon": {
+   *         "knownIcon": "INVITE",
+   *         "altText": "check calendar"
+   *       },
+   *       "onClick": {
+   *         "openLink": {
+   *           "url": "https://example.com/calendar"
+   *         }
+   *       }
+   *     }
+   *   ]
+   * }
+   * ```
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.ChipList chip_list = 14;</code>
+   */
+  @java.lang.Override
+  public com.google.apps.card.v1.ChipListOrBuilder getChipListOrBuilder() {
+    if (dataCase_ == 14) {
+      return (com.google.apps.card.v1.ChipList) data_;
+    }
+    return com.google.apps.card.v1.ChipList.getDefaultInstance();
+  }
+
   public static final int HORIZONTAL_ALIGNMENT_FIELD_NUMBER = 8;
   private int horizontalAlignment_ = 0;
 
@@ -1822,6 +2250,12 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     if (dataCase_ == 11) {
       output.writeMessage(11, (com.google.apps.card.v1.Columns) data_);
     }
+    if (dataCase_ == 13) {
+      output.writeMessage(13, (com.google.apps.card.v1.Carousel) data_);
+    }
+    if (dataCase_ == 14) {
+      output.writeMessage(14, (com.google.apps.card.v1.ChipList) data_);
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -1886,6 +2320,16 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
           com.google.protobuf.CodedOutputStream.computeMessageSize(
               11, (com.google.apps.card.v1.Columns) data_);
     }
+    if (dataCase_ == 13) {
+      size +=
+          com.google.protobuf.CodedOutputStream.computeMessageSize(
+              13, (com.google.apps.card.v1.Carousel) data_);
+    }
+    if (dataCase_ == 14) {
+      size +=
+          com.google.protobuf.CodedOutputStream.computeMessageSize(
+              14, (com.google.apps.card.v1.ChipList) data_);
+    }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
@@ -1933,6 +2377,12 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         break;
       case 11:
         if (!getColumns().equals(other.getColumns())) return false;
+        break;
+      case 13:
+        if (!getCarousel().equals(other.getCarousel())) return false;
+        break;
+      case 14:
+        if (!getChipList().equals(other.getChipList())) return false;
         break;
       case 0:
       default:
@@ -1990,6 +2440,14 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       case 11:
         hash = (37 * hash) + COLUMNS_FIELD_NUMBER;
         hash = (53 * hash) + getColumns().hashCode();
+        break;
+      case 13:
+        hash = (37 * hash) + CAROUSEL_FIELD_NUMBER;
+        hash = (53 * hash) + getCarousel().hashCode();
+        break;
+      case 14:
+        hash = (37 * hash) + CHIP_LIST_FIELD_NUMBER;
+        hash = (53 * hash) + getChipList().hashCode();
         break;
       case 0:
       default:
@@ -2165,6 +2623,12 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       if (columnsBuilder_ != null) {
         columnsBuilder_.clear();
       }
+      if (carouselBuilder_ != null) {
+        carouselBuilder_.clear();
+      }
+      if (chipListBuilder_ != null) {
+        chipListBuilder_.clear();
+      }
       horizontalAlignment_ = 0;
       dataCase_ = 0;
       data_ = null;
@@ -2204,7 +2668,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
 
     private void buildPartial0(com.google.apps.card.v1.Widget result) {
       int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000400) != 0)) {
+      if (((from_bitField0_ & 0x00001000) != 0)) {
         result.horizontalAlignment_ = horizontalAlignment_;
       }
     }
@@ -2241,6 +2705,12 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       }
       if (dataCase_ == 11 && columnsBuilder_ != null) {
         result.data_ = columnsBuilder_.build();
+      }
+      if (dataCase_ == 13 && carouselBuilder_ != null) {
+        result.data_ = carouselBuilder_.build();
+      }
+      if (dataCase_ == 14 && chipListBuilder_ != null) {
+        result.data_ = chipListBuilder_.build();
       }
     }
 
@@ -2343,6 +2813,16 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
             mergeColumns(other.getColumns());
             break;
           }
+        case CAROUSEL:
+          {
+            mergeCarousel(other.getCarousel());
+            break;
+          }
+        case CHIP_LIST:
+          {
+            mergeChipList(other.getChipList());
+            break;
+          }
         case DATA_NOT_SET:
           {
             break;
@@ -2419,7 +2899,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
             case 64:
               {
                 horizontalAlignment_ = input.readEnum();
-                bitField0_ |= 0x00000400;
+                bitField0_ |= 0x00001000;
                 break;
               } // case 64
             case 74:
@@ -2440,6 +2920,18 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
                 dataCase_ = 11;
                 break;
               } // case 90
+            case 106:
+              {
+                input.readMessage(getCarouselFieldBuilder().getBuilder(), extensionRegistry);
+                dataCase_ = 13;
+                break;
+              } // case 106
+            case 114:
+              {
+                input.readMessage(getChipListFieldBuilder().getBuilder(), extensionRegistry);
+                dataCase_ = 14;
+                break;
+              } // case 114
             default:
               {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -2490,7 +2982,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * and
      * [Formatting
      * text in Google Workspace
-     * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+     * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
      *
      * For example, the following JSON creates a bolded text:
      * ```
@@ -2520,7 +3012,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * and
      * [Formatting
      * text in Google Workspace
-     * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+     * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
      *
      * For example, the following JSON creates a bolded text:
      * ```
@@ -2560,7 +3052,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * and
      * [Formatting
      * text in Google Workspace
-     * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+     * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
      *
      * For example, the following JSON creates a bolded text:
      * ```
@@ -2597,7 +3089,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * and
      * [Formatting
      * text in Google Workspace
-     * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+     * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
      *
      * For example, the following JSON creates a bolded text:
      * ```
@@ -2631,7 +3123,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * and
      * [Formatting
      * text in Google Workspace
-     * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+     * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
      *
      * For example, the following JSON creates a bolded text:
      * ```
@@ -2677,7 +3169,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * and
      * [Formatting
      * text in Google Workspace
-     * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+     * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
      *
      * For example, the following JSON creates a bolded text:
      * ```
@@ -2717,7 +3209,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * and
      * [Formatting
      * text in Google Workspace
-     * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+     * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
      *
      * For example, the following JSON creates a bolded text:
      * ```
@@ -2744,7 +3236,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * and
      * [Formatting
      * text in Google Workspace
-     * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+     * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
      *
      * For example, the following JSON creates a bolded text:
      * ```
@@ -2779,7 +3271,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * and
      * [Formatting
      * text in Google Workspace
-     * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+     * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
      *
      * For example, the following JSON creates a bolded text:
      * ```
@@ -3516,7 +4008,6 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      *         "red": 0,
      *         "green": 0,
      *         "blue": 1,
-     *         "alpha": 1
      *       },
      *       "disabled": true,
      *     },
@@ -3563,7 +4054,6 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      *         "red": 0,
      *         "green": 0,
      *         "blue": 1,
-     *         "alpha": 1
      *       },
      *       "disabled": true,
      *     },
@@ -3620,7 +4110,6 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      *         "red": 0,
      *         "green": 0,
      *         "blue": 1,
-     *         "alpha": 1
      *       },
      *       "disabled": true,
      *     },
@@ -3674,7 +4163,6 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      *         "red": 0,
      *         "green": 0,
      *         "blue": 1,
-     *         "alpha": 1
      *       },
      *       "disabled": true,
      *     },
@@ -3725,7 +4213,6 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      *         "red": 0,
      *         "green": 0,
      *         "blue": 1,
-     *         "alpha": 1
      *       },
      *       "disabled": true,
      *     },
@@ -3788,7 +4275,6 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      *         "red": 0,
      *         "green": 0,
      *         "blue": 1,
-     *         "alpha": 1
      *       },
      *       "disabled": true,
      *     },
@@ -3845,7 +4331,6 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      *         "red": 0,
      *         "green": 0,
      *         "blue": 1,
-     *         "alpha": 1
      *       },
      *       "disabled": true,
      *     },
@@ -3889,7 +4374,6 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      *         "red": 0,
      *         "green": 0,
      *         "blue": 1,
-     *         "alpha": 1
      *       },
      *       "disabled": true,
      *     },
@@ -3941,7 +4425,6 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      *         "red": 0,
      *         "green": 0,
      *         "blue": 1,
-     *         "alpha": 1
      *       },
      *       "disabled": true,
      *     },
@@ -5057,7 +5540,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      *   "name": "appointment_time",
      *   "label": "Book your appointment at:",
      *   "type": "DATE_AND_TIME",
-     *   "valueMsEpoch": "796435200000"
+     *   "valueMsEpoch": 796435200000
      * }
      * ```
      * </pre>
@@ -5086,7 +5569,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      *   "name": "appointment_time",
      *   "label": "Book your appointment at:",
      *   "type": "DATE_AND_TIME",
-     *   "valueMsEpoch": "796435200000"
+     *   "valueMsEpoch": 796435200000
      * }
      * ```
      * </pre>
@@ -5125,7 +5608,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      *   "name": "appointment_time",
      *   "label": "Book your appointment at:",
      *   "type": "DATE_AND_TIME",
-     *   "valueMsEpoch": "796435200000"
+     *   "valueMsEpoch": 796435200000
      * }
      * ```
      * </pre>
@@ -5161,7 +5644,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      *   "name": "appointment_time",
      *   "label": "Book your appointment at:",
      *   "type": "DATE_AND_TIME",
-     *   "valueMsEpoch": "796435200000"
+     *   "valueMsEpoch": 796435200000
      * }
      * ```
      * </pre>
@@ -5195,7 +5678,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      *   "name": "appointment_time",
      *   "label": "Book your appointment at:",
      *   "type": "DATE_AND_TIME",
-     *   "valueMsEpoch": "796435200000"
+     *   "valueMsEpoch": 796435200000
      * }
      * ```
      * </pre>
@@ -5241,7 +5724,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      *   "name": "appointment_time",
      *   "label": "Book your appointment at:",
      *   "type": "DATE_AND_TIME",
-     *   "valueMsEpoch": "796435200000"
+     *   "valueMsEpoch": 796435200000
      * }
      * ```
      * </pre>
@@ -5280,7 +5763,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      *   "name": "appointment_time",
      *   "label": "Book your appointment at:",
      *   "type": "DATE_AND_TIME",
-     *   "valueMsEpoch": "796435200000"
+     *   "valueMsEpoch": 796435200000
      * }
      * ```
      * </pre>
@@ -5306,7 +5789,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      *   "name": "appointment_time",
      *   "label": "Book your appointment at:",
      *   "type": "DATE_AND_TIME",
-     *   "valueMsEpoch": "796435200000"
+     *   "valueMsEpoch": 796435200000
      * }
      * ```
      * </pre>
@@ -5340,7 +5823,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      *   "name": "appointment_time",
      *   "label": "Book your appointment at:",
      *   "type": "DATE_AND_TIME",
-     *   "valueMsEpoch": "796435200000"
+     *   "valueMsEpoch": 796435200000
      * }
      * ```
      * </pre>
@@ -5653,7 +6136,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * of columns. A grid with 10 items and 2 columns has 5 rows. A grid with 11
      * items and 2 columns has 6 rows.
      *
-     * [Google Workspace Add-ons and
+     * [Google Workspace add-ons and
      * Chat apps](https://developers.google.com/workspace/extend):
      *
      * For example, the following JSON creates a 2 column grid with a single
@@ -5711,7 +6194,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * of columns. A grid with 10 items and 2 columns has 5 rows. A grid with 11
      * items and 2 columns has 6 rows.
      *
-     * [Google Workspace Add-ons and
+     * [Google Workspace add-ons and
      * Chat apps](https://developers.google.com/workspace/extend):
      *
      * For example, the following JSON creates a 2 column grid with a single
@@ -5779,7 +6262,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * of columns. A grid with 10 items and 2 columns has 5 rows. A grid with 11
      * items and 2 columns has 6 rows.
      *
-     * [Google Workspace Add-ons and
+     * [Google Workspace add-ons and
      * Chat apps](https://developers.google.com/workspace/extend):
      *
      * For example, the following JSON creates a 2 column grid with a single
@@ -5844,7 +6327,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * of columns. A grid with 10 items and 2 columns has 5 rows. A grid with 11
      * items and 2 columns has 6 rows.
      *
-     * [Google Workspace Add-ons and
+     * [Google Workspace add-ons and
      * Chat apps](https://developers.google.com/workspace/extend):
      *
      * For example, the following JSON creates a 2 column grid with a single
@@ -5906,7 +6389,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * of columns. A grid with 10 items and 2 columns has 5 rows. A grid with 11
      * items and 2 columns has 6 rows.
      *
-     * [Google Workspace Add-ons and
+     * [Google Workspace add-ons and
      * Chat apps](https://developers.google.com/workspace/extend):
      *
      * For example, the following JSON creates a 2 column grid with a single
@@ -5979,7 +6462,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * of columns. A grid with 10 items and 2 columns has 5 rows. A grid with 11
      * items and 2 columns has 6 rows.
      *
-     * [Google Workspace Add-ons and
+     * [Google Workspace add-ons and
      * Chat apps](https://developers.google.com/workspace/extend):
      *
      * For example, the following JSON creates a 2 column grid with a single
@@ -6047,7 +6530,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * of columns. A grid with 10 items and 2 columns has 5 rows. A grid with 11
      * items and 2 columns has 6 rows.
      *
-     * [Google Workspace Add-ons and
+     * [Google Workspace add-ons and
      * Chat apps](https://developers.google.com/workspace/extend):
      *
      * For example, the following JSON creates a 2 column grid with a single
@@ -6102,7 +6585,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * of columns. A grid with 10 items and 2 columns has 5 rows. A grid with 11
      * items and 2 columns has 6 rows.
      *
-     * [Google Workspace Add-ons and
+     * [Google Workspace add-ons and
      * Chat apps](https://developers.google.com/workspace/extend):
      *
      * For example, the following JSON creates a 2 column grid with a single
@@ -6165,7 +6648,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * of columns. A grid with 10 items and 2 columns has 5 rows. A grid with 11
      * items and 2 columns has 6 rows.
      *
-     * [Google Workspace Add-ons and
+     * [Google Workspace add-ons and
      * Chat apps](https://developers.google.com/workspace/extend):
      *
      * For example, the following JSON creates a 2 column grid with a single
@@ -6764,6 +7247,828 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       return columnsBuilder_;
     }
 
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.apps.card.v1.Carousel,
+            com.google.apps.card.v1.Carousel.Builder,
+            com.google.apps.card.v1.CarouselOrBuilder>
+        carouselBuilder_;
+
+    /**
+     *
+     *
+     * <pre>
+     * A carousel contains a collection of nested widgets.
+     * For example, this is a JSON representation of a carousel that contains
+     * two text paragraphs.
+     *
+     * ```
+     * {
+     *   "widgets": [
+     *     {
+     *       "textParagraph": {
+     *         "text": "First text paragraph in the carousel."
+     *       }
+     *     },
+     *     {
+     *       "textParagraph": {
+     *         "text": "Second text paragraph in the carousel."
+     *       }
+     *     }
+     *   ]
+     * }
+     * ```
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Carousel carousel = 13;</code>
+     *
+     * @return Whether the carousel field is set.
+     */
+    @java.lang.Override
+    public boolean hasCarousel() {
+      return dataCase_ == 13;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A carousel contains a collection of nested widgets.
+     * For example, this is a JSON representation of a carousel that contains
+     * two text paragraphs.
+     *
+     * ```
+     * {
+     *   "widgets": [
+     *     {
+     *       "textParagraph": {
+     *         "text": "First text paragraph in the carousel."
+     *       }
+     *     },
+     *     {
+     *       "textParagraph": {
+     *         "text": "Second text paragraph in the carousel."
+     *       }
+     *     }
+     *   ]
+     * }
+     * ```
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Carousel carousel = 13;</code>
+     *
+     * @return The carousel.
+     */
+    @java.lang.Override
+    public com.google.apps.card.v1.Carousel getCarousel() {
+      if (carouselBuilder_ == null) {
+        if (dataCase_ == 13) {
+          return (com.google.apps.card.v1.Carousel) data_;
+        }
+        return com.google.apps.card.v1.Carousel.getDefaultInstance();
+      } else {
+        if (dataCase_ == 13) {
+          return carouselBuilder_.getMessage();
+        }
+        return com.google.apps.card.v1.Carousel.getDefaultInstance();
+      }
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A carousel contains a collection of nested widgets.
+     * For example, this is a JSON representation of a carousel that contains
+     * two text paragraphs.
+     *
+     * ```
+     * {
+     *   "widgets": [
+     *     {
+     *       "textParagraph": {
+     *         "text": "First text paragraph in the carousel."
+     *       }
+     *     },
+     *     {
+     *       "textParagraph": {
+     *         "text": "Second text paragraph in the carousel."
+     *       }
+     *     }
+     *   ]
+     * }
+     * ```
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Carousel carousel = 13;</code>
+     */
+    public Builder setCarousel(com.google.apps.card.v1.Carousel value) {
+      if (carouselBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        data_ = value;
+        onChanged();
+      } else {
+        carouselBuilder_.setMessage(value);
+      }
+      dataCase_ = 13;
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A carousel contains a collection of nested widgets.
+     * For example, this is a JSON representation of a carousel that contains
+     * two text paragraphs.
+     *
+     * ```
+     * {
+     *   "widgets": [
+     *     {
+     *       "textParagraph": {
+     *         "text": "First text paragraph in the carousel."
+     *       }
+     *     },
+     *     {
+     *       "textParagraph": {
+     *         "text": "Second text paragraph in the carousel."
+     *       }
+     *     }
+     *   ]
+     * }
+     * ```
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Carousel carousel = 13;</code>
+     */
+    public Builder setCarousel(com.google.apps.card.v1.Carousel.Builder builderForValue) {
+      if (carouselBuilder_ == null) {
+        data_ = builderForValue.build();
+        onChanged();
+      } else {
+        carouselBuilder_.setMessage(builderForValue.build());
+      }
+      dataCase_ = 13;
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A carousel contains a collection of nested widgets.
+     * For example, this is a JSON representation of a carousel that contains
+     * two text paragraphs.
+     *
+     * ```
+     * {
+     *   "widgets": [
+     *     {
+     *       "textParagraph": {
+     *         "text": "First text paragraph in the carousel."
+     *       }
+     *     },
+     *     {
+     *       "textParagraph": {
+     *         "text": "Second text paragraph in the carousel."
+     *       }
+     *     }
+     *   ]
+     * }
+     * ```
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Carousel carousel = 13;</code>
+     */
+    public Builder mergeCarousel(com.google.apps.card.v1.Carousel value) {
+      if (carouselBuilder_ == null) {
+        if (dataCase_ == 13 && data_ != com.google.apps.card.v1.Carousel.getDefaultInstance()) {
+          data_ =
+              com.google.apps.card.v1.Carousel.newBuilder((com.google.apps.card.v1.Carousel) data_)
+                  .mergeFrom(value)
+                  .buildPartial();
+        } else {
+          data_ = value;
+        }
+        onChanged();
+      } else {
+        if (dataCase_ == 13) {
+          carouselBuilder_.mergeFrom(value);
+        } else {
+          carouselBuilder_.setMessage(value);
+        }
+      }
+      dataCase_ = 13;
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A carousel contains a collection of nested widgets.
+     * For example, this is a JSON representation of a carousel that contains
+     * two text paragraphs.
+     *
+     * ```
+     * {
+     *   "widgets": [
+     *     {
+     *       "textParagraph": {
+     *         "text": "First text paragraph in the carousel."
+     *       }
+     *     },
+     *     {
+     *       "textParagraph": {
+     *         "text": "Second text paragraph in the carousel."
+     *       }
+     *     }
+     *   ]
+     * }
+     * ```
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Carousel carousel = 13;</code>
+     */
+    public Builder clearCarousel() {
+      if (carouselBuilder_ == null) {
+        if (dataCase_ == 13) {
+          dataCase_ = 0;
+          data_ = null;
+          onChanged();
+        }
+      } else {
+        if (dataCase_ == 13) {
+          dataCase_ = 0;
+          data_ = null;
+        }
+        carouselBuilder_.clear();
+      }
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A carousel contains a collection of nested widgets.
+     * For example, this is a JSON representation of a carousel that contains
+     * two text paragraphs.
+     *
+     * ```
+     * {
+     *   "widgets": [
+     *     {
+     *       "textParagraph": {
+     *         "text": "First text paragraph in the carousel."
+     *       }
+     *     },
+     *     {
+     *       "textParagraph": {
+     *         "text": "Second text paragraph in the carousel."
+     *       }
+     *     }
+     *   ]
+     * }
+     * ```
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Carousel carousel = 13;</code>
+     */
+    public com.google.apps.card.v1.Carousel.Builder getCarouselBuilder() {
+      return getCarouselFieldBuilder().getBuilder();
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A carousel contains a collection of nested widgets.
+     * For example, this is a JSON representation of a carousel that contains
+     * two text paragraphs.
+     *
+     * ```
+     * {
+     *   "widgets": [
+     *     {
+     *       "textParagraph": {
+     *         "text": "First text paragraph in the carousel."
+     *       }
+     *     },
+     *     {
+     *       "textParagraph": {
+     *         "text": "Second text paragraph in the carousel."
+     *       }
+     *     }
+     *   ]
+     * }
+     * ```
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Carousel carousel = 13;</code>
+     */
+    @java.lang.Override
+    public com.google.apps.card.v1.CarouselOrBuilder getCarouselOrBuilder() {
+      if ((dataCase_ == 13) && (carouselBuilder_ != null)) {
+        return carouselBuilder_.getMessageOrBuilder();
+      } else {
+        if (dataCase_ == 13) {
+          return (com.google.apps.card.v1.Carousel) data_;
+        }
+        return com.google.apps.card.v1.Carousel.getDefaultInstance();
+      }
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A carousel contains a collection of nested widgets.
+     * For example, this is a JSON representation of a carousel that contains
+     * two text paragraphs.
+     *
+     * ```
+     * {
+     *   "widgets": [
+     *     {
+     *       "textParagraph": {
+     *         "text": "First text paragraph in the carousel."
+     *       }
+     *     },
+     *     {
+     *       "textParagraph": {
+     *         "text": "Second text paragraph in the carousel."
+     *       }
+     *     }
+     *   ]
+     * }
+     * ```
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Carousel carousel = 13;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.apps.card.v1.Carousel,
+            com.google.apps.card.v1.Carousel.Builder,
+            com.google.apps.card.v1.CarouselOrBuilder>
+        getCarouselFieldBuilder() {
+      if (carouselBuilder_ == null) {
+        if (!(dataCase_ == 13)) {
+          data_ = com.google.apps.card.v1.Carousel.getDefaultInstance();
+        }
+        carouselBuilder_ =
+            new com.google.protobuf.SingleFieldBuilderV3<
+                com.google.apps.card.v1.Carousel,
+                com.google.apps.card.v1.Carousel.Builder,
+                com.google.apps.card.v1.CarouselOrBuilder>(
+                (com.google.apps.card.v1.Carousel) data_, getParentForChildren(), isClean());
+        data_ = null;
+      }
+      dataCase_ = 13;
+      onChanged();
+      return carouselBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.apps.card.v1.ChipList,
+            com.google.apps.card.v1.ChipList.Builder,
+            com.google.apps.card.v1.ChipListOrBuilder>
+        chipListBuilder_;
+
+    /**
+     *
+     *
+     * <pre>
+     * A list of chips.
+     *
+     * For example, the following JSON creates two chips. The first
+     * is a text chip and the second is an icon chip that opens a
+     * link:
+     * ```
+     * "chipList": {
+     *   "chips": [
+     *     {
+     *       "text": "Edit",
+     *       "disabled": true,
+     *     },
+     *     {
+     *       "icon": {
+     *         "knownIcon": "INVITE",
+     *         "altText": "check calendar"
+     *       },
+     *       "onClick": {
+     *         "openLink": {
+     *           "url": "https://example.com/calendar"
+     *         }
+     *       }
+     *     }
+     *   ]
+     * }
+     * ```
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.ChipList chip_list = 14;</code>
+     *
+     * @return Whether the chipList field is set.
+     */
+    @java.lang.Override
+    public boolean hasChipList() {
+      return dataCase_ == 14;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A list of chips.
+     *
+     * For example, the following JSON creates two chips. The first
+     * is a text chip and the second is an icon chip that opens a
+     * link:
+     * ```
+     * "chipList": {
+     *   "chips": [
+     *     {
+     *       "text": "Edit",
+     *       "disabled": true,
+     *     },
+     *     {
+     *       "icon": {
+     *         "knownIcon": "INVITE",
+     *         "altText": "check calendar"
+     *       },
+     *       "onClick": {
+     *         "openLink": {
+     *           "url": "https://example.com/calendar"
+     *         }
+     *       }
+     *     }
+     *   ]
+     * }
+     * ```
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.ChipList chip_list = 14;</code>
+     *
+     * @return The chipList.
+     */
+    @java.lang.Override
+    public com.google.apps.card.v1.ChipList getChipList() {
+      if (chipListBuilder_ == null) {
+        if (dataCase_ == 14) {
+          return (com.google.apps.card.v1.ChipList) data_;
+        }
+        return com.google.apps.card.v1.ChipList.getDefaultInstance();
+      } else {
+        if (dataCase_ == 14) {
+          return chipListBuilder_.getMessage();
+        }
+        return com.google.apps.card.v1.ChipList.getDefaultInstance();
+      }
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A list of chips.
+     *
+     * For example, the following JSON creates two chips. The first
+     * is a text chip and the second is an icon chip that opens a
+     * link:
+     * ```
+     * "chipList": {
+     *   "chips": [
+     *     {
+     *       "text": "Edit",
+     *       "disabled": true,
+     *     },
+     *     {
+     *       "icon": {
+     *         "knownIcon": "INVITE",
+     *         "altText": "check calendar"
+     *       },
+     *       "onClick": {
+     *         "openLink": {
+     *           "url": "https://example.com/calendar"
+     *         }
+     *       }
+     *     }
+     *   ]
+     * }
+     * ```
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.ChipList chip_list = 14;</code>
+     */
+    public Builder setChipList(com.google.apps.card.v1.ChipList value) {
+      if (chipListBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        data_ = value;
+        onChanged();
+      } else {
+        chipListBuilder_.setMessage(value);
+      }
+      dataCase_ = 14;
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A list of chips.
+     *
+     * For example, the following JSON creates two chips. The first
+     * is a text chip and the second is an icon chip that opens a
+     * link:
+     * ```
+     * "chipList": {
+     *   "chips": [
+     *     {
+     *       "text": "Edit",
+     *       "disabled": true,
+     *     },
+     *     {
+     *       "icon": {
+     *         "knownIcon": "INVITE",
+     *         "altText": "check calendar"
+     *       },
+     *       "onClick": {
+     *         "openLink": {
+     *           "url": "https://example.com/calendar"
+     *         }
+     *       }
+     *     }
+     *   ]
+     * }
+     * ```
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.ChipList chip_list = 14;</code>
+     */
+    public Builder setChipList(com.google.apps.card.v1.ChipList.Builder builderForValue) {
+      if (chipListBuilder_ == null) {
+        data_ = builderForValue.build();
+        onChanged();
+      } else {
+        chipListBuilder_.setMessage(builderForValue.build());
+      }
+      dataCase_ = 14;
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A list of chips.
+     *
+     * For example, the following JSON creates two chips. The first
+     * is a text chip and the second is an icon chip that opens a
+     * link:
+     * ```
+     * "chipList": {
+     *   "chips": [
+     *     {
+     *       "text": "Edit",
+     *       "disabled": true,
+     *     },
+     *     {
+     *       "icon": {
+     *         "knownIcon": "INVITE",
+     *         "altText": "check calendar"
+     *       },
+     *       "onClick": {
+     *         "openLink": {
+     *           "url": "https://example.com/calendar"
+     *         }
+     *       }
+     *     }
+     *   ]
+     * }
+     * ```
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.ChipList chip_list = 14;</code>
+     */
+    public Builder mergeChipList(com.google.apps.card.v1.ChipList value) {
+      if (chipListBuilder_ == null) {
+        if (dataCase_ == 14 && data_ != com.google.apps.card.v1.ChipList.getDefaultInstance()) {
+          data_ =
+              com.google.apps.card.v1.ChipList.newBuilder((com.google.apps.card.v1.ChipList) data_)
+                  .mergeFrom(value)
+                  .buildPartial();
+        } else {
+          data_ = value;
+        }
+        onChanged();
+      } else {
+        if (dataCase_ == 14) {
+          chipListBuilder_.mergeFrom(value);
+        } else {
+          chipListBuilder_.setMessage(value);
+        }
+      }
+      dataCase_ = 14;
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A list of chips.
+     *
+     * For example, the following JSON creates two chips. The first
+     * is a text chip and the second is an icon chip that opens a
+     * link:
+     * ```
+     * "chipList": {
+     *   "chips": [
+     *     {
+     *       "text": "Edit",
+     *       "disabled": true,
+     *     },
+     *     {
+     *       "icon": {
+     *         "knownIcon": "INVITE",
+     *         "altText": "check calendar"
+     *       },
+     *       "onClick": {
+     *         "openLink": {
+     *           "url": "https://example.com/calendar"
+     *         }
+     *       }
+     *     }
+     *   ]
+     * }
+     * ```
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.ChipList chip_list = 14;</code>
+     */
+    public Builder clearChipList() {
+      if (chipListBuilder_ == null) {
+        if (dataCase_ == 14) {
+          dataCase_ = 0;
+          data_ = null;
+          onChanged();
+        }
+      } else {
+        if (dataCase_ == 14) {
+          dataCase_ = 0;
+          data_ = null;
+        }
+        chipListBuilder_.clear();
+      }
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A list of chips.
+     *
+     * For example, the following JSON creates two chips. The first
+     * is a text chip and the second is an icon chip that opens a
+     * link:
+     * ```
+     * "chipList": {
+     *   "chips": [
+     *     {
+     *       "text": "Edit",
+     *       "disabled": true,
+     *     },
+     *     {
+     *       "icon": {
+     *         "knownIcon": "INVITE",
+     *         "altText": "check calendar"
+     *       },
+     *       "onClick": {
+     *         "openLink": {
+     *           "url": "https://example.com/calendar"
+     *         }
+     *       }
+     *     }
+     *   ]
+     * }
+     * ```
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.ChipList chip_list = 14;</code>
+     */
+    public com.google.apps.card.v1.ChipList.Builder getChipListBuilder() {
+      return getChipListFieldBuilder().getBuilder();
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A list of chips.
+     *
+     * For example, the following JSON creates two chips. The first
+     * is a text chip and the second is an icon chip that opens a
+     * link:
+     * ```
+     * "chipList": {
+     *   "chips": [
+     *     {
+     *       "text": "Edit",
+     *       "disabled": true,
+     *     },
+     *     {
+     *       "icon": {
+     *         "knownIcon": "INVITE",
+     *         "altText": "check calendar"
+     *       },
+     *       "onClick": {
+     *         "openLink": {
+     *           "url": "https://example.com/calendar"
+     *         }
+     *       }
+     *     }
+     *   ]
+     * }
+     * ```
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.ChipList chip_list = 14;</code>
+     */
+    @java.lang.Override
+    public com.google.apps.card.v1.ChipListOrBuilder getChipListOrBuilder() {
+      if ((dataCase_ == 14) && (chipListBuilder_ != null)) {
+        return chipListBuilder_.getMessageOrBuilder();
+      } else {
+        if (dataCase_ == 14) {
+          return (com.google.apps.card.v1.ChipList) data_;
+        }
+        return com.google.apps.card.v1.ChipList.getDefaultInstance();
+      }
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * A list of chips.
+     *
+     * For example, the following JSON creates two chips. The first
+     * is a text chip and the second is an icon chip that opens a
+     * link:
+     * ```
+     * "chipList": {
+     *   "chips": [
+     *     {
+     *       "text": "Edit",
+     *       "disabled": true,
+     *     },
+     *     {
+     *       "icon": {
+     *         "knownIcon": "INVITE",
+     *         "altText": "check calendar"
+     *       },
+     *       "onClick": {
+     *         "openLink": {
+     *           "url": "https://example.com/calendar"
+     *         }
+     *       }
+     *     }
+     *   ]
+     * }
+     * ```
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.ChipList chip_list = 14;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.apps.card.v1.ChipList,
+            com.google.apps.card.v1.ChipList.Builder,
+            com.google.apps.card.v1.ChipListOrBuilder>
+        getChipListFieldBuilder() {
+      if (chipListBuilder_ == null) {
+        if (!(dataCase_ == 14)) {
+          data_ = com.google.apps.card.v1.ChipList.getDefaultInstance();
+        }
+        chipListBuilder_ =
+            new com.google.protobuf.SingleFieldBuilderV3<
+                com.google.apps.card.v1.ChipList,
+                com.google.apps.card.v1.ChipList.Builder,
+                com.google.apps.card.v1.ChipListOrBuilder>(
+                (com.google.apps.card.v1.ChipList) data_, getParentForChildren(), isClean());
+        data_ = null;
+      }
+      dataCase_ = 14;
+      onChanged();
+      return chipListBuilder_;
+    }
+
     private int horizontalAlignment_ = 0;
 
     /**
@@ -6796,7 +8101,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder setHorizontalAlignmentValue(int value) {
       horizontalAlignment_ = value;
-      bitField0_ |= 0x00000400;
+      bitField0_ |= 0x00001000;
       onChanged();
       return this;
     }
@@ -6838,7 +8143,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-      bitField0_ |= 0x00000400;
+      bitField0_ |= 0x00001000;
       horizontalAlignment_ = value.getNumber();
       onChanged();
       return this;
@@ -6856,7 +8161,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearHorizontalAlignment() {
-      bitField0_ = (bitField0_ & ~0x00000400);
+      bitField0_ = (bitField0_ & ~0x00001000);
       horizontalAlignment_ = 0;
       onChanged();
       return this;

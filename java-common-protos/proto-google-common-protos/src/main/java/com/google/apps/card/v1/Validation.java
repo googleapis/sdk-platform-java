@@ -23,123 +23,120 @@ package com.google.apps.card.v1;
  *
  *
  * <pre>
- * Represents the crop style applied to an image.
+ * Represents the necessary data for validating the widget it's attached to.
  *
- * [Google Workspace add-ons and
- * Chat apps](https://developers.google.com/workspace/extend):
- *
- * For example, here's how to apply a 16:9 aspect ratio:
- *
- * ```
- * cropStyle {
- *  "type": "RECTANGLE_CUSTOM",
- *  "aspectRatio": 16/9
- * }
- * ```
+ * [Google Workspace add-ons and Chat
+ * apps](https://developers.google.com/workspace/extend):
  * </pre>
  *
- * Protobuf type {@code google.apps.card.v1.ImageCropStyle}
+ * Protobuf type {@code google.apps.card.v1.Validation}
  */
-public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
+public final class Validation extends com.google.protobuf.GeneratedMessageV3
     implements
-    // @@protoc_insertion_point(message_implements:google.apps.card.v1.ImageCropStyle)
-    ImageCropStyleOrBuilder {
+    // @@protoc_insertion_point(message_implements:google.apps.card.v1.Validation)
+    ValidationOrBuilder {
   private static final long serialVersionUID = 0L;
 
-  // Use ImageCropStyle.newBuilder() to construct.
-  private ImageCropStyle(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use Validation.newBuilder() to construct.
+  private Validation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
 
-  private ImageCropStyle() {
-    type_ = 0;
+  private Validation() {
+    inputType_ = 0;
   }
 
   @java.lang.Override
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new ImageCropStyle();
+    return new Validation();
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_ImageCropStyle_descriptor;
+        .internal_static_google_apps_card_v1_Validation_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.apps.card.v1.CardProto
-        .internal_static_google_apps_card_v1_ImageCropStyle_fieldAccessorTable
+        .internal_static_google_apps_card_v1_Validation_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.apps.card.v1.ImageCropStyle.class,
-            com.google.apps.card.v1.ImageCropStyle.Builder.class);
+            com.google.apps.card.v1.Validation.class,
+            com.google.apps.card.v1.Validation.Builder.class);
   }
 
   /**
    *
    *
    * <pre>
-   * Represents the crop style applied to an image.
-   *
-   * [Google Workspace add-ons
-   * and Chat apps](https://developers.google.com/workspace/extend):
+   * The type of the input widget.
    * </pre>
    *
-   * Protobuf enum {@code google.apps.card.v1.ImageCropStyle.ImageCropType}
+   * Protobuf enum {@code google.apps.card.v1.Validation.InputType}
    */
-  public enum ImageCropType implements com.google.protobuf.ProtocolMessageEnum {
+  public enum InputType implements com.google.protobuf.ProtocolMessageEnum {
     /**
      *
      *
      * <pre>
-     * Don't use. Unspecified.
+     * Unspecified type. Do not use.
      * </pre>
      *
-     * <code>IMAGE_CROP_TYPE_UNSPECIFIED = 0;</code>
+     * <code>INPUT_TYPE_UNSPECIFIED = 0;</code>
      */
-    IMAGE_CROP_TYPE_UNSPECIFIED(0),
+    INPUT_TYPE_UNSPECIFIED(0),
     /**
      *
      *
      * <pre>
-     * Default value. Applies a square crop.
+     * Regular text that accepts all characters.
      * </pre>
      *
-     * <code>SQUARE = 1;</code>
+     * <code>TEXT = 1;</code>
      */
-    SQUARE(1),
+    TEXT(1),
     /**
      *
      *
      * <pre>
-     * Applies a circular crop.
+     * An integer value.
      * </pre>
      *
-     * <code>CIRCLE = 2;</code>
+     * <code>INTEGER = 2;</code>
      */
-    CIRCLE(2),
+    INTEGER(2),
     /**
      *
      *
      * <pre>
-     * Applies a rectangular crop with a custom aspect ratio. Set the custom
-     * aspect ratio with `aspectRatio`.
+     * A float value.
      * </pre>
      *
-     * <code>RECTANGLE_CUSTOM = 3;</code>
+     * <code>FLOAT = 3;</code>
      */
-    RECTANGLE_CUSTOM(3),
+    FLOAT(3),
     /**
      *
      *
      * <pre>
-     * Applies a rectangular crop with a 4:3 aspect ratio.
+     * An email address.
      * </pre>
      *
-     * <code>RECTANGLE_4_3 = 4;</code>
+     * <code>EMAIL = 4;</code>
      */
-    RECTANGLE_4_3(4),
+    EMAIL(4),
+    /**
+     *
+     *
+     * <pre>
+     * A emoji selected from system-provided emoji picker.
+     * </pre>
+     *
+     * <code>EMOJI_PICKER = 5;</code>
+     */
+    EMOJI_PICKER(5),
     UNRECOGNIZED(-1),
     ;
 
@@ -147,57 +144,67 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Don't use. Unspecified.
+     * Unspecified type. Do not use.
      * </pre>
      *
-     * <code>IMAGE_CROP_TYPE_UNSPECIFIED = 0;</code>
+     * <code>INPUT_TYPE_UNSPECIFIED = 0;</code>
      */
-    public static final int IMAGE_CROP_TYPE_UNSPECIFIED_VALUE = 0;
+    public static final int INPUT_TYPE_UNSPECIFIED_VALUE = 0;
 
     /**
      *
      *
      * <pre>
-     * Default value. Applies a square crop.
+     * Regular text that accepts all characters.
      * </pre>
      *
-     * <code>SQUARE = 1;</code>
+     * <code>TEXT = 1;</code>
      */
-    public static final int SQUARE_VALUE = 1;
+    public static final int TEXT_VALUE = 1;
 
     /**
      *
      *
      * <pre>
-     * Applies a circular crop.
+     * An integer value.
      * </pre>
      *
-     * <code>CIRCLE = 2;</code>
+     * <code>INTEGER = 2;</code>
      */
-    public static final int CIRCLE_VALUE = 2;
+    public static final int INTEGER_VALUE = 2;
 
     /**
      *
      *
      * <pre>
-     * Applies a rectangular crop with a custom aspect ratio. Set the custom
-     * aspect ratio with `aspectRatio`.
+     * A float value.
      * </pre>
      *
-     * <code>RECTANGLE_CUSTOM = 3;</code>
+     * <code>FLOAT = 3;</code>
      */
-    public static final int RECTANGLE_CUSTOM_VALUE = 3;
+    public static final int FLOAT_VALUE = 3;
 
     /**
      *
      *
      * <pre>
-     * Applies a rectangular crop with a 4:3 aspect ratio.
+     * An email address.
      * </pre>
      *
-     * <code>RECTANGLE_4_3 = 4;</code>
+     * <code>EMAIL = 4;</code>
      */
-    public static final int RECTANGLE_4_3_VALUE = 4;
+    public static final int EMAIL_VALUE = 4;
+
+    /**
+     *
+     *
+     * <pre>
+     * A emoji selected from system-provided emoji picker.
+     * </pre>
+     *
+     * <code>EMOJI_PICKER = 5;</code>
+     */
+    public static final int EMOJI_PICKER_VALUE = 5;
 
     public final int getNumber() {
       if (this == UNRECOGNIZED) {
@@ -213,7 +220,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
-    public static ImageCropType valueOf(int value) {
+    public static InputType valueOf(int value) {
       return forNumber(value);
     }
 
@@ -221,31 +228,33 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
      * @param value The numeric wire value of the corresponding enum entry.
      * @return The enum associated with the given numeric wire value.
      */
-    public static ImageCropType forNumber(int value) {
+    public static InputType forNumber(int value) {
       switch (value) {
         case 0:
-          return IMAGE_CROP_TYPE_UNSPECIFIED;
+          return INPUT_TYPE_UNSPECIFIED;
         case 1:
-          return SQUARE;
+          return TEXT;
         case 2:
-          return CIRCLE;
+          return INTEGER;
         case 3:
-          return RECTANGLE_CUSTOM;
+          return FLOAT;
         case 4:
-          return RECTANGLE_4_3;
+          return EMAIL;
+        case 5:
+          return EMOJI_PICKER;
         default:
           return null;
       }
     }
 
-    public static com.google.protobuf.Internal.EnumLiteMap<ImageCropType> internalGetValueMap() {
+    public static com.google.protobuf.Internal.EnumLiteMap<InputType> internalGetValueMap() {
       return internalValueMap;
     }
 
-    private static final com.google.protobuf.Internal.EnumLiteMap<ImageCropType> internalValueMap =
-        new com.google.protobuf.Internal.EnumLiteMap<ImageCropType>() {
-          public ImageCropType findValueByNumber(int number) {
-            return ImageCropType.forNumber(number);
+    private static final com.google.protobuf.Internal.EnumLiteMap<InputType> internalValueMap =
+        new com.google.protobuf.Internal.EnumLiteMap<InputType>() {
+          public InputType findValueByNumber(int number) {
+            return InputType.forNumber(number);
           }
         };
 
@@ -262,12 +271,12 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
     }
 
     public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-      return com.google.apps.card.v1.ImageCropStyle.getDescriptor().getEnumTypes().get(0);
+      return com.google.apps.card.v1.Validation.getDescriptor().getEnumTypes().get(0);
     }
 
-    private static final ImageCropType[] VALUES = values();
+    private static final InputType[] VALUES = values();
 
-    public static ImageCropType valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+    public static InputType valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
       if (desc.getType() != getDescriptor()) {
         throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
       }
@@ -279,78 +288,77 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
 
     private final int value;
 
-    private ImageCropType(int value) {
+    private InputType(int value) {
       this.value = value;
     }
 
-    // @@protoc_insertion_point(enum_scope:google.apps.card.v1.ImageCropStyle.ImageCropType)
+    // @@protoc_insertion_point(enum_scope:google.apps.card.v1.Validation.InputType)
   }
 
-  public static final int TYPE_FIELD_NUMBER = 1;
-  private int type_ = 0;
+  public static final int CHARACTER_LIMIT_FIELD_NUMBER = 1;
+  private int characterLimit_ = 0;
 
   /**
    *
    *
    * <pre>
-   * The crop type.
+   * Specify the character limit for text input widgets.  Note that this is
+   * only used for text input and is ignored for other widgets.
+   *
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
-   * <code>.google.apps.card.v1.ImageCropStyle.ImageCropType type = 1;</code>
+   * <code>int32 character_limit = 1;</code>
    *
-   * @return The enum numeric value on the wire for type.
+   * @return The characterLimit.
    */
   @java.lang.Override
-  public int getTypeValue() {
-    return type_;
+  public int getCharacterLimit() {
+    return characterLimit_;
+  }
+
+  public static final int INPUT_TYPE_FIELD_NUMBER = 2;
+  private int inputType_ = 0;
+
+  /**
+   *
+   *
+   * <pre>
+   * Specify the type of the input widgets.
+   *
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Validation.InputType input_type = 2;</code>
+   *
+   * @return The enum numeric value on the wire for inputType.
+   */
+  @java.lang.Override
+  public int getInputTypeValue() {
+    return inputType_;
   }
 
   /**
    *
    *
    * <pre>
-   * The crop type.
+   * Specify the type of the input widgets.
+   *
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
-   * <code>.google.apps.card.v1.ImageCropStyle.ImageCropType type = 1;</code>
+   * <code>.google.apps.card.v1.Validation.InputType input_type = 2;</code>
    *
-   * @return The type.
+   * @return The inputType.
    */
   @java.lang.Override
-  public com.google.apps.card.v1.ImageCropStyle.ImageCropType getType() {
-    com.google.apps.card.v1.ImageCropStyle.ImageCropType result =
-        com.google.apps.card.v1.ImageCropStyle.ImageCropType.forNumber(type_);
-    return result == null
-        ? com.google.apps.card.v1.ImageCropStyle.ImageCropType.UNRECOGNIZED
-        : result;
-  }
-
-  public static final int ASPECT_RATIO_FIELD_NUMBER = 2;
-  private double aspectRatio_ = 0D;
-
-  /**
-   *
-   *
-   * <pre>
-   * The aspect ratio to use if the crop type is `RECTANGLE_CUSTOM`.
-   *
-   * For example, here's how to apply a 16:9 aspect ratio:
-   *
-   * ```
-   * cropStyle {
-   *  "type": "RECTANGLE_CUSTOM",
-   *  "aspectRatio": 16/9
-   * }
-   * ```
-   * </pre>
-   *
-   * <code>double aspect_ratio = 2;</code>
-   *
-   * @return The aspectRatio.
-   */
-  @java.lang.Override
-  public double getAspectRatio() {
-    return aspectRatio_;
+  public com.google.apps.card.v1.Validation.InputType getInputType() {
+    com.google.apps.card.v1.Validation.InputType result =
+        com.google.apps.card.v1.Validation.InputType.forNumber(inputType_);
+    return result == null ? com.google.apps.card.v1.Validation.InputType.UNRECOGNIZED : result;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -367,13 +375,12 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-    if (type_
-        != com.google.apps.card.v1.ImageCropStyle.ImageCropType.IMAGE_CROP_TYPE_UNSPECIFIED
-            .getNumber()) {
-      output.writeEnum(1, type_);
+    if (characterLimit_ != 0) {
+      output.writeInt32(1, characterLimit_);
     }
-    if (java.lang.Double.doubleToRawLongBits(aspectRatio_) != 0) {
-      output.writeDouble(2, aspectRatio_);
+    if (inputType_
+        != com.google.apps.card.v1.Validation.InputType.INPUT_TYPE_UNSPECIFIED.getNumber()) {
+      output.writeEnum(2, inputType_);
     }
     getUnknownFields().writeTo(output);
   }
@@ -384,13 +391,12 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
     if (size != -1) return size;
 
     size = 0;
-    if (type_
-        != com.google.apps.card.v1.ImageCropStyle.ImageCropType.IMAGE_CROP_TYPE_UNSPECIFIED
-            .getNumber()) {
-      size += com.google.protobuf.CodedOutputStream.computeEnumSize(1, type_);
+    if (characterLimit_ != 0) {
+      size += com.google.protobuf.CodedOutputStream.computeInt32Size(1, characterLimit_);
     }
-    if (java.lang.Double.doubleToRawLongBits(aspectRatio_) != 0) {
-      size += com.google.protobuf.CodedOutputStream.computeDoubleSize(2, aspectRatio_);
+    if (inputType_
+        != com.google.apps.card.v1.Validation.InputType.INPUT_TYPE_UNSPECIFIED.getNumber()) {
+      size += com.google.protobuf.CodedOutputStream.computeEnumSize(2, inputType_);
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -402,14 +408,13 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
     if (obj == this) {
       return true;
     }
-    if (!(obj instanceof com.google.apps.card.v1.ImageCropStyle)) {
+    if (!(obj instanceof com.google.apps.card.v1.Validation)) {
       return super.equals(obj);
     }
-    com.google.apps.card.v1.ImageCropStyle other = (com.google.apps.card.v1.ImageCropStyle) obj;
+    com.google.apps.card.v1.Validation other = (com.google.apps.card.v1.Validation) obj;
 
-    if (type_ != other.type_) return false;
-    if (java.lang.Double.doubleToLongBits(getAspectRatio())
-        != java.lang.Double.doubleToLongBits(other.getAspectRatio())) return false;
+    if (getCharacterLimit() != other.getCharacterLimit()) return false;
+    if (inputType_ != other.inputType_) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -421,83 +426,79 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + TYPE_FIELD_NUMBER;
-    hash = (53 * hash) + type_;
-    hash = (37 * hash) + ASPECT_RATIO_FIELD_NUMBER;
-    hash =
-        (53 * hash)
-            + com.google.protobuf.Internal.hashLong(
-                java.lang.Double.doubleToLongBits(getAspectRatio()));
+    hash = (37 * hash) + CHARACTER_LIMIT_FIELD_NUMBER;
+    hash = (53 * hash) + getCharacterLimit();
+    hash = (37 * hash) + INPUT_TYPE_FIELD_NUMBER;
+    hash = (53 * hash) + inputType_;
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static com.google.apps.card.v1.ImageCropStyle parseFrom(java.nio.ByteBuffer data)
+  public static com.google.apps.card.v1.Validation parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
 
-  public static com.google.apps.card.v1.ImageCropStyle parseFrom(
+  public static com.google.apps.card.v1.Validation parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
 
-  public static com.google.apps.card.v1.ImageCropStyle parseFrom(
-      com.google.protobuf.ByteString data)
+  public static com.google.apps.card.v1.Validation parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
 
-  public static com.google.apps.card.v1.ImageCropStyle parseFrom(
+  public static com.google.apps.card.v1.Validation parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
 
-  public static com.google.apps.card.v1.ImageCropStyle parseFrom(byte[] data)
+  public static com.google.apps.card.v1.Validation parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
 
-  public static com.google.apps.card.v1.ImageCropStyle parseFrom(
+  public static com.google.apps.card.v1.Validation parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
 
-  public static com.google.apps.card.v1.ImageCropStyle parseFrom(java.io.InputStream input)
+  public static com.google.apps.card.v1.Validation parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
   }
 
-  public static com.google.apps.card.v1.ImageCropStyle parseFrom(
+  public static com.google.apps.card.v1.Validation parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
         PARSER, input, extensionRegistry);
   }
 
-  public static com.google.apps.card.v1.ImageCropStyle parseDelimitedFrom(java.io.InputStream input)
+  public static com.google.apps.card.v1.Validation parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
   }
 
-  public static com.google.apps.card.v1.ImageCropStyle parseDelimitedFrom(
+  public static com.google.apps.card.v1.Validation parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
         PARSER, input, extensionRegistry);
   }
 
-  public static com.google.apps.card.v1.ImageCropStyle parseFrom(
+  public static com.google.apps.card.v1.Validation parseFrom(
       com.google.protobuf.CodedInputStream input) throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
   }
 
-  public static com.google.apps.card.v1.ImageCropStyle parseFrom(
+  public static com.google.apps.card.v1.Validation parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -514,7 +515,7 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
     return DEFAULT_INSTANCE.toBuilder();
   }
 
-  public static Builder newBuilder(com.google.apps.card.v1.ImageCropStyle prototype) {
+  public static Builder newBuilder(com.google.apps.card.v1.Validation prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
 
@@ -533,43 +534,34 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * Represents the crop style applied to an image.
+   * Represents the necessary data for validating the widget it's attached to.
    *
-   * [Google Workspace add-ons and
-   * Chat apps](https://developers.google.com/workspace/extend):
-   *
-   * For example, here's how to apply a 16:9 aspect ratio:
-   *
-   * ```
-   * cropStyle {
-   *  "type": "RECTANGLE_CUSTOM",
-   *  "aspectRatio": 16/9
-   * }
-   * ```
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
-   * Protobuf type {@code google.apps.card.v1.ImageCropStyle}
+   * Protobuf type {@code google.apps.card.v1.Validation}
    */
   public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
       implements
-      // @@protoc_insertion_point(builder_implements:google.apps.card.v1.ImageCropStyle)
-      com.google.apps.card.v1.ImageCropStyleOrBuilder {
+      // @@protoc_insertion_point(builder_implements:google.apps.card.v1.Validation)
+      com.google.apps.card.v1.ValidationOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
       return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_ImageCropStyle_descriptor;
+          .internal_static_google_apps_card_v1_Validation_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_ImageCropStyle_fieldAccessorTable
+          .internal_static_google_apps_card_v1_Validation_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.apps.card.v1.ImageCropStyle.class,
-              com.google.apps.card.v1.ImageCropStyle.Builder.class);
+              com.google.apps.card.v1.Validation.class,
+              com.google.apps.card.v1.Validation.Builder.class);
     }
 
-    // Construct using com.google.apps.card.v1.ImageCropStyle.newBuilder()
+    // Construct using com.google.apps.card.v1.Validation.newBuilder()
     private Builder() {}
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
@@ -580,25 +572,25 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
     public Builder clear() {
       super.clear();
       bitField0_ = 0;
-      type_ = 0;
-      aspectRatio_ = 0D;
+      characterLimit_ = 0;
+      inputType_ = 0;
       return this;
     }
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
       return com.google.apps.card.v1.CardProto
-          .internal_static_google_apps_card_v1_ImageCropStyle_descriptor;
+          .internal_static_google_apps_card_v1_Validation_descriptor;
     }
 
     @java.lang.Override
-    public com.google.apps.card.v1.ImageCropStyle getDefaultInstanceForType() {
-      return com.google.apps.card.v1.ImageCropStyle.getDefaultInstance();
+    public com.google.apps.card.v1.Validation getDefaultInstanceForType() {
+      return com.google.apps.card.v1.Validation.getDefaultInstance();
     }
 
     @java.lang.Override
-    public com.google.apps.card.v1.ImageCropStyle build() {
-      com.google.apps.card.v1.ImageCropStyle result = buildPartial();
+    public com.google.apps.card.v1.Validation build() {
+      com.google.apps.card.v1.Validation result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -606,9 +598,8 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
     }
 
     @java.lang.Override
-    public com.google.apps.card.v1.ImageCropStyle buildPartial() {
-      com.google.apps.card.v1.ImageCropStyle result =
-          new com.google.apps.card.v1.ImageCropStyle(this);
+    public com.google.apps.card.v1.Validation buildPartial() {
+      com.google.apps.card.v1.Validation result = new com.google.apps.card.v1.Validation(this);
       if (bitField0_ != 0) {
         buildPartial0(result);
       }
@@ -616,13 +607,13 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
       return result;
     }
 
-    private void buildPartial0(com.google.apps.card.v1.ImageCropStyle result) {
+    private void buildPartial0(com.google.apps.card.v1.Validation result) {
       int from_bitField0_ = bitField0_;
       if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.type_ = type_;
+        result.characterLimit_ = characterLimit_;
       }
       if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.aspectRatio_ = aspectRatio_;
+        result.inputType_ = inputType_;
       }
     }
 
@@ -661,21 +652,21 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
 
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.apps.card.v1.ImageCropStyle) {
-        return mergeFrom((com.google.apps.card.v1.ImageCropStyle) other);
+      if (other instanceof com.google.apps.card.v1.Validation) {
+        return mergeFrom((com.google.apps.card.v1.Validation) other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.apps.card.v1.ImageCropStyle other) {
-      if (other == com.google.apps.card.v1.ImageCropStyle.getDefaultInstance()) return this;
-      if (other.type_ != 0) {
-        setTypeValue(other.getTypeValue());
+    public Builder mergeFrom(com.google.apps.card.v1.Validation other) {
+      if (other == com.google.apps.card.v1.Validation.getDefaultInstance()) return this;
+      if (other.getCharacterLimit() != 0) {
+        setCharacterLimit(other.getCharacterLimit());
       }
-      if (other.getAspectRatio() != 0D) {
-        setAspectRatio(other.getAspectRatio());
+      if (other.inputType_ != 0) {
+        setInputTypeValue(other.getInputTypeValue());
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -705,16 +696,16 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
               break;
             case 8:
               {
-                type_ = input.readEnum();
+                characterLimit_ = input.readInt32();
                 bitField0_ |= 0x00000001;
                 break;
               } // case 8
-            case 17:
+            case 16:
               {
-                aspectRatio_ = input.readDouble();
+                inputType_ = input.readEnum();
                 bitField0_ |= 0x00000002;
                 break;
-              } // case 17
+              } // case 16
             default:
               {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -734,38 +725,47 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
 
     private int bitField0_;
 
-    private int type_ = 0;
+    private int characterLimit_;
 
     /**
      *
      *
      * <pre>
-     * The crop type.
+     * Specify the character limit for text input widgets.  Note that this is
+     * only used for text input and is ignored for other widgets.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
-     * <code>.google.apps.card.v1.ImageCropStyle.ImageCropType type = 1;</code>
+     * <code>int32 character_limit = 1;</code>
      *
-     * @return The enum numeric value on the wire for type.
+     * @return The characterLimit.
      */
     @java.lang.Override
-    public int getTypeValue() {
-      return type_;
+    public int getCharacterLimit() {
+      return characterLimit_;
     }
 
     /**
      *
      *
      * <pre>
-     * The crop type.
+     * Specify the character limit for text input widgets.  Note that this is
+     * only used for text input and is ignored for other widgets.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
-     * <code>.google.apps.card.v1.ImageCropStyle.ImageCropType type = 1;</code>
+     * <code>int32 character_limit = 1;</code>
      *
-     * @param value The enum numeric value on the wire for type to set.
+     * @param value The characterLimit to set.
      * @return This builder for chaining.
      */
-    public Builder setTypeValue(int value) {
-      type_ = value;
+    public Builder setCharacterLimit(int value) {
+
+      characterLimit_ = value;
       bitField0_ |= 0x00000001;
       onChanged();
       return this;
@@ -775,113 +775,62 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The crop type.
+     * Specify the character limit for text input widgets.  Note that this is
+     * only used for text input and is ignored for other widgets.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
-     * <code>.google.apps.card.v1.ImageCropStyle.ImageCropType type = 1;</code>
-     *
-     * @return The type.
-     */
-    @java.lang.Override
-    public com.google.apps.card.v1.ImageCropStyle.ImageCropType getType() {
-      com.google.apps.card.v1.ImageCropStyle.ImageCropType result =
-          com.google.apps.card.v1.ImageCropStyle.ImageCropType.forNumber(type_);
-      return result == null
-          ? com.google.apps.card.v1.ImageCropStyle.ImageCropType.UNRECOGNIZED
-          : result;
-    }
-
-    /**
-     *
-     *
-     * <pre>
-     * The crop type.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.ImageCropStyle.ImageCropType type = 1;</code>
-     *
-     * @param value The type to set.
-     * @return This builder for chaining.
-     */
-    public Builder setType(com.google.apps.card.v1.ImageCropStyle.ImageCropType value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      bitField0_ |= 0x00000001;
-      type_ = value.getNumber();
-      onChanged();
-      return this;
-    }
-
-    /**
-     *
-     *
-     * <pre>
-     * The crop type.
-     * </pre>
-     *
-     * <code>.google.apps.card.v1.ImageCropStyle.ImageCropType type = 1;</code>
+     * <code>int32 character_limit = 1;</code>
      *
      * @return This builder for chaining.
      */
-    public Builder clearType() {
+    public Builder clearCharacterLimit() {
       bitField0_ = (bitField0_ & ~0x00000001);
-      type_ = 0;
+      characterLimit_ = 0;
       onChanged();
       return this;
     }
 
-    private double aspectRatio_;
+    private int inputType_ = 0;
 
     /**
      *
      *
      * <pre>
-     * The aspect ratio to use if the crop type is `RECTANGLE_CUSTOM`.
+     * Specify the type of the input widgets.
      *
-     * For example, here's how to apply a 16:9 aspect ratio:
-     *
-     * ```
-     * cropStyle {
-     *  "type": "RECTANGLE_CUSTOM",
-     *  "aspectRatio": 16/9
-     * }
-     * ```
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
-     * <code>double aspect_ratio = 2;</code>
+     * <code>.google.apps.card.v1.Validation.InputType input_type = 2;</code>
      *
-     * @return The aspectRatio.
+     * @return The enum numeric value on the wire for inputType.
      */
     @java.lang.Override
-    public double getAspectRatio() {
-      return aspectRatio_;
+    public int getInputTypeValue() {
+      return inputType_;
     }
 
     /**
      *
      *
      * <pre>
-     * The aspect ratio to use if the crop type is `RECTANGLE_CUSTOM`.
+     * Specify the type of the input widgets.
      *
-     * For example, here's how to apply a 16:9 aspect ratio:
-     *
-     * ```
-     * cropStyle {
-     *  "type": "RECTANGLE_CUSTOM",
-     *  "aspectRatio": 16/9
-     * }
-     * ```
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
-     * <code>double aspect_ratio = 2;</code>
+     * <code>.google.apps.card.v1.Validation.InputType input_type = 2;</code>
      *
-     * @param value The aspectRatio to set.
+     * @param value The enum numeric value on the wire for inputType to set.
      * @return This builder for chaining.
      */
-    public Builder setAspectRatio(double value) {
-
-      aspectRatio_ = value;
+    public Builder setInputTypeValue(int value) {
+      inputType_ = value;
       bitField0_ |= 0x00000002;
       onChanged();
       return this;
@@ -891,25 +840,65 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The aspect ratio to use if the crop type is `RECTANGLE_CUSTOM`.
+     * Specify the type of the input widgets.
      *
-     * For example, here's how to apply a 16:9 aspect ratio:
-     *
-     * ```
-     * cropStyle {
-     *  "type": "RECTANGLE_CUSTOM",
-     *  "aspectRatio": 16/9
-     * }
-     * ```
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
-     * <code>double aspect_ratio = 2;</code>
+     * <code>.google.apps.card.v1.Validation.InputType input_type = 2;</code>
+     *
+     * @return The inputType.
+     */
+    @java.lang.Override
+    public com.google.apps.card.v1.Validation.InputType getInputType() {
+      com.google.apps.card.v1.Validation.InputType result =
+          com.google.apps.card.v1.Validation.InputType.forNumber(inputType_);
+      return result == null ? com.google.apps.card.v1.Validation.InputType.UNRECOGNIZED : result;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Specify the type of the input widgets.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Validation.InputType input_type = 2;</code>
+     *
+     * @param value The inputType to set.
+     * @return This builder for chaining.
+     */
+    public Builder setInputType(com.google.apps.card.v1.Validation.InputType value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      bitField0_ |= 0x00000002;
+      inputType_ = value.getNumber();
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Specify the type of the input widgets.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Validation.InputType input_type = 2;</code>
      *
      * @return This builder for chaining.
      */
-    public Builder clearAspectRatio() {
+    public Builder clearInputType() {
       bitField0_ = (bitField0_ & ~0x00000002);
-      aspectRatio_ = 0D;
+      inputType_ = 0;
       onChanged();
       return this;
     }
@@ -925,24 +914,24 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
       return super.mergeUnknownFields(unknownFields);
     }
 
-    // @@protoc_insertion_point(builder_scope:google.apps.card.v1.ImageCropStyle)
+    // @@protoc_insertion_point(builder_scope:google.apps.card.v1.Validation)
   }
 
-  // @@protoc_insertion_point(class_scope:google.apps.card.v1.ImageCropStyle)
-  private static final com.google.apps.card.v1.ImageCropStyle DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:google.apps.card.v1.Validation)
+  private static final com.google.apps.card.v1.Validation DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.apps.card.v1.ImageCropStyle();
+    DEFAULT_INSTANCE = new com.google.apps.card.v1.Validation();
   }
 
-  public static com.google.apps.card.v1.ImageCropStyle getDefaultInstance() {
+  public static com.google.apps.card.v1.Validation getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<ImageCropStyle> PARSER =
-      new com.google.protobuf.AbstractParser<ImageCropStyle>() {
+  private static final com.google.protobuf.Parser<Validation> PARSER =
+      new com.google.protobuf.AbstractParser<Validation>() {
         @java.lang.Override
-        public ImageCropStyle parsePartialFrom(
+        public Validation parsePartialFrom(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
@@ -961,17 +950,17 @@ public final class ImageCropStyle extends com.google.protobuf.GeneratedMessageV3
         }
       };
 
-  public static com.google.protobuf.Parser<ImageCropStyle> parser() {
+  public static com.google.protobuf.Parser<Validation> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<ImageCropStyle> getParserForType() {
+  public com.google.protobuf.Parser<Validation> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.apps.card.v1.ImageCropStyle getDefaultInstanceForType() {
+  public com.google.apps.card.v1.Validation getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 }

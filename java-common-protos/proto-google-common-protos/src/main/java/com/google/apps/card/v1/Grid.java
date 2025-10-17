@@ -34,7 +34,7 @@ package com.google.apps.card.v1;
  * 10 items and 2 columns has 5 rows. A grid with 11 items and 2 columns
  * has 6 rows.
  *
- * [Google Workspace Add-ons and Chat
+ * [Google Workspace add-ons and Chat
  * apps](https://developers.google.com/workspace/extend):
  *
  * For example, the following JSON creates a 2 column grid with a single
@@ -265,7 +265,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
    * Represents an item in a grid layout. Items can contain text, an image, or
    * both text and an image.
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -316,7 +316,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Represents the various layout options available for a grid item.
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -936,7 +936,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
      * Represents an item in a grid layout. Items can contain text, an image, or
      * both text and an image.
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -2363,7 +2363,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
    * 10 items and 2 columns has 5 rows. A grid with 11 items and 2 columns
    * has 6 rows.
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    *
    * For example, the following JSON creates a 2 column grid with a single

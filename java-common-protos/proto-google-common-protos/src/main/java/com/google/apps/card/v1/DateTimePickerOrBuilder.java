@@ -116,8 +116,8 @@ public interface DateTimePickerOrBuilder
    *
    *
    * <pre>
-   * The default value displayed in the widget, in milliseconds since [Unix
-   * epoch time](https://en.wikipedia.org/wiki/Unix_time).
+   * Optional. The default value displayed in the widget, in milliseconds since
+   * [Unix epoch time](https://en.wikipedia.org/wiki/Unix_time).
    *
    * Specify the value based on the type of picker (`DateTimePickerType`):
    *
@@ -129,7 +129,30 @@ public interface DateTimePickerOrBuilder
    *   `43200000` (or `12 * 60 * 60 * 1000`).
    * </pre>
    *
-   * <code>int64 value_ms_epoch = 4;</code>
+   * <code>optional int64 value_ms_epoch = 4;</code>
+   *
+   * @return Whether the valueMsEpoch field is set.
+   */
+  boolean hasValueMsEpoch();
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The default value displayed in the widget, in milliseconds since
+   * [Unix epoch time](https://en.wikipedia.org/wiki/Unix_time).
+   *
+   * Specify the value based on the type of picker (`DateTimePickerType`):
+   *
+   * * `DATE_AND_TIME`: a calendar date and time in UTC. For example, to
+   *   represent January 1, 2023 at 12:00 PM UTC, use `1672574400000`.
+   * * `DATE_ONLY`: a calendar date at 00:00:00 UTC. For example, to represent
+   *   January 1, 2023, use `1672531200000`.
+   * * `TIME_ONLY`: a time in UTC. For example, to represent 12:00 PM, use
+   *   `43200000` (or `12 * 60 * 60 * 1000`).
+   * </pre>
+   *
+   * <code>optional int64 value_ms_epoch = 4;</code>
    *
    * @return The valueMsEpoch.
    */

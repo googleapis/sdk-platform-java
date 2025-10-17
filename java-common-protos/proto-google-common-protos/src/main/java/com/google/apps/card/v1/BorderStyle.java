@@ -26,7 +26,7 @@ package com.google.apps.card.v1;
  * The style options for the border of a card or widget, including the border
  * type and color.
  *
- * [Google Workspace Add-ons and Chat
+ * [Google Workspace add-ons and Chat
  * apps](https://developers.google.com/workspace/extend):
  * </pre>
  *
@@ -74,7 +74,7 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Represents the border types applied to widgets.
    *
-   * [Google Workspace Add-ons
+   * [Google Workspace add-ons
    * and Chat apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -95,7 +95,7 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Default value. No border.
+     * No border.
      * </pre>
      *
      * <code>NO_BORDER = 1;</code>
@@ -105,7 +105,7 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Outline.
+     * Default value. Outline.
      * </pre>
      *
      * <code>STROKE = 2;</code>
@@ -129,7 +129,7 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Default value. No border.
+     * No border.
      * </pre>
      *
      * <code>NO_BORDER = 1;</code>
@@ -140,7 +140,7 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Outline.
+     * Default value. Outline.
      * </pre>
      *
      * <code>STROKE = 2;</code>
@@ -276,6 +276,25 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * The colors to use when the type is `BORDER_TYPE_STROKE`.
+   *
+   * To set the stroke color, specify a value for the `red`, `green`, and `blue`
+   * fields.
+   * The value must be a float number between 0 and 1 based on the RGB color
+   * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+   * represents the maximum intensity of the color.
+   *
+   * For example, the following sets the color to red at its maximum intensity:
+   *
+   * ```
+   * "color": {
+   *    "red": 1,
+   *    "green": 0,
+   *    "blue": 0,
+   * }
+   * ```
+   *
+   * The `alpha` field is unavailable for stroke color. If specified, this field
+   * is ignored.
    * </pre>
    *
    * <code>.google.type.Color stroke_color = 2;</code>
@@ -292,6 +311,25 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * The colors to use when the type is `BORDER_TYPE_STROKE`.
+   *
+   * To set the stroke color, specify a value for the `red`, `green`, and `blue`
+   * fields.
+   * The value must be a float number between 0 and 1 based on the RGB color
+   * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+   * represents the maximum intensity of the color.
+   *
+   * For example, the following sets the color to red at its maximum intensity:
+   *
+   * ```
+   * "color": {
+   *    "red": 1,
+   *    "green": 0,
+   *    "blue": 0,
+   * }
+   * ```
+   *
+   * The `alpha` field is unavailable for stroke color. If specified, this field
+   * is ignored.
    * </pre>
    *
    * <code>.google.type.Color stroke_color = 2;</code>
@@ -308,6 +346,25 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * The colors to use when the type is `BORDER_TYPE_STROKE`.
+   *
+   * To set the stroke color, specify a value for the `red`, `green`, and `blue`
+   * fields.
+   * The value must be a float number between 0 and 1 based on the RGB color
+   * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+   * represents the maximum intensity of the color.
+   *
+   * For example, the following sets the color to red at its maximum intensity:
+   *
+   * ```
+   * "color": {
+   *    "red": 1,
+   *    "green": 0,
+   *    "blue": 0,
+   * }
+   * ```
+   *
+   * The `alpha` field is unavailable for stroke color. If specified, this field
+   * is ignored.
    * </pre>
    *
    * <code>.google.type.Color stroke_color = 2;</code>
@@ -526,7 +583,7 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
    * The style options for the border of a card or widget, including the border
    * type and color.
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -850,6 +907,25 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The colors to use when the type is `BORDER_TYPE_STROKE`.
+     *
+     * To set the stroke color, specify a value for the `red`, `green`, and `blue`
+     * fields.
+     * The value must be a float number between 0 and 1 based on the RGB color
+     * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+     * represents the maximum intensity of the color.
+     *
+     * For example, the following sets the color to red at its maximum intensity:
+     *
+     * ```
+     * "color": {
+     *    "red": 1,
+     *    "green": 0,
+     *    "blue": 0,
+     * }
+     * ```
+     *
+     * The `alpha` field is unavailable for stroke color. If specified, this field
+     * is ignored.
      * </pre>
      *
      * <code>.google.type.Color stroke_color = 2;</code>
@@ -865,6 +941,25 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The colors to use when the type is `BORDER_TYPE_STROKE`.
+     *
+     * To set the stroke color, specify a value for the `red`, `green`, and `blue`
+     * fields.
+     * The value must be a float number between 0 and 1 based on the RGB color
+     * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+     * represents the maximum intensity of the color.
+     *
+     * For example, the following sets the color to red at its maximum intensity:
+     *
+     * ```
+     * "color": {
+     *    "red": 1,
+     *    "green": 0,
+     *    "blue": 0,
+     * }
+     * ```
+     *
+     * The `alpha` field is unavailable for stroke color. If specified, this field
+     * is ignored.
      * </pre>
      *
      * <code>.google.type.Color stroke_color = 2;</code>
@@ -884,6 +979,25 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The colors to use when the type is `BORDER_TYPE_STROKE`.
+     *
+     * To set the stroke color, specify a value for the `red`, `green`, and `blue`
+     * fields.
+     * The value must be a float number between 0 and 1 based on the RGB color
+     * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+     * represents the maximum intensity of the color.
+     *
+     * For example, the following sets the color to red at its maximum intensity:
+     *
+     * ```
+     * "color": {
+     *    "red": 1,
+     *    "green": 0,
+     *    "blue": 0,
+     * }
+     * ```
+     *
+     * The `alpha` field is unavailable for stroke color. If specified, this field
+     * is ignored.
      * </pre>
      *
      * <code>.google.type.Color stroke_color = 2;</code>
@@ -907,6 +1021,25 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The colors to use when the type is `BORDER_TYPE_STROKE`.
+     *
+     * To set the stroke color, specify a value for the `red`, `green`, and `blue`
+     * fields.
+     * The value must be a float number between 0 and 1 based on the RGB color
+     * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+     * represents the maximum intensity of the color.
+     *
+     * For example, the following sets the color to red at its maximum intensity:
+     *
+     * ```
+     * "color": {
+     *    "red": 1,
+     *    "green": 0,
+     *    "blue": 0,
+     * }
+     * ```
+     *
+     * The `alpha` field is unavailable for stroke color. If specified, this field
+     * is ignored.
      * </pre>
      *
      * <code>.google.type.Color stroke_color = 2;</code>
@@ -927,6 +1060,25 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The colors to use when the type is `BORDER_TYPE_STROKE`.
+     *
+     * To set the stroke color, specify a value for the `red`, `green`, and `blue`
+     * fields.
+     * The value must be a float number between 0 and 1 based on the RGB color
+     * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+     * represents the maximum intensity of the color.
+     *
+     * For example, the following sets the color to red at its maximum intensity:
+     *
+     * ```
+     * "color": {
+     *    "red": 1,
+     *    "green": 0,
+     *    "blue": 0,
+     * }
+     * ```
+     *
+     * The `alpha` field is unavailable for stroke color. If specified, this field
+     * is ignored.
      * </pre>
      *
      * <code>.google.type.Color stroke_color = 2;</code>
@@ -955,6 +1107,25 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The colors to use when the type is `BORDER_TYPE_STROKE`.
+     *
+     * To set the stroke color, specify a value for the `red`, `green`, and `blue`
+     * fields.
+     * The value must be a float number between 0 and 1 based on the RGB color
+     * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+     * represents the maximum intensity of the color.
+     *
+     * For example, the following sets the color to red at its maximum intensity:
+     *
+     * ```
+     * "color": {
+     *    "red": 1,
+     *    "green": 0,
+     *    "blue": 0,
+     * }
+     * ```
+     *
+     * The `alpha` field is unavailable for stroke color. If specified, this field
+     * is ignored.
      * </pre>
      *
      * <code>.google.type.Color stroke_color = 2;</code>
@@ -975,6 +1146,25 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The colors to use when the type is `BORDER_TYPE_STROKE`.
+     *
+     * To set the stroke color, specify a value for the `red`, `green`, and `blue`
+     * fields.
+     * The value must be a float number between 0 and 1 based on the RGB color
+     * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+     * represents the maximum intensity of the color.
+     *
+     * For example, the following sets the color to red at its maximum intensity:
+     *
+     * ```
+     * "color": {
+     *    "red": 1,
+     *    "green": 0,
+     *    "blue": 0,
+     * }
+     * ```
+     *
+     * The `alpha` field is unavailable for stroke color. If specified, this field
+     * is ignored.
      * </pre>
      *
      * <code>.google.type.Color stroke_color = 2;</code>
@@ -990,6 +1180,25 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The colors to use when the type is `BORDER_TYPE_STROKE`.
+     *
+     * To set the stroke color, specify a value for the `red`, `green`, and `blue`
+     * fields.
+     * The value must be a float number between 0 and 1 based on the RGB color
+     * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+     * represents the maximum intensity of the color.
+     *
+     * For example, the following sets the color to red at its maximum intensity:
+     *
+     * ```
+     * "color": {
+     *    "red": 1,
+     *    "green": 0,
+     *    "blue": 0,
+     * }
+     * ```
+     *
+     * The `alpha` field is unavailable for stroke color. If specified, this field
+     * is ignored.
      * </pre>
      *
      * <code>.google.type.Color stroke_color = 2;</code>
@@ -1007,6 +1216,25 @@ public final class BorderStyle extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The colors to use when the type is `BORDER_TYPE_STROKE`.
+     *
+     * To set the stroke color, specify a value for the `red`, `green`, and `blue`
+     * fields.
+     * The value must be a float number between 0 and 1 based on the RGB color
+     * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+     * represents the maximum intensity of the color.
+     *
+     * For example, the following sets the color to red at its maximum intensity:
+     *
+     * ```
+     * "color": {
+     *    "red": 1,
+     *    "green": 0,
+     *    "blue": 0,
+     * }
+     * ```
+     *
+     * The `alpha` field is unavailable for stroke color. If specified, this field
+     * is ignored.
      * </pre>
      *
      * <code>.google.type.Color stroke_color = 2;</code>
