@@ -37,7 +37,7 @@ RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_
 # 3.12.3-slim-bookworm
 FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python@sha256:afc139a0a640942491ec481ad8dda10f2c5b753f5c969393b12480155fe15a63 as final
 
-ARG OWLBOT_CLI_COMMITTISH=3a68a9c0de318784b3aefadcc502a6521b3f1bc5
+ARG OWLBOT_CLI_COMMITTISH=86dd063361d1156e099d6996f4dc8084bc65bf47
 ARG PROTOC_VERSION=25.8
 ARG GRPC_VERSION=1.71.0
 ENV HOME=/home
