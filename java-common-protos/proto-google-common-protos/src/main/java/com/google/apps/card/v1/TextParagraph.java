@@ -33,9 +33,9 @@ package com.google.apps.card.v1;
  * and
  * [Formatting
  * text in Google Workspace
- * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+ * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
  *
- * [Google Workspace Add-ons and
+ * [Google Workspace add-ons and
  * Chat apps](https://developers.google.com/workspace/extend):
  * </pre>
  *
@@ -54,6 +54,7 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
 
   private TextParagraph() {
     text_ = "";
+    textSyntax_ = 0;
   }
 
   @java.lang.Override
@@ -75,6 +76,167 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
         .ensureFieldAccessorsInitialized(
             com.google.apps.card.v1.TextParagraph.class,
             com.google.apps.card.v1.TextParagraph.Builder.class);
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * Syntax to use for formatting text.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * Protobuf enum {@code google.apps.card.v1.TextParagraph.TextSyntax}
+   */
+  public enum TextSyntax implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     *
+     *
+     * <pre>
+     * The text is rendered as HTML if unspecified.
+     * </pre>
+     *
+     * <code>TEXT_SYNTAX_UNSPECIFIED = 0;</code>
+     */
+    TEXT_SYNTAX_UNSPECIFIED(0),
+    /**
+     *
+     *
+     * <pre>
+     * The text is rendered as HTML. This is the default value.
+     * </pre>
+     *
+     * <code>HTML = 1;</code>
+     */
+    HTML(1),
+    /**
+     *
+     *
+     * <pre>
+     * The text is rendered as Markdown.
+     * </pre>
+     *
+     * <code>MARKDOWN = 2;</code>
+     */
+    MARKDOWN(2),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     *
+     *
+     * <pre>
+     * The text is rendered as HTML if unspecified.
+     * </pre>
+     *
+     * <code>TEXT_SYNTAX_UNSPECIFIED = 0;</code>
+     */
+    public static final int TEXT_SYNTAX_UNSPECIFIED_VALUE = 0;
+
+    /**
+     *
+     *
+     * <pre>
+     * The text is rendered as HTML. This is the default value.
+     * </pre>
+     *
+     * <code>HTML = 1;</code>
+     */
+    public static final int HTML_VALUE = 1;
+
+    /**
+     *
+     *
+     * <pre>
+     * The text is rendered as Markdown.
+     * </pre>
+     *
+     * <code>MARKDOWN = 2;</code>
+     */
+    public static final int MARKDOWN_VALUE = 2;
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static TextSyntax valueOf(int value) {
+      return forNumber(value);
+    }
+
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     */
+    public static TextSyntax forNumber(int value) {
+      switch (value) {
+        case 0:
+          return TEXT_SYNTAX_UNSPECIFIED;
+        case 1:
+          return HTML;
+        case 2:
+          return MARKDOWN;
+        default:
+          return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<TextSyntax> internalGetValueMap() {
+      return internalValueMap;
+    }
+
+    private static final com.google.protobuf.Internal.EnumLiteMap<TextSyntax> internalValueMap =
+        new com.google.protobuf.Internal.EnumLiteMap<TextSyntax>() {
+          public TextSyntax findValueByNumber(int number) {
+            return TextSyntax.forNumber(number);
+          }
+        };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalStateException(
+            "Can't get the descriptor of an unrecognized enum value.");
+      }
+      return getDescriptor().getValues().get(ordinal());
+    }
+
+    public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
+      return getDescriptor();
+    }
+
+    public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
+      return com.google.apps.card.v1.TextParagraph.getDescriptor().getEnumTypes().get(0);
+    }
+
+    private static final TextSyntax[] VALUES = values();
+
+    public static TextSyntax valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private TextSyntax(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:google.apps.card.v1.TextParagraph.TextSyntax)
   }
 
   public static final int TEXT_FIELD_NUMBER = 1;
@@ -130,6 +292,73 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
     }
   }
 
+  public static final int MAX_LINES_FIELD_NUMBER = 2;
+  private int maxLines_ = 0;
+
+  /**
+   *
+   *
+   * <pre>
+   * The maximum number of lines of text that are displayed in the widget. If
+   * the text exceeds the specified maximum number of lines, the excess
+   * content is concealed behind a **show more** button. If the text is equal or
+   * shorter than the specified maximum number of lines, a **show more** button
+   * isn't displayed.
+   *
+   * The default value is 0, in which case
+   * all context is displayed. Negative values are ignored.
+   * </pre>
+   *
+   * <code>int32 max_lines = 2;</code>
+   *
+   * @return The maxLines.
+   */
+  @java.lang.Override
+  public int getMaxLines() {
+    return maxLines_;
+  }
+
+  public static final int TEXT_SYNTAX_FIELD_NUMBER = 4;
+  private int textSyntax_ = 0;
+
+  /**
+   *
+   *
+   * <pre>
+   * The syntax of the text. If not set, the text is rendered as HTML.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph.TextSyntax text_syntax = 4;</code>
+   *
+   * @return The enum numeric value on the wire for textSyntax.
+   */
+  @java.lang.Override
+  public int getTextSyntaxValue() {
+    return textSyntax_;
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * The syntax of the text. If not set, the text is rendered as HTML.
+   *
+   * [Google Chat apps](https://developers.google.com/workspace/chat):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.TextParagraph.TextSyntax text_syntax = 4;</code>
+   *
+   * @return The textSyntax.
+   */
+  @java.lang.Override
+  public com.google.apps.card.v1.TextParagraph.TextSyntax getTextSyntax() {
+    com.google.apps.card.v1.TextParagraph.TextSyntax result =
+        com.google.apps.card.v1.TextParagraph.TextSyntax.forNumber(textSyntax_);
+    return result == null ? com.google.apps.card.v1.TextParagraph.TextSyntax.UNRECOGNIZED : result;
+  }
+
   private byte memoizedIsInitialized = -1;
 
   @java.lang.Override
@@ -147,6 +376,13 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(text_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, text_);
     }
+    if (maxLines_ != 0) {
+      output.writeInt32(2, maxLines_);
+    }
+    if (textSyntax_
+        != com.google.apps.card.v1.TextParagraph.TextSyntax.TEXT_SYNTAX_UNSPECIFIED.getNumber()) {
+      output.writeEnum(4, textSyntax_);
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -158,6 +394,13 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
     size = 0;
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(text_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, text_);
+    }
+    if (maxLines_ != 0) {
+      size += com.google.protobuf.CodedOutputStream.computeInt32Size(2, maxLines_);
+    }
+    if (textSyntax_
+        != com.google.apps.card.v1.TextParagraph.TextSyntax.TEXT_SYNTAX_UNSPECIFIED.getNumber()) {
+      size += com.google.protobuf.CodedOutputStream.computeEnumSize(4, textSyntax_);
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -175,6 +418,8 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
     com.google.apps.card.v1.TextParagraph other = (com.google.apps.card.v1.TextParagraph) obj;
 
     if (!getText().equals(other.getText())) return false;
+    if (getMaxLines() != other.getMaxLines()) return false;
+    if (textSyntax_ != other.textSyntax_) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -188,6 +433,10 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + TEXT_FIELD_NUMBER;
     hash = (53 * hash) + getText().hashCode();
+    hash = (37 * hash) + MAX_LINES_FIELD_NUMBER;
+    hash = (53 * hash) + getMaxLines();
+    hash = (37 * hash) + TEXT_SYNTAX_FIELD_NUMBER;
+    hash = (53 * hash) + textSyntax_;
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -302,9 +551,9 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
    * and
    * [Formatting
    * text in Google Workspace
-   * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+   * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
    *
-   * [Google Workspace Add-ons and
+   * [Google Workspace add-ons and
    * Chat apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -341,6 +590,8 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
       super.clear();
       bitField0_ = 0;
       text_ = "";
+      maxLines_ = 0;
+      textSyntax_ = 0;
       return this;
     }
 
@@ -379,6 +630,12 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
       int from_bitField0_ = bitField0_;
       if (((from_bitField0_ & 0x00000001) != 0)) {
         result.text_ = text_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.maxLines_ = maxLines_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.textSyntax_ = textSyntax_;
       }
     }
 
@@ -432,6 +689,12 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
         bitField0_ |= 0x00000001;
         onChanged();
       }
+      if (other.getMaxLines() != 0) {
+        setMaxLines(other.getMaxLines());
+      }
+      if (other.textSyntax_ != 0) {
+        setTextSyntaxValue(other.getTextSyntaxValue());
+      }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
@@ -464,6 +727,18 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
                 bitField0_ |= 0x00000001;
                 break;
               } // case 10
+            case 16:
+              {
+                maxLines_ = input.readInt32();
+                bitField0_ |= 0x00000002;
+                break;
+              } // case 16
+            case 32:
+              {
+                textSyntax_ = input.readEnum();
+                bitField0_ |= 0x00000004;
+                break;
+              } // case 32
             default:
               {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -590,6 +865,190 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       text_ = value;
       bitField0_ |= 0x00000001;
+      onChanged();
+      return this;
+    }
+
+    private int maxLines_;
+
+    /**
+     *
+     *
+     * <pre>
+     * The maximum number of lines of text that are displayed in the widget. If
+     * the text exceeds the specified maximum number of lines, the excess
+     * content is concealed behind a **show more** button. If the text is equal or
+     * shorter than the specified maximum number of lines, a **show more** button
+     * isn't displayed.
+     *
+     * The default value is 0, in which case
+     * all context is displayed. Negative values are ignored.
+     * </pre>
+     *
+     * <code>int32 max_lines = 2;</code>
+     *
+     * @return The maxLines.
+     */
+    @java.lang.Override
+    public int getMaxLines() {
+      return maxLines_;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * The maximum number of lines of text that are displayed in the widget. If
+     * the text exceeds the specified maximum number of lines, the excess
+     * content is concealed behind a **show more** button. If the text is equal or
+     * shorter than the specified maximum number of lines, a **show more** button
+     * isn't displayed.
+     *
+     * The default value is 0, in which case
+     * all context is displayed. Negative values are ignored.
+     * </pre>
+     *
+     * <code>int32 max_lines = 2;</code>
+     *
+     * @param value The maxLines to set.
+     * @return This builder for chaining.
+     */
+    public Builder setMaxLines(int value) {
+
+      maxLines_ = value;
+      bitField0_ |= 0x00000002;
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * The maximum number of lines of text that are displayed in the widget. If
+     * the text exceeds the specified maximum number of lines, the excess
+     * content is concealed behind a **show more** button. If the text is equal or
+     * shorter than the specified maximum number of lines, a **show more** button
+     * isn't displayed.
+     *
+     * The default value is 0, in which case
+     * all context is displayed. Negative values are ignored.
+     * </pre>
+     *
+     * <code>int32 max_lines = 2;</code>
+     *
+     * @return This builder for chaining.
+     */
+    public Builder clearMaxLines() {
+      bitField0_ = (bitField0_ & ~0x00000002);
+      maxLines_ = 0;
+      onChanged();
+      return this;
+    }
+
+    private int textSyntax_ = 0;
+
+    /**
+     *
+     *
+     * <pre>
+     * The syntax of the text. If not set, the text is rendered as HTML.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph.TextSyntax text_syntax = 4;</code>
+     *
+     * @return The enum numeric value on the wire for textSyntax.
+     */
+    @java.lang.Override
+    public int getTextSyntaxValue() {
+      return textSyntax_;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * The syntax of the text. If not set, the text is rendered as HTML.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph.TextSyntax text_syntax = 4;</code>
+     *
+     * @param value The enum numeric value on the wire for textSyntax to set.
+     * @return This builder for chaining.
+     */
+    public Builder setTextSyntaxValue(int value) {
+      textSyntax_ = value;
+      bitField0_ |= 0x00000004;
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * The syntax of the text. If not set, the text is rendered as HTML.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph.TextSyntax text_syntax = 4;</code>
+     *
+     * @return The textSyntax.
+     */
+    @java.lang.Override
+    public com.google.apps.card.v1.TextParagraph.TextSyntax getTextSyntax() {
+      com.google.apps.card.v1.TextParagraph.TextSyntax result =
+          com.google.apps.card.v1.TextParagraph.TextSyntax.forNumber(textSyntax_);
+      return result == null
+          ? com.google.apps.card.v1.TextParagraph.TextSyntax.UNRECOGNIZED
+          : result;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * The syntax of the text. If not set, the text is rendered as HTML.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph.TextSyntax text_syntax = 4;</code>
+     *
+     * @param value The textSyntax to set.
+     * @return This builder for chaining.
+     */
+    public Builder setTextSyntax(com.google.apps.card.v1.TextParagraph.TextSyntax value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      bitField0_ |= 0x00000004;
+      textSyntax_ = value.getNumber();
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * The syntax of the text. If not set, the text is rendered as HTML.
+     *
+     * [Google Chat apps](https://developers.google.com/workspace/chat):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.TextParagraph.TextSyntax text_syntax = 4;</code>
+     *
+     * @return This builder for chaining.
+     */
+    public Builder clearTextSyntax() {
+      bitField0_ = (bitField0_ & ~0x00000004);
+      textSyntax_ = 0;
       onChanged();
       return this;
     }

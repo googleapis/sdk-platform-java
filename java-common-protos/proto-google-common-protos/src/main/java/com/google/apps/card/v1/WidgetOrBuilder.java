@@ -35,7 +35,7 @@ public interface WidgetOrBuilder
    * and
    * [Formatting
    * text in Google Workspace
-   * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+   * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
    *
    * For example, the following JSON creates a bolded text:
    * ```
@@ -62,7 +62,7 @@ public interface WidgetOrBuilder
    * and
    * [Formatting
    * text in Google Workspace
-   * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+   * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
    *
    * For example, the following JSON creates a bolded text:
    * ```
@@ -89,7 +89,7 @@ public interface WidgetOrBuilder
    * and
    * [Formatting
    * text in Google Workspace
-   * Add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+   * add-ons](https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
    *
    * For example, the following JSON creates a bolded text:
    * ```
@@ -279,7 +279,6 @@ public interface WidgetOrBuilder
    *         "red": 0,
    *         "green": 0,
    *         "blue": 1,
-   *         "alpha": 1
    *       },
    *       "disabled": true,
    *     },
@@ -323,7 +322,6 @@ public interface WidgetOrBuilder
    *         "red": 0,
    *         "green": 0,
    *         "blue": 1,
-   *         "alpha": 1
    *       },
    *       "disabled": true,
    *     },
@@ -367,7 +365,6 @@ public interface WidgetOrBuilder
    *         "red": 0,
    *         "green": 0,
    *         "blue": 1,
-   *         "alpha": 1
    *       },
    *       "disabled": true,
    *     },
@@ -687,7 +684,7 @@ public interface WidgetOrBuilder
    *   "name": "appointment_time",
    *   "label": "Book your appointment at:",
    *   "type": "DATE_AND_TIME",
-   *   "valueMsEpoch": "796435200000"
+   *   "valueMsEpoch": 796435200000
    * }
    * ```
    * </pre>
@@ -713,7 +710,7 @@ public interface WidgetOrBuilder
    *   "name": "appointment_time",
    *   "label": "Book your appointment at:",
    *   "type": "DATE_AND_TIME",
-   *   "valueMsEpoch": "796435200000"
+   *   "valueMsEpoch": 796435200000
    * }
    * ```
    * </pre>
@@ -739,7 +736,7 @@ public interface WidgetOrBuilder
    *   "name": "appointment_time",
    *   "label": "Book your appointment at:",
    *   "type": "DATE_AND_TIME",
-   *   "valueMsEpoch": "796435200000"
+   *   "valueMsEpoch": 796435200000
    * }
    * ```
    * </pre>
@@ -814,7 +811,7 @@ public interface WidgetOrBuilder
    * of columns. A grid with 10 items and 2 columns has 5 rows. A grid with 11
    * items and 2 columns has 6 rows.
    *
-   * [Google Workspace Add-ons and
+   * [Google Workspace add-ons and
    * Chat apps](https://developers.google.com/workspace/extend):
    *
    * For example, the following JSON creates a 2 column grid with a single
@@ -869,7 +866,7 @@ public interface WidgetOrBuilder
    * of columns. A grid with 10 items and 2 columns has 5 rows. A grid with 11
    * items and 2 columns has 6 rows.
    *
-   * [Google Workspace Add-ons and
+   * [Google Workspace add-ons and
    * Chat apps](https://developers.google.com/workspace/extend):
    *
    * For example, the following JSON creates a 2 column grid with a single
@@ -924,7 +921,7 @@ public interface WidgetOrBuilder
    * of columns. A grid with 10 items and 2 columns has 5 rows. A grid with 11
    * items and 2 columns has 6 rows.
    *
-   * [Google Workspace Add-ons and
+   * [Google Workspace add-ons and
    * Chat apps](https://developers.google.com/workspace/extend):
    *
    * For example, the following JSON creates a 2 column grid with a single
@@ -1110,6 +1107,212 @@ public interface WidgetOrBuilder
    * <code>.google.apps.card.v1.Columns columns = 11;</code>
    */
   com.google.apps.card.v1.ColumnsOrBuilder getColumnsOrBuilder();
+
+  /**
+   *
+   *
+   * <pre>
+   * A carousel contains a collection of nested widgets.
+   * For example, this is a JSON representation of a carousel that contains
+   * two text paragraphs.
+   *
+   * ```
+   * {
+   *   "widgets": [
+   *     {
+   *       "textParagraph": {
+   *         "text": "First text paragraph in the carousel."
+   *       }
+   *     },
+   *     {
+   *       "textParagraph": {
+   *         "text": "Second text paragraph in the carousel."
+   *       }
+   *     }
+   *   ]
+   * }
+   * ```
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Carousel carousel = 13;</code>
+   *
+   * @return Whether the carousel field is set.
+   */
+  boolean hasCarousel();
+
+  /**
+   *
+   *
+   * <pre>
+   * A carousel contains a collection of nested widgets.
+   * For example, this is a JSON representation of a carousel that contains
+   * two text paragraphs.
+   *
+   * ```
+   * {
+   *   "widgets": [
+   *     {
+   *       "textParagraph": {
+   *         "text": "First text paragraph in the carousel."
+   *       }
+   *     },
+   *     {
+   *       "textParagraph": {
+   *         "text": "Second text paragraph in the carousel."
+   *       }
+   *     }
+   *   ]
+   * }
+   * ```
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Carousel carousel = 13;</code>
+   *
+   * @return The carousel.
+   */
+  com.google.apps.card.v1.Carousel getCarousel();
+
+  /**
+   *
+   *
+   * <pre>
+   * A carousel contains a collection of nested widgets.
+   * For example, this is a JSON representation of a carousel that contains
+   * two text paragraphs.
+   *
+   * ```
+   * {
+   *   "widgets": [
+   *     {
+   *       "textParagraph": {
+   *         "text": "First text paragraph in the carousel."
+   *       }
+   *     },
+   *     {
+   *       "textParagraph": {
+   *         "text": "Second text paragraph in the carousel."
+   *       }
+   *     }
+   *   ]
+   * }
+   * ```
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Carousel carousel = 13;</code>
+   */
+  com.google.apps.card.v1.CarouselOrBuilder getCarouselOrBuilder();
+
+  /**
+   *
+   *
+   * <pre>
+   * A list of chips.
+   *
+   * For example, the following JSON creates two chips. The first
+   * is a text chip and the second is an icon chip that opens a
+   * link:
+   * ```
+   * "chipList": {
+   *   "chips": [
+   *     {
+   *       "text": "Edit",
+   *       "disabled": true,
+   *     },
+   *     {
+   *       "icon": {
+   *         "knownIcon": "INVITE",
+   *         "altText": "check calendar"
+   *       },
+   *       "onClick": {
+   *         "openLink": {
+   *           "url": "https://example.com/calendar"
+   *         }
+   *       }
+   *     }
+   *   ]
+   * }
+   * ```
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.ChipList chip_list = 14;</code>
+   *
+   * @return Whether the chipList field is set.
+   */
+  boolean hasChipList();
+
+  /**
+   *
+   *
+   * <pre>
+   * A list of chips.
+   *
+   * For example, the following JSON creates two chips. The first
+   * is a text chip and the second is an icon chip that opens a
+   * link:
+   * ```
+   * "chipList": {
+   *   "chips": [
+   *     {
+   *       "text": "Edit",
+   *       "disabled": true,
+   *     },
+   *     {
+   *       "icon": {
+   *         "knownIcon": "INVITE",
+   *         "altText": "check calendar"
+   *       },
+   *       "onClick": {
+   *         "openLink": {
+   *           "url": "https://example.com/calendar"
+   *         }
+   *       }
+   *     }
+   *   ]
+   * }
+   * ```
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.ChipList chip_list = 14;</code>
+   *
+   * @return The chipList.
+   */
+  com.google.apps.card.v1.ChipList getChipList();
+
+  /**
+   *
+   *
+   * <pre>
+   * A list of chips.
+   *
+   * For example, the following JSON creates two chips. The first
+   * is a text chip and the second is an icon chip that opens a
+   * link:
+   * ```
+   * "chipList": {
+   *   "chips": [
+   *     {
+   *       "text": "Edit",
+   *       "disabled": true,
+   *     },
+   *     {
+   *       "icon": {
+   *         "knownIcon": "INVITE",
+   *         "altText": "check calendar"
+   *       },
+   *       "onClick": {
+   *         "openLink": {
+   *           "url": "https://example.com/calendar"
+   *         }
+   *       }
+   *     }
+   *   ]
+   * }
+   * ```
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.ChipList chip_list = 14;</code>
+   */
+  com.google.apps.card.v1.ChipListOrBuilder getChipListOrBuilder();
 
   /**
    *

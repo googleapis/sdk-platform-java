@@ -24,8 +24,11 @@ package com.google.apps.card.v1;
  *
  * <pre>
  * A field in which users can enter text. Supports suggestions and on-change
- * actions. For an example in Google Chat apps, see [Add a field in which a user
- * can enter
+ * actions.
+ * Supports form submission validation. When `Action.all_widgets_are_required`
+ * is set to `true` or this widget is specified in `Action.required_widgets`,
+ * the submission action is blocked unless a value is entered. For an example in
+ * Google Chat apps, see [Add a field in which a user can enter
  * text](https://developers.google.com/workspace/chat/design-interactive-card-dialog#add_a_field_in_which_a_user_can_enter_text).
  *
  * Chat apps receive and can process the value of entered text during form input
@@ -36,7 +39,7 @@ package com.google.apps.card.v1;
  * use a text input. To collect defined or enumerated data from users, use the
  * [SelectionInput][google.apps.card.v1.SelectionInput] widget.
  *
- * [Google Workspace Add-ons and Chat
+ * [Google Workspace add-ons and Chat
  * apps](https://developers.google.com/workspace/extend):
  * </pre>
  *
@@ -92,7 +95,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    * `initialSuggestions` is specified, `type` is always `SINGLE_LINE`,
    * even if it's set to `MULTIPLE_LINE`.
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -599,7 +602,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    * to `MULTIPLE_LINE`.
    *
    * [Google Workspace
-   * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+   * add-ons and Chat apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
    * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
@@ -632,7 +635,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    * to `MULTIPLE_LINE`.
    *
    * [Google Workspace
-   * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+   * add-ons and Chat apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
    * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
@@ -667,7 +670,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    * to `MULTIPLE_LINE`.
    *
    * [Google Workspace
-   * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+   * add-ons and Chat apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
    * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
@@ -696,7 +699,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    * a custom function.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
@@ -722,7 +725,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    * a custom function.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
@@ -750,7 +753,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    * a custom function.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
@@ -760,6 +763,68 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
     return autoCompleteAction_ == null
         ? com.google.apps.card.v1.Action.getDefaultInstance()
         : autoCompleteAction_;
+  }
+
+  public static final int VALIDATION_FIELD_NUMBER = 11;
+  private com.google.apps.card.v1.Validation validation_;
+
+  /**
+   *
+   *
+   * <pre>
+   * Specify the input format validation necessary for this text field.
+   *
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Validation validation = 11;</code>
+   *
+   * @return Whether the validation field is set.
+   */
+  @java.lang.Override
+  public boolean hasValidation() {
+    return ((bitField0_ & 0x00000008) != 0);
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * Specify the input format validation necessary for this text field.
+   *
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Validation validation = 11;</code>
+   *
+   * @return The validation.
+   */
+  @java.lang.Override
+  public com.google.apps.card.v1.Validation getValidation() {
+    return validation_ == null
+        ? com.google.apps.card.v1.Validation.getDefaultInstance()
+        : validation_;
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * Specify the input format validation necessary for this text field.
+   *
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Validation validation = 11;</code>
+   */
+  @java.lang.Override
+  public com.google.apps.card.v1.ValidationOrBuilder getValidationOrBuilder() {
+    return validation_ == null
+        ? com.google.apps.card.v1.Validation.getDefaultInstance()
+        : validation_;
   }
 
   public static final int PLACEHOLDER_TEXT_FIELD_NUMBER = 12;
@@ -861,6 +926,9 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
     if (((bitField0_ & 0x00000004) != 0)) {
       output.writeMessage(8, getAutoCompleteAction());
     }
+    if (((bitField0_ & 0x00000008) != 0)) {
+      output.writeMessage(11, getValidation());
+    }
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(placeholderText_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 12, placeholderText_);
     }
@@ -897,6 +965,9 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
     if (((bitField0_ & 0x00000004) != 0)) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(8, getAutoCompleteAction());
     }
+    if (((bitField0_ & 0x00000008) != 0)) {
+      size += com.google.protobuf.CodedOutputStream.computeMessageSize(11, getValidation());
+    }
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(placeholderText_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(12, placeholderText_);
     }
@@ -932,6 +1003,10 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
     if (hasAutoCompleteAction()) {
       if (!getAutoCompleteAction().equals(other.getAutoCompleteAction())) return false;
     }
+    if (hasValidation() != other.hasValidation()) return false;
+    if (hasValidation()) {
+      if (!getValidation().equals(other.getValidation())) return false;
+    }
     if (!getPlaceholderText().equals(other.getPlaceholderText())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
@@ -965,6 +1040,10 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
     if (hasAutoCompleteAction()) {
       hash = (37 * hash) + AUTO_COMPLETE_ACTION_FIELD_NUMBER;
       hash = (53 * hash) + getAutoCompleteAction().hashCode();
+    }
+    if (hasValidation()) {
+      hash = (37 * hash) + VALIDATION_FIELD_NUMBER;
+      hash = (53 * hash) + getValidation().hashCode();
     }
     hash = (37 * hash) + PLACEHOLDER_TEXT_FIELD_NUMBER;
     hash = (53 * hash) + getPlaceholderText().hashCode();
@@ -1073,8 +1152,11 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A field in which users can enter text. Supports suggestions and on-change
-   * actions. For an example in Google Chat apps, see [Add a field in which a user
-   * can enter
+   * actions.
+   * Supports form submission validation. When `Action.all_widgets_are_required`
+   * is set to `true` or this widget is specified in `Action.required_widgets`,
+   * the submission action is blocked unless a value is entered. For an example in
+   * Google Chat apps, see [Add a field in which a user can enter
    * text](https://developers.google.com/workspace/chat/design-interactive-card-dialog#add_a_field_in_which_a_user_can_enter_text).
    *
    * Chat apps receive and can process the value of entered text during form input
@@ -1085,7 +1167,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
    * use a text input. To collect defined or enumerated data from users, use the
    * [SelectionInput][google.apps.card.v1.SelectionInput] widget.
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -1125,6 +1207,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         getOnChangeActionFieldBuilder();
         getInitialSuggestionsFieldBuilder();
         getAutoCompleteActionFieldBuilder();
+        getValidationFieldBuilder();
       }
     }
 
@@ -1151,6 +1234,11 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       if (autoCompleteActionBuilder_ != null) {
         autoCompleteActionBuilder_.dispose();
         autoCompleteActionBuilder_ = null;
+      }
+      validation_ = null;
+      if (validationBuilder_ != null) {
+        validationBuilder_.dispose();
+        validationBuilder_ = null;
       }
       placeholderText_ = "";
       return this;
@@ -1224,6 +1312,10 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         to_bitField0_ |= 0x00000004;
       }
       if (((from_bitField0_ & 0x00000100) != 0)) {
+        result.validation_ = validationBuilder_ == null ? validation_ : validationBuilder_.build();
+        to_bitField0_ |= 0x00000008;
+      }
+      if (((from_bitField0_ & 0x00000200) != 0)) {
         result.placeholderText_ = placeholderText_;
       }
       result.bitField0_ |= to_bitField0_;
@@ -1306,9 +1398,12 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       if (other.hasAutoCompleteAction()) {
         mergeAutoCompleteAction(other.getAutoCompleteAction());
       }
+      if (other.hasValidation()) {
+        mergeValidation(other.getValidation());
+      }
       if (!other.getPlaceholderText().isEmpty()) {
         placeholderText_ = other.placeholderText_;
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00000200;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -1387,10 +1482,16 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
                 bitField0_ |= 0x00000080;
                 break;
               } // case 66
+            case 90:
+              {
+                input.readMessage(getValidationFieldBuilder().getBuilder(), extensionRegistry);
+                bitField0_ |= 0x00000100;
+                break;
+              } // case 90
             case 98:
               {
                 placeholderText_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000100;
+                bitField0_ |= 0x00000200;
                 break;
               } // case 98
             default:
@@ -2298,7 +2399,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * to `MULTIPLE_LINE`.
      *
      * [Google Workspace
-     * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+     * add-ons and Chat apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
      * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
@@ -2330,7 +2431,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * to `MULTIPLE_LINE`.
      *
      * [Google Workspace
-     * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+     * add-ons and Chat apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
      * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
@@ -2368,7 +2469,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * to `MULTIPLE_LINE`.
      *
      * [Google Workspace
-     * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+     * add-ons and Chat apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
      * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
@@ -2408,7 +2509,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * to `MULTIPLE_LINE`.
      *
      * [Google Workspace
-     * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+     * add-ons and Chat apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
      * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
@@ -2446,7 +2547,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * to `MULTIPLE_LINE`.
      *
      * [Google Workspace
-     * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+     * add-ons and Chat apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
      * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
@@ -2491,7 +2592,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * to `MULTIPLE_LINE`.
      *
      * [Google Workspace
-     * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+     * add-ons and Chat apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
      * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
@@ -2528,7 +2629,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * to `MULTIPLE_LINE`.
      *
      * [Google Workspace
-     * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+     * add-ons and Chat apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
      * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
@@ -2560,7 +2661,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * to `MULTIPLE_LINE`.
      *
      * [Google Workspace
-     * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+     * add-ons and Chat apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
      * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
@@ -2596,7 +2697,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * to `MULTIPLE_LINE`.
      *
      * [Google Workspace
-     * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+     * add-ons and Chat apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
      * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
@@ -2639,7 +2740,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * a custom function.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
@@ -2664,7 +2765,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * a custom function.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
@@ -2695,7 +2796,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * a custom function.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
@@ -2728,7 +2829,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * a custom function.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
@@ -2758,7 +2859,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * a custom function.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
@@ -2796,7 +2897,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * a custom function.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
@@ -2826,7 +2927,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * a custom function.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
@@ -2851,7 +2952,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * a custom function.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
@@ -2880,7 +2981,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      * a custom function.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
@@ -2900,6 +3001,227 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         autoCompleteAction_ = null;
       }
       return autoCompleteActionBuilder_;
+    }
+
+    private com.google.apps.card.v1.Validation validation_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.apps.card.v1.Validation,
+            com.google.apps.card.v1.Validation.Builder,
+            com.google.apps.card.v1.ValidationOrBuilder>
+        validationBuilder_;
+
+    /**
+     *
+     *
+     * <pre>
+     * Specify the input format validation necessary for this text field.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Validation validation = 11;</code>
+     *
+     * @return Whether the validation field is set.
+     */
+    public boolean hasValidation() {
+      return ((bitField0_ & 0x00000100) != 0);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Specify the input format validation necessary for this text field.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Validation validation = 11;</code>
+     *
+     * @return The validation.
+     */
+    public com.google.apps.card.v1.Validation getValidation() {
+      if (validationBuilder_ == null) {
+        return validation_ == null
+            ? com.google.apps.card.v1.Validation.getDefaultInstance()
+            : validation_;
+      } else {
+        return validationBuilder_.getMessage();
+      }
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Specify the input format validation necessary for this text field.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Validation validation = 11;</code>
+     */
+    public Builder setValidation(com.google.apps.card.v1.Validation value) {
+      if (validationBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        validation_ = value;
+      } else {
+        validationBuilder_.setMessage(value);
+      }
+      bitField0_ |= 0x00000100;
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Specify the input format validation necessary for this text field.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Validation validation = 11;</code>
+     */
+    public Builder setValidation(com.google.apps.card.v1.Validation.Builder builderForValue) {
+      if (validationBuilder_ == null) {
+        validation_ = builderForValue.build();
+      } else {
+        validationBuilder_.setMessage(builderForValue.build());
+      }
+      bitField0_ |= 0x00000100;
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Specify the input format validation necessary for this text field.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Validation validation = 11;</code>
+     */
+    public Builder mergeValidation(com.google.apps.card.v1.Validation value) {
+      if (validationBuilder_ == null) {
+        if (((bitField0_ & 0x00000100) != 0)
+            && validation_ != null
+            && validation_ != com.google.apps.card.v1.Validation.getDefaultInstance()) {
+          getValidationBuilder().mergeFrom(value);
+        } else {
+          validation_ = value;
+        }
+      } else {
+        validationBuilder_.mergeFrom(value);
+      }
+      if (validation_ != null) {
+        bitField0_ |= 0x00000100;
+        onChanged();
+      }
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Specify the input format validation necessary for this text field.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Validation validation = 11;</code>
+     */
+    public Builder clearValidation() {
+      bitField0_ = (bitField0_ & ~0x00000100);
+      validation_ = null;
+      if (validationBuilder_ != null) {
+        validationBuilder_.dispose();
+        validationBuilder_ = null;
+      }
+      onChanged();
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Specify the input format validation necessary for this text field.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Validation validation = 11;</code>
+     */
+    public com.google.apps.card.v1.Validation.Builder getValidationBuilder() {
+      bitField0_ |= 0x00000100;
+      onChanged();
+      return getValidationFieldBuilder().getBuilder();
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Specify the input format validation necessary for this text field.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Validation validation = 11;</code>
+     */
+    public com.google.apps.card.v1.ValidationOrBuilder getValidationOrBuilder() {
+      if (validationBuilder_ != null) {
+        return validationBuilder_.getMessageOrBuilder();
+      } else {
+        return validation_ == null
+            ? com.google.apps.card.v1.Validation.getDefaultInstance()
+            : validation_;
+      }
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Specify the input format validation necessary for this text field.
+     *
+     * [Google Workspace add-ons and Chat
+     * apps](https://developers.google.com/workspace/extend):
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.Validation validation = 11;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.apps.card.v1.Validation,
+            com.google.apps.card.v1.Validation.Builder,
+            com.google.apps.card.v1.ValidationOrBuilder>
+        getValidationFieldBuilder() {
+      if (validationBuilder_ == null) {
+        validationBuilder_ =
+            new com.google.protobuf.SingleFieldBuilderV3<
+                com.google.apps.card.v1.Validation,
+                com.google.apps.card.v1.Validation.Builder,
+                com.google.apps.card.v1.ValidationOrBuilder>(
+                getValidation(), getParentForChildren(), isClean());
+        validation_ = null;
+      }
+      return validationBuilder_;
     }
 
     private java.lang.Object placeholderText_ = "";
@@ -2979,7 +3301,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       placeholderText_ = value;
-      bitField0_ |= 0x00000100;
+      bitField0_ |= 0x00000200;
       onChanged();
       return this;
     }
@@ -3001,7 +3323,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder clearPlaceholderText() {
       placeholderText_ = getDefaultInstance().getPlaceholderText();
-      bitField0_ = (bitField0_ & ~0x00000100);
+      bitField0_ = (bitField0_ & ~0x00000200);
       onChanged();
       return this;
     }
@@ -3028,7 +3350,7 @@ public final class TextInput extends com.google.protobuf.GeneratedMessageV3
       }
       checkByteStringIsUtf8(value);
       placeholderText_ = value;
-      bitField0_ |= 0x00000100;
+      bitField0_ |= 0x00000200;
       onChanged();
       return this;
     }

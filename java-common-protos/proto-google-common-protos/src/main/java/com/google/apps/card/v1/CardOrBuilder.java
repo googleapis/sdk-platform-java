@@ -139,7 +139,7 @@ public interface CardOrBuilder
    *
    *
    * <pre>
-   * The divider style between sections.
+   * The divider style between the header, sections and footer.
    * </pre>
    *
    * <code>.google.apps.card.v1.Card.DividerStyle section_divider_style = 9;</code>
@@ -152,7 +152,7 @@ public interface CardOrBuilder
    *
    *
    * <pre>
-   * The divider style between sections.
+   * The divider style between the header, sections and footer.
    * </pre>
    *
    * <code>.google.apps.card.v1.Card.DividerStyle section_divider_style = 9;</code>
@@ -168,7 +168,7 @@ public interface CardOrBuilder
    * The card's actions. Actions are added to the card's toolbar menu.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    *
    * For example, the following JSON constructs a card action menu with
    * `Settings` and `Send Feedback` options:
@@ -213,7 +213,7 @@ public interface CardOrBuilder
    * The card's actions. Actions are added to the card's toolbar menu.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    *
    * For example, the following JSON constructs a card action menu with
    * `Settings` and `Send Feedback` options:
@@ -258,7 +258,7 @@ public interface CardOrBuilder
    * The card's actions. Actions are added to the card's toolbar menu.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    *
    * For example, the following JSON constructs a card action menu with
    * `Settings` and `Send Feedback` options:
@@ -303,7 +303,7 @@ public interface CardOrBuilder
    * The card's actions. Actions are added to the card's toolbar menu.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    *
    * For example, the following JSON constructs a card action menu with
    * `Settings` and `Send Feedback` options:
@@ -349,7 +349,7 @@ public interface CardOrBuilder
    * The card's actions. Actions are added to the card's toolbar menu.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    *
    * For example, the following JSON constructs a card action menu with
    * `Settings` and `Send Feedback` options:
@@ -394,7 +394,7 @@ public interface CardOrBuilder
    * Name of the card. Used as a card identifier in card navigation.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>string name = 4;</code>
@@ -410,7 +410,7 @@ public interface CardOrBuilder
    * Name of the card. Used as a card identifier in card navigation.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>string name = 4;</code>
@@ -432,7 +432,7 @@ public interface CardOrBuilder
    * [card
    * messages](https://developers.google.com/workspace/chat/create-messages#create).
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -455,7 +455,7 @@ public interface CardOrBuilder
    * [card
    * messages](https://developers.google.com/workspace/chat/create-messages#create).
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -478,7 +478,7 @@ public interface CardOrBuilder
    * [card
    * messages](https://developers.google.com/workspace/chat/create-messages#create).
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -490,11 +490,11 @@ public interface CardOrBuilder
    *
    *
    * <pre>
-   * In Google Workspace Add-ons, sets the display properties of the
+   * In Google Workspace add-ons, sets the display properties of the
    * `peekCardHeader`.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Card.DisplayStyle display_style = 6;</code>
@@ -507,11 +507,11 @@ public interface CardOrBuilder
    *
    *
    * <pre>
-   * In Google Workspace Add-ons, sets the display properties of the
+   * In Google Workspace add-ons, sets the display properties of the
    * `peekCardHeader`.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Card.DisplayStyle display_style = 6;</code>
@@ -529,7 +529,7 @@ public interface CardOrBuilder
    * cards and the contextual cards.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Card.CardHeader peek_card_header = 7;</code>
@@ -547,7 +547,7 @@ public interface CardOrBuilder
    * cards and the contextual cards.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Card.CardHeader peek_card_header = 7;</code>
@@ -565,7 +565,7 @@ public interface CardOrBuilder
    * cards and the contextual cards.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Card.CardHeader peek_card_header = 7;</code>

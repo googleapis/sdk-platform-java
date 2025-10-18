@@ -23,8 +23,11 @@ package com.google.apps.card.v1;
  *
  *
  * <pre>
- * Lets users input a date, a time, or both a date and a time. For an example in
- * Google Chat apps, see [Let a user pick a date and
+ * Lets users input a date, a time, or both a date and a time.
+ * Supports form submission validation. When `Action.all_widgets_are_required`
+ * is set to `true` or this widget is specified in `Action.required_widgets`,
+ * the submission action is blocked unless a value is selected. For an example
+ * in Google Chat apps, see [Let a user pick a date and
  * time](https://developers.google.com/workspace/chat/design-interactive-card-dialog#let_a_user_pick_a_date_and_time).
  *
  * Users can input text or use the picker to select dates and times. If users
@@ -32,7 +35,7 @@ package com.google.apps.card.v1;
  * to input the information correctly.
  *
  * [Google Workspace
- * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+ * add-ons and Chat apps](https://developers.google.com/workspace/extend):
  * </pre>
  *
  * Protobuf type {@code google.apps.card.v1.DateTimePicker}
@@ -82,7 +85,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
    * The format for the date and time in the `DateTimePicker` widget.
    * Determines whether users can input a date, a time, or both a date and time.
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -404,8 +407,8 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * The default value displayed in the widget, in milliseconds since [Unix
-   * epoch time](https://en.wikipedia.org/wiki/Unix_time).
+   * Optional. The default value displayed in the widget, in milliseconds since
+   * [Unix epoch time](https://en.wikipedia.org/wiki/Unix_time).
    *
    * Specify the value based on the type of picker (`DateTimePickerType`):
    *
@@ -417,7 +420,33 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
    *   `43200000` (or `12 * 60 * 60 * 1000`).
    * </pre>
    *
-   * <code>int64 value_ms_epoch = 4;</code>
+   * <code>optional int64 value_ms_epoch = 4;</code>
+   *
+   * @return Whether the valueMsEpoch field is set.
+   */
+  @java.lang.Override
+  public boolean hasValueMsEpoch() {
+    return ((bitField0_ & 0x00000001) != 0);
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The default value displayed in the widget, in milliseconds since
+   * [Unix epoch time](https://en.wikipedia.org/wiki/Unix_time).
+   *
+   * Specify the value based on the type of picker (`DateTimePickerType`):
+   *
+   * * `DATE_AND_TIME`: a calendar date and time in UTC. For example, to
+   *   represent January 1, 2023 at 12:00 PM UTC, use `1672574400000`.
+   * * `DATE_ONLY`: a calendar date at 00:00:00 UTC. For example, to represent
+   *   January 1, 2023, use `1672531200000`.
+   * * `TIME_ONLY`: a time in UTC. For example, to represent 12:00 PM, use
+   *   `43200000` (or `12 * 60 * 60 * 1000`).
+   * </pre>
+   *
+   * <code>optional int64 value_ms_epoch = 4;</code>
    *
    * @return The valueMsEpoch.
    */
@@ -464,7 +493,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public boolean hasOnChangeAction() {
-    return ((bitField0_ & 0x00000001) != 0);
+    return ((bitField0_ & 0x00000002) != 0);
   }
 
   /**
@@ -527,13 +556,13 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
         != com.google.apps.card.v1.DateTimePicker.DateTimePickerType.DATE_AND_TIME.getNumber()) {
       output.writeEnum(3, type_);
     }
-    if (valueMsEpoch_ != 0L) {
+    if (((bitField0_ & 0x00000001) != 0)) {
       output.writeInt64(4, valueMsEpoch_);
     }
     if (timezoneOffsetDate_ != 0) {
       output.writeInt32(5, timezoneOffsetDate_);
     }
-    if (((bitField0_ & 0x00000001) != 0)) {
+    if (((bitField0_ & 0x00000002) != 0)) {
       output.writeMessage(6, getOnChangeAction());
     }
     getUnknownFields().writeTo(output);
@@ -555,13 +584,13 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
         != com.google.apps.card.v1.DateTimePicker.DateTimePickerType.DATE_AND_TIME.getNumber()) {
       size += com.google.protobuf.CodedOutputStream.computeEnumSize(3, type_);
     }
-    if (valueMsEpoch_ != 0L) {
+    if (((bitField0_ & 0x00000001) != 0)) {
       size += com.google.protobuf.CodedOutputStream.computeInt64Size(4, valueMsEpoch_);
     }
     if (timezoneOffsetDate_ != 0) {
       size += com.google.protobuf.CodedOutputStream.computeInt32Size(5, timezoneOffsetDate_);
     }
-    if (((bitField0_ & 0x00000001) != 0)) {
+    if (((bitField0_ & 0x00000002) != 0)) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(6, getOnChangeAction());
     }
     size += getUnknownFields().getSerializedSize();
@@ -582,7 +611,10 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
     if (!getName().equals(other.getName())) return false;
     if (!getLabel().equals(other.getLabel())) return false;
     if (type_ != other.type_) return false;
-    if (getValueMsEpoch() != other.getValueMsEpoch()) return false;
+    if (hasValueMsEpoch() != other.hasValueMsEpoch()) return false;
+    if (hasValueMsEpoch()) {
+      if (getValueMsEpoch() != other.getValueMsEpoch()) return false;
+    }
     if (getTimezoneOffsetDate() != other.getTimezoneOffsetDate()) return false;
     if (hasOnChangeAction() != other.hasOnChangeAction()) return false;
     if (hasOnChangeAction()) {
@@ -605,8 +637,10 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
     hash = (53 * hash) + getLabel().hashCode();
     hash = (37 * hash) + TYPE_FIELD_NUMBER;
     hash = (53 * hash) + type_;
-    hash = (37 * hash) + VALUE_MS_EPOCH_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(getValueMsEpoch());
+    if (hasValueMsEpoch()) {
+      hash = (37 * hash) + VALUE_MS_EPOCH_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(getValueMsEpoch());
+    }
     hash = (37 * hash) + TIMEZONE_OFFSET_DATE_FIELD_NUMBER;
     hash = (53 * hash) + getTimezoneOffsetDate();
     if (hasOnChangeAction()) {
@@ -718,8 +752,11 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * Lets users input a date, a time, or both a date and a time. For an example in
-   * Google Chat apps, see [Let a user pick a date and
+   * Lets users input a date, a time, or both a date and a time.
+   * Supports form submission validation. When `Action.all_widgets_are_required`
+   * is set to `true` or this widget is specified in `Action.required_widgets`,
+   * the submission action is blocked unless a value is selected. For an example
+   * in Google Chat apps, see [Let a user pick a date and
    * time](https://developers.google.com/workspace/chat/design-interactive-card-dialog#let_a_user_pick_a_date_and_time).
    *
    * Users can input text or use the picker to select dates and times. If users
@@ -727,7 +764,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
    * to input the information correctly.
    *
    * [Google Workspace
-   * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+   * add-ons and Chat apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
    * Protobuf type {@code google.apps.card.v1.DateTimePicker}
@@ -826,17 +863,18 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
       if (((from_bitField0_ & 0x00000004) != 0)) {
         result.type_ = type_;
       }
+      int to_bitField0_ = 0;
       if (((from_bitField0_ & 0x00000008) != 0)) {
         result.valueMsEpoch_ = valueMsEpoch_;
+        to_bitField0_ |= 0x00000001;
       }
       if (((from_bitField0_ & 0x00000010) != 0)) {
         result.timezoneOffsetDate_ = timezoneOffsetDate_;
       }
-      int to_bitField0_ = 0;
       if (((from_bitField0_ & 0x00000020) != 0)) {
         result.onChangeAction_ =
             onChangeActionBuilder_ == null ? onChangeAction_ : onChangeActionBuilder_.build();
-        to_bitField0_ |= 0x00000001;
+        to_bitField0_ |= 0x00000002;
       }
       result.bitField0_ |= to_bitField0_;
     }
@@ -899,7 +937,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
       if (other.type_ != 0) {
         setTypeValue(other.getTypeValue());
       }
-      if (other.getValueMsEpoch() != 0L) {
+      if (other.hasValueMsEpoch()) {
         setValueMsEpoch(other.getValueMsEpoch());
       }
       if (other.getTimezoneOffsetDate() != 0) {
@@ -1339,8 +1377,8 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The default value displayed in the widget, in milliseconds since [Unix
-     * epoch time](https://en.wikipedia.org/wiki/Unix_time).
+     * Optional. The default value displayed in the widget, in milliseconds since
+     * [Unix epoch time](https://en.wikipedia.org/wiki/Unix_time).
      *
      * Specify the value based on the type of picker (`DateTimePickerType`):
      *
@@ -1352,7 +1390,33 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      *   `43200000` (or `12 * 60 * 60 * 1000`).
      * </pre>
      *
-     * <code>int64 value_ms_epoch = 4;</code>
+     * <code>optional int64 value_ms_epoch = 4;</code>
+     *
+     * @return Whether the valueMsEpoch field is set.
+     */
+    @java.lang.Override
+    public boolean hasValueMsEpoch() {
+      return ((bitField0_ & 0x00000008) != 0);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * Optional. The default value displayed in the widget, in milliseconds since
+     * [Unix epoch time](https://en.wikipedia.org/wiki/Unix_time).
+     *
+     * Specify the value based on the type of picker (`DateTimePickerType`):
+     *
+     * * `DATE_AND_TIME`: a calendar date and time in UTC. For example, to
+     *   represent January 1, 2023 at 12:00 PM UTC, use `1672574400000`.
+     * * `DATE_ONLY`: a calendar date at 00:00:00 UTC. For example, to represent
+     *   January 1, 2023, use `1672531200000`.
+     * * `TIME_ONLY`: a time in UTC. For example, to represent 12:00 PM, use
+     *   `43200000` (or `12 * 60 * 60 * 1000`).
+     * </pre>
+     *
+     * <code>optional int64 value_ms_epoch = 4;</code>
      *
      * @return The valueMsEpoch.
      */
@@ -1365,8 +1429,8 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The default value displayed in the widget, in milliseconds since [Unix
-     * epoch time](https://en.wikipedia.org/wiki/Unix_time).
+     * Optional. The default value displayed in the widget, in milliseconds since
+     * [Unix epoch time](https://en.wikipedia.org/wiki/Unix_time).
      *
      * Specify the value based on the type of picker (`DateTimePickerType`):
      *
@@ -1378,7 +1442,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      *   `43200000` (or `12 * 60 * 60 * 1000`).
      * </pre>
      *
-     * <code>int64 value_ms_epoch = 4;</code>
+     * <code>optional int64 value_ms_epoch = 4;</code>
      *
      * @param value The valueMsEpoch to set.
      * @return This builder for chaining.
@@ -1395,8 +1459,8 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The default value displayed in the widget, in milliseconds since [Unix
-     * epoch time](https://en.wikipedia.org/wiki/Unix_time).
+     * Optional. The default value displayed in the widget, in milliseconds since
+     * [Unix epoch time](https://en.wikipedia.org/wiki/Unix_time).
      *
      * Specify the value based on the type of picker (`DateTimePickerType`):
      *
@@ -1408,7 +1472,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
      *   `43200000` (or `12 * 60 * 60 * 1000`).
      * </pre>
      *
-     * <code>int64 value_ms_epoch = 4;</code>
+     * <code>optional int64 value_ms_epoch = 4;</code>
      *
      * @return This builder for chaining.
      */

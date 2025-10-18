@@ -26,7 +26,7 @@ package com.google.apps.card.v1;
  * Represents how to respond when users click an interactive element on
  * a card, such as a button.
  *
- * [Google Workspace Add-ons and Chat
+ * [Google Workspace add-ons and Chat
  * apps](https://developers.google.com/workspace/extend):
  * </pre>
  *
@@ -77,6 +77,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
     OPEN_LINK(2),
     OPEN_DYNAMIC_LINK_ACTION(3),
     CARD(4),
+    OVERFLOW_MENU(8),
     DATA_NOT_SET(0);
     private final int value;
 
@@ -104,6 +105,8 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
           return OPEN_DYNAMIC_LINK_ACTION;
         case 4:
           return CARD;
+        case 8:
+          return OVERFLOW_MENU;
         case 0:
           return DATA_NOT_SET;
         default:
@@ -240,7 +243,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
    * web client to do before the open link action response comes back.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Action open_dynamic_link_action = 3;</code>
@@ -262,7 +265,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
    * web client to do before the open link action response comes back.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Action open_dynamic_link_action = 3;</code>
@@ -287,7 +290,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
    * web client to do before the open link action response comes back.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Action open_dynamic_link_action = 3;</code>
@@ -309,7 +312,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
    * A new card is pushed to the card stack after clicking if specified.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Card card = 4;</code>
@@ -328,7 +331,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
    * A new card is pushed to the card stack after clicking if specified.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Card card = 4;</code>
@@ -350,7 +353,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
    * A new card is pushed to the card stack after clicking if specified.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Card card = 4;</code>
@@ -361,6 +364,60 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       return (com.google.apps.card.v1.Card) data_;
     }
     return com.google.apps.card.v1.Card.getDefaultInstance();
+  }
+
+  public static final int OVERFLOW_MENU_FIELD_NUMBER = 8;
+
+  /**
+   *
+   *
+   * <pre>
+   * If specified, this `onClick` opens an overflow menu.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.OverflowMenu overflow_menu = 8;</code>
+   *
+   * @return Whether the overflowMenu field is set.
+   */
+  @java.lang.Override
+  public boolean hasOverflowMenu() {
+    return dataCase_ == 8;
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * If specified, this `onClick` opens an overflow menu.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.OverflowMenu overflow_menu = 8;</code>
+   *
+   * @return The overflowMenu.
+   */
+  @java.lang.Override
+  public com.google.apps.card.v1.OverflowMenu getOverflowMenu() {
+    if (dataCase_ == 8) {
+      return (com.google.apps.card.v1.OverflowMenu) data_;
+    }
+    return com.google.apps.card.v1.OverflowMenu.getDefaultInstance();
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * If specified, this `onClick` opens an overflow menu.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.OverflowMenu overflow_menu = 8;</code>
+   */
+  @java.lang.Override
+  public com.google.apps.card.v1.OverflowMenuOrBuilder getOverflowMenuOrBuilder() {
+    if (dataCase_ == 8) {
+      return (com.google.apps.card.v1.OverflowMenu) data_;
+    }
+    return com.google.apps.card.v1.OverflowMenu.getDefaultInstance();
   }
 
   private byte memoizedIsInitialized = -1;
@@ -388,6 +445,9 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
     }
     if (dataCase_ == 4) {
       output.writeMessage(4, (com.google.apps.card.v1.Card) data_);
+    }
+    if (dataCase_ == 8) {
+      output.writeMessage(8, (com.google.apps.card.v1.OverflowMenu) data_);
     }
     getUnknownFields().writeTo(output);
   }
@@ -418,6 +478,11 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
           com.google.protobuf.CodedOutputStream.computeMessageSize(
               4, (com.google.apps.card.v1.Card) data_);
     }
+    if (dataCase_ == 8) {
+      size +=
+          com.google.protobuf.CodedOutputStream.computeMessageSize(
+              8, (com.google.apps.card.v1.OverflowMenu) data_);
+    }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
@@ -446,6 +511,9 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
         break;
       case 4:
         if (!getCard().equals(other.getCard())) return false;
+        break;
+      case 8:
+        if (!getOverflowMenu().equals(other.getOverflowMenu())) return false;
         break;
       case 0:
       default:
@@ -477,6 +545,10 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       case 4:
         hash = (37 * hash) + CARD_FIELD_NUMBER;
         hash = (53 * hash) + getCard().hashCode();
+        break;
+      case 8:
+        hash = (37 * hash) + OVERFLOW_MENU_FIELD_NUMBER;
+        hash = (53 * hash) + getOverflowMenu().hashCode();
         break;
       case 0:
       default:
@@ -588,7 +660,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
    * Represents how to respond when users click an interactive element on
    * a card, such as a button.
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -634,6 +706,9 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       }
       if (cardBuilder_ != null) {
         cardBuilder_.clear();
+      }
+      if (overflowMenuBuilder_ != null) {
+        overflowMenuBuilder_.clear();
       }
       dataCase_ = 0;
       data_ = null;
@@ -689,6 +764,9 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       }
       if (dataCase_ == 4 && cardBuilder_ != null) {
         result.data_ = cardBuilder_.build();
+      }
+      if (dataCase_ == 8 && overflowMenuBuilder_ != null) {
+        result.data_ = overflowMenuBuilder_.build();
       }
     }
 
@@ -758,6 +836,11 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
             mergeCard(other.getCard());
             break;
           }
+        case OVERFLOW_MENU:
+          {
+            mergeOverflowMenu(other.getOverflowMenu());
+            break;
+          }
         case DATA_NOT_SET:
           {
             break;
@@ -814,6 +897,12 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
                 dataCase_ = 4;
                 break;
               } // case 34
+            case 66:
+              {
+                input.readMessage(getOverflowMenuFieldBuilder().getBuilder(), extensionRegistry);
+                dataCase_ = 8;
+                break;
+              } // case 66
             default:
               {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -1289,7 +1378,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
      * web client to do before the open link action response comes back.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Action open_dynamic_link_action = 3;</code>
@@ -1311,7 +1400,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
      * web client to do before the open link action response comes back.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Action open_dynamic_link_action = 3;</code>
@@ -1343,7 +1432,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
      * web client to do before the open link action response comes back.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Action open_dynamic_link_action = 3;</code>
@@ -1372,7 +1461,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
      * web client to do before the open link action response comes back.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Action open_dynamic_link_action = 3;</code>
@@ -1399,7 +1488,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
      * web client to do before the open link action response comes back.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Action open_dynamic_link_action = 3;</code>
@@ -1436,7 +1525,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
      * web client to do before the open link action response comes back.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Action open_dynamic_link_action = 3;</code>
@@ -1468,7 +1557,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
      * web client to do before the open link action response comes back.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Action open_dynamic_link_action = 3;</code>
@@ -1487,7 +1576,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
      * web client to do before the open link action response comes back.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Action open_dynamic_link_action = 3;</code>
@@ -1514,7 +1603,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
      * web client to do before the open link action response comes back.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Action open_dynamic_link_action = 3;</code>
@@ -1554,7 +1643,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
      * A new card is pushed to the card stack after clicking if specified.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card card = 4;</code>
@@ -1573,7 +1662,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
      * A new card is pushed to the card stack after clicking if specified.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card card = 4;</code>
@@ -1602,7 +1691,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
      * A new card is pushed to the card stack after clicking if specified.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card card = 4;</code>
@@ -1628,7 +1717,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
      * A new card is pushed to the card stack after clicking if specified.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card card = 4;</code>
@@ -1651,7 +1740,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
      * A new card is pushed to the card stack after clicking if specified.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card card = 4;</code>
@@ -1685,7 +1774,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
      * A new card is pushed to the card stack after clicking if specified.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card card = 4;</code>
@@ -1714,7 +1803,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
      * A new card is pushed to the card stack after clicking if specified.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card card = 4;</code>
@@ -1730,7 +1819,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
      * A new card is pushed to the card stack after clicking if specified.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card card = 4;</code>
@@ -1754,7 +1843,7 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
      * A new card is pushed to the card stack after clicking if specified.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.Card card = 4;</code>
@@ -1779,6 +1868,220 @@ public final class OnClick extends com.google.protobuf.GeneratedMessageV3
       dataCase_ = 4;
       onChanged();
       return cardBuilder_;
+    }
+
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.apps.card.v1.OverflowMenu,
+            com.google.apps.card.v1.OverflowMenu.Builder,
+            com.google.apps.card.v1.OverflowMenuOrBuilder>
+        overflowMenuBuilder_;
+
+    /**
+     *
+     *
+     * <pre>
+     * If specified, this `onClick` opens an overflow menu.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.OverflowMenu overflow_menu = 8;</code>
+     *
+     * @return Whether the overflowMenu field is set.
+     */
+    @java.lang.Override
+    public boolean hasOverflowMenu() {
+      return dataCase_ == 8;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * If specified, this `onClick` opens an overflow menu.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.OverflowMenu overflow_menu = 8;</code>
+     *
+     * @return The overflowMenu.
+     */
+    @java.lang.Override
+    public com.google.apps.card.v1.OverflowMenu getOverflowMenu() {
+      if (overflowMenuBuilder_ == null) {
+        if (dataCase_ == 8) {
+          return (com.google.apps.card.v1.OverflowMenu) data_;
+        }
+        return com.google.apps.card.v1.OverflowMenu.getDefaultInstance();
+      } else {
+        if (dataCase_ == 8) {
+          return overflowMenuBuilder_.getMessage();
+        }
+        return com.google.apps.card.v1.OverflowMenu.getDefaultInstance();
+      }
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * If specified, this `onClick` opens an overflow menu.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.OverflowMenu overflow_menu = 8;</code>
+     */
+    public Builder setOverflowMenu(com.google.apps.card.v1.OverflowMenu value) {
+      if (overflowMenuBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        data_ = value;
+        onChanged();
+      } else {
+        overflowMenuBuilder_.setMessage(value);
+      }
+      dataCase_ = 8;
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * If specified, this `onClick` opens an overflow menu.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.OverflowMenu overflow_menu = 8;</code>
+     */
+    public Builder setOverflowMenu(com.google.apps.card.v1.OverflowMenu.Builder builderForValue) {
+      if (overflowMenuBuilder_ == null) {
+        data_ = builderForValue.build();
+        onChanged();
+      } else {
+        overflowMenuBuilder_.setMessage(builderForValue.build());
+      }
+      dataCase_ = 8;
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * If specified, this `onClick` opens an overflow menu.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.OverflowMenu overflow_menu = 8;</code>
+     */
+    public Builder mergeOverflowMenu(com.google.apps.card.v1.OverflowMenu value) {
+      if (overflowMenuBuilder_ == null) {
+        if (dataCase_ == 8 && data_ != com.google.apps.card.v1.OverflowMenu.getDefaultInstance()) {
+          data_ =
+              com.google.apps.card.v1.OverflowMenu.newBuilder(
+                      (com.google.apps.card.v1.OverflowMenu) data_)
+                  .mergeFrom(value)
+                  .buildPartial();
+        } else {
+          data_ = value;
+        }
+        onChanged();
+      } else {
+        if (dataCase_ == 8) {
+          overflowMenuBuilder_.mergeFrom(value);
+        } else {
+          overflowMenuBuilder_.setMessage(value);
+        }
+      }
+      dataCase_ = 8;
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * If specified, this `onClick` opens an overflow menu.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.OverflowMenu overflow_menu = 8;</code>
+     */
+    public Builder clearOverflowMenu() {
+      if (overflowMenuBuilder_ == null) {
+        if (dataCase_ == 8) {
+          dataCase_ = 0;
+          data_ = null;
+          onChanged();
+        }
+      } else {
+        if (dataCase_ == 8) {
+          dataCase_ = 0;
+          data_ = null;
+        }
+        overflowMenuBuilder_.clear();
+      }
+      return this;
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * If specified, this `onClick` opens an overflow menu.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.OverflowMenu overflow_menu = 8;</code>
+     */
+    public com.google.apps.card.v1.OverflowMenu.Builder getOverflowMenuBuilder() {
+      return getOverflowMenuFieldBuilder().getBuilder();
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * If specified, this `onClick` opens an overflow menu.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.OverflowMenu overflow_menu = 8;</code>
+     */
+    @java.lang.Override
+    public com.google.apps.card.v1.OverflowMenuOrBuilder getOverflowMenuOrBuilder() {
+      if ((dataCase_ == 8) && (overflowMenuBuilder_ != null)) {
+        return overflowMenuBuilder_.getMessageOrBuilder();
+      } else {
+        if (dataCase_ == 8) {
+          return (com.google.apps.card.v1.OverflowMenu) data_;
+        }
+        return com.google.apps.card.v1.OverflowMenu.getDefaultInstance();
+      }
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * If specified, this `onClick` opens an overflow menu.
+     * </pre>
+     *
+     * <code>.google.apps.card.v1.OverflowMenu overflow_menu = 8;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.apps.card.v1.OverflowMenu,
+            com.google.apps.card.v1.OverflowMenu.Builder,
+            com.google.apps.card.v1.OverflowMenuOrBuilder>
+        getOverflowMenuFieldBuilder() {
+      if (overflowMenuBuilder_ == null) {
+        if (!(dataCase_ == 8)) {
+          data_ = com.google.apps.card.v1.OverflowMenu.getDefaultInstance();
+        }
+        overflowMenuBuilder_ =
+            new com.google.protobuf.SingleFieldBuilderV3<
+                com.google.apps.card.v1.OverflowMenu,
+                com.google.apps.card.v1.OverflowMenu.Builder,
+                com.google.apps.card.v1.OverflowMenuOrBuilder>(
+                (com.google.apps.card.v1.OverflowMenu) data_, getParentForChildren(), isClean());
+        data_ = null;
+      }
+      dataCase_ = 8;
+      onChanged();
+      return overflowMenuBuilder_;
     }
 
     @java.lang.Override

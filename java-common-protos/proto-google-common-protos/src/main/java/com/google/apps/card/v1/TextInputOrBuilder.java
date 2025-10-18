@@ -259,7 +259,7 @@ public interface TextInputOrBuilder
    * to `MULTIPLE_LINE`.
    *
    * [Google Workspace
-   * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+   * add-ons and Chat apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
    * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
@@ -289,7 +289,7 @@ public interface TextInputOrBuilder
    * to `MULTIPLE_LINE`.
    *
    * [Google Workspace
-   * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+   * add-ons and Chat apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
    * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
@@ -319,7 +319,7 @@ public interface TextInputOrBuilder
    * to `MULTIPLE_LINE`.
    *
    * [Google Workspace
-   * Add-ons and Chat apps](https://developers.google.com/workspace/extend):
+   * add-ons and Chat apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
    * <code>.google.apps.card.v1.Suggestions initial_suggestions = 7;</code>
@@ -340,7 +340,7 @@ public interface TextInputOrBuilder
    * a custom function.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
@@ -363,7 +363,7 @@ public interface TextInputOrBuilder
    * a custom function.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
@@ -386,12 +386,58 @@ public interface TextInputOrBuilder
    * a custom function.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.Action auto_complete_action = 8;</code>
    */
   com.google.apps.card.v1.ActionOrBuilder getAutoCompleteActionOrBuilder();
+
+  /**
+   *
+   *
+   * <pre>
+   * Specify the input format validation necessary for this text field.
+   *
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Validation validation = 11;</code>
+   *
+   * @return Whether the validation field is set.
+   */
+  boolean hasValidation();
+
+  /**
+   *
+   *
+   * <pre>
+   * Specify the input format validation necessary for this text field.
+   *
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Validation validation = 11;</code>
+   *
+   * @return The validation.
+   */
+  com.google.apps.card.v1.Validation getValidation();
+
+  /**
+   *
+   *
+   * <pre>
+   * Specify the input format validation necessary for this text field.
+   *
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend):
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Validation validation = 11;</code>
+   */
+  com.google.apps.card.v1.ValidationOrBuilder getValidationOrBuilder();
 
   /**
    *
