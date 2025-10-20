@@ -26,7 +26,7 @@ import (
 	"os"
 )
 
-// Request is the structure of the release-init-request.json file.
+// ReleaseInitRequest is the structure of the release-init-request.json file.
 type ReleaseInitRequest struct {
 	Libraries []*Library `json:"libraries"`
 }
