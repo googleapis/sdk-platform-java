@@ -31,7 +31,7 @@ type ReleaseInitRequest struct {
 	Libraries []*Library `json:"libraries"`
 }
 
-// Response is the structure of the release-init-response.json file.
+// ReleaseInitResponse is the structure of the release-init-response.json file.
 type ReleaseInitResponse struct {
 	Error string `json:"error,omitempty"`
 }
