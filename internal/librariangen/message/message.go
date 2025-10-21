@@ -12,13 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package request
+// Package message defines data types which the Librarian CLI and language
+// containers exchange.
+// There shouldn't be CLI-specific data type or language container-specific
+// data types in this package.
+// TODO(b/447404382): Move this package to the https://github.com/googleapis/librarian
+// GitHub repository once the interface is finalized.
+package message
 
 import (
 	"encoding/json"
 	"fmt"
 	"os"
 )
+
+// ReleaseInitRequest is the structure of the release-init-request.json file.
+type ReleaseInitRequest struct {
+	Libraries []*Library `json:"libraries"`
+}
+
+// ReleaseInitResponse is the structure of the release-init-response.json file.
+type ReleaseInitResponse struct {
+	Error string `json:"error,omitempty"`
+}
 
 // Library is the combination of all the fields used by CLI requests and responses.
 // Each CLI command has its own request/response type, but they all use Library.

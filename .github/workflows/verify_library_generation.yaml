@@ -1,7 +1,5 @@
 on:
   pull_request:
-    paths-ignore:
-      - 'internal/librariangen/**'
 
 name: verify_library_generation
 jobs:
