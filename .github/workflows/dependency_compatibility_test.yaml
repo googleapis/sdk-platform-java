@@ -4,8 +4,6 @@ on:
   pull_request:
     branches:
       - 'main'
-    paths-ignore:
-      - 'internal/librariangen/**'      
   workflow_dispatch:
     inputs:
       dependencies-list:
@@ -17,7 +15,21 @@ on:
         default: ''
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.filter.outputs.should_run }}
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36
+      id: filter
+      with:
+        filters: |
+          should_run:
+            - '!internal/librariangen/**'
   dependency-compatibility-test:
+    needs: changes
+    if: needs.changes.outputs.should_run == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
