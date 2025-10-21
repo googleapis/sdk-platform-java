@@ -21,7 +21,7 @@
 FROM marketplace.gcr.io/google/debian12:latest AS builder
 
 # Set environment variables for tool versions for easy updates.
-ENV GO_VERSION=1.24.0
+ENV GO_VERSION=1.25.1
 
 # Install build dependencies.
 RUN apt-get update && \
@@ -63,3 +63,4 @@ COPY --from=builder /librariangen /usr/local/bin/librariangen
 # Set the entrypoint for the container to run the compiled librariangen.
 # The Librarian will provide commands like 'generate' as arguments.
 ENTRYPOINT [ "/usr/local/bin/librariangen" ]
+
