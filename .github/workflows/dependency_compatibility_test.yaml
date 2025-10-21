@@ -4,8 +4,6 @@ on:
   pull_request:
     branches:
       - 'main'
-    paths-ignore:
-      - 'internal/librariangen/**'      
   workflow_dispatch:
     inputs:
       dependencies-list:
