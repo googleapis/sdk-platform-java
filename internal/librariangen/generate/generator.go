@@ -27,15 +27,15 @@ import (
 
 	"cloud.google.com/java/internal/librariangen/bazel"
 	"cloud.google.com/java/internal/librariangen/execv"
+	"cloud.google.com/java/internal/librariangen/message"
 	"cloud.google.com/java/internal/librariangen/protoc"
-	"cloud.google.com/java/internal/librariangen/request"
 )
 
 // Test substitution vars.
 var (
 	bazelParse   = bazel.Parse
 	execvRun     = execv.Run
-	requestParse = request.ParseLibrary
+	requestParse = message.ParseLibrary
 	protocBuild  = protoc.Build
 )
 
@@ -113,7 +113,7 @@ func Generate(ctx context.Context, cfg *Config) error {
 // invokeProtoc handles the protoc GAPIC generation logic for the 'generate' CLI command.
 // It reads a request file, and for each API specified, it invokes protoc
 // to generate the client library. It returns the module path and the path to the service YAML.
-func invokeProtoc(ctx context.Context, cfg *Config, generateReq *request.Library) error {
+func invokeProtoc(ctx context.Context, cfg *Config, generateReq *message.Library) error {
 	for _, api := range generateReq.APIs {
 		apiServiceDir := filepath.Join(cfg.SourceDir, api.Path)
 		slog.Info("processing api", "service_dir", apiServiceDir)
@@ -135,7 +135,7 @@ func invokeProtoc(ctx context.Context, cfg *Config, generateReq *request.Library
 // readGenerateReq reads generate-request.json from the librarian-tool input directory.
 // The request file tells librariangen which library and APIs to generate.
 // It is prepared by the Librarian tool and mounted at /librarian.
-func readGenerateReq(librarianDir string) (*request.Library, error) {
+func readGenerateReq(librarianDir string) (*message.Library, error) {
 	reqPath := filepath.Join(librarianDir, "generate-request.json")
 	slog.Debug("librariangen: reading generate request", "path", reqPath)
 
