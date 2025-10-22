@@ -59,46 +59,7 @@ func Run(args []string, container LanguageContainer) int {
 		slog.Warn("librariangen: configure command is not yet implemented")
 		return 1
 	case "release-init":
-		cfg := &release.Context{}
-		releaseInitFlags := flag.NewFlagSet("release-init", flag.ContinueOnError)
-		releaseInitFlags.StringVar(&cfg.LibrarianDir, "librarian", "/librarian", "Path to the librarian-tool input directory. Contains release-init-request.json.")
-		releaseInitFlags.StringVar(&cfg.RepoDir, "repo", "/repo", "Path to the language repo.")
-		releaseInitFlags.StringVar(&cfg.OutputDir, "output", "/output", "Path to the output directory.")
-		if err := releaseInitFlags.Parse(flags); err != nil {
-			slog.Error("failed to parse flags", "error", err)
-			return 1
-		}
-		requestPath := filepath.Join(cfg.LibrarianDir, "release-init-request.json")
-		bytes, err := os.ReadFile(requestPath)
-		if err != nil {
-			slog.Error("failed to read request file", "path", requestPath, "error", err)
-			return 1
-		}
-		request := &message.ReleaseInitRequest{}
-		if err := json.Unmarshal(bytes, request); err != nil {
-			slog.Error("failed to parse request JSON", "error", err)
-			return 1
-		}
-		config := &release.Config{
-			Context: cfg,
-			Request: request,
-		}
-		response, err := container.ReleaseInit(context.Background(), config)
-		if err != nil {
-			slog.Error("release-init failed", "error", err)
-			return 1
-		}
-		bytes, err = json.MarshalIndent(response, "", "  ")
-		if err != nil {
-			slog.Error("failed to marshal response JSON", "error", err)
-			return 1
-		}
-		responsePath := filepath.Join(cfg.LibrarianDir, "release-init-response.json")
-		if err := os.WriteFile(responsePath, bytes, 0644); err != nil {
-			slog.Error("failed to write response file", "path", responsePath, "error", err)
-			return 1
-		}
-		slog.Info("librariangen: release-init command executed successfully")
+		return handleReleaseInit(flags, container)
 	case "build":
 		slog.Warn("librariangen: build command is not yet implemented")
 		return 1
@@ -106,5 +67,49 @@ func Run(args []string, container LanguageContainer) int {
 		slog.Error(fmt.Sprintf("librariangen: unknown command: %s (with flags %v)", cmd, flags))
 		return 1
 	}
+	return 0
+}
+
+func handleReleaseInit(flags []string, container LanguageContainer) int {
+	cfg := &release.Context{}
+	releaseInitFlags := flag.NewFlagSet("release-init", flag.ContinueOnError)
+	releaseInitFlags.StringVar(&cfg.LibrarianDir, "librarian", "/librarian", "Path to the librarian-tool input directory. Contains release-init-request.json.")
+	releaseInitFlags.StringVar(&cfg.RepoDir, "repo", "/repo", "Path to the language repo.")
+	releaseInitFlags.StringVar(&cfg.OutputDir, "output", "/output", "Path to the output directory.")
+	if err := releaseInitFlags.Parse(flags); err != nil {
+		slog.Error("failed to parse flags", "error", err)
+		return 1
+	}
+	requestPath := filepath.Join(cfg.LibrarianDir, "release-init-request.json")
+	bytes, err := os.ReadFile(requestPath)
+	if err != nil {
+		slog.Error("failed to read request file", "path", requestPath, "error", err)
+		return 1
+	}
+	request := &message.ReleaseInitRequest{}
+	if err := json.Unmarshal(bytes, request); err != nil {
+		slog.Error("failed to parse request JSON", "error", err)
+		return 1
+	}
+	config := &release.Config{
+		Context: cfg,
+		Request: request,
+	}
+	response, err := container.ReleaseInit(context.Background(), config)
+	if err != nil {
+		slog.Error("release-init failed", "error", err)
+		return 1
+	}
+	bytes, err = json.MarshalIndent(response, "", "  ")
+	if err != nil {
+		slog.Error("failed to marshal response JSON", "error", err)
+		return 1
+	}
+	responsePath := filepath.Join(cfg.LibrarianDir, "release-init-response.json")
+	if err := os.WriteFile(responsePath, bytes, 0644); err != nil {
+		slog.Error("failed to write response file", "path", responsePath, "error", err)
+		return 1
+	}
+	slog.Info("librariangen: release-init command executed successfully")
 	return 0
 }
