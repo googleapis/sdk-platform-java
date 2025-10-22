@@ -93,7 +93,7 @@ func run(ctx context.Context, args []string) error {
 		container := languagecontainer.LanguageContainer{
 			ReleaseInit: release.Init,
 		}
-		if exitCode := languagecontainer.Run(args, container); exitCode != 0 {
+		if exitCode := languagecontainer.Run(args, &container); exitCode != 0 {
 			return fmt.Errorf("command failed with exit code %d", exitCode)
 		}
 		return nil

@@ -40,7 +40,7 @@ type LanguageContainer struct {
 }
 
 // Run accepts an implementation of the LanguageContainer.
-func Run(args []string, container LanguageContainer) int {
+func Run(args []string, container *LanguageContainer) int {
 	// Logic to parse args and call the appropriate method on the container.
 	// For example, if args[1] is "generate":
 	//   request := ... // unmarshal the request from the expected location
@@ -70,7 +70,7 @@ func Run(args []string, container LanguageContainer) int {
 	return 0
 }
 
-func handleReleaseInit(flags []string, container LanguageContainer) int {
+func handleReleaseInit(flags []string, container *LanguageContainer) int {
 	cfg := &release.Context{}
 	releaseInitFlags := flag.NewFlagSet("release-init", flag.ContinueOnError)
 	releaseInitFlags.StringVar(&cfg.LibrarianDir, "librarian", "/librarian", "Path to the librarian-tool input directory. Contains release-init-request.json.")
