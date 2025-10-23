@@ -233,3 +233,37 @@ func TestRun_GenerateReadsContextArgs(t *testing.T) {
 		t.Errorf("gotConfig.Context.SourceDir = %q, want %q", got, want)
 	}
 }
+
+func TestRun_unimplementedCommands(t *testing.T) {
+	tests := []struct {
+		name      string
+		args      []string
+		container *LanguageContainer
+	}{
+		{
+			name: "generate is nil",
+			args: []string{"generate"},
+			container: &LanguageContainer{
+				ReleaseInit: func(context.Context, *release.Config) (*message.ReleaseInitResponse, error) {
+					return nil, nil
+				},
+			},
+		},
+		{
+			name: "release-init is nil",
+			args: []string{"release-init"},
+			container: &LanguageContainer{
+				Generate: func(context.Context, *generate.Config) error {
+					return nil
+				},
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if gotCode := Run(tt.args, tt.container); gotCode != 1 {
+				t.Errorf("Run() = %v, want 1", gotCode)
+			}
+		})
+	}
+}

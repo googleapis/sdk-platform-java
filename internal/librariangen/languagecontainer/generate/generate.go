@@ -42,16 +42,16 @@ type Context struct {
 // Validate ensures that the context is valid.
 func (c *Context) Validate() error {
 	if c.LibrarianDir == "" {
-		return errors.New("librariangen: librarian directory must be set")
+		return errors.New("languagecontainer: librarian directory must be set")
 	}
 	if c.InputDir == "" {
-		return errors.New("librariangen: input directory must be set")
+		return errors.New("languagecontainer: input directory must be set")
 	}
 	if c.OutputDir == "" {
-		return errors.New("librariangen: output directory must be set")
+		return errors.New("languagecontainer: output directory must be set")
 	}
 	if c.SourceDir == "" {
-		return errors.New("librariangen: source directory must be set")
+		return errors.New("languagecontainer: source directory must be set")
 	}
 	return nil
 }
@@ -69,16 +69,15 @@ type Config struct {
 // from the LibrarianDir in the given Context.
 func NewConfig(ctx *Context) (*Config, error) {
 	reqPath := filepath.Join(ctx.LibrarianDir, "generate-request.json")
-	slog.Debug("librariangen: reading generate request", "path", reqPath)
+	slog.Debug("languagecontainer: reading generate request", "path", reqPath)
 
 	generateReq, err := message.ParseLibrary(reqPath)
 	if err != nil {
 		return nil, err
 	}
-	slog.Debug("librariangen: successfully unmarshalled request", "library_id", generateReq.ID)
+	slog.Debug("languagecontainer: successfully unmarshalled request", "library_id", generateReq.ID)
 	return &Config{
 		Context: ctx,
 		Request: generateReq,
 	}, nil
 }
-

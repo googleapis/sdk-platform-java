@@ -55,17 +55,25 @@ func Run(args []string, container *LanguageContainer) int {
 	flags := args[1:]
 	switch cmd {
 	case "generate":
+		if container.Generate == nil {
+			slog.Error("languagecontainer: generate command is not implemented")
+			return 1
+		}
 		return handleGenerate(flags, container)
 	case "configure":
-		slog.Warn("librariangen: configure command is not yet implemented")
+		slog.Warn("languagecontainer: configure command is missing")
 		return 1
 	case "release-init":
+		if container.ReleaseInit == nil {
+			slog.Error("languagecontainer: generate command is missing")
+			return 1
+		}
 		return handleReleaseInit(flags, container)
 	case "build":
-		slog.Warn("librariangen: build command is not yet implemented")
+		slog.Warn("languagecontainer: build command is not yet implemented")
 		return 1
 	default:
-		slog.Error(fmt.Sprintf("librariangen: unknown command: %s (with flags %v)", cmd, flags))
+		slog.Error(fmt.Sprintf("languagecontainer: unknown command: %s (with flags %v)", cmd, flags))
 		return 1
 	}
 }
@@ -90,7 +98,7 @@ func handleGenerate(flags []string, container *LanguageContainer) int {
 		slog.Error("generate failed", "error", err)
 		return 1
 	}
-	slog.Info("librariangen: generate command executed successfully")
+	slog.Info("languagecontainer: generate command executed successfully")
 	return 0
 }
 
@@ -134,6 +142,6 @@ func handleReleaseInit(flags []string, container *LanguageContainer) int {
 		slog.Error("failed to write response file", "path", responsePath, "error", err)
 		return 1
 	}
-	slog.Info("librariangen: release-init command executed successfully")
+	slog.Info("languagecontainer: release-init command executed successfully")
 	return 0
 }
