@@ -374,11 +374,93 @@ func TestRestructureOutput(t *testing.T) {
 	}
 }
 
-func TestUnzip(t *testing.T) {
+func TestCopyAndMerge(t *testing.T) {
 	e := newTestEnv(t)
 	defer e.cleanup(t)
 
+	// 1. Setup: Create source and destination directories with nested structures.
+	srcDir := filepath.Join(e.tmpDir, "src")
+	destDir := filepath.Join(e.tmpDir, "dest")
+	sourceFiles := map[string]string{
+		"com/google/foo.java":         "",
+		"com/google/bar/baz.java":     "",
+		"com/google/bar/qux/quux.java": "",
+	}
+	destFiles := map[string]string{
+		"com/google/existing.java": "",
+		"com/google/bar/another.java": "",
+	}
+	for path, content := range sourceFiles {
+		fullPath := filepath.Join(srcDir, path)
+		if err := os.MkdirAll(filepath.Dir(fullPath), 0755); err != nil {
+			t.Fatalf("failed to create source directory for %s: %v", path, err)
+		}
+		if err := os.WriteFile(fullPath, []byte(content), 0644); err != nil {
+			t.Fatalf("failed to write source file for %s: %v", path, err)
+		}
+	}
+	for path, content := range destFiles {
+		fullPath := filepath.Join(destDir, path)
+		if err := os.MkdirAll(filepath.Dir(fullPath), 0755); err != nil {
+			t.Fatalf("failed to create dest directory for %s: %v", path, err)
+		}
+		if err := os.WriteFile(fullPath, []byte(content), 0644); err != nil {
+			t.Fatalf("failed to write dest file for %s: %v", path, err)
+		}
+	}
+
+	// 2. Execute: Call the function under test.
+	if err := copyAndMerge(srcDir, destDir); err != nil {
+		t.Fatalf("copyAndMerge() failed: %v", err)
+	}
+
+	// 3. Verify: Check that all files were merged correctly.
+	for path := range sourceFiles {
+		fullPath := filepath.Join(destDir, path)
+		if _, err := os.Stat(fullPath); err != nil {
+			t.Errorf("source file not merged: %v", err)
+		}
+	}
+	for path := range destFiles {
+		fullPath := filepath.Join(destDir, path)
+		if _, err := os.Stat(fullPath); err != nil {
+			t.Errorf("destination file was deleted: %v", err)
+		}
+	}
+}
+
+func TestUnzip(t *testing.T) {
+	t.Run("happy path", func(t *testing.T) {
+		e := newTestEnv(t)
+		defer e.cleanup(t)
+		// Create a valid zip file.
+		zipPath := filepath.Join(e.outputDir, "valid.zip")
+		f, err := os.Create(zipPath)
+		if err != nil {
+			t.Fatalf("failed to create zip file: %v", err)
+		}
+		defer f.Close()
+		zipWriter := zip.NewWriter(f)
+		if _, err := zipWriter.Create("file.txt"); err != nil {
+			t.Fatalf("failed to create file in zip: %v", err)
+		}
+		zipWriter.Close()
+
+		// Unzip the file.
+		destDir := filepath.Join(e.outputDir, "unzip-dest")
+		if err := unzip(zipPath, destDir); err != nil {
+			t.Fatalf("unzip() failed: %v", err)
+		}
+
+		// Check that the file was unzipped.
+		if _, err := os.Stat(filepath.Join(destDir, "file.txt")); err != nil {
+			t.Errorf("file not unzipped: %v", err)
+		}
+	})
+
 	t.Run("invalid zip file", func(t *testing.T) {
+		e := newTestEnv(t)
+		defer e.cleanup(t)
 		invalidZipPath := filepath.Join(e.outputDir, "invalid.zip")
 		if err := os.WriteFile(invalidZipPath, []byte("not a zip file"), 0644); err != nil {
 			t.Fatalf("failed to write invalid zip file: %v", err)
@@ -389,6 +471,8 @@ func TestUnzip(t *testing.T) {
 	})
 
 	t.Run("permission denied", func(t *testing.T) {
+		e := newTestEnv(t)
+		defer e.cleanup(t)
 		// Create a valid zip file.
 		validZipPath := filepath.Join(e.outputDir, "valid.zip")
 		if err := os.WriteFile(validZipPath, []byte{}, 0644); err != nil {
@@ -423,6 +507,8 @@ func TestUnzip(t *testing.T) {
 	})
 
 	t.Run("zip slip vulnerability", func(t *testing.T) {
+		e := newTestEnv(t)
+		defer e.cleanup(t)
 		// Create a zip file with a malicious file path.
 		maliciousZipPath := filepath.Join(e.outputDir, "malicious.zip")
 		f, err := os.Create(maliciousZipPath)
