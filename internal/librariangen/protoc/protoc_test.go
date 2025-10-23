@@ -47,10 +47,10 @@ func TestBuild(t *testing.T) {
 		t.Fatalf("failed to get absolute path for sourceDir: %v", err)
 	}
 	tests := []struct {
-		name          string
-		apiPath       string
-		config        mockConfigProvider
-		want          []string
+		name    string
+		apiPath string
+		config  mockConfigProvider
+		want    []string
 	}{
 		{
 			name:    "java_grpc_library rule",
@@ -112,7 +112,7 @@ func TestBuild(t *testing.T) {
 			name:    "proto-only",
 			apiPath: "google/cloud/secretmanager/v1beta2",
 			config: mockConfigProvider{
-				hasGAPIC:  false,
+				hasGAPIC: false,
 			},
 			want: []string{
 				"protoc",

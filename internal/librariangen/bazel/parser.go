@@ -65,6 +65,7 @@ func (c *Config) Validate() error {
 }
 
 var javaGapicLibraryRE = regexp.MustCompile(`java_gapic_library\((?s:.)*?\)`)
+
 // Parse reads a BUILD.bazel file from the given directory and extracts the
 // relevant configuration from the java_gapic_library rule.
 func Parse(dir string) (*Config, error) {

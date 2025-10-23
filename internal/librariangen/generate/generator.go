@@ -83,7 +83,11 @@ func Generate(ctx context.Context, cfg *Config) error {
 		GRPCDir:  filepath.Join(cfg.OutputDir, "grpc"),
 		ProtoDir: filepath.Join(cfg.OutputDir, "proto"),
 	}
-	defer cleanupIntermediateFiles(outputConfig)
+	defer func() {
+		if err := cleanupIntermediateFiles(outputConfig); err != nil {
+			slog.Error("librariangen: failed to clean up intermediate files", "error", err)
+		}
+	}()
 
 	generateReq, err := readGenerateReq(cfg.LibrarianDir)
 	if err != nil {
@@ -133,7 +137,7 @@ func invokeProtoc(ctx context.Context, cfg *Config, generateReq *message.Library
 		}
 
 		if err := execvRun(ctx, args, cfg.OutputDir); err != nil {
-			return fmt.Errorf("librariangen: protoc failed for api %q in library %q: %w", api.Path, generateReq.ID, err)
+			return fmt.Errorf("librariangen: protoc failed for api %q in library %q: %w, execvRun error: %v", api.Path, generateReq.ID, err, err)
 		}
 	}
 	return nil
@@ -165,7 +169,7 @@ func moveFiles(sourceDir, targetDir string) error {
 		newPath := filepath.Join(targetDir, f.Name())
 		slog.Debug("librariangen: moving file", "from", oldPath, "to", newPath)
 		if err := os.Rename(oldPath, newPath); err != nil {
-			return fmt.Errorf("librariangen: failed to move %s to %s: %w", oldPath, newPath, err)
+			return fmt.Errorf("librariangen: failed to move %s to %s: %w, os.Rename error: %v", oldPath, newPath, err, err)
 		}
 	}
 	return nil
@@ -211,7 +215,7 @@ func restructureOutput(outputDir, libraryID string) error {
 		gapicSrcDir:  gapicDestDir,
 		gapicTestDir: gapicTestDestDir,
 		protoSrcDir:  protoDestDir,
-		grpcSrcDir:  grpcDestDir,
+		grpcSrcDir:   grpcDestDir,
 		samplesDir:   samplesDestDir,
 	}
 	for src, dest := range moves {
@@ -250,20 +254,21 @@ func copyAndMerge(src, dest string) error {
 			}
 		} else {
 			if err := os.Rename(srcPath, destPath); err != nil {
-				return fmt.Errorf("librariangen: failed to move %s to %s: %w", srcPath, destPath, err)
+				return fmt.Errorf("librariangen: failed to move %s to %s: %w, os.Rename error: %v", srcPath, destPath, err, err)
 			}
 		}
 	}
 	return nil
 }
 
-func cleanupIntermediateFiles(outputConfig *protoc.OutputConfig) {
+func cleanupIntermediateFiles(outputConfig *protoc.OutputConfig) error {
 	slog.Debug("librariangen: cleaning up intermediate files")
 	for _, path := range []string{outputConfig.GAPICDir, outputConfig.GRPCDir, outputConfig.ProtoDir} {
 		if err := os.RemoveAll(path); err != nil {
-			slog.Error("librariangen: failed to clean up intermediate file", "path", path, "error", err)
+			return fmt.Errorf("failed to clean up intermediate file at %s: %w", path, err)
 		}
 	}
+	return nil
 }
 
 func unzip(src, dest string) error {
