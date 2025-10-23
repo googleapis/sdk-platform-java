@@ -78,26 +78,29 @@ func Generate(ctx context.Context, cfg *Config) error {
 		return fmt.Errorf("librariangen: invalid configuration: %w", err)
 	}
 	slog.Debug("librariangen: generate command started")
-	defer cleanupIntermediateFiles(cfg.OutputDir)
+	outputConfig := &protoc.OutputConfig{
+		GAPICDir: filepath.Join(cfg.OutputDir, "gapic"),
+		GRPCDir:  filepath.Join(cfg.OutputDir, "grpc"),
+		ProtoDir: filepath.Join(cfg.OutputDir, "proto"),
+	}
+	defer func() {
+		if err := cleanupIntermediateFiles(outputConfig); err != nil {
+			slog.Error("librariangen: failed to clean up intermediate files", "error", err)
+		}
+	}()
 
 	generateReq, err := readGenerateReq(cfg.LibrarianDir)
 	if err != nil {
 		return fmt.Errorf("librariangen: failed to read request: %w", err)
 	}
 
-	if err := invokeProtoc(ctx, cfg, generateReq); err != nil {
+	if err := invokeProtoc(ctx, cfg, generateReq, outputConfig); err != nil {
 		return fmt.Errorf("librariangen: gapic generation failed: %w", err)
 	}
 
-	// Unzip the generated zip file.
-	zipPath := filepath.Join(cfg.OutputDir, "java_gapic.zip")
-	if err := unzip(zipPath, cfg.OutputDir); err != nil {
-		return fmt.Errorf("librariangen: failed to unzip %s: %w", zipPath, err)
-	}
-
-	// Unzip the inner temp-codegen.srcjar.
-	srcjarPath := filepath.Join(cfg.OutputDir, "temp-codegen.srcjar")
-	srcjarDest := filepath.Join(cfg.OutputDir, "java_gapic_srcjar")
+	// Unzip the temp-codegen.srcjar.
+	srcjarPath := filepath.Join(outputConfig.GAPICDir, "temp-codegen.srcjar")
+	srcjarDest := outputConfig.GAPICDir
 	if err := unzip(srcjarPath, srcjarDest); err != nil {
 		return fmt.Errorf("librariangen: failed to unzip %s: %w", srcjarPath, err)
 	}
@@ -113,7 +116,7 @@ func Generate(ctx context.Context, cfg *Config) error {
 // invokeProtoc handles the protoc GAPIC generation logic for the 'generate' CLI command.
 // It reads a request file, and for each API specified, it invokes protoc
 // to generate the client library. It returns the module path and the path to the service YAML.
-func invokeProtoc(ctx context.Context, cfg *Config, generateReq *message.Library) error {
+func invokeProtoc(ctx context.Context, cfg *Config, generateReq *message.Library, outputConfig *protoc.OutputConfig) error {
 	for _, api := range generateReq.APIs {
 		apiServiceDir := filepath.Join(cfg.SourceDir, api.Path)
 		slog.Info("processing api", "service_dir", apiServiceDir)
@@ -121,12 +124,20 @@ func invokeProtoc(ctx context.Context, cfg *Config, generateReq *message.Library
 		if err != nil {
 			return fmt.Errorf("librariangen: failed to parse BUILD.bazel for %s: %w", apiServiceDir, err)
 		}
-		args, err := protocBuild(apiServiceDir, bazelConfig, cfg.SourceDir, cfg.OutputDir)
+		args, err := protocBuild(apiServiceDir, bazelConfig, cfg.SourceDir, outputConfig)
 		if err != nil {
 			return fmt.Errorf("librariangen: failed to build protoc command for api %q in library %q: %w", api.Path, generateReq.ID, err)
 		}
+
+		// Create protoc output directories.
+		for _, dir := range []string{outputConfig.ProtoDir, outputConfig.GRPCDir, outputConfig.GAPICDir} {
+			if err := os.MkdirAll(dir, 0755); err != nil {
+				return err
+			}
+		}
+
 		if err := execvRun(ctx, args, cfg.OutputDir); err != nil {
-			return fmt.Errorf("librariangen: protoc failed for api %q in library %q: %w", api.Path, generateReq.ID, err)
+			return fmt.Errorf("librariangen: protoc failed for api %q in library %q: %w, execvRun error: %v", api.Path, generateReq.ID, err, err)
 		}
 	}
 	return nil
@@ -158,7 +169,7 @@ func moveFiles(sourceDir, targetDir string) error {
 		newPath := filepath.Join(targetDir, f.Name())
 		slog.Debug("librariangen: moving file", "from", oldPath, "to", newPath)
 		if err := os.Rename(oldPath, newPath); err != nil {
-			return fmt.Errorf("librariangen: failed to move %s to %s: %w", oldPath, newPath, err)
+			return fmt.Errorf("librariangen: failed to move %s to %s: %w, os.Rename error: %v", oldPath, newPath, err, err)
 		}
 	}
 	return nil
@@ -168,29 +179,43 @@ func restructureOutput(outputDir, libraryID string) error {
 	slog.Debug("librariangen: restructuring output directory", "dir", outputDir)
 
 	// Define source and destination directories.
-	gapicSrcDir := filepath.Join(outputDir, "java_gapic_srcjar", "src", "main", "java")
-	gapicTestDir := filepath.Join(outputDir, "java_gapic_srcjar", "src", "test", "java")
-	protoSrcDir := filepath.Join(outputDir, "com")
-	samplesDir := filepath.Join(outputDir, "java_gapic_srcjar", "samples", "snippets")
+	gapicSrcDir := filepath.Join(outputDir, "gapic", "src", "main", "java")
+	gapicTestDir := filepath.Join(outputDir, "gapic", "src", "test", "java")
+	protoSrcDir := filepath.Join(outputDir, "proto")
+	resourceNameSrcDir := filepath.Join(outputDir, "gapic", "proto", "src", "main", "java")
+	grpcSrcDir := filepath.Join(outputDir, "grpc")
+	samplesDir := filepath.Join(outputDir, "gapic", "samples", "snippets")
 
+	// TODO(meltsufin): currently we assume we have a single API variant v1
 	gapicDestDir := filepath.Join(outputDir, fmt.Sprintf("google-cloud-%s", libraryID), "src", "main", "java")
 	gapicTestDestDir := filepath.Join(outputDir, fmt.Sprintf("google-cloud-%s", libraryID), "src", "test", "java")
 	protoDestDir := filepath.Join(outputDir, fmt.Sprintf("proto-google-cloud-%s-v1", libraryID), "src", "main", "java")
+	resourceNameDestDir := filepath.Join(outputDir, fmt.Sprintf("proto-google-cloud-%s-v1", libraryID), "src", "main", "java")
+	grpcDestDir := filepath.Join(outputDir, fmt.Sprintf("grpc-google-cloud-%s-v1", libraryID), "src", "main", "java")
 	samplesDestDir := filepath.Join(outputDir, "samples", "snippets")
 
 	// Create destination directories.
-	destDirs := []string{gapicDestDir, gapicTestDestDir, protoDestDir, samplesDestDir}
+	destDirs := []string{gapicDestDir, gapicTestDestDir, protoDestDir, samplesDestDir, grpcDestDir}
 	for _, dir := range destDirs {
 		if err := os.MkdirAll(dir, 0755); err != nil {
 			return err
 		}
 	}
 
-	// Move files.
+	// The resource name directory is not created if there are no resource names
+	// to generate. We create it here to avoid errors later.
+	if _, err := os.Stat(resourceNameSrcDir); os.IsNotExist(err) {
+		if err := os.MkdirAll(resourceNameSrcDir, 0755); err != nil {
+			return err
+		}
+	}
+
+	// Move files that won't have conflicts.
 	moves := map[string]string{
 		gapicSrcDir:  gapicDestDir,
 		gapicTestDir: gapicTestDestDir,
 		protoSrcDir:  protoDestDir,
+		grpcSrcDir:   grpcDestDir,
 		samplesDir:   samplesDestDir,
 	}
 	for src, dest := range moves {
@@ -199,23 +224,51 @@ func restructureOutput(outputDir, libraryID string) error {
 		}
 	}
 
+	// Merge the resource name files into the proto destination.
+	if err := copyAndMerge(resourceNameSrcDir, resourceNameDestDir); err != nil {
+		return err
+	}
+
 	return nil
 }
 
-func cleanupIntermediateFiles(outputDir string) {
-	slog.Debug("librariangen: cleaning up intermediate files", "dir", outputDir)
-	filesToRemove := []string{
-		"java_gapic_srcjar",
-		"com",
-		"java_gapic.zip",
-		"temp-codegen.srcjar",
+// copyAndMerge recursively copies the contents of src to dest, merging directories.
+func copyAndMerge(src, dest string) error {
+	entries, err := os.ReadDir(src)
+	if os.IsNotExist(err) {
+		return nil
 	}
-	for _, file := range filesToRemove {
-		path := filepath.Join(outputDir, file)
-		if err := os.RemoveAll(path); err != nil {
-			slog.Error("librariangen: failed to clean up intermediate file", "path", path, "error", err)
+	if err != nil {
+		return err
+	}
+
+	for _, entry := range entries {
+		srcPath := filepath.Join(src, entry.Name())
+		destPath := filepath.Join(dest, entry.Name())
+		if entry.IsDir() {
+			if err := os.MkdirAll(destPath, 0755); err != nil {
+				return err
+			}
+			if err := copyAndMerge(srcPath, destPath); err != nil {
+				return err
+			}
+		} else {
+			if err := os.Rename(srcPath, destPath); err != nil {
+				return fmt.Errorf("librariangen: failed to move %s to %s: %w, os.Rename error: %v", srcPath, destPath, err, err)
+			}
 		}
 	}
+	return nil
+}
+
+func cleanupIntermediateFiles(outputConfig *protoc.OutputConfig) error {
+	slog.Debug("librariangen: cleaning up intermediate files")
+	for _, path := range []string{outputConfig.GAPICDir, outputConfig.GRPCDir, outputConfig.ProtoDir} {
+		if err := os.RemoveAll(path); err != nil {
+			return fmt.Errorf("failed to clean up intermediate file at %s: %w", path, err)
+		}
+	}
+	return nil
 }
 
 func unzip(src, dest string) error {

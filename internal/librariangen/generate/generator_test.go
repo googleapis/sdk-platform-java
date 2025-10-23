@@ -16,14 +16,13 @@ package generate
 
 import (
 	"archive/zip"
-	"bytes"
 	"context"
 	"errors"
-	"log/slog"
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
+
+	"cloud.google.com/java/internal/librariangen/protoc"
 )
 
 // testEnv encapsulates a temporary test environment.
@@ -110,39 +109,33 @@ func createFakeZip(t *testing.T, path string) {
 	zipWriter := zip.NewWriter(newZipFile)
 	defer zipWriter.Close()
 
-	// Create a temporary empty zip file to be included in the main zip file.
-	tmpfile, err := os.CreateTemp("", "temp-zip-*.zip")
-	if err != nil {
-		t.Fatalf("failed to create temp file: %v", err)
-	}
-	defer os.Remove(tmpfile.Name())
-
-	tempZipWriter := zip.NewWriter(tmpfile)
-	// Add the src/main/java directory to the inner zip file.
-	_, err = tempZipWriter.Create("src/main/java/")
+	// Add the src/main/java directory to the zip file.
+	_, err = zipWriter.Create("src/main/java/")
 	if err != nil {
 		t.Fatalf("failed to create directory in zip: %v", err)
 	}
-	_, err = tempZipWriter.Create("src/test/java/")
+	_, err = zipWriter.Create("src/test/java/")
 	if err != nil {
 		t.Fatalf("failed to create directory in zip: %v", err)
 	}
-	tempZipWriter.Close()
+}
 
-	// Read the content of the temporary zip file.
-	zipBytes, err := os.ReadFile(tmpfile.Name())
-	if err != nil {
-		t.Fatalf("failed to read temp zip file: %v", err)
+func setupFakeProtocOutput(t *testing.T, e *testEnv) {
+	// Simulate protoc creating the zip file.
+	zipPath := filepath.Join(e.outputDir, "gapic", "temp-codegen.srcjar")
+	if err := os.MkdirAll(filepath.Dir(zipPath), 0755); err != nil {
+		t.Fatalf("failed to create directory: %v", err)
 	}
-
-	// Add the temporary zip file to the main zip file as temp-codegen.srcjar.
-	w, err := zipWriter.Create("temp-codegen.srcjar")
-	if err != nil {
-		t.Fatalf("failed to create empty file in zip: %v", err)
+	createFakeZip(t, zipPath)
+	// Create the directory that is expected by restructureOutput.
+	if err := os.MkdirAll(filepath.Join(e.outputDir, "gapic", "src", "main", "java"), 0755); err != nil {
+		t.Fatalf("failed to create directory: %v", err)
 	}
-	_, err = w.Write(zipBytes)
-	if err != nil {
-		t.Fatalf("failed to write content to zip: %v", err)
+	if err := os.MkdirAll(filepath.Join(e.outputDir, "gapic", "src", "test", "java"), 0755); err != nil {
+		t.Fatalf("failed to create directory: %v", err)
+	}
+	if err := os.MkdirAll(filepath.Join(e.outputDir, "gapic", "samples", "snippets"), 0755); err != nil {
+		t.Fatalf("failed to create directory: %v", err)
 	}
 }
 
@@ -254,15 +247,7 @@ java_gapic_library(
 					t.Errorf("protocRun called with %s; want %s", args[0], want)
 				}
 				if tt.protocErr == nil && tt.name != "unzip fails" {
-					// Simulate protoc creating the zip file.
-					createFakeZip(t, filepath.Join(e.outputDir, "java_gapic.zip"))
-					// Create the directory that is expected by restructureOutput.
-					if err := os.MkdirAll(filepath.Join(e.outputDir, "com"), 0755); err != nil {
-						t.Fatalf("failed to create directory: %v", err)
-					}
-					if err := os.MkdirAll(filepath.Join(e.outputDir, "java_gapic_srcjar", "samples", "snippets"), 0755); err != nil {
-						t.Fatalf("failed to create directory: %v", err)
-					}
+					setupFakeProtocOutput(t, e)
 				}
 				protocRunCount++
 				return tt.protocErr
@@ -348,56 +333,135 @@ func TestConfig_Validate(t *testing.T) {
 func TestRestructureOutput(t *testing.T) {
 	e := newTestEnv(t)
 	defer e.cleanup(t)
-	// Create dummy files and directories to be restructured.
-	if err := os.MkdirAll(filepath.Join(e.outputDir, "java_gapic_srcjar", "src", "main", "java", "com"), 0755); err != nil {
-		t.Fatal(err)
+
+	// 1. Setup: Create all the source directories and dummy files.
+	sourceFiles := map[string]string{
+		"gapic/src/main/java/com/google/foo.java":           "",
+		"gapic/src/test/java/com/google/foo_test.java":      "",
+		"proto/com/google/bar.proto":                        "",
+		"grpc/com/google/bar_grpc.java":                     "",
+		"gapic/samples/snippets/com/google/baz.java":        "",
+		"gapic/proto/src/main/java/com/google/resname.java": "",
 	}
-	if err := os.WriteFile(filepath.Join(e.outputDir, "java_gapic_srcjar", "src", "main", "java", "com", "foo.java"), nil, 0644); err != nil {
-		t.Fatal(err)
-	}
-	if err := os.MkdirAll(filepath.Join(e.outputDir, "java_gapic_srcjar", "src", "test", "java", "com"), 0755); err != nil {
-		t.Fatal(err)
-	}
-	if err := os.WriteFile(filepath.Join(e.outputDir, "java_gapic_srcjar", "src", "test", "java", "com", "foo_test.java"), nil, 0644); err != nil {
-		t.Fatal(err)
-	}
-	if err := os.MkdirAll(filepath.Join(e.outputDir, "com"), 0755); err != nil {
-		t.Fatal(err)
-	}
-	if err := os.WriteFile(filepath.Join(e.outputDir, "com", "bar.proto"), nil, 0644); err != nil {
-		t.Fatal(err)
-	}
-	if err := os.MkdirAll(filepath.Join(e.outputDir, "java_gapic_srcjar", "samples", "snippets", "com"), 0755); err != nil {
-		t.Fatal(err)
-	}
-	if err := os.WriteFile(filepath.Join(e.outputDir, "java_gapic_srcjar", "samples", "snippets", "com", "baz.java"), nil, 0644); err != nil {
-		t.Fatal(err)
+	for path, content := range sourceFiles {
+		fullPath := filepath.Join(e.outputDir, path)
+		if err := os.MkdirAll(filepath.Dir(fullPath), 0755); err != nil {
+			t.Fatalf("failed to create source directory for %s: %v", path, err)
+		}
+		if err := os.WriteFile(fullPath, []byte(content), 0644); err != nil {
+			t.Fatalf("failed to write source file for %s: %v", path, err)
+		}
 	}
 
+	// 2. Execute: Call the function under test.
 	if err := restructureOutput(e.outputDir, "my-library"); err != nil {
 		t.Fatalf("restructureOutput() failed: %v", err)
 	}
 
-	// Check that the files were moved to the correct locations.
-	if _, err := os.Stat(filepath.Join(e.outputDir, "google-cloud-my-library", "src", "main", "java", "com", "foo.java")); err != nil {
-		t.Errorf("file not moved to main: %v", err)
+	// 3. Verify: Check that all files were moved to their expected destinations.
+	expectedFiles := []string{
+		"google-cloud-my-library/src/main/java/com/google/foo.java",
+		"google-cloud-my-library/src/test/java/com/google/foo_test.java",
+		"proto-google-cloud-my-library-v1/src/main/java/com/google/bar.proto",
+		"grpc-google-cloud-my-library-v1/src/main/java/com/google/bar_grpc.java",
+		"samples/snippets/com/google/baz.java",
+		"proto-google-cloud-my-library-v1/src/main/java/com/google/resname.java",
 	}
-	if _, err := os.Stat(filepath.Join(e.outputDir, "google-cloud-my-library", "src", "test", "java", "com", "foo_test.java")); err != nil {
-		t.Errorf("file not moved to test: %v", err)
+	for _, path := range expectedFiles {
+		fullPath := filepath.Join(e.outputDir, path)
+		if _, err := os.Stat(fullPath); err != nil {
+			t.Errorf("expected file not found at %s: %v", fullPath, err)
+		}
 	}
-	if _, err := os.Stat(filepath.Join(e.outputDir, "proto-google-cloud-my-library-v1", "src", "main", "java", "bar.proto")); err != nil {
-		t.Errorf("file not moved to proto: %v", err)
+}
+
+func TestCopyAndMerge(t *testing.T) {
+	e := newTestEnv(t)
+	defer e.cleanup(t)
+
+	// 1. Setup: Create source and destination directories with nested structures.
+	srcDir := filepath.Join(e.tmpDir, "src")
+	destDir := filepath.Join(e.tmpDir, "dest")
+	sourceFiles := map[string]string{
+		"com/google/foo.java":          "",
+		"com/google/bar/baz.java":      "",
+		"com/google/bar/qux/quux.java": "",
 	}
-	if _, err := os.Stat(filepath.Join(e.outputDir, "samples", "snippets", "com", "baz.java")); err != nil {
-		t.Errorf("file not moved to samples: %v", err)
+	destFiles := map[string]string{
+		"com/google/existing.java":    "",
+		"com/google/bar/another.java": "",
+	}
+	for path, content := range sourceFiles {
+		fullPath := filepath.Join(srcDir, path)
+		if err := os.MkdirAll(filepath.Dir(fullPath), 0755); err != nil {
+			t.Fatalf("failed to create source directory for %s: %v", path, err)
+		}
+		if err := os.WriteFile(fullPath, []byte(content), 0644); err != nil {
+			t.Fatalf("failed to write source file for %s: %v", path, err)
+		}
+	}
+	for path, content := range destFiles {
+		fullPath := filepath.Join(destDir, path)
+		if err := os.MkdirAll(filepath.Dir(fullPath), 0755); err != nil {
+			t.Fatalf("failed to create dest directory for %s: %v", path, err)
+		}
+		if err := os.WriteFile(fullPath, []byte(content), 0644); err != nil {
+			t.Fatalf("failed to write dest file for %s: %v", path, err)
+		}
+	}
+
+	// 2. Execute: Call the function under test.
+	if err := copyAndMerge(srcDir, destDir); err != nil {
+		t.Fatalf("copyAndMerge() failed: %v", err)
+	}
+
+	// 3. Verify: Check that all files were merged correctly.
+	for path := range sourceFiles {
+		fullPath := filepath.Join(destDir, path)
+		if _, err := os.Stat(fullPath); err != nil {
+			t.Errorf("source file not merged: %v", err)
+		}
+	}
+	for path := range destFiles {
+		fullPath := filepath.Join(destDir, path)
+		if _, err := os.Stat(fullPath); err != nil {
+			t.Errorf("destination file was deleted: %v", err)
+		}
 	}
 }
 
 func TestUnzip(t *testing.T) {
-	e := newTestEnv(t)
-	defer e.cleanup(t)
+	t.Run("happy path", func(t *testing.T) {
+		e := newTestEnv(t)
+		defer e.cleanup(t)
+		// Create a valid zip file.
+		zipPath := filepath.Join(e.outputDir, "valid.zip")
+		f, err := os.Create(zipPath)
+		if err != nil {
+			t.Fatalf("failed to create zip file: %v", err)
+		}
+		defer f.Close()
+		zipWriter := zip.NewWriter(f)
+		if _, err := zipWriter.Create("file.txt"); err != nil {
+			t.Fatalf("failed to create file in zip: %v", err)
+		}
+		zipWriter.Close()
+
+		// Unzip the file.
+		destDir := filepath.Join(e.outputDir, "unzip-dest")
+		if err := unzip(zipPath, destDir); err != nil {
+			t.Fatalf("unzip() failed: %v", err)
+		}
+
+		// Check that the file was unzipped.
+		if _, err := os.Stat(filepath.Join(destDir, "file.txt")); err != nil {
+			t.Errorf("file not unzipped: %v", err)
+		}
+	})
 
 	t.Run("invalid zip file", func(t *testing.T) {
+		e := newTestEnv(t)
+		defer e.cleanup(t)
 		invalidZipPath := filepath.Join(e.outputDir, "invalid.zip")
 		if err := os.WriteFile(invalidZipPath, []byte("not a zip file"), 0644); err != nil {
 			t.Fatalf("failed to write invalid zip file: %v", err)
@@ -408,6 +472,8 @@ func TestUnzip(t *testing.T) {
 	})
 
 	t.Run("permission denied", func(t *testing.T) {
+		e := newTestEnv(t)
+		defer e.cleanup(t)
 		// Create a valid zip file.
 		validZipPath := filepath.Join(e.outputDir, "valid.zip")
 		if err := os.WriteFile(validZipPath, []byte{}, 0644); err != nil {
@@ -442,6 +508,8 @@ func TestUnzip(t *testing.T) {
 	})
 
 	t.Run("zip slip vulnerability", func(t *testing.T) {
+		e := newTestEnv(t)
+		defer e.cleanup(t)
 		// Create a zip file with a malicious file path.
 		maliciousZipPath := filepath.Join(e.outputDir, "malicious.zip")
 		f, err := os.Create(maliciousZipPath)
@@ -495,14 +563,11 @@ func TestMoveFiles(t *testing.T) {
 }
 
 func TestCleanupIntermediateFiles(t *testing.T) {
-	var buf bytes.Buffer
-	slog.SetDefault(slog.New(slog.NewTextHandler(&buf, nil)))
-
 	e := newTestEnv(t)
 	defer e.cleanup(t)
 
 	// Create a file that cannot be deleted.
-	protectedDir := filepath.Join(e.outputDir, "com")
+	protectedDir := filepath.Join(e.outputDir, "proto")
 	if err := os.Mkdir(protectedDir, 0755); err != nil {
 		t.Fatalf("failed to create protected dir: %v", err)
 	}
@@ -515,9 +580,12 @@ func TestCleanupIntermediateFiles(t *testing.T) {
 	}
 	defer os.Chmod(protectedDir, 0755) // Restore permissions for cleanup.
 
-	cleanupIntermediateFiles(e.outputDir)
-
-	if !strings.Contains(buf.String(), "failed to clean up intermediate file") {
-		t.Errorf("cleanupIntermediateFiles() should log an error on failure, but did not. Log: %s", buf.String())
+	outputConfig := &protoc.OutputConfig{
+		GAPICDir: filepath.Join(e.outputDir, "gapic"),
+		GRPCDir:  filepath.Join(e.outputDir, "grpc"),
+		ProtoDir: protectedDir,
+	}
+	if err := cleanupIntermediateFiles(outputConfig); err == nil {
+		t.Error("cleanupIntermediateFiles() should return an error on failure, but did not")
 	}
 }
