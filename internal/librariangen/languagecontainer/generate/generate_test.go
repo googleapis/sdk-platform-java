@@ -28,6 +28,9 @@ func TestNewConfig(t *testing.T) {
 	want := &Config{
 		Context: &Context{
 			LibrarianDir: librarianDir,
+			InputDir:     "in",
+			OutputDir:    "out",
+			SourceDir:    "source",
 		},
 		Request: &message.Library{
 			ID:      "chronicle",
@@ -55,6 +58,9 @@ func TestNewConfig(t *testing.T) {
 
 	ctx := &Context{
 		LibrarianDir: librarianDir,
+		InputDir:     "in",
+		OutputDir:    "out",
+		SourceDir:    "source",
 	}
 	got, err := NewConfig(ctx)
 	if err != nil {
@@ -63,5 +69,45 @@ func TestNewConfig(t *testing.T) {
 
 	if diff := cmp.Diff(want, got); diff != "" {
 		t.Errorf("NewConfig() mismatch (-want +got):\n%s", diff)
+	}
+}
+
+func TestNewConfig_validate(t *testing.T) {
+	tests := []struct {
+		name    string
+		context *Context
+	}{
+		{
+			name:    "empty librarian dir",
+			context: &Context{},
+		},
+		{
+			name: "empty input dir",
+			context: &Context{
+				LibrarianDir: "librarian",
+			},
+		},
+		{
+			name: "empty output dir",
+			context: &Context{
+				LibrarianDir: "librarian",
+				InputDir:     "in",
+			},
+		},
+		{
+			name: "empty source dir",
+			context: &Context{
+				LibrarianDir: "librarian",
+				InputDir:     "in",
+				OutputDir:    "out",
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if _, err := NewConfig(tt.context); err == nil {
+				t.Error("NewConfig() error = nil, want not nil")
+			}
+		})
 	}
 }

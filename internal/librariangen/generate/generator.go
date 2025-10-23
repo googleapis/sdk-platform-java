@@ -41,9 +41,6 @@ var (
 // Generate is the main entrypoint for the `generate` command. It orchestrates
 // the entire generation process.
 func Generate(ctx context.Context, cfg *generate.Config) error {
-	if err := cfg.Context.Validate(); err != nil {
-		return fmt.Errorf("librariangen: invalid configuration: %w", err)
-	}
 	slog.Debug("librariangen: generate command started")
 	defer cleanupIntermediateFiles(cfg.Context.OutputDir)
 

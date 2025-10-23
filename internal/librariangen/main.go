@@ -52,13 +52,7 @@ func runCLI(args []string) int {
 		Generate:    generate.Generate,
 		ReleaseInit: release.Init,
 	}
-	if exitCode := languagecontainer.Run(args[1:], &container); exitCode != 0 {
-		slog.Error("command failed", "command", args[1])
-		return 1
-	}
-
-	slog.Info("librariangen: finished successfully")
-	return 0
+	return languagecontainer.Run(args, &container)
 }
 
 func parseLogLevel(logLevelEnv string) slog.Level {

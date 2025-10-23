@@ -17,6 +17,7 @@ package generate
 
 import (
 	"errors"
+	"fmt"
 	"log/slog"
 	"path/filepath"
 
@@ -68,6 +69,9 @@ type Config struct {
 // NewConfig creates a new Config, parsing the generate-request.json file
 // from the LibrarianDir in the given Context.
 func NewConfig(ctx *Context) (*Config, error) {
+	if err := ctx.Validate(); err != nil {
+		return nil, fmt.Errorf("invalid context: %w", err)
+	}
 	reqPath := filepath.Join(ctx.LibrarianDir, "generate-request.json")
 	slog.Debug("languagecontainer: reading generate request", "path", reqPath)
 
