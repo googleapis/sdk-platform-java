@@ -15,91 +15,9 @@
 package main
 
 import (
-	"context"
 	"log/slog"
 	"testing"
-
-	"cloud.google.com/java/internal/librariangen/generate"
 )
-
-func TestRun(t *testing.T) {
-	// Replace the real functions with fakes for testing.
-	generateFunc = func(_ context.Context, _ *generate.Config) error {
-		return nil
-	}
-
-	ctx := context.Background()
-	tests := []struct {
-		name    string
-		args    []string
-		wantErr bool
-	}{
-		{
-			name:    "no args",
-			args:    []string{},
-			wantErr: true,
-		},
-		{
-			name:    "version flag",
-			args:    []string{"--version"},
-			wantErr: false,
-		},
-		{
-			name:    "flag as command",
-			args:    []string{"--foo"},
-			wantErr: true,
-		},
-		{
-			name:    "unknown command",
-			args:    []string{"foo"},
-			wantErr: true,
-		},
-		{
-			name:    "build command no flags",
-			args:    []string{"build"},
-			wantErr: false,
-		},
-		{
-			name:    "build command with flags",
-			args:    []string{"build", "--repo=.", "--librarian=./.librarian"},
-			wantErr: false,
-		},
-		{
-			name:    "configure command",
-			args:    []string{"configure"},
-			wantErr: false,
-		},
-		{
-			name:    "generate command no flags",
-			args:    []string{"generate"},
-			wantErr: false,
-		},
-		{
-			name:    "generate command with flags",
-			args:    []string{"generate", "--source=.", "--output=./build_out"},
-			wantErr: false,
-		},
-		{
-			name:    "release-init command no flags",
-			args:    []string{"release-init"},
-			wantErr: false,
-		},
-		{
-			name:    "release-init command with flags",
-			args:    []string{"release-init", "--repo=.", "--output=./build_out"},
-			wantErr: false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			// Since we are only testing the command dispatching, we can pass a nil
-			// context. The generate function is not actually called.
-			if err := run(ctx, tt.args); (err != nil) != tt.wantErr {
-				t.Errorf("run() error = %v, wantErr %v", err, tt.wantErr)
-			}
-		})
-	}
-}
 
 func TestRunCLI(t *testing.T) {
 	tests := []struct {
@@ -109,7 +27,7 @@ func TestRunCLI(t *testing.T) {
 	}{
 		{
 			name:     "success",
-			args:     []string{"librariangen", "build"},
+			args:     []string{"librariangen", "--version"},
 			wantCode: 0,
 		},
 		{

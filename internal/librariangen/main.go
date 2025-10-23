@@ -24,6 +24,8 @@ import (
 	"strings"
 
 	"cloud.google.com/java/internal/librariangen/generate"
+	"cloud.google.com/java/internal/librariangen/languagecontainer"
+	"cloud.google.com/java/internal/librariangen/release"
 )
 
 const version = "0.1.0"
@@ -84,20 +86,18 @@ func run(ctx context.Context, args []string) error {
 
 	switch cmd {
 	case "generate":
+		// TODO(suztomo): Move this as part of container.Generate and
+		// remove the need of this run function.
 		return handleGenerate(ctx, flags)
-	case "release-init":
-		slog.Warn("librariangen: release-init command is not yet implemented")
-		return nil
-	case "configure":
-		slog.Warn("librariangen: configure command is not yet implemented")
-		return nil
-	case "build":
-		slog.Warn("librariangen: build command is not yet implemented")
-		return nil
 	default:
-		return fmt.Errorf("librariangen: unknown command: %s (with flags %s)", cmd, flags)
+		container := languagecontainer.LanguageContainer{
+			ReleaseInit: release.Init,
+		}
+		if exitCode := languagecontainer.Run(args, &container); exitCode != 0 {
+			return fmt.Errorf("command failed with exit code %d", exitCode)
+		}
+		return nil
 	}
-
 }
 
 // handleGenerate parses flags for the generate command and calls the generator.
