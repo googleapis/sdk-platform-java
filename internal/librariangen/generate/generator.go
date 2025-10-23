@@ -17,7 +17,6 @@ package generate
 import (
 	"archive/zip"
 	"context"
-	"errors"
 	"fmt"
 	"io"
 	"log/slog"
@@ -27,82 +26,47 @@ import (
 
 	"cloud.google.com/java/internal/librariangen/bazel"
 	"cloud.google.com/java/internal/librariangen/execv"
+	"cloud.google.com/java/internal/librariangen/languagecontainer/generate"
 	"cloud.google.com/java/internal/librariangen/message"
 	"cloud.google.com/java/internal/librariangen/protoc"
 )
 
 // Test substitution vars.
 var (
-	bazelParse   = bazel.Parse
-	execvRun     = execv.Run
-	requestParse = message.ParseLibrary
-	protocBuild  = protoc.Build
+	bazelParse  = bazel.Parse
+	execvRun    = execv.Run
+	protocBuild = protoc.Build
 )
-
-// Config holds the internal librariangen configuration for the generate command.
-type Config struct {
-	// LibrarianDir is the path to the librarian-tool input directory.
-	// It is expected to contain the generate-request.json file.
-	LibrarianDir string
-	// InputDir is the path to the .librarian/generator-input directory from the
-	// language repository.
-	InputDir string
-	// OutputDir is the path to the empty directory where librariangen writes
-	// its output.
-	OutputDir string
-	// SourceDir is the path to a complete checkout of the googleapis repository.
-	SourceDir string
-}
-
-// Validate ensures that the configuration is valid.
-func (c *Config) Validate() error {
-	if c.LibrarianDir == "" {
-		return errors.New("librariangen: librarian directory must be set")
-	}
-	if c.InputDir == "" {
-		return errors.New("librariangen: input directory must be set")
-	}
-	if c.OutputDir == "" {
-		return errors.New("librariangen: output directory must be set")
-	}
-	if c.SourceDir == "" {
-		return errors.New("librariangen: source directory must be set")
-	}
-	return nil
-}
 
 // Generate is the main entrypoint for the `generate` command. It orchestrates
 // the entire generation process.
-func Generate(ctx context.Context, cfg *Config) error {
-	if err := cfg.Validate(); err != nil {
+func Generate(ctx context.Context, cfg *generate.Config) error {
+	if err := cfg.Context.Validate(); err != nil {
 		return fmt.Errorf("librariangen: invalid configuration: %w", err)
 	}
 	slog.Debug("librariangen: generate command started")
-	defer cleanupIntermediateFiles(cfg.OutputDir)
+	defer cleanupIntermediateFiles(cfg.Context.OutputDir)
 
-	generateReq, err := readGenerateReq(cfg.LibrarianDir)
-	if err != nil {
-		return fmt.Errorf("librariangen: failed to read request: %w", err)
-	}
+	generateReq := cfg.Request
 
-	if err := invokeProtoc(ctx, cfg, generateReq); err != nil {
+	if err := invokeProtoc(ctx, cfg.Context, generateReq); err != nil {
 		return fmt.Errorf("librariangen: gapic generation failed: %w", err)
 	}
 
 	// Unzip the generated zip file.
-	zipPath := filepath.Join(cfg.OutputDir, "java_gapic.zip")
-	if err := unzip(zipPath, cfg.OutputDir); err != nil {
+	zipPath := filepath.Join(cfg.Context.OutputDir, "java_gapic.zip")
+	if err := unzip(zipPath, cfg.Context.OutputDir); err != nil {
 		return fmt.Errorf("librariangen: failed to unzip %s: %w", zipPath, err)
 	}
 
 	// Unzip the inner temp-codegen.srcjar.
-	srcjarPath := filepath.Join(cfg.OutputDir, "temp-codegen.srcjar")
-	srcjarDest := filepath.Join(cfg.OutputDir, "java_gapic_srcjar")
+	srcjarPath := filepath.Join(cfg.Context.OutputDir, "temp-codegen.srcjar")
+	srcjarDest := filepath.Join(cfg.Context.OutputDir, "java_gapic_srcjar")
 	if err := unzip(srcjarPath, srcjarDest); err != nil {
 		return fmt.Errorf("librariangen: failed to unzip %s: %w", srcjarPath, err)
 	}
 
-	if err := restructureOutput(cfg.OutputDir, generateReq.ID); err != nil {
+	if err := restructureOutput(cfg.Context.OutputDir, generateReq.ID); err != nil {
 		return fmt.Errorf("librariangen: failed to restructure output: %w", err)
 	}
 
@@ -113,38 +77,23 @@ func Generate(ctx context.Context, cfg *Config) error {
 // invokeProtoc handles the protoc GAPIC generation logic for the 'generate' CLI command.
 // It reads a request file, and for each API specified, it invokes protoc
 // to generate the client library. It returns the module path and the path to the service YAML.
-func invokeProtoc(ctx context.Context, cfg *Config, generateReq *message.Library) error {
+func invokeProtoc(ctx context.Context, genCtx *generate.Context, generateReq *message.Library) error {
 	for _, api := range generateReq.APIs {
-		apiServiceDir := filepath.Join(cfg.SourceDir, api.Path)
+		apiServiceDir := filepath.Join(genCtx.SourceDir, api.Path)
 		slog.Info("processing api", "service_dir", apiServiceDir)
 		bazelConfig, err := bazelParse(apiServiceDir)
 		if err != nil {
 			return fmt.Errorf("librariangen: failed to parse BUILD.bazel for %s: %w", apiServiceDir, err)
 		}
-		args, err := protocBuild(apiServiceDir, bazelConfig, cfg.SourceDir, cfg.OutputDir)
+		args, err := protocBuild(apiServiceDir, bazelConfig, genCtx.SourceDir, genCtx.OutputDir)
 		if err != nil {
 			return fmt.Errorf("librariangen: failed to build protoc command for api %q in library %q: %w", api.Path, generateReq.ID, err)
 		}
-		if err := execvRun(ctx, args, cfg.OutputDir); err != nil {
+		if err := execvRun(ctx, args, genCtx.OutputDir); err != nil {
 			return fmt.Errorf("librariangen: protoc failed for api %q in library %q: %w", api.Path, generateReq.ID, err)
 		}
 	}
 	return nil
-}
-
-// readGenerateReq reads generate-request.json from the librarian-tool input directory.
-// The request file tells librariangen which library and APIs to generate.
-// It is prepared by the Librarian tool and mounted at /librarian.
-func readGenerateReq(librarianDir string) (*message.Library, error) {
-	reqPath := filepath.Join(librarianDir, "generate-request.json")
-	slog.Debug("librariangen: reading generate request", "path", reqPath)
-
-	generateReq, err := requestParse(reqPath)
-	if err != nil {
-		return nil, err
-	}
-	slog.Debug("librariangen: successfully unmarshalled request", "library_id", generateReq.ID)
-	return generateReq, nil
 }
 
 // moveFiles moves all files (and directories) from sourceDir to targetDir.

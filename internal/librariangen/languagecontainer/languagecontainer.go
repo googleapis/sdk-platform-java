@@ -29,12 +29,14 @@ import (
 	"os"
 	"path/filepath"
 
+	"cloud.google.com/java/internal/librariangen/languagecontainer/generate"
 	"cloud.google.com/java/internal/librariangen/languagecontainer/release"
 	"cloud.google.com/java/internal/librariangen/message"
 )
 
 // LanguageContainer defines the functions for language-specific container operations.
 type LanguageContainer struct {
+	Generate    func(context.Context, *generate.Config) error
 	ReleaseInit func(context.Context, *release.Config) (*message.ReleaseInitResponse, error)
 	// Other container functions like Generate and Build will also be part of the struct.
 }
@@ -53,8 +55,7 @@ func Run(args []string, container *LanguageContainer) int {
 	flags := args[1:]
 	switch cmd {
 	case "generate":
-		slog.Warn("librariangen: generate command is not yet implemented")
-		return 1
+		return handleGenerate(flags, container)
 	case "configure":
 		slog.Warn("librariangen: configure command is not yet implemented")
 		return 1
@@ -67,6 +68,29 @@ func Run(args []string, container *LanguageContainer) int {
 		slog.Error(fmt.Sprintf("librariangen: unknown command: %s (with flags %v)", cmd, flags))
 		return 1
 	}
+}
+
+func handleGenerate(flags []string, container *LanguageContainer) int {
+	genCtx := &generate.Context{}
+	generateFlags := flag.NewFlagSet("generate", flag.ContinueOnError)
+	generateFlags.StringVar(&genCtx.LibrarianDir, "librarian", "/librarian", "Path to the librarian-tool input directory. Contains generate-request.json.")
+	generateFlags.StringVar(&genCtx.InputDir, "input", "/input", "Path to the .librarian/generator-input directory from the language repository.")
+	generateFlags.StringVar(&genCtx.OutputDir, "output", "/output", "Path to the empty directory where librariangen writes its output.")
+	generateFlags.StringVar(&genCtx.SourceDir, "source", "/source", "Path to a complete checkout of the googleapis repository.")
+	if err := generateFlags.Parse(flags); err != nil {
+		slog.Error("failed to parse flags", "error", err)
+		return 1
+	}
+	cfg, err := generate.NewConfig(genCtx)
+	if err != nil {
+		slog.Error("failed to create generate config", "error", err)
+		return 1
+	}
+	if err := container.Generate(context.Background(), cfg); err != nil {
+		slog.Error("generate failed", "error", err)
+		return 1
+	}
+	slog.Info("librariangen: generate command executed successfully")
 	return 0
 }
 
