@@ -42,6 +42,8 @@ type LanguageContainer struct {
 }
 
 // Run accepts an implementation of the LanguageContainer.
+// The args parameter contains the command-line arguments passed to the container,
+// without including the program name. Usually it's os.Args[1:].
 func Run(args []string, container *LanguageContainer) int {
 	// Logic to parse args and call the appropriate method on the container.
 	// For example, if args[1] is "generate":

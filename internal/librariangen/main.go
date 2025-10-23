@@ -52,7 +52,7 @@ func runCLI(args []string) int {
 		Generate:    generate.Generate,
 		ReleaseInit: release.Init,
 	}
-	return languagecontainer.Run(args, &container)
+	return languagecontainer.Run(args[1:], &container)
 }
 
 func parseLogLevel(logLevelEnv string) slog.Level {
