@@ -15,8 +15,6 @@
 # downstream client libraries before they are released.
 on:
   pull_request:
-    paths-ignore:
-      - 'internal/librariangen/**'  
 name: Java 8 compatibility check
 jobs:
   java8-compatibility-check:
