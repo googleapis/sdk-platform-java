@@ -18,6 +18,8 @@ jobs:
           should_run:
             - '!internal/librariangen/**'
   build:
+    needs: changes
+    if: needs.changes.outputs.should_run == 'true'
     runs-on: ubuntu-22.04
     strategy:
       matrix:
@@ -330,6 +332,8 @@ jobs:
             --batch-mode \
             --no-transfer-progress
   showcase:
+    needs: changes
+    if: needs.changes.outputs.should_run == 'true'
     runs-on: ubuntu-22.04
     strategy:
       matrix:
