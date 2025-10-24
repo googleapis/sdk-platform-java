@@ -9,7 +9,6 @@ on:
       - library_generation/**
       - showcase/**
       - test/**
-      - internal/librariangen/**
 
 name: Downstream Check
 jobs:
