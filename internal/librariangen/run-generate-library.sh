@@ -36,6 +36,7 @@ WORKSPACE="$(pwd)/workspace"
 LIBRARIANGEN_GOOGLEAPIS_DIR=../../../googleapis
 LIBRARIANGEN_GOTOOLCHAIN=local
 GAPIC_GENERATOR_VERSION="2.62.3"
+GRPC_PLUGIN_VERSION="1.65.0"
 LIBRARIANGEN_LOG="$WORKSPACE/librariangen.log"
 
 # --- Cleanup and Setup ---
@@ -61,6 +62,10 @@ fi
 # --- Download and Prepare Tools ---
 echo "Downloading gapic-generator-java version $GAPIC_GENERATOR_VERSION..."
 wget -q "https://repo1.maven.org/maven2/com/google/api/gapic-generator-java/$GAPIC_GENERATOR_VERSION/gapic-generator-java-$GAPIC_GENERATOR_VERSION.jar" -O "$WORKSPACE/gapic-generator-java.jar"
+
+echo "Downloading protoc-gen-grpc-java..."
+wget -q "https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/$GRPC_PLUGIN_VERSION/protoc-gen-grpc-java-$GRPC_PLUGIN_VERSION-linux-x86_64.exe" -O "$WORKSPACE/protoc-gen-java_grpc"
+chmod +x "$WORKSPACE/protoc-gen-java_grpc"
 
 # Create wrapper script for protoc-gen-java_gapic
 echo "Creating protoc-gen-java_gapic wrapper..."
