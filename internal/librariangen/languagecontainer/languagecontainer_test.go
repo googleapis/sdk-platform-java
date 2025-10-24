@@ -21,6 +21,7 @@ import (
 	"path/filepath"
 	"testing"
 
+	"cloud.google.com/java/internal/librariangen/languagecontainer/generate"
 	"cloud.google.com/java/internal/librariangen/languagecontainer/release"
 	"cloud.google.com/java/internal/librariangen/message"
 	"github.com/google/go-cmp/cmp"
@@ -29,6 +30,9 @@ import (
 func TestRun(t *testing.T) {
 	tmpDir := t.TempDir()
 	if err := os.WriteFile(filepath.Join(tmpDir, "release-init-request.json"), []byte("{}"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(tmpDir, "generate-request.json"), []byte("{}"), 0644); err != nil {
 		t.Fatal(err)
 	}
 	tests := []struct {
@@ -53,9 +57,20 @@ func TestRun(t *testing.T) {
 			wantCode: 1, // Not implemented yet
 		},
 		{
-			name:     "generate command",
+			name:     "generate command with default flags",
 			args:     []string{"generate"},
-			wantCode: 1, // Not implemented yet
+			wantCode: 1, // Fails because default /librarian does not exist.
+		},
+		{
+			name:     "generate command success",
+			args:     []string{"generate", "-librarian", tmpDir},
+			wantCode: 0,
+		},
+		{
+			name:     "generate command failure",
+			args:     []string{"generate", "-librarian", tmpDir},
+			wantCode: 1,
+			wantErr:  true,
 		},
 		{
 			name:     "release-init command success",
@@ -72,6 +87,12 @@ func TestRun(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			container := LanguageContainer{
+				Generate: func(ctx context.Context, c *generate.Config) error {
+					if tt.wantErr {
+						return os.ErrNotExist
+					}
+					return nil
+				},
 				ReleaseInit: func(ctx context.Context, c *release.Config) (*message.ReleaseInitResponse, error) {
 					if tt.wantErr {
 						return nil, os.ErrNotExist
@@ -162,5 +183,86 @@ func TestRun_ReleaseInitReadsContextArgs(t *testing.T) {
 	}
 	if got, want := gotConfig.Context.OutputDir, outputDir; got != want {
 		t.Errorf("gotConfig.Context.OutputDir = %q, want %q", got, want)
+	}
+}
+
+func TestRun_GenerateReadsContextArgs(t *testing.T) {
+	tmpDir := t.TempDir()
+	librarianDir := filepath.Join(tmpDir, "librarian")
+	if err := os.Mkdir(librarianDir, 0755); err != nil {
+		t.Fatal(err)
+	}
+	// generate.NewConfig reads generate-request.json.
+	if err := os.WriteFile(filepath.Join(librarianDir, "generate-request.json"), []byte("{}"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	inputDir := filepath.Join(tmpDir, "input")
+	if err := os.Mkdir(inputDir, 0755); err != nil {
+		t.Fatal(err)
+	}
+	outputDir := filepath.Join(tmpDir, "output")
+	if err := os.Mkdir(outputDir, 0755); err != nil {
+		t.Fatal(err)
+	}
+	sourceDir := filepath.Join(tmpDir, "source")
+	if err := os.Mkdir(sourceDir, 0755); err != nil {
+		t.Fatal(err)
+	}
+	args := []string{"generate", "-librarian", librarianDir, "-input", inputDir, "-output", outputDir, "-source", sourceDir}
+	var gotConfig *generate.Config
+	container := LanguageContainer{
+		Generate: func(ctx context.Context, c *generate.Config) error {
+			gotConfig = c
+			return nil
+		},
+	}
+	if code := Run(args, &container); code != 0 {
+		t.Errorf("Run() = %v, want 0", code)
+	}
+	if got, want := gotConfig.Context.LibrarianDir, librarianDir; got != want {
+		t.Errorf("gotConfig.Context.LibrarianDir = %q, want %q", got, want)
+	}
+	if got, want := gotConfig.Context.InputDir, inputDir; got != want {
+		t.Errorf("gotConfig.Context.InputDir = %q, want %q", got, want)
+	}
+	if got, want := gotConfig.Context.OutputDir, outputDir; got != want {
+		t.Errorf("gotConfig.Context.OutputDir = %q, want %q", got, want)
+	}
+	if got, want := gotConfig.Context.SourceDir, sourceDir; got != want {
+		t.Errorf("gotConfig.Context.SourceDir = %q, want %q", got, want)
+	}
+}
+
+func TestRun_unimplementedCommands(t *testing.T) {
+	tests := []struct {
+		name      string
+		args      []string
+		container *LanguageContainer
+	}{
+		{
+			name: "generate is nil",
+			args: []string{"generate"},
+			container: &LanguageContainer{
+				ReleaseInit: func(context.Context, *release.Config) (*message.ReleaseInitResponse, error) {
+					return nil, nil
+				},
+			},
+		},
+		{
+			name: "release-init is nil",
+			args: []string{"release-init"},
+			container: &LanguageContainer{
+				Generate: func(context.Context, *generate.Config) error {
+					return nil
+				},
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if gotCode := Run(tt.args, tt.container); gotCode != 1 {
+				t.Errorf("Run() = %v, want 1", gotCode)
+			}
+		})
 	}
 }
