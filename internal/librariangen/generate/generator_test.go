@@ -22,6 +22,7 @@ import (
 	"path/filepath"
 	"testing"
 
+	"cloud.google.com/java/internal/librariangen/languagecontainer/generate"
 	"cloud.google.com/java/internal/librariangen/protoc"
 )
 
@@ -252,79 +253,25 @@ java_gapic_library(
 				protocRunCount++
 				return tt.protocErr
 			}
-			cfg := &Config{
+			genCtx := &generate.Context{
 				LibrarianDir: e.librarianDir,
 				InputDir:     "fake-input",
 				OutputDir:    e.outputDir,
 				SourceDir:    e.sourceDir,
+			}
+			cfg, err := generate.NewConfig(genCtx)
+			if err != nil && tt.wantErr {
+				// If we expect an error, and NewConfig fails, that's ok.
+				return
+			}
+			if err != nil {
+				t.Fatalf("failed to create generate config: %v", err)
 			}
 			if err := Generate(context.Background(), cfg); (err != nil) != tt.wantErr {
 				t.Errorf("Generate() error = %v, wantErr %v", err, tt.wantErr)
 			}
 			if protocRunCount != tt.wantProtocRunCount {
 				t.Errorf("protocRun called = %v; want %v", protocRunCount, tt.wantProtocRunCount)
-			}
-		})
-	}
-}
-
-func TestConfig_Validate(t *testing.T) {
-	tests := []struct {
-		name    string
-		cfg     *Config
-		wantErr bool
-	}{
-		{
-			name: "valid",
-			cfg: &Config{
-				LibrarianDir: "a",
-				InputDir:     "b",
-				OutputDir:    "c",
-				SourceDir:    "d",
-			},
-			wantErr: false,
-		},
-		{
-			name: "missing librarian dir",
-			cfg: &Config{
-				InputDir:  "b",
-				OutputDir: "c",
-				SourceDir: "d",
-			},
-			wantErr: true,
-		},
-		{
-			name: "missing input dir",
-			cfg: &Config{
-				LibrarianDir: "a",
-				OutputDir:    "c",
-				SourceDir:    "d",
-			},
-			wantErr: true,
-		},
-		{
-			name: "missing output dir",
-			cfg: &Config{
-				LibrarianDir: "a",
-				InputDir:     "b",
-				SourceDir:    "d",
-			},
-			wantErr: true,
-		},
-		{
-			name: "missing source dir",
-			cfg: &Config{
-				LibrarianDir: "a",
-				InputDir:     "b",
-				OutputDir:    "c",
-			},
-			wantErr: true,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if err := tt.cfg.Validate(); (err != nil) != tt.wantErr {
-				t.Errorf("Config.Validate() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}
