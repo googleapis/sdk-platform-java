@@ -47,10 +47,10 @@ func TestBuild(t *testing.T) {
 		t.Fatalf("failed to get absolute path for sourceDir: %v", err)
 	}
 	tests := []struct {
-		name    string
-		apiPath string
-		config  mockConfigProvider
-		want    []string
+		name          string
+		apiPath       string
+		config        mockConfigProvider
+		want          []string
 	}{
 		{
 			name:    "java_grpc_library rule",
@@ -66,9 +66,8 @@ func TestBuild(t *testing.T) {
 			want: []string{
 				"protoc",
 				"--experimental_allow_proto3_optional",
-				"--java_out=/output/proto",
-				"--java_grpc_out=/output/grpc",
-				"--java_gapic_out=metadata:/output/gapic",
+				"--java_out=/output",
+				"--java_gapic_out=metadata:/output/java_gapic.zip",
 				"--java_gapic_opt=" + strings.Join([]string{
 					"api-service-config=" + filepath.Join(sourceDir, "google/cloud/workflows/v1/workflows_v1.yaml"),
 					"gapic-config=" + filepath.Join(sourceDir, "google/cloud/workflows/v1/workflows_gapic.yaml"),
@@ -93,9 +92,8 @@ func TestBuild(t *testing.T) {
 			want: []string{
 				"protoc",
 				"--experimental_allow_proto3_optional",
-				"--java_out=/output/proto",
-				"--java_grpc_out=/output/grpc",
-				"--java_gapic_out=metadata:/output/gapic",
+				"--java_out=/output",
+				"--java_gapic_out=metadata:/output/java_gapic.zip",
 				"--java_gapic_opt=" + strings.Join([]string{
 					"api-service-config=" + filepath.Join(sourceDir, "google/cloud/secretmanager/v1beta2/secretmanager_v1beta2.yaml"),
 					"grpc-service-config=" + filepath.Join(sourceDir, "google/cloud/secretmanager/v1beta2/secretmanager_grpc_service_config.json"),
@@ -112,12 +110,12 @@ func TestBuild(t *testing.T) {
 			name:    "proto-only",
 			apiPath: "google/cloud/secretmanager/v1beta2",
 			config: mockConfigProvider{
-				hasGAPIC: false,
+				hasGAPIC:  false,
 			},
 			want: []string{
 				"protoc",
 				"--experimental_allow_proto3_optional",
-				"--java_out=/output/proto",
+				"--java_out=/output",
 				"-I=" + sourceDir,
 				filepath.Join(sourceDir, "google/cloud/secretmanager/v1beta2/secretmanager.proto"),
 			},
@@ -126,12 +124,7 @@ func TestBuild(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			outputConfig := &OutputConfig{
-				GAPICDir: "/output/gapic",
-				GRPCDir:  "/output/grpc",
-				ProtoDir: "/output/proto",
-			}
-			got, err := Build(filepath.Join(sourceDir, tt.apiPath), &tt.config, sourceDir, outputConfig)
+			got, err := Build(filepath.Join(sourceDir, tt.apiPath), &tt.config, sourceDir, "/output")
 			if err != nil {
 				t.Fatalf("Build() failed: %v", err)
 			}

@@ -19,6 +19,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
 )
 
 // ConfigProvider is an interface that describes the configuration needed
@@ -33,15 +34,8 @@ type ConfigProvider interface {
 	HasGAPIC() bool
 }
 
-// OutputConfig provides paths to directories to be used for protoc output.
-type OutputConfig struct {
-	GAPICDir string
-	GRPCDir  string
-	ProtoDir string
-}
-
 // Build constructs the full protoc command arguments for a given API.
-func Build(apiServiceDir string, config ConfigProvider, sourceDir string, outputConfig *OutputConfig) ([]string, error) {
+func Build(apiServiceDir string, config ConfigProvider, sourceDir, outputDir string) ([]string, error) {
 	// Gather all .proto files in the API's source directory.
 	entries, err := os.ReadDir(apiServiceDir)
 	if err != nil {
@@ -84,12 +78,9 @@ func Build(apiServiceDir string, config ConfigProvider, sourceDir string, output
 		"--experimental_allow_proto3_optional",
 	}
 
-	args = append(args, fmt.Sprintf("--java_out=%s", outputConfig.ProtoDir))
-	if config.Transport() != "" && config.Transport() != "rest" {
-		args = append(args, fmt.Sprintf("--java_grpc_out=%s", outputConfig.GRPCDir))
-	}
+	args = append(args, fmt.Sprintf("--java_out=%s", outputDir))
 	if config.HasGAPIC() {
-		args = append(args, fmt.Sprintf("--java_gapic_out=metadata:%s", outputConfig.GAPICDir))
+		args = append(args, fmt.Sprintf("--java_gapic_out=metadata:%s", filepath.Join(outputDir, "java_gapic.zip")))
 
 		if len(gapicOpts) > 0 {
 			args = append(args, "--java_gapic_opt="+strings.Join(gapicOpts, ","))
