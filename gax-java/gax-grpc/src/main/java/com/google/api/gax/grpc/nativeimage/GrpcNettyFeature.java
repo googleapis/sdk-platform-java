@@ -73,9 +73,6 @@ final class GrpcNettyFeature implements Feature {
       // Misc. classes used by grpc-netty-shaded
       registerForReflectiveInstantiation(
           access, "io.grpc.netty.shaded.io.netty.channel.socket.nio.NioSocketChannel");
-      registerForReflectiveInstantiation(
-          access,
-          "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.unpadded.MpscUnpaddedArrayQueue");
       registerClassForReflection(
           access, "io.grpc.netty.shaded.io.netty.util.internal.NativeLibraryUtil");
       registerClassForReflection(access, "io.grpc.netty.shaded.io.netty.util.ReferenceCountUtil");
@@ -122,6 +119,9 @@ final class GrpcNettyFeature implements Feature {
       registerClassForReflection(
           access,
           "io.grpc.netty.shaded.io.netty.channel.epoll.NativeDatagramPacketArray$NativeDatagramPacket");
+      registerClassForReflection(
+          access,
+          "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.unpadded.MpscUnpaddedArrayQueue");
 
       // tcnative
       registerClassForReflection(
