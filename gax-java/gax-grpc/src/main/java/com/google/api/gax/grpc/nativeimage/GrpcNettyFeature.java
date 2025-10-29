@@ -119,9 +119,6 @@ final class GrpcNettyFeature implements Feature {
       registerClassForReflection(
           access,
           "io.grpc.netty.shaded.io.netty.channel.epoll.NativeDatagramPacketArray$NativeDatagramPacket");
-      registerClassForReflection(
-          access,
-          "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.unpadded.MpscUnpaddedArrayQueue");
 
       // tcnative
       registerClassForReflection(
