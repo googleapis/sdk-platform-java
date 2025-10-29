@@ -32,7 +32,6 @@ package com.google.api.gax.grpc.nativeimage;
 
 import static com.google.api.gax.nativeimage.NativeImageUtils.registerClassForReflection;
 import static com.google.api.gax.nativeimage.NativeImageUtils.registerClassHierarchyForReflection;
-import static com.google.api.gax.nativeimage.NativeImageUtils.registerConstructorsForReflection;
 import static com.google.api.gax.nativeimage.NativeImageUtils.registerForReflectiveInstantiation;
 import static com.google.api.gax.nativeimage.NativeImageUtils.registerForUnsafeFieldAccess;
 
