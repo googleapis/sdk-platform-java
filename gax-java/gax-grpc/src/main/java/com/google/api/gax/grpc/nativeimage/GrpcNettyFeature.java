@@ -106,7 +106,7 @@ final class GrpcNettyFeature implements Feature {
           access, "io.grpc.netty.shaded.io.grpc.netty.ProtocolNegotiators$GrpcNegotiationHandler");
       registerClassForReflection(
           access, "io.grpc.netty.shaded.io.netty.channel.ChannelHandlerMask");
-      registerConstructorsForReflection(
+      registerClassForReflection(
           access,
           "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.unpadded.MpscUnpaddedArrayQueue");
 
