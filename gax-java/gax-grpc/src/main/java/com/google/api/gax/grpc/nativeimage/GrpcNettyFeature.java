@@ -32,6 +32,7 @@ package com.google.api.gax.grpc.nativeimage;
 
 import static com.google.api.gax.nativeimage.NativeImageUtils.registerClassForReflection;
 import static com.google.api.gax.nativeimage.NativeImageUtils.registerClassHierarchyForReflection;
+import static com.google.api.gax.nativeimage.NativeImageUtils.registerConstructorsForReflection;
 import static com.google.api.gax.nativeimage.NativeImageUtils.registerForReflectiveInstantiation;
 import static com.google.api.gax.nativeimage.NativeImageUtils.registerForUnsafeFieldAccess;
 
@@ -105,6 +106,9 @@ final class GrpcNettyFeature implements Feature {
           access, "io.grpc.netty.shaded.io.grpc.netty.ProtocolNegotiators$GrpcNegotiationHandler");
       registerClassForReflection(
           access, "io.grpc.netty.shaded.io.netty.channel.ChannelHandlerMask");
+      registerConstructorsForReflection(
+          access,
+          "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.unpadded.MpscUnpaddedArrayQueue");
 
       // Epoll Libraries
       registerClassForReflection(access, "io.grpc.netty.shaded.io.netty.channel.epoll.Epoll");
