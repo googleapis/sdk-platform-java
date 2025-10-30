@@ -150,15 +150,15 @@ final class GrpcNettyFeature implements Feature {
           "consumerIndex");
       registerForUnsafeFieldAccess(
           access,
-          NETTY_SHADED_PACKAGE + "org.jctools.queues.MpscUnpaddedArrayQueueProducerIndexField",
+          NETTY_SHADED_PACKAGE + "org.jctools.queues.unpadded.MpscUnpaddedArrayQueueProducerIndexField",
           "producerIndex");
       registerForUnsafeFieldAccess(
           access,
-          NETTY_SHADED_PACKAGE + "org.jctools.queues.MpscUnpaddedArrayQueueProducerLimitField",
+          NETTY_SHADED_PACKAGE + "org.jctools.queues.unpadded.MpscUnpaddedArrayQueueProducerLimitField",
           "producerLimit");
       registerForUnsafeFieldAccess(
           access,
-          NETTY_SHADED_PACKAGE + "org.jctools.queues.MpscUnpaddedArrayQueueConsumerIndexField",
+          NETTY_SHADED_PACKAGE + "org.jctools.queues.unpadded.MpscUnpaddedArrayQueueConsumerIndexField",
           "consumerIndex");
       registerForUnsafeFieldAccess(
           access,
@@ -175,17 +175,17 @@ final class GrpcNettyFeature implements Feature {
       registerForUnsafeFieldAccess(
           access,
           NETTY_SHADED_PACKAGE
-              + "org.jctools.queues.BaseMpscLinkedUnpaddedArrayQueueProducerFields",
+              + "org.jctools.queues.unpadded.BaseMpscLinkedUnpaddedArrayQueueProducerFields",
           "producerIndex");
       registerForUnsafeFieldAccess(
           access,
           NETTY_SHADED_PACKAGE
-              + "org.jctools.queues.BaseMpscLinkedUnpaddedArrayQueueColdProducerFields",
+              + "org.jctools.queues.unpadded.BaseMpscLinkedUnpaddedArrayQueueColdProducerFields",
           "producerLimit");
       registerForUnsafeFieldAccess(
           access,
           NETTY_SHADED_PACKAGE
-              + "org.jctools.queues.BaseMpscLinkedUnpaddedArrayQueueConsumerFields",
+              + "org.jctools.queues.unpadded.BaseMpscLinkedUnpaddedArrayQueueConsumerFields",
           "consumerIndex");
     }
   }
