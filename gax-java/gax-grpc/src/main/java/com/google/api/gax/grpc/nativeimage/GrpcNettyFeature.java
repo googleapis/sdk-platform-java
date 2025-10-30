@@ -150,15 +150,18 @@ final class GrpcNettyFeature implements Feature {
           "consumerIndex");
       registerForUnsafeFieldAccess(
           access,
-          NETTY_SHADED_PACKAGE + "org.jctools.queues.unpadded.MpscUnpaddedArrayQueueProducerIndexField",
+          NETTY_SHADED_PACKAGE
+              + "org.jctools.queues.unpadded.MpscUnpaddedArrayQueueProducerIndexField",
           "producerIndex");
       registerForUnsafeFieldAccess(
           access,
-          NETTY_SHADED_PACKAGE + "org.jctools.queues.unpadded.MpscUnpaddedArrayQueueProducerLimitField",
+          NETTY_SHADED_PACKAGE
+              + "org.jctools.queues.unpadded.MpscUnpaddedArrayQueueProducerLimitField",
           "producerLimit");
       registerForUnsafeFieldAccess(
           access,
-          NETTY_SHADED_PACKAGE + "org.jctools.queues.unpadded.MpscUnpaddedArrayQueueConsumerIndexField",
+          NETTY_SHADED_PACKAGE
+              + "org.jctools.queues.unpadded.MpscUnpaddedArrayQueueConsumerIndexField",
           "consumerIndex");
       registerForUnsafeFieldAccess(
           access,
