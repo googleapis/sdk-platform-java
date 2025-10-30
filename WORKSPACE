@@ -97,14 +97,14 @@ load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 
 grpc_java_repositories()
 
+// gRPC-Java uses jar_jar for bazel: https://github.com/grpc/grpc-java/pull/12243
+// The following lines are from jar_jar's README: https://github.com/bazeltools/bazel_jar_jar?tab=readme-ov-file#how-to-add-to-bazel-via-workspace
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
-
 git_repository(
     name = "bazel_jar_jar",
     commit = "4e7bf26da8bc8c955578fd8c8a2c763757d344df", # Latest commit SHA as of 2023/10/31
     remote = "https://github.com/bazeltools/bazel_jar_jar.git",
 )
-
 load("@bazel_jar_jar//:jar_jar.bzl", "jar_jar_repositories")
 jar_jar_repositories()
 
