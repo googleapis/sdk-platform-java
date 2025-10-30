@@ -88,13 +88,9 @@ public class NativeImageUtils {
     Class<?> clazz = access.findClassByName(name);
     if (clazz != null) {
       RuntimeReflection.register(clazz);
+      RuntimeReflection.register(clazz.getDeclaredConstructors());
       RuntimeReflection.register(clazz.getDeclaredFields());
       RuntimeReflection.register(clazz.getDeclaredMethods());
-
-      while (clazz != null) {
-        RuntimeReflection.register(clazz.getDeclaredConstructors());
-        clazz = clazz.getSuperclass();
-      }
     } else {
       LOGGER.log(Level.WARNING, CLASS_REFLECTION_ERROR_MESSAGE, name);
     }
