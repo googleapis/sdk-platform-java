@@ -105,6 +105,8 @@ final class GrpcNettyFeature implements Feature {
           access, "io.grpc.netty.shaded.io.grpc.netty.ProtocolNegotiators$GrpcNegotiationHandler");
       registerClassForReflection(
           access, "io.grpc.netty.shaded.io.netty.channel.ChannelHandlerMask");
+      registerClassForReflection(
+          access, "io.grpc.netty.shaded.io.netty.util.internal.PlatformDependent");
 
       // Epoll Libraries
       registerClassForReflection(access, "io.grpc.netty.shaded.io.netty.channel.epoll.Epoll");
