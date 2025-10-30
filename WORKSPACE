@@ -97,8 +97,8 @@ load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 
 grpc_java_repositories()
 
-// gRPC-Java uses jar_jar for bazel: https://github.com/grpc/grpc-java/pull/12243
-// The following lines are from jar_jar's README: https://github.com/bazeltools/bazel_jar_jar?tab=readme-ov-file#how-to-add-to-bazel-via-workspace
+# gRPC-Java uses jar_jar for bazel: https://github.com/grpc/grpc-java/pull/12243
+# The following lines are from jar_jar's README: https://github.com/bazeltools/bazel_jar_jar?tab=readme-ov-file#how-to-add-to-bazel-via-workspace
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 git_repository(
     name = "bazel_jar_jar",
