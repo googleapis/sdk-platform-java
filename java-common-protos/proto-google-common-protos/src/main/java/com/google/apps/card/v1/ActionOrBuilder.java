@@ -29,7 +29,7 @@ public interface ActionOrBuilder
    *
    * <pre>
    * A custom function to invoke when the containing element is
-   * clicked or othrwise activated.
+   * clicked or otherwise activated.
    *
    * For example usage, see [Read form
    * data](https://developers.google.com/workspace/chat/read-form-data).
@@ -46,7 +46,7 @@ public interface ActionOrBuilder
    *
    * <pre>
    * A custom function to invoke when the containing element is
-   * clicked or othrwise activated.
+   * clicked or otherwise activated.
    *
    * For example usage, see [Read form
    * data](https://developers.google.com/workspace/chat/read-form-data).
@@ -228,4 +228,103 @@ public interface ActionOrBuilder
    * @return The interaction.
    */
   com.google.apps.card.v1.Action.Interaction getInteraction();
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Fill this list with the names of widgets that this Action
+   * needs for a valid submission.
+   *
+   * If the widgets listed here don't have a value when this Action is invoked,
+   * the form submission is aborted.
+   *
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend):
+   * </pre>
+   *
+   * <code>repeated string required_widgets = 6;</code>
+   *
+   * @return A list containing the requiredWidgets.
+   */
+  java.util.List<java.lang.String> getRequiredWidgetsList();
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Fill this list with the names of widgets that this Action
+   * needs for a valid submission.
+   *
+   * If the widgets listed here don't have a value when this Action is invoked,
+   * the form submission is aborted.
+   *
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend):
+   * </pre>
+   *
+   * <code>repeated string required_widgets = 6;</code>
+   *
+   * @return The count of requiredWidgets.
+   */
+  int getRequiredWidgetsCount();
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Fill this list with the names of widgets that this Action
+   * needs for a valid submission.
+   *
+   * If the widgets listed here don't have a value when this Action is invoked,
+   * the form submission is aborted.
+   *
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend):
+   * </pre>
+   *
+   * <code>repeated string required_widgets = 6;</code>
+   *
+   * @param index The index of the element to return.
+   * @return The requiredWidgets at the given index.
+   */
+  java.lang.String getRequiredWidgets(int index);
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional. Fill this list with the names of widgets that this Action
+   * needs for a valid submission.
+   *
+   * If the widgets listed here don't have a value when this Action is invoked,
+   * the form submission is aborted.
+   *
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend):
+   * </pre>
+   *
+   * <code>repeated string required_widgets = 6;</code>
+   *
+   * @param index The index of the value to return.
+   * @return The bytes of the requiredWidgets at the given index.
+   */
+  com.google.protobuf.ByteString getRequiredWidgetsBytes(int index);
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional. If this is true, then all widgets are considered required by
+   * this action.
+   *
+   * [Google Workspace add-ons and Chat
+   * apps](https://developers.google.com/workspace/extend):
+   * </pre>
+   *
+   * <code>bool all_widgets_are_required = 7;</code>
+   *
+   * @return The allWidgetsAreRequired.
+   */
+  boolean getAllWidgetsAreRequired();
 }

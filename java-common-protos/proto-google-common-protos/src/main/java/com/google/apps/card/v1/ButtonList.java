@@ -28,7 +28,7 @@ package com.google.apps.card.v1;
  * [Add a
  * button](https://developers.google.com/workspace/chat/design-interactive-card-dialog#add_a_button).
  *
- * [Google Workspace Add-ons and Chat
+ * [Google Workspace add-ons and Chat
  * apps](https://developers.google.com/workspace/extend):
  * </pre>
  *
@@ -315,7 +315,7 @@ public final class ButtonList extends com.google.protobuf.GeneratedMessageV3
    * [Add a
    * button](https://developers.google.com/workspace/chat/design-interactive-card-dialog#add_a_button).
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
