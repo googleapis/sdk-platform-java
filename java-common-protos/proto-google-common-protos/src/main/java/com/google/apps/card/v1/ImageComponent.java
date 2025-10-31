@@ -25,7 +25,7 @@ package com.google.apps.card.v1;
  * <pre>
  * Represents an image.
  *
- * [Google Workspace Add-ons and Chat
+ * [Google Workspace add-ons and Chat
  * apps](https://developers.google.com/workspace/extend):
  * </pre>
  *
@@ -483,7 +483,7 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Represents an image.
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *

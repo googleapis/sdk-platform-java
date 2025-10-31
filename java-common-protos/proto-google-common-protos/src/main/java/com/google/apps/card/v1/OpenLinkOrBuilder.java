@@ -57,7 +57,7 @@ public interface OpenLinkOrBuilder
    * How to open a link.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.OpenLink.OpenAs open_as = 2;</code>
@@ -73,7 +73,7 @@ public interface OpenLinkOrBuilder
    * How to open a link.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.OpenLink.OpenAs open_as = 2;</code>
@@ -90,7 +90,7 @@ public interface OpenLinkOrBuilder
    * until the window closes.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.OpenLink.OnClose on_close = 3;</code>
@@ -107,7 +107,7 @@ public interface OpenLinkOrBuilder
    * until the window closes.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.OpenLink.OnClose on_close = 3;</code>

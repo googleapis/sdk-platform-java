@@ -54,8 +54,8 @@ public interface ButtonOrBuilder
    *
    *
    * <pre>
-   * The icon image. If both `icon` and `text` are set, then the icon appears
-   * before the text.
+   * An icon displayed inside the button. If both `icon` and `text` are set,
+   * then the icon appears before the text.
    * </pre>
    *
    * <code>.google.apps.card.v1.Icon icon = 2;</code>
@@ -68,8 +68,8 @@ public interface ButtonOrBuilder
    *
    *
    * <pre>
-   * The icon image. If both `icon` and `text` are set, then the icon appears
-   * before the text.
+   * An icon displayed inside the button. If both `icon` and `text` are set,
+   * then the icon appears before the text.
    * </pre>
    *
    * <code>.google.apps.card.v1.Icon icon = 2;</code>
@@ -82,8 +82,8 @@ public interface ButtonOrBuilder
    *
    *
    * <pre>
-   * The icon image. If both `icon` and `text` are set, then the icon appears
-   * before the text.
+   * An icon displayed inside the button. If both `icon` and `text` are set,
+   * then the icon appears before the text.
    * </pre>
    *
    * <code>.google.apps.card.v1.Icon icon = 2;</code>
@@ -94,38 +94,29 @@ public interface ButtonOrBuilder
    *
    *
    * <pre>
-   * If set, the button is filled with a solid background color and the font
-   * color changes to maintain contrast with the background color. For example,
-   * setting a blue background likely results in white text.
+   * Optional. The color of the button. If set, the button `type` is set to
+   * `FILLED` and the color of `text` and `icon` fields are set to a
+   * contrasting color for readability. For example, if the button color is
+   * set to blue, any text or icons in the button are set to white.
    *
-   * If unset, the image background is white and the font color is blue.
+   * To set the button color, specify a value for the `red`, `green`, and `blue`
+   * fields.
+   * The value must be a float number between 0 and 1 based on the RGB color
+   * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+   * represents the maximum intensity of the color.
    *
-   * For red, green, and blue, the value of each field is a `float` number that
-   * you can express in either of two ways: as a number between 0 and 255
-   * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
-   * the absence of a color and 1 or 255/255 represent the full presence of that
-   * color on the RGB scale.
-   *
-   * Optionally set `alpha`, which sets a level of transparency using this
-   * equation:
-   *
-   * ```
-   * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
-   * ```
-   *
-   * For `alpha`, a value of `1` corresponds with a solid color, and a value of
-   * `0` corresponds with a completely transparent color.
-   *
-   * For example, the following color represents a half transparent red:
+   * For example, the following sets the color to red at its maximum intensity:
    *
    * ```
    * "color": {
    *    "red": 1,
    *    "green": 0,
    *    "blue": 0,
-   *    "alpha": 0.5
    * }
    * ```
+   *
+   * The `alpha` field is unavailable for button color. If specified, this field
+   * is ignored.
    * </pre>
    *
    * <code>.google.type.Color color = 3;</code>
@@ -138,38 +129,29 @@ public interface ButtonOrBuilder
    *
    *
    * <pre>
-   * If set, the button is filled with a solid background color and the font
-   * color changes to maintain contrast with the background color. For example,
-   * setting a blue background likely results in white text.
+   * Optional. The color of the button. If set, the button `type` is set to
+   * `FILLED` and the color of `text` and `icon` fields are set to a
+   * contrasting color for readability. For example, if the button color is
+   * set to blue, any text or icons in the button are set to white.
    *
-   * If unset, the image background is white and the font color is blue.
+   * To set the button color, specify a value for the `red`, `green`, and `blue`
+   * fields.
+   * The value must be a float number between 0 and 1 based on the RGB color
+   * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+   * represents the maximum intensity of the color.
    *
-   * For red, green, and blue, the value of each field is a `float` number that
-   * you can express in either of two ways: as a number between 0 and 255
-   * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
-   * the absence of a color and 1 or 255/255 represent the full presence of that
-   * color on the RGB scale.
-   *
-   * Optionally set `alpha`, which sets a level of transparency using this
-   * equation:
-   *
-   * ```
-   * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
-   * ```
-   *
-   * For `alpha`, a value of `1` corresponds with a solid color, and a value of
-   * `0` corresponds with a completely transparent color.
-   *
-   * For example, the following color represents a half transparent red:
+   * For example, the following sets the color to red at its maximum intensity:
    *
    * ```
    * "color": {
    *    "red": 1,
    *    "green": 0,
    *    "blue": 0,
-   *    "alpha": 0.5
    * }
    * ```
+   *
+   * The `alpha` field is unavailable for button color. If specified, this field
+   * is ignored.
    * </pre>
    *
    * <code>.google.type.Color color = 3;</code>
@@ -182,38 +164,29 @@ public interface ButtonOrBuilder
    *
    *
    * <pre>
-   * If set, the button is filled with a solid background color and the font
-   * color changes to maintain contrast with the background color. For example,
-   * setting a blue background likely results in white text.
+   * Optional. The color of the button. If set, the button `type` is set to
+   * `FILLED` and the color of `text` and `icon` fields are set to a
+   * contrasting color for readability. For example, if the button color is
+   * set to blue, any text or icons in the button are set to white.
    *
-   * If unset, the image background is white and the font color is blue.
+   * To set the button color, specify a value for the `red`, `green`, and `blue`
+   * fields.
+   * The value must be a float number between 0 and 1 based on the RGB color
+   * value, where `0` (0/255) represents the absence of color  and `1` (255/255)
+   * represents the maximum intensity of the color.
    *
-   * For red, green, and blue, the value of each field is a `float` number that
-   * you can express in either of two ways: as a number between 0 and 255
-   * divided by 255 (153/255), or as a value between 0 and 1 (0.6). 0 represents
-   * the absence of a color and 1 or 255/255 represent the full presence of that
-   * color on the RGB scale.
-   *
-   * Optionally set `alpha`, which sets a level of transparency using this
-   * equation:
-   *
-   * ```
-   * pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
-   * ```
-   *
-   * For `alpha`, a value of `1` corresponds with a solid color, and a value of
-   * `0` corresponds with a completely transparent color.
-   *
-   * For example, the following color represents a half transparent red:
+   * For example, the following sets the color to red at its maximum intensity:
    *
    * ```
    * "color": {
    *    "red": 1,
    *    "green": 0,
    *    "blue": 0,
-   *    "alpha": 0.5
    * }
    * ```
+   *
+   * The `alpha` field is unavailable for button color. If specified, this field
+   * is ignored.
    * </pre>
    *
    * <code>.google.type.Color color = 3;</code>
@@ -309,4 +282,34 @@ public interface ButtonOrBuilder
    * @return The bytes for altText.
    */
   com.google.protobuf.ByteString getAltTextBytes();
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The type of a button. If unset, button type defaults to
+   * `OUTLINED`. If the `color` field is set, the button type is forced to
+   * `FILLED` and any value set for this field is ignored.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Button.Type type = 7;</code>
+   *
+   * @return The enum numeric value on the wire for type.
+   */
+  int getTypeValue();
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional. The type of a button. If unset, button type defaults to
+   * `OUTLINED`. If the `color` field is set, the button type is forced to
+   * `FILLED` and any value set for this field is ignored.
+   * </pre>
+   *
+   * <code>.google.apps.card.v1.Button.Type type = 7;</code>
+   *
+   * @return The type.
+   */
+  com.google.apps.card.v1.Button.Type getType();
 }

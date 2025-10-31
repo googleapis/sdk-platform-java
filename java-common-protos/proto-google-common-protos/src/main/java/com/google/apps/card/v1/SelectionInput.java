@@ -24,9 +24,12 @@ package com.google.apps.card.v1;
  *
  * <pre>
  * A widget that creates one or more UI items that users can select.
- * For example, a dropdown menu or checkboxes. You can use this widget to
- * collect data that can be predicted or enumerated. For an example in Google
- * Chat apps, see [Add selectable UI
+ * Supports form submission validation for `dropdown` and `multiselect` menus
+ * only. When `Action.all_widgets_are_required` is set to `true` or this widget
+ * is specified in `Action.required_widgets`, the submission action is blocked
+ * unless a value is selected. For example, a dropdown menu or checkboxes. You
+ * can use this widget to collect data that can be predicted or enumerated. For
+ * an example in Google Chat apps, see [Add selectable UI
  * elements](/workspace/chat/design-interactive-card-dialog#add_selectable_ui_elements).
  *
  * Chat apps can process the value of items that users select or input. For
@@ -36,7 +39,7 @@ package com.google.apps.card.v1;
  * To collect undefined or abstract data from users, use
  * the [TextInput][google.apps.card.v1.TextInput] widget.
  *
- * [Google Workspace Add-ons
+ * [Google Workspace add-ons
  * and Chat apps](https://developers.google.com/workspace/extend):
  * </pre>
  *
@@ -92,7 +95,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    * Each selection input supports one type of selection. Mixing checkboxes
    * and switches, for example, isn't supported.
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -143,29 +146,27 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A multiselect menu for static or dynamic data. From the menu bar,
-     * users select one or more items. Users can also input values to populate
-     * dynamic data. For example, users can start typing the name of a Google
-     * Chat space and the widget autosuggests the space.
+     * A menu with a text box. Users can type and select one or more items.
+     * For Google Workspace add-ons, you must populate items using a static
+     * array of `SelectionItem` objects.
      *
-     * To populate items for a multiselect menu, you can use one of the
-     * following types of data sources:
+     * For Google Chat apps, you can also populate items using a dynamic data
+     * source and autosuggest items as users type in the menu. For example,
+     * users can start typing the name of a Google Chat space and the widget
+     * autosuggests the space. To dynamically populate items for a multiselect
+     * menu, use one of the following types of data sources:
      *
-     *  * Static data: Items are specified as `SelectionItem` objects in the
-     *    widget. Up to 100 items.
      *  * Google Workspace data: Items are populated using data from Google
      *    Workspace, such as Google Workspace users or Google Chat spaces.
      *  * External data: Items are populated from an external data
      *    source outside of Google Workspace.
      *
-     * For examples of how to implement multiselect menus, see
+     * For examples of how to implement multiselect menus for Chat apps, see
      * [Add a multiselect
      * menu](https://developers.google.com/workspace/chat/design-interactive-card-dialog#multiselect-menu).
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
-     * Multiselect for Google Workspace Add-ons are in
-     * Developer Preview.
      * </pre>
      *
      * <code>MULTI_SELECT = 4;</code>
@@ -222,29 +223,27 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A multiselect menu for static or dynamic data. From the menu bar,
-     * users select one or more items. Users can also input values to populate
-     * dynamic data. For example, users can start typing the name of a Google
-     * Chat space and the widget autosuggests the space.
+     * A menu with a text box. Users can type and select one or more items.
+     * For Google Workspace add-ons, you must populate items using a static
+     * array of `SelectionItem` objects.
      *
-     * To populate items for a multiselect menu, you can use one of the
-     * following types of data sources:
+     * For Google Chat apps, you can also populate items using a dynamic data
+     * source and autosuggest items as users type in the menu. For example,
+     * users can start typing the name of a Google Chat space and the widget
+     * autosuggests the space. To dynamically populate items for a multiselect
+     * menu, use one of the following types of data sources:
      *
-     *  * Static data: Items are specified as `SelectionItem` objects in the
-     *    widget. Up to 100 items.
      *  * Google Workspace data: Items are populated using data from Google
      *    Workspace, such as Google Workspace users or Google Chat spaces.
      *  * External data: Items are populated from an external data
      *    source outside of Google Workspace.
      *
-     * For examples of how to implement multiselect menus, see
+     * For examples of how to implement multiselect menus for Chat apps, see
      * [Add a multiselect
      * menu](https://developers.google.com/workspace/chat/design-interactive-card-dialog#multiselect-menu).
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
-     * Multiselect for Google Workspace Add-ons are in
-     * Developer Preview.
      * </pre>
      *
      * <code>MULTI_SELECT = 4;</code>
@@ -419,15 +418,13 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
     boolean getSelected();
 
     /**
+     * <code>string start_icon_uri = 4;</code>
      *
-     *
-     * <pre>
-     * For multiselect menus, the URL for the icon displayed next to
-     * the item's `text` field. Supports PNG and JPEG files. Must be an `HTTPS`
-     * URL. For example,
-     * `https://developers.google.com/workspace/chat/images/quickstart-app-avatar.png`.
-     * </pre>
-     *
+     * @return Whether the startIconUri field is set.
+     */
+    boolean hasStartIconUri();
+
+    /**
      * <code>string start_icon_uri = 4;</code>
      *
      * @return The startIconUri.
@@ -435,15 +432,6 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
     java.lang.String getStartIconUri();
 
     /**
-     *
-     *
-     * <pre>
-     * For multiselect menus, the URL for the icon displayed next to
-     * the item's `text` field. Supports PNG and JPEG files. Must be an `HTTPS`
-     * URL. For example,
-     * `https://developers.google.com/workspace/chat/images/quickstart-app-avatar.png`.
-     * </pre>
-     *
      * <code>string start_icon_uri = 4;</code>
      *
      * @return The bytes for startIconUri.
@@ -477,6 +465,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * @return The bytes for bottomText.
      */
     com.google.protobuf.ByteString getBottomTextBytes();
+
+    com.google.apps.card.v1.SelectionInput.SelectionItem.StartIconCase getStartIconCase();
   }
 
   /**
@@ -484,9 +474,9 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * An item that users can select in a selection input, such as a checkbox
-   * or switch.
+   * or switch. Supports up to 100 items.
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -506,7 +496,6 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
     private SelectionItem() {
       text_ = "";
       value_ = "";
-      startIconUri_ = "";
       bottomText_ = "";
     }
 
@@ -529,6 +518,53 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
           .ensureFieldAccessorsInitialized(
               com.google.apps.card.v1.SelectionInput.SelectionItem.class,
               com.google.apps.card.v1.SelectionInput.SelectionItem.Builder.class);
+    }
+
+    private int startIconCase_ = 0;
+
+    @SuppressWarnings("serial")
+    private java.lang.Object startIcon_;
+
+    public enum StartIconCase
+        implements
+            com.google.protobuf.Internal.EnumLite,
+            com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+      START_ICON_URI(4),
+      STARTICON_NOT_SET(0);
+      private final int value;
+
+      private StartIconCase(int value) {
+        this.value = value;
+      }
+
+      /**
+       * @param value The number of the enum to look for.
+       * @return The enum associated with the given number.
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static StartIconCase valueOf(int value) {
+        return forNumber(value);
+      }
+
+      public static StartIconCase forNumber(int value) {
+        switch (value) {
+          case 4:
+            return START_ICON_URI;
+          case 0:
+            return STARTICON_NOT_SET;
+          default:
+            return null;
+        }
+      }
+
+      public int getNumber() {
+        return this.value;
+      }
+    };
+
+    public StartIconCase getStartIconCase() {
+      return StartIconCase.forNumber(startIconCase_);
     }
 
     public static final int TEXT_FIELD_NUMBER = 1;
@@ -668,57 +704,53 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
 
     public static final int START_ICON_URI_FIELD_NUMBER = 4;
 
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object startIconUri_ = "";
+    /**
+     * <code>string start_icon_uri = 4;</code>
+     *
+     * @return Whether the startIconUri field is set.
+     */
+    public boolean hasStartIconUri() {
+      return startIconCase_ == 4;
+    }
 
     /**
-     *
-     *
-     * <pre>
-     * For multiselect menus, the URL for the icon displayed next to
-     * the item's `text` field. Supports PNG and JPEG files. Must be an `HTTPS`
-     * URL. For example,
-     * `https://developers.google.com/workspace/chat/images/quickstart-app-avatar.png`.
-     * </pre>
-     *
      * <code>string start_icon_uri = 4;</code>
      *
      * @return The startIconUri.
      */
-    @java.lang.Override
     public java.lang.String getStartIconUri() {
-      java.lang.Object ref = startIconUri_;
+      java.lang.Object ref = "";
+      if (startIconCase_ == 4) {
+        ref = startIcon_;
+      }
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        startIconUri_ = s;
+        if (startIconCase_ == 4) {
+          startIcon_ = s;
+        }
         return s;
       }
     }
 
     /**
-     *
-     *
-     * <pre>
-     * For multiselect menus, the URL for the icon displayed next to
-     * the item's `text` field. Supports PNG and JPEG files. Must be an `HTTPS`
-     * URL. For example,
-     * `https://developers.google.com/workspace/chat/images/quickstart-app-avatar.png`.
-     * </pre>
-     *
      * <code>string start_icon_uri = 4;</code>
      *
      * @return The bytes for startIconUri.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString getStartIconUriBytes() {
-      java.lang.Object ref = startIconUri_;
+      java.lang.Object ref = "";
+      if (startIconCase_ == 4) {
+        ref = startIcon_;
+      }
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        startIconUri_ = b;
+        if (startIconCase_ == 4) {
+          startIcon_ = b;
+        }
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -803,8 +835,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
       if (selected_ != false) {
         output.writeBool(3, selected_);
       }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(startIconUri_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, startIconUri_);
+      if (startIconCase_ == 4) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, startIcon_);
       }
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(bottomText_)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 5, bottomText_);
@@ -827,8 +859,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
       if (selected_ != false) {
         size += com.google.protobuf.CodedOutputStream.computeBoolSize(3, selected_);
       }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(startIconUri_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, startIconUri_);
+      if (startIconCase_ == 4) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, startIcon_);
       }
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(bottomText_)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, bottomText_);
@@ -852,8 +884,15 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
       if (!getText().equals(other.getText())) return false;
       if (!getValue().equals(other.getValue())) return false;
       if (getSelected() != other.getSelected()) return false;
-      if (!getStartIconUri().equals(other.getStartIconUri())) return false;
       if (!getBottomText().equals(other.getBottomText())) return false;
+      if (!getStartIconCase().equals(other.getStartIconCase())) return false;
+      switch (startIconCase_) {
+        case 4:
+          if (!getStartIconUri().equals(other.getStartIconUri())) return false;
+          break;
+        case 0:
+        default:
+      }
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -871,10 +910,16 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
       hash = (53 * hash) + getValue().hashCode();
       hash = (37 * hash) + SELECTED_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getSelected());
-      hash = (37 * hash) + START_ICON_URI_FIELD_NUMBER;
-      hash = (53 * hash) + getStartIconUri().hashCode();
       hash = (37 * hash) + BOTTOM_TEXT_FIELD_NUMBER;
       hash = (53 * hash) + getBottomText().hashCode();
+      switch (startIconCase_) {
+        case 4:
+          hash = (37 * hash) + START_ICON_URI_FIELD_NUMBER;
+          hash = (53 * hash) + getStartIconUri().hashCode();
+          break;
+        case 0:
+        default:
+      }
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -983,9 +1028,9 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * An item that users can select in a selection input, such as a checkbox
-     * or switch.
+     * or switch. Supports up to 100 items.
      *
-     * [Google Workspace Add-ons and Chat
+     * [Google Workspace add-ons and Chat
      * apps](https://developers.google.com/workspace/extend):
      * </pre>
      *
@@ -1025,8 +1070,9 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
         text_ = "";
         value_ = "";
         selected_ = false;
-        startIconUri_ = "";
         bottomText_ = "";
+        startIconCase_ = 0;
+        startIcon_ = null;
         return this;
       }
 
@@ -1057,6 +1103,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
         if (bitField0_ != 0) {
           buildPartial0(result);
         }
+        buildPartialOneofs(result);
         onBuilt();
         return result;
       }
@@ -1072,12 +1119,14 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
         if (((from_bitField0_ & 0x00000004) != 0)) {
           result.selected_ = selected_;
         }
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.startIconUri_ = startIconUri_;
-        }
         if (((from_bitField0_ & 0x00000010) != 0)) {
           result.bottomText_ = bottomText_;
         }
+      }
+
+      private void buildPartialOneofs(com.google.apps.card.v1.SelectionInput.SelectionItem result) {
+        result.startIconCase_ = startIconCase_;
+        result.startIcon_ = this.startIcon_;
       }
 
       @java.lang.Override
@@ -1141,15 +1190,23 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
         if (other.getSelected() != false) {
           setSelected(other.getSelected());
         }
-        if (!other.getStartIconUri().isEmpty()) {
-          startIconUri_ = other.startIconUri_;
-          bitField0_ |= 0x00000008;
-          onChanged();
-        }
         if (!other.getBottomText().isEmpty()) {
           bottomText_ = other.bottomText_;
           bitField0_ |= 0x00000010;
           onChanged();
+        }
+        switch (other.getStartIconCase()) {
+          case START_ICON_URI:
+            {
+              startIconCase_ = 4;
+              startIcon_ = other.startIcon_;
+              onChanged();
+              break;
+            }
+          case STARTICON_NOT_SET:
+            {
+              break;
+            }
         }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
@@ -1197,8 +1254,9 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
                 } // case 24
               case 34:
                 {
-                  startIconUri_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000008;
+                  java.lang.String s = input.readStringRequireUtf8();
+                  startIconCase_ = 4;
+                  startIcon_ = s;
                   break;
                 } // case 34
               case 42:
@@ -1221,6 +1279,20 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
         } finally {
           onChanged();
         } // finally
+        return this;
+      }
+
+      private int startIconCase_ = 0;
+      private java.lang.Object startIcon_;
+
+      public StartIconCase getStartIconCase() {
+        return StartIconCase.forNumber(startIconCase_);
+      }
+
+      public Builder clearStartIcon() {
+        startIconCase_ = 0;
+        startIcon_ = null;
+        onChanged();
         return this;
       }
 
@@ -1530,28 +1602,33 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
         return this;
       }
 
-      private java.lang.Object startIconUri_ = "";
+      /**
+       * <code>string start_icon_uri = 4;</code>
+       *
+       * @return Whether the startIconUri field is set.
+       */
+      @java.lang.Override
+      public boolean hasStartIconUri() {
+        return startIconCase_ == 4;
+      }
 
       /**
-       *
-       *
-       * <pre>
-       * For multiselect menus, the URL for the icon displayed next to
-       * the item's `text` field. Supports PNG and JPEG files. Must be an `HTTPS`
-       * URL. For example,
-       * `https://developers.google.com/workspace/chat/images/quickstart-app-avatar.png`.
-       * </pre>
-       *
        * <code>string start_icon_uri = 4;</code>
        *
        * @return The startIconUri.
        */
+      @java.lang.Override
       public java.lang.String getStartIconUri() {
-        java.lang.Object ref = startIconUri_;
+        java.lang.Object ref = "";
+        if (startIconCase_ == 4) {
+          ref = startIcon_;
+        }
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          startIconUri_ = s;
+          if (startIconCase_ == 4) {
+            startIcon_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1559,25 +1636,22 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
       }
 
       /**
-       *
-       *
-       * <pre>
-       * For multiselect menus, the URL for the icon displayed next to
-       * the item's `text` field. Supports PNG and JPEG files. Must be an `HTTPS`
-       * URL. For example,
-       * `https://developers.google.com/workspace/chat/images/quickstart-app-avatar.png`.
-       * </pre>
-       *
        * <code>string start_icon_uri = 4;</code>
        *
        * @return The bytes for startIconUri.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getStartIconUriBytes() {
-        java.lang.Object ref = startIconUri_;
+        java.lang.Object ref = "";
+        if (startIconCase_ == 4) {
+          ref = startIcon_;
+        }
         if (ref instanceof String) {
           com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-          startIconUri_ = b;
+          if (startIconCase_ == 4) {
+            startIcon_ = b;
+          }
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
@@ -1585,15 +1659,6 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
       }
 
       /**
-       *
-       *
-       * <pre>
-       * For multiselect menus, the URL for the icon displayed next to
-       * the item's `text` field. Supports PNG and JPEG files. Must be an `HTTPS`
-       * URL. For example,
-       * `https://developers.google.com/workspace/chat/images/quickstart-app-avatar.png`.
-       * </pre>
-       *
        * <code>string start_icon_uri = 4;</code>
        *
        * @param value The startIconUri to set.
@@ -1603,43 +1668,27 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
         if (value == null) {
           throw new NullPointerException();
         }
-        startIconUri_ = value;
-        bitField0_ |= 0x00000008;
+        startIconCase_ = 4;
+        startIcon_ = value;
         onChanged();
         return this;
       }
 
       /**
-       *
-       *
-       * <pre>
-       * For multiselect menus, the URL for the icon displayed next to
-       * the item's `text` field. Supports PNG and JPEG files. Must be an `HTTPS`
-       * URL. For example,
-       * `https://developers.google.com/workspace/chat/images/quickstart-app-avatar.png`.
-       * </pre>
-       *
        * <code>string start_icon_uri = 4;</code>
        *
        * @return This builder for chaining.
        */
       public Builder clearStartIconUri() {
-        startIconUri_ = getDefaultInstance().getStartIconUri();
-        bitField0_ = (bitField0_ & ~0x00000008);
-        onChanged();
+        if (startIconCase_ == 4) {
+          startIconCase_ = 0;
+          startIcon_ = null;
+          onChanged();
+        }
         return this;
       }
 
       /**
-       *
-       *
-       * <pre>
-       * For multiselect menus, the URL for the icon displayed next to
-       * the item's `text` field. Supports PNG and JPEG files. Must be an `HTTPS`
-       * URL. For example,
-       * `https://developers.google.com/workspace/chat/images/quickstart-app-avatar.png`.
-       * </pre>
-       *
        * <code>string start_icon_uri = 4;</code>
        *
        * @param value The bytes for startIconUri to set.
@@ -1650,8 +1699,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         checkByteStringIsUtf8(value);
-        startIconUri_ = value;
-        bitField0_ |= 0x00000008;
+        startIconCase_ = 4;
+        startIcon_ = value;
         onChanged();
         return this;
       }
@@ -2863,7 +2912,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * The name that identifies the selection input in a form input event.
+   * Required. The name that identifies the selection input in a form input
+   * event.
    *
    * For details about working with form inputs, see [Receive form
    * data](https://developers.google.com/workspace/chat/read-form-data).
@@ -2890,7 +2940,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * The name that identifies the selection input in a form input event.
+   * Required. The name that identifies the selection input in a form input
+   * event.
    *
    * For details about working with form inputs, see [Receive form
    * data](https://developers.google.com/workspace/chat/read-form-data).
@@ -3179,7 +3230,24 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    * Minimum value is 1 item. If unspecified, defaults to 3 items.
    * </pre>
    *
-   * <code>int32 multi_select_max_selected_items = 6;</code>
+   * <code>optional int32 multi_select_max_selected_items = 6;</code>
+   *
+   * @return Whether the multiSelectMaxSelectedItems field is set.
+   */
+  @java.lang.Override
+  public boolean hasMultiSelectMaxSelectedItems() {
+    return ((bitField0_ & 0x00000002) != 0);
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * For multiselect menus, the maximum number of items that a user can select.
+   * Minimum value is 1 item. If unspecified, defaults to 3 items.
+   * </pre>
+   *
+   * <code>optional int32 multi_select_max_selected_items = 6;</code>
    *
    * @return The multiSelectMaxSelectedItems.
    */
@@ -3196,11 +3264,15 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * For multiselect menus, the number of text characters that a user inputs
-   * before the app queries autocomplete and displays suggested items
-   * in the menu.
+   * before the menu returns suggested selection items.
    *
-   * If unspecified, defaults to 0 characters for static data sources and 3
-   * characters for external data sources.
+   * If unset, the multiselect menu uses the following default values:
+   *
+   * * If the menu uses a static array of `SelectionInput` items, defaults to
+   *   0 characters and immediately populates items from the array.
+   * * If the menu uses a dynamic data source (`multi_select_data_source`),
+   *  defaults to 3 characters before querying the data source to return
+   *  suggested items.
    * </pre>
    *
    * <code>int32 multi_select_min_query_length = 7;</code>
@@ -3218,7 +3290,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * An external data source, such as a relational data base.
+   * An external data source, such as a relational database.
    * </pre>
    *
    * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
@@ -3234,7 +3306,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * An external data source, such as a relational data base.
+   * An external data source, such as a relational database.
    * </pre>
    *
    * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
@@ -3253,7 +3325,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * An external data source, such as a relational data base.
+   * An external data source, such as a relational database.
    * </pre>
    *
    * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
@@ -3350,7 +3422,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
     if (((bitField0_ & 0x00000001) != 0)) {
       output.writeMessage(5, getOnChangeAction());
     }
-    if (multiSelectMaxSelectedItems_ != 0) {
+    if (((bitField0_ & 0x00000002) != 0)) {
       output.writeInt32(6, multiSelectMaxSelectedItems_);
     }
     if (multiSelectMinQueryLength_ != 0) {
@@ -3387,7 +3459,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
     if (((bitField0_ & 0x00000001) != 0)) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(5, getOnChangeAction());
     }
-    if (multiSelectMaxSelectedItems_ != 0) {
+    if (((bitField0_ & 0x00000002) != 0)) {
       size +=
           com.google.protobuf.CodedOutputStream.computeInt32Size(6, multiSelectMaxSelectedItems_);
     }
@@ -3428,7 +3500,10 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
     if (hasOnChangeAction()) {
       if (!getOnChangeAction().equals(other.getOnChangeAction())) return false;
     }
-    if (getMultiSelectMaxSelectedItems() != other.getMultiSelectMaxSelectedItems()) return false;
+    if (hasMultiSelectMaxSelectedItems() != other.hasMultiSelectMaxSelectedItems()) return false;
+    if (hasMultiSelectMaxSelectedItems()) {
+      if (getMultiSelectMaxSelectedItems() != other.getMultiSelectMaxSelectedItems()) return false;
+    }
     if (getMultiSelectMinQueryLength() != other.getMultiSelectMinQueryLength()) return false;
     if (!getMultiSelectDataSourceCase().equals(other.getMultiSelectDataSourceCase())) return false;
     switch (multiSelectDataSourceCase_) {
@@ -3466,8 +3541,10 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
       hash = (37 * hash) + ON_CHANGE_ACTION_FIELD_NUMBER;
       hash = (53 * hash) + getOnChangeAction().hashCode();
     }
-    hash = (37 * hash) + MULTI_SELECT_MAX_SELECTED_ITEMS_FIELD_NUMBER;
-    hash = (53 * hash) + getMultiSelectMaxSelectedItems();
+    if (hasMultiSelectMaxSelectedItems()) {
+      hash = (37 * hash) + MULTI_SELECT_MAX_SELECTED_ITEMS_FIELD_NUMBER;
+      hash = (53 * hash) + getMultiSelectMaxSelectedItems();
+    }
     hash = (37 * hash) + MULTI_SELECT_MIN_QUERY_LENGTH_FIELD_NUMBER;
     hash = (53 * hash) + getMultiSelectMinQueryLength();
     switch (multiSelectDataSourceCase_) {
@@ -3588,9 +3665,12 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A widget that creates one or more UI items that users can select.
-   * For example, a dropdown menu or checkboxes. You can use this widget to
-   * collect data that can be predicted or enumerated. For an example in Google
-   * Chat apps, see [Add selectable UI
+   * Supports form submission validation for `dropdown` and `multiselect` menus
+   * only. When `Action.all_widgets_are_required` is set to `true` or this widget
+   * is specified in `Action.required_widgets`, the submission action is blocked
+   * unless a value is selected. For example, a dropdown menu or checkboxes. You
+   * can use this widget to collect data that can be predicted or enumerated. For
+   * an example in Google Chat apps, see [Add selectable UI
    * elements](/workspace/chat/design-interactive-card-dialog#add_selectable_ui_elements).
    *
    * Chat apps can process the value of items that users select or input. For
@@ -3600,7 +3680,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
    * To collect undefined or abstract data from users, use
    * the [TextInput][google.apps.card.v1.TextInput] widget.
    *
-   * [Google Workspace Add-ons
+   * [Google Workspace add-ons
    * and Chat apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -3738,6 +3818,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
       }
       if (((from_bitField0_ & 0x00000020) != 0)) {
         result.multiSelectMaxSelectedItems_ = multiSelectMaxSelectedItems_;
+        to_bitField0_ |= 0x00000002;
       }
       if (((from_bitField0_ & 0x00000040) != 0)) {
         result.multiSelectMinQueryLength_ = multiSelectMinQueryLength_;
@@ -3844,7 +3925,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
       if (other.hasOnChangeAction()) {
         mergeOnChangeAction(other.getOnChangeAction());
       }
-      if (other.getMultiSelectMaxSelectedItems() != 0) {
+      if (other.hasMultiSelectMaxSelectedItems()) {
         setMultiSelectMaxSelectedItems(other.getMultiSelectMaxSelectedItems());
       }
       if (other.getMultiSelectMinQueryLength() != 0) {
@@ -3995,7 +4076,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The name that identifies the selection input in a form input event.
+     * Required. The name that identifies the selection input in a form input
+     * event.
      *
      * For details about working with form inputs, see [Receive form
      * data](https://developers.google.com/workspace/chat/read-form-data).
@@ -4021,7 +4103,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The name that identifies the selection input in a form input event.
+     * Required. The name that identifies the selection input in a form input
+     * event.
      *
      * For details about working with form inputs, see [Receive form
      * data](https://developers.google.com/workspace/chat/read-form-data).
@@ -4047,7 +4130,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The name that identifies the selection input in a form input event.
+     * Required. The name that identifies the selection input in a form input
+     * event.
      *
      * For details about working with form inputs, see [Receive form
      * data](https://developers.google.com/workspace/chat/read-form-data).
@@ -4072,7 +4156,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The name that identifies the selection input in a form input event.
+     * Required. The name that identifies the selection input in a form input
+     * event.
      *
      * For details about working with form inputs, see [Receive form
      * data](https://developers.google.com/workspace/chat/read-form-data).
@@ -4093,7 +4178,8 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The name that identifies the selection input in a form input event.
+     * Required. The name that identifies the selection input in a form input
+     * event.
      *
      * For details about working with form inputs, see [Receive form
      * data](https://developers.google.com/workspace/chat/read-form-data).
@@ -4991,7 +5077,24 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * Minimum value is 1 item. If unspecified, defaults to 3 items.
      * </pre>
      *
-     * <code>int32 multi_select_max_selected_items = 6;</code>
+     * <code>optional int32 multi_select_max_selected_items = 6;</code>
+     *
+     * @return Whether the multiSelectMaxSelectedItems field is set.
+     */
+    @java.lang.Override
+    public boolean hasMultiSelectMaxSelectedItems() {
+      return ((bitField0_ & 0x00000020) != 0);
+    }
+
+    /**
+     *
+     *
+     * <pre>
+     * For multiselect menus, the maximum number of items that a user can select.
+     * Minimum value is 1 item. If unspecified, defaults to 3 items.
+     * </pre>
+     *
+     * <code>optional int32 multi_select_max_selected_items = 6;</code>
      *
      * @return The multiSelectMaxSelectedItems.
      */
@@ -5008,7 +5111,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * Minimum value is 1 item. If unspecified, defaults to 3 items.
      * </pre>
      *
-     * <code>int32 multi_select_max_selected_items = 6;</code>
+     * <code>optional int32 multi_select_max_selected_items = 6;</code>
      *
      * @param value The multiSelectMaxSelectedItems to set.
      * @return This builder for chaining.
@@ -5029,7 +5132,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      * Minimum value is 1 item. If unspecified, defaults to 3 items.
      * </pre>
      *
-     * <code>int32 multi_select_max_selected_items = 6;</code>
+     * <code>optional int32 multi_select_max_selected_items = 6;</code>
      *
      * @return This builder for chaining.
      */
@@ -5047,11 +5150,15 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * For multiselect menus, the number of text characters that a user inputs
-     * before the app queries autocomplete and displays suggested items
-     * in the menu.
+     * before the menu returns suggested selection items.
      *
-     * If unspecified, defaults to 0 characters for static data sources and 3
-     * characters for external data sources.
+     * If unset, the multiselect menu uses the following default values:
+     *
+     * * If the menu uses a static array of `SelectionInput` items, defaults to
+     *   0 characters and immediately populates items from the array.
+     * * If the menu uses a dynamic data source (`multi_select_data_source`),
+     *  defaults to 3 characters before querying the data source to return
+     *  suggested items.
      * </pre>
      *
      * <code>int32 multi_select_min_query_length = 7;</code>
@@ -5068,11 +5175,15 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * For multiselect menus, the number of text characters that a user inputs
-     * before the app queries autocomplete and displays suggested items
-     * in the menu.
+     * before the menu returns suggested selection items.
      *
-     * If unspecified, defaults to 0 characters for static data sources and 3
-     * characters for external data sources.
+     * If unset, the multiselect menu uses the following default values:
+     *
+     * * If the menu uses a static array of `SelectionInput` items, defaults to
+     *   0 characters and immediately populates items from the array.
+     * * If the menu uses a dynamic data source (`multi_select_data_source`),
+     *  defaults to 3 characters before querying the data source to return
+     *  suggested items.
      * </pre>
      *
      * <code>int32 multi_select_min_query_length = 7;</code>
@@ -5093,11 +5204,15 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * For multiselect menus, the number of text characters that a user inputs
-     * before the app queries autocomplete and displays suggested items
-     * in the menu.
+     * before the menu returns suggested selection items.
      *
-     * If unspecified, defaults to 0 characters for static data sources and 3
-     * characters for external data sources.
+     * If unset, the multiselect menu uses the following default values:
+     *
+     * * If the menu uses a static array of `SelectionInput` items, defaults to
+     *   0 characters and immediately populates items from the array.
+     * * If the menu uses a dynamic data source (`multi_select_data_source`),
+     *  defaults to 3 characters before querying the data source to return
+     *  suggested items.
      * </pre>
      *
      * <code>int32 multi_select_min_query_length = 7;</code>
@@ -5121,7 +5236,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * An external data source, such as a relational data base.
+     * An external data source, such as a relational database.
      * </pre>
      *
      * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
@@ -5137,7 +5252,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * An external data source, such as a relational data base.
+     * An external data source, such as a relational database.
      * </pre>
      *
      * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
@@ -5163,7 +5278,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * An external data source, such as a relational data base.
+     * An external data source, such as a relational database.
      * </pre>
      *
      * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
@@ -5186,7 +5301,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * An external data source, such as a relational data base.
+     * An external data source, such as a relational database.
      * </pre>
      *
      * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
@@ -5206,7 +5321,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * An external data source, such as a relational data base.
+     * An external data source, such as a relational database.
      * </pre>
      *
      * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
@@ -5239,7 +5354,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * An external data source, such as a relational data base.
+     * An external data source, such as a relational database.
      * </pre>
      *
      * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
@@ -5265,7 +5380,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * An external data source, such as a relational data base.
+     * An external data source, such as a relational database.
      * </pre>
      *
      * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
@@ -5278,7 +5393,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * An external data source, such as a relational data base.
+     * An external data source, such as a relational database.
      * </pre>
      *
      * <code>.google.apps.card.v1.Action external_data_source = 8;</code>
@@ -5299,7 +5414,7 @@ public final class SelectionInput extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * An external data source, such as a relational data base.
+     * An external data source, such as a relational database.
      * </pre>
      *
      * <code>.google.apps.card.v1.Action external_data_source = 8;</code>

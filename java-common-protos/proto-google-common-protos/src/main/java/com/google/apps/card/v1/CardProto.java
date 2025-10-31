@@ -45,6 +45,10 @@ public final class CardProto {
   static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_google_apps_card_v1_Card_CardAction_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_apps_card_v1_Card_NestedWidget_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_apps_card_v1_Card_NestedWidget_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
       internal_static_google_apps_card_v1_Card_CardFixedFooter_descriptor;
   static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_google_apps_card_v1_Card_CardFixedFooter_fieldAccessorTable;
@@ -105,6 +109,14 @@ public final class CardProto {
   static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_google_apps_card_v1_DateTimePicker_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_apps_card_v1_OverflowMenu_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_apps_card_v1_OverflowMenu_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_apps_card_v1_OverflowMenu_OverflowMenuItem_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_apps_card_v1_OverflowMenu_OverflowMenuItem_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
       internal_static_google_apps_card_v1_Button_descriptor;
   static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_google_apps_card_v1_Button_fieldAccessorTable;
@@ -149,6 +161,18 @@ public final class CardProto {
   static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_google_apps_card_v1_Columns_Column_Widgets_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_apps_card_v1_Carousel_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_apps_card_v1_Carousel_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_apps_card_v1_Carousel_CarouselCard_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_apps_card_v1_Carousel_CarouselCard_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_apps_card_v1_CollapseControl_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_apps_card_v1_CollapseControl_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
       internal_static_google_apps_card_v1_OnClick_descriptor;
   static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_google_apps_card_v1_OnClick_fieldAccessorTable;
@@ -164,6 +188,18 @@ public final class CardProto {
       internal_static_google_apps_card_v1_Action_ActionParameter_descriptor;
   static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_google_apps_card_v1_Action_ActionParameter_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_apps_card_v1_Validation_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_apps_card_v1_Validation_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_apps_card_v1_ChipList_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_apps_card_v1_ChipList_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_apps_card_v1_Chip_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_apps_card_v1_Chip_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor getDescriptor() {
     return descriptor;
@@ -175,7 +211,7 @@ public final class CardProto {
     java.lang.String[] descriptorData = {
       "\n"
           + "\036google/apps/card/v1/card.proto\022\023google"
-          + ".apps.card.v1\032\027google/type/color.proto\"\307\010\n"
+          + ".apps.card.v1\032\027google/type/color.proto\"\303\n\n"
           + "\004Card\0224\n"
           + "\006header\030\001 \001(\0132$.google.apps.card.v1.Card.CardHeader\0223\n"
           + "\010sections\030\002 \003(\0132!.google.apps.card.v1.Card.Section\022E\n"
@@ -192,15 +228,23 @@ public final class CardProto {
           + "\010subtitle\030\002 \001(\t\0229\n\n"
           + "image_type\030\003 \001(\0162%.google.apps.card.v1.Widget.ImageType\022\021\n"
           + "\timage_url\030\004 \001(\t\022\026\n"
-          + "\016image_alt_text\030\005 \001(\t\032\201\001\n"
+          + "\016image_alt_text\030\005 \001(\t\032\301\001\n"
           + "\007Section\022\016\n"
           + "\006header\030\001 \001(\t\022,\n"
           + "\007widgets\030\002 \003(\0132\033.google.apps.card.v1.Widget\022\023\n"
           + "\013collapsible\030\005 \001(\010\022#\n"
-          + "\033uncollapsible_widgets_count\030\006 \001(\005\032R\n\n"
+          + "\033uncollapsible_widgets_count\030\006 \001(\005\022>\n"
+          + "\020collapse_control\030\010 \001(\0132$.google.apps.card.v1.CollapseControl\032R\n"
+          + "\n"
           + "CardAction\022\024\n"
           + "\014action_label\030\001 \001(\t\022.\n"
-          + "\010on_click\030\002 \001(\0132\034.google.apps.card.v1.OnClick\032}\n"
+          + "\010on_click\030\002 \001(\0132\034.google.apps.card.v1.OnClick\032\271\001\n"
+          + "\014NestedWidget\022<\n"
+          + "\016text_paragraph\030\001 \001(\0132\".google.apps.card.v1.TextParagraphH\000\0226\n"
+          + "\013button_list\030\003 \001(\0132\037.google.apps.card.v1.ButtonListH\000\022+\n"
+          + "\005image\030\n"
+          + " \001(\0132\032.google.apps.card.v1.ImageH\000B\006\n"
+          + "\004data\032}\n"
           + "\017CardFixedFooter\0223\n"
           + "\016primary_button\030\001 \001(\0132\033.google.apps.card.v1.Button\0225\n"
           + "\020secondary_button\030\002 \001(\0132\033.google.apps.card.v1.Button\"P\n"
@@ -211,7 +255,7 @@ public final class CardProto {
           + "\014DisplayStyle\022\035\n"
           + "\031DISPLAY_STYLE_UNSPECIFIED\020\000\022\010\n"
           + "\004PEEK\020\001\022\013\n"
-          + "\007REPLACE\020\002\"\206\006\n"
+          + "\007REPLACE\020\002\"\307\007\n"
           + "\006Widget\022<\n"
           + "\016text_paragraph\030\001 \001(\0132\".google.apps.card.v1.TextParagraphH\000\022+\n"
           + "\005image\030\002 \001(\0132\032.google.apps.card.v1.ImageH\000\022<\n"
@@ -224,9 +268,12 @@ public final class CardProto {
           + "\007divider\030\t \001(\0132\034.google.apps.card.v1.DividerH\000\022)\n"
           + "\004grid\030\n"
           + " \001(\0132\031.google.apps.card.v1.GridH\000\022/\n"
-          + "\007columns\030\013 \001(\0132\034.google.apps.card.v1.ColumnsH\000\022M\n"
-          + "\024horizontal_alignment\030\010"
-          + " \001(\0162/.google.apps.card.v1.Widget.HorizontalAlignment\"#\n"
+          + "\007columns\030\013 \001(\0132\034.google.apps.card.v1.ColumnsH\000\0221\n"
+          + "\010carousel\030\r"
+          + " \001(\0132\035.google.apps.card.v1.CarouselH\000\0222\n"
+          + "\tchip_list\030\016 \001(\0132\035.google.apps.card.v1.ChipListH\000\022M\n"
+          + "\024horizontal_alignment\030\010 \001("
+          + "\0162/.google.apps.card.v1.Widget.HorizontalAlignment\"#\n"
           + "\tImageType\022\n\n"
           + "\006SQUARE\020\000\022\n\n"
           + "\006CIRCLE\020\001\"[\n"
@@ -234,39 +281,56 @@ public final class CardProto {
           + " HORIZONTAL_ALIGNMENT_UNSPECIFIED\020\000\022\t\n"
           + "\005START\020\001\022\n\n"
           + "\006CENTER\020\002\022\007\n"
-          + "\003END\020\003B\006\n"
-          + "\004data\"\035\n\r"
+          + "\003END\020\003\"X\n"
+          + "\021VerticalAlignment\022\"\n"
+          + "\036VERTICAL_ALIGNMENT_UNSPECIFIED\020\000\022\007\n"
+          + "\003TOP\020\001\022\n\n"
+          + "\006MIDDLE\020\002\022\n\n"
+          + "\006BOTTOM\020\003B\006\n"
+          + "\004data\"\267\001\n\r"
           + "TextParagraph\022\014\n"
-          + "\004text\030\001 \001(\t\"\\\n"
+          + "\004text\030\001 \001(\t\022\021\n"
+          + "\tmax_lines\030\002 \001(\005\022B\n"
+          + "\013text_syntax\030\004 \001(\0162-.google.apps.card.v1.TextParagraph.TextSyntax\"A\n"
+          + "\n"
+          + "TextSyntax\022\033\n"
+          + "\027TEXT_SYNTAX_UNSPECIFIED\020\000\022\010\n"
+          + "\004HTML\020\001\022\014\n"
+          + "\010MARKDOWN\020\002\"\\\n"
           + "\005Image\022\021\n"
           + "\timage_url\030\001 \001(\t\022.\n"
           + "\010on_click\030\002 \001(\0132\034.google.apps.card.v1.OnClick\022\020\n"
           + "\010alt_text\030\003 \001(\t\"\t\n"
-          + "\007Divider\"\236\005\n\r"
+          + "\007Divider\"\251\007\n\r"
           + "DecoratedText\022+\n"
           + "\004icon\030\001 \001(\0132\031.google.apps.card.v1.IconB\002\030\001\022-\n\n"
-          + "start_icon\030\014 \001(\0132\031.google.apps.card.v1.Icon\022\021\n"
-          + "\ttop_label\030\003 \001(\t\022\014\n"
-          + "\004text\030\004 \001(\t\022\021\n"
+          + "start_icon\030\014 \001(\0132\031.google.apps.card.v1.Icon\022T\n"
+          + "\035start_icon_vertical_alignment\030\r"
+          + " \001(\0162-.google.apps.card.v1.Widget.VerticalAlignment\022\021\n"
+          + "\ttop_label\030\003 \001(\t\022:\n"
+          + "\016top_label_text\030\021 \001(\0132\".google.apps.card.v1.TextParagraph\022\014\n"
+          + "\004text\030\004 \001(\t\0228\n"
+          + "\014content_text\030\022 \001(\0132\".google.apps.card.v1.TextParagraph\022\021\n"
           + "\twrap_text\030\005 \001(\010\022\024\n"
-          + "\014bottom_label\030\006 \001(\t\022.\n"
+          + "\014bottom_label\030\006 \001(\t\022=\n"
+          + "\021bottom_label_text\030\023 \001(\0132\".google.apps.card.v1.TextParagraph\022.\n"
           + "\010on_click\030\007 \001(\0132\034.google.apps.card.v1.OnClick\022-\n"
           + "\006button\030\010 \001(\0132\033.google.apps.card.v1.ButtonH\000\022J\n"
-          + "\016switch_control\030\t \001(\01320.googl"
-          + "e.apps.card.v1.DecoratedText.SwitchControlH\000\022-\n"
+          + "\016switch_control\030\t"
+          + " \001(\01320.google.apps.card.v1.DecoratedText.SwitchControlH\000\022-\n"
           + "\010end_icon\030\013 \001(\0132\031.google.apps.card.v1.IconH\000\032\201\002\n\r"
           + "SwitchControl\022\014\n"
           + "\004name\030\001 \001(\t\022\r\n"
           + "\005value\030\002 \001(\t\022\020\n"
           + "\010selected\030\003 \001(\010\0225\n"
           + "\020on_change_action\030\004 \001(\0132\033.google.apps.card.v1.Action\022R\n"
-          + "\014control_type\030\005 \001(\0162<.goog"
-          + "le.apps.card.v1.DecoratedText.SwitchControl.ControlType\"6\n"
+          + "\014control_type\030\005 \001(\0162<.google.apps.card."
+          + "v1.DecoratedText.SwitchControl.ControlType\"6\n"
           + "\013ControlType\022\n\n"
           + "\006SWITCH\020\000\022\014\n"
           + "\010CHECKBOX\020\001\022\r\n"
           + "\tCHECK_BOX\020\002B\t\n"
-          + "\007control\"\364\002\n"
+          + "\007control\"\251\003\n"
           + "\tTextInput\022\014\n"
           + "\004name\030\001 \001(\t\022\r\n"
           + "\005label\030\002 \001(\t\022\021\n"
@@ -275,7 +339,8 @@ public final class CardProto {
           + "\004type\030\005 \001(\0162#.google.apps.card.v1.TextInput.Type\0225\n"
           + "\020on_change_action\030\006 \001(\0132\033.google.apps.card.v1.Action\022=\n"
           + "\023initial_suggestions\030\007 \001(\0132 .google.apps.card.v1.Suggestions\0229\n"
-          + "\024auto_complete_action\030\010 \001(\0132\033.google.apps.card.v1.Action\022\030\n"
+          + "\024auto_complete_action\030\010 \001(\0132\033.google.apps.card.v1.Action\0223\n\n"
+          + "validation\030\013 \001(\0132\037.google.apps.card.v1.Validation\022\030\n"
           + "\020placeholder_text\030\014 \001(\t\"*\n"
           + "\004Type\022\017\n"
           + "\013SINGLE_LINE\020\000\022\021\n\r"
@@ -286,58 +351,76 @@ public final class CardProto {
           + "\004text\030\001 \001(\tH\000B\t\n"
           + "\007content\":\n\n"
           + "ButtonList\022,\n"
-          + "\007buttons\030\001 \003(\0132\033.google.apps.card.v1.Button\"\353\006\n"
+          + "\007buttons\030\001 \003(\0132\033.google.apps.card.v1.Button\"\244\007\n"
           + "\016SelectionInput\022\014\n"
           + "\004name\030\001 \001(\t\022\r\n"
           + "\005label\030\002 \001(\t\022?\n"
           + "\004type\030\003 \001(\01621.google.apps.card.v1.SelectionInput.SelectionType\022@\n"
           + "\005items\030\004 \003(\01321.google.apps.card.v1.SelectionInput.SelectionItem\0225\n"
-          + "\020on_change_action\030\005 \001(\0132\033.google.apps.card.v1.Action\022\'\n"
-          + "\037multi_select_max_selected_items\030\006 \001(\005\022%\n"
+          + "\020on_change_action\030\005 \001(\0132\033.google.apps.card.v1.Action\022,\n"
+          + "\037multi_select_max_selected_items\030\006 \001(\005H\001\210\001\001\022%\n"
           + "\035multi_select_min_query_length\030\007 \001(\005\022;\n"
           + "\024external_data_source\030\010 \001(\0132\033.google.apps.card.v1.ActionH\000\022V\n"
           + "\024platform_data_source\030\t"
-          + " \001(\01326.google.apps.card.v1.SelectionInput.PlatformDataSourceH\000\032k\n\r"
+          + " \001(\01326.google.apps.card.v1.SelectionInput.PlatformDataSourceH\000\032{\n\r"
           + "SelectionItem\022\014\n"
           + "\004text\030\001 \001(\t\022\r\n"
           + "\005value\030\002 \001(\t\022\020\n"
-          + "\010selected\030\003 \001(\010\022\026\n"
-          + "\016start_icon_uri\030\004 \001(\t\022\023\n"
-          + "\013bottom_text\030\005 \001(\t\032\265\001\n"
+          + "\010selected\030\003 \001(\010\022\030\n"
+          + "\016start_icon_uri\030\004 \001(\tH\000\022\023\n"
+          + "\013bottom_text\030\005 \001(\tB\014\n\n"
+          + "start_icon\032\265\001\n"
           + "\022PlatformDataSource\022e\n"
-          + "\022common_data_source\030\001 \001(\0162G.google.apps.c"
-          + "ard.v1.SelectionInput.PlatformDataSource.CommonDataSourceH\000\")\n"
+          + "\022common_data_source\030\001 \001(\0162G.google.apps.card.v1.SelectionInp"
+          + "ut.PlatformDataSource.CommonDataSourceH\000\")\n"
           + "\020CommonDataSource\022\013\n"
           + "\007UNKNOWN\020\000\022\010\n"
           + "\004USER\020\001B\r\n"
-          + "\013data_source\"\\\n"
-          + "\r"
+          + "\013data_source\"\\\n\r"
           + "SelectionType\022\r\n"
           + "\tCHECK_BOX\020\000\022\020\n"
           + "\014RADIO_BUTTON\020\001\022\n\n"
           + "\006SWITCH\020\002\022\014\n"
           + "\010DROPDOWN\020\003\022\020\n"
           + "\014MULTI_SELECT\020\004B\032\n"
-          + "\030multi_select_data_source\"\247\002\n"
+          + "\030multi_select_data_sourceB\"\n"
+          + " _multi_select_max_selected_items\"\277\002\n"
           + "\016DateTimePicker\022\014\n"
           + "\004name\030\001 \001(\t\022\r\n"
           + "\005label\030\002 \001(\t\022D\n"
-          + "\004type\030\003"
-          + " \001(\01626.google.apps.card.v1.DateTimePicker.DateTimePickerType\022\026\n"
-          + "\016value_ms_epoch\030\004 \001(\003\022\034\n"
+          + "\004type\030\003 \001(\01626"
+          + ".google.apps.card.v1.DateTimePicker.DateTimePickerType\022\033\n"
+          + "\016value_ms_epoch\030\004 \001(\003H\000\210\001\001\022\034\n"
           + "\024timezone_offset_date\030\005 \001(\005\0225\n"
           + "\020on_change_action\030\006 \001(\0132\033.google.apps.card.v1.Action\"E\n"
           + "\022DateTimePickerType\022\021\n\r"
           + "DATE_AND_TIME\020\000\022\r\n"
           + "\tDATE_ONLY\020\001\022\r\n"
-          + "\tTIME_ONLY\020\002\"\266\001\n"
+          + "\tTIME_ONLY\020\002B\021\n"
+          + "\017_value_ms_epoch\"\345\001\n"
+          + "\014OverflowMenu\022A\n"
+          + "\005items\030\001"
+          + " \003(\01322.google.apps.card.v1.OverflowMenu.OverflowMenuItem\032\221\001\n"
+          + "\020OverflowMenuItem\022-\n\n"
+          + "start_icon\030\001 \001(\0132\031.google.apps.card.v1.Icon\022\014\n"
+          + "\004text\030\002 \001(\t\022.\n"
+          + "\010on_click\030\003 \001(\0132\034.google.apps.card.v1.OnClick\022\020\n"
+          + "\010disabled\030\004 \001(\010\"\300\002\n"
           + "\006Button\022\014\n"
           + "\004text\030\001 \001(\t\022\'\n"
           + "\004icon\030\002 \001(\0132\031.google.apps.card.v1.Icon\022!\n"
           + "\005color\030\003 \001(\0132\022.google.type.Color\022.\n"
           + "\010on_click\030\004 \001(\0132\034.google.apps.card.v1.OnClick\022\020\n"
           + "\010disabled\030\005 \001(\010\022\020\n"
-          + "\010alt_text\030\006 \001(\t\"\302\001\n"
+          + "\010alt_text\030\006 \001(\t\022.\n"
+          + "\004type\030\007 \001(\0162 .google.apps.card.v1.Button.Type\"X\n"
+          + "\004Type\022\024\n"
+          + "\020TYPE_UNSPECIFIED\020\000\022\014\n"
+          + "\010OUTLINED\020\001\022\n\n"
+          + "\006FILLED\020\002\022\020\n"
+          + "\014FILLED_TONAL\020\003\022\016\n"
+          + "\n"
+          + "BORDERLESS\020\004\"\302\001\n"
           + "\004Icon\022\024\n\n"
           + "known_icon\030\001 \001(\tH\000\022\022\n"
           + "\010icon_url\030\002 \001(\tH\000\022:\n\r"
@@ -351,8 +434,8 @@ public final class CardProto {
           + "\006weight\030\003 \001(\005\022\r\n"
           + "\005grade\030\004 \001(\005\"\332\001\n"
           + "\016ImageCropStyle\022?\n"
-          + "\004type\030\001 \001(\01621.google.app"
-          + "s.card.v1.ImageCropStyle.ImageCropType\022\024\n"
+          + "\004type\030\001 \001(\01621"
+          + ".google.apps.card.v1.ImageCropStyle.ImageCropType\022\024\n"
           + "\014aspect_ratio\030\002 \001(\001\"q\n\r"
           + "ImageCropType\022\037\n"
           + "\033IMAGE_CROP_TYPE_UNSPECIFIED\020\000\022\n\n"
@@ -365,8 +448,7 @@ public final class CardProto {
           + "\014stroke_color\030\002 \001(\0132\022.google.type.Color\022\025\n\r"
           + "corner_radius\030\003 \001(\005\"D\n\n"
           + "BorderType\022\033\n"
-          + "\027BORDER_TYPE_UNSPECIFIED\020\000\022\r"
-          + "\n"
+          + "\027BORDER_TYPE_UNSPECIFIED\020\000\022\r\n"
           + "\tNO_BORDER\020\001\022\n\n"
           + "\006STROKE\020\002\"\246\001\n"
           + "\016ImageComponent\022\021\n"
@@ -389,18 +471,18 @@ public final class CardProto {
           + "\016GridItemLayout\022 \n"
           + "\034GRID_ITEM_LAYOUT_UNSPECIFIED\020\000\022\016\n\n"
           + "TEXT_BELOW\020\001\022\016\n\n"
-          + "TEXT_ABOVE\020\002\"\375\007\n"
+          + "TEXT_ABOVE\020\002\"\261\010\n"
           + "\007Columns\0229\n"
-          + "\014column_items\030\002 \003(\0132#.google.apps.card.v1.Columns.Column\032\266\007\n"
+          + "\014column_items\030\002 \003(\0132#.google.apps.card.v1.Columns.Column\032\352\007\n"
           + "\006Column\022V\n"
           + "\025horizontal_size_style\030\001"
           + " \001(\01627.google.apps.card.v1.Columns.Column.HorizontalSizeStyle\022M\n"
           + "\024horizontal_alignment\030\002"
           + " \001(\0162/.google.apps.card.v1.Widget.HorizontalAlignment\022Q\n"
-          + "\022vertical_alignment\030\003"
-          + " \001(\01625.google.apps.card.v1.Columns.Column.VerticalAlignment\022<\n"
+          + "\022vertical_alignment\030\003 \001(\01625.google.apps.c"
+          + "ard.v1.Columns.Column.VerticalAlignment\022<\n"
           + "\007widgets\030\004"
-          + " \003(\0132+.google.apps.card.v1.Columns.Column.Widgets\032\251\003\n"
+          + " \003(\0132+.google.apps.card.v1.Columns.Column.Widgets\032\335\003\n"
           + "\007Widgets\022<\n"
           + "\016text_paragraph\030\001 \001(\0132\".google.apps.card.v1.TextParagraphH\000\022+\n"
           + "\005image\030\002 \001(\0132\032.google.apps.card.v1.ImageH\000\022<\n"
@@ -408,8 +490,9 @@ public final class CardProto {
           + "\013button_list\030\004 \001(\0132\037.google.apps.card.v1.ButtonListH\000\0224\n\n"
           + "text_input\030\005 \001(\0132\036.google.apps.card.v1.TextInputH\000\022>\n"
           + "\017selection_input\030\006 \001(\0132#.google.apps.card.v1.SelectionInputH\000\022?\n"
-          + "\020date_time_picker\030\007"
-          + " \001(\0132#.google.apps.card.v1.DateTimePickerH\000B\006\n"
+          + "\020date_time_picker\030\007 \001"
+          + "(\0132#.google.apps.card.v1.DateTimePickerH\000\0222\n"
+          + "\tchip_list\030\010 \001(\0132\035.google.apps.card.v1.ChipListH\000B\006\n"
           + "\004data\"n\n"
           + "\023HorizontalSizeStyle\022%\n"
           + "!HORIZONTAL_SIZE_STYLE_UNSPECIFIED\020\000\022\030\n"
@@ -419,13 +502,26 @@ public final class CardProto {
           + "\036VERTICAL_ALIGNMENT_UNSPECIFIED\020\000\022\n\n"
           + "\006CENTER\020\001\022\007\n"
           + "\003TOP\020\002\022\n\n"
-          + "\006BOTTOM\020\003\"\340\001\n"
+          + "\006BOTTOM\020\003\"\330\001\n"
+          + "\010Carousel\022B\n"
+          + "\016carousel_cards\030\004"
+          + " \003(\0132*.google.apps.card.v1.Carousel.CarouselCard\032\207\001\n"
+          + "\014CarouselCard\0227\n"
+          + "\007widgets\030\001 \003(\0132&.google.apps.card.v1.Card.NestedWidget\022>\n"
+          + "\016footer_widgets\030\002 \003"
+          + "(\0132&.google.apps.card.v1.Card.NestedWidget\"\312\001\n"
+          + "\017CollapseControl\022M\n"
+          + "\024horizontal_alignment\030\001"
+          + " \001(\0162/.google.apps.card.v1.Widget.HorizontalAlignment\0222\n\r"
+          + "expand_button\030\002 \001(\0132\033.google.apps.card.v1.Button\0224\n"
+          + "\017collapse_button\030\003 \001(\0132\033.google.apps.card.v1.Button\"\234\002\n"
           + "\007OnClick\022-\n"
           + "\006action\030\001 \001(\0132\033.google.apps.card.v1.ActionH\000\0222\n"
           + "\topen_link\030\002 \001(\0132\035.google.apps.card.v1.OpenLinkH\000\022?\n"
           + "\030open_dynamic_link_action\030\003"
           + " \001(\0132\033.google.apps.card.v1.ActionH\000\022)\n"
-          + "\004card\030\004 \001(\0132\031.google.apps.card.v1.CardH\000B\006\n"
+          + "\004card\030\004 \001(\0132\031.google.apps.card.v1.CardH\000\022:\n\r"
+          + "overflow_menu\030\010 \001(\0132!.google.apps.card.v1.OverflowMenuH\000B\006\n"
           + "\004data\"\321\001\n"
           + "\010OpenLink\022\013\n"
           + "\003url\030\001 \001(\t\0225\n"
@@ -436,28 +532,52 @@ public final class CardProto {
           + "\007OVERLAY\020\001\"\"\n"
           + "\007OnClose\022\013\n"
           + "\007NOTHING\020\000\022\n\n"
-          + "\006RELOAD\020\001\"\210\003\n"
+          + "\006RELOAD\020\001\"\304\003\n"
           + "\006Action\022\020\n"
           + "\010function\030\001 \001(\t\022?\n\n"
           + "parameters\030\002 \003(\0132+.google.apps.card.v1.Action.ActionParameter\022A\n"
-          + "\016load_indicator\030\003 \001(\0162)."
-          + "google.apps.card.v1.Action.LoadIndicator\022\026\n"
+          + "\016load_indicator\030\003"
+          + " \001(\0162).google.apps.card.v1.Action.LoadIndicator\022\026\n"
           + "\016persist_values\030\004 \001(\010\022<\n"
-          + "\013interaction\030\005 \001(\0162\'.google.apps.card.v1.Action.Interaction\032-\n"
+          + "\013interaction\030\005 \001(\0162\'.google.apps.card.v1.Action.Interaction\022\030\n"
+          + "\020required_widgets\030\006 \003(\t\022 \n"
+          + "\030all_widgets_are_required\030\007 \001(\010\032-\n"
           + "\017ActionParameter\022\013\n"
-          + "\003key\030\001 \001(\t\022\r"
-          + "\n"
+          + "\003key\030\001 \001(\t\022\r\n"
           + "\005value\030\002 \001(\t\"&\n\r"
           + "LoadIndicator\022\013\n"
           + "\007SPINNER\020\000\022\010\n"
           + "\004NONE\020\001\";\n"
           + "\013Interaction\022\033\n"
           + "\027INTERACTION_UNSPECIFIED\020\000\022\017\n"
-          + "\013OPEN_DIALOG\020\001B\244\001\n"
-          + "\027com.google.apps.card.v1B\tCardProtoP\001Z7goo"
-          + "gle.golang.org/genproto/googleapis/apps/"
-          + "card/v1;card\252\002\023Google.Apps.Card.V1\312\002\023Goo"
-          + "gle\\Apps\\Card\\V1\352\002\026Google::Apps::Card::V1b\006proto3"
+          + "\013OPEN_DIALOG\020\001\"\314\001\n\n"
+          + "Validation\022\027\n"
+          + "\017character_limit\030\001 \001(\005\022=\n\n"
+          + "input_type\030\002 \001(\0162).google.apps.card.v1.Validation.InputType\"f\n"
+          + "\tInputType\022\032\n"
+          + "\026INPUT_TYPE_UNSPECIFIED\020\000\022\010\n"
+          + "\004TEXT\020\001\022\013\n"
+          + "\007INTEGER\020\002\022\t\n"
+          + "\005FLOAT\020\003\022\t\n"
+          + "\005EMAIL\020\004\022\020\n"
+          + "\014EMOJI_PICKER\020\005\"\264\001\n"
+          + "\010ChipList\0224\n"
+          + "\006layout\030\001 \001(\0162$.google.apps.card.v1.ChipList.Layout\022(\n"
+          + "\005chips\030\002 \003(\0132\031.google.apps.card.v1.Chip\"H\n"
+          + "\006Layout\022\026\n"
+          + "\022LAYOUT_UNSPECIFIED\020\000\022\013\n"
+          + "\007WRAPPED\020\001\022\031\n"
+          + "\025HORIZONTAL_SCROLLABLE\020\002\"\247\001\n"
+          + "\004Chip\022\'\n"
+          + "\004icon\030\001 \001(\0132\031.google.apps.card.v1.Icon\022\r\n"
+          + "\005label\030\002 \001(\t\022.\n"
+          + "\010on_click\030\003 \001(\0132\034.google.apps.card.v1.OnClick\022\023\n"
+          + "\007enabled\030\004 \001(\010B\002\030\001\022\020\n"
+          + "\010disabled\030\006 \001(\010\022\020\n"
+          + "\010alt_text\030\005 \001(\tB\244\001\n"
+          + "\027com.google.apps.card.v1B\tCardProtoP\001Z7google.golang.org/genproto/googleapi"
+          + "s/apps/card/v1;card\252\002\023Google.Apps.Card.V"
+          + "1\312\002\023Google\\Apps\\Card\\V1\352\002\026Google::Apps::Card::V1b\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
@@ -493,7 +613,7 @@ public final class CardProto {
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_apps_card_v1_Card_Section_descriptor,
             new java.lang.String[] {
-              "Header", "Widgets", "Collapsible", "UncollapsibleWidgetsCount",
+              "Header", "Widgets", "Collapsible", "UncollapsibleWidgetsCount", "CollapseControl",
             });
     internal_static_google_apps_card_v1_Card_CardAction_descriptor =
         internal_static_google_apps_card_v1_Card_descriptor.getNestedTypes().get(2);
@@ -503,8 +623,16 @@ public final class CardProto {
             new java.lang.String[] {
               "ActionLabel", "OnClick",
             });
-    internal_static_google_apps_card_v1_Card_CardFixedFooter_descriptor =
+    internal_static_google_apps_card_v1_Card_NestedWidget_descriptor =
         internal_static_google_apps_card_v1_Card_descriptor.getNestedTypes().get(3);
+    internal_static_google_apps_card_v1_Card_NestedWidget_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_apps_card_v1_Card_NestedWidget_descriptor,
+            new java.lang.String[] {
+              "TextParagraph", "ButtonList", "Image", "Data",
+            });
+    internal_static_google_apps_card_v1_Card_CardFixedFooter_descriptor =
+        internal_static_google_apps_card_v1_Card_descriptor.getNestedTypes().get(4);
     internal_static_google_apps_card_v1_Card_CardFixedFooter_fieldAccessorTable =
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_apps_card_v1_Card_CardFixedFooter_descriptor,
@@ -527,6 +655,8 @@ public final class CardProto {
               "Divider",
               "Grid",
               "Columns",
+              "Carousel",
+              "ChipList",
               "HorizontalAlignment",
               "Data",
             });
@@ -536,7 +666,7 @@ public final class CardProto {
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_apps_card_v1_TextParagraph_descriptor,
             new java.lang.String[] {
-              "Text",
+              "Text", "MaxLines", "TextSyntax",
             });
     internal_static_google_apps_card_v1_Image_descriptor = getDescriptor().getMessageTypes().get(3);
     internal_static_google_apps_card_v1_Image_fieldAccessorTable =
@@ -558,10 +688,14 @@ public final class CardProto {
             new java.lang.String[] {
               "Icon",
               "StartIcon",
+              "StartIconVerticalAlignment",
               "TopLabel",
+              "TopLabelText",
               "Text",
+              "ContentText",
               "WrapText",
               "BottomLabel",
+              "BottomLabelText",
               "OnClick",
               "Button",
               "SwitchControl",
@@ -590,6 +724,7 @@ public final class CardProto {
               "OnChangeAction",
               "InitialSuggestions",
               "AutoCompleteAction",
+              "Validation",
               "PlaceholderText",
             });
     internal_static_google_apps_card_v1_Suggestions_descriptor =
@@ -639,7 +774,7 @@ public final class CardProto {
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_apps_card_v1_SelectionInput_SelectionItem_descriptor,
             new java.lang.String[] {
-              "Text", "Value", "Selected", "StartIconUri", "BottomText",
+              "Text", "Value", "Selected", "StartIconUri", "BottomText", "StartIcon",
             });
     internal_static_google_apps_card_v1_SelectionInput_PlatformDataSource_descriptor =
         internal_static_google_apps_card_v1_SelectionInput_descriptor.getNestedTypes().get(1);
@@ -657,15 +792,31 @@ public final class CardProto {
             new java.lang.String[] {
               "Name", "Label", "Type", "ValueMsEpoch", "TimezoneOffsetDate", "OnChangeAction",
             });
-    internal_static_google_apps_card_v1_Button_descriptor =
+    internal_static_google_apps_card_v1_OverflowMenu_descriptor =
         getDescriptor().getMessageTypes().get(11);
+    internal_static_google_apps_card_v1_OverflowMenu_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_apps_card_v1_OverflowMenu_descriptor,
+            new java.lang.String[] {
+              "Items",
+            });
+    internal_static_google_apps_card_v1_OverflowMenu_OverflowMenuItem_descriptor =
+        internal_static_google_apps_card_v1_OverflowMenu_descriptor.getNestedTypes().get(0);
+    internal_static_google_apps_card_v1_OverflowMenu_OverflowMenuItem_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_apps_card_v1_OverflowMenu_OverflowMenuItem_descriptor,
+            new java.lang.String[] {
+              "StartIcon", "Text", "OnClick", "Disabled",
+            });
+    internal_static_google_apps_card_v1_Button_descriptor =
+        getDescriptor().getMessageTypes().get(12);
     internal_static_google_apps_card_v1_Button_fieldAccessorTable =
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_apps_card_v1_Button_descriptor,
             new java.lang.String[] {
-              "Text", "Icon", "Color", "OnClick", "Disabled", "AltText",
+              "Text", "Icon", "Color", "OnClick", "Disabled", "AltText", "Type",
             });
-    internal_static_google_apps_card_v1_Icon_descriptor = getDescriptor().getMessageTypes().get(12);
+    internal_static_google_apps_card_v1_Icon_descriptor = getDescriptor().getMessageTypes().get(13);
     internal_static_google_apps_card_v1_Icon_fieldAccessorTable =
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_apps_card_v1_Icon_descriptor,
@@ -673,7 +824,7 @@ public final class CardProto {
               "KnownIcon", "IconUrl", "MaterialIcon", "AltText", "ImageType", "Icons",
             });
     internal_static_google_apps_card_v1_MaterialIcon_descriptor =
-        getDescriptor().getMessageTypes().get(13);
+        getDescriptor().getMessageTypes().get(14);
     internal_static_google_apps_card_v1_MaterialIcon_fieldAccessorTable =
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_apps_card_v1_MaterialIcon_descriptor,
@@ -681,7 +832,7 @@ public final class CardProto {
               "Name", "Fill", "Weight", "Grade",
             });
     internal_static_google_apps_card_v1_ImageCropStyle_descriptor =
-        getDescriptor().getMessageTypes().get(14);
+        getDescriptor().getMessageTypes().get(15);
     internal_static_google_apps_card_v1_ImageCropStyle_fieldAccessorTable =
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_apps_card_v1_ImageCropStyle_descriptor,
@@ -689,7 +840,7 @@ public final class CardProto {
               "Type", "AspectRatio",
             });
     internal_static_google_apps_card_v1_BorderStyle_descriptor =
-        getDescriptor().getMessageTypes().get(15);
+        getDescriptor().getMessageTypes().get(16);
     internal_static_google_apps_card_v1_BorderStyle_fieldAccessorTable =
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_apps_card_v1_BorderStyle_descriptor,
@@ -697,14 +848,14 @@ public final class CardProto {
               "Type", "StrokeColor", "CornerRadius",
             });
     internal_static_google_apps_card_v1_ImageComponent_descriptor =
-        getDescriptor().getMessageTypes().get(16);
+        getDescriptor().getMessageTypes().get(17);
     internal_static_google_apps_card_v1_ImageComponent_fieldAccessorTable =
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_apps_card_v1_ImageComponent_descriptor,
             new java.lang.String[] {
               "ImageUri", "AltText", "CropStyle", "BorderStyle",
             });
-    internal_static_google_apps_card_v1_Grid_descriptor = getDescriptor().getMessageTypes().get(17);
+    internal_static_google_apps_card_v1_Grid_descriptor = getDescriptor().getMessageTypes().get(18);
     internal_static_google_apps_card_v1_Grid_fieldAccessorTable =
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_apps_card_v1_Grid_descriptor,
@@ -720,7 +871,7 @@ public final class CardProto {
               "Id", "Image", "Title", "Subtitle", "Layout",
             });
     internal_static_google_apps_card_v1_Columns_descriptor =
-        getDescriptor().getMessageTypes().get(18);
+        getDescriptor().getMessageTypes().get(19);
     internal_static_google_apps_card_v1_Columns_fieldAccessorTable =
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_apps_card_v1_Columns_descriptor,
@@ -748,18 +899,43 @@ public final class CardProto {
               "TextInput",
               "SelectionInput",
               "DateTimePicker",
+              "ChipList",
               "Data",
             });
+    internal_static_google_apps_card_v1_Carousel_descriptor =
+        getDescriptor().getMessageTypes().get(20);
+    internal_static_google_apps_card_v1_Carousel_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_apps_card_v1_Carousel_descriptor,
+            new java.lang.String[] {
+              "CarouselCards",
+            });
+    internal_static_google_apps_card_v1_Carousel_CarouselCard_descriptor =
+        internal_static_google_apps_card_v1_Carousel_descriptor.getNestedTypes().get(0);
+    internal_static_google_apps_card_v1_Carousel_CarouselCard_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_apps_card_v1_Carousel_CarouselCard_descriptor,
+            new java.lang.String[] {
+              "Widgets", "FooterWidgets",
+            });
+    internal_static_google_apps_card_v1_CollapseControl_descriptor =
+        getDescriptor().getMessageTypes().get(21);
+    internal_static_google_apps_card_v1_CollapseControl_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_apps_card_v1_CollapseControl_descriptor,
+            new java.lang.String[] {
+              "HorizontalAlignment", "ExpandButton", "CollapseButton",
+            });
     internal_static_google_apps_card_v1_OnClick_descriptor =
-        getDescriptor().getMessageTypes().get(19);
+        getDescriptor().getMessageTypes().get(22);
     internal_static_google_apps_card_v1_OnClick_fieldAccessorTable =
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_apps_card_v1_OnClick_descriptor,
             new java.lang.String[] {
-              "Action", "OpenLink", "OpenDynamicLinkAction", "Card", "Data",
+              "Action", "OpenLink", "OpenDynamicLinkAction", "Card", "OverflowMenu", "Data",
             });
     internal_static_google_apps_card_v1_OpenLink_descriptor =
-        getDescriptor().getMessageTypes().get(20);
+        getDescriptor().getMessageTypes().get(23);
     internal_static_google_apps_card_v1_OpenLink_fieldAccessorTable =
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_apps_card_v1_OpenLink_descriptor,
@@ -767,12 +943,18 @@ public final class CardProto {
               "Url", "OpenAs", "OnClose",
             });
     internal_static_google_apps_card_v1_Action_descriptor =
-        getDescriptor().getMessageTypes().get(21);
+        getDescriptor().getMessageTypes().get(24);
     internal_static_google_apps_card_v1_Action_fieldAccessorTable =
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_apps_card_v1_Action_descriptor,
             new java.lang.String[] {
-              "Function", "Parameters", "LoadIndicator", "PersistValues", "Interaction",
+              "Function",
+              "Parameters",
+              "LoadIndicator",
+              "PersistValues",
+              "Interaction",
+              "RequiredWidgets",
+              "AllWidgetsAreRequired",
             });
     internal_static_google_apps_card_v1_Action_ActionParameter_descriptor =
         internal_static_google_apps_card_v1_Action_descriptor.getNestedTypes().get(0);
@@ -781,6 +963,29 @@ public final class CardProto {
             internal_static_google_apps_card_v1_Action_ActionParameter_descriptor,
             new java.lang.String[] {
               "Key", "Value",
+            });
+    internal_static_google_apps_card_v1_Validation_descriptor =
+        getDescriptor().getMessageTypes().get(25);
+    internal_static_google_apps_card_v1_Validation_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_apps_card_v1_Validation_descriptor,
+            new java.lang.String[] {
+              "CharacterLimit", "InputType",
+            });
+    internal_static_google_apps_card_v1_ChipList_descriptor =
+        getDescriptor().getMessageTypes().get(26);
+    internal_static_google_apps_card_v1_ChipList_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_apps_card_v1_ChipList_descriptor,
+            new java.lang.String[] {
+              "Layout", "Chips",
+            });
+    internal_static_google_apps_card_v1_Chip_descriptor = getDescriptor().getMessageTypes().get(27);
+    internal_static_google_apps_card_v1_Chip_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_apps_card_v1_Chip_descriptor,
+            new java.lang.String[] {
+              "Icon", "Label", "OnClick", "Enabled", "Disabled", "AltText",
             });
     com.google.type.ColorProto.getDescriptor();
   }
