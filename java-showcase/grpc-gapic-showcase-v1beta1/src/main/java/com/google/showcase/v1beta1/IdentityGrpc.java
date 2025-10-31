@@ -24,9 +24,6 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  * A simple identity service.
  * </pre>
  */
-@javax.annotation.Generated(
-    value = "by gRPC proto compiler",
-    comments = "Source: schema/google/showcase/v1beta1/identity.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class IdentityGrpc {
 
@@ -502,8 +499,8 @@ public final class IdentityGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.User createUser(
-        com.google.showcase.v1beta1.CreateUserRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.CreateUserRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getCreateUserMethod(), getCallOptions(), request);
     }
 
@@ -515,8 +512,8 @@ public final class IdentityGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.User getUser(
-        com.google.showcase.v1beta1.GetUserRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.GetUserRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getGetUserMethod(), getCallOptions(), request);
     }
 
@@ -528,8 +525,8 @@ public final class IdentityGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.User updateUser(
-        com.google.showcase.v1beta1.UpdateUserRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.UpdateUserRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getUpdateUserMethod(), getCallOptions(), request);
     }
 
@@ -541,8 +538,8 @@ public final class IdentityGrpc {
      * </pre>
      */
     public com.google.protobuf.Empty deleteUser(
-        com.google.showcase.v1beta1.DeleteUserRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.DeleteUserRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getDeleteUserMethod(), getCallOptions(), request);
     }
 
@@ -554,8 +551,8 @@ public final class IdentityGrpc {
      * </pre>
      */
     public com.google.showcase.v1beta1.ListUsersResponse listUsers(
-        com.google.showcase.v1beta1.ListUsersRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+        com.google.showcase.v1beta1.ListUsersRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getListUsersMethod(), getCallOptions(), request);
     }
   }

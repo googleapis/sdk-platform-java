@@ -68,10 +68,10 @@ steps:
   - |
     mvn dependency:copy \
       -B -ntp \
-      -Dartifact=com.google.api:gapic-generator-java:2.55.1 \
+      -Dartifact=com.google.api:gapic-generator-java:2.63.0 \
       -DoutputDirectory=/workspace
     cd /workspace
-    mv gapic-generator-java-2.55.1.jar gapic-generator-java.jar
+    mv gapic-generator-java-2.63.0.jar gapic-generator-java.jar
   id: prepare-generator-jar
   waitFor: [ "-" ]
 
