@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.64.0](https://github.com/googleapis/sdk-platform-java/compare/v2.63.0...v2.64.0) (2025-10-31)
+
+
+### Features
+
+* [common-protos] Add `Carousel` widget ([1e4a7e5](https://github.com/googleapis/sdk-platform-java/commit/1e4a7e5088c88e5752cc24cbe44b14b3ce409778))
+* **librariangen:** add generate package ([#3952](https://github.com/googleapis/sdk-platform-java/issues/3952)) ([2f6c75d](https://github.com/googleapis/sdk-platform-java/commit/2f6c75da3021d030c7a192f1fbb4b30908ef9dad))
+* **librariangen:** generate grpc stubs and resource helpers ([#3967](https://github.com/googleapis/sdk-platform-java/issues/3967)) ([452d703](https://github.com/googleapis/sdk-platform-java/commit/452d703b703ab3222fd1a7060ed5e1ac6363322b))
+
+
+### Dependencies
+
+* Bump grpc-java to v1.76.0 ([#3942](https://github.com/googleapis/sdk-platform-java/issues/3942)) ([ffb557c](https://github.com/googleapis/sdk-platform-java/commit/ffb557ce8f3460f722b27b30af5e470edd93431b))
+
 ## [2.63.0](https://github.com/googleapis/sdk-platform-java/compare/v2.62.3...v2.63.0) (2025-10-16)
 
 
