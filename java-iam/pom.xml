@@ -143,6 +143,16 @@
         <version>1.58.1-SNAPSHOT</version><!-- {x-version-update:grpc-google-iam-v3:current} -->
       </dependency>
       <dependency>
+        <groupId>com.google.api.grpc</groupId>
+        <artifactId>proto-google-iam-v3</artifactId>
+        <version>1.56.1-SNAPSHOT</version><!-- {x-version-update:proto-google-iam-v3:current} -->
+      </dependency>
+      <dependency>
+        <groupId>com.google.api.grpc</groupId>
+        <artifactId>grpc-google-iam-v3</artifactId>
+        <version>1.56.1-SNAPSHOT</version><!-- {x-version-update:grpc-google-iam-v3:current} -->
+      </dependency>
+      <dependency>
         <groupId>javax.annotation</groupId>
         <artifactId>javax.annotation-api</artifactId>
         <version>${javax.annotation-api.version}</version>

@@ -38,10 +38,10 @@ import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
-import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.FieldMask;
+import com.google.protobuf.Message;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -126,7 +126,7 @@ public class ComplianceClientTest {
     RepeatResponse actualResponse = client.repeatDataBody(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockCompliance.getRequests();
+    List<Message> actualRequests = mockCompliance.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     RepeatRequest actualRequest = ((RepeatRequest) actualRequests.get(0));
 
@@ -198,7 +198,7 @@ public class ComplianceClientTest {
     RepeatResponse actualResponse = client.repeatDataBodyInfo(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockCompliance.getRequests();
+    List<Message> actualRequests = mockCompliance.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     RepeatRequest actualRequest = ((RepeatRequest) actualRequests.get(0));
 
@@ -270,7 +270,7 @@ public class ComplianceClientTest {
     RepeatResponse actualResponse = client.repeatDataQuery(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockCompliance.getRequests();
+    List<Message> actualRequests = mockCompliance.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     RepeatRequest actualRequest = ((RepeatRequest) actualRequests.get(0));
 
@@ -342,7 +342,7 @@ public class ComplianceClientTest {
     RepeatResponse actualResponse = client.repeatDataSimplePath(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockCompliance.getRequests();
+    List<Message> actualRequests = mockCompliance.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     RepeatRequest actualRequest = ((RepeatRequest) actualRequests.get(0));
 
@@ -414,7 +414,7 @@ public class ComplianceClientTest {
     RepeatResponse actualResponse = client.repeatDataPathResource(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockCompliance.getRequests();
+    List<Message> actualRequests = mockCompliance.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     RepeatRequest actualRequest = ((RepeatRequest) actualRequests.get(0));
 
@@ -486,7 +486,7 @@ public class ComplianceClientTest {
     RepeatResponse actualResponse = client.repeatDataPathTrailingResource(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockCompliance.getRequests();
+    List<Message> actualRequests = mockCompliance.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     RepeatRequest actualRequest = ((RepeatRequest) actualRequests.get(0));
 
@@ -558,7 +558,7 @@ public class ComplianceClientTest {
     RepeatResponse actualResponse = client.repeatDataBodyPut(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockCompliance.getRequests();
+    List<Message> actualRequests = mockCompliance.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     RepeatRequest actualRequest = ((RepeatRequest) actualRequests.get(0));
 
@@ -630,7 +630,7 @@ public class ComplianceClientTest {
     RepeatResponse actualResponse = client.repeatDataBodyPatch(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockCompliance.getRequests();
+    List<Message> actualRequests = mockCompliance.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     RepeatRequest actualRequest = ((RepeatRequest) actualRequests.get(0));
 
@@ -690,7 +690,7 @@ public class ComplianceClientTest {
     EnumResponse actualResponse = client.getEnum(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockCompliance.getRequests();
+    List<Message> actualRequests = mockCompliance.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     EnumRequest actualRequest = ((EnumRequest) actualRequests.get(0));
 
@@ -733,7 +733,7 @@ public class ComplianceClientTest {
     EnumResponse actualResponse = client.verifyEnum(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockCompliance.getRequests();
+    List<Message> actualRequests = mockCompliance.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     EnumResponse actualRequest = ((EnumResponse) actualRequests.get(0));
 
@@ -788,7 +788,7 @@ public class ComplianceClientTest {
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
 
-    List<AbstractMessage> actualRequests = mockLocations.getRequests();
+    List<Message> actualRequests = mockLocations.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     ListLocationsRequest actualRequest = ((ListLocationsRequest) actualRequests.get(0));
 
@@ -839,7 +839,7 @@ public class ComplianceClientTest {
     Location actualResponse = client.getLocation(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockLocations.getRequests();
+    List<Message> actualRequests = mockLocations.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetLocationRequest actualRequest = ((GetLocationRequest) actualRequests.get(0));
 
@@ -885,7 +885,7 @@ public class ComplianceClientTest {
     Policy actualResponse = client.setIamPolicy(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     SetIamPolicyRequest actualRequest = ((SetIamPolicyRequest) actualRequests.get(0));
 
@@ -937,7 +937,7 @@ public class ComplianceClientTest {
     Policy actualResponse = client.getIamPolicy(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     GetIamPolicyRequest actualRequest = ((GetIamPolicyRequest) actualRequests.get(0));
 
@@ -982,7 +982,7 @@ public class ComplianceClientTest {
     TestIamPermissionsResponse actualResponse = client.testIamPermissions(request);
     Assert.assertEquals(expectedResponse, actualResponse);
 
-    List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
+    List<Message> actualRequests = mockIAMPolicy.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     TestIamPermissionsRequest actualRequest = ((TestIamPermissionsRequest) actualRequests.get(0));
 
