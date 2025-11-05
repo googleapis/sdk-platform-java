@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.59.1](https://github.com/googleapis/sdk-platform-java/compare/v2.59.0...v2.59.1) (2025-11-05)
+## [2.59.3](https://github.com/googleapis/sdk-platform-java/compare/v2.59.0...v2.59.3) (2025-11-05)
 
 
 ### Bug Fixes
