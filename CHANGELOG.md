@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.59.1](https://github.com/googleapis/sdk-platform-java/compare/v2.59.0...v2.59.1) (2025-11-05)
+
+
+### Bug Fixes
+
+* (2.59.x) fix release-please-manifest and versions.txt ([#3983](https://github.com/googleapis/sdk-platform-java/issues/3983)) ([ca1156d](https://github.com/googleapis/sdk-platform-java/commit/ca1156d845930a952f150b607d3a626c38b82154))
+* (branch 2.59.x)empty changes in README.md to trigger a test release ([#3980](https://github.com/googleapis/sdk-platform-java/issues/3980)) ([c940671](https://github.com/googleapis/sdk-platform-java/commit/c9406719e7d9c7824025c94ec43bcf826b858dea))
+
 ## [2.59.0](https://github.com/googleapis/sdk-platform-java/compare/v2.58.0...v2.59.0) (2025-06-02)
 
 
