@@ -31,6 +31,8 @@ import com.google.logging.v2.LogEntryProto;
 import com.google.logging.v2.LoggingConfigProto;
 import com.google.logging.v2.LoggingMetricsProto;
 import com.google.logging.v2.LoggingProto;
+import com.google.protobuf.Empty;
+import com.google.protobuf.EmptyProto;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
@@ -142,6 +144,12 @@ class ResourceNameHelperClassComposerTest {
     // Additional resource names.
     FileDescriptor commonResourcesFileDescriptor = CommonResources.getDescriptor();
     resourceNames.putAll(Parser.parseResourceNames(commonResourcesFileDescriptor));
+
+    // Additional dependency found in LoggingService.DeleteLink LRO
+    // (google.longrunning.operation_info).response_type. Necessary for
+    // complete parsing of the descriptors.
+    FileDescriptor emptyFileDescriptor = EmptyProto.getDescriptor();
+    messageTypes.putAll(Parser.parseMessages(emptyFileDescriptor));
 
     Set<ResourceName> outputResourceNames = new HashSet<>();
     Parser.parseService(
