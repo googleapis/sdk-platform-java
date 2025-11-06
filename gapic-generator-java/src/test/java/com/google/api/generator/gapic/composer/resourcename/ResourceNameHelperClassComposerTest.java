@@ -31,7 +31,6 @@ import com.google.logging.v2.LogEntryProto;
 import com.google.logging.v2.LoggingConfigProto;
 import com.google.logging.v2.LoggingMetricsProto;
 import com.google.logging.v2.LoggingProto;
-import com.google.protobuf.Empty;
 import com.google.protobuf.EmptyProto;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
