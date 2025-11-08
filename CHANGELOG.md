@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.64.1](https://github.com/googleapis/sdk-platform-java/compare/v2.64.0...v2.64.1) (2025-11-07)
+
+
+### Dependencies
+
+* bump opentelemetry.version to 1.52.0 ([#3979](https://github.com/googleapis/sdk-platform-java/issues/3979)) ([764778c](https://github.com/googleapis/sdk-platform-java/commit/764778cd63da247037e65d9a8ec3db93caccc806))
+
 ## [2.64.0](https://github.com/googleapis/sdk-platform-java/compare/v2.63.0...v2.64.0) (2025-10-31)
 
 
