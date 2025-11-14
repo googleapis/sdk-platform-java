@@ -12,6 +12,12 @@
   "customManagers": [
     {
       "customType": "regex",
+      "fileMatch": ["dependencies.txt"],
+      "matchStrings": ["(?<depName>.*),(.*)=(?<currentValue>.*)"],
+      "datasourceTemplate": "maven"
+    },
+    {
+      "customType": "regex",
       "fileMatch": [
         "^gax-java/dependencies\\.properties$"
       ],
@@ -210,6 +216,16 @@
       "matchPackageNames": [
         "/^com.google.errorprone/"
       ]
+    },
+    {
+      "matchManagers": [
+        "regex"
+      ],
+      "semanticCommitType": "chore",
+      "matchFileNames": ["dependencies.txt"],
+      "matchDatasources": ["maven"],
+      "groupName": "Upper Bound Dependencies File",
+      "description": "Group all dependencies from the Upper Bound Dependencies File"
     }
   ]
 }

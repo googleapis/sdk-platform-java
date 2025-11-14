@@ -1898,12 +1898,15 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       serviceClientProtoBuilder.putRpcs(rpcName, methodList);
     }
 
-    metadataBuilder =
-        metadataBuilder.putServices(
-            service.name(),
-            GapicMetadata.ServiceForTransport.newBuilder()
-                .putClients("grpc", serviceClientProtoBuilder.build())
-                .build());
+    GapicMetadata.ServiceForTransport.Builder grpcServiceClient =
+        GapicMetadata.ServiceForTransport.newBuilder()
+            .putClients("grpc", serviceClientProtoBuilder.build());
+
+    if (service.hasApiVersion()) {
+      grpcServiceClient.setApiVersion(service.apiVersion());
+    }
+
+    metadataBuilder = metadataBuilder.putServices(service.name(), grpcServiceClient.build());
     context.updateGapicMetadata(metadataBuilder.build());
   }
 }

@@ -1,5 +1,53 @@
 # Changelog
 
+## [2.64.1](https://github.com/googleapis/sdk-platform-java/compare/v2.64.0...v2.64.1) (2025-11-07)
+
+
+### Dependencies
+
+* bump opentelemetry.version to 1.52.0 ([#3979](https://github.com/googleapis/sdk-platform-java/issues/3979)) ([764778c](https://github.com/googleapis/sdk-platform-java/commit/764778cd63da247037e65d9a8ec3db93caccc806))
+
+## [2.64.0](https://github.com/googleapis/sdk-platform-java/compare/v2.63.0...v2.64.0) (2025-10-31)
+
+
+### Features
+
+* [common-protos] Add `Carousel` widget ([1e4a7e5](https://github.com/googleapis/sdk-platform-java/commit/1e4a7e5088c88e5752cc24cbe44b14b3ce409778))
+* **librariangen:** add generate package ([#3952](https://github.com/googleapis/sdk-platform-java/issues/3952)) ([2f6c75d](https://github.com/googleapis/sdk-platform-java/commit/2f6c75da3021d030c7a192f1fbb4b30908ef9dad))
+* **librariangen:** generate grpc stubs and resource helpers ([#3967](https://github.com/googleapis/sdk-platform-java/issues/3967)) ([452d703](https://github.com/googleapis/sdk-platform-java/commit/452d703b703ab3222fd1a7060ed5e1ac6363322b))
+
+
+### Dependencies
+
+* Bump grpc-java to v1.76.0 ([#3942](https://github.com/googleapis/sdk-platform-java/issues/3942)) ([ffb557c](https://github.com/googleapis/sdk-platform-java/commit/ffb557ce8f3460f722b27b30af5e470edd93431b))
+
+## [2.63.0](https://github.com/googleapis/sdk-platform-java/compare/v2.62.3...v2.63.0) (2025-10-16)
+
+
+### Features
+
+* **librariangen:** add bazel package ([#3940](https://github.com/googleapis/sdk-platform-java/issues/3940)) ([feabef3](https://github.com/googleapis/sdk-platform-java/commit/feabef32c4c45be0fb1db3615568365b902ece24))
+* **librariangen:** add execv package ([#3932](https://github.com/googleapis/sdk-platform-java/issues/3932)) ([f6b0b47](https://github.com/googleapis/sdk-platform-java/commit/f6b0b47a14eddd9c76540362b5922a5acc56b5d4))
+* **librariangen:** add protoc package ([#3935](https://github.com/googleapis/sdk-platform-java/issues/3935)) ([598de06](https://github.com/googleapis/sdk-platform-java/commit/598de0697957ea3b05b1347c0898108648c3d7d1))
+* **librariangen:** add request package ([#3933](https://github.com/googleapis/sdk-platform-java/issues/3933)) ([fe44aed](https://github.com/googleapis/sdk-platform-java/commit/fe44aede2aba9627db4aa0397d2ac4de353cea03))
+* **librariangen:** scaffold Java language container for Librarian ([#3926](https://github.com/googleapis/sdk-platform-java/issues/3926)) ([29d188d](https://github.com/googleapis/sdk-platform-java/commit/29d188d20e530570f46774b37d88703822774a33))
+
+
+### Dependencies
+
+* Bump errorprone-annotations to v2.42.0 ([8d6c1f9](https://github.com/googleapis/sdk-platform-java/commit/8d6c1f915ba5f0c4ac9b89120e63dddd62e37a22))
+* Bump guava to v33.5.0 ([8d6c1f9](https://github.com/googleapis/sdk-platform-java/commit/8d6c1f915ba5f0c4ac9b89120e63dddd62e37a22))
+* Bump j2objc-annotations to v3.1 ([8d6c1f9](https://github.com/googleapis/sdk-platform-java/commit/8d6c1f915ba5f0c4ac9b89120e63dddd62e37a22))
+* update google auth library dependencies to v1.40.0 ([#3945](https://github.com/googleapis/sdk-platform-java/issues/3945)) ([1d74663](https://github.com/googleapis/sdk-platform-java/commit/1d7466332b5dc13fde6ed687247873135a5fa919))
+* Upgrade Google Http Java Client to v2.0.2 ([#3946](https://github.com/googleapis/sdk-platform-java/issues/3946)) ([7fb4f15](https://github.com/googleapis/sdk-platform-java/commit/7fb4f155eef478c1a66bc2f1fdecd7565d225b3e))
+
+## [2.62.3](https://github.com/googleapis/sdk-platform-java/compare/v2.62.2...v2.62.3) (2025-10-02)
+
+
+### Bug Fixes
+
+* **mtls:** Fix EndpointContext's determineEndpoint logic to respect env var ([#3912](https://github.com/googleapis/sdk-platform-java/issues/3912)) ([e5948d0](https://github.com/googleapis/sdk-platform-java/commit/e5948d0cf27a2ee0ff03da3541524e0463356629))
+
 ## [2.62.2](https://github.com/googleapis/sdk-platform-java/compare/v2.62.1...v2.62.2) (2025-09-18)
 
 

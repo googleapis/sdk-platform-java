@@ -25,7 +25,7 @@ package com.google.apps.card.v1;
  * <pre>
  * Represents an `onClick` event that opens a hyperlink.
  *
- * [Google Workspace Add-ons and Chat
+ * [Google Workspace add-ons and Chat
  * apps](https://developers.google.com/workspace/extend):
  * </pre>
  *
@@ -79,7 +79,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
    * client doesn't support it. `FULL_SIZE` is supported by all clients.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * Protobuf enum {@code google.apps.card.v1.OpenLink.OpenAs}
@@ -226,7 +226,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
    * can't support both values, `OnClose` takes precedence.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * Protobuf enum {@code google.apps.card.v1.OpenLink.OnClose}
@@ -431,7 +431,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
    * How to open a link.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.OpenLink.OpenAs open_as = 2;</code>
@@ -450,7 +450,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
    * How to open a link.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.OpenLink.OpenAs open_as = 2;</code>
@@ -475,7 +475,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
    * until the window closes.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.OpenLink.OnClose on_close = 3;</code>
@@ -495,7 +495,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
    * until the window closes.
    *
    * [Google Workspace
-   * Add-ons](https://developers.google.com/workspace/add-ons):
+   * add-ons](https://developers.google.com/workspace/add-ons):
    * </pre>
    *
    * <code>.google.apps.card.v1.OpenLink.OnClose on_close = 3;</code>
@@ -691,7 +691,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Represents an `onClick` event that opens a hyperlink.
    *
-   * [Google Workspace Add-ons and Chat
+   * [Google Workspace add-ons and Chat
    * apps](https://developers.google.com/workspace/extend):
    * </pre>
    *
@@ -1015,7 +1015,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
      * How to open a link.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.OpenLink.OpenAs open_as = 2;</code>
@@ -1034,7 +1034,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
      * How to open a link.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.OpenLink.OpenAs open_as = 2;</code>
@@ -1056,7 +1056,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
      * How to open a link.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.OpenLink.OpenAs open_as = 2;</code>
@@ -1077,7 +1077,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
      * How to open a link.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.OpenLink.OpenAs open_as = 2;</code>
@@ -1102,7 +1102,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
      * How to open a link.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.OpenLink.OpenAs open_as = 2;</code>
@@ -1126,7 +1126,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
      * until the window closes.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.OpenLink.OnClose on_close = 3;</code>
@@ -1146,7 +1146,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
      * until the window closes.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.OpenLink.OnClose on_close = 3;</code>
@@ -1169,7 +1169,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
      * until the window closes.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.OpenLink.OnClose on_close = 3;</code>
@@ -1191,7 +1191,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
      * until the window closes.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.OpenLink.OnClose on_close = 3;</code>
@@ -1217,7 +1217,7 @@ public final class OpenLink extends com.google.protobuf.GeneratedMessageV3
      * until the window closes.
      *
      * [Google Workspace
-     * Add-ons](https://developers.google.com/workspace/add-ons):
+     * add-ons](https://developers.google.com/workspace/add-ons):
      * </pre>
      *
      * <code>.google.apps.card.v1.OpenLink.OnClose on_close = 3;</code>
