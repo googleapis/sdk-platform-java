@@ -164,6 +164,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable
   private final ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator;
 
+  // This is initialized once for the lifetime of the application. This enables re-using
+  // channels to S2A.
   private static volatile ChannelCredentials s2aChannelCredentialsObject;
 
   /*
