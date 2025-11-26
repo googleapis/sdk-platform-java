@@ -358,6 +358,9 @@ def main(versions_file, monorepo):
     with open(".repo-metadata.json", "r") as fp:
         repo_metadata = json.load(fp)
     group_id, artifact_id = repo_metadata["distribution_name"].split(":")
+    # Derive the Release Please key in java-xxx format
+    base_name = re.sub(r'^(google-cloud-|grpc-google-cloud-|proto-google-cloud-)', '', artifact_id)
+    release_please_key = f"java-{base_name}"
     name = repo_metadata["name_pretty"]
     existing_modules = load_versions(versions_file, group_id)
     print(f"monorepo? {monorepo}")
@@ -456,6 +459,7 @@ def main(versions_file, monorepo):
                 parent_module=parent_module,
                 main_module=main_module,
                 monorepo=monorepo,
+                release_please_key=release_please_key,
             )
             if (
                 path not in excluded_dependencies_list
@@ -498,6 +502,7 @@ def main(versions_file, monorepo):
                 main_module=main_module,
                 proto_module=existing_modules[proto_artifact_id],
                 monorepo=monorepo,
+                release_please_key=release_please_key,
             )
             if (
                 path not in excluded_dependencies_list
@@ -549,6 +554,7 @@ def main(versions_file, monorepo):
             proto_modules=proto_modules,
             grpc_modules=grpc_modules,
             monorepo=monorepo,
+            release_please_key=release_please_key,
         )
 
     if os.path.isfile(f"{artifact_id}-bom/pom.xml"):
@@ -567,6 +573,7 @@ def main(versions_file, monorepo):
             main_module=main_module,
             monorepo=monorepo,
             monorepo_version=monorepo_version,
+            release_please_key=release_please_key,
         )
 
     if os.path.isfile("pom.xml"):
@@ -584,24 +591,28 @@ def main(versions_file, monorepo):
             name=name,
             monorepo=monorepo,
             monorepo_version=monorepo_version,
+            release_please_key=release_please_key,
         )
 
     print(f"updating modules in {versions_file}")
     existing_modules.pop(parent_artifact_id)
 
-    # add extra modules to versions.txt
-    for dependency_module in extra_managed_modules:
-        if dependency_module not in existing_modules:
-            existing_modules[dependency_module] = module.Module(
-                group_id=__proto_group_id(group_id),
-                artifact_id=dependency_module,
-                version=main_module.version,
-                release_version=main_module.release_version,
-            )
+
+    # Consolidate all modules into a single `java-` entry.
+    # It's safe to use the first module's version and group ID,
+    # as they will be consistent for a new library.
+
     templates.render(
         template_name="versions.txt.j2",
         output_name=versions_file,
-        modules=existing_modules.values(),
+        # Only write the main artifact module to versions.txt
+        modules=[
+            module.Module(
+            group_id=main_module.group_id,
+            artifact_id=release_please_key,
+            version=main_module.version,
+            release_version=main_module.release_version,)
+        ],
     )
 
 
