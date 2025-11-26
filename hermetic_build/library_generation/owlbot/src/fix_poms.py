@@ -359,7 +359,9 @@ def main(versions_file, monorepo):
         repo_metadata = json.load(fp)
     group_id, artifact_id = repo_metadata["distribution_name"].split(":")
     # Derive the Release Please key in java-xxx format
-    base_name = re.sub(r'^(google-cloud-|grpc-google-cloud-|proto-google-cloud-)', '', artifact_id)
+    base_name = re.sub(
+        r"^(google-cloud-|grpc-google-cloud-|proto-google-cloud-)", "", artifact_id
+    )
     release_please_key = f"java-{base_name}"
     name = repo_metadata["name_pretty"]
     existing_modules = load_versions(versions_file, group_id)
@@ -597,7 +599,6 @@ def main(versions_file, monorepo):
     print(f"updating modules in {versions_file}")
     existing_modules.pop(parent_artifact_id)
 
-
     # Consolidate all modules into a single `java-` entry.
     # It's safe to use the first module's version and group ID,
     # as they will be consistent for a new library.
@@ -608,10 +609,11 @@ def main(versions_file, monorepo):
         # Only write the main artifact module to versions.txt
         modules=[
             module.Module(
-            group_id=main_module.group_id,
-            artifact_id=release_please_key,
-            version=main_module.version,
-            release_version=main_module.release_version,)
+                group_id=main_module.group_id,
+                artifact_id=release_please_key,
+                version=main_module.version,
+                release_version=main_module.release_version,
+            )
         ],
     )
 
