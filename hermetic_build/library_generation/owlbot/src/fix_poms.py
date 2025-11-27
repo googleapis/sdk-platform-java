@@ -358,11 +358,8 @@ def main(versions_file, monorepo):
     with open(".repo-metadata.json", "r") as fp:
         repo_metadata = json.load(fp)
     group_id, artifact_id = repo_metadata["distribution_name"].split(":")
-    # Derive the Release Please key in java-xxx format
-    base_name = re.sub(
-        r"^(google-cloud-|grpc-google-cloud-|proto-google-cloud-)", "", artifact_id
-    )
-    release_please_key = base_name
+    # Use api_shortname from repo_metadata as the key for versions.txt
+    release_please_key = repo_metadata["api_shortname"]
     name = repo_metadata["name_pretty"]
     existing_modules = load_versions(versions_file, group_id)
     original_modules = set(existing_modules.keys())
@@ -598,38 +595,45 @@ def main(versions_file, monorepo):
         )
 
     print(f"updating modules in {versions_file}")
-    # The parent pom is not a standalone artifact, so we don't add it to
-    # versions.txt.
-    existing_modules.pop(parent_artifact_id)
 
-    # Determine if new modules were added.
-    added_modules = set(existing_modules.keys()) - original_modules
-    if added_modules:
-        print(f"New modules detected: {added_modules}")
-        # Remove all the individual components that were just added.
-        for key in added_modules:
-            existing_modules.pop(key)
-        # Add the single consolidated entry instead.
-        existing_modules[release_please_key] = module.Module(
+    # existing_modules contains all components, needed for pom.xml rendering.
+
+    versions_txt_modules = {}
+    # Start with all modules that were in the original versions.txt
+    for key in original_modules:
+        if key in existing_modules:
+            versions_txt_modules[key] = existing_modules[key]
+
+    # If this is a new library (release_please_key was not in original_modules),
+    # add the single consolidated entry to our versions.txt dictionary.
+    if release_please_key not in original_modules:
+        versions_txt_modules[release_please_key] = module.Module(
             group_id=group_id,
             artifact_id=release_please_key,
             version=main_module.version,
             release_version=main_module.release_version,
         )
 
-    # add extra modules to versions.txt
+    # Add extra managed modules if they aren't already included
     for dependency_module in extra_managed_modules:
-        if dependency_module not in existing_modules:
-            existing_modules[dependency_module] = module.Module(
-                group_id=__proto_group_id(group_id),
-                artifact_id=dependency_module,
-                version=main_module.version,
-                release_version=main_module.release_version,
-            )
+        if dependency_module not in versions_txt_modules:
+            # These should already be in existing_modules if loaded from versions.txt
+            if dependency_module in existing_modules:
+                 versions_txt_modules[dependency_module] = existing_modules[dependency_module]
+            # This else block should ideally not be reached in the monorepo case.
+            else:
+                 versions_txt_modules[dependency_module] = module.Module(
+                    group_id=__proto_group_id(group_id),
+                    artifact_id=dependency_module,
+                    version=main_module.version,
+                    release_version=main_module.release_version,
+                )
+
+    # Render versions.txt using the specially prepared versions_txt_modules
     templates.render(
         template_name="versions.txt.j2",
         output_name=versions_file,
-        modules=existing_modules.values(),
+        modules=versions_txt_modules.values(),
     )
 
 
