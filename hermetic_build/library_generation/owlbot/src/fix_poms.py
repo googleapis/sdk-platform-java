@@ -362,9 +362,10 @@ def main(versions_file, monorepo):
     base_name = re.sub(
         r"^(google-cloud-|grpc-google-cloud-|proto-google-cloud-)", "", artifact_id
     )
-    release_please_key = f"java-{base_name}"
+    release_please_key = base_name
     name = repo_metadata["name_pretty"]
     existing_modules = load_versions(versions_file, group_id)
+    original_modules = set(existing_modules.keys())
     print(f"monorepo? {monorepo}")
 
     # extra modules that need to be manages in versions.txt
@@ -597,24 +598,38 @@ def main(versions_file, monorepo):
         )
 
     print(f"updating modules in {versions_file}")
+    # The parent pom is not a standalone artifact, so we don't add it to
+    # versions.txt.
     existing_modules.pop(parent_artifact_id)
 
-    # Consolidate all modules into a single `java-` entry.
-    # It's safe to use the first module's version and group ID,
-    # as they will be consistent for a new library.
+    # Determine if new modules were added.
+    added_modules = set(existing_modules.keys()) - original_modules
+    if added_modules:
+        print(f"New modules detected: {added_modules}")
+        # Remove all the individual components that were just added.
+        for key in added_modules:
+            existing_modules.pop(key)
+        # Add the single consolidated entry instead.
+        existing_modules[release_please_key] = module.Module(
+            group_id=group_id,
+            artifact_id=release_please_key,
+            version=main_module.version,
+            release_version=main_module.release_version,
+        )
 
-    templates.render(
-        template_name="versions.txt.j2",
-        output_name=versions_file,
-        # Only write the main artifact module to versions.txt
-        modules=[
-            module.Module(
-                group_id=main_module.group_id,
-                artifact_id=release_please_key,
+    # add extra modules to versions.txt
+    for dependency_module in extra_managed_modules:
+        if dependency_module not in existing_modules:
+            existing_modules[dependency_module] = module.Module(
+                group_id=__proto_group_id(group_id),
+                artifact_id=dependency_module,
                 version=main_module.version,
                 release_version=main_module.release_version,
             )
-        ],
+    templates.render(
+        template_name="versions.txt.j2",
+        output_name=versions_file,
+        modules=existing_modules.values(),
     )
 
 
