@@ -619,10 +619,12 @@ def main(versions_file, monorepo):
         if dependency_module not in versions_txt_modules:
             # These should already be in existing_modules if loaded from versions.txt
             if dependency_module in existing_modules:
-                 versions_txt_modules[dependency_module] = existing_modules[dependency_module]
+                versions_txt_modules[dependency_module] = existing_modules[
+                    dependency_module
+                ]
             # This else block should ideally not be reached in the monorepo case.
             else:
-                 versions_txt_modules[dependency_module] = module.Module(
+                versions_txt_modules[dependency_module] = module.Module(
                     group_id=__proto_group_id(group_id),
                     artifact_id=dependency_module,
                     version=main_module.version,
