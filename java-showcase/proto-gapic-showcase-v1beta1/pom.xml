@@ -15,6 +15,7 @@
 
   <properties>
     <fmt.skip>true</fmt.skip>
+    <clirr.skip>true</clirr.skip>
   </properties>
 
   <dependencies>
