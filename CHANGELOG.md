@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.64.2](https://github.com/googleapis/sdk-platform-java/compare/v2.64.1...v2.64.2) (2025-12-04)
+
+
+### Bug Fixes
+
+* add per-service api_version to gapic_metadata ([#3984](https://github.com/googleapis/sdk-platform-java/issues/3984)) ([d589306](https://github.com/googleapis/sdk-platform-java/commit/d589306c4ecc12a2a744cb9dfb914ccea8fb34fd))
+
+
+### Dependencies
+
+* upgrade grpc to 1.76.1 ([#3993](https://github.com/googleapis/sdk-platform-java/issues/3993)) ([958611e](https://github.com/googleapis/sdk-platform-java/commit/958611e23460dba596160f3224d8588afdba6bc2))
+
 ## [2.64.1](https://github.com/googleapis/sdk-platform-java/compare/v2.64.0...v2.64.1) (2025-11-07)
 
 
