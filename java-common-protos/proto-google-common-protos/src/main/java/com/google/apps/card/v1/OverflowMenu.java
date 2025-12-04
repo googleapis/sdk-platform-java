@@ -59,6 +59,63 @@ public final class OverflowMenu extends com.google.protobuf.GeneratedMessageV3
     return this.unknownFields;
   }
 
+  private OverflowMenu(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    int mutable_bitField0_ = 0;
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                items_ =
+                    new java.util.ArrayList<
+                        com.google.apps.card.v1.OverflowMenu.OverflowMenuItem>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              items_.add(
+                  input.readMessage(
+                      com.google.apps.card.v1.OverflowMenu.OverflowMenuItem.parser(),
+                      extensionRegistry));
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        items_ = java.util.Collections.unmodifiableList(items_);
+      }
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.apps.card.v1.CardProto
         .internal_static_google_apps_card_v1_OverflowMenu_descriptor;
@@ -235,6 +292,87 @@ public final class OverflowMenu extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
       return this.unknownFields;
+    }
+
+    private OverflowMenuItem(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10:
+              {
+                com.google.apps.card.v1.Icon.Builder subBuilder = null;
+                if (startIcon_ != null) {
+                  subBuilder = startIcon_.toBuilder();
+                }
+                startIcon_ =
+                    input.readMessage(com.google.apps.card.v1.Icon.parser(), extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(startIcon_);
+                  startIcon_ = subBuilder.buildPartial();
+                }
+
+                break;
+              }
+            case 18:
+              {
+                java.lang.String s = input.readStringRequireUtf8();
+
+                text_ = s;
+                break;
+              }
+            case 26:
+              {
+                com.google.apps.card.v1.OnClick.Builder subBuilder = null;
+                if (onClick_ != null) {
+                  subBuilder = onClick_.toBuilder();
+                }
+                onClick_ =
+                    input.readMessage(com.google.apps.card.v1.OnClick.parser(), extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(onClick_);
+                  onClick_ = subBuilder.buildPartial();
+                }
+
+                break;
+              }
+            case 32:
+              {
+                disabled_ = input.readBool();
+                break;
+              }
+            default:
+              {
+                if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -453,7 +591,7 @@ public final class OverflowMenu extends com.google.protobuf.GeneratedMessageV3
       if (disabled_ != false) {
         output.writeBool(4, disabled_);
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
     @java.lang.Override
@@ -474,7 +612,7 @@ public final class OverflowMenu extends com.google.protobuf.GeneratedMessageV3
       if (disabled_ != false) {
         size += com.google.protobuf.CodedOutputStream.computeBoolSize(4, disabled_);
       }
-      size += getUnknownFields().getSerializedSize();
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -500,7 +638,7 @@ public final class OverflowMenu extends com.google.protobuf.GeneratedMessageV3
         if (!getOnClick().equals(other.getOnClick())) return false;
       }
       if (getDisabled() != other.getDisabled()) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
 
@@ -523,7 +661,7 @@ public final class OverflowMenu extends com.google.protobuf.GeneratedMessageV3
       }
       hash = (37 * hash) + DISABLED_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getDisabled());
-      hash = (29 * hash) + getUnknownFields().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -658,10 +796,17 @@ public final class OverflowMenu extends com.google.protobuf.GeneratedMessageV3
       }
 
       // Construct using com.google.apps.card.v1.OverflowMenu.OverflowMenuItem.newBuilder()
-      private Builder() {}
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
 
       private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
+        maybeForceBuilderInitialization();
+      }
+
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
       }
 
       @java.lang.Override
@@ -787,7 +932,7 @@ public final class OverflowMenu extends com.google.protobuf.GeneratedMessageV3
         if (other.getDisabled() != false) {
           setDisabled(other.getDisabled());
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -802,55 +947,18 @@ public final class OverflowMenu extends com.google.protobuf.GeneratedMessageV3
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
+        com.google.apps.card.v1.OverflowMenu.OverflowMenuItem parsedMessage = null;
         try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10:
-                {
-                  input.readMessage(getStartIconFieldBuilder().getBuilder(), extensionRegistry);
-
-                  break;
-                } // case 10
-              case 18:
-                {
-                  text_ = input.readStringRequireUtf8();
-
-                  break;
-                } // case 18
-              case 26:
-                {
-                  input.readMessage(getOnClickFieldBuilder().getBuilder(), extensionRegistry);
-
-                  break;
-                } // case 26
-              case 32:
-                {
-                  disabled_ = input.readBool();
-
-                  break;
-                } // case 32
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage =
+              (com.google.apps.card.v1.OverflowMenu.OverflowMenuItem) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          onChanged();
-        } // finally
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
         return this;
       }
 
@@ -1456,19 +1564,7 @@ public final class OverflowMenu extends com.google.protobuf.GeneratedMessageV3
               com.google.protobuf.CodedInputStream input,
               com.google.protobuf.ExtensionRegistryLite extensionRegistry)
               throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
+            return new OverflowMenuItem(input, extensionRegistry);
           }
         };
 
@@ -1579,7 +1675,7 @@ public final class OverflowMenu extends com.google.protobuf.GeneratedMessageV3
     for (int i = 0; i < items_.size(); i++) {
       output.writeMessage(1, items_.get(i));
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -1591,7 +1687,7 @@ public final class OverflowMenu extends com.google.protobuf.GeneratedMessageV3
     for (int i = 0; i < items_.size(); i++) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, items_.get(i));
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -1607,7 +1703,7 @@ public final class OverflowMenu extends com.google.protobuf.GeneratedMessageV3
     com.google.apps.card.v1.OverflowMenu other = (com.google.apps.card.v1.OverflowMenu) obj;
 
     if (!getItemsList().equals(other.getItemsList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -1622,7 +1718,7 @@ public final class OverflowMenu extends com.google.protobuf.GeneratedMessageV3
       hash = (37 * hash) + ITEMS_FIELD_NUMBER;
       hash = (53 * hash) + getItemsList().hashCode();
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -1757,10 +1853,19 @@ public final class OverflowMenu extends com.google.protobuf.GeneratedMessageV3
     }
 
     // Construct using com.google.apps.card.v1.OverflowMenu.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+        getItemsFieldBuilder();
+      }
     }
 
     @java.lang.Override
@@ -1768,11 +1873,10 @@ public final class OverflowMenu extends com.google.protobuf.GeneratedMessageV3
       super.clear();
       if (itemsBuilder_ == null) {
         items_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000001);
       } else {
-        items_ = null;
         itemsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
       return this;
     }
 
@@ -1885,7 +1989,7 @@ public final class OverflowMenu extends com.google.protobuf.GeneratedMessageV3
           }
         }
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -1900,45 +2004,17 @@ public final class OverflowMenu extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.apps.card.v1.OverflowMenu parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                com.google.apps.card.v1.OverflowMenu.OverflowMenuItem m =
-                    input.readMessage(
-                        com.google.apps.card.v1.OverflowMenu.OverflowMenuItem.parser(),
-                        extensionRegistry);
-                if (itemsBuilder_ == null) {
-                  ensureItemsIsMutable();
-                  items_.add(m);
-                } else {
-                  itemsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 10
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.apps.card.v1.OverflowMenu) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -2351,18 +2427,7 @@ public final class OverflowMenu extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new OverflowMenu(input, extensionRegistry);
         }
       };
 

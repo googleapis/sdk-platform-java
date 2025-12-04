@@ -55,6 +55,234 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     return this.unknownFields;
   }
 
+  private Widget(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              com.google.apps.card.v1.TextParagraph.Builder subBuilder = null;
+              if (dataCase_ == 1) {
+                subBuilder = ((com.google.apps.card.v1.TextParagraph) data_).toBuilder();
+              }
+              data_ =
+                  input.readMessage(
+                      com.google.apps.card.v1.TextParagraph.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.google.apps.card.v1.TextParagraph) data_);
+                data_ = subBuilder.buildPartial();
+              }
+              dataCase_ = 1;
+              break;
+            }
+          case 18:
+            {
+              com.google.apps.card.v1.Image.Builder subBuilder = null;
+              if (dataCase_ == 2) {
+                subBuilder = ((com.google.apps.card.v1.Image) data_).toBuilder();
+              }
+              data_ = input.readMessage(com.google.apps.card.v1.Image.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.google.apps.card.v1.Image) data_);
+                data_ = subBuilder.buildPartial();
+              }
+              dataCase_ = 2;
+              break;
+            }
+          case 26:
+            {
+              com.google.apps.card.v1.DecoratedText.Builder subBuilder = null;
+              if (dataCase_ == 3) {
+                subBuilder = ((com.google.apps.card.v1.DecoratedText) data_).toBuilder();
+              }
+              data_ =
+                  input.readMessage(
+                      com.google.apps.card.v1.DecoratedText.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.google.apps.card.v1.DecoratedText) data_);
+                data_ = subBuilder.buildPartial();
+              }
+              dataCase_ = 3;
+              break;
+            }
+          case 34:
+            {
+              com.google.apps.card.v1.ButtonList.Builder subBuilder = null;
+              if (dataCase_ == 4) {
+                subBuilder = ((com.google.apps.card.v1.ButtonList) data_).toBuilder();
+              }
+              data_ =
+                  input.readMessage(com.google.apps.card.v1.ButtonList.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.google.apps.card.v1.ButtonList) data_);
+                data_ = subBuilder.buildPartial();
+              }
+              dataCase_ = 4;
+              break;
+            }
+          case 42:
+            {
+              com.google.apps.card.v1.TextInput.Builder subBuilder = null;
+              if (dataCase_ == 5) {
+                subBuilder = ((com.google.apps.card.v1.TextInput) data_).toBuilder();
+              }
+              data_ =
+                  input.readMessage(com.google.apps.card.v1.TextInput.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.google.apps.card.v1.TextInput) data_);
+                data_ = subBuilder.buildPartial();
+              }
+              dataCase_ = 5;
+              break;
+            }
+          case 50:
+            {
+              com.google.apps.card.v1.SelectionInput.Builder subBuilder = null;
+              if (dataCase_ == 6) {
+                subBuilder = ((com.google.apps.card.v1.SelectionInput) data_).toBuilder();
+              }
+              data_ =
+                  input.readMessage(
+                      com.google.apps.card.v1.SelectionInput.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.google.apps.card.v1.SelectionInput) data_);
+                data_ = subBuilder.buildPartial();
+              }
+              dataCase_ = 6;
+              break;
+            }
+          case 58:
+            {
+              com.google.apps.card.v1.DateTimePicker.Builder subBuilder = null;
+              if (dataCase_ == 7) {
+                subBuilder = ((com.google.apps.card.v1.DateTimePicker) data_).toBuilder();
+              }
+              data_ =
+                  input.readMessage(
+                      com.google.apps.card.v1.DateTimePicker.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.google.apps.card.v1.DateTimePicker) data_);
+                data_ = subBuilder.buildPartial();
+              }
+              dataCase_ = 7;
+              break;
+            }
+          case 64:
+            {
+              int rawValue = input.readEnum();
+
+              horizontalAlignment_ = rawValue;
+              break;
+            }
+          case 74:
+            {
+              com.google.apps.card.v1.Divider.Builder subBuilder = null;
+              if (dataCase_ == 9) {
+                subBuilder = ((com.google.apps.card.v1.Divider) data_).toBuilder();
+              }
+              data_ =
+                  input.readMessage(com.google.apps.card.v1.Divider.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.google.apps.card.v1.Divider) data_);
+                data_ = subBuilder.buildPartial();
+              }
+              dataCase_ = 9;
+              break;
+            }
+          case 82:
+            {
+              com.google.apps.card.v1.Grid.Builder subBuilder = null;
+              if (dataCase_ == 10) {
+                subBuilder = ((com.google.apps.card.v1.Grid) data_).toBuilder();
+              }
+              data_ = input.readMessage(com.google.apps.card.v1.Grid.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.google.apps.card.v1.Grid) data_);
+                data_ = subBuilder.buildPartial();
+              }
+              dataCase_ = 10;
+              break;
+            }
+          case 90:
+            {
+              com.google.apps.card.v1.Columns.Builder subBuilder = null;
+              if (dataCase_ == 11) {
+                subBuilder = ((com.google.apps.card.v1.Columns) data_).toBuilder();
+              }
+              data_ =
+                  input.readMessage(com.google.apps.card.v1.Columns.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.google.apps.card.v1.Columns) data_);
+                data_ = subBuilder.buildPartial();
+              }
+              dataCase_ = 11;
+              break;
+            }
+          case 106:
+            {
+              com.google.apps.card.v1.Carousel.Builder subBuilder = null;
+              if (dataCase_ == 13) {
+                subBuilder = ((com.google.apps.card.v1.Carousel) data_).toBuilder();
+              }
+              data_ =
+                  input.readMessage(com.google.apps.card.v1.Carousel.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.google.apps.card.v1.Carousel) data_);
+                data_ = subBuilder.buildPartial();
+              }
+              dataCase_ = 13;
+              break;
+            }
+          case 114:
+            {
+              com.google.apps.card.v1.ChipList.Builder subBuilder = null;
+              if (dataCase_ == 14) {
+                subBuilder = ((com.google.apps.card.v1.ChipList) data_).toBuilder();
+              }
+              data_ =
+                  input.readMessage(com.google.apps.card.v1.ChipList.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.google.apps.card.v1.ChipList) data_);
+                data_ = subBuilder.buildPartial();
+              }
+              dataCase_ = 14;
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.apps.card.v1.CardProto.internal_static_google_apps_card_v1_Widget_descriptor;
   }
@@ -2187,7 +2415,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     if (dataCase_ == 14) {
       output.writeMessage(14, (com.google.apps.card.v1.ChipList) data_);
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -2261,7 +2489,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
           com.google.protobuf.CodedOutputStream.computeMessageSize(
               14, (com.google.apps.card.v1.ChipList) data_);
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -2318,7 +2546,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       case 0:
       default:
     }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -2383,7 +2611,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
       case 0:
       default:
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -2513,51 +2741,22 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
     }
 
     // Construct using com.google.apps.card.v1.Widget.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
     }
 
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      if (textParagraphBuilder_ != null) {
-        textParagraphBuilder_.clear();
-      }
-      if (imageBuilder_ != null) {
-        imageBuilder_.clear();
-      }
-      if (decoratedTextBuilder_ != null) {
-        decoratedTextBuilder_.clear();
-      }
-      if (buttonListBuilder_ != null) {
-        buttonListBuilder_.clear();
-      }
-      if (textInputBuilder_ != null) {
-        textInputBuilder_.clear();
-      }
-      if (selectionInputBuilder_ != null) {
-        selectionInputBuilder_.clear();
-      }
-      if (dateTimePickerBuilder_ != null) {
-        dateTimePickerBuilder_.clear();
-      }
-      if (dividerBuilder_ != null) {
-        dividerBuilder_.clear();
-      }
-      if (gridBuilder_ != null) {
-        gridBuilder_.clear();
-      }
-      if (columnsBuilder_ != null) {
-        columnsBuilder_.clear();
-      }
-      if (carouselBuilder_ != null) {
-        carouselBuilder_.clear();
-      }
-      if (chipListBuilder_ != null) {
-        chipListBuilder_.clear();
-      }
       horizontalAlignment_ = 0;
 
       dataCase_ = 0;
@@ -2792,7 +2991,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
             break;
           }
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -2807,109 +3006,17 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.apps.card.v1.Widget parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                input.readMessage(getTextParagraphFieldBuilder().getBuilder(), extensionRegistry);
-                dataCase_ = 1;
-                break;
-              } // case 10
-            case 18:
-              {
-                input.readMessage(getImageFieldBuilder().getBuilder(), extensionRegistry);
-                dataCase_ = 2;
-                break;
-              } // case 18
-            case 26:
-              {
-                input.readMessage(getDecoratedTextFieldBuilder().getBuilder(), extensionRegistry);
-                dataCase_ = 3;
-                break;
-              } // case 26
-            case 34:
-              {
-                input.readMessage(getButtonListFieldBuilder().getBuilder(), extensionRegistry);
-                dataCase_ = 4;
-                break;
-              } // case 34
-            case 42:
-              {
-                input.readMessage(getTextInputFieldBuilder().getBuilder(), extensionRegistry);
-                dataCase_ = 5;
-                break;
-              } // case 42
-            case 50:
-              {
-                input.readMessage(getSelectionInputFieldBuilder().getBuilder(), extensionRegistry);
-                dataCase_ = 6;
-                break;
-              } // case 50
-            case 58:
-              {
-                input.readMessage(getDateTimePickerFieldBuilder().getBuilder(), extensionRegistry);
-                dataCase_ = 7;
-                break;
-              } // case 58
-            case 64:
-              {
-                horizontalAlignment_ = input.readEnum();
-
-                break;
-              } // case 64
-            case 74:
-              {
-                input.readMessage(getDividerFieldBuilder().getBuilder(), extensionRegistry);
-                dataCase_ = 9;
-                break;
-              } // case 74
-            case 82:
-              {
-                input.readMessage(getGridFieldBuilder().getBuilder(), extensionRegistry);
-                dataCase_ = 10;
-                break;
-              } // case 82
-            case 90:
-              {
-                input.readMessage(getColumnsFieldBuilder().getBuilder(), extensionRegistry);
-                dataCase_ = 11;
-                break;
-              } // case 90
-            case 106:
-              {
-                input.readMessage(getCarouselFieldBuilder().getBuilder(), extensionRegistry);
-                dataCase_ = 13;
-                break;
-              } // case 106
-            case 114:
-              {
-                input.readMessage(getChipListFieldBuilder().getBuilder(), extensionRegistry);
-                dataCase_ = 14;
-                break;
-              } // case 114
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.apps.card.v1.Widget) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -7967,18 +8074,7 @@ public final class Widget extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new Widget(input, extensionRegistry);
         }
       };
 

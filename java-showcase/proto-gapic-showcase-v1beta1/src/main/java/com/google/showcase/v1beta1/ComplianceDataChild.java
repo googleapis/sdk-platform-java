@@ -48,6 +48,141 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     return this.unknownFields;
   }
 
+  private ComplianceDataChild(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    int mutable_bitField0_ = 0;
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              fString_ = s;
+              break;
+            }
+          case 21:
+            {
+              fFloat_ = input.readFloat();
+              break;
+            }
+          case 25:
+            {
+              fDouble_ = input.readDouble();
+              break;
+            }
+          case 32:
+            {
+              fBool_ = input.readBool();
+              break;
+            }
+          case 42:
+            {
+              com.google.showcase.v1beta1.ComplianceDataGrandchild.Builder subBuilder = null;
+              if (fChild_ != null) {
+                subBuilder = fChild_.toBuilder();
+              }
+              fChild_ =
+                  input.readMessage(
+                      com.google.showcase.v1beta1.ComplianceDataGrandchild.parser(),
+                      extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(fChild_);
+                fChild_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 50:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000001;
+              pString_ = s;
+              break;
+            }
+          case 61:
+            {
+              bitField0_ |= 0x00000002;
+              pFloat_ = input.readFloat();
+              break;
+            }
+          case 65:
+            {
+              bitField0_ |= 0x00000004;
+              pDouble_ = input.readDouble();
+              break;
+            }
+          case 72:
+            {
+              bitField0_ |= 0x00000008;
+              pBool_ = input.readBool();
+              break;
+            }
+          case 82:
+            {
+              com.google.showcase.v1beta1.ComplianceDataGrandchild.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000010) != 0)) {
+                subBuilder = pChild_.toBuilder();
+              }
+              pChild_ =
+                  input.readMessage(
+                      com.google.showcase.v1beta1.ComplianceDataGrandchild.parser(),
+                      extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(pChild_);
+                pChild_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000010;
+              break;
+            }
+          case 88:
+            {
+              int rawValue = input.readEnum();
+
+              fContinent_ = rawValue;
+              break;
+            }
+          case 96:
+            {
+              int rawValue = input.readEnum();
+
+              pContinent_ = rawValue;
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.showcase.v1beta1.ComplianceOuterClass
         .internal_static_google_showcase_v1beta1_ComplianceDataChild_descriptor;
@@ -426,7 +561,7 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     if (pContinent_ != com.google.showcase.v1beta1.Continent.CONTINENT_UNSPECIFIED.getNumber()) {
       output.writeEnum(12, pContinent_);
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -471,7 +606,7 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     if (pContinent_ != com.google.showcase.v1beta1.Continent.CONTINENT_UNSPECIFIED.getNumber()) {
       size += com.google.protobuf.CodedOutputStream.computeEnumSize(12, pContinent_);
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -521,7 +656,7 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
     if (hasPChild()) {
       if (!getPChild().equals(other.getPChild())) return false;
     }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -574,7 +709,7 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       hash = (37 * hash) + P_CHILD_FIELD_NUMBER;
       hash = (53 * hash) + getPChild().hashCode();
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -900,7 +1035,7 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
       if (other.hasPChild()) {
         mergePChild(other.getPChild());
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -915,103 +1050,17 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.showcase.v1beta1.ComplianceDataChild parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                fString_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 10
-            case 21:
-              {
-                fFloat_ = input.readFloat();
-
-                break;
-              } // case 21
-            case 25:
-              {
-                fDouble_ = input.readDouble();
-
-                break;
-              } // case 25
-            case 32:
-              {
-                fBool_ = input.readBool();
-
-                break;
-              } // case 32
-            case 42:
-              {
-                input.readMessage(getFChildFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 42
-            case 50:
-              {
-                pString_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 50
-            case 61:
-              {
-                pFloat_ = input.readFloat();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 61
-            case 65:
-              {
-                pDouble_ = input.readDouble();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 65
-            case 72:
-              {
-                pBool_ = input.readBool();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 72
-            case 82:
-              {
-                input.readMessage(getPChildFieldBuilder().getBuilder(), extensionRegistry);
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 82
-            case 88:
-              {
-                fContinent_ = input.readEnum();
-
-                break;
-              } // case 88
-            case 96:
-              {
-                pContinent_ = input.readEnum();
-
-                break;
-              } // case 96
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.showcase.v1beta1.ComplianceDataChild) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -1860,18 +1909,7 @@ public final class ComplianceDataChild extends com.google.protobuf.GeneratedMess
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new ComplianceDataChild(input, extensionRegistry);
         }
       };
 

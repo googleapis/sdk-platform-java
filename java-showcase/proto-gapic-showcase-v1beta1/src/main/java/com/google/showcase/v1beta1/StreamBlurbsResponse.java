@@ -54,6 +54,67 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
     return this.unknownFields;
   }
 
+  private StreamBlurbsResponse(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              com.google.showcase.v1beta1.Blurb.Builder subBuilder = null;
+              if (blurb_ != null) {
+                subBuilder = blurb_.toBuilder();
+              }
+              blurb_ =
+                  input.readMessage(com.google.showcase.v1beta1.Blurb.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(blurb_);
+                blurb_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 16:
+            {
+              int rawValue = input.readEnum();
+
+              action_ = rawValue;
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.showcase.v1beta1.MessagingOuterClass
         .internal_static_google_showcase_v1beta1_StreamBlurbsResponse_descriptor;
@@ -345,7 +406,7 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
         != com.google.showcase.v1beta1.StreamBlurbsResponse.Action.ACTION_UNSPECIFIED.getNumber()) {
       output.writeEnum(2, action_);
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -361,7 +422,7 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
         != com.google.showcase.v1beta1.StreamBlurbsResponse.Action.ACTION_UNSPECIFIED.getNumber()) {
       size += com.google.protobuf.CodedOutputStream.computeEnumSize(2, action_);
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -382,7 +443,7 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
       if (!getBlurb().equals(other.getBlurb())) return false;
     }
     if (action_ != other.action_) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -399,7 +460,7 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
     }
     hash = (37 * hash) + ACTION_FIELD_NUMBER;
     hash = (53 * hash) + action_;
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -530,10 +591,17 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
     }
 
     // Construct using com.google.showcase.v1beta1.StreamBlurbsResponse.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
     }
 
     @java.lang.Override
@@ -636,7 +704,7 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
       if (other.action_ != 0) {
         setActionValue(other.getActionValue());
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -651,43 +719,17 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.showcase.v1beta1.StreamBlurbsResponse parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                input.readMessage(getBlurbFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 10
-            case 16:
-              {
-                action_ = input.readEnum();
-
-                break;
-              } // case 16
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.showcase.v1beta1.StreamBlurbsResponse) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -1009,18 +1051,7 @@ public final class StreamBlurbsResponse extends com.google.protobuf.GeneratedMes
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new StreamBlurbsResponse(input, extensionRegistry);
         }
       };
 

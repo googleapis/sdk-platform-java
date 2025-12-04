@@ -65,6 +65,142 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     return this.unknownFields;
   }
 
+  private Publishing(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    int mutable_bitField0_ = 0;
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 18:
+            {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                methodSettings_ = new java.util.ArrayList<com.google.api.MethodSettings>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              methodSettings_.add(
+                  input.readMessage(com.google.api.MethodSettings.parser(), extensionRegistry));
+              break;
+            }
+          case 810:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              newIssueUri_ = s;
+              break;
+            }
+          case 818:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              documentationUri_ = s;
+              break;
+            }
+          case 826:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              apiShortName_ = s;
+              break;
+            }
+          case 834:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              githubLabel_ = s;
+              break;
+            }
+          case 842:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
+                codeownerGithubTeams_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              codeownerGithubTeams_.add(s);
+              break;
+            }
+          case 850:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              docTagPrefix_ = s;
+              break;
+            }
+          case 856:
+            {
+              int rawValue = input.readEnum();
+
+              organization_ = rawValue;
+              break;
+            }
+          case 874:
+            {
+              if (!((mutable_bitField0_ & 0x00000004) != 0)) {
+                librarySettings_ = new java.util.ArrayList<com.google.api.ClientLibrarySettings>();
+                mutable_bitField0_ |= 0x00000004;
+              }
+              librarySettings_.add(
+                  input.readMessage(
+                      com.google.api.ClientLibrarySettings.parser(), extensionRegistry));
+              break;
+            }
+          case 882:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              protoReferenceDocumentationUri_ = s;
+              break;
+            }
+          case 890:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              restReferenceDocumentationUri_ = s;
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        methodSettings_ = java.util.Collections.unmodifiableList(methodSettings_);
+      }
+      if (((mutable_bitField0_ & 0x00000002) != 0)) {
+        codeownerGithubTeams_ = codeownerGithubTeams_.getUnmodifiableView();
+      }
+      if (((mutable_bitField0_ & 0x00000004) != 0)) {
+        librarySettings_ = java.util.Collections.unmodifiableList(librarySettings_);
+      }
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.ClientProto.internal_static_google_api_Publishing_descriptor;
   }
@@ -770,7 +906,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       com.google.protobuf.GeneratedMessageV3.writeString(
           output, 111, restReferenceDocumentationUri_);
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -824,7 +960,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
           com.google.protobuf.GeneratedMessageV3.computeStringSize(
               111, restReferenceDocumentationUri_);
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -852,7 +988,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       return false;
     if (!getRestReferenceDocumentationUri().equals(other.getRestReferenceDocumentationUri()))
       return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -891,7 +1027,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     hash = (53 * hash) + getProtoReferenceDocumentationUri().hashCode();
     hash = (37 * hash) + REST_REFERENCE_DOCUMENTATION_URI_FIELD_NUMBER;
     hash = (53 * hash) + getRestReferenceDocumentationUri().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -1019,10 +1155,20 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     }
 
     // Construct using com.google.api.Publishing.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+        getMethodSettingsFieldBuilder();
+        getLibrarySettingsFieldBuilder();
+      }
     }
 
     @java.lang.Override
@@ -1030,11 +1176,10 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       super.clear();
       if (methodSettingsBuilder_ == null) {
         methodSettings_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000001);
       } else {
-        methodSettings_ = null;
         methodSettingsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
       newIssueUri_ = "";
 
       documentationUri_ = "";
@@ -1051,11 +1196,10 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
 
       if (librarySettingsBuilder_ == null) {
         librarySettings_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000004);
       } else {
-        librarySettings_ = null;
         librarySettingsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000004);
       protoReferenceDocumentationUri_ = "";
 
       restReferenceDocumentationUri_ = "";
@@ -1261,7 +1405,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         restReferenceDocumentationUri_ = other.restReferenceDocumentationUri_;
         onChanged();
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -1276,111 +1420,17 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.api.Publishing parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 18:
-              {
-                com.google.api.MethodSettings m =
-                    input.readMessage(com.google.api.MethodSettings.parser(), extensionRegistry);
-                if (methodSettingsBuilder_ == null) {
-                  ensureMethodSettingsIsMutable();
-                  methodSettings_.add(m);
-                } else {
-                  methodSettingsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 18
-            case 810:
-              {
-                newIssueUri_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 810
-            case 818:
-              {
-                documentationUri_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 818
-            case 826:
-              {
-                apiShortName_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 826
-            case 834:
-              {
-                githubLabel_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 834
-            case 842:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureCodeownerGithubTeamsIsMutable();
-                codeownerGithubTeams_.add(s);
-                break;
-              } // case 842
-            case 850:
-              {
-                docTagPrefix_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 850
-            case 856:
-              {
-                organization_ = input.readEnum();
-
-                break;
-              } // case 856
-            case 874:
-              {
-                com.google.api.ClientLibrarySettings m =
-                    input.readMessage(
-                        com.google.api.ClientLibrarySettings.parser(), extensionRegistry);
-                if (librarySettingsBuilder_ == null) {
-                  ensureLibrarySettingsIsMutable();
-                  librarySettings_.add(m);
-                } else {
-                  librarySettingsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 874
-            case 882:
-              {
-                protoReferenceDocumentationUri_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 882
-            case 890:
-              {
-                restReferenceDocumentationUri_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 890
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.api.Publishing) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -3305,18 +3355,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new Publishing(input, extensionRegistry);
         }
       };
 

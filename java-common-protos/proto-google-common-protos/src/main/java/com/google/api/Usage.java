@@ -55,6 +55,78 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
     return this.unknownFields;
   }
 
+  private Usage(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    int mutable_bitField0_ = 0;
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                requirements_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              requirements_.add(s);
+              break;
+            }
+          case 50:
+            {
+              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
+                rules_ = new java.util.ArrayList<com.google.api.UsageRule>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              rules_.add(input.readMessage(com.google.api.UsageRule.parser(), extensionRegistry));
+              break;
+            }
+          case 58:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              producerNotificationChannel_ = s;
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        requirements_ = requirements_.getUnmodifiableView();
+      }
+      if (((mutable_bitField0_ & 0x00000002) != 0)) {
+        rules_ = java.util.Collections.unmodifiableList(rules_);
+      }
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.UsageProto.internal_static_google_api_Usage_descriptor;
   }
@@ -324,7 +396,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(producerNotificationChannel_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 7, producerNotificationChannel_);
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -348,7 +420,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       size +=
           com.google.protobuf.GeneratedMessageV3.computeStringSize(7, producerNotificationChannel_);
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -367,7 +439,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
     if (!getRulesList().equals(other.getRulesList())) return false;
     if (!getProducerNotificationChannel().equals(other.getProducerNotificationChannel()))
       return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -388,7 +460,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
     }
     hash = (37 * hash) + PRODUCER_NOTIFICATION_CHANNEL_FIELD_NUMBER;
     hash = (53 * hash) + getProducerNotificationChannel().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -514,10 +586,19 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
     }
 
     // Construct using com.google.api.Usage.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+        getRulesFieldBuilder();
+      }
     }
 
     @java.lang.Override
@@ -527,11 +608,10 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       bitField0_ = (bitField0_ & ~0x00000001);
       if (rulesBuilder_ == null) {
         rules_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000002);
       } else {
-        rules_ = null;
         rulesBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000002);
       producerNotificationChannel_ = "";
 
       return this;
@@ -665,7 +745,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
         producerNotificationChannel_ = other.producerNotificationChannel_;
         onChanged();
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -680,56 +760,17 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.api.Usage parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureRequirementsIsMutable();
-                requirements_.add(s);
-                break;
-              } // case 10
-            case 50:
-              {
-                com.google.api.UsageRule m =
-                    input.readMessage(com.google.api.UsageRule.parser(), extensionRegistry);
-                if (rulesBuilder_ == null) {
-                  ensureRulesIsMutable();
-                  rules_.add(m);
-                } else {
-                  rulesBuilder_.addMessage(m);
-                }
-                break;
-              } // case 50
-            case 58:
-              {
-                producerNotificationChannel_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 58
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.api.Usage) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -1525,18 +1566,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new Usage(input, extensionRegistry);
         }
       };
 

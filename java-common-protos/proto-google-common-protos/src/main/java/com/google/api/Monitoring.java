@@ -103,6 +103,76 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
     return this.unknownFields;
   }
 
+  private Monitoring(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    int mutable_bitField0_ = 0;
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                producerDestinations_ =
+                    new java.util.ArrayList<com.google.api.Monitoring.MonitoringDestination>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              producerDestinations_.add(
+                  input.readMessage(
+                      com.google.api.Monitoring.MonitoringDestination.parser(), extensionRegistry));
+              break;
+            }
+          case 18:
+            {
+              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
+                consumerDestinations_ =
+                    new java.util.ArrayList<com.google.api.Monitoring.MonitoringDestination>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              consumerDestinations_.add(
+                  input.readMessage(
+                      com.google.api.Monitoring.MonitoringDestination.parser(), extensionRegistry));
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        producerDestinations_ = java.util.Collections.unmodifiableList(producerDestinations_);
+      }
+      if (((mutable_bitField0_ & 0x00000002) != 0)) {
+        consumerDestinations_ = java.util.Collections.unmodifiableList(consumerDestinations_);
+      }
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.MonitoringProto.internal_static_google_api_Monitoring_descriptor;
   }
@@ -248,6 +318,66 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
       return this.unknownFields;
+    }
+
+    private MonitoringDestination(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10:
+              {
+                java.lang.String s = input.readStringRequireUtf8();
+
+                monitoredResource_ = s;
+                break;
+              }
+            case 18:
+              {
+                java.lang.String s = input.readStringRequireUtf8();
+                if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                  metrics_ = new com.google.protobuf.LazyStringArrayList();
+                  mutable_bitField0_ |= 0x00000001;
+                }
+                metrics_.add(s);
+                break;
+              }
+            default:
+              {
+                if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          metrics_ = metrics_.getUnmodifiableView();
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -413,7 +543,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       for (int i = 0; i < metrics_.size(); i++) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, metrics_.getRaw(i));
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
     @java.lang.Override
@@ -433,7 +563,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         size += dataSize;
         size += 1 * getMetricsList().size();
       }
-      size += getUnknownFields().getSerializedSize();
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -451,7 +581,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
 
       if (!getMonitoredResource().equals(other.getMonitoredResource())) return false;
       if (!getMetricsList().equals(other.getMetricsList())) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
 
@@ -468,7 +598,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         hash = (37 * hash) + METRICS_FIELD_NUMBER;
         hash = (53 * hash) + getMetricsList().hashCode();
       }
-      hash = (29 * hash) + getUnknownFields().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -601,10 +731,17 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       }
 
       // Construct using com.google.api.Monitoring.MonitoringDestination.newBuilder()
-      private Builder() {}
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
 
       private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
+        maybeForceBuilderInitialization();
+      }
+
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
       }
 
       @java.lang.Override
@@ -714,7 +851,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
           }
           onChanged();
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -729,44 +866,18 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
+        com.google.api.Monitoring.MonitoringDestination parsedMessage = null;
         try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10:
-                {
-                  monitoredResource_ = input.readStringRequireUtf8();
-
-                  break;
-                } // case 10
-              case 18:
-                {
-                  java.lang.String s = input.readStringRequireUtf8();
-                  ensureMetricsIsMutable();
-                  metrics_.add(s);
-                  break;
-                } // case 18
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage =
+              (com.google.api.Monitoring.MonitoringDestination) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          onChanged();
-        } // finally
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
         return this;
       }
 
@@ -1121,19 +1232,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
               com.google.protobuf.CodedInputStream input,
               com.google.protobuf.ExtensionRegistryLite extensionRegistry)
               throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
+            return new MonitoringDestination(input, extensionRegistry);
           }
         };
 
@@ -1374,7 +1473,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
     for (int i = 0; i < consumerDestinations_.size(); i++) {
       output.writeMessage(2, consumerDestinations_.get(i));
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -1391,7 +1490,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       size +=
           com.google.protobuf.CodedOutputStream.computeMessageSize(2, consumerDestinations_.get(i));
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -1408,7 +1507,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
 
     if (!getProducerDestinationsList().equals(other.getProducerDestinationsList())) return false;
     if (!getConsumerDestinationsList().equals(other.getConsumerDestinationsList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -1427,7 +1526,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       hash = (37 * hash) + CONSUMER_DESTINATIONS_FIELD_NUMBER;
       hash = (53 * hash) + getConsumerDestinationsList().hashCode();
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -1602,10 +1701,20 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
     }
 
     // Construct using com.google.api.Monitoring.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+        getProducerDestinationsFieldBuilder();
+        getConsumerDestinationsFieldBuilder();
+      }
     }
 
     @java.lang.Override
@@ -1613,18 +1722,16 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       super.clear();
       if (producerDestinationsBuilder_ == null) {
         producerDestinations_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000001);
       } else {
-        producerDestinations_ = null;
         producerDestinationsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
       if (consumerDestinationsBuilder_ == null) {
         consumerDestinations_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000002);
       } else {
-        consumerDestinations_ = null;
         consumerDestinationsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000002);
       return this;
     }
 
@@ -1772,7 +1879,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
           }
         }
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -1787,59 +1894,17 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.api.Monitoring parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                com.google.api.Monitoring.MonitoringDestination m =
-                    input.readMessage(
-                        com.google.api.Monitoring.MonitoringDestination.parser(),
-                        extensionRegistry);
-                if (producerDestinationsBuilder_ == null) {
-                  ensureProducerDestinationsIsMutable();
-                  producerDestinations_.add(m);
-                } else {
-                  producerDestinationsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 10
-            case 18:
-              {
-                com.google.api.Monitoring.MonitoringDestination m =
-                    input.readMessage(
-                        com.google.api.Monitoring.MonitoringDestination.parser(),
-                        extensionRegistry);
-                if (consumerDestinationsBuilder_ == null) {
-                  ensureConsumerDestinationsIsMutable();
-                  consumerDestinations_.add(m);
-                } else {
-                  consumerDestinationsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 18
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.api.Monitoring) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -2815,18 +2880,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new Monitoring(input, extensionRegistry);
         }
       };
 

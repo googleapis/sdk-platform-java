@@ -65,6 +65,93 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
     return this.unknownFields;
   }
 
+  private DateTimePicker(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    int mutable_bitField0_ = 0;
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              name_ = s;
+              break;
+            }
+          case 18:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              label_ = s;
+              break;
+            }
+          case 24:
+            {
+              int rawValue = input.readEnum();
+
+              type_ = rawValue;
+              break;
+            }
+          case 32:
+            {
+              bitField0_ |= 0x00000001;
+              valueMsEpoch_ = input.readInt64();
+              break;
+            }
+          case 40:
+            {
+              timezoneOffsetDate_ = input.readInt32();
+              break;
+            }
+          case 50:
+            {
+              com.google.apps.card.v1.Action.Builder subBuilder = null;
+              if (onChangeAction_ != null) {
+                subBuilder = onChangeAction_.toBuilder();
+              }
+              onChangeAction_ =
+                  input.readMessage(com.google.apps.card.v1.Action.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(onChangeAction_);
+                onChangeAction_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.apps.card.v1.CardProto
         .internal_static_google_apps_card_v1_DateTimePicker_descriptor;
@@ -555,7 +642,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
     if (onChangeAction_ != null) {
       output.writeMessage(6, getOnChangeAction());
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -583,7 +670,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
     if (onChangeAction_ != null) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(6, getOnChangeAction());
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -610,7 +697,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
     if (hasOnChangeAction()) {
       if (!getOnChangeAction().equals(other.getOnChangeAction())) return false;
     }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -637,7 +724,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
       hash = (37 * hash) + ON_CHANGE_ACTION_FIELD_NUMBER;
       hash = (53 * hash) + getOnChangeAction().hashCode();
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -777,10 +864,17 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
     }
 
     // Construct using com.google.apps.card.v1.DateTimePicker.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
     }
 
     @java.lang.Override
@@ -914,7 +1008,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
       if (other.hasOnChangeAction()) {
         mergeOnChangeAction(other.getOnChangeAction());
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -929,67 +1023,17 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.apps.card.v1.DateTimePicker parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                name_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 10
-            case 18:
-              {
-                label_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 18
-            case 24:
-              {
-                type_ = input.readEnum();
-
-                break;
-              } // case 24
-            case 32:
-              {
-                valueMsEpoch_ = input.readInt64();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 32
-            case 40:
-              {
-                timezoneOffsetDate_ = input.readInt32();
-
-                break;
-              } // case 40
-            case 50:
-              {
-                input.readMessage(getOnChangeActionFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 50
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.apps.card.v1.DateTimePicker) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -1734,18 +1778,7 @@ public final class DateTimePicker extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new DateTimePicker(input, extensionRegistry);
         }
       };
 

@@ -46,6 +46,70 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
     return this.unknownFields;
   }
 
+  private StreamingSequenceReport(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    int mutable_bitField0_ = 0;
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              name_ = s;
+              break;
+            }
+          case 18:
+            {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                attempts_ =
+                    new java.util.ArrayList<
+                        com.google.showcase.v1beta1.StreamingSequenceReport.Attempt>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              attempts_.add(
+                  input.readMessage(
+                      com.google.showcase.v1beta1.StreamingSequenceReport.Attempt.parser(),
+                      extensionRegistry));
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        attempts_ = java.util.Collections.unmodifiableList(attempts_);
+      }
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.showcase.v1beta1.SequenceOuterClass
         .internal_static_google_showcase_v1beta1_StreamingSequenceReport_descriptor;
@@ -265,6 +329,109 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
       return this.unknownFields;
+    }
+
+    private Attempt(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8:
+              {
+                attemptNumber_ = input.readInt32();
+                break;
+              }
+            case 18:
+              {
+                com.google.protobuf.Timestamp.Builder subBuilder = null;
+                if (attemptDeadline_ != null) {
+                  subBuilder = attemptDeadline_.toBuilder();
+                }
+                attemptDeadline_ =
+                    input.readMessage(com.google.protobuf.Timestamp.parser(), extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(attemptDeadline_);
+                  attemptDeadline_ = subBuilder.buildPartial();
+                }
+
+                break;
+              }
+            case 26:
+              {
+                com.google.protobuf.Timestamp.Builder subBuilder = null;
+                if (responseTime_ != null) {
+                  subBuilder = responseTime_.toBuilder();
+                }
+                responseTime_ =
+                    input.readMessage(com.google.protobuf.Timestamp.parser(), extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(responseTime_);
+                  responseTime_ = subBuilder.buildPartial();
+                }
+
+                break;
+              }
+            case 34:
+              {
+                com.google.protobuf.Duration.Builder subBuilder = null;
+                if (attemptDelay_ != null) {
+                  subBuilder = attemptDelay_.toBuilder();
+                }
+                attemptDelay_ =
+                    input.readMessage(com.google.protobuf.Duration.parser(), extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(attemptDelay_);
+                  attemptDelay_ = subBuilder.buildPartial();
+                }
+
+                break;
+              }
+            case 42:
+              {
+                com.google.rpc.Status.Builder subBuilder = null;
+                if (status_ != null) {
+                  subBuilder = status_.toBuilder();
+                }
+                status_ = input.readMessage(com.google.rpc.Status.parser(), extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(status_);
+                  status_ = subBuilder.buildPartial();
+                }
+
+                break;
+              }
+            default:
+              {
+                if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -538,7 +705,7 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       if (status_ != null) {
         output.writeMessage(5, getStatus());
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
     @java.lang.Override
@@ -562,7 +729,7 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       if (status_ != null) {
         size += com.google.protobuf.CodedOutputStream.computeMessageSize(5, getStatus());
       }
-      size += getUnknownFields().getSerializedSize();
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -595,7 +762,7 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       if (hasStatus()) {
         if (!getStatus().equals(other.getStatus())) return false;
       }
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
 
@@ -624,7 +791,7 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         hash = (37 * hash) + STATUS_FIELD_NUMBER;
         hash = (53 * hash) + getStatus().hashCode();
       }
-      hash = (29 * hash) + getUnknownFields().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -757,10 +924,17 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       }
 
       // Construct using com.google.showcase.v1beta1.StreamingSequenceReport.Attempt.newBuilder()
-      private Builder() {}
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
 
       private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
+        maybeForceBuilderInitialization();
+      }
+
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
       }
 
       @java.lang.Override
@@ -909,7 +1083,7 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         if (other.hasStatus()) {
           mergeStatus(other.getStatus());
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -924,62 +1098,19 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
+        com.google.showcase.v1beta1.StreamingSequenceReport.Attempt parsedMessage = null;
         try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 8:
-                {
-                  attemptNumber_ = input.readInt32();
-
-                  break;
-                } // case 8
-              case 18:
-                {
-                  input.readMessage(
-                      getAttemptDeadlineFieldBuilder().getBuilder(), extensionRegistry);
-
-                  break;
-                } // case 18
-              case 26:
-                {
-                  input.readMessage(getResponseTimeFieldBuilder().getBuilder(), extensionRegistry);
-
-                  break;
-                } // case 26
-              case 34:
-                {
-                  input.readMessage(getAttemptDelayFieldBuilder().getBuilder(), extensionRegistry);
-
-                  break;
-                } // case 34
-              case 42:
-                {
-                  input.readMessage(getStatusFieldBuilder().getBuilder(), extensionRegistry);
-
-                  break;
-                } // case 42
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage =
+              (com.google.showcase.v1beta1.StreamingSequenceReport.Attempt)
+                  e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          onChanged();
-        } // finally
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
         return this;
       }
 
@@ -1854,19 +1985,7 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
               com.google.protobuf.CodedInputStream input,
               com.google.protobuf.ExtensionRegistryLite extensionRegistry)
               throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
+            return new Attempt(input, extensionRegistry);
           }
         };
 
@@ -2021,7 +2140,7 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
     for (int i = 0; i < attempts_.size(); i++) {
       output.writeMessage(2, attempts_.get(i));
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -2036,7 +2155,7 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
     for (int i = 0; i < attempts_.size(); i++) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, attempts_.get(i));
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -2054,7 +2173,7 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
 
     if (!getName().equals(other.getName())) return false;
     if (!getAttemptsList().equals(other.getAttemptsList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -2071,7 +2190,7 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
       hash = (37 * hash) + ATTEMPTS_FIELD_NUMBER;
       hash = (53 * hash) + getAttemptsList().hashCode();
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -2193,10 +2312,19 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
     }
 
     // Construct using com.google.showcase.v1beta1.StreamingSequenceReport.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+        getAttemptsFieldBuilder();
+      }
     }
 
     @java.lang.Override
@@ -2206,11 +2334,10 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
 
       if (attemptsBuilder_ == null) {
         attempts_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000001);
       } else {
-        attempts_ = null;
         attemptsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
       return this;
     }
 
@@ -2330,7 +2457,7 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
           }
         }
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -2345,51 +2472,18 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.showcase.v1beta1.StreamingSequenceReport parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                name_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 10
-            case 18:
-              {
-                com.google.showcase.v1beta1.StreamingSequenceReport.Attempt m =
-                    input.readMessage(
-                        com.google.showcase.v1beta1.StreamingSequenceReport.Attempt.parser(),
-                        extensionRegistry);
-                if (attemptsBuilder_ == null) {
-                  ensureAttemptsIsMutable();
-                  attempts_.add(m);
-                } else {
-                  attemptsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 18
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage =
+            (com.google.showcase.v1beta1.StreamingSequenceReport) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -2891,18 +2985,7 @@ public final class StreamingSequenceReport extends com.google.protobuf.Generated
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new StreamingSequenceReport(input, extensionRegistry);
         }
       };
 

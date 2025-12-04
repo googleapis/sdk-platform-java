@@ -56,6 +56,113 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     return this.unknownFields;
   }
 
+  private DenyRule(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    int mutable_bitField0_ = 0;
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                deniedPrincipals_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              deniedPrincipals_.add(s);
+              break;
+            }
+          case 18:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
+                exceptionPrincipals_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              exceptionPrincipals_.add(s);
+              break;
+            }
+          case 26:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000004) != 0)) {
+                deniedPermissions_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000004;
+              }
+              deniedPermissions_.add(s);
+              break;
+            }
+          case 34:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000008) != 0)) {
+                exceptionPermissions_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              exceptionPermissions_.add(s);
+              break;
+            }
+          case 42:
+            {
+              com.google.type.Expr.Builder subBuilder = null;
+              if (denialCondition_ != null) {
+                subBuilder = denialCondition_.toBuilder();
+              }
+              denialCondition_ =
+                  input.readMessage(com.google.type.Expr.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(denialCondition_);
+                denialCondition_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        deniedPrincipals_ = deniedPrincipals_.getUnmodifiableView();
+      }
+      if (((mutable_bitField0_ & 0x00000002) != 0)) {
+        exceptionPrincipals_ = exceptionPrincipals_.getUnmodifiableView();
+      }
+      if (((mutable_bitField0_ & 0x00000004) != 0)) {
+        deniedPermissions_ = deniedPermissions_.getUnmodifiableView();
+      }
+      if (((mutable_bitField0_ & 0x00000008) != 0)) {
+        exceptionPermissions_ = exceptionPermissions_.getUnmodifiableView();
+      }
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.iam.v2beta.DenyRuleProto
         .internal_static_google_iam_v2beta_DenyRule_descriptor;
@@ -613,7 +720,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     if (denialCondition_ != null) {
       output.writeMessage(5, getDenialCondition());
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -657,7 +764,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     if (denialCondition_ != null) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(5, getDenialCondition());
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -680,7 +787,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     if (hasDenialCondition()) {
       if (!getDenialCondition().equals(other.getDenialCondition())) return false;
     }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -711,7 +818,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       hash = (37 * hash) + DENIAL_CONDITION_FIELD_NUMBER;
       hash = (53 * hash) + getDenialCondition().hashCode();
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -839,10 +946,17 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     }
 
     // Construct using com.google.iam.v2beta.DenyRule.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
     }
 
     @java.lang.Override
@@ -1006,7 +1120,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       if (other.hasDenialCondition()) {
         mergeDenialCondition(other.getDenialCondition());
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -1021,65 +1135,17 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.iam.v2beta.DenyRule parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureDeniedPrincipalsIsMutable();
-                deniedPrincipals_.add(s);
-                break;
-              } // case 10
-            case 18:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureExceptionPrincipalsIsMutable();
-                exceptionPrincipals_.add(s);
-                break;
-              } // case 18
-            case 26:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureDeniedPermissionsIsMutable();
-                deniedPermissions_.add(s);
-                break;
-              } // case 26
-            case 34:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureExceptionPermissionsIsMutable();
-                exceptionPermissions_.add(s);
-                break;
-              } // case 34
-            case 42:
-              {
-                input.readMessage(getDenialConditionFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 42
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.iam.v2beta.DenyRule) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -2488,18 +2554,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new DenyRule(input, extensionRegistry);
         }
       };
 

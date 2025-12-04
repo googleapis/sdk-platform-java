@@ -56,6 +56,123 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     return this.unknownFields;
   }
 
+  private BackendRule(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    int mutable_bitField0_ = 0;
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              selector_ = s;
+              break;
+            }
+          case 18:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              address_ = s;
+              break;
+            }
+          case 25:
+            {
+              deadline_ = input.readDouble();
+              break;
+            }
+          case 33:
+            {
+              minDeadline_ = input.readDouble();
+              break;
+            }
+          case 41:
+            {
+              operationDeadline_ = input.readDouble();
+              break;
+            }
+          case 48:
+            {
+              int rawValue = input.readEnum();
+
+              pathTranslation_ = rawValue;
+              break;
+            }
+          case 58:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+              authenticationCase_ = 7;
+              authentication_ = s;
+              break;
+            }
+          case 64:
+            {
+              authentication_ = input.readBool();
+              authenticationCase_ = 8;
+              break;
+            }
+          case 74:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              protocol_ = s;
+              break;
+            }
+          case 82:
+            {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                overridesByRequestProtocol_ =
+                    com.google.protobuf.MapField.newMapField(
+                        OverridesByRequestProtocolDefaultEntryHolder.defaultEntry);
+                mutable_bitField0_ |= 0x00000001;
+              }
+              com.google.protobuf.MapEntry<java.lang.String, com.google.api.BackendRule>
+                  overridesByRequestProtocol__ =
+                      input.readMessage(
+                          OverridesByRequestProtocolDefaultEntryHolder.defaultEntry
+                              .getParserForType(),
+                          extensionRegistry);
+              overridesByRequestProtocol_
+                  .getMutableMap()
+                  .put(
+                      overridesByRequestProtocol__.getKey(),
+                      overridesByRequestProtocol__.getValue());
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.BackendProto.internal_static_google_api_BackendRule_descriptor;
   }
@@ -918,7 +1035,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         internalGetOverridesByRequestProtocol(),
         OverridesByRequestProtocolDefaultEntryHolder.defaultEntry,
         10);
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -970,7 +1087,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
           com.google.protobuf.CodedOutputStream.computeMessageSize(
               10, overridesByRequestProtocol__);
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -1008,7 +1125,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       case 0:
       default:
     }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -1058,7 +1175,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       case 0:
       default:
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -1204,10 +1321,17 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     }
 
     // Construct using com.google.api.BackendRule.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
     }
 
     @java.lang.Override
@@ -1365,7 +1489,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
             break;
           }
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -1380,101 +1504,17 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.api.BackendRule parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                selector_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 10
-            case 18:
-              {
-                address_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 18
-            case 25:
-              {
-                deadline_ = input.readDouble();
-
-                break;
-              } // case 25
-            case 33:
-              {
-                minDeadline_ = input.readDouble();
-
-                break;
-              } // case 33
-            case 41:
-              {
-                operationDeadline_ = input.readDouble();
-
-                break;
-              } // case 41
-            case 48:
-              {
-                pathTranslation_ = input.readEnum();
-
-                break;
-              } // case 48
-            case 58:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                authenticationCase_ = 7;
-                authentication_ = s;
-                break;
-              } // case 58
-            case 64:
-              {
-                authentication_ = input.readBool();
-                authenticationCase_ = 8;
-                break;
-              } // case 64
-            case 74:
-              {
-                protocol_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 74
-            case 82:
-              {
-                com.google.protobuf.MapEntry<java.lang.String, com.google.api.BackendRule>
-                    overridesByRequestProtocol__ =
-                        input.readMessage(
-                            OverridesByRequestProtocolDefaultEntryHolder.defaultEntry
-                                .getParserForType(),
-                            extensionRegistry);
-                internalGetMutableOverridesByRequestProtocol()
-                    .getMutableMap()
-                    .put(
-                        overridesByRequestProtocol__.getKey(),
-                        overridesByRequestProtocol__.getValue());
-                break;
-              } // case 82
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.api.BackendRule) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -2674,18 +2714,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new BackendRule(input, extensionRegistry);
         }
       };
 

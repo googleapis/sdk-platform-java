@@ -55,6 +55,60 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
     return this.unknownFields;
   }
 
+  private ComplianceSuite(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    int mutable_bitField0_ = 0;
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                group_ = new java.util.ArrayList<com.google.showcase.v1beta1.ComplianceGroup>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              group_.add(
+                  input.readMessage(
+                      com.google.showcase.v1beta1.ComplianceGroup.parser(), extensionRegistry));
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        group_ = java.util.Collections.unmodifiableList(group_);
+      }
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.showcase.v1beta1.ComplianceOuterClass
         .internal_static_google_showcase_v1beta1_ComplianceSuite_descriptor;
@@ -121,7 +175,7 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
     for (int i = 0; i < group_.size(); i++) {
       output.writeMessage(1, group_.get(i));
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -133,7 +187,7 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
     for (int i = 0; i < group_.size(); i++) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, group_.get(i));
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -150,7 +204,7 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
         (com.google.showcase.v1beta1.ComplianceSuite) obj;
 
     if (!getGroupList().equals(other.getGroupList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -165,7 +219,7 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
       hash = (37 * hash) + GROUP_FIELD_NUMBER;
       hash = (53 * hash) + getGroupList().hashCode();
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -297,10 +351,19 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
     }
 
     // Construct using com.google.showcase.v1beta1.ComplianceSuite.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+        getGroupFieldBuilder();
+      }
     }
 
     @java.lang.Override
@@ -308,11 +371,10 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
       super.clear();
       if (groupBuilder_ == null) {
         group_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000001);
       } else {
-        group_ = null;
         groupBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
       return this;
     }
 
@@ -426,7 +488,7 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
           }
         }
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -441,44 +503,17 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.showcase.v1beta1.ComplianceSuite parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                com.google.showcase.v1beta1.ComplianceGroup m =
-                    input.readMessage(
-                        com.google.showcase.v1beta1.ComplianceGroup.parser(), extensionRegistry);
-                if (groupBuilder_ == null) {
-                  ensureGroupIsMutable();
-                  group_.add(m);
-                } else {
-                  groupBuilder_.addMessage(m);
-                }
-                break;
-              } // case 10
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.showcase.v1beta1.ComplianceSuite) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -738,18 +773,7 @@ public final class ComplianceSuite extends com.google.protobuf.GeneratedMessageV
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new ComplianceSuite(input, extensionRegistry);
         }
       };
 

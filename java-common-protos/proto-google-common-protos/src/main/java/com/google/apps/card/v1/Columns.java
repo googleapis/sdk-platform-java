@@ -79,6 +79,60 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
     return this.unknownFields;
   }
 
+  private Columns(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    int mutable_bitField0_ = 0;
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 18:
+            {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                columnItems_ = new java.util.ArrayList<com.google.apps.card.v1.Columns.Column>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              columnItems_.add(
+                  input.readMessage(
+                      com.google.apps.card.v1.Columns.Column.parser(), extensionRegistry));
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        columnItems_ = java.util.Collections.unmodifiableList(columnItems_);
+      }
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.apps.card.v1.CardProto.internal_static_google_apps_card_v1_Columns_descriptor;
   }
@@ -281,6 +335,83 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
       return this.unknownFields;
+    }
+
+    private Column(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8:
+              {
+                int rawValue = input.readEnum();
+
+                horizontalSizeStyle_ = rawValue;
+                break;
+              }
+            case 16:
+              {
+                int rawValue = input.readEnum();
+
+                horizontalAlignment_ = rawValue;
+                break;
+              }
+            case 24:
+              {
+                int rawValue = input.readEnum();
+
+                verticalAlignment_ = rawValue;
+                break;
+              }
+            case 34:
+              {
+                if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                  widgets_ =
+                      new java.util.ArrayList<com.google.apps.card.v1.Columns.Column.Widgets>();
+                  mutable_bitField0_ |= 0x00000001;
+                }
+                widgets_.add(
+                    input.readMessage(
+                        com.google.apps.card.v1.Columns.Column.Widgets.parser(),
+                        extensionRegistry));
+                break;
+              }
+            default:
+              {
+                if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          widgets_ = java.util.Collections.unmodifiableList(widgets_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -997,6 +1128,173 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         return this.unknownFields;
       }
 
+      private Widgets(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        this();
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder();
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10:
+                {
+                  com.google.apps.card.v1.TextParagraph.Builder subBuilder = null;
+                  if (dataCase_ == 1) {
+                    subBuilder = ((com.google.apps.card.v1.TextParagraph) data_).toBuilder();
+                  }
+                  data_ =
+                      input.readMessage(
+                          com.google.apps.card.v1.TextParagraph.parser(), extensionRegistry);
+                  if (subBuilder != null) {
+                    subBuilder.mergeFrom((com.google.apps.card.v1.TextParagraph) data_);
+                    data_ = subBuilder.buildPartial();
+                  }
+                  dataCase_ = 1;
+                  break;
+                }
+              case 18:
+                {
+                  com.google.apps.card.v1.Image.Builder subBuilder = null;
+                  if (dataCase_ == 2) {
+                    subBuilder = ((com.google.apps.card.v1.Image) data_).toBuilder();
+                  }
+                  data_ =
+                      input.readMessage(com.google.apps.card.v1.Image.parser(), extensionRegistry);
+                  if (subBuilder != null) {
+                    subBuilder.mergeFrom((com.google.apps.card.v1.Image) data_);
+                    data_ = subBuilder.buildPartial();
+                  }
+                  dataCase_ = 2;
+                  break;
+                }
+              case 26:
+                {
+                  com.google.apps.card.v1.DecoratedText.Builder subBuilder = null;
+                  if (dataCase_ == 3) {
+                    subBuilder = ((com.google.apps.card.v1.DecoratedText) data_).toBuilder();
+                  }
+                  data_ =
+                      input.readMessage(
+                          com.google.apps.card.v1.DecoratedText.parser(), extensionRegistry);
+                  if (subBuilder != null) {
+                    subBuilder.mergeFrom((com.google.apps.card.v1.DecoratedText) data_);
+                    data_ = subBuilder.buildPartial();
+                  }
+                  dataCase_ = 3;
+                  break;
+                }
+              case 34:
+                {
+                  com.google.apps.card.v1.ButtonList.Builder subBuilder = null;
+                  if (dataCase_ == 4) {
+                    subBuilder = ((com.google.apps.card.v1.ButtonList) data_).toBuilder();
+                  }
+                  data_ =
+                      input.readMessage(
+                          com.google.apps.card.v1.ButtonList.parser(), extensionRegistry);
+                  if (subBuilder != null) {
+                    subBuilder.mergeFrom((com.google.apps.card.v1.ButtonList) data_);
+                    data_ = subBuilder.buildPartial();
+                  }
+                  dataCase_ = 4;
+                  break;
+                }
+              case 42:
+                {
+                  com.google.apps.card.v1.TextInput.Builder subBuilder = null;
+                  if (dataCase_ == 5) {
+                    subBuilder = ((com.google.apps.card.v1.TextInput) data_).toBuilder();
+                  }
+                  data_ =
+                      input.readMessage(
+                          com.google.apps.card.v1.TextInput.parser(), extensionRegistry);
+                  if (subBuilder != null) {
+                    subBuilder.mergeFrom((com.google.apps.card.v1.TextInput) data_);
+                    data_ = subBuilder.buildPartial();
+                  }
+                  dataCase_ = 5;
+                  break;
+                }
+              case 50:
+                {
+                  com.google.apps.card.v1.SelectionInput.Builder subBuilder = null;
+                  if (dataCase_ == 6) {
+                    subBuilder = ((com.google.apps.card.v1.SelectionInput) data_).toBuilder();
+                  }
+                  data_ =
+                      input.readMessage(
+                          com.google.apps.card.v1.SelectionInput.parser(), extensionRegistry);
+                  if (subBuilder != null) {
+                    subBuilder.mergeFrom((com.google.apps.card.v1.SelectionInput) data_);
+                    data_ = subBuilder.buildPartial();
+                  }
+                  dataCase_ = 6;
+                  break;
+                }
+              case 58:
+                {
+                  com.google.apps.card.v1.DateTimePicker.Builder subBuilder = null;
+                  if (dataCase_ == 7) {
+                    subBuilder = ((com.google.apps.card.v1.DateTimePicker) data_).toBuilder();
+                  }
+                  data_ =
+                      input.readMessage(
+                          com.google.apps.card.v1.DateTimePicker.parser(), extensionRegistry);
+                  if (subBuilder != null) {
+                    subBuilder.mergeFrom((com.google.apps.card.v1.DateTimePicker) data_);
+                    data_ = subBuilder.buildPartial();
+                  }
+                  dataCase_ = 7;
+                  break;
+                }
+              case 66:
+                {
+                  com.google.apps.card.v1.ChipList.Builder subBuilder = null;
+                  if (dataCase_ == 8) {
+                    subBuilder = ((com.google.apps.card.v1.ChipList) data_).toBuilder();
+                  }
+                  data_ =
+                      input.readMessage(
+                          com.google.apps.card.v1.ChipList.parser(), extensionRegistry);
+                  if (subBuilder != null) {
+                    subBuilder.mergeFrom((com.google.apps.card.v1.ChipList) data_);
+                    data_ = subBuilder.buildPartial();
+                  }
+                  dataCase_ = 8;
+                  break;
+                }
+              default:
+                {
+                  if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                    done = true;
+                  }
+                  break;
+                }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(this);
+        } finally {
+          this.unknownFields = unknownFields.build();
+          makeExtensionsImmutable();
+        }
+      }
+
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
         return com.google.apps.card.v1.CardProto
             .internal_static_google_apps_card_v1_Columns_Column_Widgets_descriptor;
@@ -1548,7 +1846,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         if (dataCase_ == 8) {
           output.writeMessage(8, (com.google.apps.card.v1.ChipList) data_);
         }
-        getUnknownFields().writeTo(output);
+        unknownFields.writeTo(output);
       }
 
       @java.lang.Override
@@ -1597,7 +1895,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
               com.google.protobuf.CodedOutputStream.computeMessageSize(
                   8, (com.google.apps.card.v1.ChipList) data_);
         }
-        size += getUnknownFields().getSerializedSize();
+        size += unknownFields.getSerializedSize();
         memoizedSize = size;
         return size;
       }
@@ -1642,7 +1940,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           case 0:
           default:
         }
-        if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+        if (!unknownFields.equals(other.unknownFields)) return false;
         return true;
       }
 
@@ -1689,7 +1987,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           case 0:
           default:
         }
-        hash = (29 * hash) + getUnknownFields().hashCode();
+        hash = (29 * hash) + unknownFields.hashCode();
         memoizedHashCode = hash;
         return hash;
       }
@@ -1823,39 +2121,22 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         }
 
         // Construct using com.google.apps.card.v1.Columns.Column.Widgets.newBuilder()
-        private Builder() {}
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
 
         private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
           super(parent);
+          maybeForceBuilderInitialization();
+        }
+
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
         }
 
         @java.lang.Override
         public Builder clear() {
           super.clear();
-          if (textParagraphBuilder_ != null) {
-            textParagraphBuilder_.clear();
-          }
-          if (imageBuilder_ != null) {
-            imageBuilder_.clear();
-          }
-          if (decoratedTextBuilder_ != null) {
-            decoratedTextBuilder_.clear();
-          }
-          if (buttonListBuilder_ != null) {
-            buttonListBuilder_.clear();
-          }
-          if (textInputBuilder_ != null) {
-            textInputBuilder_.clear();
-          }
-          if (selectionInputBuilder_ != null) {
-            selectionInputBuilder_.clear();
-          }
-          if (dateTimePickerBuilder_ != null) {
-            dateTimePickerBuilder_.clear();
-          }
-          if (chipListBuilder_ != null) {
-            chipListBuilder_.clear();
-          }
           dataCase_ = 0;
           data_ = null;
           return this;
@@ -2040,7 +2321,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
                 break;
               }
           }
-          this.mergeUnknownFields(other.getUnknownFields());
+          this.mergeUnknownFields(other.unknownFields);
           onChanged();
           return this;
         }
@@ -2055,83 +2336,18 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws java.io.IOException {
-          if (extensionRegistry == null) {
-            throw new java.lang.NullPointerException();
-          }
+          com.google.apps.card.v1.Columns.Column.Widgets parsedMessage = null;
           try {
-            boolean done = false;
-            while (!done) {
-              int tag = input.readTag();
-              switch (tag) {
-                case 0:
-                  done = true;
-                  break;
-                case 10:
-                  {
-                    input.readMessage(
-                        getTextParagraphFieldBuilder().getBuilder(), extensionRegistry);
-                    dataCase_ = 1;
-                    break;
-                  } // case 10
-                case 18:
-                  {
-                    input.readMessage(getImageFieldBuilder().getBuilder(), extensionRegistry);
-                    dataCase_ = 2;
-                    break;
-                  } // case 18
-                case 26:
-                  {
-                    input.readMessage(
-                        getDecoratedTextFieldBuilder().getBuilder(), extensionRegistry);
-                    dataCase_ = 3;
-                    break;
-                  } // case 26
-                case 34:
-                  {
-                    input.readMessage(getButtonListFieldBuilder().getBuilder(), extensionRegistry);
-                    dataCase_ = 4;
-                    break;
-                  } // case 34
-                case 42:
-                  {
-                    input.readMessage(getTextInputFieldBuilder().getBuilder(), extensionRegistry);
-                    dataCase_ = 5;
-                    break;
-                  } // case 42
-                case 50:
-                  {
-                    input.readMessage(
-                        getSelectionInputFieldBuilder().getBuilder(), extensionRegistry);
-                    dataCase_ = 6;
-                    break;
-                  } // case 50
-                case 58:
-                  {
-                    input.readMessage(
-                        getDateTimePickerFieldBuilder().getBuilder(), extensionRegistry);
-                    dataCase_ = 7;
-                    break;
-                  } // case 58
-                case 66:
-                  {
-                    input.readMessage(getChipListFieldBuilder().getBuilder(), extensionRegistry);
-                    dataCase_ = 8;
-                    break;
-                  } // case 66
-                default:
-                  {
-                    if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                      done = true; // was an endgroup tag
-                    }
-                    break;
-                  } // default:
-              } // switch (tag)
-            } // while (!done)
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
           } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage =
+                (com.google.apps.card.v1.Columns.Column.Widgets) e.getUnfinishedMessage();
             throw e.unwrapIOException();
           } finally {
-            onChanged();
-          } // finally
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
           return this;
         }
 
@@ -3918,19 +4134,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
                 com.google.protobuf.CodedInputStream input,
                 com.google.protobuf.ExtensionRegistryLite extensionRegistry)
                 throws com.google.protobuf.InvalidProtocolBufferException {
-              Builder builder = newBuilder();
-              try {
-                builder.mergeFrom(input, extensionRegistry);
-              } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-                throw e.setUnfinishedMessage(builder.buildPartial());
-              } catch (com.google.protobuf.UninitializedMessageException e) {
-                throw e.asInvalidProtocolBufferException()
-                    .setUnfinishedMessage(builder.buildPartial());
-              } catch (java.io.IOException e) {
-                throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                    .setUnfinishedMessage(builder.buildPartial());
-              }
-              return builder.buildPartial();
+              return new Widgets(input, extensionRegistry);
             }
           };
 
@@ -4187,7 +4391,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       for (int i = 0; i < widgets_.size(); i++) {
         output.writeMessage(4, widgets_.get(i));
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
     @java.lang.Override
@@ -4215,7 +4419,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       for (int i = 0; i < widgets_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, widgets_.get(i));
       }
-      size += getUnknownFields().getSerializedSize();
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -4234,7 +4438,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       if (horizontalAlignment_ != other.horizontalAlignment_) return false;
       if (verticalAlignment_ != other.verticalAlignment_) return false;
       if (!getWidgetsList().equals(other.getWidgetsList())) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
 
@@ -4255,7 +4459,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         hash = (37 * hash) + WIDGETS_FIELD_NUMBER;
         hash = (53 * hash) + getWidgetsList().hashCode();
       }
-      hash = (29 * hash) + getUnknownFields().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -4389,10 +4593,19 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       }
 
       // Construct using com.google.apps.card.v1.Columns.Column.newBuilder()
-      private Builder() {}
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
 
       private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
+        maybeForceBuilderInitialization();
+      }
+
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+          getWidgetsFieldBuilder();
+        }
       }
 
       @java.lang.Override
@@ -4406,11 +4619,10 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
 
         if (widgetsBuilder_ == null) {
           widgets_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
         } else {
-          widgets_ = null;
           widgetsBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
 
@@ -4538,7 +4750,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             }
           }
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -4553,63 +4765,17 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
+        com.google.apps.card.v1.Columns.Column parsedMessage = null;
         try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 8:
-                {
-                  horizontalSizeStyle_ = input.readEnum();
-
-                  break;
-                } // case 8
-              case 16:
-                {
-                  horizontalAlignment_ = input.readEnum();
-
-                  break;
-                } // case 16
-              case 24:
-                {
-                  verticalAlignment_ = input.readEnum();
-
-                  break;
-                } // case 24
-              case 34:
-                {
-                  com.google.apps.card.v1.Columns.Column.Widgets m =
-                      input.readMessage(
-                          com.google.apps.card.v1.Columns.Column.Widgets.parser(),
-                          extensionRegistry);
-                  if (widgetsBuilder_ == null) {
-                    ensureWidgetsIsMutable();
-                    widgets_.add(m);
-                  } else {
-                    widgetsBuilder_.addMessage(m);
-                  }
-                  break;
-                } // case 34
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.google.apps.card.v1.Columns.Column) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          onChanged();
-        } // finally
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
         return this;
       }
 
@@ -5348,19 +5514,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
               com.google.protobuf.CodedInputStream input,
               com.google.protobuf.ExtensionRegistryLite extensionRegistry)
               throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
+            return new Column(input, extensionRegistry);
           }
         };
 
@@ -5470,7 +5624,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
     for (int i = 0; i < columnItems_.size(); i++) {
       output.writeMessage(2, columnItems_.get(i));
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -5482,7 +5636,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
     for (int i = 0; i < columnItems_.size(); i++) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, columnItems_.get(i));
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -5498,7 +5652,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
     com.google.apps.card.v1.Columns other = (com.google.apps.card.v1.Columns) obj;
 
     if (!getColumnItemsList().equals(other.getColumnItemsList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -5513,7 +5667,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       hash = (37 * hash) + COLUMN_ITEMS_FIELD_NUMBER;
       hash = (53 * hash) + getColumnItemsList().hashCode();
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -5667,10 +5821,19 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
     }
 
     // Construct using com.google.apps.card.v1.Columns.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+        getColumnItemsFieldBuilder();
+      }
     }
 
     @java.lang.Override
@@ -5678,11 +5841,10 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
       super.clear();
       if (columnItemsBuilder_ == null) {
         columnItems_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000001);
       } else {
-        columnItems_ = null;
         columnItemsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
       return this;
     }
 
@@ -5795,7 +5957,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
           }
         }
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -5810,44 +5972,17 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.apps.card.v1.Columns parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 18:
-              {
-                com.google.apps.card.v1.Columns.Column m =
-                    input.readMessage(
-                        com.google.apps.card.v1.Columns.Column.parser(), extensionRegistry);
-                if (columnItemsBuilder_ == null) {
-                  ensureColumnItemsIsMutable();
-                  columnItems_.add(m);
-                } else {
-                  columnItemsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 18
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.apps.card.v1.Columns) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -6252,18 +6387,7 @@ public final class Columns extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new Columns(input, extensionRegistry);
         }
       };
 

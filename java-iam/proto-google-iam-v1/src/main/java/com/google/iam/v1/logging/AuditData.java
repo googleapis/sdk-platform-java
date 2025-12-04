@@ -53,6 +53,60 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
     return this.unknownFields;
   }
 
+  private AuditData(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 18:
+            {
+              com.google.iam.v1.PolicyDelta.Builder subBuilder = null;
+              if (policyDelta_ != null) {
+                subBuilder = policyDelta_.toBuilder();
+              }
+              policyDelta_ =
+                  input.readMessage(com.google.iam.v1.PolicyDelta.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(policyDelta_);
+                policyDelta_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.iam.v1.logging.AuditDataProto
         .internal_static_google_iam_v1_logging_AuditData_descriptor;
@@ -134,7 +188,7 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
     if (policyDelta_ != null) {
       output.writeMessage(2, getPolicyDelta());
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -146,7 +200,7 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
     if (policyDelta_ != null) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, getPolicyDelta());
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -165,7 +219,7 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
     if (hasPolicyDelta()) {
       if (!getPolicyDelta().equals(other.getPolicyDelta())) return false;
     }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -180,7 +234,7 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
       hash = (37 * hash) + POLICY_DELTA_FIELD_NUMBER;
       hash = (53 * hash) + getPolicyDelta().hashCode();
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -311,10 +365,17 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
     }
 
     // Construct using com.google.iam.v1.logging.AuditData.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
     }
 
     @java.lang.Override
@@ -409,7 +470,7 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
       if (other.hasPolicyDelta()) {
         mergePolicyDelta(other.getPolicyDelta());
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -424,37 +485,17 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.iam.v1.logging.AuditData parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 18:
-              {
-                input.readMessage(getPolicyDeltaFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 18
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.iam.v1.logging.AuditData) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -684,18 +725,7 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new AuditData(input, extensionRegistry);
         }
       };
 

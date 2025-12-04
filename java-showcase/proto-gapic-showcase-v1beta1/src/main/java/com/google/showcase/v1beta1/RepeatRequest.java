@@ -46,6 +46,114 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     return this.unknownFields;
   }
 
+  private RepeatRequest(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    int mutable_bitField0_ = 0;
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              name_ = s;
+              break;
+            }
+          case 18:
+            {
+              com.google.showcase.v1beta1.ComplianceData.Builder subBuilder = null;
+              if (info_ != null) {
+                subBuilder = info_.toBuilder();
+              }
+              info_ =
+                  input.readMessage(
+                      com.google.showcase.v1beta1.ComplianceData.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(info_);
+                info_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 24:
+            {
+              serverVerify_ = input.readBool();
+              break;
+            }
+          case 32:
+            {
+              fInt32_ = input.readInt32();
+              break;
+            }
+          case 40:
+            {
+              fInt64_ = input.readInt64();
+              break;
+            }
+          case 49:
+            {
+              fDouble_ = input.readDouble();
+              break;
+            }
+          case 56:
+            {
+              bitField0_ |= 0x00000002;
+              pInt32_ = input.readInt32();
+              break;
+            }
+          case 64:
+            {
+              bitField0_ |= 0x00000004;
+              pInt64_ = input.readInt64();
+              break;
+            }
+          case 73:
+            {
+              bitField0_ |= 0x00000008;
+              pDouble_ = input.readDouble();
+              break;
+            }
+          case 82:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000001;
+              intendedBindingUri_ = s;
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.showcase.v1beta1.ComplianceOuterClass
         .internal_static_google_showcase_v1beta1_RepeatRequest_descriptor;
@@ -376,7 +484,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     if (((bitField0_ & 0x00000001) != 0)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 10, intendedBindingUri_);
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -415,7 +523,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     if (((bitField0_ & 0x00000001) != 0)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(10, intendedBindingUri_);
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -458,7 +566,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
       if (java.lang.Double.doubleToLongBits(getPDouble())
           != java.lang.Double.doubleToLongBits(other.getPDouble())) return false;
     }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -505,7 +613,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
               + com.google.protobuf.Internal.hashLong(
                   java.lang.Double.doubleToLongBits(getPDouble()));
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -627,10 +735,17 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     // Construct using com.google.showcase.v1beta1.RepeatRequest.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
     }
 
     @java.lang.Override
@@ -798,7 +913,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
       if (other.hasPDouble()) {
         setPDouble(other.getPDouble());
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -813,91 +928,17 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.showcase.v1beta1.RepeatRequest parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                name_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 10
-            case 18:
-              {
-                input.readMessage(getInfoFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 18
-            case 24:
-              {
-                serverVerify_ = input.readBool();
-
-                break;
-              } // case 24
-            case 32:
-              {
-                fInt32_ = input.readInt32();
-
-                break;
-              } // case 32
-            case 40:
-              {
-                fInt64_ = input.readInt64();
-
-                break;
-              } // case 40
-            case 49:
-              {
-                fDouble_ = input.readDouble();
-
-                break;
-              } // case 49
-            case 56:
-              {
-                pInt32_ = input.readInt32();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 56
-            case 64:
-              {
-                pInt64_ = input.readInt64();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 64
-            case 73:
-              {
-                pDouble_ = input.readDouble();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 73
-            case 82:
-              {
-                intendedBindingUri_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 82
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.showcase.v1beta1.RepeatRequest) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -1599,18 +1640,7 @@ public final class RepeatRequest extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new RepeatRequest(input, extensionRegistry);
         }
       };
 

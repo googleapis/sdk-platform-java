@@ -54,6 +54,61 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
     return this.unknownFields;
   }
 
+  private BadRequest(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    int mutable_bitField0_ = 0;
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                fieldViolations_ =
+                    new java.util.ArrayList<com.google.rpc.BadRequest.FieldViolation>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              fieldViolations_.add(
+                  input.readMessage(
+                      com.google.rpc.BadRequest.FieldViolation.parser(), extensionRegistry));
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        fieldViolations_ = java.util.Collections.unmodifiableList(fieldViolations_);
+      }
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_BadRequest_descriptor;
   }
@@ -291,6 +346,81 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
       return this.unknownFields;
+    }
+
+    private FieldViolation(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10:
+              {
+                java.lang.String s = input.readStringRequireUtf8();
+
+                field_ = s;
+                break;
+              }
+            case 18:
+              {
+                java.lang.String s = input.readStringRequireUtf8();
+
+                description_ = s;
+                break;
+              }
+            case 26:
+              {
+                java.lang.String s = input.readStringRequireUtf8();
+
+                reason_ = s;
+                break;
+              }
+            case 34:
+              {
+                com.google.rpc.LocalizedMessage.Builder subBuilder = null;
+                if (localizedMessage_ != null) {
+                  subBuilder = localizedMessage_.toBuilder();
+                }
+                localizedMessage_ =
+                    input.readMessage(com.google.rpc.LocalizedMessage.parser(), extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(localizedMessage_);
+                  localizedMessage_ = subBuilder.buildPartial();
+                }
+
+                break;
+              }
+            default:
+              {
+                if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -607,7 +737,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       if (localizedMessage_ != null) {
         output.writeMessage(4, getLocalizedMessage());
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
     @java.lang.Override
@@ -628,7 +758,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       if (localizedMessage_ != null) {
         size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, getLocalizedMessage());
       }
-      size += getUnknownFields().getSerializedSize();
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -651,7 +781,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       if (hasLocalizedMessage()) {
         if (!getLocalizedMessage().equals(other.getLocalizedMessage())) return false;
       }
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
 
@@ -672,7 +802,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         hash = (37 * hash) + LOCALIZED_MESSAGE_FIELD_NUMBER;
         hash = (53 * hash) + getLocalizedMessage().hashCode();
       }
-      hash = (29 * hash) + getUnknownFields().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -804,10 +934,17 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       }
 
       // Construct using com.google.rpc.BadRequest.FieldViolation.newBuilder()
-      private Builder() {}
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
 
       private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
+        maybeForceBuilderInitialization();
+      }
+
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
       }
 
       @java.lang.Override
@@ -926,7 +1063,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         if (other.hasLocalizedMessage()) {
           mergeLocalizedMessage(other.getLocalizedMessage());
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -941,56 +1078,17 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
+        com.google.rpc.BadRequest.FieldViolation parsedMessage = null;
         try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10:
-                {
-                  field_ = input.readStringRequireUtf8();
-
-                  break;
-                } // case 10
-              case 18:
-                {
-                  description_ = input.readStringRequireUtf8();
-
-                  break;
-                } // case 18
-              case 26:
-                {
-                  reason_ = input.readStringRequireUtf8();
-
-                  break;
-                } // case 26
-              case 34:
-                {
-                  input.readMessage(
-                      getLocalizedMessageFieldBuilder().getBuilder(), extensionRegistry);
-
-                  break;
-                } // case 34
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.google.rpc.BadRequest.FieldViolation) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          onChanged();
-        } // finally
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
         return this;
       }
 
@@ -1728,19 +1826,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
               com.google.protobuf.CodedInputStream input,
               com.google.protobuf.ExtensionRegistryLite extensionRegistry)
               throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
+            return new FieldViolation(input, extensionRegistry);
           }
         };
 
@@ -1850,7 +1936,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
     for (int i = 0; i < fieldViolations_.size(); i++) {
       output.writeMessage(1, fieldViolations_.get(i));
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -1862,7 +1948,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
     for (int i = 0; i < fieldViolations_.size(); i++) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, fieldViolations_.get(i));
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -1878,7 +1964,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
     com.google.rpc.BadRequest other = (com.google.rpc.BadRequest) obj;
 
     if (!getFieldViolationsList().equals(other.getFieldViolationsList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -1893,7 +1979,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       hash = (37 * hash) + FIELD_VIOLATIONS_FIELD_NUMBER;
       hash = (53 * hash) + getFieldViolationsList().hashCode();
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -2021,10 +2107,19 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     // Construct using com.google.rpc.BadRequest.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+        getFieldViolationsFieldBuilder();
+      }
     }
 
     @java.lang.Override
@@ -2032,11 +2127,10 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       super.clear();
       if (fieldViolationsBuilder_ == null) {
         fieldViolations_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000001);
       } else {
-        fieldViolations_ = null;
         fieldViolationsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
       return this;
     }
 
@@ -2148,7 +2242,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
           }
         }
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -2163,44 +2257,17 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.rpc.BadRequest parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                com.google.rpc.BadRequest.FieldViolation m =
-                    input.readMessage(
-                        com.google.rpc.BadRequest.FieldViolation.parser(), extensionRegistry);
-                if (fieldViolationsBuilder_ == null) {
-                  ensureFieldViolationsIsMutable();
-                  fieldViolations_.add(m);
-                } else {
-                  fieldViolationsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 10
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.rpc.BadRequest) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -2610,18 +2677,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new BadRequest(input, extensionRegistry);
         }
       };
 

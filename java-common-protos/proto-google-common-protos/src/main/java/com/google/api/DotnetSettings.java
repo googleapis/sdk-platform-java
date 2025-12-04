@@ -55,6 +55,135 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     return this.unknownFields;
   }
 
+  private DotnetSettings(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    int mutable_bitField0_ = 0;
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              com.google.api.CommonLanguageSettings.Builder subBuilder = null;
+              if (common_ != null) {
+                subBuilder = common_.toBuilder();
+              }
+              common_ =
+                  input.readMessage(
+                      com.google.api.CommonLanguageSettings.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(common_);
+                common_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 18:
+            {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                renamedServices_ =
+                    com.google.protobuf.MapField.newMapField(
+                        RenamedServicesDefaultEntryHolder.defaultEntry);
+                mutable_bitField0_ |= 0x00000001;
+              }
+              com.google.protobuf.MapEntry<java.lang.String, java.lang.String> renamedServices__ =
+                  input.readMessage(
+                      RenamedServicesDefaultEntryHolder.defaultEntry.getParserForType(),
+                      extensionRegistry);
+              renamedServices_
+                  .getMutableMap()
+                  .put(renamedServices__.getKey(), renamedServices__.getValue());
+              break;
+            }
+          case 26:
+            {
+              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
+                renamedResources_ =
+                    com.google.protobuf.MapField.newMapField(
+                        RenamedResourcesDefaultEntryHolder.defaultEntry);
+                mutable_bitField0_ |= 0x00000002;
+              }
+              com.google.protobuf.MapEntry<java.lang.String, java.lang.String> renamedResources__ =
+                  input.readMessage(
+                      RenamedResourcesDefaultEntryHolder.defaultEntry.getParserForType(),
+                      extensionRegistry);
+              renamedResources_
+                  .getMutableMap()
+                  .put(renamedResources__.getKey(), renamedResources__.getValue());
+              break;
+            }
+          case 34:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000004) != 0)) {
+                ignoredResources_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000004;
+              }
+              ignoredResources_.add(s);
+              break;
+            }
+          case 42:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000008) != 0)) {
+                forcedNamespaceAliases_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              forcedNamespaceAliases_.add(s);
+              break;
+            }
+          case 50:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000010) != 0)) {
+                handwrittenSignatures_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000010;
+              }
+              handwrittenSignatures_.add(s);
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      if (((mutable_bitField0_ & 0x00000004) != 0)) {
+        ignoredResources_ = ignoredResources_.getUnmodifiableView();
+      }
+      if (((mutable_bitField0_ & 0x00000008) != 0)) {
+        forcedNamespaceAliases_ = forcedNamespaceAliases_.getUnmodifiableView();
+      }
+      if (((mutable_bitField0_ & 0x00000010) != 0)) {
+        handwrittenSignatures_ = handwrittenSignatures_.getUnmodifiableView();
+      }
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.ClientProto.internal_static_google_api_DotnetSettings_descriptor;
   }
@@ -628,7 +757,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       com.google.protobuf.GeneratedMessageV3.writeString(
           output, 6, handwrittenSignatures_.getRaw(i));
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -684,7 +813,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       size += dataSize;
       size += 1 * getHandwrittenSignaturesList().size();
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -709,7 +838,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     if (!getForcedNamespaceAliasesList().equals(other.getForcedNamespaceAliasesList()))
       return false;
     if (!getHandwrittenSignaturesList().equals(other.getHandwrittenSignaturesList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -744,7 +873,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       hash = (37 * hash) + HANDWRITTEN_SIGNATURES_FIELD_NUMBER;
       hash = (53 * hash) + getHandwrittenSignaturesList().hashCode();
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -894,10 +1023,17 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     }
 
     // Construct using com.google.api.DotnetSettings.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
     }
 
     @java.lang.Override
@@ -1051,7 +1187,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
         }
         onChanged();
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -1066,81 +1202,17 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.api.DotnetSettings parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                input.readMessage(getCommonFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 10
-            case 18:
-              {
-                com.google.protobuf.MapEntry<java.lang.String, java.lang.String> renamedServices__ =
-                    input.readMessage(
-                        RenamedServicesDefaultEntryHolder.defaultEntry.getParserForType(),
-                        extensionRegistry);
-                internalGetMutableRenamedServices()
-                    .getMutableMap()
-                    .put(renamedServices__.getKey(), renamedServices__.getValue());
-                break;
-              } // case 18
-            case 26:
-              {
-                com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
-                    renamedResources__ =
-                        input.readMessage(
-                            RenamedResourcesDefaultEntryHolder.defaultEntry.getParserForType(),
-                            extensionRegistry);
-                internalGetMutableRenamedResources()
-                    .getMutableMap()
-                    .put(renamedResources__.getKey(), renamedResources__.getValue());
-                break;
-              } // case 26
-            case 34:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureIgnoredResourcesIsMutable();
-                ignoredResources_.add(s);
-                break;
-              } // case 34
-            case 42:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureForcedNamespaceAliasesIsMutable();
-                forcedNamespaceAliases_.add(s);
-                break;
-              } // case 42
-            case 50:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureHandwrittenSignaturesIsMutable();
-                handwrittenSignatures_.add(s);
-                break;
-              } // case 50
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.api.DotnetSettings) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -2369,18 +2441,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new DotnetSettings(input, extensionRegistry);
         }
       };
 

@@ -56,6 +56,74 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
     return this.unknownFields;
   }
 
+  private CustomAttribute(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    int mutable_bitField0_ = 0;
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000001;
+              name_ = s;
+              break;
+            }
+          case 18:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000002;
+              value_ = s;
+              break;
+            }
+          case 26:
+            {
+              if (!((mutable_bitField0_ & 0x00000004) != 0)) {
+                groupValues_ = new java.util.ArrayList<com.google.shopping.type.CustomAttribute>();
+                mutable_bitField0_ |= 0x00000004;
+              }
+              groupValues_.add(
+                  input.readMessage(
+                      com.google.shopping.type.CustomAttribute.parser(), extensionRegistry));
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      if (((mutable_bitField0_ & 0x00000004) != 0)) {
+        groupValues_ = java.util.Collections.unmodifiableList(groupValues_);
+      }
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.shopping.type.TypesProto
         .internal_static_google_shopping_type_CustomAttribute_descriptor;
@@ -311,7 +379,7 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
     for (int i = 0; i < groupValues_.size(); i++) {
       output.writeMessage(3, groupValues_.get(i));
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -329,7 +397,7 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
     for (int i = 0; i < groupValues_.size(); i++) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, groupValues_.get(i));
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -353,7 +421,7 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
       if (!getValue().equals(other.getValue())) return false;
     }
     if (!getGroupValuesList().equals(other.getGroupValuesList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -376,7 +444,7 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
       hash = (37 * hash) + GROUP_VALUES_FIELD_NUMBER;
       hash = (53 * hash) + getGroupValuesList().hashCode();
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -507,10 +575,19 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
     }
 
     // Construct using com.google.shopping.type.CustomAttribute.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+        getGroupValuesFieldBuilder();
+      }
     }
 
     @java.lang.Override
@@ -522,11 +599,10 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
       bitField0_ = (bitField0_ & ~0x00000002);
       if (groupValuesBuilder_ == null) {
         groupValues_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000004);
       } else {
-        groupValues_ = null;
         groupValuesBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000004);
       return this;
     }
 
@@ -660,7 +736,7 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
           }
         }
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -675,56 +751,17 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.shopping.type.CustomAttribute parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                name_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-            case 18:
-              {
-                value_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 18
-            case 26:
-              {
-                com.google.shopping.type.CustomAttribute m =
-                    input.readMessage(
-                        com.google.shopping.type.CustomAttribute.parser(), extensionRegistry);
-                if (groupValuesBuilder_ == null) {
-                  ensureGroupValuesIsMutable();
-                  groupValues_.add(m);
-                } else {
-                  groupValuesBuilder_.addMessage(m);
-                }
-                break;
-              } // case 26
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.shopping.type.CustomAttribute) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -1406,18 +1443,7 @@ public final class CustomAttribute extends com.google.protobuf.GeneratedMessageV
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new CustomAttribute(input, extensionRegistry);
         }
       };
 

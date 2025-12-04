@@ -62,6 +62,219 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     return this.unknownFields;
   }
 
+  private DecoratedText(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              com.google.apps.card.v1.Icon.Builder subBuilder = null;
+              if (icon_ != null) {
+                subBuilder = icon_.toBuilder();
+              }
+              icon_ = input.readMessage(com.google.apps.card.v1.Icon.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(icon_);
+                icon_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 26:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              topLabel_ = s;
+              break;
+            }
+          case 34:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              text_ = s;
+              break;
+            }
+          case 40:
+            {
+              wrapText_ = input.readBool();
+              break;
+            }
+          case 50:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              bottomLabel_ = s;
+              break;
+            }
+          case 58:
+            {
+              com.google.apps.card.v1.OnClick.Builder subBuilder = null;
+              if (onClick_ != null) {
+                subBuilder = onClick_.toBuilder();
+              }
+              onClick_ =
+                  input.readMessage(com.google.apps.card.v1.OnClick.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(onClick_);
+                onClick_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 66:
+            {
+              com.google.apps.card.v1.Button.Builder subBuilder = null;
+              if (controlCase_ == 8) {
+                subBuilder = ((com.google.apps.card.v1.Button) control_).toBuilder();
+              }
+              control_ =
+                  input.readMessage(com.google.apps.card.v1.Button.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.google.apps.card.v1.Button) control_);
+                control_ = subBuilder.buildPartial();
+              }
+              controlCase_ = 8;
+              break;
+            }
+          case 74:
+            {
+              com.google.apps.card.v1.DecoratedText.SwitchControl.Builder subBuilder = null;
+              if (controlCase_ == 9) {
+                subBuilder =
+                    ((com.google.apps.card.v1.DecoratedText.SwitchControl) control_).toBuilder();
+              }
+              control_ =
+                  input.readMessage(
+                      com.google.apps.card.v1.DecoratedText.SwitchControl.parser(),
+                      extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(
+                    (com.google.apps.card.v1.DecoratedText.SwitchControl) control_);
+                control_ = subBuilder.buildPartial();
+              }
+              controlCase_ = 9;
+              break;
+            }
+          case 90:
+            {
+              com.google.apps.card.v1.Icon.Builder subBuilder = null;
+              if (controlCase_ == 11) {
+                subBuilder = ((com.google.apps.card.v1.Icon) control_).toBuilder();
+              }
+              control_ =
+                  input.readMessage(com.google.apps.card.v1.Icon.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.google.apps.card.v1.Icon) control_);
+                control_ = subBuilder.buildPartial();
+              }
+              controlCase_ = 11;
+              break;
+            }
+          case 98:
+            {
+              com.google.apps.card.v1.Icon.Builder subBuilder = null;
+              if (startIcon_ != null) {
+                subBuilder = startIcon_.toBuilder();
+              }
+              startIcon_ =
+                  input.readMessage(com.google.apps.card.v1.Icon.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(startIcon_);
+                startIcon_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 104:
+            {
+              int rawValue = input.readEnum();
+
+              startIconVerticalAlignment_ = rawValue;
+              break;
+            }
+          case 138:
+            {
+              com.google.apps.card.v1.TextParagraph.Builder subBuilder = null;
+              if (topLabelText_ != null) {
+                subBuilder = topLabelText_.toBuilder();
+              }
+              topLabelText_ =
+                  input.readMessage(
+                      com.google.apps.card.v1.TextParagraph.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(topLabelText_);
+                topLabelText_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 146:
+            {
+              com.google.apps.card.v1.TextParagraph.Builder subBuilder = null;
+              if (contentText_ != null) {
+                subBuilder = contentText_.toBuilder();
+              }
+              contentText_ =
+                  input.readMessage(
+                      com.google.apps.card.v1.TextParagraph.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(contentText_);
+                contentText_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 154:
+            {
+              com.google.apps.card.v1.TextParagraph.Builder subBuilder = null;
+              if (bottomLabelText_ != null) {
+                subBuilder = bottomLabelText_.toBuilder();
+              }
+              bottomLabelText_ =
+                  input.readMessage(
+                      com.google.apps.card.v1.TextParagraph.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(bottomLabelText_);
+                bottomLabelText_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.apps.card.v1.CardProto
         .internal_static_google_apps_card_v1_DecoratedText_descriptor;
@@ -264,6 +477,86 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
       return this.unknownFields;
+    }
+
+    private SwitchControl(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10:
+              {
+                java.lang.String s = input.readStringRequireUtf8();
+
+                name_ = s;
+                break;
+              }
+            case 18:
+              {
+                java.lang.String s = input.readStringRequireUtf8();
+
+                value_ = s;
+                break;
+              }
+            case 24:
+              {
+                selected_ = input.readBool();
+                break;
+              }
+            case 34:
+              {
+                com.google.apps.card.v1.Action.Builder subBuilder = null;
+                if (onChangeAction_ != null) {
+                  subBuilder = onChangeAction_.toBuilder();
+                }
+                onChangeAction_ =
+                    input.readMessage(com.google.apps.card.v1.Action.parser(), extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(onChangeAction_);
+                  onChangeAction_ = subBuilder.buildPartial();
+                }
+
+                break;
+              }
+            case 40:
+              {
+                int rawValue = input.readEnum();
+
+                controlType_ = rawValue;
+                break;
+              }
+            default:
+              {
+                if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -701,7 +994,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
           != com.google.apps.card.v1.DecoratedText.SwitchControl.ControlType.SWITCH.getNumber()) {
         output.writeEnum(5, controlType_);
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
     @java.lang.Override
@@ -726,7 +1019,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
           != com.google.apps.card.v1.DecoratedText.SwitchControl.ControlType.SWITCH.getNumber()) {
         size += com.google.protobuf.CodedOutputStream.computeEnumSize(5, controlType_);
       }
-      size += getUnknownFields().getSerializedSize();
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -750,7 +1043,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         if (!getOnChangeAction().equals(other.getOnChangeAction())) return false;
       }
       if (controlType_ != other.controlType_) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
 
@@ -773,7 +1066,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       }
       hash = (37 * hash) + CONTROL_TYPE_FIELD_NUMBER;
       hash = (53 * hash) + controlType_;
-      hash = (29 * hash) + getUnknownFields().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -909,10 +1202,17 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       }
 
       // Construct using com.google.apps.card.v1.DecoratedText.SwitchControl.newBuilder()
-      private Builder() {}
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
 
       private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
+        maybeForceBuilderInitialization();
+      }
+
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
       }
 
       @java.lang.Override
@@ -1037,7 +1337,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         if (other.controlType_ != 0) {
           setControlTypeValue(other.getControlTypeValue());
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -1052,62 +1352,18 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
+        com.google.apps.card.v1.DecoratedText.SwitchControl parsedMessage = null;
         try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10:
-                {
-                  name_ = input.readStringRequireUtf8();
-
-                  break;
-                } // case 10
-              case 18:
-                {
-                  value_ = input.readStringRequireUtf8();
-
-                  break;
-                } // case 18
-              case 24:
-                {
-                  selected_ = input.readBool();
-
-                  break;
-                } // case 24
-              case 34:
-                {
-                  input.readMessage(
-                      getOnChangeActionFieldBuilder().getBuilder(), extensionRegistry);
-
-                  break;
-                } // case 34
-              case 40:
-                {
-                  controlType_ = input.readEnum();
-
-                  break;
-                } // case 40
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage =
+              (com.google.apps.card.v1.DecoratedText.SwitchControl) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          onChanged();
-        } // finally
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
         return this;
       }
 
@@ -1753,19 +2009,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
               com.google.protobuf.CodedInputStream input,
               com.google.protobuf.ExtensionRegistryLite extensionRegistry)
               throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
+            return new SwitchControl(input, extensionRegistry);
           }
         };
 
@@ -2630,7 +2874,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     if (bottomLabelText_ != null) {
       output.writeMessage(19, getBottomLabelText());
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -2690,7 +2934,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     if (bottomLabelText_ != null) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(19, getBottomLabelText());
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -2748,7 +2992,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       case 0:
       default:
     }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -2809,7 +3053,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       case 0:
       default:
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -2944,10 +3188,17 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
     }
 
     // Construct using com.google.apps.card.v1.DecoratedText.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
     }
 
     @java.lang.Override
@@ -2998,15 +3249,6 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
       } else {
         onClick_ = null;
         onClickBuilder_ = null;
-      }
-      if (buttonBuilder_ != null) {
-        buttonBuilder_.clear();
-      }
-      if (switchControlBuilder_ != null) {
-        switchControlBuilder_.clear();
-      }
-      if (endIconBuilder_ != null) {
-        endIconBuilder_.clear();
       }
       controlCase_ = 0;
       control_ = null;
@@ -3200,7 +3442,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
             break;
           }
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -3215,115 +3457,17 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.apps.card.v1.DecoratedText parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                input.readMessage(getIconFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 10
-            case 26:
-              {
-                topLabel_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 26
-            case 34:
-              {
-                text_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 34
-            case 40:
-              {
-                wrapText_ = input.readBool();
-
-                break;
-              } // case 40
-            case 50:
-              {
-                bottomLabel_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 50
-            case 58:
-              {
-                input.readMessage(getOnClickFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 58
-            case 66:
-              {
-                input.readMessage(getButtonFieldBuilder().getBuilder(), extensionRegistry);
-                controlCase_ = 8;
-                break;
-              } // case 66
-            case 74:
-              {
-                input.readMessage(getSwitchControlFieldBuilder().getBuilder(), extensionRegistry);
-                controlCase_ = 9;
-                break;
-              } // case 74
-            case 90:
-              {
-                input.readMessage(getEndIconFieldBuilder().getBuilder(), extensionRegistry);
-                controlCase_ = 11;
-                break;
-              } // case 90
-            case 98:
-              {
-                input.readMessage(getStartIconFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 98
-            case 104:
-              {
-                startIconVerticalAlignment_ = input.readEnum();
-
-                break;
-              } // case 104
-            case 138:
-              {
-                input.readMessage(getTopLabelTextFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 138
-            case 146:
-              {
-                input.readMessage(getContentTextFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 146
-            case 154:
-              {
-                input.readMessage(getBottomLabelTextFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 154
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.apps.card.v1.DecoratedText) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -5836,18 +5980,7 @@ public final class DecoratedText extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new DecoratedText(input, extensionRegistry);
         }
       };
 

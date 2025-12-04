@@ -96,6 +96,103 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
     return this.unknownFields;
   }
 
+  private Grid(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    int mutable_bitField0_ = 0;
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              title_ = s;
+              break;
+            }
+          case 18:
+            {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                items_ = new java.util.ArrayList<com.google.apps.card.v1.Grid.GridItem>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              items_.add(
+                  input.readMessage(
+                      com.google.apps.card.v1.Grid.GridItem.parser(), extensionRegistry));
+              break;
+            }
+          case 26:
+            {
+              com.google.apps.card.v1.BorderStyle.Builder subBuilder = null;
+              if (borderStyle_ != null) {
+                subBuilder = borderStyle_.toBuilder();
+              }
+              borderStyle_ =
+                  input.readMessage(
+                      com.google.apps.card.v1.BorderStyle.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(borderStyle_);
+                borderStyle_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 32:
+            {
+              columnCount_ = input.readInt32();
+              break;
+            }
+          case 42:
+            {
+              com.google.apps.card.v1.OnClick.Builder subBuilder = null;
+              if (onClick_ != null) {
+                subBuilder = onClick_.toBuilder();
+              }
+              onClick_ =
+                  input.readMessage(com.google.apps.card.v1.OnClick.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(onClick_);
+                onClick_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        items_ = java.util.Collections.unmodifiableList(items_);
+      }
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.apps.card.v1.CardProto.internal_static_google_apps_card_v1_Grid_descriptor;
   }
@@ -297,6 +394,89 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
       return this.unknownFields;
+    }
+
+    private GridItem(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10:
+              {
+                java.lang.String s = input.readStringRequireUtf8();
+
+                id_ = s;
+                break;
+              }
+            case 18:
+              {
+                com.google.apps.card.v1.ImageComponent.Builder subBuilder = null;
+                if (image_ != null) {
+                  subBuilder = image_.toBuilder();
+                }
+                image_ =
+                    input.readMessage(
+                        com.google.apps.card.v1.ImageComponent.parser(), extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(image_);
+                  image_ = subBuilder.buildPartial();
+                }
+
+                break;
+              }
+            case 26:
+              {
+                java.lang.String s = input.readStringRequireUtf8();
+
+                title_ = s;
+                break;
+              }
+            case 34:
+              {
+                java.lang.String s = input.readStringRequireUtf8();
+
+                subtitle_ = s;
+                break;
+              }
+            case 72:
+              {
+                int rawValue = input.readEnum();
+
+                layout_ = rawValue;
+                break;
+              }
+            default:
+              {
+                if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -752,7 +932,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
               .getNumber()) {
         output.writeEnum(9, layout_);
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
     @java.lang.Override
@@ -778,7 +958,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
               .getNumber()) {
         size += com.google.protobuf.CodedOutputStream.computeEnumSize(9, layout_);
       }
-      size += getUnknownFields().getSerializedSize();
+      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -801,7 +981,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       if (!getTitle().equals(other.getTitle())) return false;
       if (!getSubtitle().equals(other.getSubtitle())) return false;
       if (layout_ != other.layout_) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
 
@@ -824,7 +1004,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       hash = (53 * hash) + getSubtitle().hashCode();
       hash = (37 * hash) + LAYOUT_FIELD_NUMBER;
       hash = (53 * hash) + layout_;
-      hash = (29 * hash) + getUnknownFields().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -959,10 +1139,17 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       }
 
       // Construct using com.google.apps.card.v1.Grid.GridItem.newBuilder()
-      private Builder() {}
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
 
       private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
+        maybeForceBuilderInitialization();
+      }
+
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
       }
 
       @java.lang.Override
@@ -1087,7 +1274,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         if (other.layout_ != 0) {
           setLayoutValue(other.getLayoutValue());
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
@@ -1102,61 +1289,17 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
+        com.google.apps.card.v1.Grid.GridItem parsedMessage = null;
         try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10:
-                {
-                  id_ = input.readStringRequireUtf8();
-
-                  break;
-                } // case 10
-              case 18:
-                {
-                  input.readMessage(getImageFieldBuilder().getBuilder(), extensionRegistry);
-
-                  break;
-                } // case 18
-              case 26:
-                {
-                  title_ = input.readStringRequireUtf8();
-
-                  break;
-                } // case 26
-              case 34:
-                {
-                  subtitle_ = input.readStringRequireUtf8();
-
-                  break;
-                } // case 34
-              case 72:
-                {
-                  layout_ = input.readEnum();
-
-                  break;
-                } // case 72
-              default:
-                {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-            } // switch (tag)
-          } // while (!done)
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.google.apps.card.v1.Grid.GridItem) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          onChanged();
-        } // finally
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
         return this;
       }
 
@@ -1823,19 +1966,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
               com.google.protobuf.CodedInputStream input,
               com.google.protobuf.ExtensionRegistryLite extensionRegistry)
               throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-              builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-              throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-              throw e.asInvalidProtocolBufferException()
-                  .setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-              throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                  .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
+            return new GridItem(input, extensionRegistry);
           }
         };
 
@@ -2135,7 +2266,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
     if (onClick_ != null) {
       output.writeMessage(5, getOnClick());
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -2159,7 +2290,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
     if (onClick_ != null) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(5, getOnClick());
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -2185,7 +2316,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
     if (hasOnClick()) {
       if (!getOnClick().equals(other.getOnClick())) return false;
     }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -2212,7 +2343,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       hash = (37 * hash) + ON_CLICK_FIELD_NUMBER;
       hash = (53 * hash) + getOnClick().hashCode();
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -2381,10 +2512,19 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
     }
 
     // Construct using com.google.apps.card.v1.Grid.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+        getItemsFieldBuilder();
+      }
     }
 
     @java.lang.Override
@@ -2394,11 +2534,10 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
 
       if (itemsBuilder_ == null) {
         items_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000001);
       } else {
-        items_ = null;
         itemsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
       if (borderStyleBuilder_ == null) {
         borderStyle_ = null;
       } else {
@@ -2549,7 +2688,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
       if (other.hasOnClick()) {
         mergeOnClick(other.getOnClick());
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -2564,68 +2703,17 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.apps.card.v1.Grid parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                title_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 10
-            case 18:
-              {
-                com.google.apps.card.v1.Grid.GridItem m =
-                    input.readMessage(
-                        com.google.apps.card.v1.Grid.GridItem.parser(), extensionRegistry);
-                if (itemsBuilder_ == null) {
-                  ensureItemsIsMutable();
-                  items_.add(m);
-                } else {
-                  itemsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 18
-            case 26:
-              {
-                input.readMessage(getBorderStyleFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 26
-            case 32:
-              {
-                columnCount_ = input.readInt32();
-
-                break;
-              } // case 32
-            case 42:
-              {
-                input.readMessage(getOnClickFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 42
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.apps.card.v1.Grid) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -3600,18 +3688,7 @@ public final class Grid extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new Grid(input, extensionRegistry);
         }
       };
 

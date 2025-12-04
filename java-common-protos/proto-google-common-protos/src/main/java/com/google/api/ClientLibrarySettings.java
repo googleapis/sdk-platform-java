@@ -54,6 +54,184 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
     return this.unknownFields;
   }
 
+  private ClientLibrarySettings(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              version_ = s;
+              break;
+            }
+          case 16:
+            {
+              int rawValue = input.readEnum();
+
+              launchStage_ = rawValue;
+              break;
+            }
+          case 24:
+            {
+              restNumericEnums_ = input.readBool();
+              break;
+            }
+          case 170:
+            {
+              com.google.api.JavaSettings.Builder subBuilder = null;
+              if (javaSettings_ != null) {
+                subBuilder = javaSettings_.toBuilder();
+              }
+              javaSettings_ =
+                  input.readMessage(com.google.api.JavaSettings.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(javaSettings_);
+                javaSettings_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 178:
+            {
+              com.google.api.CppSettings.Builder subBuilder = null;
+              if (cppSettings_ != null) {
+                subBuilder = cppSettings_.toBuilder();
+              }
+              cppSettings_ =
+                  input.readMessage(com.google.api.CppSettings.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(cppSettings_);
+                cppSettings_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 186:
+            {
+              com.google.api.PhpSettings.Builder subBuilder = null;
+              if (phpSettings_ != null) {
+                subBuilder = phpSettings_.toBuilder();
+              }
+              phpSettings_ =
+                  input.readMessage(com.google.api.PhpSettings.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(phpSettings_);
+                phpSettings_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 194:
+            {
+              com.google.api.PythonSettings.Builder subBuilder = null;
+              if (pythonSettings_ != null) {
+                subBuilder = pythonSettings_.toBuilder();
+              }
+              pythonSettings_ =
+                  input.readMessage(com.google.api.PythonSettings.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(pythonSettings_);
+                pythonSettings_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 202:
+            {
+              com.google.api.NodeSettings.Builder subBuilder = null;
+              if (nodeSettings_ != null) {
+                subBuilder = nodeSettings_.toBuilder();
+              }
+              nodeSettings_ =
+                  input.readMessage(com.google.api.NodeSettings.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(nodeSettings_);
+                nodeSettings_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 210:
+            {
+              com.google.api.DotnetSettings.Builder subBuilder = null;
+              if (dotnetSettings_ != null) {
+                subBuilder = dotnetSettings_.toBuilder();
+              }
+              dotnetSettings_ =
+                  input.readMessage(com.google.api.DotnetSettings.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(dotnetSettings_);
+                dotnetSettings_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 218:
+            {
+              com.google.api.RubySettings.Builder subBuilder = null;
+              if (rubySettings_ != null) {
+                subBuilder = rubySettings_.toBuilder();
+              }
+              rubySettings_ =
+                  input.readMessage(com.google.api.RubySettings.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(rubySettings_);
+                rubySettings_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 226:
+            {
+              com.google.api.GoSettings.Builder subBuilder = null;
+              if (goSettings_ != null) {
+                subBuilder = goSettings_.toBuilder();
+              }
+              goSettings_ =
+                  input.readMessage(com.google.api.GoSettings.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(goSettings_);
+                goSettings_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.ClientProto.internal_static_google_api_ClientLibrarySettings_descriptor;
   }
@@ -623,7 +801,7 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
     if (goSettings_ != null) {
       output.writeMessage(28, getGoSettings());
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -665,7 +843,7 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
     if (goSettings_ != null) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(28, getGoSettings());
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -715,7 +893,7 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
     if (hasGoSettings()) {
       if (!getGoSettings().equals(other.getGoSettings())) return false;
     }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -764,7 +942,7 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       hash = (37 * hash) + GO_SETTINGS_FIELD_NUMBER;
       hash = (53 * hash) + getGoSettings().hashCode();
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -892,10 +1070,17 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
     }
 
     // Construct using com.google.api.ClientLibrarySettings.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
     }
 
     @java.lang.Override
@@ -1106,7 +1291,7 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       if (other.hasGoSettings()) {
         mergeGoSettings(other.getGoSettings());
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -1121,97 +1306,17 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.api.ClientLibrarySettings parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                version_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 10
-            case 16:
-              {
-                launchStage_ = input.readEnum();
-
-                break;
-              } // case 16
-            case 24:
-              {
-                restNumericEnums_ = input.readBool();
-
-                break;
-              } // case 24
-            case 170:
-              {
-                input.readMessage(getJavaSettingsFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 170
-            case 178:
-              {
-                input.readMessage(getCppSettingsFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 178
-            case 186:
-              {
-                input.readMessage(getPhpSettingsFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 186
-            case 194:
-              {
-                input.readMessage(getPythonSettingsFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 194
-            case 202:
-              {
-                input.readMessage(getNodeSettingsFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 202
-            case 210:
-              {
-                input.readMessage(getDotnetSettingsFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 210
-            case 218:
-              {
-                input.readMessage(getRubySettingsFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 218
-            case 226:
-              {
-                input.readMessage(getGoSettingsFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 226
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.api.ClientLibrarySettings) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -3057,18 +3162,7 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new ClientLibrarySettings(input, extensionRegistry);
         }
       };
 

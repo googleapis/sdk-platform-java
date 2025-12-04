@@ -56,6 +56,91 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
     return this.unknownFields;
   }
 
+  private ImageComponent(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              imageUri_ = s;
+              break;
+            }
+          case 18:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              altText_ = s;
+              break;
+            }
+          case 26:
+            {
+              com.google.apps.card.v1.ImageCropStyle.Builder subBuilder = null;
+              if (cropStyle_ != null) {
+                subBuilder = cropStyle_.toBuilder();
+              }
+              cropStyle_ =
+                  input.readMessage(
+                      com.google.apps.card.v1.ImageCropStyle.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(cropStyle_);
+                cropStyle_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 34:
+            {
+              com.google.apps.card.v1.BorderStyle.Builder subBuilder = null;
+              if (borderStyle_ != null) {
+                subBuilder = borderStyle_.toBuilder();
+              }
+              borderStyle_ =
+                  input.readMessage(
+                      com.google.apps.card.v1.BorderStyle.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(borderStyle_);
+                borderStyle_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.apps.card.v1.CardProto
         .internal_static_google_apps_card_v1_ImageComponent_descriptor;
@@ -301,7 +386,7 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
     if (borderStyle_ != null) {
       output.writeMessage(4, getBorderStyle());
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -322,7 +407,7 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
     if (borderStyle_ != null) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, getBorderStyle());
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -347,7 +432,7 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
     if (hasBorderStyle()) {
       if (!getBorderStyle().equals(other.getBorderStyle())) return false;
     }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -370,7 +455,7 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
       hash = (37 * hash) + BORDER_STYLE_FIELD_NUMBER;
       hash = (53 * hash) + getBorderStyle().hashCode();
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -502,10 +587,17 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
     }
 
     // Construct using com.google.apps.card.v1.ImageComponent.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
     }
 
     @java.lang.Override
@@ -629,7 +721,7 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
       if (other.hasBorderStyle()) {
         mergeBorderStyle(other.getBorderStyle());
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -644,55 +736,17 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.apps.card.v1.ImageComponent parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                imageUri_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 10
-            case 18:
-              {
-                altText_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 18
-            case 26:
-              {
-                input.readMessage(getCropStyleFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 26
-            case 34:
-              {
-                input.readMessage(getBorderStyleFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 34
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.apps.card.v1.ImageComponent) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -1338,18 +1392,7 @@ public final class ImageComponent extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new ImageComponent(input, extensionRegistry);
         }
       };
 

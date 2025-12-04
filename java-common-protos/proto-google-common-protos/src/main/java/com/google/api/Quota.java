@@ -93,6 +93,71 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
     return this.unknownFields;
   }
 
+  private Quota(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    int mutable_bitField0_ = 0;
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 26:
+            {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                limits_ = new java.util.ArrayList<com.google.api.QuotaLimit>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              limits_.add(input.readMessage(com.google.api.QuotaLimit.parser(), extensionRegistry));
+              break;
+            }
+          case 34:
+            {
+              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
+                metricRules_ = new java.util.ArrayList<com.google.api.MetricRule>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              metricRules_.add(
+                  input.readMessage(com.google.api.MetricRule.parser(), extensionRegistry));
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        limits_ = java.util.Collections.unmodifiableList(limits_);
+      }
+      if (((mutable_bitField0_ & 0x00000002) != 0)) {
+        metricRules_ = java.util.Collections.unmodifiableList(metricRules_);
+      }
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.QuotaProto.internal_static_google_api_Quota_descriptor;
   }
@@ -277,7 +342,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
     for (int i = 0; i < metricRules_.size(); i++) {
       output.writeMessage(4, metricRules_.get(i));
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -292,7 +357,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
     for (int i = 0; i < metricRules_.size(); i++) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, metricRules_.get(i));
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -309,7 +374,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
 
     if (!getLimitsList().equals(other.getLimitsList())) return false;
     if (!getMetricRulesList().equals(other.getMetricRulesList())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -328,7 +393,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       hash = (37 * hash) + METRIC_RULES_FIELD_NUMBER;
       hash = (53 * hash) + getMetricRulesList().hashCode();
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -493,10 +558,20 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
     }
 
     // Construct using com.google.api.Quota.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+        getLimitsFieldBuilder();
+        getMetricRulesFieldBuilder();
+      }
     }
 
     @java.lang.Override
@@ -504,18 +579,16 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       super.clear();
       if (limitsBuilder_ == null) {
         limits_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000001);
       } else {
-        limits_ = null;
         limitsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
       if (metricRulesBuilder_ == null) {
         metricRules_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000002);
       } else {
-        metricRules_ = null;
         metricRulesBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000002);
       return this;
     }
 
@@ -663,7 +736,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
           }
         }
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -678,55 +751,17 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.api.Quota parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 26:
-              {
-                com.google.api.QuotaLimit m =
-                    input.readMessage(com.google.api.QuotaLimit.parser(), extensionRegistry);
-                if (limitsBuilder_ == null) {
-                  ensureLimitsIsMutable();
-                  limits_.add(m);
-                } else {
-                  limitsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 26
-            case 34:
-              {
-                com.google.api.MetricRule m =
-                    input.readMessage(com.google.api.MetricRule.parser(), extensionRegistry);
-                if (metricRulesBuilder_ == null) {
-                  ensureMetricRulesIsMutable();
-                  metricRules_.add(m);
-                } else {
-                  metricRulesBuilder_.addMessage(m);
-                }
-                break;
-              } // case 34
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.api.Quota) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -1504,18 +1539,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new Quota(input, extensionRegistry);
         }
       };
 

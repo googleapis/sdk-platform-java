@@ -56,6 +56,98 @@ public final class Chip extends com.google.protobuf.GeneratedMessageV3
     return this.unknownFields;
   }
 
+  private Chip(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              com.google.apps.card.v1.Icon.Builder subBuilder = null;
+              if (icon_ != null) {
+                subBuilder = icon_.toBuilder();
+              }
+              icon_ = input.readMessage(com.google.apps.card.v1.Icon.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(icon_);
+                icon_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 18:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              label_ = s;
+              break;
+            }
+          case 26:
+            {
+              com.google.apps.card.v1.OnClick.Builder subBuilder = null;
+              if (onClick_ != null) {
+                subBuilder = onClick_.toBuilder();
+              }
+              onClick_ =
+                  input.readMessage(com.google.apps.card.v1.OnClick.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(onClick_);
+                onClick_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 32:
+            {
+              enabled_ = input.readBool();
+              break;
+            }
+          case 42:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              altText_ = s;
+              break;
+            }
+          case 48:
+            {
+              disabled_ = input.readBool();
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.apps.card.v1.CardProto.internal_static_google_apps_card_v1_Chip_descriptor;
   }
@@ -359,7 +451,7 @@ public final class Chip extends com.google.protobuf.GeneratedMessageV3
     if (disabled_ != false) {
       output.writeBool(6, disabled_);
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -386,7 +478,7 @@ public final class Chip extends com.google.protobuf.GeneratedMessageV3
     if (disabled_ != false) {
       size += com.google.protobuf.CodedOutputStream.computeBoolSize(6, disabled_);
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -413,7 +505,7 @@ public final class Chip extends com.google.protobuf.GeneratedMessageV3
     if (getEnabled() != other.getEnabled()) return false;
     if (getDisabled() != other.getDisabled()) return false;
     if (!getAltText().equals(other.getAltText())) return false;
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -440,7 +532,7 @@ public final class Chip extends com.google.protobuf.GeneratedMessageV3
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getDisabled());
     hash = (37 * hash) + ALT_TEXT_FIELD_NUMBER;
     hash = (53 * hash) + getAltText().hashCode();
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -569,10 +661,17 @@ public final class Chip extends com.google.protobuf.GeneratedMessageV3
     }
 
     // Construct using com.google.apps.card.v1.Chip.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
     }
 
     @java.lang.Override
@@ -706,7 +805,7 @@ public final class Chip extends com.google.protobuf.GeneratedMessageV3
         altText_ = other.altText_;
         onChanged();
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -721,67 +820,17 @@ public final class Chip extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.apps.card.v1.Chip parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                input.readMessage(getIconFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 10
-            case 18:
-              {
-                label_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 18
-            case 26:
-              {
-                input.readMessage(getOnClickFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 26
-            case 32:
-              {
-                enabled_ = input.readBool();
-
-                break;
-              } // case 32
-            case 42:
-              {
-                altText_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 42
-            case 48:
-              {
-                disabled_ = input.readBool();
-
-                break;
-              } // case 48
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.apps.card.v1.Chip) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -1580,18 +1629,7 @@ public final class Chip extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new Chip(input, extensionRegistry);
         }
       };
 

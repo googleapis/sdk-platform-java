@@ -53,6 +53,86 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     return this.unknownFields;
   }
 
+  private JavaSettings(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    this();
+    if (extensionRegistry == null) {
+      throw new java.lang.NullPointerException();
+    }
+    int mutable_bitField0_ = 0;
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
+    try {
+      boolean done = false;
+      while (!done) {
+        int tag = input.readTag();
+        switch (tag) {
+          case 0:
+            done = true;
+            break;
+          case 10:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              libraryPackage_ = s;
+              break;
+            }
+          case 18:
+            {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                serviceClassNames_ =
+                    com.google.protobuf.MapField.newMapField(
+                        ServiceClassNamesDefaultEntryHolder.defaultEntry);
+                mutable_bitField0_ |= 0x00000001;
+              }
+              com.google.protobuf.MapEntry<java.lang.String, java.lang.String> serviceClassNames__ =
+                  input.readMessage(
+                      ServiceClassNamesDefaultEntryHolder.defaultEntry.getParserForType(),
+                      extensionRegistry);
+              serviceClassNames_
+                  .getMutableMap()
+                  .put(serviceClassNames__.getKey(), serviceClassNames__.getValue());
+              break;
+            }
+          case 26:
+            {
+              com.google.api.CommonLanguageSettings.Builder subBuilder = null;
+              if (common_ != null) {
+                subBuilder = common_.toBuilder();
+              }
+              common_ =
+                  input.readMessage(
+                      com.google.api.CommonLanguageSettings.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(common_);
+                common_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          default:
+            {
+              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+        }
+      }
+    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      throw e.setUnfinishedMessage(this);
+    } catch (com.google.protobuf.UninitializedMessageException e) {
+      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
+    } catch (java.io.IOException e) {
+      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+    } finally {
+      this.unknownFields = unknownFields.build();
+      makeExtensionsImmutable();
+    }
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.ClientProto.internal_static_google_api_JavaSettings_descriptor;
   }
@@ -367,7 +447,7 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     if (common_ != null) {
       output.writeMessage(3, getCommon());
     }
-    getUnknownFields().writeTo(output);
+    unknownFields.writeTo(output);
   }
 
   @java.lang.Override
@@ -392,7 +472,7 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     if (common_ != null) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, getCommon());
     }
-    size += getUnknownFields().getSerializedSize();
+    size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -413,7 +493,7 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     if (hasCommon()) {
       if (!getCommon().equals(other.getCommon())) return false;
     }
-    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
 
@@ -434,7 +514,7 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
       hash = (37 * hash) + COMMON_FIELD_NUMBER;
       hash = (53 * hash) + getCommon().hashCode();
     }
-    hash = (29 * hash) + getUnknownFields().hashCode();
+    hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -580,10 +660,17 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     }
 
     // Construct using com.google.api.JavaSettings.newBuilder()
-    private Builder() {}
+    private Builder() {
+      maybeForceBuilderInitialization();
+    }
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
+      maybeForceBuilderInitialization();
+    }
+
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
     }
 
     @java.lang.Override
@@ -689,7 +776,7 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
       if (other.hasCommon()) {
         mergeCommon(other.getCommon());
       }
-      this.mergeUnknownFields(other.getUnknownFields());
+      this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
@@ -704,55 +791,17 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      com.google.api.JavaSettings parsedMessage = null;
       try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                libraryPackage_ = input.readStringRequireUtf8();
-
-                break;
-              } // case 10
-            case 18:
-              {
-                com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
-                    serviceClassNames__ =
-                        input.readMessage(
-                            ServiceClassNamesDefaultEntryHolder.defaultEntry.getParserForType(),
-                            extensionRegistry);
-                internalGetMutableServiceClassNames()
-                    .getMutableMap()
-                    .put(serviceClassNames__.getKey(), serviceClassNames__.getValue());
-                break;
-              } // case 18
-            case 26:
-              {
-                input.readMessage(getCommonFieldBuilder().getBuilder(), extensionRegistry);
-
-                break;
-              } // case 26
-            default:
-              {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-          } // switch (tag)
-        } // while (!done)
+        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        parsedMessage = (com.google.api.JavaSettings) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        onChanged();
-      } // finally
+        if (parsedMessage != null) {
+          mergeFrom(parsedMessage);
+        }
+      }
       return this;
     }
 
@@ -1386,18 +1435,7 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
+          return new JavaSettings(input, extensionRegistry);
         }
       };
 
