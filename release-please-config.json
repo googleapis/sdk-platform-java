@@ -22,4 +22,6 @@
       ]
     }
   }
+,
+  "prerelease": true
 }
