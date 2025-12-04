@@ -402,7 +402,7 @@ jobs:
         working-directory: java-showcase
         run: |
           mvn versions:set -B -ntp -DnewVersion=local
-          mvn clirr:check -B -ntp -Dclirr.skip=false -DcomparisonVersion=$SHOWCASE_CLIENT_VERSION
+          mvn clirr:check -B -ntp -DcomparisonVersion=$SHOWCASE_CLIENT_VERSION
 
   gapic-generator-java-bom:
     runs-on: ubuntu-22.04
