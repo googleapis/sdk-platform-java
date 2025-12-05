@@ -585,7 +585,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
           return t;
         });
 
-    trustManager.updateTrustCredentials(trustBundle, 1, TimeUnit.HOURS, executor);
+    trustManager.updateTrustCredentials(trustBundle, 1, TimeUnit.HOURS, trustManagerExecutor);
     return TlsChannelCredentials.newBuilder()
         .keyManager(keyManager)
         .trustManager(trustManager)
