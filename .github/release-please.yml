@@ -23,7 +23,7 @@ branches:
       releaseType: java-backport
     - branch: 2.40.x
       releaseType: java-backport
-    - releaseType: java-backport
-      branch: 2.54.x
-    - releaseType: java-backport
-      branch: 2.59.x
+    - branch: 2.54.x
+      releaseType: java-backport
+    - branch: 2.59.x
+      releaseType: java-backport
