@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.65.0-rc1](https://github.com/googleapis/sdk-platform-java/compare/v2.64.1...v2.65.0-rc1) (2025-12-05)
+
+
+### Features
+
+* configure rc releases to be on prerelease mode ([e9055b0](https://github.com/googleapis/sdk-platform-java/commit/e9055b07ee35f7d2c8a9a513d24f1b917c60cda5))
+* Upgrade protobuf runtime and gen code to 4.33. ([#4000](https://github.com/googleapis/sdk-platform-java/issues/4000)) ([ac25015](https://github.com/googleapis/sdk-platform-java/commit/ac25015d8a2649578db0bac841ff1fe6ce597326))
+
+
+### Bug Fixes
+
+* add per-service api_version to gapic_metadata ([#3984](https://github.com/googleapis/sdk-platform-java/issues/3984)) ([d589306](https://github.com/googleapis/sdk-platform-java/commit/d589306c4ecc12a2a744cb9dfb914ccea8fb34fd))
+* add rc versioning scheme ([2939320](https://github.com/googleapis/sdk-platform-java/commit/29393200503d2b1191e69004b4bbe6e3bff75570))
+* next release candidate ([17deb81](https://github.com/googleapis/sdk-platform-java/commit/17deb815a0b31c611067676ad0965a7c56513410))
+
+
+### Dependencies
+
+* upgrade grpc to 1.76.1 ([#3993](https://github.com/googleapis/sdk-platform-java/issues/3993)) ([958611e](https://github.com/googleapis/sdk-platform-java/commit/958611e23460dba596160f3224d8588afdba6bc2))
+
 ## [2.64.1](https://github.com/googleapis/sdk-platform-java/compare/v2.64.0...v2.64.1) (2025-11-07)
 
 
