@@ -569,9 +569,22 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return null;
     }
     AdvancedTlsX509KeyManager keyManager = new AdvancedTlsX509KeyManager();
-    keyManager.updateIdentityCredentials(certChain, privateKey);
+    ScheduledExecutorService keyManagerExecutor = Executors.newSingleThreadScheduledExecutor(
+        r -> {
+          Thread t = new Thread(r, "s2a-key-manager-updater");
+          t.setDaemon(true);
+          return t;
+        });
+
+    keyManager.updateIdentityCredentials(certChain, privateKey, 1, TimeUnit.HOURS, keyManagerExecutor);
     AdvancedTlsX509TrustManager trustManager = AdvancedTlsX509TrustManager.newBuilder().build();
-    ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+    ScheduledExecutorService trustManagerExecutor = Executors.newSingleThreadScheduledExecutor(
+        r -> {
+          Thread t = new Thread(r, "s2a-trust-manager-updater");
+          t.setDaemon(true);
+          return t;
+        });
+
     trustManager.updateTrustCredentials(trustBundle, 1, TimeUnit.HOURS, executor);
     return TlsChannelCredentials.newBuilder()
         .keyManager(keyManager)
