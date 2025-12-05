@@ -18,6 +18,11 @@ extraFiles:
     hermetic_build/library_generation/owlbot/templates/java_library/.kokoro/presubmit/graalvm-native-c.cfg
   - generation_config.yaml
 branches:
+  - branch: protobuf-4.x-rc
+    bumpMinorPreMajor: true
+    handleGHRelease: true
+    manifest: true
+    releaseType: java-yoshi
   - branch: 2.23.x
     releaseType: java-backport
     manifest: true
