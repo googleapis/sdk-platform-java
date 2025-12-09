@@ -43,6 +43,11 @@
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
+        <artifactId>proto-gapic-showcase-v1beta1-3.25.8</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.api.grpc</groupId>
         <artifactId>grpc-gapic-showcase-v1beta1</artifactId>
         <version>0.0.1-SNAPSHOT</version>
       </dependency>
@@ -65,6 +70,7 @@
     <module>gapic-showcase</module>
     <module>grpc-gapic-showcase-v1beta1</module>
     <module>proto-gapic-showcase-v1beta1</module>
+    <module>proto-gapic-showcase-v1beta1-3.25.8</module>
   </modules>
 
   <profiles>

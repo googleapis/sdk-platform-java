@@ -303,6 +303,12 @@ jobs:
           mvn clean verify -P '!showcase,enable-integration-tests,loggingTestBase,disabledLogging'  \
             --batch-mode \
             --no-transfer-progress
+      - name: Showcase integration tests - protobuf-3.25.8
+        working-directory: java-showcase
+        run: |
+          mvn clean verify -P '!showcase,enable-integration-tests,protobuf-3.25.8'  \
+            --batch-mode \
+            --no-transfer-progress
   showcase:
     runs-on: ubuntu-22.04
     strategy:
