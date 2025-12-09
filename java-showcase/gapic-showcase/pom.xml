@@ -233,16 +233,6 @@
   </dependencies>
   <profiles>
     <profile>
-      <id>protobuf-3.25.8</id>
-      <dependencies>
-        <dependency>
-          <groupId>com.google.api.grpc</groupId>
-          <artifactId>proto-gapic-showcase-v1beta1</artifactId>
-          <version>0.0.1-SNAPSHOT-3.25.8</version>
-        </dependency>
-      </dependencies>
-    </profile>
-    <profile>
       <id>slf4j2_logback</id>
       <!--slf4j2, logback dependencies, and only compile logging test for 2.x-->
       <activation>
@@ -374,6 +364,16 @@
           </plugin>
         </plugins>
       </build>
+    </profile>
+    <profile>
+      <id>protobuf-3.25.8</id>
+      <dependencies>
+        <dependency>
+          <groupId>com.google.api.grpc</groupId>
+          <artifactId>proto-gapic-showcase-v1beta1</artifactId>
+          <version>0.0.1-SNAPSHOT-3.25.8</version>
+        </dependency>
+      </dependencies>
     </profile>
   </profiles>
 

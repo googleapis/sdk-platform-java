@@ -5,7 +5,7 @@
   <groupId>com.google.api.grpc</groupId>
   <artifactId>proto-gapic-showcase-v1beta1</artifactId>
   <version>0.0.1-SNAPSHOT-3.25.8</version>
-  <name>proto-gapic-showcase-v1beta1</name>
+  <name>proto-gapic-showcase-v1beta1-3.25.8</name>
   <description>PROTO library for proto-gapic-showcase-v1beta1</description>
   <parent>
     <groupId>com.google.cloud</groupId>
