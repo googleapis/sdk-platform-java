@@ -104,10 +104,6 @@
     </dependency>
     <dependency>
       <groupId>com.google.api.grpc</groupId>
-      <artifactId>proto-gapic-showcase-v1beta1-3.25.8</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.api.grpc</groupId>
       <artifactId>grpc-google-common-protos</artifactId>
       <scope>test</scope>
     </dependency>
