@@ -303,6 +303,13 @@ jobs:
           mvn clean verify -P '!showcase,enable-integration-tests,loggingTestBase,disabledLogging'  \
             --batch-mode \
             --no-transfer-progress
+      - name: Showcase integration tests - Protobuf gen code 3.21.0
+        working-directory: java-showcase-3.21.0
+        run: |
+          mvn verify \
+            -P enable-integration-tests \
+            --batch-mode \
+            --no-transfer-progress
   showcase:
     runs-on: ubuntu-22.04
     strategy:
@@ -417,7 +424,7 @@ jobs:
       run: |
         mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip -Dfmt.skip
     - name: Validate gapic-generator-java-bom
-      uses: googleapis/java-cloud-bom/tests/validate-bom@ef3656d3c66f4c6bd3b2c569d64a77cb40aeb77e
+      uses: googleapis/java-cloud-bom/tests/validate-bom@47ad868794c5d38ee7eb95d69371a7a79f84d890
       with:
         bom-path: gapic-generator-java-bom/pom.xml
 
