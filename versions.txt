@@ -24,4 +24,3 @@ proto-google-iam-v3:1.58.1:1.58.2-SNAPSHOT
 grpc-google-iam-v3:1.58.1:1.58.2-SNAPSHOT
 proto-google-iam-v3beta:1.58.1:1.58.2-SNAPSHOT
 grpc-google-iam-v3beta:1.58.1:1.58.2-SNAPSHOT
-proto-gapic-showcase-v1beta1-3.25.8:0.10.1:0.10.2-SNAPSHOT

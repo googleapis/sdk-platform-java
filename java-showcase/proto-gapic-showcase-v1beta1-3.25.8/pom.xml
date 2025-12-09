@@ -3,8 +3,8 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.api.grpc</groupId>
-  <artifactId>proto-gapic-showcase-v1beta1</artifactId>
-  <version>0.0.1-SNAPSHOT-3.25.8</version>
+  <artifactId>proto-gapic-showcase-v1beta1-3.25.8</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
   <name>proto-gapic-showcase-v1beta1-3.25.8</name>
   <description>PROTO library for proto-gapic-showcase-v1beta1</description>
   <parent>

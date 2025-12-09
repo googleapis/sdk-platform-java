@@ -39,7 +39,7 @@
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>proto-gapic-showcase-v1beta1-3.25.8</artifactId>
-        <version>0.10.2-SNAPSHOT</version><!-- {x-version-update:proto-gapic-showcase-v1beta1-3.25.8:current} -->
+        <version>0.0.1-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
@@ -260,12 +260,6 @@
           </plugin>
         </plugins>
       </build>
-    </profile>
-    <profile>
-      <id>protobuf-3.25.8</id>
-      <modules>
-        <module>proto-gapic-showcase-v1beta1-3.25.8</module>
-      </modules>
     </profile>
   </profiles>
 </project>

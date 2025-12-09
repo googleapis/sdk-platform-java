@@ -104,20 +104,12 @@
     </dependency>
     <dependency>
       <groupId>com.google.api.grpc</groupId>
-      <artifactId>proto-gapic-showcase-v1beta1-3.25.8</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.api.grpc</groupId>
       <artifactId>grpc-google-common-protos</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>proto-google-iam-v1</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.api.grpc</groupId>
-      <artifactId>proto-gapic-showcase-v1beta1</artifactId>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
@@ -233,6 +225,18 @@
   </dependencies>
   <profiles>
     <profile>
+      <id>showcase</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>com.google.api.grpc</groupId>
+          <artifactId>proto-gapic-showcase-v1beta1</artifactId>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
       <id>slf4j2_logback</id>
       <!--slf4j2, logback dependencies, and only compile logging test for 2.x-->
       <activation>
@@ -241,6 +245,10 @@
         </property>
       </activation>
       <dependencies>
+        <dependency>
+          <groupId>com.google.api.grpc</groupId>
+          <artifactId>proto-gapic-showcase-v1beta1</artifactId>
+        </dependency>
         <dependency>
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-api</artifactId>
@@ -285,6 +293,10 @@
         </property>
       </activation>
       <dependencies>
+        <dependency>
+          <groupId>com.google.api.grpc</groupId>
+          <artifactId>proto-gapic-showcase-v1beta1</artifactId>
+        </dependency>
         <dependency>
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-api</artifactId>
@@ -331,6 +343,10 @@
       </activation>
       <dependencies>
         <dependency>
+          <groupId>com.google.api.grpc</groupId>
+          <artifactId>proto-gapic-showcase-v1beta1</artifactId>
+        </dependency>
+        <dependency>
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-api</artifactId>
           <version>1.7.36</version>
@@ -370,10 +386,34 @@
       <dependencies>
         <dependency>
           <groupId>com.google.api.grpc</groupId>
-          <artifactId>proto-gapic-showcase-v1beta1</artifactId>
-          <version>0.0.1-SNAPSHOT-3.25.8</version>
+          <artifactId>proto-gapic-showcase-v1beta1-3.25.8</artifactId>
+          <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+          <groupId>com.google.api.grpc</groupId>
+          <artifactId>grpc-gapic-showcase-v1beta1</artifactId>
+          <exclusions>
+            <exclusion>
+              <groupId>com.google.api.grpc</groupId>
+              <artifactId>proto-gapic-showcase-v1beta1</artifactId>
+            </exclusion>
+          </exclusions>
         </dependency>
       </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+              <!--   Do not compile by default (without logging deps)  -->
+              <testExcludes>
+                <testExclude>**/com/google/showcase/v1beta1/it/logging/*.java</testExclude>
+              </testExcludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
 
