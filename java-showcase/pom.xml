@@ -38,6 +38,11 @@
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
+        <artifactId>proto-gapic-showcase-v1beta1-3.25.8</artifactId>
+        <version>0.10.2-SNAPSHOT</version><!-- {x-version-update:proto-gapic-showcase-v1beta1-3.25.8:current} -->
+      </dependency>
+      <dependency>
+        <groupId>com.google.api.grpc</groupId>
         <artifactId>proto-gapic-showcase-v1beta1</artifactId>
         <version>0.0.1-SNAPSHOT</version>
       </dependency>
