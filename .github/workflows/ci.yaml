@@ -310,6 +310,13 @@ jobs:
             -P enable-integration-tests \
             --batch-mode \
             --no-transfer-progress
+      - name: Showcase integration tests - Protobuf gen code 3.21.0
+        working-directory: java-showcase-3.21.0
+        run: |
+          mvn verify \
+            -P enable-integration-tests \
+            --batch-mode \
+            --no-transfer-progress
   showcase:
     runs-on: ubuntu-22.04
     strategy:
