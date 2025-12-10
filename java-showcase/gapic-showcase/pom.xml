@@ -201,6 +201,14 @@
       <scope>test</scope>
     </dependency>
 
+    <!--  Protobuf 3.x compatibility tests, tensorflow depends on protobuf 3.x gen code and runtime  -->
+    <dependency>
+      <groupId>org.tensorflow</groupId>
+      <artifactId>tensorflow-core-platform</artifactId>
+      <version>1.1.0</version>
+      <scope>test</scope>
+    </dependency>
+
     <!-- Otel testing libraries -->
     <dependency>
       <groupId>io.opentelemetry</groupId>
