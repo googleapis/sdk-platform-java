@@ -35,8 +35,6 @@ import javax.annotation.Generated;
  * methods that explicitly implement server delay, and paginated calls. Set the 'showcase-trailer'
  * metadata key on any method to have the values echoed in the response trailers.
  *
- * This client uses Echo version v1_20240408.
- *
  * <p>This class provides the ability to make remote calls to the backing service through method
  * calls that map to API methods. Sample code to get started:
  *
