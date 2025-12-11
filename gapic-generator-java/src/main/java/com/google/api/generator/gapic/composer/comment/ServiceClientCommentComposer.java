@@ -117,8 +117,7 @@ public class ServiceClientCommentComposer {
     // Include google.api.api_version breadcrumb comment.
     if (service.hasApiVersion()) {
       classHeaderJavadocBuilder.addUnescapedComment(
-          String.format(
-              "This client uses %s version %s.", service.name(), service.apiVersion()));
+          String.format("This client uses %s version %s.", service.name(), service.apiVersion()));
     }
 
     // Service introduction.
