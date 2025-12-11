@@ -108,9 +108,18 @@ public class ServiceClientCommentComposer {
       String secondaryTransport) {
     JavaDocComment.Builder classHeaderJavadocBuilder = JavaDocComment.builder();
     if (service.hasDescription()) {
+      String description = service.description();
+
+      // Include google.api.api_version breadcrumb comment.
+      if (service.hasApiVersion()) {
+        description =
+            String.format(
+                "%s\n\nThis client uses %s version %s.",
+                description, service.apiShortName(), service.apiVersion());
+      }
+
       String descriptionComment =
-          CommentFormatter.formatAsJavaDocComment(
-              service.description(), SERVICE_DESCRIPTION_SUMMARY_PATTERN);
+          CommentFormatter.formatAsJavaDocComment(description, SERVICE_DESCRIPTION_SUMMARY_PATTERN);
       classHeaderJavadocBuilder = classHeaderJavadocBuilder.addUnescapedComment(descriptionComment);
     }
 
