@@ -79,6 +79,7 @@
               <!--   Do not compile by default (without logging deps)  -->
               <testExcludes>
                 <testExclude>**/com/google/showcase/v1beta1/it/logging/*.java</testExclude>
+                <testExclude>**/com/google/showcase/v1beta1/it/ITProtobuf3Compatibility.java</testExclude>
               </testExcludes>
             </configuration>
           </plugin>
