@@ -15,7 +15,7 @@ import org.tensorflow.types.TInt32;
  * Tensorflow depends on protobuf 3.x gen code and runtime, we test it in showcase module to prove
  * that it works with protobuf 4.33+ gen code and runtime that comes with client libraries.
  */
-public class ITProtobuf3Compatibility {
+class ITProtobuf3Compatibility {
 
   @Test
   void testTensorflow_helloWorldExample() {
