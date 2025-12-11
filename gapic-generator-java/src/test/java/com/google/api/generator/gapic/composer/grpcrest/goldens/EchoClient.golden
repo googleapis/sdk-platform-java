@@ -32,7 +32,7 @@ import javax.annotation.Generated;
 /**
  * This client uses Echo version foo_version_for_tests.
  *
- * This class provides the ability to make remote calls to the backing service through method calls
+ * <p>This class provides the ability to make remote calls to the backing service through method calls
  * that map to API methods. Sample code to get started:
  *
  * <pre>{@code
