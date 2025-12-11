@@ -118,7 +118,7 @@ public class ServiceClientCommentComposer {
     if (service.hasApiVersion()) {
       classHeaderJavadocBuilder.addUnescapedComment(
           String.format(
-              "This client uses %s version %s.", service.apiShortName(), service.apiVersion()));
+              "This client uses %s version %s.", service.name(), service.apiVersion()));
     }
 
     // Service introduction.
