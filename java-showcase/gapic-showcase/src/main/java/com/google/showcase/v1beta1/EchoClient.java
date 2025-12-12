@@ -59,6 +59,8 @@ import javax.annotation.Generated;
  * 'x-goog-request-params' metadata key on any method to have the values echoed in the response
  * headers.
  *
+ * <p>This client uses Echo version v1_20240408.
+ *
  * <p>This class provides the ability to make remote calls to the backing service through method
  * calls that map to API methods. Sample code to get started:
  *
