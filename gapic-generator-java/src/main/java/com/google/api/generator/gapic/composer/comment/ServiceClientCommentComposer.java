@@ -114,6 +114,12 @@ public class ServiceClientCommentComposer {
       classHeaderJavadocBuilder = classHeaderJavadocBuilder.addUnescapedComment(descriptionComment);
     }
 
+    // Include google.api.api_version breadcrumb comment.
+    if (service.hasApiVersion()) {
+      classHeaderJavadocBuilder.addParagraph(
+          String.format("This client uses %s version %s.", service.name(), service.apiVersion()));
+    }
+
     // Service introduction.
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_INTRO_STRING);
     classHeaderJavadocBuilder.addSampleCode(classMethodSampleCode);
