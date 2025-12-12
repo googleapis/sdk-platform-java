@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.64.3](https://github.com/googleapis/sdk-platform-java/compare/v2.64.2...v2.64.3) (2025-12-12)
+
+
+### Bug Fixes
+
+* add api_version breadcrumb to client docs ([#4018](https://github.com/googleapis/sdk-platform-java/issues/4018)) ([a2b2179](https://github.com/googleapis/sdk-platform-java/commit/a2b2179874e6a5435001fe201f4eecc2a8e4c531))
+
+
+### Dependencies
+
+* update google api dependencies ([#3917](https://github.com/googleapis/sdk-platform-java/issues/3917)) ([480cf13](https://github.com/googleapis/sdk-platform-java/commit/480cf13148687c53c4af3da9d48490aeb5bf4b88))
+
 ## [2.64.2](https://github.com/googleapis/sdk-platform-java/compare/v2.64.1...v2.64.2) (2025-12-10)
 
 
