@@ -276,6 +276,7 @@ releaseType: java-yoshi
             # This method needs read .repo-metadata.json to render templates.
             # The file is located in FIXTURES/java_templates/render-readme.
             java.common_templates(
+                monorepo=True,
                 template_path=TEMPLATES_PATH,
             )
             self.assertTrue(os.path.isfile("README.md"))
