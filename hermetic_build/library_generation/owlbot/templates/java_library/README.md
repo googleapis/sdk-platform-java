@@ -36,7 +36,7 @@ If you are using Maven with [BOM][libraries-bom], add this to your pom.xml file:
 ```
 
 If you are using Maven without the BOM, add this to your dependencies:
-{% elif monorepo %}
+{% elif monorepo and (group_id == "com.google.cloud" or group_id == "com.google.analytics" or group_id == "com.google.area120") %}
 If you are using Maven with [BOM][libraries-bom], add this to your pom.xml file:
 
 ```xml
