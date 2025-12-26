@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.64.3](https://github.com/googleapis/sdk-platform-java/compare/v2.64.2...v2.64.3) (2025-12-26)
+
+
+### Bug Fixes
+
+* add api_version breadcrumb to client docs ([#4018](https://github.com/googleapis/sdk-platform-java/issues/4018)) ([a2b2179](https://github.com/googleapis/sdk-platform-java/commit/a2b2179874e6a5435001fe201f4eecc2a8e4c531))
+
+
+### Dependencies
+
+* update dependencies.txt for grpc-gcp to 1.9.0  ([#4025](https://github.com/googleapis/sdk-platform-java/issues/4025)) ([b68791d](https://github.com/googleapis/sdk-platform-java/commit/b68791d074c02e02a5ccf2f937a5922749a14f56))
+* update google api dependencies ([#3917](https://github.com/googleapis/sdk-platform-java/issues/3917)) ([480cf13](https://github.com/googleapis/sdk-platform-java/commit/480cf13148687c53c4af3da9d48490aeb5bf4b88))
+
 ## [2.64.2](https://github.com/googleapis/sdk-platform-java/compare/v2.64.1...v2.64.2) (2025-12-10)
 
 
