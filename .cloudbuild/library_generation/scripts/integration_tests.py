@@ -43,7 +43,10 @@ class IntegrationTest(unittest.TestCase):
             compare_result = dircmp(
                 f"{golden_dir}/{library_name}",
                 actual_library,
-                ignore=[".repo-metadata.json"],
+                # README.md is ignored because the golden files in the 
+                # google-cloud-java repository still contain the old build badges.
+                # TODO: Remove README.md from ignore list once golden files are updated.
+                ignore=[".repo-metadata.json", "README.md"],
             )
             diff_files = []
             golden_only = []
