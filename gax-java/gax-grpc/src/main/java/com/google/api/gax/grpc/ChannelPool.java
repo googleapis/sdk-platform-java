@@ -72,16 +72,16 @@ class ChannelPool extends ManagedChannel {
 
   private final ChannelPoolSettings settings;
   private final ChannelFactory channelFactory;
-  private final ScheduledExecutorService executor;
+  private final ScheduledExecutorService backgroundExecutor;
 
   private final Object entryWriteLock = new Object();
   @VisibleForTesting final AtomicReference<ImmutableList<Entry>> entries = new AtomicReference<>();
   private final AtomicInteger indexTicker = new AtomicInteger();
   private final String authority;
 
-  static ChannelPool create(ChannelPoolSettings settings, ChannelFactory channelFactory)
+  static ChannelPool create(ChannelPoolSettings settings, ChannelFactory channelFactory, ScheduledExecutorService backgroundExecutor)
       throws IOException {
-    return new ChannelPool(settings, channelFactory, Executors.newSingleThreadScheduledExecutor());
+    return new ChannelPool(settings, channelFactory, backgroundExecutor);
   }
 
   /**
@@ -108,7 +108,7 @@ class ChannelPool extends ManagedChannel {
 
     entries.set(initialListBuilder.build());
     authority = entries.get().get(0).channel.authority();
-    this.executor = executor;
+    this.backgroundExecutor = executor;
 
     if (!settings.isStaticSize()) {
       executor.scheduleAtFixedRate(
@@ -157,9 +157,9 @@ class ChannelPool extends ManagedChannel {
     for (Entry entry : localEntries) {
       entry.channel.shutdown();
     }
-    if (executor != null) {
+    if (backgroundExecutor != null) {
       // shutdownNow will cancel scheduled tasks
-      executor.shutdownNow();
+      backgroundExecutor.shutdownNow();
     }
     return this;
   }
@@ -173,7 +173,7 @@ class ChannelPool extends ManagedChannel {
         return false;
       }
     }
-    return executor == null || executor.isShutdown();
+    return backgroundExecutor == null || backgroundExecutor.isShutdown();
   }
 
   /** {@inheritDoc} */
@@ -186,7 +186,7 @@ class ChannelPool extends ManagedChannel {
       }
     }
 
-    return executor == null || executor.isTerminated();
+    return backgroundExecutor == null || backgroundExecutor.isTerminated();
   }
 
   /** {@inheritDoc} */
@@ -198,8 +198,8 @@ class ChannelPool extends ManagedChannel {
     for (Entry entry : localEntries) {
       entry.channel.shutdownNow();
     }
-    if (executor != null) {
-      executor.shutdownNow();
+    if (backgroundExecutor != null) {
+      backgroundExecutor.shutdownNow();
     }
     return this;
   }
@@ -216,9 +216,9 @@ class ChannelPool extends ManagedChannel {
       }
       entry.channel.awaitTermination(awaitTimeNanos, TimeUnit.NANOSECONDS);
     }
-    if (executor != null) {
+    if (backgroundExecutor != null) {
       long awaitTimeNanos = endTimeNanos - System.nanoTime();
-      executor.awaitTermination(awaitTimeNanos, TimeUnit.NANOSECONDS);
+      backgroundExecutor.awaitTermination(awaitTimeNanos, TimeUnit.NANOSECONDS);
     }
     return isTerminated();
   }

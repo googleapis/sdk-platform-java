@@ -78,6 +78,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -129,6 +130,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
   private final int processorCount;
   private final Executor executor;
+  private final ScheduledExecutorService backgroundExecutor;
   private final HeaderProvider headerProvider;
   private final boolean useS2A;
   private final String endpoint;
@@ -181,6 +183,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   private InstantiatingGrpcChannelProvider(Builder builder) {
     this.processorCount = builder.processorCount;
     this.executor = builder.executor;
+    this.backgroundExecutor = builder.backgroundExecutor;
     this.headerProvider = builder.headerProvider;
     this.useS2A = builder.useS2A;
     this.endpoint = builder.endpoint;
@@ -356,7 +359,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return GrpcTransportChannel.newBuilder()
         .setManagedChannel(
             ChannelPool.create(
-                channelPoolSettings, InstantiatingGrpcChannelProvider.this::createSingleChannel))
+                channelPoolSettings, InstantiatingGrpcChannelProvider.this::createSingleChannel, backgroundExecutor))
         .setDirectPath(this.canUseDirectPath())
         .build();
   }
@@ -855,6 +858,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   public static final class Builder {
     @Deprecated private int processorCount;
     private Executor executor;
+    private ScheduledExecutorService backgroundExecutor;
     private HeaderProvider headerProvider;
     private String endpoint;
     private String mtlsEndpoint;
@@ -882,6 +886,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     private List<HardBoundTokenTypes> allowedHardBoundTokenTypes;
 
     private Builder() {
+      backgroundExecutor = Executors.newSingleThreadScheduledExecutor();
       processorCount = Runtime.getRuntime().availableProcessors();
       envProvider = System::getenv;
       channelPoolSettings = ChannelPoolSettings.staticallySized(1);
@@ -891,6 +896,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     private Builder(InstantiatingGrpcChannelProvider provider) {
       this.processorCount = provider.processorCount;
       this.executor = provider.executor;
+      this.backgroundExecutor = provider.backgroundExecutor;
       this.headerProvider = provider.headerProvider;
       this.endpoint = provider.endpoint;
       this.useS2A = provider.useS2A;
@@ -948,6 +954,18 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @Deprecated
     public Builder setExecutorProvider(ExecutorProvider executorProvider) {
       return setExecutor((Executor) executorProvider.getExecutor());
+    }
+
+    /**
+     * Sets the background executor for this TransportChannelProvider.
+     *
+     * <p>This is optional. The background executor is used for channel refresh and channel resize
+     * on {@link ChannelPool}. This allows us to reuse the same executor for other long running
+     * operations.
+     */
+    public Builder setBackgroundExecutor(ScheduledExecutorService executor) {
+      this.backgroundExecutor = executor;
+      return this;
     }
 
     /**
