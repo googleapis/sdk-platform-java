@@ -359,7 +359,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return GrpcTransportChannel.newBuilder()
         .setManagedChannel(
             ChannelPool.create(
-                channelPoolSettings, InstantiatingGrpcChannelProvider.this::createSingleChannel, backgroundExecutor))
+                channelPoolSettings,
+                InstantiatingGrpcChannelProvider.this::createSingleChannel,
+                backgroundExecutor))
         .setDirectPath(this.canUseDirectPath())
         .build();
   }
@@ -840,6 +842,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @BetaApi("Channel pool sizing api is not yet stable")
   public ChannelPoolSettings getChannelPoolSettings() {
     return channelPoolSettings;
+  }
+
+  /** Gets the background executor for channel refresh and resize. */
+  public ScheduledExecutorService getBackgroundExecutor() {
+    return backgroundExecutor;
   }
 
   @Override

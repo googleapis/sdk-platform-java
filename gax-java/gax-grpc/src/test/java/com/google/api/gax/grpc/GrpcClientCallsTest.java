@@ -57,6 +57,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -122,7 +123,8 @@ class GrpcClientCallsTest {
     Channel pool =
         ChannelPool.create(
             ChannelPoolSettings.staticallySized(2),
-            new FakeChannelFactory(Arrays.asList(channel0, channel1)));
+            new FakeChannelFactory(Arrays.asList(channel0, channel1)),
+            Executors.newSingleThreadScheduledExecutor());
     GrpcCallContext context = defaultCallContext.withChannel(pool);
 
     ClientCall<Color, Money> gotCallA =

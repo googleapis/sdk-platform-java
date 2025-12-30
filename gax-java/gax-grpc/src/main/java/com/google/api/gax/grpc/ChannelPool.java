@@ -46,7 +46,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CancellationException;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -79,7 +78,10 @@ class ChannelPool extends ManagedChannel {
   private final AtomicInteger indexTicker = new AtomicInteger();
   private final String authority;
 
-  static ChannelPool create(ChannelPoolSettings settings, ChannelFactory channelFactory, ScheduledExecutorService backgroundExecutor)
+  static ChannelPool create(
+      ChannelPoolSettings settings,
+      ChannelFactory channelFactory,
+      ScheduledExecutorService backgroundExecutor)
       throws IOException {
     return new ChannelPool(settings, channelFactory, backgroundExecutor);
   }
