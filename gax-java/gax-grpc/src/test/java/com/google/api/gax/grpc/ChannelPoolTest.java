@@ -46,7 +46,6 @@ import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.util.FakeLogHandler;
 import com.google.auth.Credentials;
-import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.type.Color;
@@ -79,13 +78,13 @@ import org.mockito.stubbing.Answer;
 class ChannelPoolTest {
   private static final int DEFAULT_AWAIT_TERMINATION_SEC = 10;
   private ChannelPool pool;
-  private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
   @AfterEach
   void cleanup() throws InterruptedException {
-    Preconditions.checkNotNull(pool, "Channel pool was never created");
-    pool.shutdown();
-    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
+    if (pool != null) {
+      pool.shutdown();
+      pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
+    }
   }
 
   @Test
@@ -99,7 +98,7 @@ class ChannelPoolTest {
         ChannelPool.create(
             ChannelPoolSettings.staticallySized(2),
             new FakeChannelFactory(Arrays.asList(sub1, sub2)),
-            executor);
+            null);
     assertThat(pool.authority()).isEqualTo("myAuth");
   }
 
@@ -115,7 +114,7 @@ class ChannelPoolTest {
         ChannelPool.create(
             ChannelPoolSettings.staticallySized(channels.size()),
             new FakeChannelFactory(channels),
-            executor);
+            null);
 
     verifyTargetChannel(pool, channels, sub1);
     verifyTargetChannel(pool, channels, sub2);
@@ -173,7 +172,7 @@ class ChannelPoolTest {
         ChannelPool.create(
             ChannelPoolSettings.staticallySized(numChannels),
             new FakeChannelFactory(Arrays.asList(channels)),
-            executor);
+            null);
 
     int numThreads = 20;
     final int numPerThread = 1000;
@@ -210,7 +209,7 @@ class ChannelPoolTest {
                 .setPreemptiveRefreshEnabled(true)
                 .build(),
             new FakeChannelFactory(Arrays.asList(channel1, channel2), mockChannelPrimer),
-            executor);
+            null);
     Mockito.verify(mockChannelPrimer, Mockito.times(2))
         .primeChannel(Mockito.any(ManagedChannel.class));
   }
@@ -272,7 +271,7 @@ class ChannelPoolTest {
     ManagedChannel replacementChannel = Mockito.mock(ManagedChannel.class);
     FakeChannelFactory channelFactory =
         new FakeChannelFactory(ImmutableList.of(underlyingChannel, replacementChannel));
-    pool = ChannelPool.create(ChannelPoolSettings.staticallySized(1), channelFactory, executor);
+    pool = ChannelPool.create(ChannelPoolSettings.staticallySized(1), channelFactory, null);
 
     // create a mock call when new call comes to the underlying channel
     MockClientCall<String, Integer> mockClientCall = new MockClientCall<>(1, Status.OK);
@@ -321,7 +320,7 @@ class ChannelPoolTest {
 
     FakeChannelFactory channelFactory =
         new FakeChannelFactory(ImmutableList.of(underlyingChannel, replacementChannel));
-    pool = ChannelPool.create(ChannelPoolSettings.staticallySized(1), channelFactory, executor);
+    pool = ChannelPool.create(ChannelPoolSettings.staticallySized(1), channelFactory, null);
 
     // create a mock call when new call comes to the underlying channel
     MockClientCall<String, Integer> mockClientCall = new MockClientCall<>(1, Status.OK);
@@ -366,7 +365,7 @@ class ChannelPoolTest {
 
     FakeChannelFactory channelFactory =
         new FakeChannelFactory(ImmutableList.of(underlyingChannel, replacementChannel));
-    pool = ChannelPool.create(ChannelPoolSettings.staticallySized(1), channelFactory, executor);
+    pool = ChannelPool.create(ChannelPoolSettings.staticallySized(1), channelFactory, null);
 
     // create a mock call when new call comes to the underlying channel
     MockClientCall<String, Integer> mockClientCall = new MockClientCall<>(1, Status.OK);
@@ -629,7 +628,7 @@ class ChannelPoolTest {
     Mockito.when(fakeChannel.newCall(Mockito.any(), Mockito.any())).thenReturn(mockClientCall);
     ChannelPoolSettings channelPoolSettings = ChannelPoolSettings.staticallySized(1);
     ChannelFactory factory = new FakeChannelFactory(ImmutableList.of(fakeChannel));
-    pool = ChannelPool.create(channelPoolSettings, factory, executor);
+    pool = ChannelPool.create(channelPoolSettings, factory, null);
 
     EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
     Mockito.doNothing()
@@ -687,7 +686,7 @@ class ChannelPoolTest {
       ChannelPoolSettings channelPoolSettings = ChannelPoolSettings.staticallySized(1);
       ChannelFactory factory = new FakeChannelFactory(ImmutableList.of(fakeChannel));
 
-      pool = ChannelPool.create(channelPoolSettings, factory, executor);
+      pool = ChannelPool.create(channelPoolSettings, factory, null);
 
       EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
       Mockito.doNothing()

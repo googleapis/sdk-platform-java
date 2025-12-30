@@ -78,7 +78,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -130,7 +129,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
   private final int processorCount;
   private final Executor executor;
-  private final ScheduledExecutorService backgroundExecutor;
+  @Nullable private final ScheduledExecutorService backgroundExecutor;
   private final HeaderProvider headerProvider;
   private final boolean useS2A;
   private final String endpoint;
@@ -893,7 +892,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     private List<HardBoundTokenTypes> allowedHardBoundTokenTypes;
 
     private Builder() {
-      backgroundExecutor = Executors.newSingleThreadScheduledExecutor();
       processorCount = Runtime.getRuntime().availableProcessors();
       envProvider = System::getenv;
       channelPoolSettings = ChannelPoolSettings.staticallySized(1);
@@ -964,7 +962,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
 
     /**
-     * Sets the background executor for this TransportChannelProvider.
+     * Sets the background executor for this TransportChannelProvider. The life cycle of the
+     * executor should be managed by the caller.
      *
      * <p>This is optional. The background executor is used for channel refresh and channel resize
      * on {@link ChannelPool}. This allows us to reuse the same executor for other long running

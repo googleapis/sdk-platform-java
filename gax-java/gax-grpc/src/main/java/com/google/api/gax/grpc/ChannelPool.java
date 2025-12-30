@@ -46,7 +46,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CancellationException;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -72,6 +74,10 @@ class ChannelPool extends ManagedChannel {
   private final ChannelPoolSettings settings;
   private final ChannelFactory channelFactory;
   private final ScheduledExecutorService backgroundExecutor;
+  private final boolean shouldShutdownExecutor;
+
+  private ScheduledFuture<?> refreshFuture = null;
+  private ScheduledFuture<?> resizeFuture = null;
 
   private final Object entryWriteLock = new Object();
   @VisibleForTesting final AtomicReference<ImmutableList<Entry>> entries = new AtomicReference<>();
@@ -81,7 +87,7 @@ class ChannelPool extends ManagedChannel {
   static ChannelPool create(
       ChannelPoolSettings settings,
       ChannelFactory channelFactory,
-      ScheduledExecutorService backgroundExecutor)
+      @Nullable ScheduledExecutorService backgroundExecutor)
       throws IOException {
     return new ChannelPool(settings, channelFactory, backgroundExecutor);
   }
@@ -97,7 +103,7 @@ class ChannelPool extends ManagedChannel {
   ChannelPool(
       ChannelPoolSettings settings,
       ChannelFactory channelFactory,
-      ScheduledExecutorService executor)
+      @Nullable ScheduledExecutorService executor)
       throws IOException {
     this.settings = settings;
     this.channelFactory = channelFactory;
@@ -110,21 +116,30 @@ class ChannelPool extends ManagedChannel {
 
     entries.set(initialListBuilder.build());
     authority = entries.get().get(0).channel.authority();
-    this.backgroundExecutor = executor;
+
+    if (executor == null) {
+      this.backgroundExecutor = Executors.newSingleThreadScheduledExecutor();
+      this.shouldShutdownExecutor = true;
+    } else {
+      this.backgroundExecutor = executor;
+      this.shouldShutdownExecutor = false;
+    }
 
     if (!settings.isStaticSize()) {
-      executor.scheduleAtFixedRate(
-          this::resizeSafely,
-          ChannelPoolSettings.RESIZE_INTERVAL.getSeconds(),
-          ChannelPoolSettings.RESIZE_INTERVAL.getSeconds(),
-          TimeUnit.SECONDS);
+      resizeFuture =
+          backgroundExecutor.scheduleAtFixedRate(
+              this::resizeSafely,
+              ChannelPoolSettings.RESIZE_INTERVAL.getSeconds(),
+              ChannelPoolSettings.RESIZE_INTERVAL.getSeconds(),
+              TimeUnit.SECONDS);
     }
     if (settings.isPreemptiveRefreshEnabled()) {
-      executor.scheduleAtFixedRate(
-          this::refreshSafely,
-          REFRESH_PERIOD.getSeconds(),
-          REFRESH_PERIOD.getSeconds(),
-          TimeUnit.SECONDS);
+      refreshFuture =
+          backgroundExecutor.scheduleAtFixedRate(
+              this::refreshSafely,
+              REFRESH_PERIOD.getSeconds(),
+              REFRESH_PERIOD.getSeconds(),
+              TimeUnit.SECONDS);
     }
   }
 
@@ -159,9 +174,16 @@ class ChannelPool extends ManagedChannel {
     for (Entry entry : localEntries) {
       entry.channel.shutdown();
     }
-    if (backgroundExecutor != null) {
+    if (shouldShutdownExecutor) {
       // shutdownNow will cancel scheduled tasks
       backgroundExecutor.shutdownNow();
+    } else {
+      if (resizeFuture != null) {
+        resizeFuture.cancel(false);
+      }
+      if (refreshFuture != null) {
+        refreshFuture.cancel(false);
+      }
     }
     return this;
   }
@@ -175,7 +197,7 @@ class ChannelPool extends ManagedChannel {
         return false;
       }
     }
-    return backgroundExecutor == null || backgroundExecutor.isShutdown();
+    return !shouldShutdownExecutor || backgroundExecutor.isShutdown();
   }
 
   /** {@inheritDoc} */
@@ -188,7 +210,7 @@ class ChannelPool extends ManagedChannel {
       }
     }
 
-    return backgroundExecutor == null || backgroundExecutor.isTerminated();
+    return !shouldShutdownExecutor || backgroundExecutor.isTerminated();
   }
 
   /** {@inheritDoc} */
@@ -200,8 +222,15 @@ class ChannelPool extends ManagedChannel {
     for (Entry entry : localEntries) {
       entry.channel.shutdownNow();
     }
-    if (backgroundExecutor != null) {
+    if (shouldShutdownExecutor) {
       backgroundExecutor.shutdownNow();
+    } else {
+      if (resizeFuture != null) {
+        resizeFuture.cancel(true);
+      }
+      if (refreshFuture != null) {
+        refreshFuture.cancel(true);
+      }
     }
     return this;
   }
@@ -218,7 +247,7 @@ class ChannelPool extends ManagedChannel {
       }
       entry.channel.awaitTermination(awaitTimeNanos, TimeUnit.NANOSECONDS);
     }
-    if (backgroundExecutor != null) {
+    if (shouldShutdownExecutor) {
       long awaitTimeNanos = endTimeNanos - System.nanoTime();
       backgroundExecutor.awaitTermination(awaitTimeNanos, TimeUnit.NANOSECONDS);
     }
