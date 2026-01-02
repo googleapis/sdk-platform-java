@@ -27,7 +27,7 @@ from library_generation.tests.owlbot import util
 TEST_OWLBOT = Path(__file__).parent.parent / "resources" / "test-owlbot"
 FIXTURES = Path(__file__).parent.parent / "resources" / "test-owlbot" / "fixtures"
 TEMPLATES_PATH = Path(__file__).parent.parent.parent / "owlbot" / "templates"
-TEST_CURRENT_YEAR = 2025
+TEST_CURRENT_YEAR = "2025"
 
 SAMPLE_METADATA = """
 <metadata>
