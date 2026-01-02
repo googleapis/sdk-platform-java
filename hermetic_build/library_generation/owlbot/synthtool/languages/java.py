@@ -104,13 +104,13 @@ def fix_proto_headers(proto_root: Path) -> None:
     s.replace(
         _filter_no_header([proto_root / "src/**/*.java"]),
         PROTOBUF_HEADER,
-        f"{_get_good_license}{PROTOBUF_HEADER}",
+        f"{_get_good_license()}{PROTOBUF_HEADER}",
     )
     # https://github.com/googleapis/gapic-generator/issues/3074
     s.replace(
         [proto_root / "src/**/*Name.java", proto_root / "src/**/*Names.java"],
         BAD_LICENSE,
-        _get_good_license,
+        _get_good_license(),
     )
 
 
@@ -122,7 +122,7 @@ def fix_grpc_headers(grpc_root: Path, package_name: str = "unused") -> None:
     s.replace(
         _filter_no_header([grpc_root / "src/**/*.java"]),
         "^package (.*);",
-        f"{_get_good_license}package \\1;",
+        f"{_get_good_license()}package \\1;",
     )
 
 
