@@ -18,6 +18,8 @@ import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.common.base.Strings;
+
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -35,7 +37,7 @@ public class CommentComposer {
               + "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n"
               + "See the License for the specific language governing permissions and\n"
               + "limitations under the License.",
-          Calendar.getInstance().get(Calendar.YEAR));
+          getCurrentYear());
 
   private static final String AUTO_GENERATED_CLASS_DISCLAIMER_STRING =
       "AUTO-GENERATED DOCUMENTATION AND CLASS.";
@@ -78,4 +80,10 @@ public class CommentComposer {
           CommentStatement.withComment(
               LineComment.withComment(
                   "https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library")));
+
+  private static String getCurrentYear() {
+    String testCurrentYear = System.getenv("test_current_year");
+    int currentYearFromCalendar = Calendar.getInstance().get(Calendar.YEAR);
+    return Strings.isNullOrEmpty(testCurrentYear) ? String.valueOf(currentYearFromCalendar) : testCurrentYear;
+  }
 }
