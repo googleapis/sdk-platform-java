@@ -19,7 +19,6 @@ import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.common.base.Strings;
-
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -84,6 +83,8 @@ public class CommentComposer {
   private static String getCurrentYear() {
     String testCurrentYear = System.getenv("test_current_year");
     int currentYearFromCalendar = Calendar.getInstance().get(Calendar.YEAR);
-    return Strings.isNullOrEmpty(testCurrentYear) ? String.valueOf(currentYearFromCalendar) : testCurrentYear;
+    return Strings.isNullOrEmpty(testCurrentYear)
+        ? String.valueOf(currentYearFromCalendar)
+        : testCurrentYear;
   }
 }
