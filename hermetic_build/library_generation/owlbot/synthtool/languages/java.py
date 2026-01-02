@@ -56,15 +56,14 @@ LIBRARY_VERSION_ENV_KEY = "SYNTHTOOL_LIBRARY_VERSION"
 
 def _get_good_license():
     current_year = int(os.getenv("TEST_CURRENT_YEAR", date.today().year))
-    good_license = f"""
-        /*
+    good_license = f"""/*
          * Copyright {current_year} Google LLC
          *
          * Licensed under the Apache License, Version 2.0 (the "License");
          * you may not use this file except in compliance with the License.
          * You may obtain a copy of the License at
          *
-         * https://www.apache.org/licenses/LICENSE-2.0
+         *     https://www.apache.org/licenses/LICENSE-2.0
          *
          * Unless required by applicable law or agreed to in writing, software
          * distributed under the License is distributed on an "AS IS" BASIS,
