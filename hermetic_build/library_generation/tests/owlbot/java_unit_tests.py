@@ -172,7 +172,7 @@ class JavaUnitTests(unittest.TestCase):
             )
             os.chdir(cwd)
 
-    @mock.patch.dict(java.CURRENT_YEAR, 2025)
+    @mock.patch(java.CURRENT_YEAR, 2025)
     def test_fix_proto_license(self):
         with tempfile.TemporaryDirectory() as tempdir:
             cwd = os.getcwd()
@@ -189,7 +189,7 @@ class JavaUnitTests(unittest.TestCase):
             )
             os.chdir(cwd)
 
-    @mock.patch.dict(java.CURRENT_YEAR, 2025)
+    @mock.patch(java.CURRENT_YEAR, 2025)
     def test_fix_proto_license_idempotent(self):
         with tempfile.TemporaryDirectory() as tempdir:
             cwd = os.getcwd()
@@ -208,7 +208,7 @@ class JavaUnitTests(unittest.TestCase):
             )
             os.chdir(cwd)
 
-    @mock.patch.dict(java.CURRENT_YEAR, 2025)
+    @mock.patch(java.CURRENT_YEAR, 2025)
     def test_fix_grpc_license(self):
         with tempfile.TemporaryDirectory() as tempdir:
             cwd = os.getcwd()
@@ -225,7 +225,7 @@ class JavaUnitTests(unittest.TestCase):
             )
             os.chdir(cwd)
 
-    @mock.patch.dict(java.CURRENT_YEAR, 2025)
+    @mock.patch(java.CURRENT_YEAR, 2025)
     def test_fix_grpc_license_idempotent(self):
         with tempfile.TemporaryDirectory() as tempdir:
             cwd = os.getcwd()
