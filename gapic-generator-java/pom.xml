@@ -324,7 +324,7 @@
             </additionalClasspathElement>
           </additionalClasspathElements>
           <environmentVariables>
-            <test_current_year>2025</test_current_year>
+            <TEST_CURRENT_YEAR>2025</TEST_CURRENT_YEAR>
           </environmentVariables>
         </configuration>
       </plugin>
