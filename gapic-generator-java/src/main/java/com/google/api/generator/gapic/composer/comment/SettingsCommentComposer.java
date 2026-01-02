@@ -45,7 +45,7 @@ public class SettingsCommentComposer {
       "To configure the RetrySettings of a Long Running Operation method, create an OperationTimedPollAlgorithm object and update the RPC's polling algorithm. For example, to configure the RetrySettings for %s:";
 
   private static final String CLASS_HEADER_SAMPLE_CODE_SUFFIX =
-      "Please refer to the [Client Side Retry Guide](https://github.com/googleapis/google-cloud-java/blob/main/docs/client_retries.md) for additional support in setting retries.";
+      "Please refer to the [Client Side Retry Guide](https://docs.cloud.google.com/java/docs/client-retries) for additional support in setting retries.";
 
   private static final String CLASS_HEADER_BUILDER_DESCRIPTION =
       "The builder of this class is recursive, so contained classes are themselves builders. When"

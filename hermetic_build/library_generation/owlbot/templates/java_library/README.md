@@ -36,7 +36,7 @@ If you are using Maven with [BOM][libraries-bom], add this to your pom.xml file:
 ```
 
 If you are using Maven without the BOM, add this to your dependencies:
-{% elif monorepo %}
+{% elif monorepo and (group_id == "com.google.cloud" or group_id == "com.google.analytics" or group_id == "com.google.area120") %}
 If you are using Maven with [BOM][libraries-bom], add this to your pom.xml file:
 
 ```xml
@@ -238,30 +238,10 @@ information.
 
 Apache 2.0 - See [LICENSE][license] for more information.
 
-## CI Status
-
-Java Version | Status
------------- | ------{% if metadata['min_java_version'] <= 7 %}
-Java 7 | [![Kokoro CI][kokoro-badge-image-1]][kokoro-badge-link-1]{% endif %}
-Java 8 | [![Kokoro CI][kokoro-badge-image-2]][kokoro-badge-link-2]
-Java 8 OSX | [![Kokoro CI][kokoro-badge-image-3]][kokoro-badge-link-3]
-Java 8 Windows | [![Kokoro CI][kokoro-badge-image-4]][kokoro-badge-link-4]
-Java 11 | [![Kokoro CI][kokoro-badge-image-5]][kokoro-badge-link-5]
-
 Java is a registered trademark of Oracle and/or its affiliates.
 
 [product-docs]: {{metadata['repo']['product_documentation']}}
 [javadocs]: {{metadata['repo']['client_documentation']}}
-[kokoro-badge-image-1]: http://storage.googleapis.com/cloud-devrel-public/java/badges/{{ repo_short }}/java7.svg
-[kokoro-badge-link-1]: http://storage.googleapis.com/cloud-devrel-public/java/badges/{{ repo_short }}/java7.html
-[kokoro-badge-image-2]: http://storage.googleapis.com/cloud-devrel-public/java/badges/{{ repo_short }}/java8.svg
-[kokoro-badge-link-2]: http://storage.googleapis.com/cloud-devrel-public/java/badges/{{ repo_short }}/java8.html
-[kokoro-badge-image-3]: http://storage.googleapis.com/cloud-devrel-public/java/badges/{{ repo_short }}/java8-osx.svg
-[kokoro-badge-link-3]: http://storage.googleapis.com/cloud-devrel-public/java/badges/{{ repo_short }}/java8-osx.html
-[kokoro-badge-image-4]: http://storage.googleapis.com/cloud-devrel-public/java/badges/{{ repo_short }}/java8-win.svg
-[kokoro-badge-link-4]: http://storage.googleapis.com/cloud-devrel-public/java/badges/{{ repo_short }}/java8-win.html
-[kokoro-badge-image-5]: http://storage.googleapis.com/cloud-devrel-public/java/badges/{{ repo_short }}/java11.svg
-[kokoro-badge-link-5]: http://storage.googleapis.com/cloud-devrel-public/java/badges/{{ repo_short }}/java11.html
 [stability-image]: https://img.shields.io/badge/stability-{% if metadata['repo']['release_level'] == 'stable' %}stable-green{% elif metadata['repo']['release_level'] == 'preview' %}preview-yellow{% else %}unknown-red{% endif %}
 [maven-version-image]: https://img.shields.io/maven-central/v/{{ group_id }}/{{ artifact_id }}.svg
 [maven-version-link]: https://central.sonatype.com/artifact/{{ group_id }}/{{ artifact_id }}/{{ version }}
