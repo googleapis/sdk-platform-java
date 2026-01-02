@@ -30,7 +30,7 @@ logger.setLevel(logging.DEBUG)
 
 JAR_DOWNLOAD_URL = "https://github.com/google/google-java-format/releases/download/google-java-format-{version}/google-java-format-{version}-all-deps.jar"
 DEFAULT_FORMAT_VERSION = "1.7"
-CURRENT_YEAR = int(os.getenv("TEST_CURRENT_YEAR", date.now().year))
+CURRENT_YEAR = int(os.getenv("TEST_CURRENT_YEAR", date.today().year))
 GOOD_LICENSE = f"""/*
  * Copyright {CURRENT_YEAR} Google LLC
  *
