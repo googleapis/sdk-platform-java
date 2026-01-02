@@ -91,6 +91,7 @@ steps:
   ]
   env:
   - "DOCKER_BUILDKIT=1"
+  - "TEST_CURRENT_YEAR=2025"
   id: generate-libraries
   waitFor: [
     "build-image",
