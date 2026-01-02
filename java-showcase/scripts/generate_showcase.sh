@@ -8,7 +8,6 @@ trap cleanup ERR
 readonly ROOT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/../.."
 pushd "${ROOT_DIR}"
 source "${ROOT_DIR}/java-showcase/scripts/showcase_utilities.sh"
-export TEST_CURRENT_YEAR=2025
 
 cleanup() {
   if [[ -z "${api_def_dir}" ]]; then
