@@ -160,7 +160,7 @@ def _merge_release_please(destination_text: str):
 
 
 def _merge_common_templates(
-        source_text: str, destination_text: str, file_path: Path
+    source_text: str, destination_text: str, file_path: Path
 ) -> str:
     # keep any existing pom.xml
     if file_path.match("pom.xml") or file_path.match("sync-repo-settings.yaml"):
@@ -193,9 +193,9 @@ def _common_template_metadata() -> Dict[str, Any]:
 
 
 def common_templates(
-        excludes: List[str] = [],
-        template_path: Optional[Path] = None,
-        **kwargs,
+    excludes: List[str] = [],
+    template_path: Optional[Path] = None,
+    **kwargs,
 ) -> None:
     """Generate common templates for a Java Library
 
@@ -231,8 +231,8 @@ def common_templates(
         "java-resourcemanager",
     ]
     kwargs["migrated_split_repo"] = split_repo and (
-            repo_metadata["library_type"] == "GAPIC_AUTO"
-            or (repo_short and repo_short in special_libs_in_monorepo)
+        repo_metadata["library_type"] == "GAPIC_AUTO"
+        or (repo_short and repo_short in special_libs_in_monorepo)
     )
     logger.info(
         "monorepo: {}, split_repo: {}, library_type: {},"
