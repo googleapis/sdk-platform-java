@@ -5,5 +5,3 @@ build --protocopt=--experimental_allow_proto3_optional
 
 build --cxxopt=-std=c++14
 build --host_cxxopt=-std=c++14
-
-test --test_env=TEST_CURRENT_YEAR=2025
