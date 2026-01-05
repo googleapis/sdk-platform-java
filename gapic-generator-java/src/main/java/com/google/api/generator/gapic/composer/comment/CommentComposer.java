@@ -81,7 +81,7 @@ public class CommentComposer {
                   "https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library")));
 
   private static String getCurrentYear() {
-    String testCurrentYear = System.getenv("TEST_CURRENT_YEAR");
+    String testCurrentYear = System.getenv("CURRENT_YEAR_OVERRIDE");
     int currentYearFromCalendar = Calendar.getInstance().get(Calendar.YEAR);
     return Strings.isNullOrEmpty(testCurrentYear)
         ? String.valueOf(currentYearFromCalendar)

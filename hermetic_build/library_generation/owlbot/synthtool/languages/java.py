@@ -55,7 +55,7 @@ LIBRARY_VERSION_ENV_KEY = "SYNTHTOOL_LIBRARY_VERSION"
 
 
 def _get_good_license():
-    current_year = int(os.getenv("TEST_CURRENT_YEAR", date.today().year))
+    current_year = int(os.getenv("CURRENT_YEAR_OVERRIDE", date.today().year))
     good_license = f"""/*
  * Copyright {current_year} Google LLC
  *
