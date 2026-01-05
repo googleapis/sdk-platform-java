@@ -629,7 +629,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
           try {
             mtlsToS2AChannelCredentials =
                 createMtlsToS2AChannelCredentials(rootFile, certKeyFile, certKeyFile);
-          } catch (IOException | GeneralSecurityException ignore) {
+          } catch (IOException ignore) {
             // Fallback to plaintext-to-S2A connection on error.
             LOG.log(
                 Level.WARNING,
