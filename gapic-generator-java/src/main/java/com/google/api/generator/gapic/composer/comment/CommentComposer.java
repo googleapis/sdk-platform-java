@@ -18,6 +18,7 @@ import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.common.base.Strings;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -35,7 +36,7 @@ public class CommentComposer {
               + "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n"
               + "See the License for the specific language governing permissions and\n"
               + "limitations under the License.",
-          Calendar.getInstance().get(Calendar.YEAR));
+          getCurrentYear());
 
   private static final String AUTO_GENERATED_CLASS_DISCLAIMER_STRING =
       "AUTO-GENERATED DOCUMENTATION AND CLASS.";
@@ -78,4 +79,20 @@ public class CommentComposer {
           CommentStatement.withComment(
               LineComment.withComment(
                   "https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library")));
+
+  // This environment variable is mainly used to override the current year to a fixed year in tests
+  // so we don't have to update golden tests every year.
+  // This does not work for golden integration tests that are generated from Bazel rules. Because
+  // the Bazel rule java_gapic_library calls the generator through proto_custom_library which does
+  // not pass any environment variables. Golden integration tests still need to be updated every
+  // year.
+  private static final String CURRENT_YEAR_OVERRIDE = "CURRENT_YEAR_OVERRIDE";
+
+  private static String getCurrentYear() {
+    String testCurrentYear = System.getenv(CURRENT_YEAR_OVERRIDE);
+    int currentYearFromCalendar = Calendar.getInstance().get(Calendar.YEAR);
+    return Strings.isNullOrEmpty(testCurrentYear)
+        ? String.valueOf(currentYearFromCalendar)
+        : testCurrentYear;
+  }
 }
