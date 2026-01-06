@@ -89,7 +89,12 @@ class ChannelPool extends ManagedChannel {
       ChannelFactory channelFactory,
       @Nullable ScheduledExecutorService backgroundExecutor)
       throws IOException {
-    return new ChannelPool(settings, channelFactory, backgroundExecutor);
+
+    FixedExecutorProvider executorProvider =
+        backgroundExecutor == null
+            ? FixedExecutorProvider.create(Executors.newSingleThreadScheduledExecutor(), true)
+            : FixedExecutorProvider.create(backgroundExecutor, false);
+    return new ChannelPool(settings, channelFactory, executorProvider);
   }
 
   /**
@@ -97,16 +102,17 @@ class ChannelPool extends ManagedChannel {
    *
    * @param settings options for controling the ChannelPool sizing behavior
    * @param channelFactory method to create the channels
-   * @param executor periodically refreshes the channels
+   * @param executorProvider provides the executor that periodically refreshes the channels
    */
   @VisibleForTesting
   ChannelPool(
       ChannelPoolSettings settings,
       ChannelFactory channelFactory,
-      @Nullable ScheduledExecutorService executor)
+      FixedExecutorProvider executorProvider)
       throws IOException {
     this.settings = settings;
     this.channelFactory = channelFactory;
+    this.backgroundExecutorProvider = executorProvider;
 
     ImmutableList.Builder<Entry> initialListBuilder = ImmutableList.builder();
 
@@ -116,11 +122,6 @@ class ChannelPool extends ManagedChannel {
 
     entries.set(initialListBuilder.build());
     authority = entries.get().get(0).channel.authority();
-
-    this.backgroundExecutorProvider =
-        executor == null
-            ? FixedExecutorProvider.create(Executors.newSingleThreadScheduledExecutor(), true)
-            : FixedExecutorProvider.create(executor, false);
 
     if (!settings.isStaticSize()) {
       resizeFuture =
@@ -171,6 +172,9 @@ class ChannelPool extends ManagedChannel {
   public ManagedChannel shutdown() {
     LOG.fine("Initiating graceful shutdown due to explicit request");
 
+    // Resize and refresh tasks can block on channel priming. We don't need
+    // to wait for the channels to be ready since we're shutting down the
+    // pool. Allowing interrupt to speed it up.
     if (resizeFuture != null) {
       resizeFuture.cancel(true);
     }

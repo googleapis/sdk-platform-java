@@ -34,6 +34,7 @@ import static com.google.api.gax.grpc.testing.FakeServiceGrpc.METHOD_SERVER_STRE
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.core.ApiFuture;
+import com.google.api.gax.core.FixedExecutorProvider;
 import com.google.api.gax.grpc.testing.FakeChannelFactory;
 import com.google.api.gax.grpc.testing.FakeMethodDescriptor;
 import com.google.api.gax.rpc.ClientContext;
@@ -226,6 +227,7 @@ class ChannelPoolTest {
 
     ScheduledExecutorService scheduledExecutorService =
         Mockito.mock(ScheduledExecutorService.class);
+    FixedExecutorProvider provider = FixedExecutorProvider.create(scheduledExecutorService);
 
     Answer<?> extractChannelRefresher =
         invocation -> {
@@ -247,7 +249,7 @@ class ChannelPoolTest {
                 .setPreemptiveRefreshEnabled(true)
                 .build(),
             channelFactory,
-            scheduledExecutorService);
+            provider);
     // 1 call during the creation
     Mockito.verify(mockChannelPrimer, Mockito.times(1))
         .primeChannel(Mockito.any(ManagedChannel.class));
@@ -409,6 +411,7 @@ class ChannelPoolTest {
     // mock executor service to capture the runnable scheduled, so we can invoke it when we want to
     ScheduledExecutorService scheduledExecutorService =
         Mockito.mock(ScheduledExecutorService.class);
+    FixedExecutorProvider provider = FixedExecutorProvider.create(scheduledExecutorService);
 
     Mockito.doReturn(null)
         .when(scheduledExecutorService)
@@ -423,7 +426,7 @@ class ChannelPoolTest {
                 .setPreemptiveRefreshEnabled(true)
                 .build(),
             channelFactory,
-            scheduledExecutorService);
+            provider);
     Mockito.reset(underlyingChannel1);
 
     pool.newCall(FakeMethodDescriptor.<String, Integer>create(), CallOptions.DEFAULT);
@@ -443,6 +446,7 @@ class ChannelPoolTest {
   @Test
   void channelCountShouldNotChangeWhenOutstandingRpcsAreWithinLimits() throws Exception {
     ScheduledExecutorService executor = Mockito.mock(ScheduledExecutorService.class);
+    FixedExecutorProvider provider = FixedExecutorProvider.create(executor);
 
     List<ManagedChannel> channels = new ArrayList<>();
     List<ClientCall<Object, Object>> startedCalls = new ArrayList<>();
@@ -471,7 +475,7 @@ class ChannelPoolTest {
                 .setMaxRpcsPerChannel(2)
                 .build(),
             channelFactory,
-            executor);
+            provider);
     assertThat(pool.entries.get()).hasSize(2);
 
     // Start the minimum number of
@@ -522,6 +526,7 @@ class ChannelPoolTest {
   @Test
   void removedIdleChannelsAreShutdown() throws Exception {
     ScheduledExecutorService executor = Mockito.mock(ScheduledExecutorService.class);
+    FixedExecutorProvider provider = FixedExecutorProvider.create(executor);
 
     List<ManagedChannel> channels = new ArrayList<>();
     List<ClientCall<Object, Object>> startedCalls = new ArrayList<>();
@@ -550,7 +555,7 @@ class ChannelPoolTest {
                 .setMaxRpcsPerChannel(2)
                 .build(),
             channelFactory,
-            executor);
+            provider);
     assertThat(pool.entries.get()).hasSize(2);
 
     // With no outstanding RPCs, the pool should shrink
@@ -562,6 +567,7 @@ class ChannelPoolTest {
   @Test
   void removedActiveChannelsAreShutdown() throws Exception {
     ScheduledExecutorService executor = Mockito.mock(ScheduledExecutorService.class);
+    FixedExecutorProvider provider = FixedExecutorProvider.create(executor);
 
     List<ManagedChannel> channels = new ArrayList<>();
     List<ClientCall<Object, Object>> startedCalls = new ArrayList<>();
@@ -590,7 +596,7 @@ class ChannelPoolTest {
                 .setMaxRpcsPerChannel(2)
                 .build(),
             channelFactory,
-            executor);
+            provider);
     assertThat(pool.entries.get()).hasSize(2);
 
     // Start 2 RPCs

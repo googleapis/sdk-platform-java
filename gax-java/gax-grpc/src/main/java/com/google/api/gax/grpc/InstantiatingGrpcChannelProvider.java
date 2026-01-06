@@ -248,6 +248,16 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   @Override
+  public boolean needsBackgroundExecutor() {
+    return backgroundExecutor == null;
+  }
+
+  @Override
+  public TransportChannelProvider withBackgroundExecutor(ScheduledExecutorService executor) {
+    return toBuilder().setBackgroundExecutor(executor).build();
+  }
+
+  @Override
   public boolean needsHeaders() {
     return headerProvider == null;
   }
@@ -964,10 +974,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     /**
      * Sets the background executor for this TransportChannelProvider. The life cycle of the
      * executor should be managed by the caller.
-     *
-     * <p>This is optional. The background executor is used for channel refresh and channel resize
-     * on {@link ChannelPool}. This allows us to reuse the same executor for other long running
-     * operations.
      */
     public Builder setBackgroundExecutor(ScheduledExecutorService executor) {
       this.backgroundExecutor = executor;

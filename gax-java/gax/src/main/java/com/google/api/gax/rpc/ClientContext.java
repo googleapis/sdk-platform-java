@@ -211,7 +211,10 @@ public abstract class ClientContext {
     if (transportChannelProvider.needsExecutor() && settings.getExecutorProvider() != null) {
       transportChannelProvider = transportChannelProvider.withExecutor(backgroundExecutor);
     }
-
+    if (transportChannelProvider.needsBackgroundExecutor()) {
+      transportChannelProvider =
+          transportChannelProvider.withBackgroundExecutor(backgroundExecutor);
+    }
     Map<String, String> headers = getHeaders(settings, credentials);
     if (transportChannelProvider.needsHeaders()) {
       transportChannelProvider = transportChannelProvider.withHeaders(headers);
