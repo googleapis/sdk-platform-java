@@ -230,7 +230,7 @@ class ChannelPool extends ManagedChannel {
     for (Entry entry : localEntries) {
       entry.channel.shutdownNow();
     }
-    
+
     if (backgroundExecutorProvider.shouldAutoClose()) {
       backgroundExecutorProvider.getExecutor().shutdownNow();
     }
