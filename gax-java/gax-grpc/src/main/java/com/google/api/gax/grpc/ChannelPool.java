@@ -171,16 +171,16 @@ class ChannelPool extends ManagedChannel {
   public ManagedChannel shutdown() {
     LOG.fine("Initiating graceful shutdown due to explicit request");
 
+    if (resizeFuture != null) {
+      resizeFuture.cancel(true);
+    }
+    if (refreshFuture != null) {
+      refreshFuture.cancel(true);
+    }
+
     List<Entry> localEntries = entries.get();
     for (Entry entry : localEntries) {
       entry.channel.shutdown();
-    }
-
-    if (resizeFuture != null) {
-      resizeFuture.cancel(false);
-    }
-    if (refreshFuture != null) {
-      refreshFuture.cancel(false);
     }
 
     if (backgroundExecutorProvider.shouldAutoClose()) {
@@ -219,11 +219,6 @@ class ChannelPool extends ManagedChannel {
   public ManagedChannel shutdownNow() {
     LOG.fine("Initiating immediate shutdown due to explicit request");
 
-    List<Entry> localEntries = entries.get();
-    for (Entry entry : localEntries) {
-      entry.channel.shutdownNow();
-    }
-
     if (resizeFuture != null) {
       resizeFuture.cancel(true);
     }
@@ -231,6 +226,11 @@ class ChannelPool extends ManagedChannel {
       refreshFuture.cancel(true);
     }
 
+    List<Entry> localEntries = entries.get();
+    for (Entry entry : localEntries) {
+      entry.channel.shutdownNow();
+    }
+    
     if (backgroundExecutorProvider.shouldAutoClose()) {
       backgroundExecutorProvider.getExecutor().shutdownNow();
     }
