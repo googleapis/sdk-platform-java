@@ -27,6 +27,7 @@ from library_generation.tests.owlbot import util
 TEST_OWLBOT = Path(__file__).parent.parent / "resources" / "test-owlbot"
 FIXTURES = Path(__file__).parent.parent / "resources" / "test-owlbot" / "fixtures"
 TEMPLATES_PATH = Path(__file__).parent.parent.parent / "owlbot" / "templates"
+CURRENT_YEAR_OVERRIDE = "2025"
 
 SAMPLE_METADATA = """
 <metadata>
@@ -172,6 +173,7 @@ class JavaUnitTests(unittest.TestCase):
             )
             os.chdir(cwd)
 
+    @mock.patch.dict(os.environ, {"CURRENT_YEAR_OVERRIDE": CURRENT_YEAR_OVERRIDE})
     def test_fix_proto_license(self):
         with tempfile.TemporaryDirectory() as tempdir:
             cwd = os.getcwd()
@@ -188,6 +190,7 @@ class JavaUnitTests(unittest.TestCase):
             )
             os.chdir(cwd)
 
+    @mock.patch.dict(os.environ, {"CURRENT_YEAR_OVERRIDE": CURRENT_YEAR_OVERRIDE})
     def test_fix_proto_license_idempotent(self):
         with tempfile.TemporaryDirectory() as tempdir:
             cwd = os.getcwd()
@@ -206,6 +209,7 @@ class JavaUnitTests(unittest.TestCase):
             )
             os.chdir(cwd)
 
+    @mock.patch.dict(os.environ, {"CURRENT_YEAR_OVERRIDE": CURRENT_YEAR_OVERRIDE})
     def test_fix_grpc_license(self):
         with tempfile.TemporaryDirectory() as tempdir:
             cwd = os.getcwd()
@@ -222,6 +226,7 @@ class JavaUnitTests(unittest.TestCase):
             )
             os.chdir(cwd)
 
+    @mock.patch.dict(os.environ, {"CURRENT_YEAR_OVERRIDE": CURRENT_YEAR_OVERRIDE})
     def test_fix_grpc_license_idempotent(self):
         with tempfile.TemporaryDirectory() as tempdir:
             cwd = os.getcwd()

@@ -24,6 +24,15 @@ com_google_api_gax_java_repositories()
 
 _googleapis_commit = "7438480b2a1bc6371d748e974f7a3647f90c4e8d"
 
+# This is required for local testing on macOS. There is known incompatibility between old zlib and the latest macOS (Sequoia 15.7.3 as of writing)
+http_archive(
+    name = "zlib",
+    build_file = "@com_google_protobuf//:third_party/zlib.BUILD",
+    sha256 = "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23",
+    strip_prefix = "zlib-1.3.1",
+    urls = ["https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.gz"],
+)
+
 http_archive(
     name = "com_google_googleapis",
     strip_prefix = "googleapis-%s" % _googleapis_commit,
