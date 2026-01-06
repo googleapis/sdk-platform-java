@@ -648,8 +648,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
                 Level.WARNING,
                 "Cannot establish an mTLS connection to S2A due to error creating MTLS to MDS TlsChannelCredentials credentials, falling back to plaintext connection to S2A: "
                     + ignore.getMessage());
-            s2aChannelCredentialsObject =
-                createPlaintextToS2AChannelCredentials(plaintextAddress);
+            s2aChannelCredentialsObject = createPlaintextToS2AChannelCredentials(plaintextAddress);
             return s2aChannelCredentialsObject;
           }
           s2aChannelCredentialsObject =
