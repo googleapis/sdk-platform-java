@@ -165,6 +165,19 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   // channels to S2A.
   private static volatile ChannelCredentials s2aChannelCredentialsObject;
 
+  /**
+   * Resets the s2aChannelCredentialsObject of the {@link InstantiatingGrpcChannelProvider} class
+   * for testing purposes.
+   *
+   * <p>This should only be called from tests.
+   */
+  @VisibleForTesting
+  public static void resetS2AChannelCredentialsObjectForTests() {
+    synchronized (InstantiatingGrpcChannelProvider.class) {
+      s2aChannelCredentialsObject = null;
+    }
+  }
+
   /*
    * Experimental feature
    *
@@ -601,7 +614,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   ChannelCredentials createS2ASecuredChannelCredentials() {
     if (s2aChannelCredentialsObject == null) {
       // s2aChannelCredentialsObject is initialized once and shared by all instances of the class.
-      // To prevent a race on intialization, the object initilization is synchronizaed on the class
+      // To prevent a race on initialization, the object initialization is synchronized on the class
       // object.
       synchronized (InstantiatingGrpcChannelProvider.class) {
         if (s2aChannelCredentialsObject != null) {
