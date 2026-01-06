@@ -30,6 +30,7 @@
 package com.google.api.gax.grpc;
 
 import com.google.api.core.InternalApi;
+import com.google.api.gax.core.FixedExecutorProvider;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -73,8 +74,7 @@ class ChannelPool extends ManagedChannel {
 
   private final ChannelPoolSettings settings;
   private final ChannelFactory channelFactory;
-  private final ScheduledExecutorService backgroundExecutor;
-  private final boolean shouldShutdownExecutor;
+  private final FixedExecutorProvider backgroundExecutorProvider;
 
   private ScheduledFuture<?> refreshFuture = null;
   private ScheduledFuture<?> resizeFuture = null;
@@ -117,29 +117,30 @@ class ChannelPool extends ManagedChannel {
     entries.set(initialListBuilder.build());
     authority = entries.get().get(0).channel.authority();
 
-    if (executor == null) {
-      this.backgroundExecutor = Executors.newSingleThreadScheduledExecutor();
-      this.shouldShutdownExecutor = true;
-    } else {
-      this.backgroundExecutor = executor;
-      this.shouldShutdownExecutor = false;
-    }
+    this.backgroundExecutorProvider =
+        executor == null
+            ? FixedExecutorProvider.create(Executors.newSingleThreadScheduledExecutor(), true)
+            : FixedExecutorProvider.create(executor, false);
 
     if (!settings.isStaticSize()) {
       resizeFuture =
-          backgroundExecutor.scheduleAtFixedRate(
-              this::resizeSafely,
-              ChannelPoolSettings.RESIZE_INTERVAL.getSeconds(),
-              ChannelPoolSettings.RESIZE_INTERVAL.getSeconds(),
-              TimeUnit.SECONDS);
+          backgroundExecutorProvider
+              .getExecutor()
+              .scheduleAtFixedRate(
+                  this::resizeSafely,
+                  ChannelPoolSettings.RESIZE_INTERVAL.getSeconds(),
+                  ChannelPoolSettings.RESIZE_INTERVAL.getSeconds(),
+                  TimeUnit.SECONDS);
     }
     if (settings.isPreemptiveRefreshEnabled()) {
       refreshFuture =
-          backgroundExecutor.scheduleAtFixedRate(
-              this::refreshSafely,
-              REFRESH_PERIOD.getSeconds(),
-              REFRESH_PERIOD.getSeconds(),
-              TimeUnit.SECONDS);
+          backgroundExecutorProvider
+              .getExecutor()
+              .scheduleAtFixedRate(
+                  this::refreshSafely,
+                  REFRESH_PERIOD.getSeconds(),
+                  REFRESH_PERIOD.getSeconds(),
+                  TimeUnit.SECONDS);
     }
   }
 
@@ -174,17 +175,18 @@ class ChannelPool extends ManagedChannel {
     for (Entry entry : localEntries) {
       entry.channel.shutdown();
     }
-    if (shouldShutdownExecutor) {
-      // shutdownNow will cancel scheduled tasks
-      backgroundExecutor.shutdownNow();
-    } else {
-      if (resizeFuture != null) {
-        resizeFuture.cancel(false);
-      }
-      if (refreshFuture != null) {
-        refreshFuture.cancel(false);
-      }
+
+    if (resizeFuture != null) {
+      resizeFuture.cancel(false);
     }
+    if (refreshFuture != null) {
+      refreshFuture.cancel(false);
+    }
+
+    if (backgroundExecutorProvider.shouldAutoClose()) {
+      backgroundExecutorProvider.getExecutor().shutdown();
+    }
+
     return this;
   }
 
@@ -197,7 +199,7 @@ class ChannelPool extends ManagedChannel {
         return false;
       }
     }
-    return !shouldShutdownExecutor || backgroundExecutor.isShutdown();
+    return true;
   }
 
   /** {@inheritDoc} */
@@ -209,8 +211,7 @@ class ChannelPool extends ManagedChannel {
         return false;
       }
     }
-
-    return !shouldShutdownExecutor || backgroundExecutor.isTerminated();
+    return true;
   }
 
   /** {@inheritDoc} */
@@ -222,15 +223,16 @@ class ChannelPool extends ManagedChannel {
     for (Entry entry : localEntries) {
       entry.channel.shutdownNow();
     }
-    if (shouldShutdownExecutor) {
-      backgroundExecutor.shutdownNow();
-    } else {
-      if (resizeFuture != null) {
-        resizeFuture.cancel(true);
-      }
-      if (refreshFuture != null) {
-        refreshFuture.cancel(true);
-      }
+
+    if (resizeFuture != null) {
+      resizeFuture.cancel(true);
+    }
+    if (refreshFuture != null) {
+      refreshFuture.cancel(true);
+    }
+
+    if (backgroundExecutorProvider.shouldAutoClose()) {
+      backgroundExecutorProvider.getExecutor().shutdownNow();
     }
     return this;
   }
@@ -246,10 +248,6 @@ class ChannelPool extends ManagedChannel {
         break;
       }
       entry.channel.awaitTermination(awaitTimeNanos, TimeUnit.NANOSECONDS);
-    }
-    if (shouldShutdownExecutor) {
-      long awaitTimeNanos = endTimeNanos - System.nanoTime();
-      backgroundExecutor.awaitTermination(awaitTimeNanos, TimeUnit.NANOSECONDS);
     }
     return isTerminated();
   }
