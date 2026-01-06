@@ -854,7 +854,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   /** Gets the background executor for channel refresh and resize. */
-  public ScheduledExecutorService getBackgroundExecutor() {
+  ScheduledExecutorService getBackgroundExecutor() {
     return backgroundExecutor;
   }
 
