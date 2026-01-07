@@ -928,22 +928,27 @@ class ITOtelMetrics {
   void testMetricsFeatureFlag() throws Exception {
     // Test metrics disabled
     System.setProperty("GOOGLE_CLOUD_ENABLE_METRICS", "false");
-    MetricsTracerFactory factory = new MetricsTracerFactory(null);
-    ApiTracer tracer =
-        factory.newTracer(
-            BaseApiTracer.getInstance(),
-            SpanName.of("EchoClient", "Echo"),
-            ApiTracerFactory.OperationType.Unary);
-    assertThat(tracer).isNotInstanceOf(MetricsTracer.class);
-    assertThat(tracer).isSameInstanceAs(BaseApiTracer.getInstance());
 
-    // Test metrics enabled
-    System.setProperty("GOOGLE_CLOUD_ENABLE_METRICS", "true");
-    tracer =
-        factory.newTracer(
-            BaseApiTracer.getInstance(),
-            SpanName.of("EchoClient", "Echo"),
-            ApiTracerFactory.OperationType.Unary);
-    assertThat(tracer).isInstanceOf(MetricsTracer.class);
+    try (InMemoryMetricReader reader = InMemoryMetricReader.create()) {
+
+      OpenTelemetryMetricsRecorder recorder = createOtelMetricsRecorder(reader);
+      MetricsTracerFactory factory = new MetricsTracerFactory(recorder);
+      ApiTracer tracer =
+          factory.newTracer(
+              BaseApiTracer.getInstance(),
+              SpanName.of("EchoClient", "Echo"),
+              ApiTracerFactory.OperationType.Unary);
+      assertThat(tracer).isNotInstanceOf(MetricsTracer.class);
+      assertThat(tracer).isSameInstanceAs(BaseApiTracer.getInstance());
+
+      // Test metrics enabled
+      System.setProperty("GOOGLE_CLOUD_ENABLE_METRICS", "true");
+      tracer =
+          factory.newTracer(
+              BaseApiTracer.getInstance(),
+              SpanName.of("EchoClient", "Echo"),
+              ApiTracerFactory.OperationType.Unary);
+      assertThat(tracer).isInstanceOf(MetricsTracer.class);
+    }
   }
 }
