@@ -36,9 +36,11 @@ import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.truth.Truth;
 import java.util.Map;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 class MetricsTracerFactoryTest {
   private static final int DEFAULT_ATTRIBUTES_COUNT = 2;
@@ -47,15 +49,26 @@ class MetricsTracerFactoryTest {
   @Mock private ApiTracer parent;
   private SpanName spanName;
   private MetricsTracerFactory metricsTracerFactory;
+  private AutoCloseable closeable;
 
   @BeforeEach
   void setUp() {
+    closeable = MockitoAnnotations.openMocks(this);
+    // Enable metrics for tests by default, as most tests expect MetricsTracer
+    System.setProperty("GOOGLE_CLOUD_ENABLE_METRICS", "true");
+
     // Create an instance of MetricsTracerFactory with the mocked MetricsRecorder
     metricsTracerFactory = new MetricsTracerFactory(metricsRecorder);
 
     spanName = mock(SpanName.class);
     when(spanName.getClientName()).thenReturn("testService");
     when(spanName.getMethodName()).thenReturn("testMethod");
+  }
+
+  @AfterEach
+  void tearDown() throws Exception {
+    System.clearProperty("GOOGLE_CLOUD_ENABLE_METRICS");
+    closeable.close();
   }
 
   @Test
@@ -66,6 +79,14 @@ class MetricsTracerFactoryTest {
     // Assert that the apiTracer created has expected type and not null
     Truth.assertThat(apiTracer).isNotNull();
     Truth.assertThat(apiTracer).isInstanceOf(MetricsTracer.class);
+  }
+
+  @Test
+  void testNewTracer_disabledMetrics_returnsBaseApiTracer() {
+    System.setProperty("GOOGLE_CLOUD_ENABLE_METRICS", "false");
+    ApiTracer apiTracer = metricsTracerFactory.newTracer(parent, spanName, OperationType.Unary);
+
+    Truth.assertThat(apiTracer).isSameInstanceAs(BaseApiTracer.getInstance());
   }
 
   @Test

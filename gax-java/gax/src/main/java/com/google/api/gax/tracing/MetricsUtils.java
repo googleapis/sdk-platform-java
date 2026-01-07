@@ -27,52 +27,33 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package com.google.api.gax.tracing;
 
-import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
-import com.google.common.collect.ImmutableMap;
-import java.util.Map;
+import com.google.common.annotations.VisibleForTesting;
 
-/**
- * A {@link ApiTracerFactory} to build instances of {@link MetricsTracer}.
- *
- * <p>This class wraps the {@link MetricsRecorder} and pass it to {@link MetricsTracer}. It will be
- * used to record metrics in {@link MetricsTracer}.
- *
- * <p>This class is expected to be initialized once during client initialization.
- */
-@BetaApi
+/** Internal utility class to manage metrics configuration. */
 @InternalApi
-public class MetricsTracerFactory implements ApiTracerFactory {
-  protected MetricsRecorder metricsRecorder;
+public class MetricsUtils {
+  static final String GOOGLE_CLOUD_ENABLE_METRICS = "GOOGLE_CLOUD_ENABLE_METRICS";
 
-  /** Mapping of client attributes that are set for every MetricsTracer */
-  private final Map<String, String> attributes;
-
-  /** Creates a MetricsTracerFactory with no additional client level attributes. */
-  public MetricsTracerFactory(MetricsRecorder metricsRecorder) {
-    this(metricsRecorder, ImmutableMap.of());
-  }
+  private MetricsUtils() {}
 
   /**
-   * Pass in a Map of client level attributes which will be added to every single MetricsTracer
-   * created from the ApiTracerFactory.
+   * Returns true if metrics are enabled via the GOOGLE_CLOUD_ENABLE_METRICS environment variable or
+   * system property.
    */
-  public MetricsTracerFactory(MetricsRecorder metricsRecorder, Map<String, String> attributes) {
-    this.metricsRecorder = metricsRecorder;
-    this.attributes = ImmutableMap.copyOf(attributes);
+  public static boolean isMetricsEnabled() {
+    String enableMetrics = System.getProperty(GOOGLE_CLOUD_ENABLE_METRICS);
+    if (enableMetrics == null) {
+      enableMetrics = System.getenv(GOOGLE_CLOUD_ENABLE_METRICS);
+    }
+    return isMetricsEnabled(enableMetrics);
   }
 
-  @Override
-  public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
-    if (!MetricsUtils.isMetricsEnabled()) {
-      return BaseApiTracer.getInstance();
-    }
-    MetricsTracer metricsTracer =
-        new MetricsTracer(
-            MethodName.of(spanName.getClientName(), spanName.getMethodName()), metricsRecorder);
-    attributes.forEach(metricsTracer::addAttributes);
-    return metricsTracer;
+  @VisibleForTesting
+  static boolean isMetricsEnabled(String envValue) {
+    return "true".equalsIgnoreCase(envValue);
   }
 }
