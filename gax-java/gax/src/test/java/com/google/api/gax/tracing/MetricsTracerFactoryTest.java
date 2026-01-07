@@ -39,9 +39,13 @@ import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
+@ExtendWith(MockitoExtension.class)
 class MetricsTracerFactoryTest {
   private static final int DEFAULT_ATTRIBUTES_COUNT = 2;
 
@@ -49,11 +53,9 @@ class MetricsTracerFactoryTest {
   @Mock private ApiTracer parent;
   private SpanName spanName;
   private MetricsTracerFactory metricsTracerFactory;
-  private AutoCloseable closeable;
 
   @BeforeEach
   void setUp() {
-    closeable = MockitoAnnotations.openMocks(this);
     // Enable metrics for tests by default, as most tests expect MetricsTracer
     System.setProperty("GOOGLE_CLOUD_ENABLE_METRICS", "true");
 
@@ -66,9 +68,8 @@ class MetricsTracerFactoryTest {
   }
 
   @AfterEach
-  void tearDown() throws Exception {
+  void tearDown() {
     System.clearProperty("GOOGLE_CLOUD_ENABLE_METRICS");
-    closeable.close();
   }
 
   @Test
@@ -81,7 +82,12 @@ class MetricsTracerFactoryTest {
     Truth.assertThat(apiTracer).isInstanceOf(MetricsTracer.class);
   }
 
+  /**
+   * The LENIENT strictness flag avoids unnecessary mocks (from setUp() method) from being called
+   * out in this test. This test renders them unecessary because metrics are disabled here.
+   */
   @Test
+  @MockitoSettings(strictness = Strictness.LENIENT)
   void testNewTracer_disabledMetrics_returnsBaseApiTracer() {
     System.setProperty("GOOGLE_CLOUD_ENABLE_METRICS", "false");
     ApiTracer apiTracer = metricsTracerFactory.newTracer(parent, spanName, OperationType.Unary);
