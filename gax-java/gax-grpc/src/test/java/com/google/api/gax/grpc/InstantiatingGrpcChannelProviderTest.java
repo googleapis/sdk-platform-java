@@ -1155,7 +1155,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setS2AConfigProvider(s2aConfigProvider)
             .build();
     assertThat(provider.createS2ASecuredChannelCredentials()).isNull();
-    InstantiatingGrpcChannelProvider.resetS2AChannelCredentialsObjectForTests();
+    InstantiatingGrpcChannelProvider.resetS2AChannelCredentials();
   }
 
   @Test
@@ -1176,7 +1176,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         .contains(
             "Cannot establish an mTLS connection to S2A because autoconfig endpoint did not return a mtls address to reach S2A.");
     InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
-    InstantiatingGrpcChannelProvider.resetS2AChannelCredentialsObjectForTests();
+    InstantiatingGrpcChannelProvider.resetS2AChannelCredentials();
   }
 
   @Test
@@ -1199,7 +1199,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         .contains(
             "Cannot establish an mTLS connection to S2A because MTLS to MDS credentials do not exist on filesystem, falling back to plaintext connection to S2A");
     InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
-    InstantiatingGrpcChannelProvider.resetS2AChannelCredentialsObjectForTests();
+    InstantiatingGrpcChannelProvider.resetS2AChannelCredentials();
   }
 
   @Test

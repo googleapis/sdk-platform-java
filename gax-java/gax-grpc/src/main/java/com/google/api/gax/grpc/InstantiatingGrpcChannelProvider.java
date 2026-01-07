@@ -172,7 +172,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
    * <p>This should only be called from tests.
    */
   @VisibleForTesting
-  static void resetS2AChannelCredentialsObjectForTests() {
+  static void resetS2AChannelCredentials() {
     synchronized (InstantiatingGrpcChannelProvider.class) {
       s2aChannelCredentialsObject = null;
     }
