@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -30,6 +30,7 @@
 
 package com.google.showcase.v1beta1.it;
 
+import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -42,9 +43,7 @@ import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.rpc.UnavailableException;
-import com.google.api.gax.tracing.MetricsTracer;
-import com.google.api.gax.tracing.MetricsTracerFactory;
-import com.google.api.gax.tracing.OpenTelemetryMetricsRecorder;
+import com.google.api.gax.tracing.*;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -154,6 +153,9 @@ class ITOtelMetrics {
 
   @BeforeEach
   void setup() throws Exception {
+    // Enable metrics for these tests
+    System.setProperty("GOOGLE_CLOUD_ENABLE_METRICS", "true");
+
     inMemoryMetricReader = InMemoryMetricReader.create();
     OpenTelemetryMetricsRecorder otelMetricsRecorder =
         createOtelMetricsRecorder(inMemoryMetricReader);
@@ -167,6 +169,8 @@ class ITOtelMetrics {
 
   @AfterEach
   void cleanup() throws InterruptedException, IOException {
+    System.clearProperty("GOOGLE_CLOUD_ENABLE_METRICS");
+
     inMemoryMetricReader.close();
     inMemoryMetricReader.shutdown();
 
@@ -918,5 +922,28 @@ class ITOtelMetrics {
 
     echoClient.close();
     echoClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+  }
+
+  @Test
+  void testMetricsFeatureFlag() throws Exception {
+    // Test metrics disabled
+    System.setProperty("GOOGLE_CLOUD_ENABLE_METRICS", "false");
+    MetricsTracerFactory factory = new MetricsTracerFactory(null);
+    ApiTracer tracer =
+        factory.newTracer(
+            BaseApiTracer.getInstance(),
+            SpanName.of("EchoClient", "Echo"),
+            ApiTracerFactory.OperationType.Unary);
+    assertThat(tracer).isNotInstanceOf(MetricsTracer.class);
+    assertThat(tracer).isSameInstanceAs(BaseApiTracer.getInstance());
+
+    // Test metrics enabled
+    System.setProperty("GOOGLE_CLOUD_ENABLE_METRICS", "true");
+    tracer =
+        factory.newTracer(
+            BaseApiTracer.getInstance(),
+            SpanName.of("EchoClient", "Echo"),
+            ApiTracerFactory.OperationType.Unary);
+    assertThat(tracer).isInstanceOf(MetricsTracer.class);
   }
 }
