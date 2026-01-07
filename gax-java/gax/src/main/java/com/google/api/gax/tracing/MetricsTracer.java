@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -44,6 +44,7 @@ import java.util.Map;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Logger;
 import javax.annotation.Nullable;
 
 /**
@@ -55,6 +56,9 @@ import javax.annotation.Nullable;
 @BetaApi
 @InternalApi
 public class MetricsTracer implements ApiTracer {
+  private static final Logger LOGGER = Logger.getLogger(MetricsTracer.class.getName());
+  private static final AtomicBoolean WARNING_LOGGED = new AtomicBoolean();
+
   public static final String METHOD_ATTRIBUTE = "method";
   public static final String LANGUAGE_ATTRIBUTE = "language";
   public static final String STATUS_ATTRIBUTE = "status";
@@ -69,6 +73,14 @@ public class MetricsTracer implements ApiTracer {
   private final AtomicBoolean operationFinished;
 
   public MetricsTracer(MethodName methodName, MetricsRecorder metricsRecorder) {
+    if (!MetricsUtils.isMetricsEnabled()) {
+      if (WARNING_LOGGED.compareAndSet(false, true)) {
+        LOGGER.info(
+            "Metrics are currently disabled. To enable metrics, set the environment variable "
+                + "GOOGLE_CLOUD_ENABLE_METRICS=true or the system property "
+                + "GOOGLE_CLOUD_ENABLE_METRICS=true.");
+      }
+    }
     this.attributes.put(METHOD_ATTRIBUTE, methodName.toString());
     this.attributes.put(LANGUAGE_ATTRIBUTE, DEFAULT_LANGUAGE);
     this.metricsRecorder = metricsRecorder;
