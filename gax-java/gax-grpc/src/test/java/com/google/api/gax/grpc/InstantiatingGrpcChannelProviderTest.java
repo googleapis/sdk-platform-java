@@ -1180,6 +1180,27 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   }
 
   @Test
+  void
+      createTwoS2ASecuredChannelCredentials_mtlsS2AAddressNull_returnsSamePlaintextToS2AS2AChannelCredentials() {
+    SecureSessionAgent s2aConfigProvider = Mockito.mock(SecureSessionAgent.class);
+    SecureSessionAgentConfig config =
+        SecureSessionAgentConfig.createBuilder().setPlaintextAddress("localhost:8080").build();
+    Mockito.when(s2aConfigProvider.getConfig()).thenReturn(config);
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setS2AConfigProvider(s2aConfigProvider)
+            .build();
+    assertThat(provider.createS2ASecuredChannelCredentials()).isNotNull();
+    InstantiatingGrpcChannelProvider provider2 =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setS2AConfigProvider(s2aConfigProvider)
+            .build();
+    assertThat(provider2.createS2ASecuredChannelCredentials()).isNotNull();
+    assertEquals(provider, provider2);
+    InstantiatingGrpcChannelProvider.resetS2AChannelCredentials();
+  }
+
+  @Test
   void createS2ASecuredChannelCredentials_returnsPlaintextToS2AS2AChannelCredentials() {
     SecureSessionAgent s2aConfigProvider = Mockito.mock(SecureSessionAgent.class);
     SecureSessionAgentConfig config =
