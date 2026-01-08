@@ -178,6 +178,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
   }
 
+  @VisibleForTesting
+  static ChannelCredentials getS2AChannelCredentials() {
+    return s2aChannelCredentials;
+  }
+
   /*
    * Experimental feature
    *

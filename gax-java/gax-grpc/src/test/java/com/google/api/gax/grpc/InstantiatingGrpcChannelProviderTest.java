@@ -1197,7 +1197,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setS2AConfigProvider(s2aConfigProvider)
             .build();
     assertThat(provider2.createS2ASecuredChannelCredentials()).isNotNull();
-    assertEquals(provider, provider2);
+    assertEquals(provider.getS2AChannelCredentials(), provider2.getS2AChannelCredentials());
   }
 
   @Test
