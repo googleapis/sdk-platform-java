@@ -92,6 +92,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import io.opentelemetry.sdk.trace.SdkTracerProvider;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -161,9 +163,9 @@ class ITOtelMetrics {
   }
 
   private OpenTelemetryTracingRecorder createOtelTracingRecorder() {
-    SdkMeterProvider sdkMeterProvider = SdkMeterProvider.builder().build();
+    SdkTracerProvider sdkTracerProvider = SdkTracerProvider.builder().build();
     OpenTelemetry openTelemetry =
-        OpenTelemetrySdk.builder().setMeterProvider(sdkMeterProvider).build();
+        OpenTelemetrySdk.builder().setTracerProvider(sdkTracerProvider).build();
     return new OpenTelemetryTracingRecorder(openTelemetry, SERVICE_NAME);
   }
 
