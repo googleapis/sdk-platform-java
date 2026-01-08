@@ -1147,6 +1147,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   void createS2ASecuredChannelCredentials_bothS2AAddressesNull_returnsNull() {
+    InstantiatingGrpcChannelProvider.resetS2AChannelCredentials();
     SecureSessionAgent s2aConfigProvider = Mockito.mock(SecureSessionAgent.class);
     SecureSessionAgentConfig config = SecureSessionAgentConfig.createBuilder().build();
     Mockito.when(s2aConfigProvider.getConfig()).thenReturn(config);
@@ -1155,12 +1156,12 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setS2AConfigProvider(s2aConfigProvider)
             .build();
     assertThat(provider.createS2ASecuredChannelCredentials()).isNull();
-    InstantiatingGrpcChannelProvider.resetS2AChannelCredentials();
   }
 
   @Test
   void
       createS2ASecuredChannelCredentials_mtlsS2AAddressNull_returnsPlaintextToS2AS2AChannelCredentials() {
+    InstantiatingGrpcChannelProvider.resetS2AChannelCredentials();
     SecureSessionAgent s2aConfigProvider = Mockito.mock(SecureSessionAgent.class);
     SecureSessionAgentConfig config =
         SecureSessionAgentConfig.createBuilder().setPlaintextAddress("localhost:8080").build();
@@ -1176,12 +1177,12 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         .contains(
             "Cannot establish an mTLS connection to S2A because autoconfig endpoint did not return a mtls address to reach S2A.");
     InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
-    InstantiatingGrpcChannelProvider.resetS2AChannelCredentials();
   }
 
   @Test
   void
       createTwoS2ASecuredChannelCredentials_mtlsS2AAddressNull_returnsSamePlaintextToS2AS2AChannelCredentials() {
+    InstantiatingGrpcChannelProvider.resetS2AChannelCredentials();
     SecureSessionAgent s2aConfigProvider = Mockito.mock(SecureSessionAgent.class);
     SecureSessionAgentConfig config =
         SecureSessionAgentConfig.createBuilder().setPlaintextAddress("localhost:8080").build();
@@ -1197,11 +1198,11 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .build();
     assertThat(provider2.createS2ASecuredChannelCredentials()).isNotNull();
     assertEquals(provider, provider2);
-    InstantiatingGrpcChannelProvider.resetS2AChannelCredentials();
   }
 
   @Test
   void createS2ASecuredChannelCredentials_returnsPlaintextToS2AS2AChannelCredentials() {
+    InstantiatingGrpcChannelProvider.resetS2AChannelCredentials();
     SecureSessionAgent s2aConfigProvider = Mockito.mock(SecureSessionAgent.class);
     SecureSessionAgentConfig config =
         SecureSessionAgentConfig.createBuilder()
@@ -1220,7 +1221,6 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         .contains(
             "Cannot establish an mTLS connection to S2A because MTLS to MDS credentials do not exist on filesystem, falling back to plaintext connection to S2A");
     InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
-    InstantiatingGrpcChannelProvider.resetS2AChannelCredentials();
   }
 
   @Test
