@@ -35,6 +35,11 @@ import com.google.api.core.InternalApi;
 
 /**
  * A {@link ApiTracerFactory} to build instances of {@link TracingTracer}.
+ *
+ * <p>This class wraps the {@link TracingRecorder} and pass it to {@link TracingTracer}. It will be
+ * used to record traces in {@link TracingTracer}.
+ *
+ * <p>This class is expected to be initialized once during client initialization.
  */
 @BetaApi
 @InternalApi

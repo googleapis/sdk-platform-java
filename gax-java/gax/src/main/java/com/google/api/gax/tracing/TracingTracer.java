@@ -34,7 +34,9 @@ import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 
 /**
- * This class computes generic traces that can be observed in the lifecycle of an RPC operation.
+ * This class computes generic traces that can be observed in the lifecycle of an RPC operation. The
+ * responsibility of recording traces should delegate to {@link TracingRecorder}, hence this class
+ * should not have any knowledge about the observability framework used for tracing recording.
  */
 @BetaApi
 @InternalApi

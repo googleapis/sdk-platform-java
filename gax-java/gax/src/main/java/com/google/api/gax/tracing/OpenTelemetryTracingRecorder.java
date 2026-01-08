@@ -35,7 +35,8 @@ import com.google.api.core.InternalApi;
 import io.opentelemetry.api.OpenTelemetry;
 
 /**
- * OpenTelemetry implementation of recording traces.
+ * OpenTelemetry implementation of recording traces. This implementation collections the
+ * measurements related to the lifecyle of an RPC.
  */
 @BetaApi
 @InternalApi
@@ -43,6 +44,12 @@ public class OpenTelemetryTracingRecorder implements TracingRecorder {
   private final OpenTelemetry openTelemetry;
   private final String serviceName;
 
+  /**
+   * Creates a new instance of OpenTelemetryTracingRecorder.
+   *
+   * @param openTelemetry OpenTelemetry instance
+   * @param serviceName Service Name
+   */
   public OpenTelemetryTracingRecorder(OpenTelemetry openTelemetry, String serviceName) {
     this.openTelemetry = openTelemetry;
     this.serviceName = serviceName;
