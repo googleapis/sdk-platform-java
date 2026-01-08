@@ -35,7 +35,7 @@ import com.google.api.core.InternalApi;
 import io.opentelemetry.api.OpenTelemetry;
 
 /**
- * OpenTelemetry implementation of recording traces. This implementation collections the
+ * OpenTelemetry implementation of recording traces. This implementation collects the
  * measurements related to the lifecyle of an RPC.
  */
 @BetaApi
