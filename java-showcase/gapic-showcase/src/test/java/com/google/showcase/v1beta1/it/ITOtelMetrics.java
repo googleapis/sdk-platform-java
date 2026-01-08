@@ -144,14 +144,16 @@ class ITOtelMetrics {
   private OpenTelemetryMetricsRecorder createOtelMetricsRecorder(
       InMemoryMetricReader inMemoryMetricReader) {
     SdkMeterProvider sdkMeterProvider =
-            SdkMeterProvider.builder().registerMetricReader(inMemoryMetricReader).build();
-    OpenTelemetry openTelemetry = OpenTelemetrySdk.builder().setMeterProvider(sdkMeterProvider).build();
+        SdkMeterProvider.builder().registerMetricReader(inMemoryMetricReader).build();
+    OpenTelemetry openTelemetry =
+        OpenTelemetrySdk.builder().setMeterProvider(sdkMeterProvider).build();
     return new OpenTelemetryMetricsRecorder(openTelemetry, SERVICE_NAME);
   }
 
   private OpenTelemetryTracingRecorder createOtelTracingRecorder() {
     SdkMeterProvider sdkMeterProvider = SdkMeterProvider.builder().build();
-    OpenTelemetry openTelemetry = OpenTelemetrySdk.builder().setMeterProvider(sdkMeterProvider).build();
+    OpenTelemetry openTelemetry =
+        OpenTelemetrySdk.builder().setMeterProvider(sdkMeterProvider).build();
     return new OpenTelemetryTracingRecorder(openTelemetry, SERVICE_NAME);
   }
 
