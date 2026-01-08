@@ -144,11 +144,15 @@ class ITOtelMetrics {
   private OpenTelemetryMetricsRecorder createOtelMetricsRecorder(
       InMemoryMetricReader inMemoryMetricReader) {
     SdkMeterProvider sdkMeterProvider =
-        SdkMeterProvider.builder().registerMetricReader(inMemoryMetricReader).build();
-
-    OpenTelemetry openTelemetry =
-        OpenTelemetrySdk.builder().setMeterProvider(sdkMeterProvider).build();
+            SdkMeterProvider.builder().registerMetricReader(inMemoryMetricReader).build();
+    OpenTelemetry openTelemetry = OpenTelemetrySdk.builder().setMeterProvider(sdkMeterProvider).build();
     return new OpenTelemetryMetricsRecorder(openTelemetry, SERVICE_NAME);
+  }
+
+  private OpenTelemetryTracingRecorder createOtelTracingRecorder() {
+    SdkMeterProvider sdkMeterProvider = SdkMeterProvider.builder().build();
+    OpenTelemetry openTelemetry = OpenTelemetrySdk.builder().setMeterProvider(sdkMeterProvider).build();
+    return new OpenTelemetryTracingRecorder(openTelemetry, SERVICE_NAME);
   }
 
   @BeforeEach
@@ -925,7 +929,8 @@ class ITOtelMetrics {
   void testTracingFeatureFlag() {
     // Test tracing disabled
     System.setProperty("GOOGLE_CLOUD_ENABLE_TRACING", "false");
-    TracingTracerFactory factory = new TracingTracerFactory(null);
+    TracingRecorder recorder = createOtelTracingRecorder();
+    TracingTracerFactory factory = new TracingTracerFactory(recorder);
     ApiTracer tracer =
         factory.newTracer(
             BaseApiTracer.getInstance(),
