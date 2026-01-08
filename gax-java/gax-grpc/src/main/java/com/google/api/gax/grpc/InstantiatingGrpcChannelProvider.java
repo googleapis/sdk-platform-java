@@ -163,18 +163,18 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
   // This is initialized once for the lifetime of the application. This enables re-using
   // channels to S2A.
-  private static volatile ChannelCredentials s2aChannelCredentialsObject;
+  private static volatile ChannelCredentials s2aChannelCredentials;
 
   /**
-   * Resets the s2aChannelCredentialsObject of the {@link InstantiatingGrpcChannelProvider} class
-   * for testing purposes.
+   * Resets the s2aChannelCredentials of the {@link InstantiatingGrpcChannelProvider} class for
+   * testing purposes.
    *
    * <p>This should only be called from tests.
    */
   @VisibleForTesting
   static void resetS2AChannelCredentials() {
     synchronized (InstantiatingGrpcChannelProvider.class) {
-      s2aChannelCredentialsObject = null;
+      s2aChannelCredentials = null;
     }
   }
 
@@ -612,13 +612,13 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
    * @return {@link ChannelCredentials} configured to use S2A to create mTLS connection.
    */
   ChannelCredentials createS2ASecuredChannelCredentials() {
-    if (s2aChannelCredentialsObject == null) {
-      // s2aChannelCredentialsObject is initialized once and shared by all instances of the class.
+    if (s2aChannelCredentials == null) {
+      // s2aChannelCredentials is initialized once and shared by all instances of the class.
       // To prevent a race on initialization, the object initialization is synchronized on the class
       // object.
       synchronized (InstantiatingGrpcChannelProvider.class) {
-        if (s2aChannelCredentialsObject != null) {
-          return s2aChannelCredentialsObject;
+        if (s2aChannelCredentials != null) {
+          return s2aChannelCredentials;
         }
         SecureSessionAgentConfig config = s2aConfigProvider.getConfig();
         String plaintextAddress = config.getPlaintextAddress();
@@ -628,8 +628,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
           LOG.log(
               Level.INFO,
               "Cannot establish an mTLS connection to S2A because autoconfig endpoint did not return a mtls address to reach S2A.");
-          s2aChannelCredentialsObject = createPlaintextToS2AChannelCredentials(plaintextAddress);
-          return s2aChannelCredentialsObject;
+          s2aChannelCredentials = createPlaintextToS2AChannelCredentials(plaintextAddress);
+          return s2aChannelCredentials;
         }
         // Currently, MTLS to MDS is only available on GCE. See:
         // https://cloud.google.com/compute/docs/metadata/overview#https-mds
@@ -648,24 +648,24 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
                 Level.WARNING,
                 "Cannot establish an mTLS connection to S2A due to error creating MTLS to MDS TlsChannelCredentials credentials, falling back to plaintext connection to S2A: "
                     + ignore.getMessage());
-            s2aChannelCredentialsObject = createPlaintextToS2AChannelCredentials(plaintextAddress);
-            return s2aChannelCredentialsObject;
+            s2aChannelCredentials = createPlaintextToS2AChannelCredentials(plaintextAddress);
+            return s2aChannelCredentials;
           }
-          s2aChannelCredentialsObject =
+          s2aChannelCredentials =
               buildS2AChannelCredentials(mtlsAddress, mtlsToS2AChannelCredentials);
-          return s2aChannelCredentialsObject;
+          return s2aChannelCredentials;
         } else {
           // Fallback to plaintext-to-S2A connection if MTLS-MDS creds do not exist.
           LOG.log(
               Level.INFO,
               "Cannot establish an mTLS connection to S2A because MTLS to MDS credentials do not"
                   + " exist on filesystem, falling back to plaintext connection to S2A");
-          s2aChannelCredentialsObject = createPlaintextToS2AChannelCredentials(plaintextAddress);
-          return s2aChannelCredentialsObject;
+          s2aChannelCredentials = createPlaintextToS2AChannelCredentials(plaintextAddress);
+          return s2aChannelCredentials;
         }
       }
     }
-    return s2aChannelCredentialsObject;
+    return s2aChannelCredentials;
   }
 
   private ManagedChannel createSingleChannel() throws IOException {
