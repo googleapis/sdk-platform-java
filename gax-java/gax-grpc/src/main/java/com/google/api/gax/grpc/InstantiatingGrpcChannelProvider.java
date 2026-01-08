@@ -178,6 +178,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
   }
 
+  /**
+   * Returns the s2aChannelCredentials of the {@link InstantiatingGrpcChannelProvider} class for
+   * testing purposes.
+   *
+   * <p>This should only be called from tests.
+   */
   @VisibleForTesting
   static ChannelCredentials getS2AChannelCredentials() {
     return s2aChannelCredentials;
