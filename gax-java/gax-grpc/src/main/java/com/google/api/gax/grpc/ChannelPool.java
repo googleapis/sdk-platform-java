@@ -30,6 +30,7 @@
 package com.google.api.gax.grpc;
 
 import com.google.api.core.InternalApi;
+import com.google.api.gax.core.FixedExecutorProvider;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -48,6 +49,7 @@ import java.util.List;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -72,16 +74,27 @@ class ChannelPool extends ManagedChannel {
 
   private final ChannelPoolSettings settings;
   private final ChannelFactory channelFactory;
-  private final ScheduledExecutorService executor;
+  private final FixedExecutorProvider backgroundExecutorProvider;
+
+  private ScheduledFuture<?> refreshFuture = null;
+  private ScheduledFuture<?> resizeFuture = null;
 
   private final Object entryWriteLock = new Object();
   @VisibleForTesting final AtomicReference<ImmutableList<Entry>> entries = new AtomicReference<>();
   private final AtomicInteger indexTicker = new AtomicInteger();
   private final String authority;
 
-  static ChannelPool create(ChannelPoolSettings settings, ChannelFactory channelFactory)
+  static ChannelPool create(
+      ChannelPoolSettings settings,
+      ChannelFactory channelFactory,
+      @Nullable ScheduledExecutorService backgroundExecutor)
       throws IOException {
-    return new ChannelPool(settings, channelFactory, Executors.newSingleThreadScheduledExecutor());
+
+    FixedExecutorProvider executorProvider =
+        backgroundExecutor == null
+            ? FixedExecutorProvider.create(Executors.newSingleThreadScheduledExecutor(), true)
+            : FixedExecutorProvider.create(backgroundExecutor, false);
+    return new ChannelPool(settings, channelFactory, executorProvider);
   }
 
   /**
@@ -89,16 +102,17 @@ class ChannelPool extends ManagedChannel {
    *
    * @param settings options for controling the ChannelPool sizing behavior
    * @param channelFactory method to create the channels
-   * @param executor periodically refreshes the channels
+   * @param executorProvider provides the executor that periodically refreshes the channels
    */
   @VisibleForTesting
   ChannelPool(
       ChannelPoolSettings settings,
       ChannelFactory channelFactory,
-      ScheduledExecutorService executor)
+      FixedExecutorProvider executorProvider)
       throws IOException {
     this.settings = settings;
     this.channelFactory = channelFactory;
+    this.backgroundExecutorProvider = executorProvider;
 
     ImmutableList.Builder<Entry> initialListBuilder = ImmutableList.builder();
 
@@ -108,21 +122,26 @@ class ChannelPool extends ManagedChannel {
 
     entries.set(initialListBuilder.build());
     authority = entries.get().get(0).channel.authority();
-    this.executor = executor;
 
     if (!settings.isStaticSize()) {
-      executor.scheduleAtFixedRate(
-          this::resizeSafely,
-          ChannelPoolSettings.RESIZE_INTERVAL.getSeconds(),
-          ChannelPoolSettings.RESIZE_INTERVAL.getSeconds(),
-          TimeUnit.SECONDS);
+      resizeFuture =
+          backgroundExecutorProvider
+              .getExecutor()
+              .scheduleAtFixedRate(
+                  this::resizeSafely,
+                  ChannelPoolSettings.RESIZE_INTERVAL.getSeconds(),
+                  ChannelPoolSettings.RESIZE_INTERVAL.getSeconds(),
+                  TimeUnit.SECONDS);
     }
     if (settings.isPreemptiveRefreshEnabled()) {
-      executor.scheduleAtFixedRate(
-          this::refreshSafely,
-          REFRESH_PERIOD.getSeconds(),
-          REFRESH_PERIOD.getSeconds(),
-          TimeUnit.SECONDS);
+      refreshFuture =
+          backgroundExecutorProvider
+              .getExecutor()
+              .scheduleAtFixedRate(
+                  this::refreshSafely,
+                  REFRESH_PERIOD.getSeconds(),
+                  REFRESH_PERIOD.getSeconds(),
+                  TimeUnit.SECONDS);
     }
   }
 
@@ -153,14 +172,25 @@ class ChannelPool extends ManagedChannel {
   public ManagedChannel shutdown() {
     LOG.fine("Initiating graceful shutdown due to explicit request");
 
+    // Resize and refresh tasks can block on channel priming. We don't need
+    // to wait for the channels to be ready since we're shutting down the
+    // pool. Allowing interrupt to speed it up.
+    if (resizeFuture != null) {
+      resizeFuture.cancel(true);
+    }
+    if (refreshFuture != null) {
+      refreshFuture.cancel(true);
+    }
+
     List<Entry> localEntries = entries.get();
     for (Entry entry : localEntries) {
       entry.channel.shutdown();
     }
-    if (executor != null) {
-      // shutdownNow will cancel scheduled tasks
-      executor.shutdownNow();
+
+    if (backgroundExecutorProvider.shouldAutoClose()) {
+      backgroundExecutorProvider.getExecutor().shutdown();
     }
+
     return this;
   }
 
@@ -173,7 +203,7 @@ class ChannelPool extends ManagedChannel {
         return false;
       }
     }
-    return executor == null || executor.isShutdown();
+    return true;
   }
 
   /** {@inheritDoc} */
@@ -185,8 +215,7 @@ class ChannelPool extends ManagedChannel {
         return false;
       }
     }
-
-    return executor == null || executor.isTerminated();
+    return true;
   }
 
   /** {@inheritDoc} */
@@ -194,12 +223,20 @@ class ChannelPool extends ManagedChannel {
   public ManagedChannel shutdownNow() {
     LOG.fine("Initiating immediate shutdown due to explicit request");
 
+    if (resizeFuture != null) {
+      resizeFuture.cancel(true);
+    }
+    if (refreshFuture != null) {
+      refreshFuture.cancel(true);
+    }
+
     List<Entry> localEntries = entries.get();
     for (Entry entry : localEntries) {
       entry.channel.shutdownNow();
     }
-    if (executor != null) {
-      executor.shutdownNow();
+
+    if (backgroundExecutorProvider.shouldAutoClose()) {
+      backgroundExecutorProvider.getExecutor().shutdownNow();
     }
     return this;
   }
@@ -215,10 +252,6 @@ class ChannelPool extends ManagedChannel {
         break;
       }
       entry.channel.awaitTermination(awaitTimeNanos, TimeUnit.NANOSECONDS);
-    }
-    if (executor != null) {
-      long awaitTimeNanos = endTimeNanos - System.nanoTime();
-      executor.awaitTermination(awaitTimeNanos, TimeUnit.NANOSECONDS);
     }
     return isTerminated();
   }

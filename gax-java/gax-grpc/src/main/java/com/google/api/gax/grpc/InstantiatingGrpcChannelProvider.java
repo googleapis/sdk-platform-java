@@ -129,6 +129,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
   private final int processorCount;
   private final Executor executor;
+  @Nullable private final ScheduledExecutorService backgroundExecutor;
   private final HeaderProvider headerProvider;
   private final boolean useS2A;
   private final String endpoint;
@@ -181,6 +182,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   private InstantiatingGrpcChannelProvider(Builder builder) {
     this.processorCount = builder.processorCount;
     this.executor = builder.executor;
+    this.backgroundExecutor = builder.backgroundExecutor;
     this.headerProvider = builder.headerProvider;
     this.useS2A = builder.useS2A;
     this.endpoint = builder.endpoint;
@@ -243,6 +245,16 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Override
   public TransportChannelProvider withExecutor(Executor executor) {
     return toBuilder().setExecutor(executor).build();
+  }
+
+  @Override
+  public boolean needsBackgroundExecutor() {
+    return backgroundExecutor == null;
+  }
+
+  @Override
+  public TransportChannelProvider withBackgroundExecutor(ScheduledExecutorService executor) {
+    return toBuilder().setBackgroundExecutor(executor).build();
   }
 
   @Override
@@ -356,7 +368,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return GrpcTransportChannel.newBuilder()
         .setManagedChannel(
             ChannelPool.create(
-                channelPoolSettings, InstantiatingGrpcChannelProvider.this::createSingleChannel))
+                channelPoolSettings,
+                InstantiatingGrpcChannelProvider.this::createSingleChannel,
+                backgroundExecutor))
         .setDirectPath(this.canUseDirectPath())
         .build();
   }
@@ -839,6 +853,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return channelPoolSettings;
   }
 
+  /** Gets the background executor for channel refresh and resize. */
+  ScheduledExecutorService getBackgroundExecutor() {
+    return backgroundExecutor;
+  }
+
   @Override
   public boolean shouldAutoClose() {
     return true;
@@ -855,6 +874,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   public static final class Builder {
     @Deprecated private int processorCount;
     private Executor executor;
+    private ScheduledExecutorService backgroundExecutor;
     private HeaderProvider headerProvider;
     private String endpoint;
     private String mtlsEndpoint;
@@ -891,6 +911,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     private Builder(InstantiatingGrpcChannelProvider provider) {
       this.processorCount = provider.processorCount;
       this.executor = provider.executor;
+      this.backgroundExecutor = provider.backgroundExecutor;
       this.headerProvider = provider.headerProvider;
       this.endpoint = provider.endpoint;
       this.useS2A = provider.useS2A;
@@ -948,6 +969,15 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @Deprecated
     public Builder setExecutorProvider(ExecutorProvider executorProvider) {
       return setExecutor((Executor) executorProvider.getExecutor());
+    }
+
+    /**
+     * Sets the background executor for this TransportChannelProvider. The life cycle of the
+     * executor should be managed by the caller.
+     */
+    public Builder setBackgroundExecutor(ScheduledExecutorService executor) {
+      this.backgroundExecutor = executor;
+      return this;
     }
 
     /**

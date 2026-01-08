@@ -209,9 +209,13 @@ public abstract class ClientContext {
     // executor can only be set from TransportChannelProvider#withExecutor directly, and a provider
     // will have a default executor if it needs one.
     if (transportChannelProvider.needsExecutor() && settings.getExecutorProvider() != null) {
-      transportChannelProvider = transportChannelProvider.withExecutor(backgroundExecutor);
+      transportChannelProvider =
+          transportChannelProvider.withExecutor(settings.getExecutorProvider().getExecutor());
     }
-
+    if (transportChannelProvider.needsBackgroundExecutor()) {
+      transportChannelProvider =
+          transportChannelProvider.withBackgroundExecutor(backgroundExecutor);
+    }
     Map<String, String> headers = getHeaders(settings, credentials);
     if (transportChannelProvider.needsHeaders()) {
       transportChannelProvider = transportChannelProvider.withHeaders(headers);

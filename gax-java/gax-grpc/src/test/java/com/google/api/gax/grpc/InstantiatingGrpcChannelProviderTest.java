@@ -1272,6 +1272,23 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     Truth.assertThat(providerBuilder.isMtlsS2AHardBoundTokensEnabled()).isTrue();
   }
 
+  @Test
+  void testDefaultBuilderNeedsBackgroundExecutor() {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().build();
+
+    assertThat(provider.needsBackgroundExecutor()).isTrue();
+  }
+
+  @Test
+  void testSettingBackgroundExecutor() {
+    ScheduledExecutorService mockExecutor = Mockito.mock(ScheduledExecutorService.class);
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().setBackgroundExecutor(mockExecutor).build();
+
+    assertThat(provider.getBackgroundExecutor()).isEqualTo(mockExecutor);
+  }
+
   private static class FakeLogHandler extends Handler {
 
     List<LogRecord> records = new ArrayList<>();
