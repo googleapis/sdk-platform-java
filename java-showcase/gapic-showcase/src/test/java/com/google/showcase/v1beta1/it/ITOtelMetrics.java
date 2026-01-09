@@ -45,7 +45,6 @@ import com.google.api.gax.rpc.UnavailableException;
 import com.google.api.gax.tracing.MetricsTracer;
 import com.google.api.gax.tracing.MetricsTracerFactory;
 import com.google.api.gax.tracing.OpenTelemetryMetricsRecorder;
-import com.google.api.gax.tracing.OpenTelemetryTracingRecorder;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -85,7 +84,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import io.opentelemetry.sdk.trace.SdkTracerProvider;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -152,13 +150,6 @@ class ITOtelMetrics {
     OpenTelemetry openTelemetry =
         OpenTelemetrySdk.builder().setMeterProvider(sdkMeterProvider).build();
     return new OpenTelemetryMetricsRecorder(openTelemetry, SERVICE_NAME);
-  }
-
-  private OpenTelemetryTracingRecorder createOtelTracingRecorder() {
-    SdkTracerProvider sdkTracerProvider = SdkTracerProvider.builder().build();
-    OpenTelemetry openTelemetry =
-        OpenTelemetrySdk.builder().setTracerProvider(sdkTracerProvider).build();
-    return new OpenTelemetryTracingRecorder(openTelemetry, SERVICE_NAME);
   }
 
   @BeforeEach

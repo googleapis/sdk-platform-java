@@ -32,7 +32,11 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
+import com.google.api.gax.core.GaxProperties;
 import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
+import java.util.Map;
 
 /**
  * OpenTelemetry implementation of recording traces. This implementation collects the measurements
@@ -41,7 +45,8 @@ import io.opentelemetry.api.OpenTelemetry;
 @BetaApi
 @InternalApi
 public class OpenTelemetryTracingRecorder implements TracingRecorder {
-  private final OpenTelemetry openTelemetry;
+  public static final String GAX_TRACER_NAME = "gax-java";
+  private final Tracer tracer;
   private final String serviceName;
 
   /**
@@ -51,7 +56,20 @@ public class OpenTelemetryTracingRecorder implements TracingRecorder {
    * @param serviceName Service Name
    */
   public OpenTelemetryTracingRecorder(OpenTelemetry openTelemetry, String serviceName) {
-    this.openTelemetry = openTelemetry;
+    this.tracer =
+        openTelemetry
+            .tracerBuilder(GAX_TRACER_NAME)
+            .setInstrumentationVersion(GaxProperties.getGaxVersion())
+            .build();
     this.serviceName = serviceName;
+  }
+
+  @Override
+  public void recordLowLevelNetworkSpan(Map<String, String> attributes) {
+    Span span = tracer.spanBuilder(serviceName + "/low-level-network-span").startSpan();
+    if (attributes != null) {
+      attributes.forEach(span::setAttribute);
+    }
+    span.end();
   }
 }
