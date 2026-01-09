@@ -38,7 +38,7 @@ org.apache.httpcomponents:httpclient,httpcomponents.httpclient=4.5.14
 org.apache.httpcomponents:httpcore,httpcomponents.httpcore=4.4.16
 org.apache.httpcomponents.client5:httpclient5,apache-httpclient-5=5.5.1
 org.apache.httpcomponents.core5:httpcore5,apache-httpcore-5=5.3.6
-org.json:json,json=20250517
+org.json:json,json=20251224
 io.perfmark:perfmark-api,perfmark-api=0.27.0
 # Note: This is the google opentelemetry exporter and not the general opentelemetry project
 com.google.cloud.opentelemetry:exporter-metrics,google.cloud.opentelemetry=0.36.0
