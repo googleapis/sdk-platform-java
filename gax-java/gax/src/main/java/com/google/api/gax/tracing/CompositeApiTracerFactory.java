@@ -30,42 +30,32 @@
 
 package com.google.api.gax.tracing;
 
-import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
-import java.util.HashMap;
-import java.util.Map;
+import com.google.common.collect.ImmutableList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * This class computes generic traces that can be observed in the lifecycle of an RPC operation. The
- * responsibility of recording traces should delegate to {@link TracingRecorder}, hence this class
- * should not have any knowledge about the observability framework used for tracing recording.
+ * A composite implementation of {@link ApiTracerFactory} that creates {@link CompositeApiTracer}s.
  */
-@BetaApi
 @InternalApi
-public class TracingTracer extends BaseApiTracer {
-  private final TracingRecorder tracingRecorder;
-  private final Map<String, String> attributes = new HashMap<>();
+public class CompositeApiTracerFactory implements ApiTracerFactory {
+  private final List<ApiTracerFactory> factories;
 
-  public TracingTracer(TracingRecorder tracingRecorder) {
-    this.tracingRecorder = tracingRecorder;
+  public CompositeApiTracerFactory(List<ApiTracerFactory> factories) {
+    this.factories = ImmutableList.copyOf(factories);
+  }
+
+  public static ApiTracerFactory of(ApiTracerFactory... factories) {
+    return new CompositeApiTracerFactory(ImmutableList.copyOf(factories));
   }
 
   @Override
-  public void attemptStarted(Object request, int attemptNumber) {
-    tracingRecorder.recordLowLevelNetworkSpan(attributes);
-  }
-
-  /**
-   * Add attributes that will be attached to all spans.
-   */
-  public void addAttributes(String key, String value) {
-    attributes.put(key, value);
-  }
-
-  /**
-   * Add attributes that will be attached to all spans.
-   */
-  public void addAttributes(Map<String, String> attributes) {
-    this.attributes.putAll(attributes);
+  public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
+    List<ApiTracer> tracers =
+        factories.stream()
+            .map(f -> f.newTracer(parent, spanName, operationType))
+            .collect(Collectors.toList());
+    return new CompositeApiTracer(tracers);
   }
 }

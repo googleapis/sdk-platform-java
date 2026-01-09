@@ -30,6 +30,7 @@
 
 package com.google.showcase.v1beta1.it;
 
+import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -42,9 +43,7 @@ import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.rpc.UnavailableException;
-import com.google.api.gax.tracing.MetricsTracer;
-import com.google.api.gax.tracing.MetricsTracerFactory;
-import com.google.api.gax.tracing.OpenTelemetryMetricsRecorder;
+import com.google.api.gax.tracing.*;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -72,6 +71,10 @@ import io.opentelemetry.sdk.metrics.data.LongPointData;
 import io.opentelemetry.sdk.metrics.data.MetricData;
 import io.opentelemetry.sdk.metrics.data.PointData;
 import io.opentelemetry.sdk.testing.exporter.InMemoryMetricReader;
+import io.opentelemetry.sdk.testing.exporter.InMemorySpanExporter;
+import io.opentelemetry.sdk.trace.SdkTracerProvider;
+import io.opentelemetry.sdk.trace.data.SpanData;
+import io.opentelemetry.sdk.trace.export.SimpleSpanProcessor;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,7 +86,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -920,5 +922,56 @@ class ITOtelMetrics {
 
     echoClient.close();
     echoClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+  }
+
+  @Test
+  void testTracingFeatureFlag() throws Exception {
+    // Test tracing disabled
+    System.setProperty("GOOGLE_CLOUD_ENABLE_TRACING", "false");
+    TracingTracerFactory factory = new TracingTracerFactory(null);
+    ApiTracer tracer =
+        factory.newTracer(
+            BaseApiTracer.getInstance(),
+            SpanName.of("EchoClient", "Echo"),
+            ApiTracerFactory.OperationType.Unary);
+    assertThat(tracer).isNotInstanceOf(TracingTracer.class);
+    assertThat(tracer).isSameInstanceAs(BaseApiTracer.getInstance());
+
+    // Test tracing enabled
+    System.setProperty("GOOGLE_CLOUD_ENABLE_TRACING", "true");
+    tracer =
+        factory.newTracer(
+            BaseApiTracer.getInstance(),
+            SpanName.of("EchoClient", "Echo"),
+            ApiTracerFactory.OperationType.Unary);
+    assertThat(tracer).isInstanceOf(TracingTracer.class);
+
+    // Verify dummy network trace
+    InMemorySpanExporter spanExporter = InMemorySpanExporter.create();
+    SdkTracerProvider tracerProvider =
+        SdkTracerProvider.builder()
+            .addSpanProcessor(SimpleSpanProcessor.create(spanExporter))
+            .build();
+    OpenTelemetry openTelemetry =
+        OpenTelemetrySdk.builder().setTracerProvider(tracerProvider).build();
+
+    OpenTelemetryTracingRecorder tracingRecorder =
+        new OpenTelemetryTracingRecorder(openTelemetry, SERVICE_NAME);
+    TracingTracerFactory tracingTracerFactory = new TracingTracerFactory(tracingRecorder);
+
+    EchoClient grpcClient = TestClientInitializer.createGrpcEchoClientOpentelemetry(tracingTracerFactory);
+    try {
+      grpcClient.echo(EchoRequest.newBuilder().setContent("test").build());
+
+      List<SpanData> spans = spanExporter.getFinishedSpanItems();
+      assertThat(spans).isNotEmpty();
+      Optional<SpanData> t4Span =
+          spans.stream().filter(s -> s.getName().equals("LowLevelNetworkSpan")).findFirst();
+      assertThat(t4Span.isPresent()).isTrue();
+      assertThat(t4Span.get().getKind()).isEqualTo(io.opentelemetry.api.trace.SpanKind.CLIENT);
+    } finally {
+      grpcClient.close();
+      grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    }
   }
 }

@@ -35,6 +35,8 @@ import static com.google.common.truth.Truth.assertThat;
 import com.google.api.gax.tracing.ApiTracer;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracer;
+import com.google.api.gax.tracing.MetricsTracerFactory;
+import com.google.api.gax.tracing.OpenTelemetryMetricsRecorder;
 import com.google.api.gax.tracing.OpenTelemetryTracingRecorder;
 import com.google.api.gax.tracing.SpanName;
 import com.google.api.gax.tracing.TracingTracer;
@@ -42,12 +44,17 @@ import com.google.api.gax.tracing.TracingTracerFactory;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
+import io.opentelemetry.api.GlobalOpenTelemetry;
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.sdk.OpenTelemetrySdk;
+import io.opentelemetry.sdk.metrics.SdkMeterProvider;
+import io.opentelemetry.sdk.metrics.data.MetricData;
+import io.opentelemetry.sdk.testing.exporter.InMemoryMetricReader;
 import io.opentelemetry.sdk.testing.exporter.InMemorySpanExporter;
 import io.opentelemetry.sdk.trace.SdkTracerProvider;
 import io.opentelemetry.sdk.trace.data.SpanData;
 import io.opentelemetry.sdk.trace.export.SimpleSpanProcessor;
+import java.util.Collection;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,18 +63,31 @@ import org.junit.jupiter.api.Test;
 class ITOtelTracing {
   private static final String SERVICE_NAME = "ShowcaseTracingTest";
   private InMemorySpanExporter spanExporter;
+  private InMemoryMetricReader metricReader;
   private OpenTelemetryTracingRecorder tracingRecorder;
+  private OpenTelemetryMetricsRecorder metricsRecorder;
 
   @BeforeEach
   void setup() {
     spanExporter = InMemorySpanExporter.create();
+    metricReader = InMemoryMetricReader.create();
+
     SdkTracerProvider tracerProvider =
         SdkTracerProvider.builder()
             .addSpanProcessor(SimpleSpanProcessor.create(spanExporter))
             .build();
+
+    SdkMeterProvider meterProvider =
+        SdkMeterProvider.builder().registerMetricReader(metricReader).build();
+
     OpenTelemetry openTelemetry =
-        OpenTelemetrySdk.builder().setTracerProvider(tracerProvider).build();
+        OpenTelemetrySdk.builder()
+            .setTracerProvider(tracerProvider)
+            .setMeterProvider(meterProvider)
+            .build();
+
     tracingRecorder = new OpenTelemetryTracingRecorder(openTelemetry, SERVICE_NAME);
+    metricsRecorder = new OpenTelemetryMetricsRecorder(openTelemetry, SERVICE_NAME);
   }
 
   @AfterEach
@@ -76,33 +96,75 @@ class ITOtelTracing {
   }
 
   @Test
-  void testTracingFeatureFlag() {
+  void testTracingFeatureFlag() throws Exception {
+    // Test tracing disabled
     System.setProperty("GOOGLE_CLOUD_ENABLE_TRACING", "false");
-    TracingTracerFactory factory = new TracingTracerFactory(tracingRecorder);
-    ApiTracer tracer = factory.newTracer(BaseApiTracer.getInstance(), SpanName.of("EchoClient", "Echo"), ApiTracerFactory.OperationType.Unary);
-    assertThat(tracer).isNotInstanceOf(TracingTracer.class);
+    try (EchoClient client = TestClientInitializer.createGrpcEchoClient()) {
+      ApiTracer tracer =
+          client
+              .getSettings()
+              .getStubSettings()
+              .getTracerFactory()
+              .newTracer(
+                  BaseApiTracer.getInstance(),
+                  SpanName.of("EchoClient", "Echo"),
+                  ApiTracerFactory.OperationType.Unary);
+      assertThat(tracer).isNotInstanceOf(TracingTracer.class);
+    }
 
+    // Test tracing enabled
     System.setProperty("GOOGLE_CLOUD_ENABLE_TRACING", "true");
-    tracer = factory.newTracer(BaseApiTracer.getInstance(), SpanName.of("EchoClient", "Echo"), ApiTracerFactory.OperationType.Unary);
-    assertThat(tracer).isInstanceOf(TracingTracer.class);
+    // We need to register a global OpenTelemetry instance for auto-configuration to work
+    SdkTracerProvider tracerProvider =
+        SdkTracerProvider.builder()
+            .addSpanProcessor(SimpleSpanProcessor.create(InMemorySpanExporter.create()))
+            .build();
+    OpenTelemetrySdk.builder().setTracerProvider(tracerProvider).buildAndRegisterGlobal();
+
+    try (EchoClient client = TestClientInitializer.createGrpcEchoClient()) {
+      ApiTracer tracer =
+          client
+              .getSettings()
+              .getStubSettings()
+              .getTracerFactory()
+              .newTracer(
+                  BaseApiTracer.getInstance(),
+                  SpanName.of("EchoClient", "Echo"),
+                  ApiTracerFactory.OperationType.Unary);
+      assertThat(tracer).isInstanceOf(TracingTracer.class);
+    }
   }
 
   @Test
-  void testTracingTracer_recordsLowLevelNetworkSpan() throws Exception {
+  void testTracingAndMetrics_recordedSimultaneously() throws Exception {
     System.setProperty("GOOGLE_CLOUD_ENABLE_TRACING", "true");
-    TracingTracerFactory factory = new TracingTracerFactory(tracingRecorder);
-    try (EchoClient client = TestClientInitializer.createGrpcEchoClientOpentelemetry(factory)) {
-      client.echo(EchoRequest.newBuilder().setContent("test").build());
+
+    MetricsTracerFactory metricsFactory = new MetricsTracerFactory(metricsRecorder);
+
+    try (EchoClient client =
+        TestClientInitializer.createGrpcEchoClient()) {
+      client.echo(EchoRequest.newBuilder().setContent("tracing-test").build());
 
       List<SpanData> spans = spanExporter.getFinishedSpanItems();
       assertThat(spans).isNotEmpty();
-
-      // Verify that the low-level network span was recorded.
-      // The OpenTelemetryTracingRecorder typically names this span using the service name prefix.
       boolean foundLowLevelSpan =
           spans.stream()
               .anyMatch(span -> span.getName().equals(SERVICE_NAME + "/low-level-network-span"));
       assertThat(foundLowLevelSpan).isTrue();
+    }
+
+    spanExporter.reset();
+    try (EchoClient client =
+        TestClientInitializer.createGrpcEchoClientOpentelemetry(metricsFactory)) {
+      client.echo(EchoRequest.newBuilder().setContent("metrics-test").build());
+
+      Collection<MetricData> metrics = metricReader.collectAllMetrics();
+      List<SpanData> spans = spanExporter.getFinishedSpanItems();
+      assertThat(metrics).isNotEmpty();
+      assertThat(spans).isNotEmpty();
+      boolean foundAttemptCount =
+          metrics.stream().anyMatch(m -> m.getName().equals(SERVICE_NAME + "/attempt_count"));
+      assertThat(foundAttemptCount).isTrue();
     }
   }
 }

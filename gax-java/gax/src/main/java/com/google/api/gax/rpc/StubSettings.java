@@ -46,6 +46,11 @@ import com.google.api.gax.core.InstantiatingExecutorProvider;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
+import com.google.api.gax.tracing.CompositeApiTracerFactory;
+import com.google.api.gax.tracing.OpenTelemetryTracingRecorder;
+import com.google.api.gax.tracing.TracingTracerFactory;
+import com.google.api.gax.tracing.TracingUtils;
+import io.opentelemetry.api.GlobalOpenTelemetry;
 import com.google.auth.oauth2.QuotaProjectIdProvider;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
@@ -104,11 +109,24 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     this.quotaProjectId = builder.quotaProjectId;
     this.streamWatchdogProvider = builder.streamWatchdogProvider;
     this.streamWatchdogCheckInterval = builder.streamWatchdogCheckInterval;
-    this.tracerFactory = builder.tracerFactory;
+    this.tracerFactory = autoConfigureTracerFactory(builder.tracerFactory);
     this.deprecatedExecutorProviderSet = builder.deprecatedExecutorProviderSet;
     this.gdchApiAudience = builder.gdchApiAudience;
     this.endpointContext = buildEndpointContext(builder);
     this.apiKey = builder.apiKey;
+  }
+
+  private ApiTracerFactory autoConfigureTracerFactory(ApiTracerFactory factory) {
+    if (TracingUtils.isTracingEnabled()) {
+      ApiTracerFactory tracingFactory =
+          new TracingTracerFactory(
+              new OpenTelemetryTracingRecorder(GlobalOpenTelemetry.get(), getServiceName()));
+      if (factory instanceof BaseApiTracerFactory) {
+        return tracingFactory;
+      }
+      return CompositeApiTracerFactory.of(factory, tracingFactory);
+    }
+    return factory;
   }
 
   /**

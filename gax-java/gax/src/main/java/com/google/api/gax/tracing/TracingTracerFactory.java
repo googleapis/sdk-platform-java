@@ -46,7 +46,7 @@ import java.util.Map;
 @BetaApi
 @InternalApi
 public class TracingTracerFactory implements ApiTracerFactory {
-  protected TracingRecorder tracingRecorder;
+  private final TracingRecorder tracingRecorder;
 
   /** Mapping of client attributes that are set for every TracingTracer */
   private final Map<String, String> attributes;
