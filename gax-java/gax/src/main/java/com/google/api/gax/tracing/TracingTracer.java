@@ -32,6 +32,8 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class computes generic traces that can be observed in the lifecycle of an RPC operation. The
@@ -42,8 +44,29 @@ import com.google.api.core.InternalApi;
 @InternalApi
 public class TracingTracer extends BaseApiTracer {
   private final TracingRecorder tracingRecorder;
+  private final Map<String, String> attributes = new HashMap<>();
 
   public TracingTracer(TracingRecorder tracingRecorder) {
     this.tracingRecorder = tracingRecorder;
+  }
+
+  @Override
+  public void attemptStarted(Object request, int attemptNumber) {
+    // temporary dummy trace to enable further development
+    tracingRecorder.recordLowLevelNetworkSpan(attributes);
+  }
+
+  /**
+   * Add attributes that will be attached to all spans.
+   */
+  public void addAttributes(String key, String value) {
+    attributes.put(key, value);
+  }
+
+  /**
+   * Add attributes that will be attached to all spans.
+   */
+  public void addAttributes(Map<String, String> attributes) {
+    this.attributes.putAll(attributes);
   }
 }

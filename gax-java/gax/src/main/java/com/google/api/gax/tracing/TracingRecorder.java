@@ -32,6 +32,7 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
+import java.util.Map;
 
 /**
  * Provides an interface for tracing recording. The implementer is expected to use an observability
@@ -42,5 +43,12 @@ import com.google.api.core.InternalApi;
 @BetaApi
 @InternalApi
 public interface TracingRecorder {
-  // Minimal working feature: noop implementation for now.
+
+  /**
+   * Represents a low-level network span (T4) and serves as a placeholder for further development.
+   * This represents a single network request/attempt.
+   *
+   * @param attributes Map of the attributes to store on the span.
+   */
+  default void recordLowLevelNetworkSpan(Map<String, String> attributes) {}
 }

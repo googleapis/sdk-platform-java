@@ -70,6 +70,8 @@ public class TracingTracerFactory implements ApiTracerFactory {
     if (!TracingUtils.isTracingEnabled()) {
       return BaseApiTracer.getInstance();
     }
-    return new TracingTracer(tracingRecorder);
+    TracingTracer tracingTracer = new TracingTracer(tracingRecorder);
+    attributes.forEach(tracingTracer::addAttributes);
+    return tracingTracer;
   }
 }

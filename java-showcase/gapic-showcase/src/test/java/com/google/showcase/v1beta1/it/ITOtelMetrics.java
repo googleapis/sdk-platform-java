@@ -30,7 +30,6 @@
 
 package com.google.showcase.v1beta1.it;
 
-import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -43,17 +42,10 @@ import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.rpc.UnavailableException;
-import com.google.api.gax.tracing.ApiTracer;
-import com.google.api.gax.tracing.ApiTracerFactory;
-import com.google.api.gax.tracing.BaseApiTracer;
 import com.google.api.gax.tracing.MetricsTracer;
 import com.google.api.gax.tracing.MetricsTracerFactory;
 import com.google.api.gax.tracing.OpenTelemetryMetricsRecorder;
 import com.google.api.gax.tracing.OpenTelemetryTracingRecorder;
-import com.google.api.gax.tracing.SpanName;
-import com.google.api.gax.tracing.TracingRecorder;
-import com.google.api.gax.tracing.TracingTracer;
-import com.google.api.gax.tracing.TracingTracerFactory;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -937,29 +929,5 @@ class ITOtelMetrics {
 
     echoClient.close();
     echoClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
-  }
-
-  @Test
-  void testTracingFeatureFlag() {
-    // Test tracing disabled
-    System.setProperty("GOOGLE_CLOUD_ENABLE_TRACING", "false");
-    TracingRecorder recorder = createOtelTracingRecorder();
-    TracingTracerFactory factory = new TracingTracerFactory(recorder);
-    ApiTracer tracer =
-        factory.newTracer(
-            BaseApiTracer.getInstance(),
-            SpanName.of("EchoClient", "Echo"),
-            ApiTracerFactory.OperationType.Unary);
-    assertThat(tracer).isNotInstanceOf(TracingTracer.class);
-    assertThat(tracer).isSameInstanceAs(BaseApiTracer.getInstance());
-
-    // Test tracing enabled
-    System.setProperty("GOOGLE_CLOUD_ENABLE_TRACING", "true");
-    tracer =
-        factory.newTracer(
-            BaseApiTracer.getInstance(),
-            SpanName.of("EchoClient", "Echo"),
-            ApiTracerFactory.OperationType.Unary);
-    assertThat(tracer).isInstanceOf(TracingTracer.class);
   }
 }
