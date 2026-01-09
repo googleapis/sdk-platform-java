@@ -37,7 +37,6 @@ import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracer;
 import com.google.api.gax.tracing.MetricsTracerFactory;
 import com.google.api.gax.tracing.OpenTelemetryMetricsRecorder;
-import com.google.api.gax.tracing.OpenTelemetryTracingRecorder;
 import com.google.api.gax.tracing.SpanName;
 import com.google.api.gax.tracing.TracingTracer;
 import com.google.api.gax.tracing.TracingTracerFactory;
@@ -45,7 +44,6 @@ import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import io.opentelemetry.api.GlobalOpenTelemetry;
-import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
 import io.opentelemetry.sdk.metrics.data.MetricData;
@@ -64,8 +62,8 @@ class ITOtelTracing {
   private static final String SERVICE_NAME = "ShowcaseTracingTest";
   private InMemorySpanExporter spanExporter;
   private InMemoryMetricReader metricReader;
-  private OpenTelemetryTracingRecorder tracingRecorder;
   private OpenTelemetryMetricsRecorder metricsRecorder;
+  private OpenTelemetrySdk openTelemetrySdk;
 
   @BeforeEach
   void setup() {
@@ -80,19 +78,22 @@ class ITOtelTracing {
     SdkMeterProvider meterProvider =
         SdkMeterProvider.builder().registerMetricReader(metricReader).build();
 
-    OpenTelemetry openTelemetry =
+    openTelemetrySdk =
         OpenTelemetrySdk.builder()
             .setTracerProvider(tracerProvider)
             .setMeterProvider(meterProvider)
-            .build();
+            .buildAndRegisterGlobal();
 
-    tracingRecorder = new OpenTelemetryTracingRecorder(openTelemetry, SERVICE_NAME);
-    metricsRecorder = new OpenTelemetryMetricsRecorder(openTelemetry, SERVICE_NAME);
+    metricsRecorder = new OpenTelemetryMetricsRecorder(openTelemetrySdk, SERVICE_NAME);
   }
 
   @AfterEach
   void tearDown() {
     System.clearProperty("GOOGLE_CLOUD_ENABLE_TRACING");
+    if (openTelemetrySdk != null) {
+      openTelemetrySdk.close();
+    }
+    GlobalOpenTelemetry.resetForTest();
   }
 
   @Test
@@ -114,12 +115,6 @@ class ITOtelTracing {
 
     // Test tracing enabled
     System.setProperty("GOOGLE_CLOUD_ENABLE_TRACING", "true");
-    // We need to register a global OpenTelemetry instance for auto-configuration to work
-    SdkTracerProvider tracerProvider =
-        SdkTracerProvider.builder()
-            .addSpanProcessor(SimpleSpanProcessor.create(InMemorySpanExporter.create()))
-            .build();
-    OpenTelemetrySdk.builder().setTracerProvider(tracerProvider).buildAndRegisterGlobal();
 
     try (EchoClient client = TestClientInitializer.createGrpcEchoClient()) {
       ApiTracer tracer =
@@ -141,15 +136,14 @@ class ITOtelTracing {
 
     MetricsTracerFactory metricsFactory = new MetricsTracerFactory(metricsRecorder);
 
-    try (EchoClient client =
-        TestClientInitializer.createGrpcEchoClient()) {
+    try (EchoClient client = TestClientInitializer.createGrpcEchoClient()) {
       client.echo(EchoRequest.newBuilder().setContent("tracing-test").build());
 
       List<SpanData> spans = spanExporter.getFinishedSpanItems();
       assertThat(spans).isNotEmpty();
       boolean foundLowLevelSpan =
           spans.stream()
-              .anyMatch(span -> span.getName().equals(SERVICE_NAME + "/low-level-network-span"));
+              .anyMatch(span -> span.getName().equals("/low-level-network-span"));
       assertThat(foundLowLevelSpan).isTrue();
     }
 
