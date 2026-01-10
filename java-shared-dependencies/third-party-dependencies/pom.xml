@@ -44,6 +44,7 @@
     <dev.cel.version>0.6.0</dev.cel.version>
     <com.google.crypto.tink.version>1.16.0</com.google.crypto.tink.version>
     <io.opentelemetry.contrib.opentelemetry-gcp-resources.version>1.45.0-alpha</io.opentelemetry.contrib.opentelemetry-gcp-resources.version>
+    <json.version>20250517</json.version>
   </properties>
 
   <dependencyManagement>
@@ -238,6 +239,11 @@
         <groupId>com.google.cloud.opentelemetry</groupId>
         <artifactId>detector-resources-support</artifactId>
         <version>${google.cloud.opentelemetry.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.json</groupId>
+        <artifactId>json</artifactId>
+        <version>${json.version}</version>
       </dependency>
       <dependency>
         <groupId>org.junit</groupId>
