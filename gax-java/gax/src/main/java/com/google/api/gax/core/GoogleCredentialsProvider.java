@@ -119,6 +119,8 @@ public abstract class GoogleCredentialsProvider implements CredentialsProvider {
     /**
      * Sets the scopes to apply to the credentials that are acquired from Application Default
      * Credentials, before the credentials are sent to the service.
+     * These scopes only take effect if the underlying credentials require them.
+     * See {@link GoogleCredentials#createScopedRequired()} for more details on when scopes are necessary.
      */
     public abstract Builder setScopesToApply(List<String> val);
 
