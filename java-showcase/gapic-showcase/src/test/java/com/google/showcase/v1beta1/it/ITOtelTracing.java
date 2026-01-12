@@ -39,7 +39,6 @@ import com.google.api.gax.tracing.MetricsTracerFactory;
 import com.google.api.gax.tracing.OpenTelemetryMetricsRecorder;
 import com.google.api.gax.tracing.SpanName;
 import com.google.api.gax.tracing.TracingTracer;
-import com.google.api.gax.tracing.TracingTracerFactory;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
@@ -143,6 +142,7 @@ class ITOtelTracing {
       assertThat(spans).isNotEmpty();
       boolean foundLowLevelSpan =
           spans.stream()
+              // .anyMatch(span -> span.getName().equals(SERVICE_NAME + "/low-level-network-span"));
               .anyMatch(span -> span.getName().equals("/low-level-network-span"));
       assertThat(foundLowLevelSpan).isTrue();
     }

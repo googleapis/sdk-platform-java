@@ -35,9 +35,7 @@ import com.google.common.collect.ImmutableList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * A composite implementation of {@link ApiTracer} that broadcasts events to multiple tracers.
- */
+/** A composite implementation of {@link ApiTracer} that broadcasts events to multiple tracers. */
 @InternalApi
 public class CompositeApiTracer implements ApiTracer {
   private final List<ApiTracer> tracers;

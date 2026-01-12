@@ -55,16 +55,12 @@ public class TracingTracer extends BaseApiTracer {
     tracingRecorder.recordLowLevelNetworkSpan(attributes);
   }
 
-  /**
-   * Add attributes that will be attached to all spans.
-   */
+  /** Add attributes that will be attached to all spans. */
   public void addAttributes(String key, String value) {
     attributes.put(key, value);
   }
 
-  /**
-   * Add attributes that will be attached to all spans.
-   */
+  /** Add attributes that will be attached to all spans. */
   public void addAttributes(Map<String, String> attributes) {
     this.attributes.putAll(attributes);
   }
