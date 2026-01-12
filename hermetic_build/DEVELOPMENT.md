@@ -45,9 +45,10 @@ In order to update:
 1. Clone googleapis with `git clone https://github.com/googleapis/googleapis`.
 2. `cd` into googleapis and
    checkout [the commit declared in the IT file](https://github.com/googleapis/sdk-platform-java/blob/aa4a7f76f5260326583075496444c9434054dc90/.cloudbuild/library_generation/cloudbuild-library-generation-integration-test.yaml#L40C18-L40C58).
-   . Clone or `cd` into google-cloud-java and checkout the `chore/test-hermetic-build` branch.
-3. Build the Docker image locally or use a published one:
-4. Generate the libraries
+   . 
+3. Clone or `cd` into google-cloud-java and checkout the `chore/test-hermetic-build` branch.
+4. Build the Docker image locally or use a published one:
+5. Generate the libraries
 
 ```bash
 docker run \
@@ -59,7 +60,7 @@ docker run \
   --api-definitions-path="/googleapis" &> out
 ```
 
-5. `cd` into google-cloud-java and push the expected changes
+6. `cd` into google-cloud-java and push the expected changes.
 
 # Run the unit tests
 
