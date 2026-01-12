@@ -11,13 +11,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ macOS-13, ubuntu-22.04, windows-2022 ]
+        os: [ macos-15-intel, ubuntu-22.04, windows-2022 ]
         java: [ 11, 17 ]
     runs-on: ${{ matrix.os }}
     steps:
       - run: git config --global core.longpaths true
       - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           java-version: ${{ matrix.java }}
           distribution: temurin
@@ -37,12 +37,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ macOS-13, ubuntu-22.04, windows-2022 ]
+        os: [ macos-15-intel, ubuntu-22.04, windows-2022 ]
     runs-on: ${{ matrix.os }}
     steps:
       - run: git config --global core.longpaths true
       - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           java-version: 11
           distribution: temurin
@@ -51,7 +51,7 @@ jobs:
       - name: Install with Java 11
         run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip -DskipTests -Dfmt.skip
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           java-version: 8
           distribution: temurin
