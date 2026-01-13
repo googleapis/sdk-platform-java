@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.65.1](https://github.com/googleapis/sdk-platform-java/compare/v2.65.0...v2.65.1) (2026-01-13)
+
+
+### Documentation
+
+* Update docs for GoogleCredentialsProvider#setScopesToApply ([#4057](https://github.com/googleapis/sdk-platform-java/issues/4057)) ([0a9962f](https://github.com/googleapis/sdk-platform-java/commit/0a9962f9945b6018796a808f89a6a3a309d1ca04))
+
 ## [2.65.0](https://github.com/googleapis/sdk-platform-java/compare/v2.64.2...v2.65.0) (2026-01-12)
 
 
