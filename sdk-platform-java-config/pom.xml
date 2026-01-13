@@ -18,5 +18,7 @@
 
     <properties>
         <google-cloud-shared-dependencies.version>3.55.0</google-cloud-shared-dependencies.version> <!-- {x-version-update:google-cloud-shared-dependencies:current} -->
+        <!--  skipping clirr check for protobuf 4.x upgrade for downstream libraries -->
+        <clirr.skip>true</clirr.skip>
     </properties>
 </project>
