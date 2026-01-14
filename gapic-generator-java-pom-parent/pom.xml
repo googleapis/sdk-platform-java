@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.api</groupId>
   <artifactId>gapic-generator-java-pom-parent</artifactId>
-  <version>2.64.3-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+  <version>2.65.1</version><!-- {x-version-update:gapic-generator-java:current} -->
   <packaging>pom</packaging>
   <name>GAPIC Generator Java POM Parent</name>
   <url>https://github.com/googleapis/sdk-platform-java</url>
@@ -40,6 +40,8 @@
     <junit.version>5.11.4</junit.version>
     <mockito.version>4.11.0</mockito.version>
     <slf4j.version>2.0.16</slf4j.version>
+    <!--  skipping clirr check for protobuf 4.x upgrade -->
+    <clirr.skip>true</clirr.skip>
   </properties>
 
   <developers>
