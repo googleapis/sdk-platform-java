@@ -36,7 +36,7 @@ jobs:
       if: env.SHOULD_RUN == 'true'
       with:
         fetch-depth: 0
-        token: ${{ secrets.CLOUD_JAVA_BOT_TOKEN }}
+        token: ${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}
     - name: Install Maven modules
       if: env.SHOULD_RUN == 'true'
       shell: bash
@@ -61,5 +61,5 @@ jobs:
         base_ref: ${{ github.base_ref }}
         head_ref: ${{ github.head_ref }}
         image_tag: ${{ env.GENERATOR_VERSION }}
-        token: ${{ secrets.CLOUD_JAVA_BOT_TOKEN }}
+        token: ${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}
         showcase_mode: true
